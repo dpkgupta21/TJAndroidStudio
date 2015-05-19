@@ -42,7 +42,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String JOURNEY_COLUMN_GROUPTYPE = "groupType";
     public static final String JOURNEY_COLUMN_BUDDY_IDS = "buddyIds";
     public static final String JOURNEY_COLUMN_JOURNEY_LAPS = "journeyLapIds";
-    public static final String JOURNEY_COLUMN_ISACTIVE = "isActive";
+    public static final String JOURNEY_COLUMN_STATUS = "journeyStatus";
     // Table TIMELINE fields
     public static final String TABLE_TIMELINE = "TIMELINE";
     public static final String TIMELINE_COLUMN_ID = "_id";
@@ -173,7 +173,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + JOURNEY_COLUMN_GROUPTYPE + " text ,"
             + JOURNEY_COLUMN_BUDDY_IDS + " text ,"
             + JOURNEY_COLUMN_JOURNEY_LAPS + " text ,"
-            + JOURNEY_COLUMN_ISACTIVE + " integer " + ");";
+            + JOURNEY_COLUMN_STATUS + " text " + ");";
     private static final String CREATE_TABLE_TIMELINE = "create table " + TABLE_TIMELINE + "("
             + TIMELINE_COLUMN_ID + " integer primary key autoincrement, "
             + TIMELINE_COLUMN_ID_ONSERVER + " text ,"

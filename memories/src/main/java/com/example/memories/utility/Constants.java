@@ -23,5 +23,8 @@ public class Constants {
 
     public static final String TRAVELJAR_API_BASE_URL = "https://www.traveljar.in/api/v1";
 
+    public static final String JOURNEY_STATUS_ACTIVE = "ACTIVE";
+    public static final String JOURNEY_STATUS_PENDING = "PENDING";
+    public static final String JOURNEY_STATUS_FINISHED = "FINISHED";
 
 }

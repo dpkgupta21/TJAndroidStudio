@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.memories.models.Journey;
+import com.example.memories.utility.Constants;
 
 public class JourneyDataSource {
 
@@ -29,7 +30,7 @@ public class JourneyDataSource {
         values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, newJourney.getBuddies().toString());
         // values.put(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS,
         // newJourney.getLaps().toString());
-        values.put(MySQLiteHelper.JOURNEY_COLUMN_ISACTIVE, newJourney.isActive());
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_STATUS, newJourney.getJourneyStatus());
 
         // insert row
         long journey_id = db.insert(MySQLiteHelper.TABLE_JOURNEY, null, values);
@@ -42,7 +43,7 @@ public class JourneyDataSource {
     public static String getCurrentJourney(Context mContext) {
         String currentJourneyId;
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
-                + MySQLiteHelper.JOURNEY_COLUMN_ISACTIVE + " = 1";
+                + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = " + Constants.JOURNEY_STATUS_ACTIVE;
         SQLiteDatabase db = MySQLiteHelper.getInstance(mContext).getReadableDatabase();
         Log.e(TAG, selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);

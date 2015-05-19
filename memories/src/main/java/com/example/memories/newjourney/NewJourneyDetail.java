@@ -17,6 +17,7 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.models.Journey;
 import com.example.memories.timeline.Timeline;
+import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.volley.AppController;
@@ -180,7 +181,7 @@ public class NewJourneyDetail extends Activity {
 
         // Add it to the Database
         Journey newJ = new Journey(idOnServer, name, tag_line, group_relationship, created_by_id,
-                null, buddyArrayList, 1);
+                null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE);
         JourneyDataSource.createJourney(newJ, getBaseContext());
         TJPreferences.setActiveJourneyId(this, idOnServer);
     }
@@ -204,7 +205,7 @@ public class NewJourneyDetail extends Activity {
 
         // Add it to the Database
         Journey newJ = new Journey(id, name, tag_line, group_relationship, created_by_id, null,
-                buddyArrayList, 1);
+                buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE);
         JourneyDataSource.createJourney(newJ, getBaseContext());
         TJPreferences.setActiveJourneyId(this, id);
     }
