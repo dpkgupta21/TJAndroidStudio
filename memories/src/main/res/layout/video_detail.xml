@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/abc_action_bar_home_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/abhi" />
+
+        <ImageView
+            android:id="@+id/playVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/abc_action_bar_home_description"
+            android:src="@drawable/ic_play" />
+    </RelativeLayout>
+
+    <com.example.memories.customviews.MyCircularImageView
+        android:id="@+id/profilePic"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="115dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/abc_action_bar_home_description"
+        android:src="@drawable/banner3" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/no_likes"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="5"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/favBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/default_string"
+            android:src="@drawable/heart_empty" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/photo_detail_rl2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profilePic"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/photo_detail_date_big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:text="07"
+            android:textColor="@color/red"
+            android:textSize="@dimen/tj_giant_font"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/photo_detail_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/photo_detail_date_big"
+            android:text="7 December 2014"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <TextView
+            android:id="@+id/photo_detail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/photo_detail_date"
+            android:layout_below="@id/photo_detail_date"
+            android:text="Sunday 1:19 pm"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <TextView
+            android:id="@+id/photo_detail_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Bangalore"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <TextView
+            android:id="@+id/photo_detail_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/photo_detail_place"
+            android:text="30 C : Sunny"
+            android:textSize="@dimen/tj_medium_font" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/video_detail_caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photo_detail_rl2"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="Give this voice some words!"
+        android:inputType="textMultiLine"
+        android:lines="6"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/xyz"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/splash_bg1" />
+
+    <LinearLayout
+        android:id="@+id/splash_screen_footer"
+        style="@android:style/ButtonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <com.example.memories.customviews.MyButtonView
+            android:id="@+id/splash_signup_btn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:onClick="goToSignUp"
+            android:text="I&apos;m New"
+            android:textColor="@color/black" />
+
+        <com.example.memories.customviews.MyButtonView
+            android:id="@+id/splash_signin_btn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:onClick="goToSignIn"
+            android:text="Sign In"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</LinearLayout>

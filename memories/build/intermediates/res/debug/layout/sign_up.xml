@@ -1,0 +1,120 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg">
+
+    <!-- Layout starts upside down -->
+
+    <LinearLayout
+        android:id="@+id/already_signed_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/already_signed_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already Signed?"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/sign_in_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:clickable="true"
+            android:onClick="goToSignIn"
+            android:text="LOG IN"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sign_up_box_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/already_signed_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:background="@color/signin_box"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <EditText
+            android:id="@+id/signupNameTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <EditText
+            android:id="@+id/signupEmailTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <EditText
+            android:id="@+id/signupPasswordTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <com.example.memories.customviews.MyButtonView
+            android:id="@+id/signupBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_corner_button"
+            android:onClick="signUp"
+            android:text="SIGN UP"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/or" />
+
+        <com.example.memories.customviews.MyButtonView
+            android:id="@+id/fbSignUpBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_corner_button_blue"
+            android:onClick="fbSignUp"
+            android:text="FACEBOOK SIGN UP"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tj_medium_font" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/signup_heading_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/sign_up_box_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="SIGN UP"
+        android:textColor="@color/white"
+        android:textSize="@dimen/tj_large_font"
+        android:textStyle="bold" />
+
+</RelativeLayout><!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/src/main/res/layout/sign_up.xml -->

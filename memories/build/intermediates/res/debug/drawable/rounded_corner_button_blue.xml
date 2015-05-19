@@ -1,0 +1,12 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="@color/tj_fb_blue" />
+    <!-- this one is ths color of the Rounded Button -->
+    <corners
+        android:bottomLeftRadius="3sp"
+        android:bottomRightRadius="3sp"
+        android:topLeftRadius="3sp"
+        android:topRightRadius="3sp" />
+
+</shape><!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/src/main/res/drawable/rounded_corner_button_blue.xml -->

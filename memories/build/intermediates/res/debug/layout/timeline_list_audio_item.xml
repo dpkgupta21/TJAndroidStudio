@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/tj_medium_gray"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/timelineItemPlayBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/play" />
+
+        <TextView
+            android:id="@+id/timelineItemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="20 hours ago"
+            android:textColor="@color/black"
+            android:textSize="@dimen/tj_small_font"
+            android:textStyle="italic" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/timelineItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:src="@drawable/sound_bars" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <com.example.memories.customviews.MyCircularImageView
+            android:id="@+id/timelineItemUserImage"
+            android:layout_width="@dimen/circularProfDimen"
+            android:layout_height="@dimen/circularProfDimen"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="-35dp"
+            android:src="@drawable/ic_profile" />
+
+        <ImageButton
+            android:id="@+id/timelineItemFavIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/white"
+            android:contentDescription="@string/default_string"
+            android:src="@drawable/heart_empty" />
+
+        <TextView
+            android:id="@+id/noLikesTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/timelineItemFavIcon" />
+
+    </RelativeLayout>
+
+</LinearLayout><!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/src/main/res/layout/timeline_list_audio_item.xml -->

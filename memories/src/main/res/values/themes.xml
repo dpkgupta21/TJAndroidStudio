@@ -1,0 +1,54 @@
+<resources>
+
+    <!-- Theme for CaptureMomentsBaseActivity -->
+    <style name="CaptureMomentsBaseTheme" parent="@android:style/Theme.Translucent">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!-- the theme applied to the application or activity -->
+    <style name="CustomActionBarTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="android:actionBarStyle">@style/TJActionBar</item>
+        <item name="android:actionModeBackground">@color/md_blue</item>
+        <item name="android:actionBarTabTextStyle">@style/TJActionBarTabText</item>
+        <item name="android:actionBarTabStyle">@style/TJTabStyle</item>
+        <item name="android:actionMenuTextColor">@color/md_blue</item>
+
+        <item name="android:actionBarTabBarStyle">@style/Divider</item>
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="TJActionBar" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:titleTextStyle">@style/TJActionBarTitleText</item>
+        <item name="android:background">@color/tj_red</item>
+    </style>
+
+    <!-- ActionBar title text -->
+    <style name="TJActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Action Bar tab bar -->
+    <style name="Divider" parent="@android:style/Widget.Holo.ActionBar.TabBar">
+        <item name="android:showDividers">middle</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+    </style>
+
+    <style name="TJTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:showDividers">none</item>
+        <item name="android:measureWithLargestChild">false</item>
+        <!-- <item name="android:background">@color/red</item> -->
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <!-- ActionBar TABS text styles -->
+    <style name="TJActionBarTabText" parent="@style/Widget.AppCompat.ActionBar.TabText">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:background="@drawable/banner3"
+        android:padding="10dp">
+
+        <com.example.memories.customviews.MyCircularImageView
+            android:id="@+id/sidemenu_profile_pic"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/abhi" />
+
+        <TextView
+            android:id="@+id/sidemenu_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/sidemenu_profile_pic"
+            android:text="Anonymous"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sidemenu_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/sidemenu_username"
+            android:layout_below="@id/sidemenu_username"
+            android:text="Update your status here"
+            android:textColor="@color/white" />
+
+        <ImageButton
+            android:id="@+id/sidemenu_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/sidemenu_profile_pic"
+            android:background="@color/transparent"
+            android:contentDescription="@string/default_string"
+            android:src="@drawable/settings" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/sidemenu_features_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/white"
+        android:dividerHeight="1dp"
+        android:drawSelectorOnTop="true"></ListView>
+
+    <!-- Horizontal line in sidebar to divide -->
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@color/black" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/sidemenu_journey_progress_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Journey Progress" />
+
+        <ImageView
+            android:id="@+id/sidemenu_journey_completion_img"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_below="@id/sidemenu_journey_progress_txt"
+            android:contentDescription="@string/default_string"
+            android:src="@drawable/round76" />
+
+        <TextView
+            android:id="@+id/sidemenu_journey_progress_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sidemenu_journey_progress_txt"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/sidemenu_journey_completion_img"
+            android:text="4 days | 2657 kms" />
+
+        <Button
+            android:id="@+id/sidemenu_journey_new_journey_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sidemenu_journey_progress_days"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/sidemenu_journey_completion_img"
+            android:onClick="newJourney"
+            android:text="New Journey" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <!-- ListRow Left side Thumbnail image -->
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/checkin_place_thumbnail"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/abhi" />
+
+    <RelativeLayout
+        android:id="@+id/checkin_place_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- checkin_place name -->
+
+        <TextView
+            android:id="@+id/checkin_place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Pearl Harbour Hotel"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- checkin_place address -->
+
+        <TextView
+            android:id="@+id/checkin_place_address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkin_place_name"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Phuket, Thailand"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/checkin_place_count"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkin_place_address"
+            android:text="3,123 were here"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</LinearLayout>

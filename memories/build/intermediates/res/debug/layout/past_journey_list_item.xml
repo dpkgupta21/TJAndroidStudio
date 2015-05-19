@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/past_journey_card"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@drawable/abhi"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/past_journey_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="New Year&apos;s Party"
+        android:textColor="@color/white"
+        android:textSize="@dimen/tj_large_font"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/past_journey_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Goa"
+        android:textColor="@color/white"
+        android:textSize="@dimen/tj_large_font"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/past_journey_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="25th Dec - 2nd Jan"
+        android:textColor="@color/white"
+        android:textSize="@dimen/tj_medium_font" />
+
+</RelativeLayout><!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/src/main/res/layout/past_journey_list_item.xml -->

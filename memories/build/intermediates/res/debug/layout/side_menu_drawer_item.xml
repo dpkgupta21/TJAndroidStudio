@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/side_menu_cloud_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/default_string"
+        android:gravity="center_vertical|"
+        android:paddingRight="10dp"
+        android:src="@drawable/hamburger" />
+
+    <com.example.memories.customviews.MyTextView
+        android:id="@+id/side_menu_cloud_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="Content not available"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</LinearLayout><!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/src/main/res/layout/side_menu_drawer_item.xml -->

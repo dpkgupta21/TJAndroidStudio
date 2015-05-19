@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/abc_action_bar_home_description"
+        android:src="@drawable/ic_profile" />
+
+</LinearLayout>
+<!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/src/main/res/layout/gallery_audio_list_item.xml -->

@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/noFriendsSelected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" />
+
+    <ImageButton
+        android:id="@+id/mood_select_friend_imgbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="selectFriends"
+        android:src="@drawable/profile_image_empty" />
+
+    <TextView
+        android:id="@+id/mood_text_select_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Friend"
+        android:textSize="@dimen/tj_medium_font" />
+
+    <TextView
+        android:id="@+id/mood_text_is"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="is"
+        android:textColor="@color/tj_medium_gray"
+        android:textSize="@dimen/tj_extra_giant_font"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/mood_select_mood_imgbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="selectMood"
+        android:src="@drawable/boss" />
+
+    <TextView
+        android:id="@+id/mood_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Excited"
+        android:textSize="@dimen/tj_medium_font" />
+
+    <TextView
+        android:id="@+id/mood_text_because_of"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="because of"
+        android:textColor="@color/tj_medium_gray"
+        android:textSize="@dimen/tj_extra_giant_font"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/mood_because_of_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine">
+
+        <requestFocus />
+    </EditText>
+
+</LinearLayout>

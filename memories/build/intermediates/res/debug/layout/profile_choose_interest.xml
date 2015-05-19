@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Choose your interests in group"
+        android:textSize="22sp" />
+
+    <ListView
+        android:id="@+id/interestList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp" />
+
+</LinearLayout>
+<!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/src/main/res/layout/profile_choose_interest.xml -->

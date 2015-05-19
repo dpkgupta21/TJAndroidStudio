@@ -1,0 +1,3 @@
+include ':flotingMenuLibrary'
+include ':library'
+include ':memories'

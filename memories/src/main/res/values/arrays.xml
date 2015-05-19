@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sidemenu_features_list">
+        <item>Timeline</item>
+        <item>Gallery</item>
+        <item>Past Journeys</item>
+        <item>Journey Details</item>
+        <item>Profile</item>
+    </string-array>
+
+    <string-array name="journey_buddies_list">
+        <item>Abhinav Mittal</item>
+        <item>Abhinav Soni</item>
+        <item>Amit Kumar Sharma</item>
+        <item>Abhinav Panwar</item>
+        <item>Amit Sharma</item>
+    </string-array>
+
+    <string-array name="contacts_list">
+        <item>John Cena</item>
+        <item>Dwayne Jhonson</item>
+        <item>Shawn Michaels</item>
+        <item>Randy Orton</item>
+        <item>Trish Stratus</item>
+        <item>Victoria</item>
+        <item>Big Show</item>
+        <item>Brock Lesner</item>
+        <item>Jeff Hardy</item>
+        <item>Lita</item>
+    </string-array>
+
+    <string-array name="places_list">
+        <item>Goa</item>
+        <item>Bangalore</item>
+        <item>Jaipur</item>
+        <item>Alwar</item>
+        <item>Vellore</item>
+    </string-array>
+
+</resources>

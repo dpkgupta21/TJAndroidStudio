@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <GridView
+        android:id="@+id/moodsGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="4"
+        android:padding="10dp"
+        android:src="@drawable/emoticon117"></GridView>
+
+</LinearLayout>
+<!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/src/main/res/layout/moods_grid.xml -->

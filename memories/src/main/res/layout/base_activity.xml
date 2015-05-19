@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent">
+
+    <FrameLayout
+        android:id="@+id/content_activity_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/content_activity_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.example.flotingmenulibrary.FloatingActionsMenu
+        android:id="@+id/multiple_actions_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        fab:fab_addButtonColorNormal="@color/tj_red"
+        fab:fab_addButtonColorPressed="@color/tj_red"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        fab:fab_expandDirection="up"
+        fab:fab_labelStyle="@style/menu_labels_style">
+
+        <com.example.flotingmenulibrary.FloatingActionButton
+            android:id="@+id/button_mood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onFABClick"
+            android:src="@drawable/emoticon117"
+            fab:fab_colorNormal="@color/tj_orange"
+            fab:fab_colorPressed="@color/white"
+            fab:fab_size="mini"
+            fab:fab_title="Set Mood" />
+
+        <com.example.flotingmenulibrary.FloatingActionButton
+            android:id="@+id/button_checkin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onFABClick"
+            android:src="@drawable/map32"
+            fab:fab_colorNormal="@color/tj_orange"
+            fab:fab_colorPressed="@color/white"
+            fab:fab_size="mini"
+            fab:fab_title="Checkin" />
+
+        <com.example.flotingmenulibrary.FloatingActionButton
+            android:id="@+id/button_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onFABClick"
+            android:src="@drawable/stack21"
+            fab:fab_colorNormal="@color/tj_orange"
+            fab:fab_colorPressed="@color/white"
+            fab:fab_size="mini"
+            fab:fab_title="Photo" />
+
+        <com.example.flotingmenulibrary.FloatingActionButton
+            android:id="@+id/button_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onFABClick"
+            android:src="@drawable/note48"
+            fab:fab_colorNormal="@color/tj_orange"
+            fab:fab_colorPressed="@color/white"
+            fab:fab_size="mini"
+            fab:fab_title="Notes" />
+
+        <com.example.flotingmenulibrary.FloatingActionButton
+            android:id="@+id/button_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onFABClick"
+            android:src="@drawable/movie36"
+            fab:fab_colorNormal="@color/tj_orange"
+            fab:fab_colorPressed="@color/white"
+            fab:fab_size="mini"
+            fab:fab_title="Video" />
+
+        <com.example.flotingmenulibrary.FloatingActionButton
+            android:id="@+id/button_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onFABClick"
+            android:src="@drawable/microphone52"
+            fab:fab_colorNormal="@color/tj_orange"
+            fab:fab_colorPressed="@color/white"
+            fab:fab_size="mini"
+            fab:fab_title="Audio" />
+    </com.example.flotingmenulibrary.FloatingActionsMenu>
+
+</RelativeLayout>

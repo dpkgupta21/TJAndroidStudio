@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/new_journey_location_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="From"
+        android:textColor="@color/tj_orange"
+        android:textSize="@dimen/tj_medium_font" />
+
+    <TextView
+        android:id="@+id/new_journey_location_lap_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/from"
+        android:text="Bangalore"
+        android:textSize="@dimen/tj_medium_font"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/new_journey_location_lap_conveyance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Car"
+        android:textSize="@dimen/tj_medium_font"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="To"
+        android:textColor="@color/tj_orange"
+        android:textSize="@dimen/tj_medium_font" />
+
+    <TextView
+        android:id="@+id/new_journey_location_lap_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/from"
+        android:text="Goa"
+        android:textSize="@dimen/tj_medium_font"
+        android:textStyle="bold" />
+
+    <!-- Top half -->
+
+    <ImageView
+        android:id="@+id/middle_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/new_journey_location_lap_from"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/line" />
+
+    <!-- Bottom half -->
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/middle_line"
+        android:text="Travel date"
+        android:textColor="@color/tj_orange"
+        android:textSize="@dimen/tj_medium_font" />
+
+    <TextView
+        android:id="@+id/new_journey_location_lap_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:text="25th Dec&apos;14"
+        android:textSize="@dimen/tj_medium_font"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/middle_line"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/barcode" />
+
+    <TextView
+        android:id="@+id/time_of_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/middle_line"
+        android:text="Time Of Day"
+        android:textColor="@color/tj_orange"
+        android:textSize="@dimen/tj_medium_font" />
+
+    <TextView
+        android:id="@+id/new_journey_location_lap_timeofday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/time_of_day"
+        android:text="4 hours"
+        android:textSize="@dimen/tj_medium_font"
+        android:textStyle="bold" />
+
+</RelativeLayout><!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/src/main/res/layout/new_journey_laps_list_item.xml -->

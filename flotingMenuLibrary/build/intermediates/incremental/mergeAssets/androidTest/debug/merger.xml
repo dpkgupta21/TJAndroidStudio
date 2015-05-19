@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="19.1.0"><source path="/media/ankit/6C3E-BE46/travel/gradle/flotingMenuLibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/assets"/></dataSet><dataSet config="debug"><source path="/media/ankit/6C3E-BE46/travel/gradle/flotingMenuLibrary/build/intermediates/bundles/debug/assets"/></dataSet><dataSet config="main"><source path="/media/ankit/6C3E-BE46/travel/gradle/flotingMenuLibrary/src/androidTest/assets"/></dataSet></merger>
