@@ -36,6 +36,7 @@ public class PictureDataSource {
         values.put(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT, newPic.getCreatedAt());
         values.put(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT, newPic.getCreatedAt());
         values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, newPic.getLikedBy());
+        values.put(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH, newPic.getPicThumbnailPath());
 
         // insert row
         Long picture_id = db.insert(MySQLiteHelper.TABLE_PICTURE, null, values);
@@ -67,6 +68,7 @@ public class PictureDataSource {
         List<Memories> memoriesList = getPictureMemories(cursor);
         cursor.close();
         db.close();
+        Log.d(TAG, "pictures fetched successfully " + memoriesList.size());
         return memoriesList;
     }
 
@@ -93,6 +95,7 @@ public class PictureDataSource {
 
         cursor.close();
         db.close();
+        Log.d(TAG, "pictures fetched successfully " + memoriesList.size());
         return memoriesList;
     }
 
@@ -101,6 +104,14 @@ public class PictureDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.PICTURE_COLUMN_ID_ONSERVER, serverId);
         values.put(MySQLiteHelper.PICTURE_COLUMN_DATASERVERURL, serverUrl);
+        db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = " + picId, null);
+        db.close();
+    }
+
+    public static void updatePicLocalPath(Context context, String newPath, String picId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.PICTURE_COLUMN_DATALOCALURL, newPath);
         db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = " + picId, null);
         db.close();
     }
@@ -146,6 +157,7 @@ public class PictureDataSource {
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY)));
             picture.setjId(cursor.getString(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
+            picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH)));
             picturesList.add(picture);
             cursor.moveToNext();
         }
@@ -184,6 +196,7 @@ public class PictureDataSource {
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY)));
             picture.setjId(cursor.getString(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
+            picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH)));
             picturesList.add(picture);
             cursor.moveToNext();
         }

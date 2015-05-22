@@ -11,7 +11,7 @@ public class Contact implements Comparable<Contact> {
     private String allJourneyIds;
     private boolean isOnBoard;
     private String interests;
-    private boolean isSelected;
+    private boolean isSelected =  true;
 
     public Contact() {
 

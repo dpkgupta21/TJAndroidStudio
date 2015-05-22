@@ -11,21 +11,32 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.memories.R;
+import com.example.memories.SQLitedatabase.AudioDataSource;
+import com.example.memories.SQLitedatabase.ContactDataSource;
+import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.SQLitedatabase.NoteDataSource;
+import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Audio;
+import com.example.memories.models.Journey;
 import com.example.memories.models.Mood;
 import com.example.memories.models.Note;
 import com.example.memories.models.Picture;
 import com.example.memories.models.Video;
+import com.example.memories.services.PullBuddiesService;
 import com.example.memories.timeline.Timeline;
+import com.example.memories.utility.AudioUtil;
+import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
+import com.example.memories.utility.PictureUtilities;
+import com.example.memories.utility.VideoUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,7 +49,6 @@ import java.util.List;
 public class GcmIntentService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
     public static final String TAG = "<GcmIntentService>";
-    NotificationCompat.Builder builder;
     private NotificationManager mNotificationManager;
 
     public GcmIntentService() {
@@ -102,23 +112,34 @@ public class GcmIntentService extends IntentService {
     private void parseGcmMessage(Bundle bundle) {
         Log.d(TAG, " parseGcmMessage called");
         String type = bundle.get("type").toString();
-        String memType = bundle.get("memory_type").toString();
-        String data = bundle.get("details").toString();
-        String journeyId = bundle.getString("journey_id");
+        String journeyId;
 
         switch (Integer.parseInt(type)) {
             case HelpMe.TYPE_CREATE_MEMORY:
+                String memType = bundle.get("memory_type").toString();
+                String data = bundle.get("details").toString();
+                journeyId = bundle.getString("journey_id");
                 try {
                     Log.d(TAG, "type = create , so createMemory called");
                     createMemory(journeyId, Integer.parseInt(memType), new JSONObject(data));
-                } catch (NumberFormatException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 break;
+
+            case HelpMe.TYPE_CREATE_JOURNEY:
+                Log.d(TAG, "type = create journey");
+
+                journeyId = bundle.get("id").toString();
+                Log.d(TAG, "bundle buddy ids are " + bundle.get("buddy_ids"));
+                String buddyIds = (String)bundle.get("buddy_ids");
+                buddyIds = buddyIds.replace("[", "");
+                buddyIds = buddyIds.replace("]", "");
+
+
+                Journey newJ = new Journey(journeyId, "deafault", "tagline", "Friends", "90", null, Arrays.asList(buddyIds), Constants.JOURNEY_STATUS_PENDING);
+                JourneyDataSource.createJourney(newJ, this);
 
             default:
                 break;
@@ -153,7 +174,7 @@ public class GcmIntentService extends IntentService {
 
                 Picture newPic = new Picture(idOnServer, jId, HelpMe.PICTURE_TYPE, caption, extension,
                         size, dataUrl, null, createdBy,
-                        createdAt, updatedAt, null);
+                        createdAt, updatedAt, null, null);
 
                 //PictureUtilities.downloadPicFromURL(this, newPic);
                 //PictureDataSource.createPicture(newPic, this);
@@ -168,11 +189,11 @@ public class GcmIntentService extends IntentService {
                 Audio newAudio = new Audio(idOnServer, jId, HelpMe.AUDIO_TYPE, extension, size,
                         dataUrl, null, createdBy, createdAt, updatedAt, null);
 
+                AudioDataSource.createAudio(newAudio, this);
                 //AudioUtil.downloadAudio(this, newAudio);
-                //AudioDataSource.createAudio(newAudio, this);
                 break;
 
-            case HelpMe.TYPE_VIDEO:
+/*            case HelpMe.TYPE_VIDEO:
                 Log.d(TAG, "its video type with idOnServer = " + idOnServer);
                 dataUrl = data.getString("data_url");
                 size = Long.parseLong(data.getString("size"));
@@ -180,10 +201,10 @@ public class GcmIntentService extends IntentService {
                 caption = data.getString("caption");
 
                 Video newVideo = new Video(idOnServer, jId, HelpMe.VIDEO_TYPE, caption, extension,
-                        size, dataUrl, null, createdBy, createdAt, updatedAt, null);
+                        size, dataUrl, null, createdBy, createdAt, updatedAt, null, null);
                 //Downloading video and save to database
-                //VideoUtil.downloadVideo(this, newVideo);
-                break;
+                VideoUtil.createNewVideoFromServer(this, newVideo);
+                break;*/
 
             case HelpMe.TYPE_NOTE:
                 Log.d(TAG, "its note type with idOnServer = " + idOnServer);

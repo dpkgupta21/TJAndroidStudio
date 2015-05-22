@@ -163,6 +163,8 @@ public class HelpMe {
     public static Bitmap decodeSampledBitmapFromPath(Context mContext, String resPath,
                                                      int reqWidth, int reqHeight) throws FileNotFoundException {
 
+        Log.d(TAG, "local file path for image is " + resPath);
+
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -185,7 +187,7 @@ public class HelpMe {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
-        int inSampleSize = 1;
+        int inSampleSize = 4;
 
         if (height > reqHeight || width > reqWidth) {
 

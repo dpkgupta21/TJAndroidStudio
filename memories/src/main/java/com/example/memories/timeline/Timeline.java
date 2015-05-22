@@ -1,12 +1,14 @@
 package com.example.memories.timeline;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.memories.BaseActivity;
 import com.example.memories.R;
@@ -34,6 +36,9 @@ public class Timeline extends BaseActivity {
     private ListView mListView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<Memories> memoriesList;
+
+    private boolean backPressedToExitOnce = false;
+    private Toast toast = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,24 +76,6 @@ public class Timeline extends BaseActivity {
             }
         });
 
-        RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constants.TRAVELJAR_API_BASE_URL).build();
-        TravelJarServices myService = restAdapter.create(TravelJarServices.class);
-
-        myService.addPlace(TJPreferences.getApiKey(this), "Delhi",
-                new Callback<String>() {
-                    @Override
-                    public void success(String str, retrofit.client.Response response) {
-                        Log.d(TAG, "image uploaded successfully " + str);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        Log.d(TAG, "error in uploading picture" + retrofitError);
-                        retrofitError.printStackTrace();
-                    }
-                });
-
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -105,4 +92,48 @@ public class Timeline extends BaseActivity {
         j_id = TJPreferences.getActiveJourneyId(this);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedToExitOnce) {
+            super.onBackPressed();
+        } else {
+            this.backPressedToExitOnce = true;
+            showToast("Press again to exit");
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    backPressedToExitOnce = false;
+                }
+            }, 2000);
+        }
+    }
+
+    private void showToast(String message) {
+        if (this.toast == null) {
+            // Create toast if found null, it would he the case of first call only
+            this.toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+
+        } else if (this.toast.getView() == null) {
+            // Toast not showing, so create new one
+            this.toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+
+        } else {
+            // Updating toast message is showing
+            this.toast.setText(message);
+        }
+
+        // Showing toast finally
+        this.toast.show();
+    }
+
+    @Override
+    protected void onPause() {
+        if (this.toast != null) {
+            this.toast.cancel();
+        }
+        super.onPause();
+    }
+
 }

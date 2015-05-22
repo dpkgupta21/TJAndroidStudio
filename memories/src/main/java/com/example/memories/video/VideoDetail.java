@@ -3,6 +3,7 @@ package com.example.memories.video;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.example.memories.SQLitedatabase.VideoDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Video;
 import com.example.memories.timeline.Timeline;
+import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.utility.VideoUtil;
@@ -28,6 +30,8 @@ import com.google.common.base.Joiner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,12 +75,14 @@ public class VideoDetail extends Activity {
         mProfileImg = (ImageView) findViewById(R.id.profilePic);
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
 
+        String thumbnailPath = null;
         Bundle extras = getIntent().getExtras();
         //If the activity is started for an already clicked video
         if (extras.getString("VIDEO_ID") != null) {
             Log.d(TAG, "running for an already existing video");
             mVideo = VideoDataSource.getVideoById(extras.getString("VIDEO_ID"), this);
             videoPath = mVideo.getDataLocalURL(); //path to image
+            thumbnailPath = mVideo.getLocalThumbPath();
             //setup the state of favourite button
             if (mVideo.getLikedBy() != null) {
                 List<String> likedBy = Arrays.asList((mVideo.getLikedBy()).split(","));
@@ -92,14 +98,32 @@ public class VideoDetail extends Activity {
         //If the activity is started for a newly clicked picture
         if (extras.getString("VIDEO_PATH") != null) {
             Log.d(TAG, "running for a already clicked video");
+            videoPath = extras.getString("VIDEO_PATH");
+            Bitmap bitmap = HelpMe.getVideoThumbnail(videoPath);
+            FileOutputStream out = null;
+            thumbnailPath = Constants.TRAVELJAR_FOLDER_VIDEO + "vid_" + System.currentTimeMillis() + ".mp4";
+            try {
+                out = new FileOutputStream(thumbnailPath);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             isNewVideo = true;
             videoPath = extras.getString("VIDEO_PATH");
             mVideo = new Video(null, TJPreferences.getActiveJourneyId(this), HelpMe.VIDEO_TYPE, caption.getText().toString()
-                    .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), currenTime, currenTime, null);
+                    .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), currenTime, currenTime, null, thumbnailPath);
         }
 
         //Setting fields common in both the cases
-        video.setImageBitmap(HelpMe.getVideoThumbnail(videoPath));
+        video.setImageBitmap(BitmapFactory.decodeFile(thumbnailPath));
 
 
         //Profile picture
@@ -136,12 +160,13 @@ public class VideoDetail extends Activity {
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(
-                        mVideo.getDataLocalURL())));
-                mediaIntent.setDataAndType(
-                        Uri.fromFile(new File(mVideo.getDataLocalURL())),
-                        "video/*");
-                startActivity(mediaIntent);
+                if(mVideo.getDataLocalURL() != null){
+                    Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(mVideo.getDataLocalURL())));
+                    mediaIntent.setDataAndType(Uri.fromFile(new File(mVideo.getDataLocalURL())), "video/*");
+                    startActivity(mediaIntent);
+                }else{
+                    VideoUtil.downloadAndPlayVideo(VideoDetail.this, mVideo);
+                }
             }
         });
     }

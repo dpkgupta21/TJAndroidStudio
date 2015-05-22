@@ -17,7 +17,7 @@ import com.example.memories.models.Contact;
 import java.util.List;
 
 public class CheckInFriendsListAdapter extends BaseAdapter {
-    private static final String TAG = "checkinFriendsGridAdapter";
+    private static final String TAG = "checkinFriendsAdapter";
     Context mContext;
     List<Contact> mContactsList;
 

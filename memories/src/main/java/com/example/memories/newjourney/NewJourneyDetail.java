@@ -125,6 +125,7 @@ public class NewJourneyDetail extends Activity {
                         e.printStackTrace();
                     }
                     Intent i = new Intent(getBaseContext(), Timeline.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
 
                 }
@@ -145,6 +146,7 @@ public class NewJourneyDetail extends Activity {
                         e.printStackTrace();
                     }
                     Intent i = new Intent(getBaseContext(), Timeline.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 }
             });

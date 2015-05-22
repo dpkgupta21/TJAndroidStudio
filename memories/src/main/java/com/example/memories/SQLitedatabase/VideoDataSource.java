@@ -31,6 +31,7 @@ public class VideoDataSource {
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_BY, newVideo.getCreatedBy());
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_AT, newVideo.getCreatedAt());
         values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, newVideo.getLikedBy());
+        values.put(MySQLiteHelper.VIDEO_CLOUMN_LOCALTHUMBNAILPATH, newVideo.getLocalThumbPath());
 
         long video_id = db.insert(MySQLiteHelper.TABLE_VIDEO, null, values);
         Log.d(TAG, "New video Inserted!");
@@ -112,6 +113,16 @@ public class VideoDataSource {
         db.close();
     }
 
+    public static void updateVideoLocalUrl(Context context, String memId, String localUrl) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.VIDEO_COLUMN_DATALOCALURL, localUrl);
+        db.update(MySQLiteHelper.TABLE_VIDEO, values, MySQLiteHelper.VIDEO_COLUMN_ID + " = "
+                + memId, null);
+
+        db.close();
+    }
+
     private static List<Memories> getVideosMemoryList(Cursor cursor, Context context) {
         List<Memories> videosList = new ArrayList<Memories>();
         cursor.moveToFirst();
@@ -142,6 +153,7 @@ public class VideoDataSource {
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_UPDATED_AT)));
             video.setLikedBy(cursor.getString(cursor
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY)));
+            video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_CLOUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();
         }
@@ -178,6 +190,7 @@ public class VideoDataSource {
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_UPDATED_AT)));
             video.setLikedBy(cursor.getString(cursor
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY)));
+            video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_CLOUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();
         }

@@ -11,6 +11,7 @@ public class Video extends Memories {
     private String dataServerURL;
     private String dataLocalURL;
     private boolean checked;
+    private String localThumbPath;
 
     public Video() {
 
@@ -18,7 +19,7 @@ public class Video extends Memories {
 
     public Video(String idOnServer, String jId, String memType, String caption, String ext,
                  long size, String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                 long updatedAt, String likedBy) {
+                 long updatedAt, String likedBy, String localThumbPath) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -31,6 +32,7 @@ public class Video extends Memories {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.likedBy = likedBy;
+        this.localThumbPath = localThumbPath;
     }
 
     public boolean isChecked() {
@@ -83,6 +85,14 @@ public class Video extends Memories {
 
     public void updateLikedBy(Context context, String memId, String likedBy) {
         VideoDataSource.updateFavourites(context, memId, likedBy);
+    }
+
+    public String getLocalThumbPath() {
+        return localThumbPath;
+    }
+
+    public void setLocalThumbPath(String localThumbPath) {
+        this.localThumbPath = localThumbPath;
     }
 
 }

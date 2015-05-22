@@ -1,6 +1,7 @@
 package com.example.memories.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Journey {
     private String idOnServer;
@@ -8,8 +9,8 @@ public class Journey {
     private String tagLine;
     private String groupType;
     private String createdBy;
-    private ArrayList<String> laps;
-    private ArrayList<String> buddies;
+    private List<String> laps;
+    private List<String> buddies;
     private String journeyStatus;
 
     public Journey() {
@@ -17,7 +18,7 @@ public class Journey {
     }
 
     public Journey(String idOnServer, String name, String tagLine, String groupType,
-                   String createdBy, ArrayList<String> jLaps, ArrayList<String> buddies, String journeyStatus) {
+                   String createdBy, List<String> jLaps, List<String> buddies, String journeyStatus) {
         this.idOnServer = idOnServer;
         this.name = name;
         this.tagLine = tagLine;
@@ -68,27 +69,26 @@ public class Journey {
         this.createdBy = createdBy;
     }
 
-    public ArrayList<String> getLaps() {
+    public List<String> getLaps() {
         return laps;
     }
 
-    public void setLaps(ArrayList<String> laps) {
+    public void setLaps(List<String> laps) {
         this.laps = laps;
     }
 
-    public ArrayList<String> getBuddies() {
+    public List<String> getBuddies() {
         return buddies;
     }
 
-    public void setBuddies(ArrayList<String> buddies) {
+    public void setBuddies(List<String> buddies) {
         this.buddies = buddies;
     }
 
+    public void setJourneyStatus(String journeyStatus){
+        this.journeyStatus = journeyStatus;
+    }
     public String getJourneyStatus() {
         return journeyStatus;
-    }
-
-    public void setActive(String journeyStatus) {
-        this.journeyStatus = journeyStatus;
     }
 }

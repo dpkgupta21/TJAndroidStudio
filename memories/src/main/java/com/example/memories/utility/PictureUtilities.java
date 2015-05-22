@@ -1,15 +1,20 @@
 package com.example.memories.utility;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Picture;
+import com.example.memories.newjourney.adapters.PendingJourneysListAdapter;
+import com.example.memories.timeline.Timeline;
 import com.example.memories.volley.AppController;
 
 import org.apache.http.HttpResponse;
@@ -30,24 +35,21 @@ public class PictureUtilities {
 
     private static final String TAG = "PICTURE_UTILITY";
 
-    public static String downloadPicFromURL(final Context context, final Picture pic) {
+    public static String downloadPicFromURL(final Context context, final Picture pic, final ImageView imageView) {
+        Log.d(TAG, "download pic called");
         String picServerUrl = pic.getDataServerURL();
-        final String picLocalUrl = Constants.TRAVELJAR_FOLDER_PICTURE + System.currentTimeMillis()
-                + ".jpeg";
+        final String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/pic_" + System.currentTimeMillis() + ".jpg";
         if (picServerUrl != null) {
             ImageRequest request = new ImageRequest(picServerUrl, new Response.Listener<Bitmap>() {
                 @Override
                 public void onResponse(Bitmap bitmap) {
                     FileOutputStream out = null;
                     try {
-                        File tjDir = new File(Constants.TRAVELJAR_FOLDER_PICTURE);
-                        if (!tjDir.exists()) {
-                            tjDir.mkdirs();
-                        }
-                        out = new FileOutputStream(picLocalUrl);
+                        out = new FileOutputStream(imagePath);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                        pic.setDataLocalURL(picLocalUrl);
-                        PictureDataSource.createPicture(pic, context);
+                        imageView.setImageBitmap(bitmap);
+                        pic.setDataLocalURL(imagePath);
+                        PictureDataSource.updatePicLocalPath(context, imagePath, pic.getId());
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
@@ -66,7 +68,42 @@ public class PictureUtilities {
             });
             AppController.getInstance().addToRequestQueue(request);
         }
-        return picLocalUrl;
+        return imagePath;
+    }
+
+    public static void createNewPicFromServer(final Context context, final Picture pic, String thumbUrl){
+        final String imagePath = Constants.TRAVELJAR_FOLDER_PICTURE + "/thumb_" + System.currentTimeMillis() + ".jpg";
+        if (thumbUrl != null) {
+            ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap bitmap) {
+                    FileOutputStream out = null;
+                    try {
+                        out = new FileOutputStream(imagePath);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        pic.setPicThumbnailPath(imagePath);
+                        PictureDataSource.createPicture(pic, context);
+                        PendingJourneysListAdapter.requestCount--;
+                        Log.d(TAG, "pendingList requestcount = "+ PendingJourneysListAdapter.requestCount);
+                        PendingJourneysListAdapter.areAllRequestsFinished();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (out != null) {
+                                out.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }, 0, 0, null, new Response.ErrorListener() {
+                public void onErrorResponse(VolleyError error) {
+                }
+            });
+            AppController.getInstance().addToRequestQueue(request);
+        }
     }
 
     public static void uploadPicture(Context context, Picture picture) {

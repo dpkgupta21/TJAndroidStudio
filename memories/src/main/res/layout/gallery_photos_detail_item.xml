@@ -24,7 +24,7 @@
         android:layout_marginRight="20dp"
         android:src="@drawable/delete85" />
 
-    <ImageView
+    <NetworkImageView
         android:id="@+id/detailImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

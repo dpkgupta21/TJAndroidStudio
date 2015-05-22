@@ -46,13 +46,15 @@ public class SplashScreen extends Activity {
 
     public void goToSignUp(View v) {
         Intent i = new Intent(getBaseContext(), SignUp.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 
     public void goToSignIn(View v) {
         Intent i = new Intent(getBaseContext(), SignIn.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 

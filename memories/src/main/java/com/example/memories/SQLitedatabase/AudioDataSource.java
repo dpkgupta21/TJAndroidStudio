@@ -71,6 +71,7 @@ public class AudioDataSource {
         List<Memories> audioList = getAudioMemoriesList(context, cursor);
         db.close();
         cursor.close();
+        Log.d(TAG, "audios fetched successfully " + audioList.size());
         return audioList;
     }
 

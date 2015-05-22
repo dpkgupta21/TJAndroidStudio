@@ -1,6 +1,7 @@
 package com.example.memories.SQLitedatabase;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.memories.models.Memories;
 
@@ -9,6 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class MemoriesDataSource {
+
+    private static final String TAG = "<MemoriesDS>";
 
     public static List<Memories> getAllMemoriesList(Context context, String journeyId) {
         List<Memories> memoriesList = new ArrayList<Memories>();
@@ -20,6 +23,7 @@ public class MemoriesDataSource {
         memoriesList.addAll(MoodDataSource.getMoodsFromJourney(context, journeyId));
         Collections.sort(memoriesList);
 
+        Log.d(TAG, "total memories =" + memoriesList.size());
         return memoriesList;
     }
 

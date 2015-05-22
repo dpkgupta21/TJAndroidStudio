@@ -82,6 +82,7 @@ public class TimeLineAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "get view called");
         final int type = getItemViewType(position);
         System.out.println("getView " + position + " " + convertView + " type = " + type);
         final ViewHolder holder;
@@ -227,7 +228,8 @@ public class TimeLineAdapter extends BaseAdapter {
                 Picture pic = (Picture) memoriesList.get(position);
                 if (pic.getDataLocalURL() != null) {
                     Log.d(TAG, "localdataUrl = " + pic.getDataLocalURL());
-                    LoadBitmapFromPath.loadBitmap(pic.getDataLocalURL(), holder.timelineItemImage, 350, 125, context);
+                    Log.d(TAG, "pic local thumbnail is : " +pic.getPicThumbnailPath());
+                    LoadBitmapFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, 256, 192, context);
 //					try {
 //						holder.timelineItemImage.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(
 //								context, pic.getDataLocalURL(), 680, 250));
@@ -244,7 +246,6 @@ public class TimeLineAdapter extends BaseAdapter {
             case 2:
                 Log.d(TAG, "in audio");
                 holder.timelineItemAudioPlayBtn.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         Audio audio = (Audio) memoriesList.get(position);
@@ -260,6 +261,7 @@ public class TimeLineAdapter extends BaseAdapter {
                         // HelpMe.playAudio(audio.getDataURL(), context);
                     }
                 });
+                Log.d(TAG, "iN AUDIO ENDED HERE");
                 break;
 
             case 3:
@@ -280,21 +282,32 @@ public class TimeLineAdapter extends BaseAdapter {
             case 5:
                 Log.d(TAG, "in checkin");
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
-                String checkInStatus = "";
+                String checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName();
                 Contact firstContact = ContactDataSource.getContactById(context, checkin.getCheckInWith().get(0));
-                if (checkin.getCheckInWith().size() == 1) {
-                    checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName()
-                            + " with " + firstContact.getName();
-                } else if (checkin.getCheckInWith().size() > 1) {
-                    checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName()
-                            + " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
+                if(firstContact != null) {
+                    if (checkin.getCheckInWith().size() == 1) {
+                        checkInStatus += " with " + firstContact.getName();
+                    } else if (checkin.getCheckInWith().size() > 1) {
+                        checkInStatus += " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
+                    }
                 }
                 holder.timelineItemCaption.setText(checkInStatus);
                 break;
 
             case 6:
+                Log.d(TAG, "in mood" );
                 Mood mood = (Mood) memoriesList.get(position);
-                holder.timelineItemCaption.setText(mood.getMood());
+                String friendMood = "";
+                Contact fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(0));
+                if(fContact != null) {
+                    if (mood.getBuddyIds().size() == 1) {
+                        friendMood += fContact.getName();
+                    } else if (mood.getBuddyIds().size() > 1) {
+                        friendMood += fContact.getName() + " and " + (mood.getBuddyIds().size() - 1) + " others";
+                    }
+                }
+                friendMood += " feeling " + mood.getMood() + " because " + mood.getReason();
+                holder.timelineItemCaption.setText(friendMood);
 
             default:
                 break;

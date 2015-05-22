@@ -26,6 +26,8 @@ public class CheckinUtil {
         params.put("api_key", TJPreferences.getApiKey(context));
         params.put("checkin[user_id]", checkin.getCreatedBy());
         params.put("checkin[place_name]", checkin.getCheckInPlaceName());
+        params.put("latitude", (Double) checkin.getLatitude() == null ? null : ((Double) checkin.getLatitude()).toString());
+        params.put("longitude", (Double)checkin.getLongitude() == null ? null : ((Double)checkin.getLongitude()).toString());
         Log.d(TAG, "uploading checkin with parameters " + params);
 
         String url = Constants.TRAVELJAR_API_BASE_URL + "/journeys/"
@@ -38,7 +40,7 @@ public class CheckinUtil {
                         Log.d(TAG, "checkin uploaded successfully" + response);
                         try {
                             String serverId = response.getJSONObject("checkin").getString("id");
-                            NoteDataSource.updateServerId(context, checkin.getId(), serverId);
+                            NoteDataSource.updateServerId(context.getApplicationContext(), checkin.getId(), serverId);
                         } catch (Exception ex) {
                             Log.d(TAG, "exception in parsing checkin received from server" + ex);
                         }
