@@ -11,6 +11,7 @@ public class Picture extends Memories {
     private long size;
     private String dataServerURL;
     private String dataLocalURL;
+    private String picLocalThumbnailPath;
 
     // To check whether the image is selected in gridview or not. Not to be
     // saved in database
@@ -22,7 +23,7 @@ public class Picture extends Memories {
 
     public Picture(String idOnServer, String jId, String memType, String caption, String ext,
                    long size, String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                   long updatedAt, String likedBy) {
+                   long updatedAt, String likedBy, String picLocalThumbnailPath) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -35,6 +36,7 @@ public class Picture extends Memories {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.likedBy = likedBy;
+        this.picLocalThumbnailPath = picLocalThumbnailPath;
     }
 
     public String getCaption() {
@@ -79,6 +81,14 @@ public class Picture extends Memories {
 
     public String getDataLocalURL() {
         return dataLocalURL;
+    }
+
+    public void setPicThumbnailPath(String picLocalThumbnailPath) {
+        this.picLocalThumbnailPath = picLocalThumbnailPath;
+    }
+
+    public String getPicThumbnailPath() {
+        return picLocalThumbnailPath;
     }
 
     public void setDataLocalURL(String dataLocalURL) {

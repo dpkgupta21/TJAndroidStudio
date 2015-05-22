@@ -23,9 +23,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.memories.R;
 import com.example.memories.checkin.adapter.CheckInPlacesListAdapter;
 import com.example.memories.services.GPSTracker;
+import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.volley.AppController;
-import com.example.memories.volley.Const;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,9 +97,9 @@ public class CheckInPlacesList extends Activity {
     private void getCheckInPlaces(double lat, double longi, String query) {
         showProgressDialog();
 
-        String url = Const.URL_FS_VENUE_EXPLORE + "?ll=" + lat + "," + longi + "&client_id="
-                + Const.FOURSQUARE_CLIENT_ID + "&client_secret=" + Const.FOURSQUARE_CLIENT_SECRET
-                + "&v=" + Const.v;
+        String url = Constants.URL_FS_VENUE_EXPLORE + "?ll=" + lat + "," + longi + "&client_id="
+                + Constants.FOURSQUARE_CLIENT_ID + "&client_secret=" + Constants.FOURSQUARE_CLIENT_SECRET
+                + "&v=" + Constants.v;
 
         url = (query == null) ? url : url + "&query=" + query;
 

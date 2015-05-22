@@ -10,6 +10,7 @@ import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.models.Mood;
 import com.example.memories.volley.AppController;
 import com.example.memories.volley.CustomJsonRequest;
+import com.google.common.base.Joiner;
 
 import org.json.JSONObject;
 
@@ -25,8 +26,9 @@ public class MoodUtil {
         Map<String, String> params = new HashMap<String, String>();
         params.put("api_key", TJPreferences.getApiKey(context));
         params.put("mood[user_id]", mood.getCreatedBy());
-        params.put("mood[note]", mood.getMood());
+        params.put("mood[mood]", mood.getMood());
         params.put("mood[reason]", mood.getReason());
+        params.put("mood[buddies]", Joiner.on(",").join(mood.getBuddyIds()));
         Log.d(TAG, "uploading mood with parameters " + params);
 
         String url = Constants.TRAVELJAR_API_BASE_URL + "/journeys/"

@@ -17,10 +17,10 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.models.Journey;
 import com.example.memories.timeline.Timeline;
+import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.volley.AppController;
-import com.example.memories.volley.Const;
 import com.example.memories.volley.CustomJsonRequest;
 import com.google.common.base.Joiner;
 
@@ -104,7 +104,7 @@ public class NewJourneyDetail extends Activity {
             // Tag used to cancel the request
             String tag_json_obj = "createNewJourney";
 
-            String url = Const.URL_CREATE_JOURNEY;
+            String url = Constants.URL_CREATE_JOURNEY;
 
             final ProgressDialog pDialog = new ProgressDialog(this);
             pDialog.setMessage("Loading...");
@@ -124,6 +124,7 @@ public class NewJourneyDetail extends Activity {
                         e.printStackTrace();
                     }
                     Intent i = new Intent(getBaseContext(), Timeline.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
 
                 }
@@ -144,6 +145,7 @@ public class NewJourneyDetail extends Activity {
                         e.printStackTrace();
                     }
                     Intent i = new Intent(getBaseContext(), Timeline.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 }
             });
@@ -180,7 +182,7 @@ public class NewJourneyDetail extends Activity {
 
         // Add it to the Database
         Journey newJ = new Journey(idOnServer, name, tag_line, group_relationship, created_by_id,
-                null, buddyArrayList, 1);
+                null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE);
         JourneyDataSource.createJourney(newJ, getBaseContext());
         TJPreferences.setActiveJourneyId(this, idOnServer);
     }
@@ -204,7 +206,7 @@ public class NewJourneyDetail extends Activity {
 
         // Add it to the Database
         Journey newJ = new Journey(id, name, tag_line, group_relationship, created_by_id, null,
-                buddyArrayList, 1);
+                buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE);
         JourneyDataSource.createJourney(newJ, getBaseContext());
         TJPreferences.setActiveJourneyId(this, id);
     }

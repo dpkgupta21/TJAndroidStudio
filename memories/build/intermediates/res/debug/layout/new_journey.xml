@@ -8,15 +8,29 @@
         android:id="@+id/new_journey_embark_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:contentDescription="@string/default_string"
         android:onClick="embarkNewJourney"
-        android:padding="50dp"
-        android:src="@drawable/upload119" />
+        android:src="@drawable/upload119"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp" />
 
-    <FrameLayout
-        android:id="@+id/frame_container	"
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></FrameLayout>
+        android:layout_height="wrap_content"
+        android:text="Pending Requests"
+        android:id="@+id/textView"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pendingRequestsList"
+        android:layout_above="@+id/new_journey_embark_btn"
+        android:layout_below="@+id/textView" />
 
 </RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/new_journey.xml -->

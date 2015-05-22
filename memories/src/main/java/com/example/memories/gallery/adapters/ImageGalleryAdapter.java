@@ -64,7 +64,7 @@ public class ImageGalleryAdapter extends BaseAdapter {
             holder.overlayImgView.setVisibility(View.VISIBLE);
         }
 
-        LoadBitmapFromPath.loadBitmap(mImgList.get(position).getDataLocalURL(), holder.imgView, 100, 100, mContext);
+        LoadBitmapFromPath.loadBitmap(mImgList.get(position).getPicThumbnailPath(), holder.imgView, 100, 100, mContext);
 
         holder.overlayImgView.setImageResource(R.drawable.img_selected);
         return rowView;

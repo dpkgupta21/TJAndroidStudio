@@ -23,6 +23,7 @@ public class SelectFriends extends Activity {
 
     public static final String TAG = "<SelectFriends>";
     GridView mGridView;
+    List<String> mSelectedFriends;
     List<Contact> mContactsList;
     FriendsGridAdapter mAdapter;
 
@@ -31,11 +32,12 @@ public class SelectFriends extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_friends_list);
 
-        //JourneyDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        //JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
 
+        mSelectedFriends = getIntent().getExtras().getStringArrayList("SELECTED_FRIENDS");
         mGridView = (GridView) findViewById(R.id.friends_list);
 
-        mContactsList = ContactDataSource.getContactsFromCurrentJourney(this);
+        mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
         mAdapter = new FriendsGridAdapter(this, mContactsList);
         mGridView.setAdapter(mAdapter);
 
@@ -74,20 +76,19 @@ public class SelectFriends extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:
-                ArrayList<String> selectedContacts = new ArrayList<String>();
+                mSelectedFriends = new ArrayList<String>();
                 for (Contact contact : mContactsList) {
-                    if (contact.isSelected()) {
-                        selectedContacts.add(contact.getIdOnServer());
+                    if (!contact.isSelected()) {
+                        mSelectedFriends.remove(contact.getIdOnServer());
+                    }else{
+                        if(!mSelectedFriends.contains(contact.getIdOnServer())){
+                            mSelectedFriends.add(contact.getIdOnServer());
+                        }
                     }
                 }
-                if (selectedContacts.size() > 0) {
-                    Intent returnIntent = new Intent();
-                    returnIntent.putStringArrayListExtra("SELECTED_FRIENDS", selectedContacts);
-                    setResult(RESULT_OK, returnIntent);
-                } else {
-                    Intent returnIntent = new Intent();
-                    setResult(RESULT_CANCELED, returnIntent);
-                }
+                Intent returnIntent = new Intent();
+                returnIntent.putStringArrayListExtra("SELECTED_FRIENDS", (ArrayList<String>)mSelectedFriends);
+                setResult(RESULT_OK, returnIntent);
                 finish();
                 return true;
         }

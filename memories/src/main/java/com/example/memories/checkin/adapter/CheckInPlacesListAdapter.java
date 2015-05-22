@@ -13,8 +13,8 @@ import com.android.volley.Cache.Entry;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.memories.R;
+import com.example.memories.utility.Constants;
 import com.example.memories.volley.AppController;
-import com.example.memories.volley.Const;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -72,12 +72,12 @@ public class CheckInPlacesListAdapter extends ArrayAdapter<Map<String, String>> 
         holder.thumbnail.setImageUrl(imgURL, imageLoader);
 
         // Loading image with placeholder and error image
-        // imageLoader.get(Const.URL_IMAGE,
+        // imageLoader.get(Constants.URL_IMAGE,
         // ImageLoader.getImageListener(imageView, R.drawable.abhi,
         // R.drawable.hamburger));
 
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
-        Entry entry = cache.get(Const.URL_IMAGE);
+        Entry entry = cache.get(Constants.URL_IMAGE);
         if (entry != null) {
             try {
                 String data = new String(entry.data, "UTF-8");

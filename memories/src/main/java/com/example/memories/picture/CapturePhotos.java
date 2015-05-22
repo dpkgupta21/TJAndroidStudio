@@ -79,13 +79,10 @@ public class CapturePhotos extends Activity {
     //  Create a file Uri for saving an image or video
     // returns a new file on the image will be storeds
     private File getOutputMediaFile() throws IOException {
-        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/TravelJar/Pictures");
-        if (!storageDir.exists()) {
-            storageDir.mkdirs();
-        }
-        File imageFile = null;
-        imageFile = File.createTempFile("pic_" + System.currentTimeMillis(), ".jpg", storageDir);
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+
+        File imageFile = File.createTempFile("pic_" + System.currentTimeMillis(), ".jpg", storageDir);
         imagePath = imageFile.getAbsolutePath();
         return imageFile;
     }
@@ -100,9 +97,10 @@ public class CapturePhotos extends Activity {
             } catch (Exception ex) {
 
             }
-            bitmap = getAdjustedBitmap(this, bitmap);
+
+            //bitmap = getAdjustedBitmap(this, bitmap);
             img.setImageBitmap(bitmap);
-            new replacePictureTask().execute(new Object[]{new File(imagePath), bitmap});
+            //new replacePictureTask().execute(new Object[]{new File(imagePath), bitmap});
         }
     }
 

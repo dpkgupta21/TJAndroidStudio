@@ -50,9 +50,50 @@ public class ContactDataSource {
         return contacts;
     }
 
-    public static List<Contact> getContactsFromCurrentJourney(Context context) {
+    public static List<String> getNonExistingContacts(Context context, List<String> contactIds){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        String[] buddyIds = JourneyDataSource.getContactsFromJourney(context,
+        List<String> existingContacts = new ArrayList<String>();
+        String query = "SELECT "+ MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER +" FROM " + MySQLiteHelper.TABLE_CONTACT +
+                " WHERE " + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " IN (" + makePlaceholders(contactIds.size()) + ")";
+        String[] array = new String[contactIds.size()];
+        Cursor cursor = db.rawQuery(query, contactIds.toArray(array));
+        String contactId;
+        if(cursor.moveToFirst()){
+            do{
+                contactId = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER));
+                existingContacts.add(contactId);
+            }while (cursor.moveToNext());
+        }
+        List<String> nonExistingContactsList = new ArrayList<String>();
+        for(String id : contactIds){
+            if(!existingContacts.contains(id)){
+                nonExistingContactsList.add(id);
+            }
+        }
+        return nonExistingContactsList;
+    }
+
+    // This method will take a list of contact Ids and return a List of Contacts corresponding to those Ids
+    public static List<Contact> getContactsListFromIds(Context context, List<String> contactIds){
+        Log.d(TAG, "fetching contacts list corresponding to contact ids list");
+        String[] ids = new String[contactIds.size()];
+        ids = contactIds.toArray(ids);
+        String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " WHERE "
+                + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " IN ("
+                + makePlaceholders(ids.length) + ")";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, ids);
+        List<Contact> contactsList = getContactsList(cursor, context);
+        Log.d(TAG, "buddies from current journey are " + contactsList.toString());
+        cursor.close();
+        db.close();
+        return contactsList;
+    }
+
+    public static List<Contact> getContactsFromCurrentJourney(Context context) {
+        Log.d(TAG, "fetch contacts from current journey" );
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        String[] buddyIds = JourneyDataSource.getBuddyIdsFromJourney(context,
                 TJPreferences.getActiveJourneyId(context));
         for (int i = 0; i < buddyIds.length; i++) {
             buddyIds[i] = buddyIds[i].trim();
@@ -62,16 +103,16 @@ public class ContactDataSource {
                 + makePlaceholders(buddyIds.length) + ")";
         Cursor cursor = db.rawQuery(query, buddyIds);
         List<Contact> contactsList = getContactsList(cursor, context);
-        Log.d(TAG, "buddies from current journey are " + makePlaceholders(buddyIds.length));
+        Log.d(TAG, "buddies from current journey are " + contactsList.toString());
         cursor.close();
         db.close();
         return contactsList;
     }
 
     public static Contact getContactById(Context context, String buddyId) {
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " WHERE "
-                + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + buddyId;
+                + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = '" + buddyId + "'";
         Cursor cursor = db.rawQuery(query, null);
 
         Contact contact = null;

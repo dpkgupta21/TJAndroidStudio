@@ -42,7 +42,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String JOURNEY_COLUMN_GROUPTYPE = "groupType";
     public static final String JOURNEY_COLUMN_BUDDY_IDS = "buddyIds";
     public static final String JOURNEY_COLUMN_JOURNEY_LAPS = "journeyLapIds";
-    public static final String JOURNEY_COLUMN_ISACTIVE = "isActive";
+    public static final String JOURNEY_COLUMN_STATUS = "journeyStatus";
     // Table TIMELINE fields
     public static final String TABLE_TIMELINE = "TIMELINE";
     public static final String TIMELINE_COLUMN_ID = "_id";
@@ -67,6 +67,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String PICTURE_COLUMN_CREATEDAT = "createdAt";
     public static final String PICTURE_COLUMN_UPDATEDAT = "updatedAt";
     public static final String PICTURE_COLUMN_LIKEDBY = "likedBy";
+    public static final String PICTURE_CLOUMN_LOCALTHUMBNAILPATH = "thumbnailPath";
     //	Table Audio fields
     public static final String TABLE_AUDIO = "AUDIO";
     public static final String VOICE_COLUMN_ID = "_id";
@@ -97,6 +98,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String VIDEO_COLUMN_CREATED_AT = "createdAt";
     public static final String VIDEO_COLUMN_UPDATED_AT = "updatedAt";
     public static final String VIDEO_COLUMN_LIKED_BY = "likedBy";
+    public static final String VIDEO_CLOUMN_LOCALTHUMBNAILPATH = "thumbnailPath";
     //	Table Moods fields
     public static final String TABLE_MOOD = "MOOD";
     public static final String MOOD_COLUMN_ID = "_id";
@@ -173,7 +175,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + JOURNEY_COLUMN_GROUPTYPE + " text ,"
             + JOURNEY_COLUMN_BUDDY_IDS + " text ,"
             + JOURNEY_COLUMN_JOURNEY_LAPS + " text ,"
-            + JOURNEY_COLUMN_ISACTIVE + " integer " + ");";
+            + JOURNEY_COLUMN_STATUS + " text " + ");";
     private static final String CREATE_TABLE_TIMELINE = "create table " + TABLE_TIMELINE + "("
             + TIMELINE_COLUMN_ID + " integer primary key autoincrement, "
             + TIMELINE_COLUMN_ID_ONSERVER + " text ,"
@@ -195,7 +197,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + PICTURE_COLUMN_CREATEDBY + " text ,"
             + PICTURE_COLUMN_CREATEDAT + " text ,"
             + PICTURE_COLUMN_UPDATEDAT + " text ,"
+            + PICTURE_CLOUMN_LOCALTHUMBNAILPATH + " text ,"
             + PICTURE_COLUMN_LIKEDBY + " text " + ");";
+
     private static final String CREATE_TABLE_AUDIO = "create table if not exists " + TABLE_AUDIO + "("
             + VOICE_COLUMN_ID + " integer primary key autoincrement, "
             + VOICE_COLUMN_ID_ONSERVER + " text, "
@@ -222,6 +226,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + VIDEO_COLUMN_CREATED_BY + " text ,"
             + VIDEO_COLUMN_CREATED_AT + " integer ,"
             + VIDEO_COLUMN_UPDATED_AT + " integer ,"
+            + VIDEO_CLOUMN_LOCALTHUMBNAILPATH + " text ,"
             + VIDEO_COLUMN_LIKED_BY + " text " + ");";
     private static final String CREATE_TABLE_CHECKIN = "create table " + TABLE_CHECKIN + "("
             + CHECKIN_COLUMN_ID + " integer primary key autoincrement, "

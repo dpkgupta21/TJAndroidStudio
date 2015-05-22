@@ -3,6 +3,8 @@ package com.example.memories.picture;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,12 +23,15 @@ import com.example.memories.models.Contact;
 import com.example.memories.models.Picture;
 import com.example.memories.models.Video;
 import com.example.memories.timeline.Timeline;
+import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.PictureUtilities;
 import com.example.memories.utility.TJPreferences;
 import com.google.common.base.Joiner;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +57,8 @@ public class PhotoDetail extends Activity {
     private boolean isNewPic;
     private TextView noLikesTxt;
 
+    private String localThumbnailPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +83,7 @@ public class PhotoDetail extends Activity {
             Log.d(TAG, "running for an already created picture");
             mPicture = PictureDataSource.getPictureById(this, extras.getString("PICTURE_ID"));
             imagePath = mPicture.getDataLocalURL(); //path to image
+            localThumbnailPath = mPicture.getPicThumbnailPath();
             //setup the state of favourite button
             if (mPicture.getLikedBy() != null) {
                 List<String> likedBy = Arrays.asList((mPicture.getLikedBy()).split(","));
@@ -93,35 +101,59 @@ public class PhotoDetail extends Activity {
             Log.d(TAG, "running for a newly clicked picture");
             isNewPic = true;
             imagePath = extras.getString("imagePath");
+            Bitmap thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), 512, 384);
+            localThumbnailPath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" +System.currentTimeMillis()+".jpg";
+            FileOutputStream out = null;
+            try {
+                out = new FileOutputStream(localThumbnailPath);
+                thumbnail.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
             mPicture = new Picture(null, TJPreferences.getActiveJourneyId(this), HelpMe.PICTURE_TYPE, caption.getText().toString()
-                    .trim(), "png", 1223, null, imagePath, TJPreferences.getUserId(this), currenTime, currenTime, null);
+                    .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), currenTime, currenTime, null, localThumbnailPath);
         }
 
         //Setting fields common in both the cases
 
         // setup Image taking path from imagePath variable
-        try {
-            Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, imagePath, 680, 250);
-            photo.setImageBitmap(bitmap);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, imagePath, 680, 250);
+            photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
 
         //Profile picture
+        Log.d(TAG, "setting the profile picture" + mPicture.getCreatedBy());
         String profileImgPath;
         if (mPicture != null && !mPicture.getCreatedBy().equals(TJPreferences.getUserId(this))) {
             Contact contact = ContactDataSource.getContactById(this, mPicture.getCreatedBy());
+            Log.d(TAG, "contact is " + contact);
             profileImgPath = contact.getPicLocalUrl();
         } else {
             profileImgPath = TJPreferences.getProfileImgPath(this);
         }
-        try {
-            Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
-            mProfileImg.setImageBitmap(bitmap);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if(profileImgPath != null) {
+            try {
+                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
+                mProfileImg.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+        Log.d(TAG, "profile picture set successfully");
 
         setFavouriteBtnClickListener();
 

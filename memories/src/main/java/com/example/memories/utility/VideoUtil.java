@@ -1,11 +1,18 @@
 package com.example.memories.utility;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.example.memories.SQLitedatabase.VideoDataSource;
 import com.example.memories.models.Video;
+import com.example.memories.volley.AppController;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -29,7 +36,7 @@ public class VideoUtil {
 
     public static final String TAG = "VIDEO_UTIL";
 
-    public static void downloadVideo(Context context, Video video) {
+    public static void downloadAndPlayVideo(Context context, Video video) {
         DownloadTask task = (new VideoUtil()).new DownloadTask(context, video);
         task.execute(video.getDataServerURL());
     }
@@ -101,8 +108,44 @@ public class VideoUtil {
         @Override
         protected void onPostExecute(String result) {
             if (result == null) {
-                VideoDataSource.createVideo(video, context);
+                VideoDataSource.updateVideoLocalUrl(context, video.getId(), video.getDataLocalURL());
+                Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(video.getDataLocalURL())));
+                mediaIntent.setDataAndType(Uri.fromFile(new File(video.getDataLocalURL())), "video/*");
+                context.startActivity(mediaIntent);
+//                VideoDataSource.createVideo(video, context);
             }
+        }
+    }
+
+    public static void createNewVideoFromServer(final Context context, final Video video, String thumbUrl){
+        final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "/vid_" + System.currentTimeMillis() + ".mp4";
+        if (thumbUrl != null) {
+            ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap bitmap) {
+                    FileOutputStream out = null;
+                    try {
+                        out = new FileOutputStream(imagePath);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        video.setLocalThumbPath(imagePath);
+                        VideoDataSource.createVideo(video, context);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (out != null) {
+                                out.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }, 0, 0, null, new Response.ErrorListener() {
+                public void onErrorResponse(VolleyError error) {
+                }
+            });
+            AppController.getInstance().addToRequestQueue(request);
         }
     }
 
@@ -124,7 +167,7 @@ public class VideoUtil {
             entityBuilder.addTextBody("video[user_id]", video.getCreatedBy());
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
 
-            String url = "https://www.traveljar.in/api/v1/journeys/" + TJPreferences.getActiveJourneyId(context) + "/videos";
+            String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/videos";
             HttpPost updateProfileRequest = new HttpPost(url);
             updateProfileRequest.setEntity(entityBuilder.build());
             HttpResponse response;

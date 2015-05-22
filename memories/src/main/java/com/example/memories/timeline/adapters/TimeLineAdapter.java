@@ -1,5 +1,6 @@
 package com.example.memories.timeline.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -25,6 +26,7 @@ import com.example.memories.models.Picture;
 import com.example.memories.models.Video;
 import com.example.memories.picture.PhotoDetail;
 import com.example.memories.utility.AudioPlayer;
+import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.LoadBitmapFromPath;
 import com.example.memories.utility.LoadThumbnailFromPath;
@@ -82,6 +84,7 @@ public class TimeLineAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "get view called");
         final int type = getItemViewType(position);
         System.out.println("getView " + position + " " + convertView + " type = " + type);
         final ViewHolder holder;
@@ -221,13 +224,14 @@ public class TimeLineAdapter extends BaseAdapter {
         Log.d(TAG, "3.2");
 
         switch (type) {
-            case 1:
+            case 0:
                 Log.d(TAG, "in picture " + holder.timelineItemImage.getWidth() + holder.timelineItemImage.getHeight());
 
                 Picture pic = (Picture) memoriesList.get(position);
                 if (pic.getDataLocalURL() != null) {
                     Log.d(TAG, "localdataUrl = " + pic.getDataLocalURL());
-                    LoadBitmapFromPath.loadBitmap(pic.getDataLocalURL(), holder.timelineItemImage, 350, 125, context);
+                    Log.d(TAG, "pic local thumbnail is : " +pic.getPicThumbnailPath());
+                    LoadBitmapFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, 256, 192, context);
 //					try {
 //						holder.timelineItemImage.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(
 //								context, pic.getDataLocalURL(), 680, 250));
@@ -241,15 +245,21 @@ public class TimeLineAdapter extends BaseAdapter {
                     Log.d(TAG, "no local data URL set");
                 }
                 break;
-            case 2:
+            case 1:
                 Log.d(TAG, "in audio");
                 holder.timelineItemAudioPlayBtn.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         Audio audio = (Audio) memoriesList.get(position);
 
                         if (!isPlaying) {
+                            if(audio.getDataLocalURL() == null){
+                                ProgressDialog pDialog = new ProgressDialog(context);
+                                pDialog.setMessage("Loading...");
+                                pDialog.show();
+                                audio.setDataLocalURL(AudioUtil.saveAudio(context, audio));
+                                pDialog.dismiss();
+                            }
                             mPlayer = new AudioPlayer(audio.getDataLocalURL());
                             mPlayer.startPlaying();
                         } else {
@@ -260,9 +270,10 @@ public class TimeLineAdapter extends BaseAdapter {
                         // HelpMe.playAudio(audio.getDataURL(), context);
                     }
                 });
+                Log.d(TAG, "iN AUDIO ENDED HERE");
                 break;
 
-            case 3:
+            case 2:
                 Log.d(TAG, "in video");
                 Video vid = (Video) memoriesList.get(position);
 
@@ -271,30 +282,41 @@ public class TimeLineAdapter extends BaseAdapter {
                 //holder.timelineItemImage.setImageBitmap(HelpMe.getVideoThumbnail(vid.getDataURL()));
                 break;
 
-            case 4:
+            case 3:
                 Log.d(TAG, "in notes");
                 Note note = (Note) memoriesList.get(position);
                 holder.timelineItemContent.setText(note.getContent());
                 break;
 
-            case 5:
+            case 4:
                 Log.d(TAG, "in checkin");
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
-                String checkInStatus = "";
+                String checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName();
                 Contact firstContact = ContactDataSource.getContactById(context, checkin.getCheckInWith().get(0));
-                if (checkin.getCheckInWith().size() == 1) {
-                    checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName()
-                            + " with " + firstContact.getName();
-                } else if (checkin.getCheckInWith().size() > 1) {
-                    checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName()
-                            + " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
+                if(firstContact != null) {
+                    if (checkin.getCheckInWith().size() == 1) {
+                        checkInStatus += " with " + firstContact.getName();
+                    } else if (checkin.getCheckInWith().size() > 1) {
+                        checkInStatus += " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
+                    }
                 }
                 holder.timelineItemCaption.setText(checkInStatus);
                 break;
 
-            case 6:
+            case 5:
+                Log.d(TAG, "in mood" );
                 Mood mood = (Mood) memoriesList.get(position);
-                holder.timelineItemCaption.setText(mood.getMood());
+                String friendMood = "";
+                Contact fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(0));
+                if(fContact != null) {
+                    if (mood.getBuddyIds().size() == 1) {
+                        friendMood += fContact.getName();
+                    } else if (mood.getBuddyIds().size() > 1) {
+                        friendMood += fContact.getName() + " and " + (mood.getBuddyIds().size() - 1) + " others";
+                    }
+                }
+                friendMood += " feeling " + mood.getMood() + " because " + mood.getReason();
+                holder.timelineItemCaption.setText(friendMood);
 
             default:
                 break;

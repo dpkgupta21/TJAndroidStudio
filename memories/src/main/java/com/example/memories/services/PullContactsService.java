@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -22,7 +24,6 @@ import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.utility.Constants;
 import com.example.memories.volley.AppController;
-import com.example.memories.volley.Const;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,9 +39,13 @@ import java.util.Map;
 
 public class PullContactsService extends IntentService {
 
+
+    private ResultReceiver mReceiver;
+    private int REQUEST_CODE;
     private static final String TAG = "<PullContactsService>";
     private ArrayList<Contact> list;
     private ArrayList<String> allEmailPhoneList;
+
 
     public PullContactsService() {
         super("PullContactsService");
@@ -50,8 +55,17 @@ public class PullContactsService extends IntentService {
         super(name);
     }
 
+    public int onStartCommand(Intent intent, int flags, int startId){
+        mReceiver = intent.getParcelableExtra("RECEIVER");
+        REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
+        super.onStartCommand(intent, startId, startId);
+        Log.d(TAG, "on start command");
+        return START_STICKY;
+    }
+
     @Override
     protected void onHandleIntent(Intent workIntent) {
+        Log.d(TAG, "on Handle Intent");
         getPhoneContactsList();
     }
 
@@ -126,7 +140,6 @@ public class PullContactsService extends IntentService {
                 + "names count" + nameCount);
 
         CheckTJContacts();
-
         // Collections.sort(list);
         return list;
     }
@@ -136,7 +149,7 @@ public class PullContactsService extends IntentService {
 
         Integer len = allEmailPhoneList.size();
         Map<String, String> jsonParams = new HashMap<String, String>();
-        jsonParams.put("api_key", "0v6xW0bp0nUjsuLdOrxd1A");
+        jsonParams.put("api_key", "key");
         jsonParams.put("count", len.toString());
 
         for (int i = 0; i < len; i++) {
@@ -146,7 +159,7 @@ public class PullContactsService extends IntentService {
         // Tag used to cancel the request
         String tag_json_obj = "CheckTJContacts";
 
-        String url = Const.URL_CHECK_TJ_CONTACTS;
+        String url = Constants.URL_CHECK_TJ_CONTACTS;
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.POST, url, new JSONObject(
                 jsonParams), new Response.Listener<JSONObject>() {
 
@@ -262,6 +275,14 @@ public class PullContactsService extends IntentService {
             ContactDataSource.createContact(tempContact, this);
             list.add(tempContact);
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        Log.d(TAG, "ondestroy() method called");
+        Bundle bundle = new Bundle();
+        mReceiver.send(REQUEST_CODE, bundle);
+        super.onDestroy();
     }
 
 }

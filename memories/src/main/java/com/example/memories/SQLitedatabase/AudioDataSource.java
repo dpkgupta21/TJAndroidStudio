@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.example.memories.models.Audio;
 import com.example.memories.models.Memories;
-import com.example.memories.models.Picture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +70,7 @@ public class AudioDataSource {
         List<Memories> audioList = getAudioMemoriesList(context, cursor);
         db.close();
         cursor.close();
+        Log.d(TAG, "audios fetched successfully " + audioList.size());
         return audioList;
     }
 
@@ -79,6 +79,14 @@ public class AudioDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.VOICE_COLUMN_ID_ONSERVER, serverId);
         values.put(MySQLiteHelper.VOICE_COLUMN_DATASERVERURL, serverUrl);
+        db.update(MySQLiteHelper.TABLE_AUDIO, values, MySQLiteHelper.VOICE_COLUMN_ID + " = " + audioId, null);
+        db.close();
+    }
+
+    public static void updateDataLocalUrl(Context context, String audioId, String localUrl) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.VOICE_COLUMN_DATALOCALURL, localUrl);
         db.update(MySQLiteHelper.TABLE_AUDIO, values, MySQLiteHelper.VOICE_COLUMN_ID + " = " + audioId, null);
         db.close();
     }

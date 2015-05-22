@@ -31,27 +31,17 @@ public class CaptureVideo extends Activity {
         }
     }
 
-/*	private void saveAndUploadVideo() {
-        Video video = new Video("", TJPreferences.getActiveJourneyId(this), HelpMe.VIDEO_TYPE, "",
-				mVideoExtension, (new File(mVideoPath)).length(), null, mVideoPath,
-				TJPreferences.getUserId(this), System.currentTimeMillis(),
-				System.currentTimeMillis());
-		videoId = VideoDataSource.createVideo(video, this);
-		VideoUtil.uploadVideo(this, video);
-		Log.d(TAG, "new video added in local DB successfully");
-	}*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = data.getData();
             Log.d(TAG, "video saved at" + videoUri);
             Log.d(TAG, "Real path URI" + getRealPathFromURI(videoUri));
-            moveFileToTravelJarDir(getRealPathFromURI(videoUri));
+//            moveFileToTravelJarDir(getRealPathFromURI(videoUri));
 //			saveAndUploadVideo();
 
             Intent i = new Intent(this, VideoDetail.class);
-            i.putExtra("VIDEO_PATH", mVideoPath);
+            i.putExtra("VIDEO_PATH", getRealPathFromURI(videoUri));
             startActivity(i);
         }
     }
@@ -71,7 +61,7 @@ public class CaptureVideo extends Activity {
         }
     }
 
-    private void moveFileToTravelJarDir(String sourceFilePath) {
+    /*private void moveFileToTravelJarDir(String sourceFilePath) {
         // File originally where the video is saved
         File sourceFile = new File(sourceFilePath);
 
@@ -91,5 +81,5 @@ public class CaptureVideo extends Activity {
         // This will move the file to the traveljar video directory
         sourceFile.renameTo(destFile);
 
-    }
+    }*/
 }

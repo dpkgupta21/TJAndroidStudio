@@ -10,8 +10,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.memories.utility.Constants;
 import com.example.memories.volley.AppController;
-import com.example.memories.volley.Const;
 
 import org.json.JSONObject;
 
@@ -50,7 +50,7 @@ public class JsonRequestActivity {
     private static void makeJsonObjReq() {
         // showProgressDialog();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET,
-                Const.URL_FS_VENUE_EXPLORE, null, new Response.Listener<JSONObject>() {
+                Constants.URL_FS_VENUE_EXPLORE, null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

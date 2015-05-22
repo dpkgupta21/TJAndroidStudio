@@ -29,7 +29,6 @@ import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
 import com.example.memories.utility.TJPreferences;
-import com.example.memories.volley.Const;
 import com.example.memories.volley.CustomJsonRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -174,7 +173,7 @@ public class SignUp extends Activity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Const.URL_SIGN_UP;
+        String url = Constants.URL_SIGN_UP;
 
         // Request a string response from the provided URL.
         CustomJsonRequest signUpReg = new CustomJsonRequest(Request.Method.POST, url, params,
@@ -190,6 +189,7 @@ public class SignUp extends Activity {
 
                         // Staring MainActivity
                         Intent i = new Intent(getApplicationContext(), NewJourney.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                         finish();
                     }
@@ -201,6 +201,7 @@ public class SignUp extends Activity {
         });
 
         // Add the request to the RequestQueue.
+        //AppController.getInstance().getRequestQueue().add(signUpReg);
         queue.add(signUpReg);
 
     }
