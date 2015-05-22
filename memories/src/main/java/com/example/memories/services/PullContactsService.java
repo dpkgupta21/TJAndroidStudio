@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -38,9 +40,13 @@ import java.util.Map;
 
 public class PullContactsService extends IntentService {
 
+
+    private ResultReceiver mReceiver;
+    private int REQUEST_CODE;
     private static final String TAG = "<PullContactsService>";
     private ArrayList<Contact> list;
     private ArrayList<String> allEmailPhoneList;
+
 
     public PullContactsService() {
         super("PullContactsService");
@@ -50,8 +56,17 @@ public class PullContactsService extends IntentService {
         super(name);
     }
 
+    public int onStartCommand(Intent intent, int flags, int startId){
+        mReceiver = intent.getParcelableExtra("RECEIVER");
+        REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
+        super.onStartCommand(intent, startId, startId);
+        Log.d(TAG, "on start command");
+        return START_STICKY;
+    }
+
     @Override
     protected void onHandleIntent(Intent workIntent) {
+        Log.d(TAG, "on Handle Intent");
         getPhoneContactsList();
     }
 
@@ -126,7 +141,6 @@ public class PullContactsService extends IntentService {
                 + "names count" + nameCount);
 
         CheckTJContacts();
-
         // Collections.sort(list);
         return list;
     }
@@ -262,6 +276,14 @@ public class PullContactsService extends IntentService {
             ContactDataSource.createContact(tempContact, this);
             list.add(tempContact);
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        Log.d(TAG, "ondestroy() method called");
+        Bundle bundle = new Bundle();
+        mReceiver.send(REQUEST_CODE, bundle);
+        super.onDestroy();
     }
 
 }

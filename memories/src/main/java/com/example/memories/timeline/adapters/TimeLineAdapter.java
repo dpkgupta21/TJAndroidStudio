@@ -1,5 +1,6 @@
 package com.example.memories.timeline.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -25,6 +26,7 @@ import com.example.memories.models.Picture;
 import com.example.memories.models.Video;
 import com.example.memories.picture.PhotoDetail;
 import com.example.memories.utility.AudioPlayer;
+import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.LoadBitmapFromPath;
 import com.example.memories.utility.LoadThumbnailFromPath;
@@ -222,7 +224,7 @@ public class TimeLineAdapter extends BaseAdapter {
         Log.d(TAG, "3.2");
 
         switch (type) {
-            case 1:
+            case 0:
                 Log.d(TAG, "in picture " + holder.timelineItemImage.getWidth() + holder.timelineItemImage.getHeight());
 
                 Picture pic = (Picture) memoriesList.get(position);
@@ -243,7 +245,7 @@ public class TimeLineAdapter extends BaseAdapter {
                     Log.d(TAG, "no local data URL set");
                 }
                 break;
-            case 2:
+            case 1:
                 Log.d(TAG, "in audio");
                 holder.timelineItemAudioPlayBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -251,6 +253,13 @@ public class TimeLineAdapter extends BaseAdapter {
                         Audio audio = (Audio) memoriesList.get(position);
 
                         if (!isPlaying) {
+                            if(audio.getDataLocalURL() == null){
+                                ProgressDialog pDialog = new ProgressDialog(context);
+                                pDialog.setMessage("Loading...");
+                                pDialog.show();
+                                audio.setDataLocalURL(AudioUtil.saveAudio(context, audio));
+                                pDialog.dismiss();
+                            }
                             mPlayer = new AudioPlayer(audio.getDataLocalURL());
                             mPlayer.startPlaying();
                         } else {
@@ -264,7 +273,7 @@ public class TimeLineAdapter extends BaseAdapter {
                 Log.d(TAG, "iN AUDIO ENDED HERE");
                 break;
 
-            case 3:
+            case 2:
                 Log.d(TAG, "in video");
                 Video vid = (Video) memoriesList.get(position);
 
@@ -273,13 +282,13 @@ public class TimeLineAdapter extends BaseAdapter {
                 //holder.timelineItemImage.setImageBitmap(HelpMe.getVideoThumbnail(vid.getDataURL()));
                 break;
 
-            case 4:
+            case 3:
                 Log.d(TAG, "in notes");
                 Note note = (Note) memoriesList.get(position);
                 holder.timelineItemContent.setText(note.getContent());
                 break;
 
-            case 5:
+            case 4:
                 Log.d(TAG, "in checkin");
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
                 String checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName();
@@ -294,7 +303,7 @@ public class TimeLineAdapter extends BaseAdapter {
                 holder.timelineItemCaption.setText(checkInStatus);
                 break;
 
-            case 6:
+            case 5:
                 Log.d(TAG, "in mood" );
                 Mood mood = (Mood) memoriesList.get(position);
                 String friendMood = "";

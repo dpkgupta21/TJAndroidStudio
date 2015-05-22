@@ -1,7 +1,6 @@
 package com.example.memories.utility;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -13,8 +12,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Picture;
-import com.example.memories.newjourney.adapters.PendingJourneysListAdapter;
-import com.example.memories.timeline.Timeline;
 import com.example.memories.volley.AppController;
 
 import org.apache.http.HttpResponse;
@@ -83,9 +80,6 @@ public class PictureUtilities {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                         pic.setPicThumbnailPath(imagePath);
                         PictureDataSource.createPicture(pic, context);
-                        PendingJourneysListAdapter.requestCount--;
-                        Log.d(TAG, "pendingList requestcount = "+ PendingJourneysListAdapter.requestCount);
-                        PendingJourneysListAdapter.areAllRequestsFinished();
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {

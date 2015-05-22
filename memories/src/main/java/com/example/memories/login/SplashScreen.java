@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.memories.R;
-import com.example.memories.services.PullContactsService;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.SessionManager;
 
@@ -38,8 +37,8 @@ public class SplashScreen extends Activity {
              * Creates a new Intent to start the RSSPullService IntentService.
 			 * Passes a URI in the Intent's "data" field.
 			 */
-            Intent mServiceIntent = new Intent(getBaseContext(), PullContactsService.class);
-            startService(mServiceIntent);
+            /*Intent mServiceIntent = new Intent(getBaseContext(), PullContactsService.class);
+            startService(mServiceIntent);*/
         }
 
     }

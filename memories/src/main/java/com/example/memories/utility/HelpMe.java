@@ -39,19 +39,19 @@ public class HelpMe {
     public static final int TYPE_CREATE_JOURNEY = 4;
     // Type = picture/audio/video/note
     // don't change them -- are synced with server
-    public static final String PICTURE_TYPE = "1";
-    public static final String AUDIO_TYPE = "2";
-    public static final String VIDEO_TYPE = "3";
-    public static final String NOTE_TYPE = "4";
-    public static final String CHECKIN_TYPE = "5";
-    public static final String MOOD_TYPE = "6";
+    public static final String PICTURE_TYPE = "0";
+    public static final String AUDIO_TYPE = "1";
+    public static final String VIDEO_TYPE = "2";
+    public static final String NOTE_TYPE = "3";
+    public static final String CHECKIN_TYPE = "4";
+    public static final String MOOD_TYPE = "5";
 
-    public static final int TYPE_PICTURE = 1;
-    public static final int TYPE_AUDIO = 2;
-    public static final int TYPE_VIDEO = 3;
-    public static final int TYPE_NOTE = 4;
-    public static final int TYPE_CHECKIN = 5;
-    public static final int TYPE_MOOD = 6;
+    public static final int TYPE_PICTURE = 0;
+    public static final int TYPE_AUDIO = 1;
+    public static final int TYPE_VIDEO = 2;
+    public static final int TYPE_NOTE = 3;
+    public static final int TYPE_CHECKIN = 4;
+    public static final int TYPE_MOOD = 5;
     public static final int TYPE_MAX_COUNT = 6;
 
     public static final String CONVEYANCE_FLIGHT = "Flight";

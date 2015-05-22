@@ -10,7 +10,8 @@ public class Const {
     // public static final String API_KEY = "1Vr7C35_O_I24mtu8TWVyQ";
     public static final String API_KEY = "key";
     public static final String URL_IMAGE = "http://api.androidhive.info/volley/volley-image.jpg";
-    private final static String URL_TJ_DOMAIN = "https://www.traveljar.in/";
+    //private final static String URL_TJ_DOMAIN = "https://www.traveljar.in/";
+    private final static String URL_TJ_DOMAIN = "http://192.168.1.2:3000/";
     public static final String URL_SIGN_IN = URL_TJ_DOMAIN + "api/v1/users/login";
     public static final String URL_SIGN_UP = URL_TJ_DOMAIN + "api/v1/users";
     // public static final String URL_CREATE_JOURNEY =

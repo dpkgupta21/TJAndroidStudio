@@ -26,8 +26,9 @@ public class CheckinUtil {
         params.put("api_key", TJPreferences.getApiKey(context));
         params.put("checkin[user_id]", checkin.getCreatedBy());
         params.put("checkin[place_name]", checkin.getCheckInPlaceName());
-        params.put("latitude", (Double) checkin.getLatitude() == null ? null : ((Double) checkin.getLatitude()).toString());
-        params.put("longitude", (Double)checkin.getLongitude() == null ? null : ((Double)checkin.getLongitude()).toString());
+        params.put("checkin[latitude]", (Double) checkin.getLatitude() == null ? null : ((Double) checkin.getLatitude()).toString());
+        params.put("checkin[longitude]", (Double)checkin.getLongitude() == null ? null : ((Double)checkin.getLongitude()).toString());
+        params.put("checkin[buddies]", checkin.getCheckInWith().toString());
         Log.d(TAG, "uploading checkin with parameters " + params);
 
         String url = Constants.TRAVELJAR_API_BASE_URL + "/journeys/"

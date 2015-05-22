@@ -16,7 +16,7 @@ import com.example.memories.models.Contact;
 import java.util.List;
 
 public class SelectedFriendsListAdapter extends ArrayAdapter<Contact> {
-    private static final String TAG = "[SelectedFriendsListAdapter]";
+    private static final String TAG = "[SelectedFriendAdapter]";
     private final Activity context;
     private List<Contact> names;
 

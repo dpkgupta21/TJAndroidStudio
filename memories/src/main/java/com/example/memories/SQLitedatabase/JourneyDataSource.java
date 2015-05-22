@@ -70,6 +70,19 @@ public class JourneyDataSource {
 
     }
 
+    public static Journey getJourneyById(Context context, String journeyId){
+        Log.d(TAG, "inside getJourneyById");
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
+                + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = '" + journeyId + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        List<Journey> journeyList = getJourneys(context, cursor);
+        cursor.close();
+        db.close();
+        Log.d(TAG, "journey fetched successfully");
+        return journeyList.get(0);
+    }
+
     public static List<Journey> getPendingJourneys(Context context){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "

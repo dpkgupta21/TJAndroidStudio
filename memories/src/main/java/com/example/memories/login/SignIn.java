@@ -6,13 +6,14 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request.Method;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -20,6 +21,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
+import com.example.memories.services.PullContactsService;
+import com.example.memories.services.PullMemoriesService;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
@@ -32,12 +35,19 @@ import org.json.JSONObject;
 
 import java.util.regex.Pattern;
 
-public class SignIn extends Activity {
+public class SignIn extends Activity implements CustomResultReceiver.Receiver{
 
     protected static final String TAG = null;
     private EditText txtEmailAddress;
     private EditText txtPassword;
     private SessionManager session;
+
+    private boolean contactsFetched;
+    private boolean memoriesFetched;
+    private int REQUEST_FETCH_CONTACTS = 1;
+    private int REQUEST_FETCH_MEMORIES = 2;
+
+    public CustomResultReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,8 @@ public class SignIn extends Activity {
 
         getActionBar().hide();
 
+        mReceiver = new CustomResultReceiver(new Handler());
+        mReceiver.setReceiver(this);
         // Session Manager
         session = new SessionManager(getApplicationContext());
 
@@ -73,6 +85,8 @@ public class SignIn extends Activity {
     }
 
     public void signIn(View v) {
+        Log.d(TAG, "signIn() method called");
+
         // Get username, password from EditText
         final String emailAddress = txtEmailAddress.getText().toString().trim();
         String password = txtPassword.getText().toString().trim();
@@ -91,7 +105,7 @@ public class SignIn extends Activity {
                 pDialog.setMessage("Loading...");
                 pDialog.show();
 
-                CustomJsonRequest jsonObjReq = new CustomJsonRequest(Method.GET, url, null,
+                CustomJsonRequest jsonObjReq = new CustomJsonRequest(Request.Method.GET, url, null,
                         new Response.Listener<JSONObject>() {
 
                             @Override
@@ -99,6 +113,15 @@ public class SignIn extends Activity {
                                 Log.d(TAG, response.toString());
                                 try {
                                     updateUserPref(response);
+                                    Intent mServiceIntent = new Intent(getBaseContext(), PullContactsService.class);
+                                    mServiceIntent.putExtra("RECEIVER", mReceiver);
+                                    mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_CONTACTS);
+                                    startService(mServiceIntent);
+
+                                    Intent intent = new Intent(getBaseContext(), PullMemoriesService.class);
+                                    mServiceIntent.putExtra("RECEIVER", mReceiver);
+                                    mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
+                                    startService(intent);
                                 } catch (JSONException e) {
                                     // TODO Auto-generated catch block
                                     e.printStackTrace();
@@ -165,4 +188,20 @@ public class SignIn extends Activity {
         TJPreferences.setActiveJourneyId(this, currentJourney);
     }
 
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        if(resultCode == REQUEST_FETCH_CONTACTS){
+            contactsFetched = true;
+        }else if(resultCode == REQUEST_FETCH_MEMORIES){
+            memoriesFetched = true;
+        }
+        if(contactsFetched && memoriesFetched){
+            Intent i = new Intent(getApplicationContext(), Timeline.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+        }
+        Log.d(TAG, "sign in contacts fetched successfully");
+    }
 }
+
+
