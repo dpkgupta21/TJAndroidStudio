@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values-sv/values.xml -->
+    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values-sv/values.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Visa startsidan"</string>
     <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Navigera uppåt"</string>
@@ -15,7 +15,7 @@
     <string msgid="893419373245838918" name="abc_searchview_description_voice">"Röstsökning"</string>
     <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Dela med"</string>
     <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Dela med %s"</string>
-    <!-- From: file:/media/ankit/6C3E-BE46/travel/gradle/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/5.0.89/res/values-sv/common_strings.xml -->
+    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/5.0.89/res/values-sv/common_strings.xml -->
     <eat-comment/>
     <string msgid="4181637455539816337" name="common_google_play_services_enable_button">"Aktivera Google Play Tjänster"</string>
     <string msgid="7627896071867667758" name="common_google_play_services_enable_text">"Du måste aktivera Google Play Tjänster för att den här appen ska fungera."</string>

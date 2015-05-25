@@ -21,7 +21,8 @@ public class Constants {
     public static final String TRAVELJAR_FOLDER_AUDIO = TRAVELJAR_FOLDER_ROOT + "/audio/";
     public static final String TRAVELJAR_FOLDER_PICTURE = TRAVELJAR_FOLDER_ROOT + "/Pictures/";
 
-    public static final String TRAVELJAR_API_BASE_URL = "https://www.traveljar.in/api/v1";
+    //public static final String TRAVELJAR_API_BASE_URL = "https://www.traveljar.in/api/v1";
+    public static final String TRAVELJAR_API_BASE_URL = "http://192.168.1.2:3000/api/v1";
 
     public static final String JOURNEY_STATUS_ACTIVE = "ACTIVE";
     public static final String JOURNEY_STATUS_PENDING = "PENDING";

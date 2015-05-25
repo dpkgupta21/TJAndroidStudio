@@ -135,8 +135,10 @@ public class VideoDetail extends Activity {
             profileImgPath = TJPreferences.getProfileImgPath(this);
         }
         try {
-            Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
-            mProfileImg.setImageBitmap(bitmap);
+            if(profileImgPath != null) {
+                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
+                mProfileImg.setImageBitmap(bitmap);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

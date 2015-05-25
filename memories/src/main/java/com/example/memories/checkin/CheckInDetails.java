@@ -21,12 +21,10 @@ import com.example.memories.SQLitedatabase.CheckinDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.models.CheckIn;
-import com.example.memories.models.Contact;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.CheckinUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
-import com.google.common.base.Joiner;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -72,7 +70,10 @@ public class CheckInDetails extends Activity {
             Log.d(TAG, "latitude, longitude " + lat + " " + longi);
         }
         //Get all the friends
-        mSelectedFriends = Arrays.asList(JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this)));
+        String buddyIds[] = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        if(buddyIds != null){
+            mSelectedFriends = Arrays.asList(buddyIds);
+        }
 
         // get the friends list
 /*        Integer buddyCount = getResources().getStringArray(R.array.journey_buddies_list).length - 1;
@@ -90,12 +91,15 @@ public class CheckInDetails extends Activity {
     }
 
     private void setSelectedFriends(){
-        if (mSelectedFriends.size() == 0) {
-            checkinDetailsBuddies.setText("- with ");
-        } else if (mSelectedFriends.size() == 1) {
-            checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName());
-        } else {
-            checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName() + " and " + (mSelectedFriends.size() - 1) + " others");
+        if(mSelectedFriends != null) {
+            if (mSelectedFriends.size() == 0) {
+                checkinDetailsBuddies.setText("- with ");
+            }else if (mSelectedFriends.size() == 1) {
+                Log.d(TAG, "selected friends are " + mSelectedFriends.get(0) + "abc");
+                checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName());
+            } else {
+                checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName() + " and " + (mSelectedFriends.size() - 1) + " others");
+            }
         }
     }
 
@@ -147,7 +151,7 @@ public class CheckInDetails extends Activity {
 
     public void goToBuddyList(View v) {
         Intent intent = new Intent(getApplicationContext(), CheckInFriendsList.class);
-        intent.putStringArrayListExtra("SELECTED_FRIENDS", new ArrayList<String>(mSelectedFriends));
+        intent.putStringArrayListExtra("SELECTED_FRIENDS", mSelectedFriends == null ? null : new ArrayList<String>(mSelectedFriends));
         startActivityForResult(intent, REQUEST_CODE_SELECT_FRIENDS);
     }
 

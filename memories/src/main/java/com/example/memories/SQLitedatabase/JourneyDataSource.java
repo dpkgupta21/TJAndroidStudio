@@ -48,15 +48,14 @@ public class JourneyDataSource {
     }
 
     public static String getCurrentJourney(Context mContext) {
-        String currentJourneyId;
+        String currentJourneyId = null;
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
-                + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = " + Constants.JOURNEY_STATUS_ACTIVE;
+                + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_ACTIVE + "'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(mContext).getReadableDatabase();
         Log.e(TAG, selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null) {
-            c.moveToFirst();
+        if (c.moveToFirst()) {
             currentJourneyId = c.getString(c
                     .getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER));
         } else {
@@ -154,6 +153,7 @@ public class JourneyDataSource {
             Log.d(TAG, "buddies List " + cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS)));
             buddyIds = buddies.split(",");
         }
+        Log.d(TAG, "buddy ids are " + buddyIds);
         cursor.close();
         db.close();
         return buddyIds;

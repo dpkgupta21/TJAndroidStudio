@@ -17,7 +17,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
@@ -42,10 +41,11 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
     private EditText txtPassword;
     private SessionManager session;
 
-    private boolean contactsFetched;
-    private boolean memoriesFetched;
+    private boolean contactsFetched = false;
+    private boolean memoriesFetched = false;
     private int REQUEST_FETCH_CONTACTS = 1;
     private int REQUEST_FETCH_MEMORIES = 2;
+    private ProgressDialog pDialog;
 
     public CustomResultReceiver mReceiver;
 
@@ -72,6 +72,8 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
         txtPassword = (EditText) findViewById(R.id.signInPasswordTxt);
         autoPopulateEmail(txtEmailAddress);
 
+        pDialog = new ProgressDialog(this);
+
     }
 
     public void goToSignUp(View v) {
@@ -87,6 +89,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
     public void signIn(View v) {
         Log.d(TAG, "signIn() method called");
 
+        pDialog.show();
         // Get username, password from EditText
         final String emailAddress = txtEmailAddress.getText().toString().trim();
         String password = txtPassword.getText().toString().trim();
@@ -113,31 +116,37 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
                                 Log.d(TAG, response.toString());
                                 try {
                                     updateUserPref(response);
+                                    TJPreferences.setActiveJourneyId(SignIn.this, "9");
+                                    Log.d(TAG, "calling pullMemoriesService to fetcch all journeys and their memories");
+                                    Intent intent = new Intent(getBaseContext(), PullMemoriesService.class);
+                                    intent.putExtra("RECEIVER", mReceiver);
+                                    intent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
+                                    startService(intent);
+
+                                    Log.d(TAG, "calling pullContactsService to fetcch all journeys and their memories");
                                     Intent mServiceIntent = new Intent(getBaseContext(), PullContactsService.class);
                                     mServiceIntent.putExtra("RECEIVER", mReceiver);
                                     mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_CONTACTS);
                                     startService(mServiceIntent);
 
-                                    Intent intent = new Intent(getBaseContext(), PullMemoriesService.class);
-                                    mServiceIntent.putExtra("RECEIVER", mReceiver);
-                                    mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
-                                    startService(intent);
                                 } catch (JSONException e) {
+                                    Log.d(TAG, "everything fine upto here 4");
                                     // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 }
 
                                 pDialog.hide();
                                 // Staring MainActivity
-                                Intent i = new Intent(getApplicationContext(), Timeline.class);
+/*                                Intent i = new Intent(getApplicationContext(), Timeline.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i);
+                                startActivity(i);*/
                             }
                         }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d(TAG, "Error: " + error.getMessage());
+                        Log.d(TAG, "everything fine upto here 5" + error);
+                        //VolleyLog.d(TAG, "Error: " + error.getMessage());
                         pDialog.hide();
                         Toast.makeText(getApplicationContext(),
                                 "Username & password donot match!", Toast.LENGTH_LONG)
@@ -191,11 +200,14 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if(resultCode == REQUEST_FETCH_CONTACTS){
+            Log.d(TAG, "fetch contacts service completed");
             contactsFetched = true;
         }else if(resultCode == REQUEST_FETCH_MEMORIES){
+            Log.d(TAG, "fetch memories service completed");
             memoriesFetched = true;
         }
         if(contactsFetched && memoriesFetched){
+            pDialog.dismiss();
             Intent i = new Intent(getApplicationContext(), Timeline.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);

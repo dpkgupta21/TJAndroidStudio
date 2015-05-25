@@ -123,7 +123,7 @@ public class PictureUtilities {
             entityBuilder.addTextBody("picture[user_id]", picture.getCreatedBy());
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
 
-            String url = "https://www.traveljar.in/api/v1/journeys/" + TJPreferences.getActiveJourneyId(context) + "/pictures";
+            String url = "http://192.168.1.2:3000/api/v1/journeys/" + TJPreferences.getActiveJourneyId(context) + "/pictures";
             HttpPost updateProfileRequest = new HttpPost(url);
             updateProfileRequest.setEntity(entityBuilder.build());
             HttpResponse response;

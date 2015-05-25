@@ -104,7 +104,7 @@ public class CheckInPlacesList extends Activity {
         url = (query == null) ? url : url + "&query=" + query;
 
         Log.d(TAG, "FS_URL=" + url);
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET, url, null,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET, url, (String)null,
                 new Response.Listener<JSONObject>() {
 
                     @Override

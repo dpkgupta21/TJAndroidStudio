@@ -14,10 +14,8 @@ import android.widget.ImageView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
-import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.moods.FriendsGridAdapter;
-import com.example.memories.utility.TJPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class CheckInFriendsList extends Activity {
     private static final String TAG = "CHECKIN_FRIENDS_LIST";
     GridView mGridView;
     List<String> mSelectedFriends;
-    List<Contact> mContactsList;
+    List<Contact> mContactsList = new ArrayList<Contact>();
     FriendsGridAdapter mAdapter;
 
     @Override
@@ -40,7 +38,11 @@ public class CheckInFriendsList extends Activity {
 
         mGridView = (GridView) findViewById(R.id.checkin_buddy_gridview);
 
-        mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
+        if(mSelectedFriends == null) {
+            mContactsList = new ArrayList<Contact>();
+        }else if(mSelectedFriends.size() > 0){
+            mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
+        }
         mAdapter = new FriendsGridAdapter(this, mContactsList);
         mGridView.setAdapter(mAdapter);
 

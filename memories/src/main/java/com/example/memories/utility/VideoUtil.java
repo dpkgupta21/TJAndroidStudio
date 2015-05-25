@@ -10,9 +10,7 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.SQLitedatabase.VideoDataSource;
-import com.example.memories.models.Picture;
 import com.example.memories.models.Video;
 import com.example.memories.volley.AppController;
 
@@ -169,7 +167,7 @@ public class VideoUtil {
             entityBuilder.addTextBody("video[user_id]", video.getCreatedBy());
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
 
-            String url = "https://www.traveljar.in/api/v1/journeys/" + TJPreferences.getActiveJourneyId(context) + "/videos";
+            String url = "http://192.168.1.2:3000/api/v1/journeys/" + TJPreferences.getActiveJourneyId(context) + "/videos";
             HttpPost updateProfileRequest = new HttpPost(url);
             updateProfileRequest.setEntity(entityBuilder.build());
             HttpResponse response;

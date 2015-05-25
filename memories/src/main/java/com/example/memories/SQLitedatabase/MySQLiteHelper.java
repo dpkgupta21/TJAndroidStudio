@@ -319,4 +319,18 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public static void deleteAll(Context context) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        db.delete(TABLE_AUDIO, null, null);
+        db.delete(TABLE_CHECKIN, null, null);
+        db.delete(TABLE_CONTACT, null, null);
+        db.delete(TABLE_JOURNEY, null, null);
+        db.delete(TABLE_MOOD, null, null);
+        db.delete(TABLE_NOTES, null, null);
+        db.delete(TABLE_PICTURE, null, null);
+        db.delete(TABLE_TIMELINE, null, null);
+        db.delete(TABLE_USER, null, null);
+        db.delete(TABLE_VIDEO, null, null);
+    }
+
 }

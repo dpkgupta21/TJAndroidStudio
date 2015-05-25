@@ -46,22 +46,27 @@ public class CaptureMoods extends Activity implements SelectMoodsDialog.OnEmotic
         selectMoodImgBtn = (ImageButton) findViewById(R.id.mood_select_mood_imgbtn);
         moodText = (TextView) findViewById(R.id.mood_text);
         moodReasonEditTxt = (EditText) findViewById(R.id.mood_because_of_txt);
-        mSelectedFriends = Arrays.asList(JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this)));
+        String[] friendIds = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        if(friendIds != null) {
+            mSelectedFriends = Arrays.asList();
+        }
     }
 
     private void setSelectedFriends(){
-        if (mSelectedFriends.size() == 0) {
-            noFriendsSelectedTxt.setText("No friend Selected");
-        } else if (mSelectedFriends.size() == 1) {
-            noFriendsSelectedTxt.setText(ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName());
-        } else {
-            noFriendsSelectedTxt.setText(ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName() + " and " + (mSelectedFriends.size() - 1) + " others");
+        if(mSelectedFriends != null) {
+            if (mSelectedFriends.size() == 0) {
+                noFriendsSelectedTxt.setText("No friend Selected");
+            } else if (mSelectedFriends.size() == 1) {
+                noFriendsSelectedTxt.setText(ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName());
+            } else if (mSelectedFriends.size() > 1) {
+                noFriendsSelectedTxt.setText(ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName() + " and " + (mSelectedFriends.size() - 1) + " others");
+            }
         }
     }
 
     public void selectFriends(View v) {
         Intent intent = new Intent(getBaseContext(), SelectFriends.class);
-        intent.putStringArrayListExtra("SELECTED_FRIENDS", new ArrayList<String>(mSelectedFriends));
+        intent.putStringArrayListExtra("SELECTED_FRIENDS", mSelectedFriends == null ? null : new ArrayList<String>(mSelectedFriends));
         startActivityForResult(intent, PICK_CONTACTS);
     }
 

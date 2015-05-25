@@ -292,12 +292,14 @@ public class TimeLineAdapter extends BaseAdapter {
                 Log.d(TAG, "in checkin");
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
                 String checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName();
-                Contact firstContact = ContactDataSource.getContactById(context, checkin.getCheckInWith().get(0));
-                if(firstContact != null) {
-                    if (checkin.getCheckInWith().size() == 1) {
-                        checkInStatus += " with " + firstContact.getName();
-                    } else if (checkin.getCheckInWith().size() > 1) {
-                        checkInStatus += " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
+                if(checkin.getCheckInWith() != null && checkin.getCheckInWith().size() > 0) {
+                    Contact firstContact = ContactDataSource.getContactById(context, checkin.getCheckInWith().get(0));
+                    if (firstContact != null) {
+                        if (checkin.getCheckInWith().size() == 1) {
+                            checkInStatus += " with " + firstContact.getName();
+                        } else if (checkin.getCheckInWith().size() > 1) {
+                            checkInStatus += " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
+                        }
                     }
                 }
                 holder.timelineItemCaption.setText(checkInStatus);

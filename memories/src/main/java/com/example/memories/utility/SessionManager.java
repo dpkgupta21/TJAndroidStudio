@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.memories.SQLitedatabase.MySQLiteHelper;
 import com.example.memories.login.SignIn;
 
 public class SessionManager {
@@ -55,11 +56,11 @@ public class SessionManager {
         // Closing all the Activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        // Add new Flag to start new Activity
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
         // Staring Login Activity
         _context.startActivity(i);
+        Log.d(TAG, "logging out user");
+
+        MySQLiteHelper.deleteAll(mContext);
     }
 
     /**

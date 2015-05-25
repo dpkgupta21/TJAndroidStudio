@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TJAndroidStudio.iml" filepath="$PROJECT_DIR$/TJAndroidStudio.iml" />
       <module fileurl="file://$PROJECT_DIR$/flotingMenuLibrary/flotingMenuLibrary.iml" filepath="$PROJECT_DIR$/flotingMenuLibrary/flotingMenuLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gradle.iml" filepath="$PROJECT_DIR$/gradle.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/memories/memories.iml" filepath="$PROJECT_DIR$/memories/memories.iml" />
     </modules>

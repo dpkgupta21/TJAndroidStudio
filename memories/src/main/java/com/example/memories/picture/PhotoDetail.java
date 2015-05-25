@@ -21,7 +21,6 @@ import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Picture;
-import com.example.memories.models.Video;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
@@ -147,8 +146,10 @@ public class PhotoDetail extends Activity {
         }
         if(profileImgPath != null) {
             try {
-                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
-                mProfileImg.setImageBitmap(bitmap);
+                if(profileImgPath != null) {
+                    Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
+                    mProfileImg.setImageBitmap(bitmap);
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

@@ -121,11 +121,11 @@ public class PullContactsService extends IntentService {
                         allEmailPhoneList.add((emailContact != null) ? emailContact : phone);
                         // allEmailPhoneList.add(emailContact);
 
-                        Log.d(TAG, "-------------------------");
+                        /*Log.d(TAG, "-------------------------");
                         Log.d(TAG, "Id :" + nameCount);
                         Log.d(TAG, "Name : " + name);
                         Log.d(TAG, "Phone : " + phone);
-                        Log.d(TAG, "Email : " + emailContact);
+                        Log.d(TAG, "Email : " + emailContact);*/
                         nameCount++;
                     } else {
                         noNameCount++;
