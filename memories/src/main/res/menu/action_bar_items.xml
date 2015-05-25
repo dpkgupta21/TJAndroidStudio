@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Search Widget -->
-    <item
-        android:id="@+id/action_search"
-        android:actionViewClass="android.widget.SearchView"
-        android:icon="@drawable/abc_ab_bottom_solid_dark_holo"
-        android:showAsAction="ifRoom"
-        android:title="@string/default_string" />
+    <!--<item-->
+    <!--android:id="@+id/action_search"-->
+    <!--android:actionViewClass="android.widget.SearchView"-->
+    <!--android:icon="@drawable/seo"-->
+    <!--android:showAsAction="ifRoom"-->
+    <!--android:title="@string/default_string" />-->
 
     <!-- Logout Icon -->
     <item

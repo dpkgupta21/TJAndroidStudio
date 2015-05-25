@@ -48,7 +48,7 @@ public class JourneyDataSource {
     }
 
     public static String getCurrentJourney(Context mContext) {
-        String currentJourneyId;
+        String currentJourneyId = null;
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
                 + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_ACTIVE + "'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(mContext).getReadableDatabase();
@@ -69,7 +69,7 @@ public class JourneyDataSource {
 
     }
 
-    public static Journey getJourneyById(Context context, String journeyId){
+    public static Journey getJourneyById(Context context, String journeyId) {
         Log.d(TAG, "inside getJourneyById");
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
@@ -82,7 +82,7 @@ public class JourneyDataSource {
         return journeyList.get(0);
     }
 
-    public static List<Journey> getPendingJourneys(Context context){
+    public static List<Journey> getPendingJourneys(Context context) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
                 + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_PENDING + "'";
@@ -93,11 +93,11 @@ public class JourneyDataSource {
         return journeyList;
     }
 
-    private static List<Journey> getJourneys(Context context, Cursor cursor){
-        List<Journey> journeyList =  new ArrayList<Journey>();
-        if(cursor.moveToFirst()){
+    private static List<Journey> getJourneys(Context context, Cursor cursor) {
+        List<Journey> journeyList = new ArrayList<Journey>();
+        if (cursor.moveToFirst()) {
             Journey journey;
-            while(!cursor.isAfterLast()){
+            while (!cursor.isAfterLast()) {
                 journey = new Journey();
                 journey.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER)));
                 journey.setName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_NAME)));
@@ -153,6 +153,7 @@ public class JourneyDataSource {
             Log.d(TAG, "buddies List " + cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS)));
             buddyIds = buddies.split(",");
         }
+        Log.d(TAG, "buddy ids are " + buddyIds);
         cursor.close();
         db.close();
         return buddyIds;

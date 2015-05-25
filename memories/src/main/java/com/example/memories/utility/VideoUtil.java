@@ -46,6 +46,38 @@ public class VideoUtil {
         task.execute();
     }
 
+    public static void createNewVideoFromServer(final Context context, final Video video, String thumbUrl) {
+        final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "/vid_" + System.currentTimeMillis() + ".mp4";
+        if (thumbUrl != null) {
+            ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap bitmap) {
+                    FileOutputStream out = null;
+                    try {
+                        out = new FileOutputStream(imagePath);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        video.setLocalThumbPath(imagePath);
+                        VideoDataSource.createVideo(video, context);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (out != null) {
+                                out.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }, 0, 0, null, new Response.ErrorListener() {
+                public void onErrorResponse(VolleyError error) {
+                }
+            });
+            AppController.getInstance().addToRequestQueue(request);
+        }
+    }
+
     private class DownloadTask extends AsyncTask<String, Integer, String> {
 
         Context context;
@@ -114,38 +146,6 @@ public class VideoUtil {
                 context.startActivity(mediaIntent);
 //                VideoDataSource.createVideo(video, context);
             }
-        }
-    }
-
-    public static void createNewVideoFromServer(final Context context, final Video video, String thumbUrl){
-        final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "/vid_" + System.currentTimeMillis() + ".mp4";
-        if (thumbUrl != null) {
-            ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
-                @Override
-                public void onResponse(Bitmap bitmap) {
-                    FileOutputStream out = null;
-                    try {
-                        out = new FileOutputStream(imagePath);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                        video.setLocalThumbPath(imagePath);
-                        VideoDataSource.createVideo(video, context);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            if (out != null) {
-                                out.close();
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }, 0, 0, null, new Response.ErrorListener() {
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
-            AppController.getInstance().addToRequestQueue(request);
         }
     }
 

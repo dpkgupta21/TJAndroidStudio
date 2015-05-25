@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.example.memories.SQLitedatabase.CheckinDataSource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CheckIn extends Memories {

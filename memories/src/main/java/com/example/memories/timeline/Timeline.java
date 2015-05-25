@@ -14,18 +14,11 @@ import com.example.memories.BaseActivity;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.MemoriesDataSource;
 import com.example.memories.models.Memories;
-import com.example.memories.retrofit.StringConverter;
-import com.example.memories.retrofit.TravelJarServices;
 import com.example.memories.timeline.adapters.TimeLineAdapter;
-import com.example.memories.utility.Constants;
 import com.example.memories.utility.SessionManager;
 import com.example.memories.utility.TJPreferences;
 
 import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 
 public class Timeline extends BaseActivity {
 

@@ -68,7 +68,7 @@ public class PictureUtilities {
         return imagePath;
     }
 
-    public static void createNewPicFromServer(final Context context, final Picture pic, String thumbUrl){
+    public static void createNewPicFromServer(final Context context, final Picture pic, String thumbUrl) {
         final String imagePath = Constants.TRAVELJAR_FOLDER_PICTURE + "/thumb_" + System.currentTimeMillis() + ".jpg";
         if (thumbUrl != null) {
             ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
@@ -165,7 +165,7 @@ public class PictureUtilities {
 				TJPreferences.getApiKey(context)),
 				new TypedString(TJPreferences.getUserId(context)),
 				new TypedFile("image*//*",
-				new File(picture.getDataLocalURL())),
+                new File(picture.getDataLocalURL())),
 				new Callback<String>() {
 					@Override
 					public void success(String str, retrofit.client.Response response) {

@@ -21,7 +21,6 @@ import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Picture;
-import com.example.memories.models.Video;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
@@ -102,7 +101,7 @@ public class PhotoDetail extends Activity {
             isNewPic = true;
             imagePath = extras.getString("imagePath");
             Bitmap thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), 512, 384);
-            localThumbnailPath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" +System.currentTimeMillis()+".jpg";
+            localThumbnailPath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" + System.currentTimeMillis() + ".jpg";
             FileOutputStream out = null;
             try {
                 out = new FileOutputStream(localThumbnailPath);
@@ -129,7 +128,7 @@ public class PhotoDetail extends Activity {
         // setup Image taking path from imagePath variable
 //        try {
 //            Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, imagePath, 680, 250);
-            photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
+        photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        }
@@ -145,10 +144,12 @@ public class PhotoDetail extends Activity {
         } else {
             profileImgPath = TJPreferences.getProfileImgPath(this);
         }
-        if(profileImgPath != null) {
+        if (profileImgPath != null) {
             try {
-                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
-                mProfileImg.setImageBitmap(bitmap);
+                if (profileImgPath != null) {
+                    Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
+                    mProfileImg.setImageBitmap(bitmap);
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -172,9 +173,9 @@ public class PhotoDetail extends Activity {
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(likedBy == null){
+                if (likedBy == null) {
                     likedBy = new ArrayList<String>();
-                    if(mPicture.getLikedBy() != null) {
+                    if (mPicture.getLikedBy() != null) {
                         String array[] = mPicture.getLikedBy().split(",");
                         for (String s : array) {
                             likedBy.add(s);
@@ -196,7 +197,7 @@ public class PhotoDetail extends Activity {
                     finalValue = Joiner.on(",").join(likedBy);
                 }
                 mPicture.setLikedBy(finalValue);
-                if(!isNewPic) {
+                if (!isNewPic) {
                     mPicture.updateLikedBy(PhotoDetail.this, mPicture.getId(), finalValue);
                 }
             }
@@ -206,7 +207,7 @@ public class PhotoDetail extends Activity {
     private void saveAndUploadPic() {
         Log.d(TAG, "creating a new picture in local DB");
 
-        if(likedBy != null) {
+        if (likedBy != null) {
             mPicture.setLikedBy(Joiner.on(",").join(likedBy));
         }
         mPicture.setCaption(caption.getText().toString());

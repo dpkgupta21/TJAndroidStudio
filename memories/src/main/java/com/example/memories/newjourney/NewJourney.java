@@ -16,7 +16,7 @@ import com.example.memories.timeline.Timeline;
 
 import java.util.List;
 
-public class NewJourney extends Activity implements CustomResultReceiver.Receiver{
+public class NewJourney extends Activity implements CustomResultReceiver.Receiver {
 
     private static final String TAG = "<NewJourney>";
     private ListView mListView;
@@ -33,7 +33,7 @@ public class NewJourney extends Activity implements CustomResultReceiver.Receive
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey);
 
-        mListView = (ListView)findViewById(R.id.pendingRequestsList);
+        mListView = (ListView) findViewById(R.id.pendingRequestsList);
         mPendingJourneysList = JourneyDataSource.getPendingJourneys(this);
         mAdapter = new PendingJourneysListAdapter(this, mPendingJourneysList);
         mListView.setAdapter(mAdapter);
@@ -46,12 +46,12 @@ public class NewJourney extends Activity implements CustomResultReceiver.Receive
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        if(resultCode == REQUEST_FETCH_CONTACTS){
+        if (resultCode == REQUEST_FETCH_CONTACTS) {
             contactsFetched = true;
-        }else if(resultCode == REQUEST_FETCH_MEMORIES){
+        } else if (resultCode == REQUEST_FETCH_MEMORIES) {
             memoriesFetched = true;
         }
-        if(contactsFetched && memoriesFetched){
+        if (contactsFetched && memoriesFetched) {
             Intent i = new Intent(getApplicationContext(), Timeline.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);

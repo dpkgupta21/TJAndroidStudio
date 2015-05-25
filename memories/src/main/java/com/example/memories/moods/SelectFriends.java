@@ -24,7 +24,7 @@ public class SelectFriends extends Activity {
     public static final String TAG = "<SelectFriends>";
     GridView mGridView;
     List<String> mSelectedFriends;
-    List<Contact> mContactsList;
+    List<Contact> mContactsList = new ArrayList<Contact>();
     FriendsGridAdapter mAdapter;
 
     @Override
@@ -37,7 +37,11 @@ public class SelectFriends extends Activity {
         mSelectedFriends = getIntent().getExtras().getStringArrayList("SELECTED_FRIENDS");
         mGridView = (GridView) findViewById(R.id.friends_list);
 
-        mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
+        if (mSelectedFriends == null) {
+            mContactsList = new ArrayList<Contact>();
+        } else if (mSelectedFriends.size() > 0) {
+            mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
+        }
         mAdapter = new FriendsGridAdapter(this, mContactsList);
         mGridView.setAdapter(mAdapter);
 
@@ -80,14 +84,14 @@ public class SelectFriends extends Activity {
                 for (Contact contact : mContactsList) {
                     if (!contact.isSelected()) {
                         mSelectedFriends.remove(contact.getIdOnServer());
-                    }else{
-                        if(!mSelectedFriends.contains(contact.getIdOnServer())){
+                    } else {
+                        if (!mSelectedFriends.contains(contact.getIdOnServer())) {
                             mSelectedFriends.add(contact.getIdOnServer());
                         }
                     }
                 }
                 Intent returnIntent = new Intent();
-                returnIntent.putStringArrayListExtra("SELECTED_FRIENDS", (ArrayList<String>)mSelectedFriends);
+                returnIntent.putStringArrayListExtra("SELECTED_FRIENDS", (ArrayList<String>) mSelectedFriends);
                 setResult(RESULT_OK, returnIntent);
                 finish();
                 return true;

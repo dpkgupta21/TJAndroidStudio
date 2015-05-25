@@ -108,7 +108,7 @@ public class PictureDataSource {
         db.close();
     }
 
-    public static void updatePicLocalPath(Context context, String newPath, String picId){
+    public static void updatePicLocalPath(Context context, String newPath, String picId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.PICTURE_COLUMN_DATALOCALURL, newPath);

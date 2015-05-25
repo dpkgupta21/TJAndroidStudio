@@ -16,16 +16,16 @@ ADDED from AndroidManifest.xml:2:1
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
 MERGED from TJAndroidStudio:library:unspecified:7:5
-MERGED from com.android.support:support-v4:21.0.3:15:5
+MERGED from com.android.support:support-v4:22.1.0:20:5
 MERGED from TJAndroidStudio:flotingMenuLibrary:unspecified:7:5
-MERGED from com.android.support:support-v4:21.0.3:15:5
-MERGED from com.android.support:appcompat-v7:19.1.0:18:5
-MERGED from com.android.support:support-v4:21.0.3:15:5
-MERGED from com.android.support:support-v4:21.0.3:15:5
-MERGED from com.android.support:appcompat-v7:19.1.0:18:5
-MERGED from com.android.support:support-v4:21.0.3:15:5
-MERGED from com.google.android.gms:play-services:5.0.89:15:5
-MERGED from com.android.support:support-v4:21.0.3:15:5
+MERGED from com.android.support:support-v4:22.1.0:20:5
+MERGED from com.android.support:appcompat-v7:22.1.0:20:5
+MERGED from com.android.support:support-v4:22.1.0:20:5
+MERGED from com.android.support:support-v4:22.1.0:20:5
+MERGED from com.android.support:appcompat-v7:22.1.0:20:5
+MERGED from com.android.support:support-v4:22.1.0:20:5
+MERGED from com.google.android.gms:play-services:6.1.71:15:5
+MERGED from com.android.support:support-v4:22.1.0:20:5
 	android:targetSdkVersion
 		ADDED from AndroidManifest.xml:9:9
 		INJECTED from AndroidManifest.xml:0:0
@@ -86,16 +86,16 @@ ADDED from AndroidManifest.xml:26:5
 		ADDED from AndroidManifest.xml:26:22
 application
 ADDED from AndroidManifest.xml:28:5
-MERGED from com.android.support:support-v4:21.0.3:16:5
+MERGED from com.android.support:support-v4:22.1.0:22:5
 MERGED from TJAndroidStudio:flotingMenuLibrary:unspecified:11:5
-MERGED from com.android.support:support-v4:21.0.3:16:5
-MERGED from com.android.support:appcompat-v7:19.1.0:19:5
-MERGED from com.android.support:support-v4:21.0.3:16:5
-MERGED from com.android.support:support-v4:21.0.3:16:5
-MERGED from com.android.support:appcompat-v7:19.1.0:19:5
-MERGED from com.android.support:support-v4:21.0.3:16:5
-MERGED from com.google.android.gms:play-services:5.0.89:16:5
-MERGED from com.android.support:support-v4:21.0.3:16:5
+MERGED from com.android.support:support-v4:22.1.0:22:5
+MERGED from com.android.support:appcompat-v7:22.1.0:22:5
+MERGED from com.android.support:support-v4:22.1.0:22:5
+MERGED from com.android.support:support-v4:22.1.0:22:5
+MERGED from com.android.support:appcompat-v7:22.1.0:22:5
+MERGED from com.android.support:support-v4:22.1.0:22:5
+MERGED from com.google.android.gms:play-services:6.1.71:16:5
+MERGED from com.android.support:support-v4:22.1.0:22:5
 	android:label
 		ADDED from AndroidManifest.xml:32:9
 	android:allowBackup
@@ -268,91 +268,87 @@ ADDED from AndroidManifest.xml:119:9
 		ADDED from AndroidManifest.xml:121:13
 	android:name
 		ADDED from AndroidManifest.xml:120:13
-activity#com.example.memories.audio.CaptureVoiceActivity
+activity#com.example.memories.audio.AudioDetail
 ADDED from AndroidManifest.xml:122:9
 	android:label
 		ADDED from AndroidManifest.xml:124:13
 	android:name
 		ADDED from AndroidManifest.xml:123:13
-activity#com.example.memories.audio.AudioDetail
+activity#com.example.memories.video.CaptureVideo
 ADDED from AndroidManifest.xml:126:9
 	android:label
 		ADDED from AndroidManifest.xml:128:13
 	android:name
 		ADDED from AndroidManifest.xml:127:13
-activity#com.example.memories.video.CaptureVideo
-ADDED from AndroidManifest.xml:130:9
-	android:label
-		ADDED from AndroidManifest.xml:132:13
-	android:name
-		ADDED from AndroidManifest.xml:131:13
 activity#com.example.memories.video.VideoDetail
-ADDED from AndroidManifest.xml:133:9
+ADDED from AndroidManifest.xml:129:9
 	android:label
-		ADDED from AndroidManifest.xml:135:13
+		ADDED from AndroidManifest.xml:131:13
 	android:name
-		ADDED from AndroidManifest.xml:134:13
+		ADDED from AndroidManifest.xml:130:13
 activity#com.example.memories.note.CreateNotes
-ADDED from AndroidManifest.xml:136:9
+ADDED from AndroidManifest.xml:132:9
 	android:label
-		ADDED from AndroidManifest.xml:138:13
+		ADDED from AndroidManifest.xml:134:13
 	android:name
-		ADDED from AndroidManifest.xml:137:13
-activity#com.android.music.MediaPlaybackActivity
-ADDED from AndroidManifest.xml:139:9
-	android:name
-		ADDED from AndroidManifest.xml:139:19
+		ADDED from AndroidManifest.xml:133:13
 activity#com.example.memories.moods.SelectFriends
-ADDED from AndroidManifest.xml:140:9
+ADDED from AndroidManifest.xml:135:9
 	android:label
-		ADDED from AndroidManifest.xml:142:13
+		ADDED from AndroidManifest.xml:137:13
 	android:name
-		ADDED from AndroidManifest.xml:141:13
+		ADDED from AndroidManifest.xml:136:13
 activity#com.example.memories.retrofit.MultiPartUpload
-ADDED from AndroidManifest.xml:144:9
+ADDED from AndroidManifest.xml:139:9
 	android:label
-		ADDED from AndroidManifest.xml:146:13
+		ADDED from AndroidManifest.xml:141:13
 	android:name
-		ADDED from AndroidManifest.xml:145:13
+		ADDED from AndroidManifest.xml:140:13
 service#com.example.memories.services.PullContactsService
-ADDED from AndroidManifest.xml:148:9
+ADDED from AndroidManifest.xml:143:9
 	android:exported
-		ADDED from AndroidManifest.xml:150:13
+		ADDED from AndroidManifest.xml:145:13
 	android:name
+		ADDED from AndroidManifest.xml:144:13
+service#com.example.memories.services.PullMemoriesService
+ADDED from AndroidManifest.xml:147:9
+	android:exported
 		ADDED from AndroidManifest.xml:149:13
+	android:name
+		ADDED from AndroidManifest.xml:148:13
 meta-data#com.google.android.gms.version
-ADDED from AndroidManifest.xml:152:9
+ADDED from AndroidManifest.xml:151:9
 	android:value
-		ADDED from AndroidManifest.xml:154:13
-	android:name
 		ADDED from AndroidManifest.xml:153:13
+	android:name
+		ADDED from AndroidManifest.xml:152:13
 meta-data#com.facebook.sdk.ApplicationId
-ADDED from AndroidManifest.xml:155:9
+ADDED from AndroidManifest.xml:154:9
 	android:value
-		ADDED from AndroidManifest.xml:157:13
-	android:name
 		ADDED from AndroidManifest.xml:156:13
+	android:name
+		ADDED from AndroidManifest.xml:155:13
 receiver#com.example.memories.gcm.GcmBroadcastReceiver
-ADDED from AndroidManifest.xml:165:9
+ADDED from AndroidManifest.xml:164:9
 	android:permission
-		ADDED from AndroidManifest.xml:167:13
-	android:name
 		ADDED from AndroidManifest.xml:166:13
+	android:name
+		ADDED from AndroidManifest.xml:165:13
 intent-filter#com.example.memories+com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:168:13
+ADDED from AndroidManifest.xml:167:13
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from AndroidManifest.xml:171:17
+ADDED from AndroidManifest.xml:170:17
 	android:name
-		ADDED from AndroidManifest.xml:171:25
+		ADDED from AndroidManifest.xml:170:25
 action#com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:173:17
+ADDED from AndroidManifest.xml:172:17
 	android:name
-		ADDED from AndroidManifest.xml:173:25
+		ADDED from AndroidManifest.xml:172:25
 category#com.example.memories
-ADDED from AndroidManifest.xml:175:17
+ADDED from AndroidManifest.xml:174:17
 	android:name
-		ADDED from AndroidManifest.xml:175:27
+		ADDED from AndroidManifest.xml:174:27
 service#com.example.memories.gcm.GcmIntentService
-ADDED from AndroidManifest.xml:185:9
+ADDED from AndroidManifest.xml:184:9
 	android:name
-		ADDED from AndroidManifest.xml:185:18
+		ADDED from AndroidManifest.xml:184:18

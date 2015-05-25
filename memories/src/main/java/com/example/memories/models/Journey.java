@@ -1,6 +1,5 @@
 package com.example.memories.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Journey {
@@ -85,10 +84,11 @@ public class Journey {
         this.buddies = buddies;
     }
 
-    public void setJourneyStatus(String journeyStatus){
-        this.journeyStatus = journeyStatus;
-    }
     public String getJourneyStatus() {
         return journeyStatus;
+    }
+
+    public void setJourneyStatus(String journeyStatus) {
+        this.journeyStatus = journeyStatus;
     }
 }

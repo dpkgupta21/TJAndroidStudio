@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,14 +17,11 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
-import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Audio;
 import com.example.memories.models.Contact;
-import com.example.memories.models.Picture;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
-import com.example.memories.utility.PictureUtilities;
 import com.example.memories.utility.TJPreferences;
 import com.google.common.base.Joiner;
 
@@ -132,9 +128,9 @@ public class AudioDetail extends Activity {
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(likedBy == null){
+                if (likedBy == null) {
                     likedBy = new ArrayList<String>();
-                    if(mAudio.getLikedBy() != null) {
+                    if (mAudio.getLikedBy() != null) {
                         String array[] = mAudio.getLikedBy().split(",");
                         for (String s : array) {
                             likedBy.add(s);
@@ -156,7 +152,7 @@ public class AudioDetail extends Activity {
                     finalValue = Joiner.on(",").join(likedBy);
                 }
                 mAudio.setLikedBy(finalValue);
-                if(!isNewAudio) {
+                if (!isNewAudio) {
                     mAudio.updateLikedBy(AudioDetail.this, mAudio.getId(), finalValue);
                 }
             }
@@ -166,7 +162,7 @@ public class AudioDetail extends Activity {
     private void saveAndUploadPic() {
         Log.d(TAG, "creating a new audio in local DB");
 
-        if(likedBy != null) {
+        if (likedBy != null) {
             mAudio.setLikedBy(Joiner.on(",").join(likedBy));
         }
 //        mAudio.setCaption(caption.getText().toString());

@@ -46,11 +46,11 @@
         android:layout_marginTop="10dp">
 
         <TextView
+            android:id="@+id/no_likes"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:text="5"
-            android:textSize="16sp"
-            android:id="@+id/no_likes" />
+            android:textSize="16sp" />
 
         <ImageButton
             android:id="@+id/favBtn"

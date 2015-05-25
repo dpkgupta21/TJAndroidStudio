@@ -11,6 +11,8 @@ import android.os.ResultReceiver;
 
 public class CustomResultReceiver extends ResultReceiver {
 
+    private Receiver mReceiver;
+
     /**
      * Create a new ResultReceive to receive results.  Your
      * {@link #onReceiveResult} method will be called from the thread running
@@ -27,8 +29,6 @@ public class CustomResultReceiver extends ResultReceiver {
             mReceiver.onReceiveResult(resultCode, resultData);
         }
     }
-
-    private Receiver mReceiver;
 
     public void setReceiver(Receiver receiver) {
         mReceiver = receiver;

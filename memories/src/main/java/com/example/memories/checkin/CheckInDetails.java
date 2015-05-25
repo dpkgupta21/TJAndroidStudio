@@ -21,12 +21,10 @@ import com.example.memories.SQLitedatabase.CheckinDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.models.CheckIn;
-import com.example.memories.models.Contact;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.CheckinUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
-import com.google.common.base.Joiner;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -56,139 +54,6 @@ public class CheckInDetails extends Activity {
     private static Uri getOutputMediaFileUri(int type) {
         Log.d(TAG, "1");
         return Uri.fromFile(getOutputMediaFile(type));
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.checkin_details);
-
-        // get the name of the place
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            placeName = extras.getString("placeName");
-            lat = extras.getDouble("latitude");
-            longi = extras.getDouble("longitude");
-            Log.d(TAG, "latitude, longitude " + lat + " " + longi);
-        }
-        //Get all the friends
-        mSelectedFriends = Arrays.asList(JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this)));
-
-        // get the friends list
-/*        Integer buddyCount = getResources().getStringArray(R.array.journey_buddies_list).length - 1;
-        String buddiesList = getResources().getStringArray(R.array.journey_buddies_list)[0]
-                + " and " + buddyCount.toString() + " others";*/
-
-        // update the textview in the layout
-        checkinDetailsCaption = (EditText) findViewById(R.id.checkin_details_caption);
-        checkinDetailsPlace = (TextView) findViewById(R.id.checkin_details_location);
-        checkinDetailsBuddies = (TextView) findViewById(R.id.checkin_friends);
-
-        checkinDetailsPlace.append(placeName);
-        setSelectedFriends();
-
-    }
-
-    private void setSelectedFriends(){
-        if (mSelectedFriends.size() == 0) {
-            checkinDetailsBuddies.setText("- with ");
-        } else if (mSelectedFriends.size() == 1) {
-            checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName());
-        } else {
-            checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName() + " and " + (mSelectedFriends.size() - 1) + " others");
-        }
-    }
-
-
-    private void createNewCheckinIntoDB() {
-        Log.d(TAG, "creating a new checkin in local DB");
-
-        String j_id = TJPreferences.getActiveJourneyId(this);
-        String user_id = TJPreferences.getUserId(this);
-
-        CheckIn newCheckIn = new CheckIn(null, j_id, HelpMe.CHECKIN_TYPE, checkinDetailsCaption
-                .getText().toString().trim(), lat, longi, placeName, null, mSelectedFriends, user_id,
-                HelpMe.getCurrentTime(), HelpMe.getCurrentTime());
-
-        CheckinDataSource.createCheckIn(newCheckIn, this);
-        CheckinUtil.uploadCheckin(newCheckIn, this);
-    }
-
-
-    public void goToPlaceList(View v) {
-        Intent i = new Intent(getApplicationContext(), CheckInPlacesList.class);
-        i.putExtra("placeName", placeName);
-        startActivity(i);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_with_done_only, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_done:
-                Log.d(TAG, "done clicked!");
-                createNewCheckinIntoDB();
-                Intent i = new Intent(getBaseContext(), Timeline.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-    public void goToBuddyList(View v) {
-        Intent intent = new Intent(getApplicationContext(), CheckInFriendsList.class);
-        intent.putStringArrayListExtra("SELECTED_FRIENDS", new ArrayList<String>(mSelectedFriends));
-        startActivityForResult(intent, REQUEST_CODE_SELECT_FRIENDS);
-    }
-
-    public void goToMoods(View v) {
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "6" + requestCode + "--" + resultCode + "--" + data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // Image captured and saved to fileUri specified in the Intent
-                ImageButton img = (ImageButton) findViewById(R.id.checkin_details_image);
-                Log.d(TAG, fileUri.toString());
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                img.setImageBitmap(photo);
-
-            } else if (resultCode == RESULT_CANCELED) {
-                // User cancelled the image capture
-            } else {
-                // Image capture failed, advise user
-            }
-        } else if (requestCode == REQUEST_CODE_SELECT_FRIENDS) {
-            if (resultCode == RESULT_OK) {
-                mSelectedFriends = data.getStringArrayListExtra("SELECTED_FRIENDS");
-                setSelectedFriends();
-            }
-        }
-    }
-
-
-    // CAMERA METHODS
-    // -----------------------------------------------------------------
-    public void goToCamera(View v) {
-        // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // create a file to save the image
-        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-        // start the image capture Intent
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     /**
@@ -224,6 +89,141 @@ public class CheckInDetails extends Activity {
                 + ".jpg");
 
         return mediaFile;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.checkin_details);
+
+        // get the name of the place
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            placeName = extras.getString("placeName");
+            lat = extras.getDouble("latitude");
+            longi = extras.getDouble("longitude");
+            Log.d(TAG, "latitude, longitude " + lat + " " + longi);
+        }
+        //Get all the friends
+        String buddyIds[] = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        if (buddyIds != null) {
+            mSelectedFriends = Arrays.asList(buddyIds);
+        }
+
+        // get the friends list
+/*        Integer buddyCount = getResources().getStringArray(R.array.journey_buddies_list).length - 1;
+        String buddiesList = getResources().getStringArray(R.array.journey_buddies_list)[0]
+                + " and " + buddyCount.toString() + " others";*/
+
+        // update the textview in the layout
+        checkinDetailsCaption = (EditText) findViewById(R.id.checkin_details_caption);
+        checkinDetailsPlace = (TextView) findViewById(R.id.checkin_details_location);
+        checkinDetailsBuddies = (TextView) findViewById(R.id.checkin_friends);
+
+        checkinDetailsPlace.append(placeName);
+        setSelectedFriends();
+
+    }
+
+    private void setSelectedFriends() {
+        if (mSelectedFriends != null) {
+            if (mSelectedFriends.size() == 0) {
+                checkinDetailsBuddies.setText("- with ");
+            } else if (mSelectedFriends.size() == 1) {
+                Log.d(TAG, "selected friends are " + mSelectedFriends.get(0) + "abc");
+                checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName());
+            } else {
+                checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName() + " and " + (mSelectedFriends.size() - 1) + " others");
+            }
+        }
+    }
+
+    private void createNewCheckinIntoDB() {
+        Log.d(TAG, "creating a new checkin in local DB");
+
+        String j_id = TJPreferences.getActiveJourneyId(this);
+        String user_id = TJPreferences.getUserId(this);
+
+        CheckIn newCheckIn = new CheckIn(null, j_id, HelpMe.CHECKIN_TYPE, checkinDetailsCaption
+                .getText().toString().trim(), lat, longi, placeName, null, mSelectedFriends, user_id,
+                HelpMe.getCurrentTime(), HelpMe.getCurrentTime());
+
+        CheckinDataSource.createCheckIn(newCheckIn, this);
+        CheckinUtil.uploadCheckin(newCheckIn, this);
+    }
+
+    public void goToPlaceList(View v) {
+        Intent i = new Intent(getApplicationContext(), CheckInPlacesList.class);
+        i.putExtra("placeName", placeName);
+        startActivity(i);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar_with_done_only, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+            case R.id.action_done:
+                Log.d(TAG, "done clicked!");
+                createNewCheckinIntoDB();
+                Intent i = new Intent(getBaseContext(), Timeline.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void goToBuddyList(View v) {
+        Intent intent = new Intent(getApplicationContext(), CheckInFriendsList.class);
+        intent.putStringArrayListExtra("SELECTED_FRIENDS", mSelectedFriends == null ? null : new ArrayList<String>(mSelectedFriends));
+        startActivityForResult(intent, REQUEST_CODE_SELECT_FRIENDS);
+    }
+
+    public void goToMoods(View v) {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "6" + requestCode + "--" + resultCode + "--" + data);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Image captured and saved to fileUri specified in the Intent
+                ImageButton img = (ImageButton) findViewById(R.id.checkin_details_image);
+                Log.d(TAG, fileUri.toString());
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                img.setImageBitmap(photo);
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // User cancelled the image capture
+            } else {
+                // Image capture failed, advise user
+            }
+        } else if (requestCode == REQUEST_CODE_SELECT_FRIENDS) {
+            if (resultCode == RESULT_OK) {
+                mSelectedFriends = data.getStringArrayListExtra("SELECTED_FRIENDS");
+                setSelectedFriends();
+            }
+        }
+    }
+
+    // CAMERA METHODS
+    // -----------------------------------------------------------------
+    public void goToCamera(View v) {
+        // create Intent to take a picture and return control to the calling application
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // create a file to save the image
+        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+        // start the image capture Intent
+        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
 }

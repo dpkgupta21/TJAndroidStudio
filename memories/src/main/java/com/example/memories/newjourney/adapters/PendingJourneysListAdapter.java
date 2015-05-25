@@ -27,7 +27,7 @@ public class PendingJourneysListAdapter extends BaseAdapter {
     static Context mContext;
     List<Journey> mJourneyList;
 
-    public PendingJourneysListAdapter(Context context, List<Journey> journeyList){
+    public PendingJourneysListAdapter(Context context, List<Journey> journeyList) {
         mContext = context;
         mJourneyList = journeyList;
     }
@@ -49,8 +49,8 @@ public class PendingJourneysListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
-            LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.pending_request_list_item, null);
         }
         final Journey journey = mJourneyList.get(position);

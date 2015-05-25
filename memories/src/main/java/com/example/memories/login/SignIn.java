@@ -34,19 +34,18 @@ import org.json.JSONObject;
 
 import java.util.regex.Pattern;
 
-public class SignIn extends Activity implements CustomResultReceiver.Receiver{
+public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
     protected static final String TAG = null;
+    public CustomResultReceiver mReceiver;
     private EditText txtEmailAddress;
     private EditText txtPassword;
     private SessionManager session;
-
-    private boolean contactsFetched;
-    private boolean memoriesFetched;
+    private boolean contactsFetched = false;
+    private boolean memoriesFetched = false;
     private int REQUEST_FETCH_CONTACTS = 1;
     private int REQUEST_FETCH_MEMORIES = 2;
-
-    public CustomResultReceiver mReceiver;
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +70,8 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
         txtPassword = (EditText) findViewById(R.id.signInPasswordTxt);
         autoPopulateEmail(txtEmailAddress);
 
+        pDialog = new ProgressDialog(this);
+
     }
 
     public void goToSignUp(View v) {
@@ -86,6 +87,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
     public void signIn(View v) {
         Log.d(TAG, "signIn() method called");
 
+        pDialog.show();
         // Get username, password from EditText
         final String emailAddress = txtEmailAddress.getText().toString().trim();
         String password = txtPassword.getText().toString().trim();
@@ -97,7 +99,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
             if (emailAddress.length() > 0 && password.length() > 0) {
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(this);
-                String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=1234" ;
+                String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=1234";
                 Log.d(TAG, url);
 
                 final ProgressDialog pDialog = new ProgressDialog(this);
@@ -112,31 +114,35 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
                                 Log.d(TAG, response.toString());
                                 try {
                                     updateUserPref(response);
+                                    TJPreferences.setActiveJourneyId(SignIn.this, "9");
+                                    Log.d(TAG, "calling pullMemoriesService to fetcch all journeys and their memories");
+                                    Intent intent = new Intent(getBaseContext(), PullMemoriesService.class);
+                                    intent.putExtra("RECEIVER", mReceiver);
+                                    intent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
+                                    startService(intent);
+
+                                    Log.d(TAG, "calling pullContactsService to fetcch all journeys and their memories");
                                     Intent mServiceIntent = new Intent(getBaseContext(), PullContactsService.class);
                                     mServiceIntent.putExtra("RECEIVER", mReceiver);
                                     mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_CONTACTS);
                                     startService(mServiceIntent);
 
-                                    Intent intent = new Intent(getBaseContext(), PullMemoriesService.class);
-                                    mServiceIntent.putExtra("RECEIVER", mReceiver);
-                                    mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
-                                    startService(intent);
                                 } catch (JSONException e) {
+                                    Log.d(TAG, "everything fine upto here 4");
                                     // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 }
 
                                 pDialog.hide();
                                 // Staring MainActivity
-                                Intent i = new Intent(getApplicationContext(), Timeline.class);
+/*                                Intent i = new Intent(getApplicationContext(), Timeline.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i);
+                                startActivity(i);*/
                             }
                         }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        VolleyLog.d(TAG, "Error: " + error.getMessage());
                         pDialog.hide();
                         Toast.makeText(getApplicationContext(),
                                 "Username & password donot match!", Toast.LENGTH_LONG)
@@ -189,12 +195,15 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        if(resultCode == REQUEST_FETCH_CONTACTS){
+        if (resultCode == REQUEST_FETCH_CONTACTS) {
+            Log.d(TAG, "fetch contacts service completed");
             contactsFetched = true;
-        }else if(resultCode == REQUEST_FETCH_MEMORIES){
+        } else if (resultCode == REQUEST_FETCH_MEMORIES) {
+            Log.d(TAG, "fetch memories service completed");
             memoriesFetched = true;
         }
-        if(contactsFetched && memoriesFetched){
+        if (contactsFetched && memoriesFetched) {
+            pDialog.dismiss();
             Intent i = new Intent(getApplicationContext(), Timeline.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);

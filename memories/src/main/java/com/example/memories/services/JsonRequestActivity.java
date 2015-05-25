@@ -50,7 +50,7 @@ public class JsonRequestActivity {
     private static void makeJsonObjReq() {
         // showProgressDialog();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET,
-                Constants.URL_FS_VENUE_EXPLORE, null, new Response.Listener<JSONObject>() {
+                Constants.URL_FS_VENUE_EXPLORE, (String) null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

@@ -58,7 +58,7 @@ public class GcmIntentService extends IntentService {
 
         if (!extras.isEmpty()) { // has effect of unparcelling Bundle
             /*
-			 * Filter messages based on message type. Since it is likely that
+             * Filter messages based on message type. Since it is likely that
 			 * GCM will be extended in the future with new message types, just
 			 * ignore any message types you're not interested in, or that you
 			 * don't recognize.
@@ -126,7 +126,7 @@ public class GcmIntentService extends IntentService {
 
                 journeyId = bundle.get("id").toString();
                 Log.d(TAG, "bundle buddy ids are " + bundle.get("buddy_ids"));
-                String buddyIds = (String)bundle.get("buddy_ids");
+                String buddyIds = (String) bundle.get("buddy_ids");
                 buddyIds = buddyIds.replace("[", "");
                 buddyIds = buddyIds.replace("]", "");
 

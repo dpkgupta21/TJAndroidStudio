@@ -12,7 +12,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
-import com.example.memories.SQLitedatabase.NoteDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.TJPreferences;
@@ -31,12 +30,12 @@ import java.util.Map;
 /**
  * Created by ankit on 20/5/15.
  */
-public class PullBuddiesService extends IntentService{
+public class PullBuddiesService extends IntentService {
 
     private static final String TAG = "PULL_BUDDIES_SERVICE";
     List<String> buddyIds;
 
-    public PullBuddiesService(){
+    public PullBuddiesService() {
         super("pull buddies service");
     }
 
@@ -45,18 +44,18 @@ public class PullBuddiesService extends IntentService{
         fetchBuddies();
     }
 
-    public int onStartCommand(Intent intent, int flags, int startId){
+    public int onStartCommand(Intent intent, int flags, int startId) {
         buddyIds = intent.getStringArrayListExtra("BUDDY_IDS");
         return START_STICKY;
     }
 
-    public void fetchBuddies(){
+    public void fetchBuddies() {
         String requestUrl;
         CustomJsonRequest jsonRequest;
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("api_key", TJPreferences.getApiKey(this));
-        for(String s : buddyIds){
+        for (String s : buddyIds) {
             requestUrl = "https://www.traveljar.in/api/v1/users/" + s;
             jsonRequest = new CustomJsonRequest(Request.Method.POST, requestUrl, params,
                     new Response.Listener<JSONObject>() {

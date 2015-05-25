@@ -50,23 +50,23 @@ public class ContactDataSource {
         return contacts;
     }
 
-    public static List<String> getNonExistingContacts(Context context, List<String> contactIds){
+    public static List<String> getNonExistingContacts(Context context, List<String> contactIds) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         List<String> existingContacts = new ArrayList<String>();
-        String query = "SELECT "+ MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER +" FROM " + MySQLiteHelper.TABLE_CONTACT +
+        String query = "SELECT " + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " FROM " + MySQLiteHelper.TABLE_CONTACT +
                 " WHERE " + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " IN (" + makePlaceholders(contactIds.size()) + ")";
         String[] array = new String[contactIds.size()];
         Cursor cursor = db.rawQuery(query, contactIds.toArray(array));
         String contactId;
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 contactId = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER));
                 existingContacts.add(contactId);
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         List<String> nonExistingContactsList = new ArrayList<String>();
-        for(String id : contactIds){
-            if(!existingContacts.contains(id)){
+        for (String id : contactIds) {
+            if (!existingContacts.contains(id)) {
                 nonExistingContactsList.add(id);
             }
         }
@@ -74,7 +74,7 @@ public class ContactDataSource {
     }
 
     // This method will take a list of contact Ids and return a List of Contacts corresponding to those Ids
-    public static List<Contact> getContactsListFromIds(Context context, List<String> contactIds){
+    public static List<Contact> getContactsListFromIds(Context context, List<String> contactIds) {
         Log.d(TAG, "fetching contacts list corresponding to contact ids list");
         String[] ids = new String[contactIds.size()];
         ids = contactIds.toArray(ids);
@@ -91,7 +91,7 @@ public class ContactDataSource {
     }
 
     public static List<Contact> getContactsFromCurrentJourney(Context context) {
-        Log.d(TAG, "fetch contacts from current journey" );
+        Log.d(TAG, "fetch contacts from current journey");
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         String[] buddyIds = JourneyDataSource.getBuddyIdsFromJourney(context,
                 TJPreferences.getActiveJourneyId(context));

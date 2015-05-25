@@ -12,12 +12,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.example.memories.R;
 import com.example.memories.models.Picture;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.PictureUtilities;
-import com.example.memories.volley.AppController;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -59,7 +57,7 @@ public class ImageCarouselAdapter extends PagerAdapter {
 
         DisplayMetrics displayMetrics = _activity.getResources().getDisplayMetrics();
 
-        if(mPictureList.get(position).getDataLocalURL() != null){
+        if (mPictureList.get(position).getDataLocalURL() != null) {
             try {
                 imgDisplay.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, mPictureList
                                 .get(position).getDataLocalURL(), displayMetrics.widthPixels,
@@ -67,7 +65,7 @@ public class ImageCarouselAdapter extends PagerAdapter {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             PictureUtilities.downloadPicFromURL(_activity, mPictureList.get(position), imgDisplay);
         }
 

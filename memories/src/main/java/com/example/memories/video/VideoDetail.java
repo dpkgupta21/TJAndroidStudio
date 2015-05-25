@@ -135,8 +135,10 @@ public class VideoDetail extends Activity {
             profileImgPath = TJPreferences.getProfileImgPath(this);
         }
         try {
-            Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
-            mProfileImg.setImageBitmap(bitmap);
+            if (profileImgPath != null) {
+                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
+                mProfileImg.setImageBitmap(bitmap);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -160,11 +162,11 @@ public class VideoDetail extends Activity {
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mVideo.getDataLocalURL() != null){
+                if (mVideo.getDataLocalURL() != null) {
                     Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(mVideo.getDataLocalURL())));
                     mediaIntent.setDataAndType(Uri.fromFile(new File(mVideo.getDataLocalURL())), "video/*");
                     startActivity(mediaIntent);
-                }else{
+                } else {
                     VideoUtil.downloadAndPlayVideo(VideoDetail.this, mVideo);
                 }
             }
@@ -175,9 +177,9 @@ public class VideoDetail extends Activity {
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(likedBy == null){
+                if (likedBy == null) {
                     likedBy = new ArrayList<String>();
-                    if(mVideo.getLikedBy() != null) {
+                    if (mVideo.getLikedBy() != null) {
                         String array[] = mVideo.getLikedBy().split(",");
                         for (String s : array) {
                             likedBy.add(s);
@@ -199,7 +201,7 @@ public class VideoDetail extends Activity {
                     finalValue = Joiner.on(",").join(likedBy);
                 }
                 mVideo.setLikedBy(finalValue);
-                if(!isNewVideo) {
+                if (!isNewVideo) {
                     mVideo.updateLikedBy(VideoDetail.this, mVideo.getId(), finalValue);
                 }
             }
@@ -208,7 +210,7 @@ public class VideoDetail extends Activity {
 
     private void saveAndUploadVideo() {
         Log.d(TAG, "creating a new video in local DB");
-        if(likedBy != null) {
+        if (likedBy != null) {
             mVideo.setLikedBy(Joiner.on(",").join(likedBy));
         }
         mVideo.setCaption(caption.getText().toString());

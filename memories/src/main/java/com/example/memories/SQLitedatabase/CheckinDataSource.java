@@ -35,7 +35,7 @@ public class CheckinDataSource {
         values.put(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE, newCheckIn.getLongitude());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_URL, newCheckIn.getCheckInPicURL());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_PLACE_NAME, newCheckIn.getCheckInPlaceName());
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_WITH, Joiner.on(",").join(newCheckIn.getCheckInWith()));
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_WITH, newCheckIn.getCheckInWith() == null ? null : Joiner.on(",").join(newCheckIn.getCheckInWith()));
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY, newCheckIn.getCreatedBy());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CREATED_AT, newCheckIn.getCreatedAt());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT, newCheckIn.getUpdatedAt());
@@ -149,7 +149,7 @@ public class CheckinDataSource {
             checkin.setCheckInPicURL(c.getString(c
                     .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_URL)));
             String list = c.getString(c.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_WITH));
-            if(list != null){
+            if (list != null) {
                 checkin.setCheckInWith(Arrays.asList(list.split(",")));
             }
             checkin.setCreatedBy(c.getString(c

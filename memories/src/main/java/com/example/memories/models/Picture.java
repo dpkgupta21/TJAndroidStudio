@@ -83,16 +83,16 @@ public class Picture extends Memories {
         return dataLocalURL;
     }
 
-    public void setPicThumbnailPath(String picLocalThumbnailPath) {
-        this.picLocalThumbnailPath = picLocalThumbnailPath;
+    public void setDataLocalURL(String dataLocalURL) {
+        this.dataLocalURL = dataLocalURL;
     }
 
     public String getPicThumbnailPath() {
         return picLocalThumbnailPath;
     }
 
-    public void setDataLocalURL(String dataLocalURL) {
-        this.dataLocalURL = dataLocalURL;
+    public void setPicThumbnailPath(String picLocalThumbnailPath) {
+        this.picLocalThumbnailPath = picLocalThumbnailPath;
     }
 
     public void updateLikedBy(Context context, String memId, String likedBy) {

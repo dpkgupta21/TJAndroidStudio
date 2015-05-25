@@ -21,7 +21,8 @@ public class Constants {
     public static final String TRAVELJAR_FOLDER_AUDIO = TRAVELJAR_FOLDER_ROOT + "/audio/";
     public static final String TRAVELJAR_FOLDER_PICTURE = TRAVELJAR_FOLDER_ROOT + "/Pictures/";
 
-    public static final String TRAVELJAR_API_BASE_URL = "https://www.traveljar.in/api/v1";
+    //public static final String TRAVELJAR_API_BASE_URL = "https://www.traveljar.in/api/v1";
+    public static final String TRAVELJAR_API_BASE_URL = "http://192.168.1.2:3000/api/v1";
 
     public static final String JOURNEY_STATUS_ACTIVE = "ACTIVE";
     public static final String JOURNEY_STATUS_PENDING = "PENDING";
@@ -37,10 +38,10 @@ public class Constants {
     public static final String API_KEY = "key";
     public static final String URL_IMAGE = "http://api.androidhive.info/volley/volley-image.jpg";
     //private final static String URL_TJ_DOMAIN = "https://www.traveljar.in/";
-    private final static String URL_TJ_DOMAIN = "http://192.168.1.2:3000/";
+    public final static String URL_TJ_DOMAIN = "http://192.168.1.2:3000/";
     public static final String URL_SIGN_IN = URL_TJ_DOMAIN + "api/v1/users/login";
     public static final String URL_SIGN_UP = URL_TJ_DOMAIN + "api/v1/users";
-    
+
     public static final String URL_CHECK_TJ_CONTACTS = URL_TJ_DOMAIN + "api/v1/users/contacts";
     public static final String URL_CREATE_JOURNEY = URL_TJ_DOMAIN + "api/v1/journeys";
 

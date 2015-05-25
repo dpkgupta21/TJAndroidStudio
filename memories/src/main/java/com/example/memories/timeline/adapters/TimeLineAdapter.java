@@ -230,7 +230,7 @@ public class TimeLineAdapter extends BaseAdapter {
                 Picture pic = (Picture) memoriesList.get(position);
                 if (pic.getDataLocalURL() != null) {
                     Log.d(TAG, "localdataUrl = " + pic.getDataLocalURL());
-                    Log.d(TAG, "pic local thumbnail is : " +pic.getPicThumbnailPath());
+                    Log.d(TAG, "pic local thumbnail is : " + pic.getPicThumbnailPath());
                     LoadBitmapFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, 256, 192, context);
 //					try {
 //						holder.timelineItemImage.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(
@@ -253,7 +253,7 @@ public class TimeLineAdapter extends BaseAdapter {
                         Audio audio = (Audio) memoriesList.get(position);
 
                         if (!isPlaying) {
-                            if(audio.getDataLocalURL() == null){
+                            if (audio.getDataLocalURL() == null) {
                                 ProgressDialog pDialog = new ProgressDialog(context);
                                 pDialog.setMessage("Loading...");
                                 pDialog.show();
@@ -292,23 +292,25 @@ public class TimeLineAdapter extends BaseAdapter {
                 Log.d(TAG, "in checkin");
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
                 String checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName();
-                Contact firstContact = ContactDataSource.getContactById(context, checkin.getCheckInWith().get(0));
-                if(firstContact != null) {
-                    if (checkin.getCheckInWith().size() == 1) {
-                        checkInStatus += " with " + firstContact.getName();
-                    } else if (checkin.getCheckInWith().size() > 1) {
-                        checkInStatus += " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
+                if (checkin.getCheckInWith() != null && checkin.getCheckInWith().size() > 0) {
+                    Contact firstContact = ContactDataSource.getContactById(context, checkin.getCheckInWith().get(0));
+                    if (firstContact != null) {
+                        if (checkin.getCheckInWith().size() == 1) {
+                            checkInStatus += " with " + firstContact.getName();
+                        } else if (checkin.getCheckInWith().size() > 1) {
+                            checkInStatus += " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
+                        }
                     }
                 }
                 holder.timelineItemCaption.setText(checkInStatus);
                 break;
 
             case 5:
-                Log.d(TAG, "in mood" );
+                Log.d(TAG, "in mood");
                 Mood mood = (Mood) memoriesList.get(position);
                 String friendMood = "";
                 Contact fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(0));
-                if(fContact != null) {
+                if (fContact != null) {
                     if (mood.getBuddyIds().size() == 1) {
                         friendMood += fContact.getName();
                     } else if (mood.getBuddyIds().size() > 1) {
@@ -326,7 +328,7 @@ public class TimeLineAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                switch (type){
+                switch (type) {
                     case HelpMe.TYPE_PICTURE:
                         intent = new Intent(context, PhotoDetail.class);
                         intent.putExtra("PICTURE_ID", memory.getId());

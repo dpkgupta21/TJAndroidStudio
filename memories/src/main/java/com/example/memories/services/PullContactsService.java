@@ -214,7 +214,6 @@ public class PullContactsService extends IntentService {
 
         for (int i = 0; i < len; i++) {
             JSONObject userItem = allUsers.getJSONObject(i);
-            userItem.get
             final String idOnServer = userItem.getString("id");
             String name = userItem.getString("name");
             String email = userItem.getString("email");

@@ -42,6 +42,57 @@ public class AudioUtil {
 
     }
 
+    // No separate thread
+    public static String saveAudio(Context context, Audio audio) {
+        InputStream input = null;
+        OutputStream output = null;
+        HttpURLConnection connection = null;
+        String fileLocation = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath() + "/aud_" + System.currentTimeMillis()
+                + ".mp3";
+        URL downloadUrl;
+        try {
+            downloadUrl = new URL(audio.getDataServerURL());
+            Log.d(TAG, "started downloading audio ");
+            connection = (HttpURLConnection) downloadUrl.openConnection();
+            connection.connect();
+
+            // expect HTTP 200 OK, so we don't mistakenly save error report
+            // instead of the file
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                return "Server returned HTTP " + connection.getResponseCode() + " "
+                        + connection.getResponseMessage();
+            }
+
+            // download the file
+            input = connection.getInputStream();
+            output = new FileOutputStream(fileLocation);
+
+            byte data[] = new byte[4096];
+            int count;
+            while ((count = input.read(data)) != -1) {
+                output.write(data, 0, count);
+            }
+            audio.setDataLocalURL(fileLocation);
+            Log.d(TAG, "download finished");
+            AudioDataSource.updateDataLocalUrl(context, audio.getId(), fileLocation);
+            Log.d(TAG, "updated audio local url in database successfully");
+        } catch (Exception e) {
+            return e.toString();
+        } finally {
+            try {
+                if (output != null)
+                    output.close();
+                if (input != null)
+                    input.close();
+            } catch (IOException ignored) {
+            }
+
+            if (connection != null)
+                connection.disconnect();
+        }
+        return fileLocation;
+    }
+
     private class DownloadTask extends AsyncTask<String, Integer, String> {
 
         Context context;
@@ -128,6 +179,7 @@ public class AudioUtil {
             entityBuilder.addTextBody("audio[user_id]", audio.getCreatedBy());
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
 
+
             String url = "Constants.URL_MEMORY_UPLOAD" + TJPreferences.getActiveJourneyId(context) + "/audios";
             HttpPost updateProfileRequest = new HttpPost(url);
             updateProfileRequest.setEntity(entityBuilder.build());
@@ -157,57 +209,6 @@ public class AudioUtil {
                 Log.d(TAG, ex.getMessage());
             }
         }
-    }
-
-    // No separate thread
-    public static String saveAudio(Context context, Audio audio){
-        InputStream input = null;
-        OutputStream output = null;
-        HttpURLConnection connection = null;
-        String fileLocation = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath() + "/aud_"+ System.currentTimeMillis()
-                + ".mp3";
-        URL downloadUrl;
-        try {
-            downloadUrl = new URL(audio.getDataServerURL());
-            Log.d(TAG, "started downloading audio ");
-            connection = (HttpURLConnection) downloadUrl.openConnection();
-            connection.connect();
-
-            // expect HTTP 200 OK, so we don't mistakenly save error report
-            // instead of the file
-            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                return "Server returned HTTP " + connection.getResponseCode() + " "
-                        + connection.getResponseMessage();
-            }
-
-            // download the file
-            input = connection.getInputStream();
-            output = new FileOutputStream(fileLocation);
-
-            byte data[] = new byte[4096];
-            int count;
-            while ((count = input.read(data)) != -1) {
-                output.write(data, 0, count);
-            }
-            audio.setDataLocalURL(fileLocation);
-            Log.d(TAG, "download finished");
-            AudioDataSource.updateDataLocalUrl(context, audio.getId(), fileLocation);
-            Log.d(TAG, "updated audio local url in database successfully");
-        } catch (Exception e) {
-            return e.toString();
-        } finally {
-            try {
-                if (output != null)
-                    output.close();
-                if (input != null)
-                    input.close();
-            } catch (IOException ignored) {
-            }
-
-            if (connection != null)
-                connection.disconnect();
-        }
-        return fileLocation;
     }
 
 }

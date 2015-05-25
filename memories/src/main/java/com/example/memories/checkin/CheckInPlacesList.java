@@ -1,5 +1,6 @@
 package com.example.memories.checkin;
 
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,10 +16,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.Request.Method;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.memories.R;
 import com.example.memories.checkin.adapter.CheckInPlacesListAdapter;
@@ -104,7 +105,7 @@ public class CheckInPlacesList extends Activity {
         url = (query == null) ? url : url + "&query=" + query;
 
         Log.d(TAG, "FS_URL=" + url);
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET, url, null,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET, url, (String) null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
