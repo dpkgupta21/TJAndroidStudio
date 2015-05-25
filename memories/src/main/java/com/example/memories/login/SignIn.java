@@ -17,7 +17,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
@@ -137,7 +136,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver{
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d(TAG, "Error: " + error.getMessage());
+//                        VolleyLog.d(TAG, "Error: " + error.getMessage());
                         pDialog.hide();
                         Toast.makeText(getApplicationContext(),
                                 "Username & password donot match!", Toast.LENGTH_LONG)

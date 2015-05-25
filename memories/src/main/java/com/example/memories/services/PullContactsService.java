@@ -40,11 +40,12 @@ import java.util.Map;
 public class PullContactsService extends IntentService {
 
 
+    private static final String TAG = "<PullContactsService>";
     private ResultReceiver mReceiver;
     private int REQUEST_CODE;
-    private static final String TAG = "<PullContactsService>";
     private ArrayList<Contact> list;
-    private ArrayList<String> allEmailPhoneList;
+    private ArrayList<String> allPhoneList;
+    private ArrayList<String> allEmailList;
 
 
     public PullContactsService() {
@@ -55,7 +56,7 @@ public class PullContactsService extends IntentService {
         super(name);
     }
 
-    public int onStartCommand(Intent intent, int flags, int startId){
+    public int onStartCommand(Intent intent, int flags, int startId) {
         mReceiver = intent.getParcelableExtra("RECEIVER");
         REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
         super.onStartCommand(intent, startId, startId);
@@ -73,8 +74,10 @@ public class PullContactsService extends IntentService {
         Log.d(TAG, "started scanning phone contacts");
         Integer noNameCount = 0;
         Integer nameCount = 0;
+        Integer emailCount = 0;
         Integer totalContacts = 0;
-        allEmailPhoneList = new ArrayList<String>();
+        allPhoneList = new ArrayList<String>();
+        allEmailList = new ArrayList<String>();
 
         list = new ArrayList<Contact>();
         ContentResolver cr = getContentResolver();
@@ -115,29 +118,32 @@ public class PullContactsService extends IntentService {
                     }
                     emailCur.close();
 
-                    if (phone != null || emailContact != null) {
-                        // if (emailContact != null) {
-                        allEmailPhoneList.add((emailContact != null) ? emailContact : phone);
-                        // allEmailPhoneList.add(emailContact);
-
-                        Log.d(TAG, "-------------------------");
-                        Log.d(TAG, "Id :" + nameCount);
-                        Log.d(TAG, "Name : " + name);
-                        Log.d(TAG, "Phone : " + phone);
-                        Log.d(TAG, "Email : " + emailContact);
+                    // if (phone != null || emailContact != null) {
+                    if (phone != null) {
+                        allPhoneList.add(phone);
                         nameCount++;
+                    } else if (emailContact != null) {
+                        allEmailList.add(emailContact);
+                        emailCount++;
                     } else {
                         noNameCount++;
                     }
-                } else {
-                    // noNameCount++;
+
+                    Log.d(TAG, "-------------------------");
+                    Log.d(TAG, "Id :" + nameCount);
+                    Log.d(TAG, "Name : " + name);
+                    Log.d(TAG, "Phone : " + phone);
+                    Log.d(TAG, "Email : " + emailContact);
+
+
+                    totalContacts++;
                 }
-                totalContacts++;
             }
         }
+
         Log.d(TAG, "phone contacts scanning complete");
         Log.d(TAG, "statistics : Total contacts = " + totalContacts + "no names = " + noNameCount
-                + "names count" + nameCount);
+                + " : names count = " + nameCount + " : email count = " + emailCount);
 
         CheckTJContacts();
         // Collections.sort(list);
@@ -147,13 +153,19 @@ public class PullContactsService extends IntentService {
     private void CheckTJContacts() {
         Log.d(TAG, "Now checking who all are on traveljar");
 
-        Integer len = allEmailPhoneList.size();
+        Integer phoneLen = allPhoneList.size();
+        Integer emailLen = allEmailList.size();
         Map<String, String> jsonParams = new HashMap<String, String>();
-        jsonParams.put("api_key", "key");
-        jsonParams.put("count", len.toString());
 
-        for (int i = 0; i < len; i++) {
-            jsonParams.put("array[" + i + "]", allEmailPhoneList.get(i).toString());
+        jsonParams.put("phone_count", phoneLen.toString());
+        jsonParams.put("email_count", emailLen.toString());
+
+        for (int i = 0; i < phoneLen; i++) {
+            jsonParams.put("phone_array[" + i + "]", allPhoneList.get(i).toString());
+        }
+
+        for (int i = 0; i < emailLen; i++) {
+            jsonParams.put("email_array[" + i + "]", allEmailList.get(i).toString());
         }
 
         // Tag used to cancel the request
@@ -202,6 +214,7 @@ public class PullContactsService extends IntentService {
 
         for (int i = 0; i < len; i++) {
             JSONObject userItem = allUsers.getJSONObject(i);
+            userItem.get
             final String idOnServer = userItem.getString("id");
             String name = userItem.getString("name");
             String email = userItem.getString("email");
@@ -278,7 +291,7 @@ public class PullContactsService extends IntentService {
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         Log.d(TAG, "ondestroy() method called");
         Bundle bundle = new Bundle();
         mReceiver.send(REQUEST_CODE, bundle);
