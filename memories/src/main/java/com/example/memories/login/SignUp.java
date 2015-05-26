@@ -63,13 +63,14 @@ public class SignUp extends Activity {
     private String emailAddress;
     private String password;
     private String name;
+    ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
 
-        getActionBar().hide();
+        //getActionBar().hide();
 
         // Session Manager
         session = new SessionManager(this);
@@ -130,7 +131,7 @@ public class SignUp extends Activity {
             // Check for Internet connection otherwise no use in making request
             if (HelpMe.isNetworkAvailable(this)) {
 
-                final ProgressDialog pDialog = new ProgressDialog(this);
+                pDialog = new ProgressDialog(this);
                 pDialog.setMessage("Loading...");
                 pDialog.show();
 
@@ -187,6 +188,7 @@ public class SignUp extends Activity {
                             e.printStackTrace();
                         }
 
+                        pDialog.dismiss();
                         // Staring MainActivity
                         Intent i = new Intent(getApplicationContext(), NewJourney.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

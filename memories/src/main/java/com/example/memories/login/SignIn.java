@@ -52,7 +52,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
 
-        getActionBar().hide();
+        //getActionBar().hide();
 
         mReceiver = new CustomResultReceiver(new Handler());
         mReceiver.setReceiver(this);
@@ -102,7 +102,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
                 String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=1234";
                 Log.d(TAG, url);
 
-                final ProgressDialog pDialog = new ProgressDialog(this);
+                final ProgressDialog pDialog = new ProgressDialog(getApplicationContext());
                 pDialog.setMessage("Loading...");
                 pDialog.show();
 

@@ -19,7 +19,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        getActionBar().hide();
+        //getActionBar().hide();
 
         // Session class instance
         session = new SessionManager(getApplicationContext());
