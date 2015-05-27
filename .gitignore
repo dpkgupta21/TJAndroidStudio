@@ -29,3 +29,7 @@ proguard/
 # By abhinav
 build/intermediates/
 .idea/
+.gradle/2.2.1/taskArtifacts/
+floatingMenuLibrary/build/
+library/build/
+memories/build/
