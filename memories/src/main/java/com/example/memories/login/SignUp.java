@@ -19,10 +19,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.memories.DashBoard;
 import com.example.memories.R;
 import com.example.memories.newjourney.LapsList;
 import com.example.memories.newjourney.NewJourney;
-import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
@@ -72,7 +72,7 @@ public class SignUp extends Activity {
         session = new SessionManager(this);
 
         if (session.isLoggedIn(this)) {
-            Intent i = new Intent(getBaseContext(), Timeline.class);
+            Intent i = new Intent(getBaseContext(), DashBoard.class);
             startActivity(i);
             finish();
         }

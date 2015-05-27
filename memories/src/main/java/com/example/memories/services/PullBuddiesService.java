@@ -4,6 +4,8 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -34,6 +36,8 @@ public class PullBuddiesService extends IntentService {
 
     private static final String TAG = "PULL_BUDDIES_SERVICE";
     List<String> buddyIds;
+    private ResultReceiver mReceiver;
+    private int REQUEST_CODE;
 
     public PullBuddiesService() {
         super("pull buddies service");
@@ -45,6 +49,8 @@ public class PullBuddiesService extends IntentService {
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
+        mReceiver = intent.getParcelableExtra("RECEIVER");
+        REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
         buddyIds = intent.getStringArrayListExtra("BUDDY_IDS");
         return START_STICKY;
     }
@@ -147,4 +153,13 @@ public class PullBuddiesService extends IntentService {
             AppController.getInstance().addToRequestQueue(jsonRequest);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "ondestroy() method called");
+        Bundle bundle = new Bundle();
+        mReceiver.send(REQUEST_CODE, bundle);
+        super.onDestroy();
+    }
+    
 }

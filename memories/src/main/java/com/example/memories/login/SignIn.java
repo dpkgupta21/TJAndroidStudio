@@ -18,11 +18,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.memories.DashBoard;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.services.PullContactsService;
 import com.example.memories.services.PullMemoriesService;
-import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
@@ -60,7 +60,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         session = new SessionManager(getApplicationContext());
 
         if (session.isLoggedIn(this)) {
-            Intent i = new Intent(getBaseContext(), Timeline.class);
+            Intent i = new Intent(getBaseContext(), DashBoard.class);
             startActivity(i);
             finish();
         }
@@ -205,7 +205,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         }
         if (contactsFetched && memoriesFetched) {
             pDialog.dismiss();
-            Intent i = new Intent(getApplicationContext(), Timeline.class);
+            Intent i = new Intent(getApplicationContext(), DashBoard.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         }

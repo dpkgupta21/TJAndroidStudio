@@ -140,6 +140,10 @@
             android:name="com.example.memories.retrofit.MultiPartUpload"
             android:label="@string/app_name"></activity>
 
+        <activity
+            android:name="com.example.memories.DashBoard"
+            android:label="@string/app_name"></activity>
+
         <service
             android:name="com.example.memories.services.PullContactsService"
             android:exported="false"></service>

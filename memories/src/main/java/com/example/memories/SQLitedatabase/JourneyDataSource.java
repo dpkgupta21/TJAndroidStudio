@@ -43,7 +43,7 @@ public class JourneyDataSource {
         long journey_id = db.insert(MySQLiteHelper.TABLE_JOURNEY, null, values);
         db.close();
 
-        Log.d(TAG, "New Journey Inserted! with journey_id = " + journey_id);
+        Log.d(TAG, "New Journey Inserted! with journey_id = " + journey_id + newJourney.getJourneyStatus());
         return journey_id;
     }
 
@@ -92,6 +92,27 @@ public class JourneyDataSource {
         db.close();
         return journeyList;
     }
+
+    public static List<Journey> getAllActiveJourneys(Context context) {
+
+        Cursor c = getAllJourneys(context);
+        List<Journey> list = getJourneys(context, c);
+        Log.d(TAG, "list is " + list.toString());
+
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_ACTIVE + "'";
+        Log.d(TAG, "fetching journeys " + selectQuery);
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Log.e(TAG, selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        List<Journey> journeyList = getJourneys(context, cursor);
+        Log.d(TAG, "total active journeys fetched are " + journeyList.size());
+        cursor.close();
+        db.close();
+        return journeyList;
+    }
+
+
 
     private static List<Journey> getJourneys(Context context, Cursor cursor) {
         List<Journey> journeyList = new ArrayList<Journey>();
