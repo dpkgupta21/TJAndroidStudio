@@ -70,7 +70,7 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
             ((ViewHolder) view.getTag()).checkbox.setTag(list.get(position));
         }
 
-        Log.d(TAG, "concvert view awayi" + list.size() + "position = " + position);
+        Log.d(TAG, "convert view away" + list.size() + "position = " + position);
         ViewHolder holder = (ViewHolder) view.getTag();
         holder.name.setText(list.get(position).getName());
 

@@ -46,10 +46,11 @@ public class NewJourneyDetail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_detail);
 
+        jName = ((EditText) findViewById(R.id.new_journey_detail_name)).getText().toString().trim();
     }
 
     private void getAllParams() {
-        jName = ((EditText) findViewById(R.id.new_journey_detail_name)).getText().toString().trim();
+
         jTagline = ((EditText) findViewById(R.id.new_journey_detail_tagline)).getText().toString()
                 .trim();
         jGroupType = "Friends";
@@ -57,7 +58,7 @@ public class NewJourneyDetail extends Activity {
         Log.d(TAG, "buddy list = " + jBuddyList);
 
         // create params to be sent in create new journey api
-        params = new HashMap<String, String>();
+        params = new HashMap<>();
         try {
             params.put("journey[name]", jName);
             params.put("journey[tag_line]", jTagline);
@@ -90,70 +91,72 @@ public class NewJourneyDetail extends Activity {
                 currentPosition++;
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
     }
 
     public void createNewJourney(View v) {
-        if (HelpMe.isNetworkAvailable(this)) {
+        if (jName != null && jName != "") {
+            if (HelpMe.isNetworkAvailable(this)) {
 
-            getAllParams();
+                getAllParams();
 
-            // Tag used to cancel the request
-            String tag_json_obj = "createNewJourney";
+                // Tag used to cancel the request
+                String tag_json_obj = "createNewJourney";
 
-            String url = Constants.URL_CREATE_JOURNEY;
+                String url = Constants.URL_CREATE_JOURNEY;
 
-            final ProgressDialog pDialog = new ProgressDialog(this);
-            pDialog.setMessage("Loading...");
-            pDialog.show();
+                final ProgressDialog pDialog = new ProgressDialog(this);
+                pDialog.setMessage("Loading...");
+                pDialog.show();
 
-            CustomJsonRequest newJourneyReq = new CustomJsonRequest(Request.Method.POST, url,
-                    params, new Response.Listener<JSONObject>() {
+                CustomJsonRequest newJourneyReq = new CustomJsonRequest(Request.Method.POST, url,
+                        params, new Response.Listener<JSONObject>() {
 
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.d(TAG, response.toString());
-                    pDialog.hide();
-                    try {
-                        createNewJourneyInDB(response);
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, response.toString());
+                        pDialog.hide();
+                        try {
+                            createNewJourneyInDB(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Intent i = new Intent(getBaseContext(), Timeline.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
+
                     }
-                    Intent i = new Intent(getBaseContext(), Timeline.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(i);
+                }, new Response.ErrorListener() {
 
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                    pDialog.hide();
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "There were some issues, yet we are creating a journey for you :)",
-                            Toast.LENGTH_LONG).show();
-                    try {
-                        createNewJourneyInDBBypass();
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d(TAG, "Error: " + error.getMessage());
+                        pDialog.hide();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There were some issues, yet we are creating a journey for you :)",
+                                Toast.LENGTH_LONG).show();
+                        try {
+                            createNewJourneyInDBBypass();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Intent i = new Intent(getBaseContext(), Timeline.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
                     }
-                    Intent i = new Intent(getBaseContext(), Timeline.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(i);
-                }
-            });
+                });
 
-            // Adding request to request queue
-            AppController.getInstance().addToRequestQueue(newJourneyReq, tag_json_obj);
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(newJourneyReq, tag_json_obj);
+            } else {
+                Toast.makeText(getBaseContext(), "Please connect to Internet", Toast.LENGTH_LONG)
+                        .show();
+            }
         } else {
-            Toast.makeText(getBaseContext(), "Please connect to Internet", Toast.LENGTH_LONG)
+            Toast.makeText(getBaseContext(), "Journey Name is required", Toast.LENGTH_LONG)
                     .show();
         }
     }
@@ -172,7 +175,7 @@ public class NewJourneyDetail extends Activity {
         JSONArray lapsList = newJourney.getJSONArray("journey_lap_ids");
         JSONArray buddyList = newJourney.getJSONArray("buddy_ids");
 
-        ArrayList<String> buddyArrayList = new ArrayList<String>();
+        ArrayList<String> buddyArrayList = new ArrayList<>();
         if (buddyList != null) {
             int len = buddyList.length();
             for (int i = 0; i < len; i++) {
@@ -197,7 +200,7 @@ public class NewJourneyDetail extends Activity {
         String group_relationship = "friends";
         String created_by_id = "18";
 
-        ArrayList<String> buddyArrayList = new ArrayList<String>();
+        ArrayList<String> buddyArrayList = new ArrayList<>();
 
         for (int i = 0; i < 1; i++) {
             buddyArrayList.add("22");

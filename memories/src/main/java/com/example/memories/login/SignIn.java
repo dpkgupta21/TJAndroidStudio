@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,8 +37,6 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
@@ -68,7 +64,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
 
-        //getActionBar().hide();
+        getActionBar().hide();
 
         mReceiver = new CustomResultReceiver(new Handler());
         mReceiver.setReceiver(this);
@@ -215,25 +211,8 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         TJPreferences.setLoggedIn(this, true);
         TJPreferences.setActiveJourneyId(this, currentJourney);
 
-        //setting the profile image
-        if (!(new File(Constants.GUMNAAM_IMAGE_URL)).exists()) {
-            //check whether the dir exists
-            File dir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
-            File file = new File(Constants.GUMNAAM_IMAGE_URL);
-            FileOutputStream outStream;
-            try {
-                outStream = new FileOutputStream(file);
-                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                outStream.flush();
-                outStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        // download & set the default profile image if does not exist
+        HelpMe.createImageIfNotExist(this);
         TJPreferences.setProfileImgPath(this, Constants.GUMNAAM_IMAGE_URL);
     }
 

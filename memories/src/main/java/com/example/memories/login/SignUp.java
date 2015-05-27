@@ -65,7 +65,7 @@ public class SignUp extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
 
-        //getActionBar().hide();
+        getActionBar().hide();
 
         // Session Manager
         SessionManager session = new SessionManager(this);
@@ -132,6 +132,10 @@ public class SignUp extends Activity {
 
                 // Get a GCM registration id
                 startRegistrationOfGCM(getApplicationContext());
+
+                // download & set the default profile image if does not exist
+                HelpMe.createImageIfNotExist(this);
+                TJPreferences.setProfileImgPath(SignUp.this, Constants.GUMNAAM_IMAGE_URL);
 
             } else {
                 Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG)
