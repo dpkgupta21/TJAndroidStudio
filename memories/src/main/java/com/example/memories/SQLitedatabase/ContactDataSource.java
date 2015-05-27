@@ -32,9 +32,13 @@ public class ContactDataSource {
         values.put(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD, newContact.isOnBoard() ? 1 : 0);
 
         // insert row
-        long contact_id = db.insert(MySQLiteHelper.TABLE_CONTACT, null, values);
+        long contact_id = 0;
+        try {
+            contact_id = db.insert(MySQLiteHelper.TABLE_CONTACT, null, values);
+        }catch(Exception ex){
+            Log.d(TAG, "contact already exists so not inserting");
+        }
         db.close();
-
         return contact_id;
     }
 

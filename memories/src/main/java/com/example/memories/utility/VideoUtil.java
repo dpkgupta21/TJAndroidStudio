@@ -47,7 +47,7 @@ public class VideoUtil {
     }
 
     public static void createNewVideoFromServer(final Context context, final Video video, String thumbUrl) {
-        final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "/vid_" + System.currentTimeMillis() + ".mp4";
+        final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "/vid_" + System.currentTimeMillis() + ".jpg";
         if (thumbUrl != null) {
             ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
                 @Override

@@ -190,7 +190,6 @@ public class NewJourneyDetail extends Activity {
     private void createNewJourneyInDBBypass() throws JSONException {
 
         Log.d(TAG, "createNewJourneyInDB");
-
         String id = "45";
         String name = "abhinav";
         String tag_line = "asdaf";

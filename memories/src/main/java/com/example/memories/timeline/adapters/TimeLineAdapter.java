@@ -29,7 +29,6 @@ import com.example.memories.utility.AudioPlayer;
 import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.LoadBitmapFromPath;
-import com.example.memories.utility.LoadThumbnailFromPath;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.video.VideoDetail;
 import com.google.common.base.Joiner;
@@ -225,12 +224,10 @@ public class TimeLineAdapter extends BaseAdapter {
 
         switch (type) {
             case 0:
-                Log.d(TAG, "in picture " + holder.timelineItemImage.getWidth() + holder.timelineItemImage.getHeight());
+                Log.d(TAG, "in picture");
 
                 Picture pic = (Picture) memoriesList.get(position);
-                if (pic.getDataLocalURL() != null) {
-                    Log.d(TAG, "localdataUrl = " + pic.getDataLocalURL());
-                    Log.d(TAG, "pic local thumbnail is : " + pic.getPicThumbnailPath());
+                if (pic.getPicThumbnailPath() != null) {
                     LoadBitmapFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, 256, 192, context);
 //					try {
 //						holder.timelineItemImage.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(
@@ -277,8 +274,9 @@ public class TimeLineAdapter extends BaseAdapter {
                 Log.d(TAG, "in video");
                 Video vid = (Video) memoriesList.get(position);
 
-                LoadThumbnailFromPath.loadBitmap(vid.getDataLocalURL(), holder.timelineItemImage, context);
+//                LoadThumbnailFromPath.loadBitmap(vid.getDataLocalURL(), holder.timelineItemImage, context);
                 holder.timelineItemCaption.setText(vid.getCaption());
+                LoadBitmapFromPath.loadBitmap(vid.getLocalThumbPath(), holder.timelineItemImage, 256, 192, context);
                 //holder.timelineItemImage.setImageBitmap(HelpMe.getVideoThumbnail(vid.getDataURL()));
                 break;
 
@@ -327,25 +325,24 @@ public class TimeLineAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
+                Intent intent = null;
                 switch (type) {
                     case HelpMe.TYPE_PICTURE:
                         intent = new Intent(context, PhotoDetail.class);
                         intent.putExtra("PICTURE_ID", memory.getId());
-                        context.startActivity(intent);
                         break;
 
                     case HelpMe.TYPE_VIDEO:
                         intent = new Intent(context, VideoDetail.class);
                         intent.putExtra("VIDEO_ID", memory.getId());
-                        context.startActivity(intent);
                         break;
                     case HelpMe.TYPE_AUDIO:
                         intent = new Intent(context, AudioDetail.class);
                         intent.putExtra("AUDIO_ID", memory.getId());
-                        context.startActivity(intent);
                         break;
                 }
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                context.startActivity(intent);
             }
         });
 

@@ -45,7 +45,7 @@ public class PictureUtilities {
                         out = new FileOutputStream(imagePath);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                         imageView.setImageBitmap(bitmap);
-                        pic.setDataLocalURL(imagePath);
+                        pic.setPicThumbnailPath(imagePath);
                         PictureDataSource.updatePicLocalPath(context, imagePath, pic.getId());
                     } catch (Exception e) {
                         e.printStackTrace();

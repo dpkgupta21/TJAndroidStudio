@@ -180,7 +180,7 @@ public class AudioUtil {
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
 
 
-            String url = "Constants.URL_MEMORY_UPLOAD" + TJPreferences.getActiveJourneyId(context) + "/audios";
+            String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/audios";
             HttpPost updateProfileRequest = new HttpPost(url);
             updateProfileRequest.setEntity(entityBuilder.build());
             HttpResponse response;
