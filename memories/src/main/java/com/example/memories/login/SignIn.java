@@ -5,8 +5,6 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -34,8 +32,6 @@ import com.example.memories.volley.CustomJsonRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.regex.Pattern;
 
 public class SignIn extends Activity implements CustomResultReceiver.Receiver {
@@ -194,24 +190,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         TJPreferences.setActiveJourneyId(this, currentJourney);
 
         //setting the profile image
-        if (!(new File(Constants.GUMNAAM_IMAGE_URL)).exists()) {
-            //check whether the dir exists
-            File dir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
-            File file = new File(Constants.GUMNAAM_IMAGE_URL);
-            FileOutputStream outStream = null;
-            try {
-                outStream = new FileOutputStream(file);
-                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                outStream.flush();
-                outStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        HelpMe.createImageIfNotExist(this);
         TJPreferences.setProfileImgPath(this, Constants.GUMNAAM_IMAGE_URL);
     }
 

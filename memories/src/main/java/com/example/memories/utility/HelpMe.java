@@ -19,9 +19,12 @@ import android.provider.MediaStore.MediaColumns;
 import android.provider.MediaStore.Video.Thumbnails;
 import android.util.Log;
 
+import com.example.memories.R;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -241,6 +244,27 @@ public class HelpMe {
             }
         }
         return bitmap;
+    }
+
+    public static void createImageIfNotExist(Context context){
+        if (!(new File(Constants.GUMNAAM_IMAGE_URL)).exists()) {
+            //check whether the dir exists
+            File dir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_profile);
+            File file = new File(Constants.GUMNAAM_IMAGE_URL);
+            FileOutputStream outStream = null;
+            try {
+                outStream = new FileOutputStream(file);
+                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                outStream.flush();
+                outStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

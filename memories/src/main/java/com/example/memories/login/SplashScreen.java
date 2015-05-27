@@ -10,7 +10,11 @@ import android.view.View;
 import com.example.memories.R;
 import com.example.memories.services.PullContactsService;
 import com.example.memories.timeline.Timeline;
+import com.example.memories.utility.Constants;
+import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
+
+import java.io.File;
 
 public class SplashScreen extends Activity implements CustomResultReceiver.Receiver{
     private static final String TAG = "<SplashScreen>";
@@ -50,6 +54,33 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
             startService(intent);
         }
 
+    }
+
+    private void createTravelJarInitials(){
+        // Create traveljar pictures folder
+        File file;
+        file = new File (Constants.TRAVELJAR_FOLDER_PICTURE);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        // Create traveljar VIDEO folder
+        file = new File (Constants.TRAVELJAR_FOLDER_VIDEO);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        // Create traveljar AUDIO folder
+        file = new File (Constants.TRAVELJAR_FOLDER_AUDIO);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        // Create traveljar BUDDY PROFILES folder
+        file = new File (Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+
+        //If gumnaam image doesn't exists than create one
+        HelpMe.createImageIfNotExist(this);
     }
 
     public void goToSignUp(View v) {

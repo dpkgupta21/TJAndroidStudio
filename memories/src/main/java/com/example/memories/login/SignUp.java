@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,8 +35,6 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -139,21 +135,7 @@ public class SignUp extends Activity {
                 startRegistrationOfGCM(getApplicationContext());
 
                 //set the default profile image
-                File dir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
-                File file = new File(Constants.GUMNAAM_IMAGE_URL);
-                FileOutputStream outStream = null;
-                try {
-                    outStream = new FileOutputStream(file);
-                    bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                    outStream.flush();
-                    outStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                HelpMe.createImageIfNotExist(this);
                 TJPreferences.setProfileImgPath(SignUp.this, Constants.GUMNAAM_IMAGE_URL);
 
             } else {

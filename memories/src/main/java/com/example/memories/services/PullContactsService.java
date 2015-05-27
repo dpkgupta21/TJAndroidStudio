@@ -5,7 +5,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.provider.BaseColumns;
@@ -19,7 +18,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.utility.Constants;
@@ -260,24 +258,7 @@ public class PullContactsService extends IntentService {
             } else {
 
                 // check whether the gumnaam image already exists
-                if (!(new File(Constants.GUMNAAM_IMAGE_URL)).exists()) {
-                    //check whether the dir exists
-                    File dir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
-                    if (!dir.exists()) {
-                        dir.mkdirs();
-                    }
-                    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
-                    File file = new File(Constants.GUMNAAM_IMAGE_URL);
-                    FileOutputStream outStream = null;
-                    try {
-                        outStream = new FileOutputStream(file);
-                        bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                        outStream.flush();
-                        outStream.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+
                 picServerUrl = null;
                 picLocalUrl = Constants.GUMNAAM_IMAGE_URL;
             }
