@@ -3,16 +3,21 @@ package com.example.memories.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
 import com.example.memories.R;
+import com.example.memories.services.PullContactsService;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.SessionManager;
 
-public class SplashScreen extends Activity {
+public class SplashScreen extends Activity implements CustomResultReceiver.Receiver{
     private static final String TAG = "<SplashScreen>";
     private SessionManager session;
+
+    public CustomResultReceiver mReceiver;
+    private int REQUEST_FETCH_CONTACTS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +25,18 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.splash_screen);
 
         //getActionBar().hide();
-
         // Session class instance
         session = new SessionManager(getApplicationContext());
+
+        mReceiver = new CustomResultReceiver(new Handler());
+        mReceiver.setReceiver(this);
 
         // check if already logged in
         if (session.isLoggedIn(this)) {
             Log.d(TAG, "since already logged in");
             Log.d(TAG, "SplashScreen ==> Timeline");
-            Intent i = new Intent(getBaseContext(), Timeline.class);
-            startActivity(i);
+            Intent intent = new Intent(getBaseContext(), Timeline.class);
+            startActivity(intent);
             finish();
         } else {
 
@@ -37,8 +44,10 @@ public class SplashScreen extends Activity {
              * Creates a new Intent to start the RSSPullService IntentService.
 			 * Passes a URI in the Intent's "data" field.
 			 */
-            /*Intent mServiceIntent = new Intent(getBaseContext(), PullContactsService.class);
-            startService(mServiceIntent);*/
+            Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+            intent.putExtra("RECEIVER", mReceiver);
+            intent.putExtra("REQUEST_CODE", REQUEST_FETCH_CONTACTS);
+            startService(intent);
         }
 
     }
@@ -57,4 +66,10 @@ public class SplashScreen extends Activity {
         startActivity(i);
     }
 
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        if (resultCode == REQUEST_FETCH_CONTACTS) {
+            Log.d(TAG, "fetch contacts service completed");
+        };
+    }
 }
