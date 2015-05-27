@@ -73,6 +73,7 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
         Log.d(TAG, "concvert view awayi" + list.size() + "position = " + position);
         ViewHolder holder = (ViewHolder) view.getTag();
         holder.name.setText(list.get(position).getName());
+
         if (list.get(position).getPhone_no() == null || list.get(position).getPhone_no() == "") {
             holder.phone_no.setText(list.get(position).getPrimaryEmail());
         } else {

@@ -189,6 +189,7 @@ public class CaptureAudio extends Activity {
             case R.id.action_done:
                 saveAndUploadAudio();
                 Intent i = new Intent(getBaseContext(), Timeline.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;
             default:

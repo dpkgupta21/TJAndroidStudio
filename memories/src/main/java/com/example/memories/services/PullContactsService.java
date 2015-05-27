@@ -217,7 +217,7 @@ public class PullContactsService extends IntentService {
             final String idOnServer = userItem.getString("id");
             String name = userItem.getString("name");
             String email = userItem.getString("email");
-            String phone_no = userItem.getString("phone");
+            String phone_no = (userItem.getString("phone") == "null") ? null : userItem.getString("phone");
             String status = userItem.getString("status");
             String picServerUrl = userItem.getJSONObject("profile_picture").getJSONObject("thumb")
                     .getString("url");

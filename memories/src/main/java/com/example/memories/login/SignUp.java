@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,8 +35,6 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,19 +42,18 @@ import java.util.regex.Pattern;
 
 public class SignUp extends Activity {
 
-    // GCM -----------------------------------
-    public static final String EXTRA_MESSAGE = "message";
-    public static final String PROPERTY_REG_ID = "registration_id";
     private static final String TAG = "<<SIgnUp>>";
+
+    // GCM -----------------------------------
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     String SENDER_ID = Constants.GOOGLE_PROJECT_NUMBER;
     GoogleCloudMessaging gcm;
     Context context;
     String regid = "";
+
     private EditText txtEmailAddress;
     private EditText txtPassword;
     private EditText txtName;
-    private SessionManager session;
     private Map<String, String> params;
     private String emailAddress;
     private String password;
@@ -73,7 +68,7 @@ public class SignUp extends Activity {
         //getActionBar().hide();
 
         // Session Manager
-        session = new SessionManager(this);
+        SessionManager session = new SessionManager(this);
 
         if (session.isLoggedIn(this)) {
             Intent i = new Intent(getBaseContext(), Timeline.class);
@@ -109,7 +104,7 @@ public class SignUp extends Activity {
     }
 
     private void getParams() {
-        params = new HashMap<String, String>();
+        params = new HashMap<>();
         params.put("user[name]", name);
         params.put("user[email]", emailAddress);
         params.put("user[password]", password);
@@ -137,24 +132,6 @@ public class SignUp extends Activity {
 
                 // Get a GCM registration id
                 startRegistrationOfGCM(getApplicationContext());
-
-                //set the default profile image
-                File dir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
-                File file = new File(Constants.GUMNAAM_IMAGE_URL);
-                FileOutputStream outStream = null;
-                try {
-                    outStream = new FileOutputStream(file);
-                    bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                    outStream.flush();
-                    outStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                TJPreferences.setProfileImgPath(SignUp.this, Constants.GUMNAAM_IMAGE_URL);
 
             } else {
                 Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG)
@@ -237,6 +214,7 @@ public class SignUp extends Activity {
     }
 
     // GCM methods and declarations
+    // -------------------------------------------------------------------
     public void startRegistrationOfGCM(Context mContext) {
 
         context = mContext;
@@ -313,7 +291,7 @@ public class SignUp extends Activity {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                String msg = "";
+                String msg;
                 try {
                     if (gcm == null) {
                         gcm = GoogleCloudMessaging.getInstance(context);
@@ -325,7 +303,7 @@ public class SignUp extends Activity {
                     // HTTP, so it
                     // can use GCM/HTTP or CCS to send messages to your app.
                     // sendRegistrationIdToBackend();
-                    makeRequestOnServer();
+
 
                     // For this demo: we don't need to send it because the
                     // device will send
@@ -348,6 +326,7 @@ public class SignUp extends Activity {
             @Override
             protected void onPostExecute(String msg) {
                 Log.d(TAG, msg + "\n");
+                makeRequestOnServer();
             }
         }.execute(null, null, null);
     }

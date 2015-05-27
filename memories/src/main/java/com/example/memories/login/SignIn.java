@@ -4,9 +4,11 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -30,12 +32,16 @@ import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.volley.CustomJsonRequest;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class SignIn extends Activity implements CustomResultReceiver.Receiver {
@@ -44,12 +50,18 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     public CustomResultReceiver mReceiver;
     private EditText txtEmailAddress;
     private EditText txtPassword;
-    private SessionManager session;
     private boolean contactsFetched = false;
     private boolean memoriesFetched = false;
     private int REQUEST_FETCH_CONTACTS = 1;
     private int REQUEST_FETCH_MEMORIES = 2;
     private ProgressDialog pDialog;
+
+    // GCM -----------------------------------
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    String SENDER_ID = Constants.GOOGLE_PROJECT_NUMBER;
+    GoogleCloudMessaging gcm;
+    Context context;
+    String regid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +73,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         mReceiver = new CustomResultReceiver(new Handler());
         mReceiver.setReceiver(this);
         // Session Manager
-        session = new SessionManager(getApplicationContext());
+        SessionManager session = new SessionManager(getApplicationContext());
 
         if (session.isLoggedIn(this)) {
             Intent i = new Intent(getBaseContext(), Timeline.class);
@@ -73,9 +85,13 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         txtEmailAddress = (EditText) findViewById(R.id.signInEmailTxt);
         txtPassword = (EditText) findViewById(R.id.signInPasswordTxt);
         autoPopulateEmail(txtEmailAddress);
+    }
 
-        pDialog = new ProgressDialog(this);
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Check device for Play Services APK.
+        checkPlayServices();
     }
 
     public void goToSignUp(View v) {
@@ -90,7 +106,14 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
     public void signIn(View v) {
         Log.d(TAG, "signIn() method called");
+        // Get a GCM registration id
+        startRegistrationOfGCM(getApplicationContext());
+    }
 
+
+    public void makeRequestToServer(){
+        Log.d(TAG, "makeREqusttoServer method called" + regid);
+        pDialog = new ProgressDialog(this);
         pDialog.show();
         // Get username, password from EditText
         final String emailAddress = txtEmailAddress.getText().toString().trim();
@@ -103,7 +126,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
             if (emailAddress.length() > 0 && password.length() > 0) {
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(this);
-                String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=1234";
+                String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=" + regid;
                 Log.d(TAG, url);
 
                 pDialog.show();
@@ -130,7 +153,6 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
                                 } catch (JSONException e) {
                                     Log.d(TAG, "everything fine upto here 4");
-                                    // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 }
 
@@ -202,7 +224,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
             }
             Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
             File file = new File(Constants.GUMNAAM_IMAGE_URL);
-            FileOutputStream outStream = null;
+            FileOutputStream outStream;
             try {
                 outStream = new FileOutputStream(file);
                 bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
@@ -232,6 +254,125 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         }
         Log.d(TAG, "sign in contacts fetched successfully");
     }
+
+    // GCM methods and declarations
+    // -------------------------------------------------------------------
+    public void startRegistrationOfGCM(Context mContext) {
+
+        context = mContext;
+
+        // Check device for Play Services APK. If check succeeds, proceed with
+        // GCM registration.
+        if (checkPlayServices()) {
+            gcm = GoogleCloudMessaging.getInstance(this);
+            regid = getRegistrationId(context);
+
+            if (regid.isEmpty()) {
+                registerInBackground();
+            }
+        } else {
+            Log.i(TAG, "No valid Google Play Services APK found.");
+        }
+    }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If it
+     * doesn't, display a dialog that allows users to download the APK from the
+     * Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Gets the current registration ID for application on GCM service, if there
+     * is one.
+     * <p/>
+     * If result is empty, the app needs to register.
+     *
+     * @return registration ID, or empty string if there is no existing
+     * registration ID.
+     */
+    private String getRegistrationId(Context context) {
+        String registrationId = TJPreferences.getGcmRegId(context);
+        if (registrationId == null) {
+            Log.i(TAG, "Registration not found.");
+            return "";
+        }
+
+        // Check if app was updated; if so, it must clear the registration ID
+        // since the existing regID is not guaranteed to work with the new
+        // app version.
+        int registeredVersion = TJPreferences.getAppVersion(context);
+        int currentVersion = HelpMe.getAppVersion(context);
+        if (registeredVersion != currentVersion) {
+            Log.i(TAG, "App version changed.");
+            return "";
+        }
+        return registrationId;
+    }
+
+    /**
+     * Registers the application with GCM servers asynchronously.
+     * <p/>
+     * Stores the registration ID and the app versionCode in the application's
+     * shared preferences.
+     */
+    private void registerInBackground() {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg;
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(context);
+                    }
+                    regid = gcm.register(SENDER_ID);
+                    msg = "Device registered, registration ID=" + regid;
+
+                    // You should send the registration ID to your server over
+                    // HTTP, so it
+                    // can use GCM/HTTP or CCS to send messages to your app.
+                    // sendRegistrationIdToBackend();
+
+
+                    // For this demo: we don't need to send it because the
+                    // device will send
+                    // upstream messages to a server that echo back the message
+                    // using the
+                    // 'from' address in the message.
+
+                    // Persist the regID - no need to register again.
+                    Log.d(TAG, "usre eris id isss === " + regid);
+                    TJPreferences.setGcmRegId(context, regid);
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                    // If there is an error, don't just keep trying to register.
+                    // Require the user to click a button again, or perform
+                    // exponential back-off.
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                Log.d(TAG, msg + "\n");
+                makeRequestToServer();
+            }
+        }.execute(null, null, null);
+    }
+
 }
 
 
