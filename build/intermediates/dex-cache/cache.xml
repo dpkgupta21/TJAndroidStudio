@@ -2,123 +2,123 @@
 <items version="2" >
 
     <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c980d1e68c8688c07b51a1f48d7201556b27b41e">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-10dab2287cbd1ee6c9196a812e84b0a98fe37e61.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/volley.jar"
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/libs/volley.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="d8f5b9114ebe0f76de7fbf55e950540959ce4ff8">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/volley-bf3d3956663a874a72ea6a997a5c6144db637478.jar" />
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/volley-b8c22440a080db1da6092d0dd5b9cb0eb6c2bea1.jar" />
     </item>
     <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/androidasync-2.1.3.jar"
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/libs/androidasync-2.1.3.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="52aed89a155265a48984ecc06aa8dec12674edad">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/androidasync-2.1.3-cd51b8bfce6a37baca2203927decd0bc61c4fbbb.jar" />
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/androidasync-2.1.3-9f49940c47216eff90da18f606f91421e1a1c168.jar" />
     </item>
     <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/jars/classes.jar"
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-5fc8b74880fd896a384d21a3c57df664dca1305c.jar" />
+        sha1="a3f17c7e75fbc92f04c453ff3889a65236b9245e">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-7e51b1df2fc553fcc35d06eab4bc1c633b3de0f5.jar" />
     </item>
     <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.6/cf8bacbf0d476c7f2221f861269365b66447f7ec/httpmime-4.3.6.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="cf8bacbf0d476c7f2221f861269365b66447f7ec">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/httpmime-4.3.6-138c746b7260a70afc58f5365f176edf8e7638ac.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/google-collections-1.0.jar"
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/libs/google-collections-1.0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="9ffe71ac6dcab6bc03ea13f5c2e7b2804e69b357">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/google-collections-1.0-37cc7d5f53ef3b364e732c670614d05ca99ddb2a.jar" />
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/google-collections-1.0-5618d3da7ee9cfa57d0941fc92c39fe43f4e4e73.jar" />
     </item>
     <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.0/jars/libs/internal_impl-22.1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="025cb89f2896c63200ff4c2e6c467a95691d880a">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/internal_impl-22.1.0-44339a6c5f394c24194c85a606021eb53838a27c.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/gson-2.3.1-c970ea5b85422df836bae54661059e6dfecee0e9.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/android-support-v7-recyclerview.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="7c0018e9838fc8c654c6fa83a110c4600b46febd">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/android-support-v7-recyclerview-8128fb0c59e7572a4121714ae9771bf0cb28d86b.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/jars/classes.jar"
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="983e2f375504bc04def18e709c35192afe92e65f">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-44d50fb9fb5e233afaaa44c060f0bbed0aef6240.jar" />
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-01e37965d0048b8c33937268058f7e4e0a417ba0.jar" />
     </item>
     <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/ion-2.1.3.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0659c4d0a26ab5d857db1440199cef6dd42b4428">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/ion-2.1.3-0b9c5e3c04919cb80dc94107f216f7d8e44bf4b6.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/library/unspecified/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="afeb68babf12d72f2ff526df3b35d27c97388f76">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-72110607ce9a6472f00a5dd7591e72f7afd778b8.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/retrofit-1.9.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a681c044244d9fc375198588297a39ba78028423">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/retrofit-1.9.0-02e50e9140694ed40cfea19ca45f0ef4f4df25e0.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="eeebabdfd8203f6ab639ccea4ffa1f20e1adee3a">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-6d9daa0edd066c00cf656b9144aa5fc61bf4fe1e.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5/82edcaec6c7b4599eaeaaf11167ceea41db42f33/httpclient-android-4.3.5.jar"
+        jar="/home/ankit/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5/82edcaec6c7b4599eaeaaf11167ceea41db42f33/httpclient-android-4.3.5.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="82edcaec6c7b4599eaeaaf11167ceea41db42f33">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/httpclient-android-4.3.5-3d23a28497f6363a48321bf12621daa42303c689.jar" />
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/httpclient-android-4.3.5-265b77e7a389084cc4caf13ef6bd43804a6a2df2.jar" />
     </item>
     <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/commons-io-2.4.jar"
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/commons-io-2.4-8fae23eb2dbf44228f71d9cffee0cdb9919cf00b.jar" />
+        sha1="eeebabdfd8203f6ab639ccea4ffa1f20e1adee3a">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-bde2dd8af391188a57123c9b3976a4f63dfb0d77.jar" />
     </item>
     <item
-        jar="/Users/abhi/Downloads/Setups/adt-bundle-mac-x86_64-20140702/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.0/support-annotations-22.1.0.jar"
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.0/jars/libs/internal_impl-22.1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="025cb89f2896c63200ff4c2e6c467a95691d880a">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/internal_impl-22.1.0-4a33ae374ede5c9c0390081f3193f3c9936eec3a.jar" />
+    </item>
+    <item
+        jar="/home/ankit/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.6/cf8bacbf0d476c7f2221f861269365b66447f7ec/httpmime-4.3.6.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="cf8bacbf0d476c7f2221f861269365b66447f7ec">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/httpmime-4.3.6-7caeff80b652d06b677e6983edde2f59ac1faad7.jar" />
+    </item>
+    <item
+        jar="/home/ankit/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/gson-2.3.1-eba1553d2d2989dda16d555f42c89f9a136772a0.jar" />
+    </item>
+    <item
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/libs/ion-2.1.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0659c4d0a26ab5d857db1440199cef6dd42b4428">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/ion-2.1.3-0305d9683ea7a44a52243a1d3dbeea94aaac02c4.jar" />
+    </item>
+    <item
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/libs/retrofit-1.9.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a681c044244d9fc375198588297a39ba78028423">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/retrofit-1.9.0-93636548ea4b94442c06db819373eafc43886265.jar" />
+    </item>
+    <item
+        jar="/home/ankit/Documents/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/22.1.0/support-annotations-22.1.0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="281bc6c58ecb3644c23fbc5ee0452019f67b4d5d">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/support-annotations-22.1.0-8849734afb50b14ccaee4f710f8c0cc2c50eaa9a.jar" />
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/support-annotations-22.1.0-ed153f506d0c64c8fa19b05b31a479e01ad33d5b.jar" />
+    </item>
+    <item
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/library/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6f56f6b7c8d9f87f60ef8b2a19b39d373754b8a6">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-49c7ef869b078a8648fa1c01ede312bf54eae611.jar" />
+    </item>
+    <item
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-35d4517c8c1444421967a5bae4cc998e2bafb5dc.jar" />
+    </item>
+    <item
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/libs/android-support-v7-recyclerview.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7c0018e9838fc8c654c6fa83a110c4600b46febd">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/android-support-v7-recyclerview-7b0e6a54fcd19b862649a8dcebedc6eef28c2cc6.jar" />
+    </item>
+    <item
+        jar="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/libs/commons-io-2.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
+        <dex dex="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/commons-io-2.4-6beaf2afddb98edf1719f5215f77afbc4952b332.jar" />
     </item>
 
 </items>

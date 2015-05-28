@@ -1,6 +1,8 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -11,8 +13,6 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
 MERGED from TJAndroidStudio:library:unspecified:7:5
@@ -252,7 +252,7 @@ ADDED from AndroidManifest.xml:111:9
 		ADDED from AndroidManifest.xml:113:13
 	android:name
 		ADDED from AndroidManifest.xml:112:13
-activity#com.example.memories.profile.ProfileActivity
+activity#com.example.memories.profile.Profile
 ADDED from AndroidManifest.xml:114:9
 	android:label
 		ADDED from AndroidManifest.xml:116:13
@@ -326,16 +326,16 @@ ADDED from AndroidManifest.xml:152:9
 		ADDED from AndroidManifest.xml:153:13
 meta-data#com.google.android.gms.version
 ADDED from AndroidManifest.xml:156:9
-	android:value
-		ADDED from AndroidManifest.xml:158:13
 	android:name
 		ADDED from AndroidManifest.xml:157:13
+	android:value
+		ADDED from AndroidManifest.xml:158:13
 meta-data#com.facebook.sdk.ApplicationId
 ADDED from AndroidManifest.xml:159:9
-	android:value
-		ADDED from AndroidManifest.xml:161:13
 	android:name
 		ADDED from AndroidManifest.xml:160:13
+	android:value
+		ADDED from AndroidManifest.xml:161:13
 receiver#com.example.memories.gcm.GcmBroadcastReceiver
 ADDED from AndroidManifest.xml:169:9
 	android:permission

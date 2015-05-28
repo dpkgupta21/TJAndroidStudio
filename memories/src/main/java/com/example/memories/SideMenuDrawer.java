@@ -13,7 +13,7 @@ import android.widget.SimpleAdapter;
 import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.gallery.GalleryBaseActivity;
 import com.example.memories.pastjourney.PastJourneyList;
-import com.example.memories.profile.ProfileActivity;
+import com.example.memories.profile.Profile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +79,7 @@ public class SideMenuDrawer extends Fragment {
                         startActivity(i);
                         break;
                     case 3:
-                        i = new Intent(getActivity(), ProfileActivity.class);
+                        i = new Intent(getActivity(), Profile.class);
                         startActivityForResult(i, REQUEST_CODE_UPDATE_PROFILE);
                         break;
 
