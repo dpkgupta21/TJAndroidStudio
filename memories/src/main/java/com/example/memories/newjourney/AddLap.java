@@ -1,11 +1,12 @@
 package com.example.memories.newjourney;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class AddLap extends Activity {
+public class AddLap extends AppCompatActivity {
 
     protected static final String TAG = "<AddLap>";
     private TextView fromLocation;
@@ -46,8 +47,9 @@ public class AddLap extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_lap_new);
 
-        actionBar = getActionBar();
-        actionBar.setTitle("Select Location");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         fromLocation = (TextView) findViewById(R.id.new_journey_location_new_from);
         toLocation = (TextView) findViewById(R.id.new_journey_location_new_to);

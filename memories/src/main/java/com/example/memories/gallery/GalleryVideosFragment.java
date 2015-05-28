@@ -50,9 +50,6 @@ public class GalleryVideosFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        actionBar = getActivity().getActionBar();
-        actionBar.setTitle(getResources().getString(R.string.gallery_video));
-
         mGridView = (GridView) rootView.findViewById(R.id.videos_grid_view);
 
         mVideoList = VideoDataSource.getAllVideos(getActivity());

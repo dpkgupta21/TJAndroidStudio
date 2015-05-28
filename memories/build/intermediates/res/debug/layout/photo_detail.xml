@@ -1,7 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical"
     android:background="@color/white">
+
+    <include layout="@layout/toolbar" />
 
     <ImageView
         android:id="@+id/photo_detail_photo"
@@ -15,7 +18,6 @@
         android:id="@+id/photo_detail_rl1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/photo_detail_photo"
         android:background="@color/white">
 
         <com.example.memories.customviews.MyCircularImageView
@@ -49,7 +51,6 @@
         android:id="@+id/photo_detail_rl2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/photo_detail_rl1"
         android:layout_marginBottom="20dp"
         android:background="@color/white">
 
@@ -102,10 +103,9 @@
         android:id="@+id/photo_detail_caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/photo_detail_rl2"
         android:background="@color/white"
         android:hint="Give this picture some words!"
         android:inputType="textMultiLine"
         android:lines="4" />
 
-</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/photo_detail.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/photo_detail.xml -->

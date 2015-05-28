@@ -1,9 +1,10 @@
 package com.example.memories.newjourney;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewJourneyDetail extends Activity {
+public class NewJourneyDetail extends AppCompatActivity {
 
     protected static final String TAG = "<NewJourneyDetail>";
     private String jName;
@@ -45,6 +46,10 @@ public class NewJourneyDetail extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_detail);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         jName = ((EditText) findViewById(R.id.new_journey_detail_name)).getText().toString().trim();
     }

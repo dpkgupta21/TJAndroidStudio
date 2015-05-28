@@ -1,9 +1,10 @@
 package com.example.memories.newjourney;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SelectedFriendsList extends Activity {
+public class SelectedFriendsList extends AppCompatActivity {
 
     private static final String TAG = "<SelectedFriendsList>";
     public static List<Contact> selectedList;
@@ -38,9 +39,10 @@ public class SelectedFriendsList extends Activity {
         setContentView(R.layout.new_journey_selected_friends_list);
         Log.d(TAG, "entered Add friends");
 
-        actionBar = getActionBar();
-        actionBar.setTitle("Add Friends");
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
+        
         selectedList = new ArrayList<Contact>();
 
         ListView contactListView = (ListView) findViewById(R.id.addFriendsList);

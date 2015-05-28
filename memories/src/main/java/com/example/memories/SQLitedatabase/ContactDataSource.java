@@ -34,7 +34,6 @@ public class ContactDataSource {
         // insert row
         long contact_id = 0;
         try {
-            Log.d(TAG, "tringnoe");
             contact_id = db.insertOrThrow(MySQLiteHelper.TABLE_CONTACT, null, values);
         }catch (Exception ex){
             Log.d(TAG, "contact already exists so not inserting excccceptiononon");

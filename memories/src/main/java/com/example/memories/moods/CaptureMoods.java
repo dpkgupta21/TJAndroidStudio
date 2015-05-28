@@ -1,8 +1,9 @@
 package com.example.memories.moods;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +19,7 @@ import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.models.Mood;
+import com.example.memories.moods.adapters.SelectMoodsDialog;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.MoodUtil;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CaptureMoods extends Activity implements SelectMoodsDialog.OnEmoticonSelectListener {
+public class CaptureMoods extends AppCompatActivity implements SelectMoodsDialog.OnEmoticonSelectListener {
 
     private static final String TAG = "<CaptureMoods>";
     private static int PICK_CONTACTS = 1;
@@ -40,7 +42,11 @@ public class CaptureMoods extends Activity implements SelectMoodsDialog.OnEmotic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.set_mood);
+        setContentView(R.layout.mood_capture);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         noFriendsSelectedTxt = (TextView) findViewById(R.id.noFriendsSelected);
         selectMoodImgBtn = (ImageButton) findViewById(R.id.mood_select_mood_imgbtn);

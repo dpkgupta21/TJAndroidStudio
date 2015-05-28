@@ -1,4 +1,4 @@
-package com.example.memories.login;
+package com.example.memories.services;
 
 import android.os.Bundle;
 import android.os.Handler;

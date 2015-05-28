@@ -1,14 +1,17 @@
 package com.example.memories.video;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-public class CaptureVideo extends Activity {
+import com.example.memories.R;
+
+public class CaptureVideo extends AppCompatActivity {
 
     static final int REQUEST_VIDEO_CAPTURE = 1;
     private static final String TAG = "<CaptureVideo>";
@@ -19,6 +22,10 @@ public class CaptureVideo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dispatchTakeVideoIntent();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
     }
 
     private void dispatchTakeVideoIntent() {

@@ -1,4 +1,4 @@
-package com.example.memories.moods;
+package com.example.memories.moods.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

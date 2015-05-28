@@ -1,11 +1,12 @@
 package com.example.memories.picture;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,7 +38,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class PhotoDetail extends Activity {
+public class PhotoDetail extends AppCompatActivity {
 
     private static final String TAG = "<PhotoDetail>";
     List<String> likedBy = new ArrayList<String>();
@@ -63,6 +64,10 @@ public class PhotoDetail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photo_detail);
         Log.d(TAG, "entrerd photo details");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         currenTime = HelpMe.getCurrentTime();
         photo = (ImageView) findViewById(R.id.photo_detail_photo);

@@ -1,12 +1,13 @@
 package com.example.memories.audio;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +29,7 @@ import com.example.memories.utility.TJPreferences;
 import java.io.File;
 import java.io.IOException;
 
-public class CaptureAudio extends Activity {
+public class CaptureAudio extends AppCompatActivity {
 
     private static final String TAG = "CaptureVoice";
     private static String mFileName = null;
@@ -58,21 +59,16 @@ public class CaptureAudio extends Activity {
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
 
-    public CaptureAudio() {
 
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/TravelJar/Audio";
-        File directory = new File(dirPath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        mFileName = dirPath + "/voice_" + System.currentTimeMillis() + ".3gp";
-    }
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.capture_audio);
+        setContentView(R.layout.audio_capture);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         startRecording = (LinearLayout) findViewById(R.id.startRecording);
         playRecording = (LinearLayout) findViewById(R.id.playRecording);
@@ -133,6 +129,8 @@ public class CaptureAudio extends Activity {
         timerHandler.removeCallbacks(timerRunnable);
     }
 
+
+
     private void startRecording() {
         // using inbuilt media player
         mRecorder = new MediaRecorder();
@@ -154,6 +152,17 @@ public class CaptureAudio extends Activity {
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
+    }
+
+    public CaptureAudio() {
+
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + "/TravelJar/Audio";
+        File directory = new File(dirPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        mFileName = dirPath + "/voice_" + System.currentTimeMillis() + ".3gp";
     }
 
     private void saveAndUploadAudio() {

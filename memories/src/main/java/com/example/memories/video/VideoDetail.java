@@ -1,11 +1,12 @@
 package com.example.memories.video;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,7 +39,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class VideoDetail extends Activity {
+public class VideoDetail extends AppCompatActivity {
 
     private static final String TAG = "<VideoDetail>";
     List<String> likedBy = new ArrayList<String>();
@@ -62,6 +63,10 @@ public class VideoDetail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_detail);
         Log.d(TAG, "entrerd video details");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         currenTime = HelpMe.getCurrentTime();
         video = (ImageView) findViewById(R.id.thumbnail);

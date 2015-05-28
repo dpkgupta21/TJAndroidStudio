@@ -30,7 +30,7 @@
         android:allowBackup="true"
         android:icon="@drawable/jar"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/myAppTheme" >>
         <activity
             android:name="com.example.memories.login.SplashScreen"
             android:label="@string/app_name">
@@ -48,7 +48,8 @@
             android:label="@string/app_name"></activity>
         <activity
             android:name=".BaseActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name="com.example.memories.checkin.CheckInPlacesList"
             android:label="@string/app_name"></activity>
@@ -138,6 +139,10 @@
 
         <activity
             android:name="com.example.memories.retrofit.MultiPartUpload"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name="com.example.memories.DashBoard"
             android:label="@string/app_name"></activity>
 
         <service

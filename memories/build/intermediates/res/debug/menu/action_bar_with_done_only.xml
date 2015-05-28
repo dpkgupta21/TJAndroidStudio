@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Done Button -->
     <item
         android:id="@+id/action_done"
         android:icon="@drawable/check35"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/default_string" />
 
 </menu><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/menu/action_bar_with_done_only.xml -->

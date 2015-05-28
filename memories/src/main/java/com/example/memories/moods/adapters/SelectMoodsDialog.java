@@ -1,4 +1,4 @@
-package com.example.memories.moods;
+package com.example.memories.moods.adapters;
 
 import android.app.Activity;
 import android.app.AlertDialog;

@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar" />
+
     <TextView
         android:id="@+id/timerView"
         android:layout_width="match_parent"
@@ -71,4 +73,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/capture_audio.xml -->
+</LinearLayout>

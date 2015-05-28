@@ -1,8 +1,9 @@
 package com.example.memories.note;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +18,7 @@ import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.NotesUtil;
 import com.example.memories.utility.TJPreferences;
 
-public class CreateNotes extends Activity {
+public class CreateNotes extends AppCompatActivity {
 
     private static final String TAG = "<CreateNotes>";
     EditText mNoteContent;
@@ -25,7 +26,11 @@ public class CreateNotes extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notes);
+        setContentView(R.layout.notes_capture);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         mNoteContent = (EditText) findViewById(R.id.noteContent);
     }

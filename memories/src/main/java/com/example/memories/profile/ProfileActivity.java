@@ -1,10 +1,11 @@
 package com.example.memories.profile;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +34,7 @@ import retrofit.RetrofitError;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
 
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "<PROFILEACTIVITY>";
     private static final int REQUEST_CODE_UPDATE_PROFILE = 2;
@@ -53,6 +54,10 @@ public class ProfileActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         mProfileImg = (MyCircularImageView) findViewById(R.id.profileImg);
         mChangePwdImg = (ImageView) findViewById(R.id.changePwd);

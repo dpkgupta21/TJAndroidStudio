@@ -49,9 +49,6 @@ public class GalleryPhotosFragment extends Fragment {
 
         Log.d(TAG, "enetred gallery photos fragment!!");
 
-        actionBar = getActivity().getActionBar();
-        actionBar.setTitle(getResources().getString(R.string.gallery_photo));
-
         mGridView = (GridView) rootView.findViewById(R.id.images_grid_view);
 
         mImageList = PictureDataSource.getAllPictures(getActivity());

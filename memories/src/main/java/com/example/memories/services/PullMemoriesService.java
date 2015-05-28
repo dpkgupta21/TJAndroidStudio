@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.SQLitedatabase.CheckinDataSource;
+import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.SQLitedatabase.NoteDataSource;
 import com.example.memories.models.Audio;
@@ -105,9 +106,11 @@ public class PullMemoriesService extends IntentService {
                                 laps.replace("[", "");
                                 laps.replace("]", "");
                                 lapsList = Arrays.asList(laps.split(","));
+
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
                                         createdBy, lapsList, buddiesList, Constants.JOURNEY_STATUS_ACTIVE);
                                 saveMemories(jsonObject.getJSONArray("memories"), idOnServer);
+                                JourneyDataSource.createJourney(journey, PullMemoriesService.this);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -1,8 +1,9 @@
 package com.example.memories.newjourney;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -13,7 +14,7 @@ import com.example.memories.newjourney.adapters.LocationListAdapter;
 
 import java.util.ArrayList;
 
-public class LocationList extends Activity {
+public class LocationList extends AppCompatActivity {
 
     private LocationListAdapter locationListAdapter;
 
@@ -21,6 +22,10 @@ public class LocationList extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_location_list);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         final ArrayList<String> locationList = new ArrayList<String>();
         int len = getResources().getStringArray(R.array.places_list).length;

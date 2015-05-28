@@ -29,4 +29,7 @@
     <color name="black_semi_transparent">#B2000000</color>
     <color name="profile_background">#FFAD0E</color>
 
+    <color name="primaryColor">#2196F3</color>
+    <color name="primaryColorDark">#0D47A1</color>
+
 </resources>

@@ -3,6 +3,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar" />
+
     <ListView
         android:id="@+id/new_journey_location_list"
         android:layout_width="fill_parent"

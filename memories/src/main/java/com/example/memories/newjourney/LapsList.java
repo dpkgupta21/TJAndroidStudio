@@ -1,9 +1,10 @@
 package com.example.memories.newjourney;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -18,7 +19,7 @@ import com.example.memories.customviews.MyFABView;
 import com.example.memories.newjourney.adapters.LapsListAdapter;
 import com.example.memories.volley.AppController;
 
-public class LapsList extends Activity {
+public class LapsList extends AppCompatActivity {
 
     protected static final String TAG = "<LapsList>";
     private LapsListAdapter lapsListViewAdapter;
@@ -29,8 +30,9 @@ public class LapsList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_laps_list);
 
-        actionBar = getActionBar();
-        actionBar.setTitle("Travel Itinerary");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         // Add lap FAB Button
         final MyFABView fabButton = new MyFABView.Builder(this)

@@ -281,7 +281,7 @@ public class TimeLineAdapter extends BaseAdapter {
                 break;
 
             case 3:
-                Log.d(TAG, "in notes");
+                Log.d(TAG, "in notes_capture");
                 Note note = (Note) memoriesList.get(position);
                 holder.timelineItemContent.setText(note.getContent());
                 break;

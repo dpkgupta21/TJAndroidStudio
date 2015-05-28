@@ -1,22 +1,23 @@
 package com.example.memories.newjourney;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
-import com.example.memories.login.CustomResultReceiver;
 import com.example.memories.models.Journey;
 import com.example.memories.newjourney.adapters.PendingJourneysListAdapter;
+import com.example.memories.services.CustomResultReceiver;
 import com.example.memories.timeline.Timeline;
 
 import java.util.List;
 
-public class NewJourney extends Activity implements CustomResultReceiver.Receiver {
+public class NewJourney extends AppCompatActivity implements CustomResultReceiver.Receiver {
 
     private static final String TAG = "<NewJourney>";
     private ListView mListView;
@@ -32,6 +33,10 @@ public class NewJourney extends Activity implements CustomResultReceiver.Receive
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         mListView = (ListView) findViewById(R.id.pendingRequestsList);
         mPendingJourneysList = JourneyDataSource.getPendingJourneys(this);

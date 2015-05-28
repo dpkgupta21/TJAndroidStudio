@@ -1,100 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent">
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/content_activity_frame"
+    <include layout="@layout/toolbar" />
+
+    <android.support.v4.widget.DrawerLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:id="@+id/drawerLayout"
+        android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/content_activity_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <FrameLayout
+            android:id="@+id/content_activity_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
 
-    <com.example.flotingmenulibrary.FloatingActionsMenu
-        android:id="@+id/multiple_actions_down"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        fab:fab_addButtonColorNormal="@color/tj_red"
-        fab:fab_addButtonColorPressed="@color/tj_red"
-        fab:fab_addButtonPlusIconColor="@color/white"
-        fab:fab_expandDirection="up"
-        fab:fab_labelStyle="@style/menu_labels_style">
+        <!-- activity view -->
+        <!--<RelativeLayout
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:layout_height="match_parent">
 
-        <com.example.flotingmenulibrary.FloatingActionButton
-            android:id="@+id/button_mood"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onFABClick"
-            android:src="@drawable/emoticon117"
-            fab:fab_colorNormal="@color/tj_orange"
-            fab:fab_colorPressed="@color/white"
-            fab:fab_size="mini"
-            fab:fab_title="Set Mood" />
+            <TextView
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:textColor="#000"
+                android:text="Activity Content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>-->
 
-        <com.example.flotingmenulibrary.FloatingActionButton
-            android:id="@+id/button_checkin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onFABClick"
-            android:src="@drawable/map32"
-            fab:fab_colorNormal="@color/tj_orange"
-            fab:fab_colorPressed="@color/white"
-            fab:fab_size="mini"
-            fab:fab_title="Checkin" />
+        <fragment
+            android:id="@+id/fragment_drawer"
+            android:name="com.example.memories.SideMenuDrawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|start" />
 
-        <com.example.flotingmenulibrary.FloatingActionButton
-            android:id="@+id/button_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onFABClick"
-            android:src="@drawable/stack21"
-            fab:fab_colorNormal="@color/tj_orange"
-            fab:fab_colorPressed="@color/white"
-            fab:fab_size="mini"
-            fab:fab_title="Photo" />
+        <!-- navigation drawer -->
+        <RelativeLayout
+            android:layout_gravity="left|start"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:layout_height="match_parent">
 
-        <com.example.flotingmenulibrary.FloatingActionButton
-            android:id="@+id/button_note"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onFABClick"
-            android:src="@drawable/note48"
-            fab:fab_colorNormal="@color/tj_orange"
-            fab:fab_colorPressed="@color/white"
-            fab:fab_size="mini"
-            fab:fab_title="Notes" />
+            <ListView
+                android:id="@+id/left_drawer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#eee"
+                android:background="#fff"
+                android:dividerHeight="1dp" />
+        </RelativeLayout>
 
-        <com.example.flotingmenulibrary.FloatingActionButton
-            android:id="@+id/button_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onFABClick"
-            android:src="@drawable/movie36"
-            fab:fab_colorNormal="@color/tj_orange"
-            fab:fab_colorPressed="@color/white"
-            fab:fab_size="mini"
-            fab:fab_title="Video" />
+    </android.support.v4.widget.DrawerLayout>
 
-        <com.example.flotingmenulibrary.FloatingActionButton
-            android:id="@+id/button_audio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onFABClick"
-            android:src="@drawable/microphone52"
-            fab:fab_colorNormal="@color/tj_orange"
-            fab:fab_colorPressed="@color/white"
-            fab:fab_size="mini"
-            fab:fab_title="Audio" />
-    </com.example.flotingmenulibrary.FloatingActionsMenu>
-
-</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/base_activity.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/base_activity.xml -->

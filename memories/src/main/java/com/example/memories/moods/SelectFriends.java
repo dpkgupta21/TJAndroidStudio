@@ -1,8 +1,9 @@
 package com.example.memories.moods;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,11 +16,12 @@ import android.widget.ImageView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.models.Contact;
+import com.example.memories.moods.adapters.FriendsGridAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectFriends extends Activity {
+public class SelectFriends extends AppCompatActivity {
 
     public static final String TAG = "<SelectFriends>";
     GridView mGridView;
@@ -32,7 +34,9 @@ public class SelectFriends extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_friends_list);
 
-        //JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Capture Audio");
+        setSupportActionBar(toolbar);
 
         mSelectedFriends = getIntent().getExtras().getStringArrayList("SELECTED_FRIENDS");
         mGridView = (GridView) findViewById(R.id.friends_list);

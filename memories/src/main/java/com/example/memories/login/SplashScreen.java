@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.memories.R;
-import com.example.memories.services.PullContactsService;
+import com.example.memories.services.CustomResultReceiver;
 import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
@@ -28,12 +28,14 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        getActionBar().hide();
+
         // Session class instance
         session = new SessionManager(getApplicationContext());
 
         mReceiver = new CustomResultReceiver(new Handler());
         mReceiver.setReceiver(this);
+
+        createTravelJarInitials();
 
         // check if already logged in
         if (session.isLoggedIn(this)) {
@@ -43,15 +45,13 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
             startActivity(intent);
             finish();
         } else {
+              //Creates a new Intent to start the RSSPullService IntentService.
+			  //Passes a URI in the Intent's "data" field.
 
-			/*
-             * Creates a new Intent to start the RSSPullService IntentService.
-			 * Passes a URI in the Intent's "data" field.
-			 */
-            Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+            /*Intent intent = new Intent(getBaseContext(), PullContactsService.class);
             intent.putExtra("RECEIVER", mReceiver);
             intent.putExtra("REQUEST_CODE", REQUEST_FETCH_CONTACTS);
-            startService(intent);
+            startService(intent);*/
         }
 
     }
