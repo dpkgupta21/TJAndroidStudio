@@ -75,7 +75,7 @@ public class PendingJourneysListAdapter extends BaseAdapter {
                 }
 
                 //Fetch all the memories
-                /*Intent intent = new Intent(mContext, Timeline.class);
+                /*Intent intent = new Intent(mContext, TimelineFragment.class);
                 mContext.startActivity(intent);*/
             }
         });

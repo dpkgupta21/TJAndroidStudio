@@ -20,7 +20,7 @@ import com.example.memories.models.Journey;
 import com.example.memories.models.Mood;
 import com.example.memories.models.Note;
 import com.example.memories.models.Picture;
-import com.example.memories.timeline.Timeline;
+import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -92,7 +92,7 @@ public class GcmIntentService extends IntentService {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this,
-                Timeline.class), 0);
+                TimelineFragment.class), 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher).setContentTitle("GCM Notification")

@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.memories.R;
+import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.services.CustomResultReceiver;
-import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
@@ -40,8 +40,8 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
         // check if already logged in
         if (session.isLoggedIn(this)) {
             Log.d(TAG, "since already logged in");
-            Log.d(TAG, "SplashScreen ==> Timeline");
-            Intent intent = new Intent(getBaseContext(), Timeline.class);
+            Log.d(TAG, "SplashScreen ==> TimelineFragment");
+            Intent intent = new Intent(getBaseContext(), ActivejourneyList.class);
             startActivity(intent);
             finish();
         } else {

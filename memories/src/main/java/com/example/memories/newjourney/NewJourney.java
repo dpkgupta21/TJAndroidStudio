@@ -10,10 +10,10 @@ import android.widget.ListView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Journey;
 import com.example.memories.newjourney.adapters.PendingJourneysListAdapter;
 import com.example.memories.services.CustomResultReceiver;
-import com.example.memories.timeline.Timeline;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class NewJourney extends AppCompatActivity implements CustomResultReceive
             memoriesFetched = true;
         }
         if (contactsFetched && memoriesFetched) {
-            Intent i = new Intent(getApplicationContext(), Timeline.class);
+            Intent i = new Intent(getApplicationContext(), CurrentJourneyBaseActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         }

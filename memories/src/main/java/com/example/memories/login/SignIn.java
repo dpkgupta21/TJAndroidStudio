@@ -20,7 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.example.memories.DashBoard;
+import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.services.CustomResultReceiver;
@@ -73,7 +73,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         SessionManager session = new SessionManager(getApplicationContext());
 
         if (session.isLoggedIn(this)) {
-            Intent i = new Intent(getBaseContext(), DashBoard.class);
+            Intent i = new Intent(getBaseContext(), ActivejourneyList.class);
             startActivity(i);
             finish();
         }
@@ -154,10 +154,6 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
                                 }
 
                                 TJPreferences.setActiveJourneyId(SignIn.this, "21");
-                                // Staring MainActivity
-/*                                Intent i = new Intent(getApplicationContext(), Timeline.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i);*/
                             }
                         }, new Response.ErrorListener() {
 
@@ -228,7 +224,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         }
         if (contactsFetched && memoriesFetched) {
             pDialog.dismiss();
-            Intent i = new Intent(getApplicationContext(), DashBoard.class);
+            Intent i = new Intent(getApplicationContext(), ActivejourneyList.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         }

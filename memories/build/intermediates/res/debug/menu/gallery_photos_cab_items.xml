@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Upload -->
     <item
         android:id="@+id/action_upload"
         android:icon="@drawable/upload119"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="Upload" />
 
     <!-- Delete -->
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/delete48"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="Delete" />
 
 </menu><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/menu/gallery_photos_cab_items.xml -->

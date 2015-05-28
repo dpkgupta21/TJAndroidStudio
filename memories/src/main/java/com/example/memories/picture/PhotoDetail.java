@@ -22,7 +22,7 @@ import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Picture;
-import com.example.memories.timeline.Timeline;
+import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.PictureUtilities;
@@ -236,7 +236,7 @@ public class PhotoDetail extends AppCompatActivity {
                 if (isNewPic) {
                     saveAndUploadPic();
                 }
-                Intent i = new Intent(getBaseContext(), Timeline.class);
+                Intent i = new Intent(getBaseContext(), TimelineFragment.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;

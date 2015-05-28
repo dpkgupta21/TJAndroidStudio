@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.models.Audio;
-import com.example.memories.timeline.Timeline;
+import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
@@ -197,7 +197,7 @@ public class CaptureAudio extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_done:
                 saveAndUploadAudio();
-                Intent i = new Intent(getBaseContext(), Timeline.class);
+                Intent i = new Intent(getBaseContext(), TimelineFragment.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;

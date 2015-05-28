@@ -20,7 +20,7 @@ import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.models.Mood;
 import com.example.memories.moods.adapters.SelectMoodsDialog;
-import com.example.memories.timeline.Timeline;
+import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.MoodUtil;
 import com.example.memories.utility.TJPreferences;
@@ -116,7 +116,7 @@ public class CaptureMoods extends AppCompatActivity implements SelectMoodsDialog
                             .show();
                 } else {
                     createNewMoodIntoDB();
-                    Intent i = new Intent(getBaseContext(), Timeline.class);
+                    Intent i = new Intent(getBaseContext(), TimelineFragment.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }

@@ -13,7 +13,7 @@ import android.widget.EditText;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.NoteDataSource;
 import com.example.memories.models.Note;
-import com.example.memories.timeline.Timeline;
+import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.NotesUtil;
 import com.example.memories.utility.TJPreferences;
@@ -62,7 +62,7 @@ public class CreateNotes extends AppCompatActivity {
             case R.id.action_done:
                 Log.d(TAG, "done clicked!");
                 uploadAndSaveNote();
-                Intent i = new Intent(getBaseContext(), Timeline.class);
+                Intent i = new Intent(getBaseContext(), TimelineFragment.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;

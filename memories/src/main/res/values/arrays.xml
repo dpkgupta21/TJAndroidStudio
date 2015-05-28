@@ -2,10 +2,9 @@
 <resources>
 
     <string-array name="sidemenu_features_list">
-        <item>Timeline</item>
-        <item>Gallery</item>
+        <item>Active Journeys</item>
         <item>Past Journeys</item>
-        <item>Journey Details</item>
+        <item>Gallery</item>
         <item>Profile</item>
     </string-array>
 

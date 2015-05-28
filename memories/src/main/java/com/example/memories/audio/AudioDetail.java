@@ -1,10 +1,14 @@
 package com.example.memories.audio;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,6 +20,7 @@ import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.models.Audio;
 import com.example.memories.models.Contact;
+import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
@@ -173,29 +178,29 @@ public class AudioDetail extends AppCompatActivity {
         AudioUtil.uploadAudio(this, mAudio);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.action_bar_with_done_only, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar actions click
-//        switch (item.getItemId()) {
-//            case R.id.action_done:
-//                Log.d(TAG, "done clicked!");
-//                if (isNewAudio) {
-//                    saveAndUploadPic();
-//                }
-//                Intent i = new Intent(getBaseContext(), Timeline.class);
-//                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(i);
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar_with_done_only, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+            case R.id.action_done:
+                Log.d(TAG, "done clicked!");
+                if (isNewAudio) {
+                    saveAndUploadPic();
+                }
+                Intent i = new Intent(getBaseContext(), TimelineFragment.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

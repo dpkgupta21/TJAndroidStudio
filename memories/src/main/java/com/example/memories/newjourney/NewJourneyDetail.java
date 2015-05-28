@@ -16,8 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Journey;
-import com.example.memories.timeline.Timeline;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
@@ -128,7 +128,7 @@ public class NewJourneyDetail extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Intent i = new Intent(getBaseContext(), Timeline.class);
+                        Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
 
@@ -148,7 +148,7 @@ public class NewJourneyDetail extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Intent i = new Intent(getBaseContext(), Timeline.class);
+                        Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     }

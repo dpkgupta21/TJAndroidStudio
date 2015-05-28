@@ -30,7 +30,7 @@
         android:allowBackup="true"
         android:icon="@drawable/jar"
         android:label="@string/app_name"
-        android:theme="@style/myAppTheme" >>
+        android:theme="@style/myAppTheme">>
         <activity
             android:name="com.example.memories.login.SplashScreen"
             android:label="@string/app_name">
@@ -100,7 +100,7 @@
             android:name="com.example.memories.newjourney.NewJourneyDetail"
             android:label="@string/app_name"></activity>
         <activity
-            android:name="com.example.memories.timeline.Timeline"
+            android:name=".currentjourney.CurrentJourneyBaseActivity"
             android:label="@string/app_name"></activity>
         <activity
             android:name="com.example.memories.newjourney.AddLap"
@@ -142,7 +142,7 @@
             android:label="@string/app_name"></activity>
 
         <activity
-            android:name="com.example.memories.DashBoard"
+            android:name=".activejourney.ActivejourneyList"
             android:label="@string/app_name"></activity>
 
         <service

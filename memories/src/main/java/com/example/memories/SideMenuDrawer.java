@@ -10,10 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.gallery.GalleryBaseActivity;
 import com.example.memories.pastjourney.PastJourneyList;
 import com.example.memories.profile.ProfileActivity;
-import com.example.memories.timeline.Timeline;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ public class SideMenuDrawer extends Fragment {
         featuresListView = (ListView) rootView.findViewById(R.id.sidemenu_features_list);
         featuresList = new ArrayList<Map<String, String>>();
         Integer[] categoryIconArray = {R.drawable.timeline, R.drawable.map32, R.drawable.stack21,
-                R.drawable.cookies, R.drawable.seo47, R.drawable.shopping232};
+                R.drawable.cookies};
         String[] hashMapKeys = {"icon", "title"};
 
         Integer len = getResources().getStringArray(R.array.sidemenu_features_list).length;
@@ -67,18 +67,18 @@ public class SideMenuDrawer extends Fragment {
                 Intent i;
                 switch (position) {
                     case 0:
-                        i = new Intent(getActivity(), Timeline.class);
+                        i = new Intent(getActivity(), ActivejourneyList.class);
                         startActivity(i);
                         break;
                     case 1:
-                        i = new Intent(getActivity(), GalleryBaseActivity.class);
-                        startActivity(i);
-                        break;
-                    case 2:
                         i = new Intent(getActivity(), PastJourneyList.class);
                         startActivity(i);
                         break;
-                    case 4:
+                    case 2:
+                        i = new Intent(getActivity(), GalleryBaseActivity.class);
+                        startActivity(i);
+                        break;
+                    case 3:
                         i = new Intent(getActivity(), ProfileActivity.class);
                         startActivityForResult(i, REQUEST_CODE_UPDATE_PROFILE);
                         break;
