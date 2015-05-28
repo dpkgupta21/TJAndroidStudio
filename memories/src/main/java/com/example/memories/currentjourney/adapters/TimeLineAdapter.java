@@ -24,7 +24,7 @@ import com.example.memories.models.Mood;
 import com.example.memories.models.Note;
 import com.example.memories.models.Picture;
 import com.example.memories.models.Video;
-import com.example.memories.picture.PhotoDetail;
+import com.example.memories.picture.PictureDetail;
 import com.example.memories.utility.AudioPlayer;
 import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
@@ -129,7 +129,7 @@ public class TimeLineAdapter extends BaseAdapter {
                     break;
 
                 case HelpMe.TYPE_MOOD:
-                    convertView = mInflater.inflate(R.layout.timeline_item_mood_item, null);
+                    convertView = mInflater.inflate(R.layout.timeline_list_mood_item, null);
                     holder.timelineItemCaption = (TextView) convertView
                             .findViewById(R.id.timelineItemCaption);
                     break;
@@ -328,7 +328,7 @@ public class TimeLineAdapter extends BaseAdapter {
                 Intent intent = null;
                 switch (type) {
                     case HelpMe.TYPE_PICTURE:
-                        intent = new Intent(context, PhotoDetail.class);
+                        intent = new Intent(context, PictureDetail.class);
                         intent.putExtra("PICTURE_ID", memory.getId());
                         break;
 

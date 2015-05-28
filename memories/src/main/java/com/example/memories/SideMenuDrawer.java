@@ -26,8 +26,6 @@ public class SideMenuDrawer extends Fragment {
 
     private static final String TAG = "<BaseActivity>";
     private static final int REQUEST_CODE_UPDATE_PROFILE = 2;
-    private ArrayList<Map<String, String>> featuresList;
-    private ListView featuresListView;
     private View rootView;
 
     @Override
@@ -41,15 +39,15 @@ public class SideMenuDrawer extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // Sliding Side Menu Drawer code
-        featuresListView = (ListView) rootView.findViewById(R.id.sidemenu_features_list);
-        featuresList = new ArrayList<Map<String, String>>();
+        ListView featuresListView = (ListView) rootView.findViewById(R.id.sidemenu_features_list);
+        ArrayList<Map<String, String>> featuresList = new ArrayList<>();
         Integer[] categoryIconArray = {R.drawable.timeline, R.drawable.map32, R.drawable.stack21,
                 R.drawable.cookies};
         String[] hashMapKeys = {"icon", "title"};
 
         Integer len = getResources().getStringArray(R.array.sidemenu_features_list).length;
         for (int i = 0; i < len; i++) {
-            HashMap<String, String> setting = new HashMap<String, String>();
+            HashMap<String, String> setting = new HashMap<>();
             setting.put("icon", "" + categoryIconArray[i]);
             setting.put("title", getResources().getStringArray(R.array.sidemenu_features_list)[i]);
             featuresList.add(setting);

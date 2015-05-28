@@ -21,7 +21,7 @@ import com.example.memories.moods.adapters.FriendsGridAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectFriends extends AppCompatActivity {
+public class MoodSelectFriends extends AppCompatActivity {
 
     public static final String TAG = "<SelectFriends>";
     GridView mGridView;
@@ -32,7 +32,7 @@ public class SelectFriends extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.select_friends_list);
+        setContentView(R.layout.mood_select_friends_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Capture Audio");

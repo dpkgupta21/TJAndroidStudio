@@ -47,7 +47,7 @@ public class CheckInFriendsListAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.select_friends_grid_item, parent, false);
+            convertView = inflater.inflate(R.layout.mood_select_friends_grid_item, parent, false);
         }
         ImageView profileImg = (ImageView) convertView.findViewById(R.id.friendImg);
         ImageView overlayImg = (ImageView) convertView.findViewById(R.id.overlayImg);

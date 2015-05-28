@@ -18,9 +18,9 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
+import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.models.Mood;
 import com.example.memories.moods.adapters.SelectMoodsDialog;
-import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.MoodUtil;
 import com.example.memories.utility.TJPreferences;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CaptureMoods extends AppCompatActivity implements SelectMoodsDialog.OnEmoticonSelectListener {
+public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.OnEmoticonSelectListener {
 
     private static final String TAG = "<CaptureMoods>";
     private static int PICK_CONTACTS = 1;
@@ -71,7 +71,7 @@ public class CaptureMoods extends AppCompatActivity implements SelectMoodsDialog
     }
 
     public void selectFriends(View v) {
-        Intent intent = new Intent(getBaseContext(), SelectFriends.class);
+        Intent intent = new Intent(getBaseContext(), MoodSelectFriends.class);
         intent.putStringArrayListExtra("SELECTED_FRIENDS", mSelectedFriends == null ? null : new ArrayList<String>(mSelectedFriends));
         startActivityForResult(intent, PICK_CONTACTS);
     }

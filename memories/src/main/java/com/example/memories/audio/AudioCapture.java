@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
-import com.example.memories.models.Audio;
 import com.example.memories.currentjourney.TimelineFragment;
+import com.example.memories.models.Audio;
 import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
@@ -29,7 +29,7 @@ import com.example.memories.utility.TJPreferences;
 import java.io.File;
 import java.io.IOException;
 
-public class CaptureAudio extends AppCompatActivity {
+public class AudioCapture extends AppCompatActivity {
 
     private static final String TAG = "CaptureVoice";
     private static String mFileName = null;
@@ -60,6 +60,16 @@ public class CaptureAudio extends AppCompatActivity {
     private MediaPlayer mPlayer = null;
 
 
+    public AudioCapture() {
+
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + "/TravelJar/Audio";
+        File directory = new File(dirPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        mFileName = dirPath + "/voice_" + System.currentTimeMillis() + ".3gp";
+    }
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -129,8 +139,6 @@ public class CaptureAudio extends AppCompatActivity {
         timerHandler.removeCallbacks(timerRunnable);
     }
 
-
-
     private void startRecording() {
         // using inbuilt media player
         mRecorder = new MediaRecorder();
@@ -152,17 +160,6 @@ public class CaptureAudio extends AppCompatActivity {
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
-    }
-
-    public CaptureAudio() {
-
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/TravelJar/Audio";
-        File directory = new File(dirPath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        mFileName = dirPath + "/voice_" + System.currentTimeMillis() + ".3gp";
     }
 
     private void saveAndUploadAudio() {

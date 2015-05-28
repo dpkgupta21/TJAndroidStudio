@@ -1,8 +1,6 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -13,6 +11,8 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
 MERGED from TJAndroidStudio:library:unspecified:7:5
@@ -160,25 +160,25 @@ ADDED from AndroidManifest.xml:59:9
 		ADDED from AndroidManifest.xml:61:13
 	android:name
 		ADDED from AndroidManifest.xml:60:13
-activity#com.example.memories.picture.CapturePhotos
+activity#com.example.memories.picture.PictureCapture
 ADDED from AndroidManifest.xml:62:9
 	android:label
 		ADDED from AndroidManifest.xml:64:13
 	android:name
 		ADDED from AndroidManifest.xml:63:13
-activity#com.example.memories.moods.CaptureMoods
+activity#com.example.memories.moods.MoodCapture
 ADDED from AndroidManifest.xml:65:9
 	android:label
 		ADDED from AndroidManifest.xml:67:13
 	android:name
 		ADDED from AndroidManifest.xml:66:13
-activity#com.example.memories.audio.CaptureAudio
+activity#com.example.memories.audio.AudioCapture
 ADDED from AndroidManifest.xml:68:9
 	android:label
 		ADDED from AndroidManifest.xml:70:13
 	android:name
 		ADDED from AndroidManifest.xml:69:13
-activity#com.example.memories.picture.PhotoDetail
+activity#com.example.memories.picture.PictureDetail
 ADDED from AndroidManifest.xml:71:9
 	android:label
 		ADDED from AndroidManifest.xml:73:13
@@ -276,7 +276,7 @@ ADDED from AndroidManifest.xml:123:9
 		ADDED from AndroidManifest.xml:125:13
 	android:name
 		ADDED from AndroidManifest.xml:124:13
-activity#com.example.memories.video.CaptureVideo
+activity#com.example.memories.video.VideoCapture
 ADDED from AndroidManifest.xml:127:9
 	android:label
 		ADDED from AndroidManifest.xml:129:13
@@ -294,7 +294,7 @@ ADDED from AndroidManifest.xml:133:9
 		ADDED from AndroidManifest.xml:135:13
 	android:name
 		ADDED from AndroidManifest.xml:134:13
-activity#com.example.memories.moods.SelectFriends
+activity#com.example.memories.moods.MoodSelectFriends
 ADDED from AndroidManifest.xml:136:9
 	android:label
 		ADDED from AndroidManifest.xml:138:13
@@ -312,51 +312,57 @@ ADDED from AndroidManifest.xml:144:9
 		ADDED from AndroidManifest.xml:146:13
 	android:name
 		ADDED from AndroidManifest.xml:145:13
-service#com.example.memories.services.PullContactsService
+activity#com.example.memories.currentjourney.JourneyInfo
 ADDED from AndroidManifest.xml:148:9
-	android:exported
+	android:label
 		ADDED from AndroidManifest.xml:150:13
 	android:name
 		ADDED from AndroidManifest.xml:149:13
-service#com.example.memories.services.PullMemoriesService
+service#com.example.memories.services.PullContactsService
 ADDED from AndroidManifest.xml:152:9
 	android:exported
 		ADDED from AndroidManifest.xml:154:13
 	android:name
 		ADDED from AndroidManifest.xml:153:13
-meta-data#com.google.android.gms.version
+service#com.example.memories.services.PullMemoriesService
 ADDED from AndroidManifest.xml:156:9
+	android:exported
+		ADDED from AndroidManifest.xml:158:13
 	android:name
 		ADDED from AndroidManifest.xml:157:13
+meta-data#com.google.android.gms.version
+ADDED from AndroidManifest.xml:160:9
 	android:value
-		ADDED from AndroidManifest.xml:158:13
-meta-data#com.facebook.sdk.ApplicationId
-ADDED from AndroidManifest.xml:159:9
+		ADDED from AndroidManifest.xml:162:13
 	android:name
-		ADDED from AndroidManifest.xml:160:13
-	android:value
 		ADDED from AndroidManifest.xml:161:13
+meta-data#com.facebook.sdk.ApplicationId
+ADDED from AndroidManifest.xml:163:9
+	android:value
+		ADDED from AndroidManifest.xml:165:13
+	android:name
+		ADDED from AndroidManifest.xml:164:13
 receiver#com.example.memories.gcm.GcmBroadcastReceiver
-ADDED from AndroidManifest.xml:169:9
+ADDED from AndroidManifest.xml:173:9
 	android:permission
-		ADDED from AndroidManifest.xml:171:13
+		ADDED from AndroidManifest.xml:175:13
 	android:name
-		ADDED from AndroidManifest.xml:170:13
+		ADDED from AndroidManifest.xml:174:13
 intent-filter#com.example.memories+com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:172:13
+ADDED from AndroidManifest.xml:176:13
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from AndroidManifest.xml:175:17
-	android:name
-		ADDED from AndroidManifest.xml:175:25
-action#com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:177:17
-	android:name
-		ADDED from AndroidManifest.xml:177:25
-category#com.example.memories
 ADDED from AndroidManifest.xml:179:17
 	android:name
-		ADDED from AndroidManifest.xml:179:27
-service#com.example.memories.gcm.GcmIntentService
-ADDED from AndroidManifest.xml:189:9
+		ADDED from AndroidManifest.xml:179:25
+action#com.google.android.c2dm.intent.REGISTRATION
+ADDED from AndroidManifest.xml:181:17
 	android:name
-		ADDED from AndroidManifest.xml:189:18
+		ADDED from AndroidManifest.xml:181:25
+category#com.example.memories
+ADDED from AndroidManifest.xml:183:17
+	android:name
+		ADDED from AndroidManifest.xml:183:27
+service#com.example.memories.gcm.GcmIntentService
+ADDED from AndroidManifest.xml:193:9
+	android:name
+		ADDED from AndroidManifest.xml:193:18

@@ -17,7 +17,7 @@ import android.widget.ListView;
 
 public class BaseActivity extends AppCompatActivity {
 
-    private static final String TAG ="<BaseActivity>";
+    private static final String TAG = "<BaseActivity>";
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -52,7 +52,7 @@ public class BaseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         leftDrawerList.setAdapter(navigationDrawerAdapter);
-        navigationDrawerAdapter=new ArrayAdapter<String>( BaseActivity.this, android.R.layout.simple_list_item_1, leftSliderData);
+        navigationDrawerAdapter = new ArrayAdapter<>(BaseActivity.this, android.R.layout.simple_list_item_1, leftSliderData);
     }
 
     private void initDrawer() {

@@ -42,7 +42,7 @@ public class SelectedFriendsList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Capture Audio");
         setSupportActionBar(toolbar);
-        
+
         selectedList = new ArrayList<Contact>();
 
         ListView contactListView = (ListView) findViewById(R.id.addFriendsList);

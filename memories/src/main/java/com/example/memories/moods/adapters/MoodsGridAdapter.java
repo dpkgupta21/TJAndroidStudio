@@ -42,7 +42,7 @@ public class MoodsGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.moods_grid_item, null);
+            convertView = inflater.inflate(R.layout.mood_grid_item, null);
             ImageView emoticon = (ImageView) convertView.findViewById(R.id.emoticon);
             TextView emoticonTitle = (TextView) convertView.findViewById(R.id.emoticonTitle);
 

@@ -35,7 +35,7 @@ public class ContactDataSource {
         long contact_id = 0;
         try {
             contact_id = db.insertOrThrow(MySQLiteHelper.TABLE_CONTACT, null, values);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Log.d(TAG, "contact already exists so not inserting excccceptiononon");
         }
 
@@ -100,6 +100,7 @@ public class ContactDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         String[] buddyIds = JourneyDataSource.getBuddyIdsFromJourney(context,
                 TJPreferences.getActiveJourneyId(context));
+        Log.d(TAG, "active journey id = " + TJPreferences.getActiveJourneyId(context) + "no of nuddies = " + buddyIds.length);
         for (int i = 0; i < buddyIds.length; i++) {
             buddyIds[i] = buddyIds[i].trim();
         }

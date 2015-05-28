@@ -6,14 +6,14 @@
     <item
         android:id="@+id/action_upload"
         android:icon="@drawable/upload119"
-        app:showAsAction="ifRoom"
-        android:title="Upload" />
+        android:title="Upload"
+        app:showAsAction="ifRoom" />
 
     <!-- Delete -->
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/delete48"
-        app:showAsAction="never"
-        android:title="Delete" />
+        android:title="Delete"
+        app:showAsAction="never" />
 
-</menu><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/menu/gallery_photos_cab_items.xml -->
+</menu><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/menu/gallery_photos_cab_items.xml -->

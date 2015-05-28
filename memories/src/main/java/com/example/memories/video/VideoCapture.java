@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.example.memories.R;
 
-public class CaptureVideo extends AppCompatActivity {
+public class VideoCapture extends AppCompatActivity {
 
     static final int REQUEST_VIDEO_CAPTURE = 1;
     private static final String TAG = "<CaptureVideo>";

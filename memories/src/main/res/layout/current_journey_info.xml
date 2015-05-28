@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <ImageView
+            android:id="@+id/journey_info_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/abhi" />
+
+        <TextView
+            android:id="@+id/journey_info_created_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="5dp"
+            android:text="Created by Abhinav Mittal on 21st May 2015"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/journey_info_journey_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/journey_info_created_by"
+            android:layout_margin="5dp"
+            android:text="NEW YEAR'S PARTY @ GOA"
+            android:textColor="@color/white" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:src="@drawable/abc_edit_text_material" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tj_dark_gray"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/journey_info_buddies_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+
+
+        <com.example.memories.customviews.MyButtonView
+            android:id="@+id/journey_info_exit_group"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_corner_button"
+            android:text="EXIT GROUP"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tj_medium_font" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

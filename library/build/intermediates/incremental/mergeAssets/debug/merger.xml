@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/main/assets"/></dataSet><dataSet config="debug"><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/debug/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/library/src/main/assets"/></dataSet><dataSet config="debug"><source path="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/library/src/debug/assets"/></dataSet></merger>

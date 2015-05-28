@@ -23,7 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class CapturePhotos extends AppCompatActivity {
+public class PictureCapture extends AppCompatActivity {
 
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -44,7 +44,7 @@ public class CapturePhotos extends AppCompatActivity {
     }
 
     public void okPic(View v) {
-        Intent i = new Intent(getBaseContext(), PhotoDetail.class);
+        Intent i = new Intent(getBaseContext(), PictureDetail.class);
         i.putExtra("imagePath", imagePath);
         startActivity(i);
         finish();

@@ -161,5 +161,5 @@ public class PullBuddiesService extends IntentService {
         mReceiver.send(REQUEST_CODE, bundle);
         super.onDestroy();
     }
-    
+
 }

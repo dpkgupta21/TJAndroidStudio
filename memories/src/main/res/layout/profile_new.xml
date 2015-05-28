@@ -1,77 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="250dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/abhi"
-            android:scaleType="fitXY"
-            android:id="@+id/cover_image" />
-
-        <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/cover_image"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/abhi" />
+
+        <com.example.memories.customviews.MyCircularImageView
+            android:id="@+id/profile_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/profile_image_empty" />
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/profile_img"
             android:layout_centerHorizontal="true"
-            android:id="@+id/details">
+            android:layout_marginTop="10dp"
+            android:text="Abhinav Mittal"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:text="980 miles travelled"
-                android:paddingTop="25dp"
-                android:paddingBottom="25dp"
-                android:gravity="center"
-                android:background="#112C85"/>
+    </RelativeLayout>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:layout_weight="1"
-                android:text="6 journeys"
-                android:paddingTop="25dp"
-                android:paddingBottom="25dp"
-                android:gravity="center"
-                android:background="#0F2F92"/>
-
-        </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1D3FAD">
 
         <TextView
+            android:id="@+id/profile_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="20dp"
             android:text="Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum "
-            android:background="#1D3FAD"
-            android:textColor="@color/white"
-            android:id="@+id/textView2"
-            android:padding="20dp"
-            android:layout_above="@+id/details"
-            android:layout_centerHorizontal="true" />
+            android:textColor="@color/white" />
 
         <TextView
+            android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lives in jhopdi | abcd@pqrmail.com"
-            android:background="#1D3FAD"
-            android:textColor="@color/white"
-            android:id="@+id/location"
+            android:layout_below="@id/profile_status"
+            android:layout_centerHorizontal="true"
             android:padding="20dp"
-            android:layout_above="@+id/details"
-            android:layout_centerHorizontal="true" />
+            android:text="Lives in jhopdi | abcd@pqrmail.com"
+            android:textColor="@color/white" />
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1D3FAD">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#112C85"
+            android:gravity="center"
+            android:paddingBottom="25dp"
+            android:paddingTop="25dp"
+            android:text="980 miles travelled"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0F2F92"
+            android:gravity="center"
+            android:paddingBottom="25dp"
+            android:paddingTop="25dp"
+            android:text="6 journeys"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 

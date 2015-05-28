@@ -248,7 +248,7 @@ public class HelpMe {
 
     // CHecks if a default profile image is present or not
     // if not copies it from the drawable folder
-    public static void createImageIfNotExist(Context context){
+    public static void createImageIfNotExist(Context context) {
         if (!(new File(Constants.GUMNAAM_IMAGE_URL)).exists()) {
             //check whether the dir exists
             File dir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);

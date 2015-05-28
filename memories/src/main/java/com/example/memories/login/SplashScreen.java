@@ -16,11 +16,10 @@ import com.example.memories.utility.SessionManager;
 
 import java.io.File;
 
-public class SplashScreen extends Activity implements CustomResultReceiver.Receiver{
+public class SplashScreen extends Activity implements CustomResultReceiver.Receiver {
     private static final String TAG = "<SplashScreen>";
-    private SessionManager session;
-
     public CustomResultReceiver mReceiver;
+    private SessionManager session;
     private int REQUEST_FETCH_CONTACTS = 1;
 
     @Override
@@ -45,8 +44,8 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
             startActivity(intent);
             finish();
         } else {
-              //Creates a new Intent to start the RSSPullService IntentService.
-			  //Passes a URI in the Intent's "data" field.
+            //Creates a new Intent to start the RSSPullService IntentService.
+            //Passes a URI in the Intent's "data" field.
 
             /*Intent intent = new Intent(getBaseContext(), PullContactsService.class);
             intent.putExtra("RECEIVER", mReceiver);
@@ -56,26 +55,26 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
 
     }
 
-    private void createTravelJarInitials(){
+    private void createTravelJarInitials() {
         // Create traveljar pictures folder
         File file;
-        file = new File (Constants.TRAVELJAR_FOLDER_PICTURE);
-        if(!file.exists()){
+        file = new File(Constants.TRAVELJAR_FOLDER_PICTURE);
+        if (!file.exists()) {
             file.mkdirs();
         }
         // Create traveljar VIDEO folder
-        file = new File (Constants.TRAVELJAR_FOLDER_VIDEO);
-        if(!file.exists()){
+        file = new File(Constants.TRAVELJAR_FOLDER_VIDEO);
+        if (!file.exists()) {
             file.mkdirs();
         }
         // Create traveljar AUDIO folder
-        file = new File (Constants.TRAVELJAR_FOLDER_AUDIO);
-        if(!file.exists()){
+        file = new File(Constants.TRAVELJAR_FOLDER_AUDIO);
+        if (!file.exists()) {
             file.mkdirs();
         }
         // Create traveljar BUDDY PROFILES folder
-        file = new File (Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
-        if(!file.exists()){
+        file = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
+        if (!file.exists()) {
             file.mkdirs();
         }
 
@@ -101,6 +100,7 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if (resultCode == REQUEST_FETCH_CONTACTS) {
             Log.d(TAG, "fetch contacts service completed");
-        };
+        }
+        ;
     }
 }

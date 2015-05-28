@@ -12,8 +12,8 @@ import android.widget.EditText;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.NoteDataSource;
-import com.example.memories.models.Note;
 import com.example.memories.currentjourney.TimelineFragment;
+import com.example.memories.models.Note;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.NotesUtil;
 import com.example.memories.utility.TJPreferences;

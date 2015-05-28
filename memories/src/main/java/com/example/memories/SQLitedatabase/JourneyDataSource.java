@@ -113,7 +113,6 @@ public class JourneyDataSource {
     }
 
 
-
     private static List<Journey> getJourneys(Context context, Cursor cursor) {
         List<Journey> journeyList = new ArrayList<Journey>();
         if (cursor.moveToFirst()) {

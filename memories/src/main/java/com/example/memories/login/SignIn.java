@@ -20,9 +20,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
+import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.services.CustomResultReceiver;
 import com.example.memories.services.PullContactsService;
 import com.example.memories.services.PullMemoriesService;
@@ -44,7 +44,13 @@ import java.util.regex.Pattern;
 public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
     protected static final String TAG = null;
+    // GCM -----------------------------------
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public CustomResultReceiver mReceiver;
+    String SENDER_ID = Constants.GOOGLE_PROJECT_NUMBER;
+    GoogleCloudMessaging gcm;
+    Context context;
+    String regid = "";
     private EditText txtEmailAddress;
     private EditText txtPassword;
     private boolean contactsFetched = false;
@@ -53,18 +59,10 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     private int REQUEST_FETCH_MEMORIES = 2;
     private ProgressDialog pDialog;
 
-    // GCM -----------------------------------
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    String SENDER_ID = Constants.GOOGLE_PROJECT_NUMBER;
-    GoogleCloudMessaging gcm;
-    Context context;
-    String regid = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
-
 
 
         mReceiver = new CustomResultReceiver(new Handler());
@@ -108,7 +106,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     }
 
 
-    public void makeRequestToServer(){
+    public void makeRequestToServer() {
         Log.d(TAG, "makeREqusttoServer method called" + regid);
         pDialog = new ProgressDialog(this);
         pDialog.show();

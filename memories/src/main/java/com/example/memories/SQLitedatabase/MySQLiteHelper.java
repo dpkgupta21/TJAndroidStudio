@@ -7,32 +7,7 @@ import android.util.Log;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
-    // Table User fields
-    public static final String TABLE_USER = "User";
-    public static final String COLUMN_USER_ID = "id";
-    public static final String COLUMN_USER_NAME = "name";
-    public static final String COLUMN_USER_EMAIL = "emailAddress";
-    public static final String COLUMN_USER_PSWRD = "pswrd";
-    public static final String COLUMN_USER_PHONE = "phone_no";
-    public static final String COLUMN_USER_PIC = "profilePic";
-    public static final String COLUMN_USER_HANDLE = "handle";
-    public static final String COLUMN_USER_JOINED_ON = "joinedOn";
-    public static final String COLUMN_USER_JOURNEY = "journeyList";
-    public static final String COLUMN_USER_CONNECTION = "connections";
-    public static final String COLUMN_USER_INTERESTS = "interests";
-    // Database creation sql statement
-    private static final String CREATE_TABLE_USER = "create table " + TABLE_USER + "("
-            + COLUMN_USER_ID + " integer primary key autoincrement, "
-            + COLUMN_USER_NAME + " text not null,"
-            + COLUMN_USER_EMAIL + " text ,"
-            + COLUMN_USER_PSWRD + " text ,"
-            + COLUMN_USER_PHONE + " text ,"
-            + COLUMN_USER_PIC + " text ,"
-            + COLUMN_USER_HANDLE + " text ,"
-            + COLUMN_USER_JOINED_ON + " text ,"
-            + COLUMN_USER_JOURNEY + " text ,"
-            + COLUMN_USER_CONNECTION + " text ,"
-            + COLUMN_USER_INTERESTS + " text " + ");";
+
     // Table Contact fields
     public static final String TABLE_CONTACT = "Contact";
     public static final String CONTACT_COLUMN_ID_ONSERVER = "idOnServer";
@@ -131,7 +106,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String VOICE_COLUMN_ID_ONSERVER = "idOnServer";
     public static final String VOICE_COLUMN_JID = "jId";
     public static final String VOICE_COLUMN_MEM_TYPE = "memoryType";
-    public static final String VOICE_COLUMN_CAPTION = "caption";
     public static final String VOICE_COLUMN_EXT = "extension";
     public static final String VOICE_COLUMN_SIZE = "size";
     public static final String VOICE_COLUMN_DATASERVERURL = "dataServerURL";
@@ -288,14 +262,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NOTES, null, null);
         db.delete(TABLE_PICTURE, null, null);
         db.delete(TABLE_TIMELINE, null, null);
-        db.delete(TABLE_USER, null, null);
         db.delete(TABLE_VIDEO, null, null);
     }
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(CREATE_TABLE_USER);
-        Log.d(TAG, "User table created!");
         database.execSQL(CREATE_TABLE_CONTACT);
         Log.d(TAG, "COntact table created!");
         database.execSQL(CREATE_TABLE_JOURNEY);
@@ -320,7 +291,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(MySQLiteHelper.class.getName(), "Upgrading database from version " + oldVersion
                 + " to " + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_JOURNEY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIMELINE);

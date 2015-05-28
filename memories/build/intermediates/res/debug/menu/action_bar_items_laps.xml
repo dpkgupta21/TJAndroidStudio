@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_next"
         android:icon="@drawable/next"
-        app:showAsAction="ifRoom"
-        android:title="@string/default_string" />
+        android:title="@string/default_string"
+        app:showAsAction="ifRoom" />
 
-</menu><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/menu/action_bar_items_laps.xml -->
+</menu><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/menu/action_bar_items_laps.xml -->

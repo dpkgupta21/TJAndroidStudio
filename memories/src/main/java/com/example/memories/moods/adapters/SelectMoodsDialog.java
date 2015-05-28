@@ -77,7 +77,7 @@ public class SelectMoodsDialog extends DialogFragment {
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Log.d(TAG, "inflater value is " + inflater);
-        View aboutUsDialogView = inflater.inflate(R.layout.moods_grid, null);
+        View aboutUsDialogView = inflater.inflate(R.layout.mood_grid, null);
         mAdapter = new MoodsGridAdapter(getActivity(), emoticons);
         mGridView = (GridView) aboutUsDialogView.findViewById(R.id.moodsGrid);
         Log.d(TAG, "inflater value is " + inflater + " adapter " + mAdapter + " GridView " + mGridView);

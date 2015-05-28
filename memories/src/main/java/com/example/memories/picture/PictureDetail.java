@@ -20,9 +20,9 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.PictureDataSource;
+import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Picture;
-import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.PictureUtilities;
@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class PhotoDetail extends AppCompatActivity {
+public class PictureDetail extends AppCompatActivity {
 
     private static final String TAG = "<PhotoDetail>";
     List<String> likedBy = new ArrayList<String>();
@@ -92,7 +92,7 @@ public class PhotoDetail extends AppCompatActivity {
             if (mPicture.getLikedBy() != null) {
                 List<String> likedBy = Arrays.asList((mPicture.getLikedBy()).split(","));
                 //mFavBtn.setText(String.valueOf(likedBy.size()));
-                if (likedBy.contains(TJPreferences.getUserId(PhotoDetail.this))) {
+                if (likedBy.contains(TJPreferences.getUserId(PictureDetail.this))) {
                     mFavBtn.setImageResource(R.drawable.heart_full);
                 } else {
                     mFavBtn.setImageResource(R.drawable.heart_empty);
@@ -187,11 +187,11 @@ public class PhotoDetail extends AppCompatActivity {
                         }
                     }
                 }
-                if (likedBy.contains(TJPreferences.getUserId(PhotoDetail.this))) {
-                    likedBy.remove(TJPreferences.getUserId(PhotoDetail.this));
+                if (likedBy.contains(TJPreferences.getUserId(PictureDetail.this))) {
+                    likedBy.remove(TJPreferences.getUserId(PictureDetail.this));
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 } else {
-                    likedBy.add(TJPreferences.getUserId(PhotoDetail.this));
+                    likedBy.add(TJPreferences.getUserId(PictureDetail.this));
                     mFavBtn.setImageResource(R.drawable.heart_full);
                 }
                 noLikesTxt.setText(String.valueOf(likedBy.size()));
@@ -203,7 +203,7 @@ public class PhotoDetail extends AppCompatActivity {
                 }
                 mPicture.setLikedBy(finalValue);
                 if (!isNewPic) {
-                    mPicture.updateLikedBy(PhotoDetail.this, mPicture.getId(), finalValue);
+                    mPicture.updateLikedBy(PictureDetail.this, mPicture.getId(), finalValue);
                 }
             }
         });

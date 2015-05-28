@@ -1,10 +1,14 @@
 package com.example.memories.currentjourney;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.memories.R;
@@ -20,9 +24,9 @@ public class CurrentJourneyBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.timeline_base_activity);
+        setContentView(R.layout.current_journey_base_activity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.timeline_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Capture Audio");
         setSupportActionBar(toolbar);
 
@@ -36,6 +40,28 @@ public class CurrentJourneyBaseActivity extends AppCompatActivity {
 
     public void onFABClick(View v) {
         Log.d(TAG, "djfnjdfndjn");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.current_journey_action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+            case R.id.action_info:
+                Log.d(TAG, "info clicked!");
+                Intent i = new Intent(getBaseContext(), JourneyInfo.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

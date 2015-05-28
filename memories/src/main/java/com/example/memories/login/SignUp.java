@@ -19,10 +19,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.R;
+import com.example.memories.activejourney.ActivejourneyList;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.newjourney.LapsList;
-import com.example.memories.newjourney.NewJourney;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
@@ -50,7 +50,7 @@ public class SignUp extends Activity {
     GoogleCloudMessaging gcm;
     Context context;
     String regid = "";
-
+    ProgressDialog pDialog;
     private EditText txtEmailAddress;
     private EditText txtPassword;
     private EditText txtName;
@@ -58,13 +58,11 @@ public class SignUp extends Activity {
     private String emailAddress;
     private String password;
     private String name;
-    ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
-
 
 
         // Session Manager
@@ -171,7 +169,7 @@ public class SignUp extends Activity {
 
                         pDialog.dismiss();
                         // Staring MainActivity
-                        Intent i = new Intent(getApplicationContext(), NewJourney.class);
+                        Intent i = new Intent(getApplicationContext(), CurrentJourneyBaseActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                         finish();

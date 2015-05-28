@@ -17,20 +17,20 @@ import android.widget.ListView;
 import com.example.flotingmenulibrary.FloatingActionsMenu;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.MemoriesDataSource;
-import com.example.memories.audio.CaptureAudio;
+import com.example.memories.audio.AudioCapture;
 import com.example.memories.checkin.CheckInPlacesList;
-import com.example.memories.models.Memories;
-import com.example.memories.moods.CaptureMoods;
-import com.example.memories.note.CreateNotes;
-import com.example.memories.picture.CapturePhotos;
 import com.example.memories.currentjourney.adapters.TimeLineAdapter;
+import com.example.memories.models.Memories;
+import com.example.memories.moods.MoodCapture;
+import com.example.memories.note.CreateNotes;
+import com.example.memories.picture.PictureCapture;
 import com.example.memories.utility.SessionManager;
 import com.example.memories.utility.TJPreferences;
-import com.example.memories.video.CaptureVideo;
+import com.example.memories.video.VideoCapture;
 
 import java.util.List;
 
-public class TimelineFragment extends Fragment implements View.OnClickListener{
+public class TimelineFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "<TimelineFragment>";
     public static TimeLineAdapter mAdapter;
@@ -154,7 +154,7 @@ public class TimelineFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.button_mood:
                 Log.d(TAG, "set a mood clicked");
-                i = new Intent(getActivity(), CaptureMoods.class);
+                i = new Intent(getActivity(), MoodCapture.class);
                 startActivity(i);
                 break;
             case R.id.button_checkin:
@@ -164,7 +164,7 @@ public class TimelineFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.button_photo:
                 Log.d(TAG, "photo clicked");
-                i = new Intent(getActivity(), CapturePhotos.class);
+                i = new Intent(getActivity(), PictureCapture.class);
                 startActivity(i);
                 break;
             case R.id.button_note:
@@ -174,12 +174,12 @@ public class TimelineFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.button_video:
                 Log.d(TAG, "video clicked");
-                i = new Intent(getActivity(), CaptureVideo.class);
+                i = new Intent(getActivity(), VideoCapture.class);
                 startActivity(i);
                 break;
             case R.id.button_audio:
                 Log.d(TAG, "audio clicked");
-                i = new Intent(getActivity(), CaptureAudio.class);
+                i = new Intent(getActivity(), AudioCapture.class);
                 startActivity(i);
                 break;
         }

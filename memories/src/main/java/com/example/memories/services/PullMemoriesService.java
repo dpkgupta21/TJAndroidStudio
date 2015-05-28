@@ -81,7 +81,7 @@ public class PullMemoriesService extends IntentService {
                             Log.d(TAG, "=====" + response.getJSONArray("journeys"));
 //                            /JSONArray jsonArray = response.getJSONArray("journeys");
                             JSONObject jsonObject;
-                            JSONArray journeyJSONArray =  response.getJSONArray("journeys");
+                            JSONArray journeyJSONArray = response.getJSONArray("journeys");
                             int length = journeyJSONArray.length();
                             String idOnServer;
                             String name;
