@@ -1,6 +1,5 @@
 package com.example.memories.currentjourney;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,20 +16,14 @@ import android.widget.ListView;
 import com.example.flotingmenulibrary.FloatingActionsMenu;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.MemoriesDataSource;
-import com.example.memories.audio.AudioCapture;
-import com.example.memories.checkin.CheckInPlacesList;
 import com.example.memories.currentjourney.adapters.TimeLineAdapter;
 import com.example.memories.models.Memories;
-import com.example.memories.moods.MoodCapture;
-import com.example.memories.note.CreateNotes;
-import com.example.memories.picture.PictureCapture;
 import com.example.memories.utility.SessionManager;
 import com.example.memories.utility.TJPreferences;
-import com.example.memories.video.VideoCapture;
 
 import java.util.List;
 
-public class TimelineFragment extends Fragment implements View.OnClickListener {
+public class TimelineFragment extends Fragment{
 
     private static final String TAG = "<TimelineFragment>";
     public static TimeLineAdapter mAdapter;
@@ -140,12 +133,12 @@ public class TimelineFragment extends Fragment implements View.OnClickListener {
                 return false;
             }
         });
-
     }
 
     // On clicking on options in FAB button
     // Take them to their respective modules/screens
-    public void onFABClick(View v) {
+
+/*    public void onFABClick(View v) {
         // TODO Auto-generated method stub
         Intent i;
         if (mFab.isExpanded()) {
@@ -182,12 +175,12 @@ public class TimelineFragment extends Fragment implements View.OnClickListener {
                 i = new Intent(getActivity(), AudioCapture.class);
                 startActivity(i);
                 break;
-        }
+        }*/
 
-    }
-
+    //}
+/*
     @Override
     public void onClick(View v) {
         onFABClick(v);
-    }
+    }*/
 }

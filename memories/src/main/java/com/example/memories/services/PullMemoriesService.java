@@ -42,9 +42,10 @@ import java.util.List;
  */
 public class PullMemoriesService extends IntentService {
     private static final String TAG = "PullMemoriesService";
-    private ResultReceiver mReceiver;
-    private int REQUEST_CODE;
+    private static ResultReceiver mReceiver;
+    private static int REQUEST_CODE;
     private Journey journey;
+    private static int count = 0;
 
     public PullMemoriesService() {
         super("PullMemoriesService");
@@ -55,10 +56,10 @@ public class PullMemoriesService extends IntentService {
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, startId, startId);
         Log.d(TAG, "on start command");
         mReceiver = intent.getParcelableExtra("RECEIVER");
         REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
-        super.onStartCommand(intent, startId, startId);
         Log.d(TAG, "on start command");
         return START_STICKY;
     }
@@ -99,18 +100,21 @@ public class PullMemoriesService extends IntentService {
                                 tagLine = jsonObject.getString("tag_line");
                                 createdBy = jsonObject.getString("created_by_id");
                                 buddies = jsonObject.getJSONArray("buddy_ids").toString();
-                                buddies.replace("[", "");
-                                buddies.replace("]", "");
+                                Log.d(TAG, "buddies list saved in database are " + buddies);
+                                buddies = buddies.replace("[", "");
+                                buddies = buddies.replace("]", "");
                                 buddiesList = Arrays.asList(buddies.split(","));
+                                Log.d(TAG, "buddies list saved in database are " + buddiesList + " blah blah " + buddies);
                                 laps = jsonObject.getJSONArray("journey_lap_ids").toString();
-                                laps.replace("[", "");
+                                laps.replace("[",  "");
                                 laps.replace("]", "");
                                 lapsList = Arrays.asList(laps.split(","));
 
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
                                         createdBy, lapsList, buddiesList, Constants.JOURNEY_STATUS_ACTIVE);
-                                saveMemories(jsonObject.getJSONArray("memories"), idOnServer);
                                 JourneyDataSource.createJourney(journey, PullMemoriesService.this);
+                                Log.d(TAG, "journey parsed and saved successfully in the database");
+                                saveMemories(jsonObject.getJSONArray("memories"), idOnServer);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -172,6 +176,7 @@ public class PullMemoriesService extends IntentService {
                         Picture newPic = new Picture(memoryId, journeyId, HelpMe.PICTURE_TYPE, null, "jpg",
                                 100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl);
                         PictureUtilities.createNewPicFromServer(PullMemoriesService.this, newPic, thumbnailUrl);
+                        count++;
                         Log.d(TAG, "picture parsed and saved successfully");
 
                     } else if (key.equals("note") && object.get(key) instanceof JSONObject) {
@@ -184,6 +189,7 @@ public class PullMemoriesService extends IntentService {
                                 createdAt, updatedAt, null);
 
                         NoteDataSource.createNote(newNote, PullMemoriesService.this);
+
                         Log.d(TAG, "note parsed and saved successfully");
 
                     } else if (key.equals("video") && object.get(key) instanceof JSONObject) {
@@ -196,6 +202,7 @@ public class PullMemoriesService extends IntentService {
                         Video newVideo = new Video(memoryId, journeyId, HelpMe.VIDEO_TYPE, description,
                                 "png", 1223, null, fileUrl, createdBy, createdAt, updatedAt, null, thumbnailUrl);
                         VideoUtil.createNewVideoFromServer(PullMemoriesService.this, newVideo, thumbnailUrl);
+                        count++;
                         Log.d(TAG, "video parsed and saved successfully" + thumbnailUrl);
 
                     } else if (key.equals("checkin") && object.get(key) instanceof JSONObject) {
@@ -216,6 +223,7 @@ public class PullMemoriesService extends IntentService {
                         CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName, null, buddyIds, createdBy,
                                 createdAt, updatedAt);
                         CheckinDataSource.createCheckIn(newCheckIn, PullMemoriesService.this);
+
                         Log.d(TAG, "checkin parsed and saved successfully");
 
                     } else if (key.equals("mood") && object.get(key) instanceof JSONObject) {
@@ -230,6 +238,7 @@ public class PullMemoriesService extends IntentService {
                         Mood newMood = new Mood(memoryId, journeyId, HelpMe.MOOD_TYPE, buddyId, mood, reason,
                                 createdBy, createdAt, updatedAt, null);
                         MoodDataSource.createMood(newMood, PullMemoriesService.this);
+
                         Log.d(TAG, "mood parsed and saved successfully");
 
                     } else if (key.equals("audio") && object.get(key) instanceof JSONObject) {
@@ -242,6 +251,7 @@ public class PullMemoriesService extends IntentService {
                         Audio newAudio = new Audio(memoryId, journeyId, HelpMe.AUDIO_TYPE, "3gp", 1122,
                                 fileUrl, null, createdBy, createdAt, updatedAt, null);
                         AudioDataSource.createAudio(newAudio, PullMemoriesService.this);
+
                         Log.d(TAG, "audio parsed and saved successfully");
 
                     }
@@ -252,10 +262,14 @@ public class PullMemoriesService extends IntentService {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        Log.d(TAG, "pull memories service onDestroy()");
-        Bundle bundle = new Bundle();
-        mReceiver.send(REQUEST_CODE, bundle);
+    public static void isFinished(){
+        count--;
+        Log.d(TAG, "not finished" + count);
+        if(count == 0) {
+            Log.d(TAG, "isfimiehd cal;ed" + count);
+            count = 0;
+            Bundle bundle = new Bundle();
+            mReceiver.send(REQUEST_CODE, bundle);
+        }
     }
 }

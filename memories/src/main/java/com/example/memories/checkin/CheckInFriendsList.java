@@ -36,7 +36,7 @@ public class CheckInFriendsList extends AppCompatActivity {
         setContentView(R.layout.checkin_buddy_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Select Friends");
         setSupportActionBar(toolbar);
 
         mSelectedFriends = getIntent().getExtras().getStringArrayList("SELECTED_FRIENDS");

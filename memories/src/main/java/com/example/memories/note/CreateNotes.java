@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.NoteDataSource;
-import com.example.memories.currentjourney.TimelineFragment;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Note;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.NotesUtil;
@@ -29,7 +29,7 @@ public class CreateNotes extends AppCompatActivity {
         setContentView(R.layout.notes_capture);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("New Note");
         setSupportActionBar(toolbar);
 
         mNoteContent = (EditText) findViewById(R.id.noteContent);
@@ -62,7 +62,7 @@ public class CreateNotes extends AppCompatActivity {
             case R.id.action_done:
                 Log.d(TAG, "done clicked!");
                 uploadAndSaveNote();
-                Intent i = new Intent(getBaseContext(), TimelineFragment.class);
+                Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;

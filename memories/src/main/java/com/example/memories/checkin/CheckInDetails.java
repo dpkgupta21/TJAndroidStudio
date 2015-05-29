@@ -21,8 +21,9 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.CheckinDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
-import com.example.memories.currentjourney.TimelineFragment;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.CheckIn;
+import com.example.memories.models.Contact;
 import com.example.memories.utility.CheckinUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
@@ -98,7 +99,7 @@ public class CheckInDetails extends AppCompatActivity {
         setContentView(R.layout.checkin_details);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Checkin");
         setSupportActionBar(toolbar);
 
         // get the name of the place
@@ -132,14 +133,16 @@ public class CheckInDetails extends AppCompatActivity {
 
     private void setSelectedFriends() {
         if (mSelectedFriends != null) {
-            if (mSelectedFriends.size() == 0) {
-                checkinDetailsBuddies.setText("- with ");
-            } else if (mSelectedFriends.size() == 1) {
-                Log.d(TAG, "selected friends are " + mSelectedFriends.get(0) + "abc");
-                checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName());
-            } else {
-                checkinDetailsBuddies.setText("- with " + ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName() + " and " + (mSelectedFriends.size() - 1) + " others");
+            String checkinWithText = "";
+            if (mSelectedFriends.size() > 0) {
+                Contact contact = ContactDataSource.getContactById(this, mSelectedFriends.get(0));
+                if (mSelectedFriends.size() == 1) {
+                    checkinWithText += "- with " + ((contact == null) ? "" : contact.getName());
+                } else {
+                    checkinWithText += "- with " + ((contact == null) ? "" : contact.getName()) + " and " + (mSelectedFriends.size() - 1) + " others";
+                }
             }
+            checkinDetailsBuddies.setText(checkinWithText);
         }
     }
 
@@ -177,7 +180,7 @@ public class CheckInDetails extends AppCompatActivity {
             case R.id.action_done:
                 Log.d(TAG, "done clicked!");
                 createNewCheckinIntoDB();
-                Intent i = new Intent(getBaseContext(), TimelineFragment.class);
+                Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Journey;
 import com.example.memories.services.CustomResultReceiver;
 import com.example.memories.services.PullBuddiesService;
@@ -99,11 +100,17 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
             Log.d(TAG, "Total contacts " + buddyList.toString());
             if (buddyList.size() > 0) {
+                Log.d(TAG, "some contacts not present fetching them");
                 Intent intent = new Intent(mContext, PullBuddiesService.class);
                 intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
                 intent.putExtra("RECEIVER", mReceiver);
                 intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
                 mContext.startService(intent);
+            }else{
+                Log.d(TAG, "all required contacts are already present in the database");
+                Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.getApplicationContext().startActivity(intent);
             }
         }
     }

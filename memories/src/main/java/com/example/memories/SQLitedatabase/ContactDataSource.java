@@ -56,6 +56,7 @@ public class ContactDataSource {
     }
 
     public static List<String> getNonExistingContacts(Context context, List<String> contactIds) {
+        Log.d(TAG, "contacts list is " + contactIds);
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         List<String> existingContacts = new ArrayList<String>();
         String query = "SELECT " + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " FROM " + MySQLiteHelper.TABLE_CONTACT +
@@ -75,6 +76,8 @@ public class ContactDataSource {
                 nonExistingContactsList.add(id);
             }
         }
+        cursor.close();
+        db.close();
         return nonExistingContactsList;
     }
 

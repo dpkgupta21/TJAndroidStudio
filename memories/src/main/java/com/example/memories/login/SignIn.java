@@ -24,7 +24,6 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.services.CustomResultReceiver;
-import com.example.memories.services.PullContactsService;
 import com.example.memories.services.PullMemoriesService;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
@@ -131,27 +130,17 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
                             @Override
                             public void onResponse(JSONObject response) {
-                                Log.d(TAG, response.toString());
                                 try {
                                     updateUserPref(response);
-                                    Log.d(TAG, "calling pullMemoriesService to fetcch all journeys and their memories");
-                                    Intent intent = new Intent(getBaseContext(), PullMemoriesService.class);
-                                    intent.putExtra("RECEIVER", mReceiver);
-                                    intent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
-                                    startService(intent);
-
-                                    Log.d(TAG, "calling pullContactsService to fetcch all journeys and their memories");
-                                    Intent mServiceIntent = new Intent(getBaseContext(), PullContactsService.class);
-                                    mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_CONTACTS);
-                                    mServiceIntent.putExtra("RECEIVER", mReceiver);
-                                    startService(mServiceIntent);
-
                                 } catch (JSONException e) {
-                                    Log.d(TAG, "everything fine upto here 4");
                                     e.printStackTrace();
                                 }
-
-                                TJPreferences.setActiveJourneyId(SignIn.this, "21");
+                                Log.d(TAG, response.toString());
+                                Log.d(TAG, "calling pullMemoriesService to fetch all journeys and their memories");
+                                Intent mServiceIntent = new Intent(getBaseContext(), PullMemoriesService.class);
+                                mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
+                                mServiceIntent.putExtra("RECEIVER", mReceiver);
+                                startService(mServiceIntent);
                             }
                         }, new Response.ErrorListener() {
 
@@ -213,20 +202,13 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        if (resultCode == REQUEST_FETCH_CONTACTS) {
-            Log.d(TAG, "fetch contacts service completed");
-            contactsFetched = true;
-        } else if (resultCode == REQUEST_FETCH_MEMORIES) {
-            Log.d(TAG, "fetch memories service completed");
-            memoriesFetched = true;
-        }
-        if (contactsFetched && memoriesFetched) {
+        if (resultCode == REQUEST_FETCH_MEMORIES) {
             pDialog.dismiss();
             Intent i = new Intent(getApplicationContext(), ActivejourneyList.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         }
-        Log.d(TAG, "sign in contacts fetched successfully");
+        Log.d(TAG, "signed in");
     }
 
     // GCM methods and declarations

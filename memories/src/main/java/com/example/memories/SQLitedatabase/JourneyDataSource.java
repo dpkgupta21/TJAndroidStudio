@@ -126,6 +126,7 @@ public class JourneyDataSource {
                 journey.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY)));
                 String buddyIds = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
                 journey.setBuddies(Arrays.asList(buddyIds.split(",")));
+                Log.d(TAG, "buddy ids fetched from database are " + buddyIds);
                 /*String laps = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS));
                 journey.setLaps(Arrays.asList(laps.split(",")));*/
                 journey.setJourneyStatus(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_STATUS)));

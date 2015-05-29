@@ -1,6 +1,5 @@
 package com.example.memories.newjourney;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +22,6 @@ public class LapsList extends AppCompatActivity {
 
     protected static final String TAG = "<LapsList>";
     private LapsListAdapter lapsListViewAdapter;
-    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +29,7 @@ public class LapsList extends AppCompatActivity {
         setContentView(R.layout.new_journey_laps_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("New Lap");
         setSupportActionBar(toolbar);
 
         // Add lap FAB Button

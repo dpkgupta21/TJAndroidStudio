@@ -18,7 +18,7 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
-import com.example.memories.currentjourney.TimelineFragment;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Mood;
 import com.example.memories.moods.adapters.SelectMoodsDialog;
 import com.example.memories.utility.HelpMe;
@@ -45,7 +45,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         setContentView(R.layout.mood_capture);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Mood");
         setSupportActionBar(toolbar);
 
         noFriendsSelectedTxt = (TextView) findViewById(R.id.noFriendsSelected);
@@ -116,7 +116,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
                             .show();
                 } else {
                     createNewMoodIntoDB();
-                    Intent i = new Intent(getBaseContext(), TimelineFragment.class);
+                    Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }

@@ -33,7 +33,7 @@ public class AllFriendsList extends AppCompatActivity {
         setContentView(R.layout.new_journey_traveljar_contact_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Add Friends");
         setSupportActionBar(toolbar);
 
         Log.d(TAG, "1");

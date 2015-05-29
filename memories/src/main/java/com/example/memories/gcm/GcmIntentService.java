@@ -131,7 +131,7 @@ public class GcmIntentService extends IntentService {
                 buddyIds = buddyIds.replace("]", "");
 
 
-                Journey newJ = new Journey(journeyId, "deafault", "tagline", "Friends", "90", null, Arrays.asList(buddyIds), Constants.JOURNEY_STATUS_PENDING);
+                Journey newJ = new Journey(journeyId, "deafault", "tagline", "Friends", "90", null, Arrays.asList(buddyIds), Constants.JOURNEY_STATUS_ACTIVE);
                 JourneyDataSource.createJourney(newJ, this);
 
             default:

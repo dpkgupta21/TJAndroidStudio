@@ -48,7 +48,7 @@ public class AddLap extends AppCompatActivity {
         setContentView(R.layout.new_journey_lap_new);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Add Lap");
         setSupportActionBar(toolbar);
 
         fromLocation = (TextView) findViewById(R.id.new_journey_location_new_from);

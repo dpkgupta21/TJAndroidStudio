@@ -3,7 +3,6 @@ package com.example.memories.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
@@ -12,10 +11,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.utility.Constants;
+import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.volley.AppController;
 import com.example.memories.volley.CustomJsonRequest;
@@ -38,6 +37,11 @@ public class PullBuddiesService extends IntentService {
     List<String> buddyIds;
     private ResultReceiver mReceiver;
     private int REQUEST_CODE;
+    private int noRequests;
+
+    public PullBuddiesService(String name) {
+        super("PullMemoriesService");
+    }
 
     public PullBuddiesService() {
         super("pull buddies service");
@@ -45,23 +49,30 @@ public class PullBuddiesService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Log.d(TAG, "on handle intent called");
         fetchBuddies();
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, "onstart command");
+        super.onStartCommand(intent, flags, startId);
+        Log.d(TAG, "onstart command 2");
         mReceiver = intent.getParcelableExtra("RECEIVER");
         REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
         buddyIds = intent.getStringArrayListExtra("BUDDY_IDS");
+        noRequests = buddyIds.size();
         return START_STICKY;
     }
 
     public void fetchBuddies() {
+        Log.d(TAG, "fetching profiles" + buddyIds.toString() + ",");
         String requestUrl;
         CustomJsonRequest jsonRequest;
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("api_key", TJPreferences.getApiKey(this));
         for (String s : buddyIds) {
+            Log.d(TAG, "fetching profiles for buddies ->" + s + ",");
             requestUrl = "https://www.traveljar.in/api/v1/users/" + s;
             jsonRequest = new CustomJsonRequest(Request.Method.POST, requestUrl, params,
                     new Response.Listener<JSONObject>() {
@@ -106,6 +117,8 @@ public class PullBuddiesService extends IntentService {
                                                             e.printStackTrace();
                                                         }
                                                     }
+                                                    noRequests --;
+                                                    onFinish();
                                                 }
                                             }, 0, 0, null, new Response.ErrorListener() {
                                         public void onErrorResponse(VolleyError error) {
@@ -114,25 +127,9 @@ public class PullBuddiesService extends IntentService {
                                     AppController.getInstance().addToRequestQueue(request);
                                 } else {
                                     // check whether the gumnaam image already exists
-                                    if (!(new File(Constants.GUMNAAM_IMAGE_URL)).exists()) {
-                                        //check whether the dir exists
-                                        File dir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
-                                        if (!dir.exists()) {
-                                            dir.mkdirs();
-                                        }
-                                        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_profile);
-                                        File file = new File(Constants.GUMNAAM_IMAGE_URL);
-                                        FileOutputStream outStream = null;
-                                        try {
-                                            outStream = new FileOutputStream(file);
-                                            bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                                            outStream.flush();
-                                            outStream.close();
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
                                     picServerUrl = null;
+                                    HelpMe.createImageIfNotExist(PullBuddiesService.this);
+
                                     picLocalUrl = Constants.GUMNAAM_IMAGE_URL;
                                 }
                                 Log.d(TAG, "id = " + idOnServer + "name = " + userName + email + " " + picServerUrl);
@@ -154,12 +151,11 @@ public class PullBuddiesService extends IntentService {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        Log.d(TAG, "ondestroy() method called");
-        Bundle bundle = new Bundle();
-        mReceiver.send(REQUEST_CODE, bundle);
-        super.onDestroy();
+    private void onFinish(){
+        if(noRequests == 0){
+            Bundle bundle = new Bundle();
+            mReceiver.send(REQUEST_CODE, bundle);
+        }
     }
 
 }

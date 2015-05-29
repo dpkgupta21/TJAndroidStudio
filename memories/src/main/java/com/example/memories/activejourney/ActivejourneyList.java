@@ -48,7 +48,6 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
         mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        Log.d(TAG, "buddies lisr === " + JourneyDataSource.getAllActiveJourneys(this));
         // specify an adapter (see also next example)
         mAdapter = new ActiveJourneyListAdapter(JourneyDataSource.getAllActiveJourneys(this), getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
@@ -72,6 +71,7 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
+        Log.d(TAG, "on receive result called " + resultCode);
         if (resultCode == REQUEST_FETCH_BUDDIES) {
             Log.d(TAG, "fetch buddies service completed");
             Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
