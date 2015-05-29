@@ -15,8 +15,8 @@ import android.widget.ImageView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
+import com.example.memories.checkin.adapter.CheckInFriendsListAdapter;
 import com.example.memories.models.Contact;
-import com.example.memories.moods.adapters.FriendsGridAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class CheckInFriendsList extends AppCompatActivity {
     GridView mGridView;
     List<String> mSelectedFriends;
     List<Contact> mContactsList = new ArrayList<Contact>();
-    FriendsGridAdapter mAdapter;
+    CheckInFriendsListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class CheckInFriendsList extends AppCompatActivity {
         } else if (mSelectedFriends.size() > 0) {
             mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
         }
-        mAdapter = new FriendsGridAdapter(this, mContactsList);
+        mAdapter = new CheckInFriendsListAdapter(this, mContactsList);
         mGridView.setAdapter(mAdapter);
 
         mGridView.setOnItemClickListener(new OnItemClickListener() {

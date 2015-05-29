@@ -12,18 +12,22 @@ import android.util.Log;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
+import com.example.memories.SQLitedatabase.CheckinDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.SQLitedatabase.NoteDataSource;
 import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.models.Audio;
+import com.example.memories.models.CheckIn;
 import com.example.memories.models.Journey;
 import com.example.memories.models.Mood;
 import com.example.memories.models.Note;
 import com.example.memories.models.Picture;
+import com.example.memories.models.Video;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.PictureUtilities;
+import com.example.memories.utility.VideoUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
@@ -159,9 +163,10 @@ public class GcmIntentService extends IntentService {
         String reason;
 
         switch (memType) {
-            case HelpMe.TYPE_PICTURE:
+            case HelpMe.SERVER_PICTURE_TYPE:
                 Log.d(TAG, "its picture type with idOnServer = " + idOnServer);
                 dataUrl = data.getString("data_url");
+                String thumb = data.getString("thumbnail");
                 size = Long.parseLong(data.getString("size"));
                 extension = data.getString("extention");
                 caption = "nthing";
@@ -169,13 +174,13 @@ public class GcmIntentService extends IntentService {
                 Picture newPic = new Picture(idOnServer, jId, HelpMe.PICTURE_TYPE, caption, extension,
                         size, dataUrl, null, createdBy,
                         createdAt, updatedAt, null, null);
-                PictureUtilities.createNewPicFromServer(this, newPic, dataUrl);
+                PictureUtilities.createNewPicFromServer(this, newPic, thumb);
 
                 //PictureUtilities.downloadPicFromURL(this, newPic);
                 //PictureDataSource.createPicture(newPic, this);
                 break;
 
-            case HelpMe.TYPE_AUDIO:
+            case HelpMe.SERVER_AUDIO_TYPE:
                 Log.d(TAG, "its audio type with idOnServer = " + idOnServer);
                 dataUrl = data.getString("data_url");
                 size = Long.parseLong(data.getString("size"));
@@ -188,20 +193,21 @@ public class GcmIntentService extends IntentService {
                 //AudioUtil.downloadAudio(this, newAudio);
                 break;
 
-/*            case HelpMe.TYPE_VIDEO:
+            case HelpMe.SERVER_VIDEO_TYPE:
                 Log.d(TAG, "its video type with idOnServer = " + idOnServer);
                 dataUrl = data.getString("data_url");
+                String localThumbUrl = data.getString("thumbnail");
                 size = Long.parseLong(data.getString("size"));
                 extension = data.getString("extention");
                 caption = data.getString("caption");
 
                 Video newVideo = new Video(idOnServer, jId, HelpMe.VIDEO_TYPE, caption, extension,
-                        size, dataUrl, null, createdBy, createdAt, updatedAt, null, null);
+                        size, null, null, createdBy, createdAt, updatedAt, null, null);
                 //Downloading video and save to database
-                VideoUtil.createNewVideoFromServer(this, newVideo);
-                break;*/
+                VideoUtil.createNewVideoFromServer(this, newVideo, localThumbUrl);
+                break;
 
-            case HelpMe.TYPE_NOTE:
+            case HelpMe.SERVER_NOTE_TYPE:
                 Log.d(TAG, "its note type with idOnServer = " + idOnServer);
                 content = data.getString("content");
                 caption = data.getString("caption");
@@ -212,7 +218,7 @@ public class GcmIntentService extends IntentService {
                 NoteDataSource.createNote(newNote, this);
                 break;
 
-            case HelpMe.TYPE_MOOD:
+            case HelpMe.SERVER_MOOD_TYPE:
                 Log.d(TAG, "its mood type with idOnServer = " + idOnServer);
                 mood = data.getString("mood");
                 reason = data.getString("reason");
@@ -227,6 +233,23 @@ public class GcmIntentService extends IntentService {
                         createdBy, createdAt, updatedAt, null);
 
                 MoodDataSource.createMood(newMood, this);
+                break;
+
+            case HelpMe.SERVER_CHECKIN_TYPE:
+                Log.d(TAG, "its checkin type with idOnServer = " + idOnServer);
+                String buddies = data.getString("buddies");
+                buddies = buddies.replace("[", "");
+                buddies = buddies.replace("]", "");
+                List<String> buddyList = Arrays.asList(buddies.split(","));
+                String place_name = data.getString("place_name");
+                Double latitude = data.getString("latitude") == "null" ? 0.0d : Double.parseDouble(data.getString("latitude"));
+                Double longitude = data.getString("longitude") == "null" ? 0.0d : Double.parseDouble(data.getString("longitude"));
+                caption = data.getString("caption");
+
+                CheckIn newCheckin = new CheckIn(idOnServer, jId, HelpMe.CHECKIN_TYPE, caption, latitude, longitude,
+                        place_name, null, buddyList, createdBy, createdAt, updatedAt);
+
+                CheckinDataSource.createCheckIn(newCheckin, this);
                 break;
 
             default:

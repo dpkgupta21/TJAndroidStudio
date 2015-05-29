@@ -49,6 +49,13 @@ public class HelpMe {
     public static final String CHECKIN_TYPE = "4";
     public static final String MOOD_TYPE = "5";
 
+    public static final int SERVER_PICTURE_TYPE = 1;
+    public static final int SERVER_AUDIO_TYPE = 2;
+    public static final int SERVER_VIDEO_TYPE = 3;
+    public static final int SERVER_NOTE_TYPE = 4;
+    public static final int SERVER_CHECKIN_TYPE = 5;
+    public static final int SERVER_MOOD_TYPE = 6;
+
     public static final int TYPE_PICTURE = 0;
     public static final int TYPE_AUDIO = 1;
     public static final int TYPE_VIDEO = 2;
