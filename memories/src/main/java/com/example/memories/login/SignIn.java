@@ -142,8 +142,8 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
                                     Log.d(TAG, "calling pullContactsService to fetcch all journeys and their memories");
                                     Intent mServiceIntent = new Intent(getBaseContext(), PullContactsService.class);
-                                    mServiceIntent.putExtra("RECEIVER", mReceiver);
                                     mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_CONTACTS);
+                                    mServiceIntent.putExtra("RECEIVER", mReceiver);
                                     startService(mServiceIntent);
 
                                 } catch (JSONException e) {

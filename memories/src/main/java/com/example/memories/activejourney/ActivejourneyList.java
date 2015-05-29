@@ -14,18 +14,21 @@ import com.example.memories.BaseActivity;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.activejourney.adapters.ActiveJourneyListAdapter;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.customviews.MyFABView;
 import com.example.memories.newjourney.LapsList;
+import com.example.memories.services.CustomResultReceiver;
 
 /**
  * Created by ankit on 27/5/15.
  */
-public class ActivejourneyList extends BaseActivity {
+public class ActivejourneyList extends BaseActivity implements CustomResultReceiver.Receiver {
 
     private static final String TAG = "<ActivejourneyList>";
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private ActiveJourneyListAdapter mAdapter;
+    private static final int REQUEST_FETCH_BUDDIES = 1;
 
     private boolean backPressedToExitOnce = false;
     private Toast toast = null;
@@ -65,6 +68,17 @@ public class ActivejourneyList extends BaseActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        if (resultCode == REQUEST_FETCH_BUDDIES) {
+            Log.d(TAG, "fetch buddies service completed");
+            Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        Log.d(TAG, "sign in contacts fetched successfully");
     }
 
     @Override
