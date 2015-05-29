@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/tj_medium_gray"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="15dp"
+    android:layout_marginBottom="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,13 +20,23 @@
             android:src="@drawable/play" />
 
         <TextView
+            android:id="@+id/text123"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play Audio"
+            android:layout_toRightOf="@id/timelineItemPlayBtn"
+            android:layout_alignTop="@id/timelineItemPlayBtn"
+            android:textColor="@color/tj_blackt"
+            android:textSize="@dimen/tj_large_font" />
+
+        <TextView
             android:id="@+id/timelineItemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="20 hours ago"
-            android:textColor="@color/black"
+            android:textColor="@color/tj_red_light_text"
             android:textSize="@dimen/tj_small_font"
             android:textStyle="italic" />
     </RelativeLayout>
@@ -39,7 +50,7 @@
             android:id="@+id/timelineItemImage"
             android:layout_width="match_parent"
             android:layout_height="125dp"
-            android:src="@drawable/sound_bars" />
+            android:src="@drawable/audio_wave" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -52,8 +63,6 @@
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="-35dp"
             android:src="@drawable/ic_profile" />
 
         <ImageButton
@@ -61,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:background="@color/white"
             android:contentDescription="@string/default_string"
             android:src="@drawable/heart_empty" />
