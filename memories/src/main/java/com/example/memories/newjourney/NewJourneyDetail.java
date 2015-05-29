@@ -36,10 +36,12 @@ import java.util.Map;
 public class NewJourneyDetail extends AppCompatActivity {
 
     protected static final String TAG = "<NewJourneyDetail>";
-    private String jName;
-    private String jTagline;
+
     private String jGroupType;
     private String jBuddyList;
+    private String jName;
+    private EditText mJourneyName;
+    private EditText mJourneyTagLine;
     private Map<String, String> params;
 
     @Override
@@ -48,16 +50,15 @@ public class NewJourneyDetail extends AppCompatActivity {
         setContentView(R.layout.new_journey_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Journey Details");
         setSupportActionBar(toolbar);
 
-        jName = ((EditText) findViewById(R.id.new_journey_detail_name)).getText().toString().trim();
+        mJourneyName = (EditText) findViewById(R.id.new_journey_detail_name);
+        mJourneyTagLine = (EditText) findViewById(R.id.new_journey_detail_tagline);
     }
 
-    private void getAllParams() {
+    private void createParams() {
 
-        jTagline = ((EditText) findViewById(R.id.new_journey_detail_tagline)).getText().toString()
-                .trim();
         jGroupType = "Friends";
         jBuddyList = Joiner.on(",").join(AppController.buddyList);
         Log.d(TAG, "buddy list = " + jBuddyList);
@@ -65,25 +66,21 @@ public class NewJourneyDetail extends AppCompatActivity {
         // create params to be sent in create new journey api
         params = new HashMap<>();
         try {
-            params.put("journey[name]", jName);
-            params.put("journey[tag_line]", jTagline);
+            params.put("journey[name]", mJourneyName.getText().toString().trim());
+            params.put("journey[tag_line]", mJourneyTagLine.getText().toString().trim());
             params.put("journey[group_relationship]", jGroupType);
             params.put("journey[buddy_ids]", jBuddyList);
             params.put("api_key", TJPreferences.getApiKey(getBaseContext()));
 
-            // get all the journey laps into an array and pass as POST
-            // parameters
-            // parse the "lapslist"
-            // so that
-            // it can be properly
-            // passed to backend when creating new journey
+            // get all the journey laps into an array and pass as POST parameters parse the "lapslist" so that
+            // it can be properly passed to backend when creating new journey
 
             int currentPosition = 0;
             for (Map<String, String> lap : ((AppController) getApplicationContext()).lapsList) {
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_id]",
                         "1");
                 params.put("journey[journey_laps_attributes[" + currentPosition
-                        + "]][destination_id]", "1");
+                        + "]][destination_id]", "2");
                 params.put(
                         "journey[journey_laps_attributes[" + currentPosition + "]][travel_mode]",
                         "car");
@@ -102,15 +99,17 @@ public class NewJourneyDetail extends AppCompatActivity {
     }
 
     public void createNewJourney(View v) {
+        jName = mJourneyName.getText().toString();
         if (jName != null && jName != "") {
             if (HelpMe.isNetworkAvailable(this)) {
 
-                getAllParams();
+                createParams();
 
                 // Tag used to cancel the request
                 String tag_json_obj = "createNewJourney";
-
                 String url = Constants.URL_CREATE_JOURNEY;
+                Log.d(TAG, "creating new journey with url " + url);
+                Log.d(TAG, "with params " + params);
 
                 final ProgressDialog pDialog = new ProgressDialog(this);
                 pDialog.setMessage("Loading...");
@@ -141,16 +140,8 @@ public class NewJourneyDetail extends AppCompatActivity {
                         pDialog.hide();
                         Toast.makeText(
                                 getApplicationContext(),
-                                "There were some issues, yet we are creating a journey for you :)",
+                                "There are some issues creating your journey please try again",
                                 Toast.LENGTH_LONG).show();
-                        try {
-                            createNewJourneyInDBBypass();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(i);
                     }
                 });
 
@@ -195,7 +186,7 @@ public class NewJourneyDetail extends AppCompatActivity {
         TJPreferences.setActiveJourneyId(this, idOnServer);
     }
 
-    private void createNewJourneyInDBBypass() throws JSONException {
+    /*private void createNewJourneyInDBBypass() throws JSONException {
 
         Log.d(TAG, "createNewJourneyInDB");
         String id = "45";
@@ -216,6 +207,6 @@ public class NewJourneyDetail extends AppCompatActivity {
                 buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE);
         JourneyDataSource.createJourney(newJ, getBaseContext());
         TJPreferences.setActiveJourneyId(this, id);
-    }
+    }*/
 
 }

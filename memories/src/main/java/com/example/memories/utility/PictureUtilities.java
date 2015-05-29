@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Picture;
+import com.example.memories.services.PullMemoriesService;
 import com.example.memories.volley.AppController;
 
 import org.apache.http.HttpResponse;
@@ -91,6 +92,8 @@ public class PictureUtilities {
                             e.printStackTrace();
                         }
                     }
+
+                    PullMemoriesService.isFinished();
                 }
             }, 0, 0, null, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {

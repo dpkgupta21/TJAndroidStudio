@@ -1,8 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
@@ -12,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
+        android:padding="10dp"
         android:hint="Enter contact name" />
 
     <ListView
@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="1dp"
+        android:padding="10dp" />
 
 </LinearLayout>

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.VideoDataSource;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Video;
@@ -180,7 +181,9 @@ public class VideoDetail extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-
+        Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void setFavouriteBtnClickListener() {

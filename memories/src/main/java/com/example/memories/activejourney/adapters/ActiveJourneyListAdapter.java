@@ -13,6 +13,7 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Journey;
+import com.example.memories.services.CustomResultReceiver;
 import com.example.memories.services.PullBuddiesService;
 import com.example.memories.utility.TJPreferences;
 
@@ -23,6 +24,8 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
     private static final String TAG = "<ActiveJListAdapter>";
     private List<Journey> mDataset;
     private Context mContext;
+    private static final int REQUEST_FETCH_BUDDIES = 1;
+    public CustomResultReceiver mReceiver;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ActiveJourneyListAdapter(List<Journey> myDataset, Context context) {
@@ -70,6 +73,9 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         return mDataset.size();
     }
 
+
+
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -94,15 +100,18 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
             Log.d(TAG, "Total contacts " + buddyList.toString());
             if (buddyList.size() > 0) {
+                Log.d(TAG, "some contacts not present fetching them");
                 Intent intent = new Intent(mContext, PullBuddiesService.class);
+                intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
+                intent.putExtra("RECEIVER", mReceiver);
                 intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
                 mContext.startService(intent);
+            }else{
+                Log.d(TAG, "all required contacts are already present in the database");
+                Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.getApplicationContext().startActivity(intent);
             }
-
-            //Fetch all the memories
-            Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
         }
     }
 
