@@ -23,6 +23,7 @@ import com.example.memories.models.Note;
 import com.example.memories.models.Picture;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
+import com.example.memories.utility.PictureUtilities;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
@@ -168,6 +169,7 @@ public class GcmIntentService extends IntentService {
                 Picture newPic = new Picture(idOnServer, jId, HelpMe.PICTURE_TYPE, caption, extension,
                         size, dataUrl, null, createdBy,
                         createdAt, updatedAt, null, null);
+                PictureUtilities.createNewPicFromServer(this, newPic, dataUrl);
 
                 //PictureUtilities.downloadPicFromURL(this, newPic);
                 //PictureDataSource.createPicture(newPic, this);

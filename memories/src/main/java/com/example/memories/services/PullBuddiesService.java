@@ -73,8 +73,8 @@ public class PullBuddiesService extends IntentService {
         params.put("api_key", TJPreferences.getApiKey(this));
         for (String s : buddyIds) {
             Log.d(TAG, "fetching profiles for buddies ->" + s + ",");
-            requestUrl = "https://www.traveljar.in/api/v1/users/" + s;
-            jsonRequest = new CustomJsonRequest(Request.Method.POST, requestUrl, params,
+            requestUrl = Constants.URL_SIGN_UP + "/" + s + "?api_key=" + TJPreferences.getApiKey(this);
+            jsonRequest = new CustomJsonRequest(Request.Method.GET, requestUrl, null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
