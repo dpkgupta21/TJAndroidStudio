@@ -12,10 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.memories.R;
+import com.example.memories.audio.AudioCapture;
+import com.example.memories.checkin.CheckInPlacesList;
 import com.example.memories.currentjourney.adapters.CurrentJourneyTabsAdapter;
 import com.example.memories.customviews.SlidingTabLayout;
+import com.example.memories.moods.MoodCapture;
+import com.example.memories.note.CreateNotes;
+import com.example.memories.picture.PictureCapture;
+import com.example.memories.video.VideoCapture;
 
-public class CurrentJourneyBaseActivity extends AppCompatActivity {
+public class CurrentJourneyBaseActivity extends AppCompatActivity{
 
     private static final String TAG = "<CurJourneyActivity>";
     private SlidingTabLayout mSlidingTabLayout;
@@ -38,15 +44,48 @@ public class CurrentJourneyBaseActivity extends AppCompatActivity {
 
     }
 
-    public void onFABClick(View v) {
-        Log.d(TAG, "djfnjdfndjn");
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.current_journey_action_bar, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void fabClick(View view){
+        Log.d(TAG, "on fab view click called" + view);
+        Intent i;
+        switch (view.getId()) {
+            case R.id.button_mood:
+                Log.d(TAG, "set a mood clicked");
+                i = new Intent(this, MoodCapture.class);
+                startActivity(i);
+                break;
+            case R.id.button_checkin:
+                Log.d(TAG, "checkin clicked");
+                i = new Intent(this, CheckInPlacesList.class);
+                startActivity(i);
+                break;
+            case R.id.button_photo:
+                Log.d(TAG, "photo clicked");
+                i = new Intent(this, PictureCapture.class);
+                startActivity(i);
+                break;
+            case R.id.button_note:
+                i = new Intent(this, CreateNotes.class);
+                startActivity(i);
+                Log.d(TAG, "note clicked");
+                break;
+            case R.id.button_video:
+                Log.d(TAG, "video clicked");
+                i = new Intent(this, VideoCapture.class);
+                startActivity(i);
+                break;
+            case R.id.button_audio:
+                Log.d(TAG, "audio clicked");
+                i = new Intent(this, AudioCapture.class);
+                startActivity(i);
+                break;
+        }
     }
 
     @Override
@@ -63,6 +102,4 @@ public class CurrentJourneyBaseActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }

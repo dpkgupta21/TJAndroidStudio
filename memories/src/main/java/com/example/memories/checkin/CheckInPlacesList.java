@@ -57,7 +57,7 @@ public class CheckInPlacesList extends AppCompatActivity {
         setContentView(R.layout.checkin_places_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Checkin Places");
         setSupportActionBar(toolbar);
 
         filterPlacesEditTxt = (EditText) findViewById(R.id.checkin_places_search);

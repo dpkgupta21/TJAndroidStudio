@@ -6,10 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-
-import com.example.memories.R;
 
 public class VideoCapture extends AppCompatActivity {
 
@@ -23,9 +20,9 @@ public class VideoCapture extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dispatchTakeVideoIntent();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitle("Capture Audio");
+//        setSupportActionBar(toolbar);
     }
 
     private void dispatchTakeVideoIntent() {

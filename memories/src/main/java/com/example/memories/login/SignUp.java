@@ -21,7 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.memories.R;
 import com.example.memories.activejourney.ActivejourneyList;
-import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.newjourney.LapsList;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
@@ -136,12 +135,11 @@ public class SignUp extends Activity {
                 TJPreferences.setProfileImgPath(SignUp.this, Constants.GUMNAAM_IMAGE_URL);
 
             } else {
-                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG)
+                Toast.makeText(getApplicationContext(), "No internet connection please check your internet connection", Toast.LENGTH_LONG)
                         .show();
             }
         } else {
-            // user didn't entered emailAddress or password
-            // Show alert asking him to enter the details
+            // user didn't entered emailAddress or password show alert asking him to enter the details
             Toast.makeText(getApplicationContext(), "Please enter Name, emailAddress & password",
                     Toast.LENGTH_LONG).show();
         }
@@ -169,7 +167,7 @@ public class SignUp extends Activity {
 
                         pDialog.dismiss();
                         // Staring MainActivity
-                        Intent i = new Intent(getApplicationContext(), CurrentJourneyBaseActivity.class);
+                        Intent i = new Intent(getApplicationContext(), ActivejourneyList.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                         finish();
@@ -177,7 +175,9 @@ public class SignUp extends Activity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "That didn't work!");
+                pDialog.dismiss();
+                Toast.makeText(SignUp.this, "Unable to Sign Up please try after some time", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Unable to sign up volley error -> " + error);
             }
         });
 
@@ -301,26 +301,19 @@ public class SignUp extends Activity {
                     regid = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regid;
 
-                    // You should send the registration ID to your server over
-                    // HTTP, so it
-                    // can use GCM/HTTP or CCS to send messages to your app.
+                    // You should send the registration ID to your server over HTTP, so it can use GCM/HTTP or CCS to send messages to your app.
                     // sendRegistrationIdToBackend();
 
 
-                    // For this demo: we don't need to send it because the
-                    // device will send
-                    // upstream messages to a server that echo back the message
-                    // using the
-                    // 'from' address in the message.
+                    // For this demo: we don't need to send it because the device will send upstream messages to a server that echo back the message
+                    // using the 'from' address in the message.
 
                     // Persist the regID - no need to register again.
                     Log.d(TAG, "usre eris id isss === " + regid);
                     TJPreferences.setGcmRegId(context, regid);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
-                    // If there is an error, don't just keep trying to register.
-                    // Require the user to click a button again, or perform
-                    // exponential back-off.
+                    // If there is an error, don't just keep trying to register. Require the user to click a button again, or perform exponential back-off.
                 }
                 return msg;
             }

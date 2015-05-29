@@ -65,7 +65,7 @@ public class VideoDetail extends AppCompatActivity {
         Log.d(TAG, "entrerd video details");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Video");
         setSupportActionBar(toolbar);
 
         currenTime = HelpMe.getCurrentTime();
@@ -176,6 +176,11 @@ public class VideoDetail extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 
     private void setFavouriteBtnClickListener() {

@@ -43,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/emoticon117"
+            android:onClick="fabClick"
             fab:fab_colorNormal="@color/tj_orange"
             fab:fab_colorPressed="@color/white"
             fab:fab_size="mini"
@@ -53,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/map32"
+            android:onClick="fabClick"
             fab:fab_colorNormal="@color/tj_orange"
             fab:fab_colorPressed="@color/white"
             fab:fab_size="mini"
@@ -63,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/stack21"
+            android:onClick="fabClick"
             fab:fab_colorNormal="@color/tj_orange"
             fab:fab_colorPressed="@color/white"
             fab:fab_size="mini"
@@ -72,6 +75,7 @@
             android:id="@+id/button_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="fabClick"
             android:src="@drawable/note48"
             fab:fab_colorNormal="@color/tj_orange"
             fab:fab_colorPressed="@color/white"
@@ -83,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/movie36"
+            android:onClick="fabClick"
             fab:fab_colorNormal="@color/tj_orange"
             fab:fab_colorPressed="@color/white"
             fab:fab_size="mini"
@@ -92,6 +97,7 @@
             android:id="@+id/button_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="fabClick"
             android:src="@drawable/microphone52"
             fab:fab_colorNormal="@color/tj_orange"
             fab:fab_colorPressed="@color/white"
@@ -99,4 +105,4 @@
             fab:fab_title="Audio" />
     </com.example.flotingmenulibrary.FloatingActionsMenu>
 
-</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list.xml -->
+</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list.xml -->

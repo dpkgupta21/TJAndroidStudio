@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.PictureDataSource;
-import com.example.memories.currentjourney.TimelineFragment;
+import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Picture;
 import com.example.memories.utility.Constants;
@@ -66,7 +66,7 @@ public class PictureDetail extends AppCompatActivity {
         Log.d(TAG, "entrerd photo details");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Picture");
         setSupportActionBar(toolbar);
 
         currenTime = HelpMe.getCurrentTime();
@@ -236,7 +236,7 @@ public class PictureDetail extends AppCompatActivity {
                 if (isNewPic) {
                     saveAndUploadPic();
                 }
-                Intent i = new Intent(getBaseContext(), TimelineFragment.class);
+                Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;

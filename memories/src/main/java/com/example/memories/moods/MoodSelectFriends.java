@@ -35,7 +35,7 @@ public class MoodSelectFriends extends AppCompatActivity {
         setContentView(R.layout.mood_select_friends_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Select Mood");
         setSupportActionBar(toolbar);
 
         mSelectedFriends = getIntent().getExtras().getStringArrayList("SELECTED_FRIENDS");
