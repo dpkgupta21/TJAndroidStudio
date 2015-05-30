@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/tj_medium_gray"
-    android:padding="10dp">
+    android:background="@drawable/custom_border_gray">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Happiness is outing with friends"
+                android:text="Picture/Video default text"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -51,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/timelineItemCaption"
                 android:text="20 hours ago"
-                android:textColor="@color/black"
+                android:textColor="@color/tj_red_light_text"
                 android:textSize="@dimen/tj_small_font"
                 android:textStyle="italic" />
 
@@ -68,9 +67,11 @@
                 android:id="@+id/noLikesTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/timelineItemCaption"
-                android:text="" />
+                android:text="0"
+                android:layout_marginTop="-8dp"
+                android:layout_marginRight="10dp"
+                android:textSize="@dimen/tj_extra_giant_font"
+                android:layout_toLeftOf="@+id/timelineItemFavIcon" />
 
         </RelativeLayout>
     </RelativeLayout>

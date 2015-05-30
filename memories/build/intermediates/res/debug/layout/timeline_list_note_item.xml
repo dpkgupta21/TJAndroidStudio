@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:background="@drawable/custom_border_gray"
+    android:padding="15dp"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Note"
+            android:textSize="@dimen/tj_large_font"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -24,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="20 hours ago"
-            android:textColor="@color/black"
+            android:textColor="@color/tj_red_light_text"
             android:textSize="@dimen/tj_small_font"
             android:textStyle="italic" />
     </RelativeLayout>
@@ -35,6 +37,7 @@
         android:layout_height="wrap_content"
         android:text="@string/default_note"
         android:textColor="@color/black"
+        android:padding="5dp"
         android:textStyle="bold" />
 
     <RelativeLayout
@@ -58,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:background="@color/white"
             android:contentDescription="@string/default_string"
             android:src="@drawable/heart_empty" />
@@ -66,9 +70,11 @@
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/timelineItemFavIcon"
-            android:text="" />
+            android:text="0"
+            android:layout_marginRight="10dp"
+            android:textSize="@dimen/tj_extra_giant_font"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/timelineItemFavIcon" />
 
     </RelativeLayout>
 

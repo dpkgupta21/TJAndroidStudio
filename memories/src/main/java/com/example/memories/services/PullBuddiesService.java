@@ -61,6 +61,7 @@ public class PullBuddiesService extends IntentService {
         REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
         buddyIds = intent.getStringArrayListExtra("BUDDY_IDS");
         noRequests = buddyIds.size();
+        Log.d(TAG, "no of requets = " + noRequests + buddyIds + ",,,,");
         return START_STICKY;
     }
 
@@ -73,7 +74,7 @@ public class PullBuddiesService extends IntentService {
         params.put("api_key", TJPreferences.getApiKey(this));
         for (String s : buddyIds) {
             Log.d(TAG, "fetching profiles for buddies ->" + s + ",");
-            requestUrl = Constants.URL_SIGN_UP + "/" + s + "?api_key=" + TJPreferences.getApiKey(this);
+            requestUrl = Constants.URL_USER_SHOW_DETAILS + "/" + s + "?api_key=" + TJPreferences.getApiKey(this);
             jsonRequest = new CustomJsonRequest(Request.Method.GET, requestUrl, null,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -86,10 +87,15 @@ public class PullBuddiesService extends IntentService {
                                 String status = response.getJSONObject("user").getString("status");
                                 String interests = response.getJSONObject("user").getString("interests");
                                 String phone_no = response.getJSONObject("user").getString("phone");
-                                String picServerUrl = response.getJSONObject("profile_picture").getJSONObject("thumb")
-                                        .getString("url");
+
+//                                Log.d(TAG , "1");
+//                                Log.d(TAG,"==" + response.getJSONObject("user").getJSONObject("profile_picture"));
+//                                Log.d(TAG,"==" + response.getJSONObject("user").getJSONObject("profile_picture").getJSONObject("thumb"));
+//                                Log.d(TAG,"==" + response.getJSONObject("user").getJSONObject("profile_picture").getJSONObject("thumb").getString("url"));
+
+                                String picServerUrl = response.getJSONObject("user").getJSONObject("profile_picture").getJSONObject("thumb").getString("url");
                                 String picLocalUrl;
-                                String allJourneyIds = response.getString("journey_ids");
+                                String allJourneyIds = response.getJSONObject("user").getString("journey_ids");
                                 if (picServerUrl != "null") {
                                     picLocalUrl = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + idOnServer + ".jpeg";
                                     ImageRequest request = new ImageRequest(picServerUrl,
@@ -117,8 +123,6 @@ public class PullBuddiesService extends IntentService {
                                                             e.printStackTrace();
                                                         }
                                                     }
-                                                    noRequests --;
-                                                    onFinish();
                                                 }
                                             }, 0, 0, null, new Response.ErrorListener() {
                                         public void onErrorResponse(VolleyError error) {
@@ -136,6 +140,7 @@ public class PullBuddiesService extends IntentService {
                                 Contact tempContact = new Contact(idOnServer, userName, email, status, picServerUrl, picLocalUrl,
                                         phone_no, allJourneyIds, true, interests);
                                 ContactDataSource.createContact(tempContact, PullBuddiesService.this);
+                                onFinish();
                             } catch (Exception ex) {
                                 Log.d(TAG, "exception in parsing note received from server" + ex);
                             }
@@ -151,8 +156,9 @@ public class PullBuddiesService extends IntentService {
         }
     }
 
-    private void onFinish(){
-        if(noRequests == 0){
+    private void onFinish() {
+        noRequests--;
+        if (noRequests == 0) {
             Bundle bundle = new Bundle();
             mReceiver.send(REQUEST_CODE, bundle);
         }

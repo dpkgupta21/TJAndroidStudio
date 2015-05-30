@@ -48,7 +48,9 @@ public class AddLap extends AppCompatActivity {
         setContentView(R.layout.new_journey_lap_new);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Add Lap");
+        toolbar.setTitle("New Location");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setNavigationIcon(R.drawable.next);
         setSupportActionBar(toolbar);
 
         fromLocation = (TextView) findViewById(R.id.new_journey_location_new_from);

@@ -30,6 +30,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HelpMe {
     public static final String PREFS_NAME = "TravelJarPrefs";
@@ -92,6 +94,33 @@ public class HelpMe {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
+    // Check for valid Email address
+    public static boolean isValidMail(String email) {
+        boolean check;
+        Pattern p;
+        Matcher m;
+
+        String EMAIL_STRING = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        p = Pattern.compile(EMAIL_STRING);
+
+        m = p.matcher(email);
+        check = m.matches();
+
+        return check;
+    }
+
+    // Check for valid mobile number of 10 digits
+    public static boolean isValidMobile(String phone) {
+        if (phone.length() != 10) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     public static String getDate(long timestamp, int type) {
         SimpleDateFormat onlyDate = new SimpleDateFormat("dd");

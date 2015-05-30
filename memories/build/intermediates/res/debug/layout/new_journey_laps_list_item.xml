@@ -3,7 +3,7 @@
     android:id="@+id/new_journey_location_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/custom_border_gray"
     android:padding="15dp">
 
     <TextView

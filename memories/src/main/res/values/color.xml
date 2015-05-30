@@ -8,9 +8,21 @@
     <color name="translucent">#CC000000</color>
 
     <!-- TJ colors -->
+    <color name="tj_red_dark_toolbar">#e84c3d</color>
+    <color name="tj_red_light_status_bar">#c83426</color>
+    <color name="tj_red_dark_icons">#ff0032</color>
+    <color name="tj_red_light_text">#f3a49d</color>
+
+    <color name="tj_gray_border">#c8c8c8</color>
+    <color name="tj_gray_bg">#f3f3f3</color>
+
+    <color name="tj_black_text">#f3f3f3</color>
+
+
+    <!-- old ones-->
     <color name="tj_orange">#FFA31A</color>
     <color name="tj_green">#16A085</color>
-    <color name="tj_red">#E74C3C</color>
+
     <color name="tj_yellow">#FF9900</color>
     <color name="tj_dark_gray">#333333</color>
     <color name="tj_medium_gray">#666666</color>

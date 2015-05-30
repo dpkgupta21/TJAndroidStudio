@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -38,6 +39,10 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_journey_list);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Active Journeys");
+        toolbar.setLogo(R.drawable.ic_launcher);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.active_journey_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -63,7 +68,6 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
             public void onClick(View v) {
                 Log.d(TAG, "FAB clicked");
                 Intent i = new Intent(getBaseContext(), LapsList.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
         });

@@ -154,13 +154,19 @@
     <eat-comment/>
     <color name="text_primary">#D9FFFFFF</color>
     <color name="text_secondary">#D9000000</color>
+    <color name="tj_black_text">#f3f3f3</color>
     <color name="tj_dark_gray">#333333</color>
     <color name="tj_fb_blue">#3C5B97</color>
+    <color name="tj_gray_bg">#f3f3f3</color>
+    <color name="tj_gray_border">#c8c8c8</color>
     <color name="tj_green">#16A085</color>
     <color name="tj_light_gray">#EEEEEE</color>
     <color name="tj_medium_gray">#666666</color>
     <color name="tj_orange">#FFA31A</color>
-    <color name="tj_red">#E74C3C</color>
+    <color name="tj_red_dark_icons">#ff0032</color>
+    <color name="tj_red_dark_toolbar">#e84c3d</color>
+    <color name="tj_red_light_status_bar">#c83426</color>
+    <color name="tj_red_light_text">#f3a49d</color>
     <color name="tj_yellow">#FF9900</color>
     <color name="translucent">#CC000000</color>
     <color name="transparent">#00000000</color>
@@ -436,7 +442,7 @@
     <eat-comment/>
     <string name="name"><i>First Name</i></string>
     <string name="number_verification1">To let your friends find and add you please add your phone number and verify</string>
-    <string name="number_verification2">Thank you for entering your number. A verification number has been sent to your mobile. Please enter to verify</string>
+    <string name="number_verification2">"Congrats! Your number is verified. Let's explore the world now!"</string>
     <string name="password"><i>Password</i></string>
     <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/admob_strings.xml -->
     <eat-comment/>
@@ -1529,7 +1535,7 @@
     <eat-comment/>
     <style name="TJActionBar" parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:titleTextStyle">@style/TJActionBarTitleText</item>
-        <item name="android:background">@color/tj_red</item>
+        <item name="android:background">@color/tj_red_dark_toolbar</item>
     </style>
     <style name="TJActionBarTabText" parent="@style/Widget.AppCompat.ActionBar.TabText">
         <item name="android:textColor">@color/black</item>

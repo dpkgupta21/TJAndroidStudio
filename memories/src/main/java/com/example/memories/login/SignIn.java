@@ -21,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.memories.R;
-import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.services.CustomResultReceiver;
 import com.example.memories.services.PullMemoriesService;
@@ -185,7 +184,6 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         String email = userItem.getString("email");
         String phone = userItem.getString("phone");
         String api_key = userItem.getString("api_key");
-        String currentJourney = JourneyDataSource.getCurrentJourney(getApplicationContext());
 
         TJPreferences.setUserId(this, id);
         TJPreferences.setUserName(this, name);
@@ -193,7 +191,6 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         TJPreferences.setPhone(this, phone);
         TJPreferences.setApiKey(this, api_key);
         TJPreferences.setLoggedIn(this, true);
-        TJPreferences.setActiveJourneyId(this, currentJourney);
 
         // download & set the default profile image if does not exist
         HelpMe.createImageIfNotExist(this);

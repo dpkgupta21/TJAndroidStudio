@@ -49,7 +49,7 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
             Intent intent = new Intent(getBaseContext(), PullContactsService.class);
             intent.putExtra("RECEIVER", mReceiver);
             intent.putExtra("REQUEST_CODE", REQUEST_FETCH_CONTACTS);
-            startService(intent);
+            //startService(intent);
         }
 
     }

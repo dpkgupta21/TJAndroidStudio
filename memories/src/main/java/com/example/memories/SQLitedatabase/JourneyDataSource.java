@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.memories.models.Journey;
 import com.example.memories.utility.Constants;
+import com.example.memories.utility.TJPreferences;
 import com.google.common.base.Joiner;
 
 import java.util.ArrayList;
@@ -47,25 +48,19 @@ public class JourneyDataSource {
         return journey_id;
     }
 
-    public static String getCurrentJourney(Context mContext) {
+    public static Journey getCurrentJourney(Context mContext) {
         String currentJourneyId = null;
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
-                + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_ACTIVE + "'";
+                + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = '" + TJPreferences.getActiveJourneyId(mContext) + "'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(mContext).getReadableDatabase();
         Log.e(TAG, selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c.moveToFirst()) {
-            currentJourneyId = c.getString(c
-                    .getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER));
-        } else {
-            Log.d(TAG, "no past journeys!!!");
-            currentJourneyId = null;
-        }
+        List<Journey> journeyList = getJourneys(mContext, c);
 
         c.close();
         db.close();
-        return currentJourneyId;
+        return journeyList.get(0);
 
     }
 
