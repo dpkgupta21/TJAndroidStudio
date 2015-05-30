@@ -99,8 +99,8 @@ public class NewJourneyDetail extends AppCompatActivity {
     }
 
     public void createNewJourney(View v) {
-        jName = mJourneyName.getText().toString();
-        if (jName != null && jName != "") {
+        jName = mJourneyName.getText().toString().trim();
+        if (!jName.isEmpty()) {
             if (HelpMe.isNetworkAvailable(this)) {
 
                 createParams();
@@ -121,7 +121,9 @@ public class NewJourneyDetail extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
-                        pDialog.hide();
+                        if (pDialog != null) {
+                            pDialog.hide();
+                        }
                         try {
                             createNewJourneyInDB(response);
                         } catch (JSONException e) {

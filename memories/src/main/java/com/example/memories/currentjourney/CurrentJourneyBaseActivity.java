@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.memories.R;
+import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.audio.AudioCapture;
 import com.example.memories.checkin.CheckInPlacesList;
 import com.example.memories.currentjourney.adapters.CurrentJourneyTabsAdapter;
@@ -21,7 +22,7 @@ import com.example.memories.note.CreateNotes;
 import com.example.memories.picture.PictureCapture;
 import com.example.memories.video.VideoCapture;
 
-public class CurrentJourneyBaseActivity extends AppCompatActivity{
+public class CurrentJourneyBaseActivity extends AppCompatActivity {
 
     private static final String TAG = "<CurJourneyActivity>";
     private SlidingTabLayout mSlidingTabLayout;
@@ -33,7 +34,9 @@ public class CurrentJourneyBaseActivity extends AppCompatActivity{
         setContentView(R.layout.current_journey_base_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Current Journey");
+        toolbar.setSubtitle(JourneyDataSource.getCurrentJourney(this).getName());
+        toolbar.setLogo(R.drawable.ic_launcher);
         setSupportActionBar(toolbar);
 
         mViewPager = (ViewPager) findViewById(R.id.timeline_viewpager);
@@ -51,7 +54,7 @@ public class CurrentJourneyBaseActivity extends AppCompatActivity{
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void fabClick(View view){
+    public void fabClick(View view) {
         Log.d(TAG, "on fab view click called" + view);
         Intent i;
         switch (view.getId()) {

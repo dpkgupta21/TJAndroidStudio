@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/custom_border_gray"
     android:orientation="vertical"
     android:padding="15dp"
     android:layout_marginBottom="10dp">
@@ -26,7 +26,7 @@
             android:text="Play Audio"
             android:layout_toRightOf="@id/timelineItemPlayBtn"
             android:layout_alignTop="@id/timelineItemPlayBtn"
-            android:textColor="@color/tj_blackt"
+            android:textColor="@color/black"
             android:textSize="@dimen/tj_large_font" />
 
         <TextView
@@ -49,7 +49,7 @@
         <ImageView
             android:id="@+id/timelineItemImage"
             android:layout_width="match_parent"
-            android:layout_height="125dp"
+            android:layout_height="100dp"
             android:src="@drawable/audio_wave" />
     </RelativeLayout>
 
@@ -79,7 +79,10 @@
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:text="0"
+            android:layout_marginRight="10dp"
+            android:textSize="@dimen/tj_extra_giant_font"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/timelineItemFavIcon" />
 
     </RelativeLayout>

@@ -4,4 +4,4 @@
     <item android:drawable="@drawable/car95" android:state_checked="true" />
     <item android:drawable="@drawable/delete48" android:state_checked="false" />
 
-</selector><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/drawable/toggle_afternoon.xml -->
+</selector><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/drawable/toggle_afternoon.xml -->

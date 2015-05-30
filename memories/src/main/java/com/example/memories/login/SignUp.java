@@ -116,6 +116,13 @@ public class SignUp extends Activity {
         password = txtPassword.getText().toString();
         name = txtName.getText().toString();
 
+        // Email address validation
+        if(!HelpMe.isValidMail(emailAddress)){
+            Toast.makeText(getApplicationContext(), "Please enter a valid email address", Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
         // Check if emailAddress and password is filled
         if (emailAddress.trim().length() > 0 && password.trim().length() > 0
                 && name.trim().length() > 0) {
@@ -167,8 +174,7 @@ public class SignUp extends Activity {
 
                         pDialog.dismiss();
                         // Staring MainActivity
-                        Intent i = new Intent(getApplicationContext(), ActivejourneyList.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        Intent i = new Intent(getApplicationContext(), NumberVerificationActivity.class);
                         startActivity(i);
                         finish();
                     }

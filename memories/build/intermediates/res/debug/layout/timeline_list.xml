@@ -14,6 +14,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:divider="#b5b5b5"
+            android:background="@color/tj_gray_bg"
+            android:padding="10dp"
             android:dividerHeight="1dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -32,8 +34,8 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        fab:fab_addButtonColorNormal="@color/tj_red"
-        fab:fab_addButtonColorPressed="@color/tj_red"
+        fab:fab_addButtonColorNormal="@color/tj_red_dark_icons"
+        fab:fab_addButtonColorPressed="@color/tj_red_dark_icons"
         fab:fab_addButtonPlusIconColor="@color/white"
         fab:fab_expandDirection="up"
         fab:fab_labelStyle="@style/menu_labels_style">
@@ -105,4 +107,4 @@
             fab:fab_title="Audio" />
     </com.example.flotingmenulibrary.FloatingActionsMenu>
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list.xml -->

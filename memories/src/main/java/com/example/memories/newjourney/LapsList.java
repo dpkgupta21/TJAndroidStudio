@@ -29,7 +29,8 @@ public class LapsList extends AppCompatActivity {
         setContentView(R.layout.new_journey_laps_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("New Lap");
+        toolbar.setTitle("Travel Plan");
+        toolbar.setNavigationIcon(R.drawable.next);
         setSupportActionBar(toolbar);
 
         // Add lap FAB Button

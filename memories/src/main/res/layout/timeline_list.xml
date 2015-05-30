@@ -13,10 +13,10 @@
             android:id="@+id/timelineList"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:divider="#b5b5b5"
+            android:divider="#f3f3f3"
+            android:dividerHeight="7dp"
             android:background="@color/tj_gray_bg"
-            android:padding="10dp"
-            android:dividerHeight="1dp" />
+            android:padding="10dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <FrameLayout
@@ -34,8 +34,8 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        fab:fab_addButtonColorNormal="@color/tj_red"
-        fab:fab_addButtonColorPressed="@color/tj_red"
+        fab:fab_addButtonColorNormal="@color/tj_red_dark_icons"
+        fab:fab_addButtonColorPressed="@color/tj_red_dark_icons"
         fab:fab_addButtonPlusIconColor="@color/white"
         fab:fab_expandDirection="up"
         fab:fab_labelStyle="@style/menu_labels_style">

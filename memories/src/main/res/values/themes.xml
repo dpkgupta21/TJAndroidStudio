@@ -21,7 +21,7 @@
     <!-- ActionBar styles -->
     <style name="TJActionBar" parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:titleTextStyle">@style/TJActionBarTitleText</item>
-        <item name="android:background">@color/tj_red</item>
+        <item name="android:background">@color/tj_red_dark_toolbar</item>
     </style>
 
     <!-- ActionBar title text -->

@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.util.Log;
 
 /**
  * This {@code WakefulBroadcastReceiver} takes care of creating and managing a
@@ -17,8 +18,11 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
+    private static final String TAG = "<GcmBroadcastReceiver>";
+
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d(TAG, intent.getExtras().toString());
         // Explicitly specify that GcmIntentService will handle the intent.
         ComponentName comp = new ComponentName(context.getPackageName(),
                 GcmIntentService.class.getName());

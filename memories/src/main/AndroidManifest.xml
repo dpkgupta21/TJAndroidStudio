@@ -15,6 +15,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <permission
         android:name="com.example.memories.permission.C2D_MESSAGE"
@@ -45,6 +48,12 @@
             android:label="@string/app_name"></activity>
         <activity
             android:name="com.example.memories.login.SignUp"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name="com.example.memories.login.NumberVerificationActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name="com.example.memories.login.NumberVerificationActivity2"
             android:label="@string/app_name"></activity>
         <activity
             android:name=".BaseActivity"
@@ -82,15 +91,6 @@
             android:name="com.example.memories.pastjourney.PastJourneyList"
             android:label="@string/app_name"></activity>
         <activity
-            android:name="com.example.memories.newjourney.NewJourney"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.example.memories.newjourney.SelectedFriendsList"
             android:label="@string/app_name"></activity>
         <activity
@@ -116,9 +116,6 @@
             android:label="@string/app_name"></activity>
         <activity
             android:name="com.example.memories.profile.ChangePassword"
-            android:label="@string/app_name"></activity>
-        <activity
-            android:name="com.example.memories.profile.ChooseInterest"
             android:label="@string/app_name"></activity>
         <activity
             android:name="com.example.memories.audio.AudioDetail"
@@ -149,6 +146,8 @@
             android:name="com.example.memories.currentjourney.JourneyInfo"
             android:label="@string/app_name"></activity>
 
+
+
         <service
             android:name="com.example.memories.services.PullContactsService"
             android:exported="false"></service>
@@ -161,12 +160,20 @@
             android:name="com.example.memories.services.PullBuddiesService"
             android:exported="false" />
 
+        <!--To recive and read text messages -->
+        <receiver
+            android:name=".utility.SMSReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+
 
         <!--
           BroadcastReceiver that will receive intents from GCM

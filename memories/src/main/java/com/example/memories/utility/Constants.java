@@ -22,11 +22,13 @@ public class Constants {
     public static final String TRAVELJAR_FOLDER_PICTURE = TRAVELJAR_FOLDER_ROOT + "/Pictures/";
 
     //public static final String TRAVELJAR_API_BASE_URL = "https://www.traveljar.in/api/v1";
-    public static final String TRAVELJAR_API_BASE_URL = "http://192.168.1.15:3000/api/v1";
+    public static final String TRAVELJAR_API_BASE_URL = "http://192.168.1.3:3000/api/v1";
 
     public static final String JOURNEY_STATUS_ACTIVE = "ACTIVE";
     public static final String JOURNEY_STATUS_PENDING = "PENDING";
     public static final String JOURNEY_STATUS_FINISHED = "FINISHED";
+
+    public static final String URL_IMAGE = "http://api.androidhive.info/volley/volley-image.jpg";
 
     // SERVER API URLS ==========================================
     // Check In requirements
@@ -34,18 +36,25 @@ public class Constants {
     public static final String FOURSQUARE_CLIENT_SECRET = "B0W3L1BJ5MEAYZJN3HSUXDCAVRNNDXT1VVKTO0SMLLRR3L3N";
     public static final String v = "20141201";
     public static final String URL_FS_VENUE_EXPLORE = "https://api.foursquare.com/v2/venues/search";
+
     // public static final String API_KEY = "1Vr7C35_O_I24mtu8TWVyQ";
     public static final String API_KEY = "key";
-    public static final String URL_IMAGE = "http://api.androidhive.info/volley/volley-image.jpg";
+
+    // BASE DOMAIN API
     //public  final static String URL_TJ_DOMAIN = "https://www.traveljar.in/";
-    public final static String URL_TJ_DOMAIN = "http://192.168.1.15:3000/";
+    public final static String URL_TJ_DOMAIN = "http://192.168.1.3:3000/";
+
+    // USER APIS
     public static final String URL_SIGN_IN = URL_TJ_DOMAIN + "api/v1/users/login";
     public static final String URL_SIGN_UP = URL_TJ_DOMAIN + "api/v1/users";
-
+    public static final String URL_UPDATE_USER_DETAILS = URL_TJ_DOMAIN + "api/v1/users/";
     public static final String URL_CHECK_TJ_CONTACTS = URL_TJ_DOMAIN + "api/v1/users/contacts";
+    public static final String URL_USER_SHOW_DETAILS = URL_TJ_DOMAIN + "api/v1/users";
+
+    // JOURNEY APIS
     public static final String URL_CREATE_JOURNEY = URL_TJ_DOMAIN + "api/v1/journeys";
 
-    // Memories
+    // MEMORIES APIS
     public static final String URL_MEMORIES_FETCH_ALL = URL_TJ_DOMAIN + "api/v1/journeys/";
     public static final String URL_MEMORY_UPLOAD = URL_TJ_DOMAIN + "api/v1/journeys/";
 

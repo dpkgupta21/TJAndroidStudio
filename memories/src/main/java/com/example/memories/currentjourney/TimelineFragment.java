@@ -23,7 +23,7 @@ import com.example.memories.utility.TJPreferences;
 
 import java.util.List;
 
-public class TimelineFragment extends Fragment{
+public class TimelineFragment extends Fragment {
 
     private static final String TAG = "<TimelineFragment>";
     public static TimeLineAdapter mAdapter;
@@ -48,8 +48,6 @@ public class TimelineFragment extends Fragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        Log.d(TAG, "5");
 
         /**
          * Call getActivity() function whenever you want to check user login getActivity() will

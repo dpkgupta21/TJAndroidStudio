@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/custom_border_gray"
     android:padding="15dp"
     android:orientation="vertical">
 
@@ -70,9 +70,11 @@
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/timelineItemFavIcon"
-            android:text="" />
+            android:text="0"
+            android:layout_marginRight="10dp"
+            android:textSize="@dimen/tj_extra_giant_font"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/timelineItemFavIcon" />
 
     </RelativeLayout>
 
