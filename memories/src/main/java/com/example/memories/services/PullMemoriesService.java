@@ -92,6 +92,7 @@ public class PullMemoriesService extends IntentService {
                             List<String> lapsList;
                             String buddies;
                             List<String> buddiesList;
+                            JSONArray memoriesList;
 
                             for (int i = 0; i < length; i++) {
                                 jsonObject = journeyJSONArray.getJSONObject(i);
@@ -114,11 +115,20 @@ public class PullMemoriesService extends IntentService {
                                         createdBy, lapsList, buddiesList, Constants.JOURNEY_STATUS_ACTIVE);
                                 JourneyDataSource.createJourney(journey, PullMemoriesService.this);
                                 Log.d(TAG, "journey parsed and saved successfully in the database");
-                                saveMemories(jsonObject.getJSONArray("memories"), idOnServer);
+
+
+                                memoriesList = jsonObject.getJSONArray("memories");
+                                if(memoriesList != null){
+                                    Log.d(TAG, "there are no memories");
+                                    saveMemories(jsonObject.getJSONArray("memories"), idOnServer);
+                                }
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        isFinished();
 
                     }
                 }, new Response.ErrorListener() {
@@ -265,7 +275,7 @@ public class PullMemoriesService extends IntentService {
     public static void isFinished(){
         count--;
         Log.d(TAG, "not finished" + count);
-        if(count == 0) {
+        if(count < 0) {
             Log.d(TAG, "isfimiehd cal;ed" + count);
             count = 0;
             Bundle bundle = new Bundle();

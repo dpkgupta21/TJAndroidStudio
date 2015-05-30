@@ -54,7 +54,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         moodReasonEditTxt = (EditText) findViewById(R.id.mood_because_of_txt);
         String[] friendIds = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         if (friendIds != null) {
-            mSelectedFriends = Arrays.asList();
+            mSelectedFriends = Arrays.asList(friendIds);
         }
     }
 

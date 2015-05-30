@@ -67,9 +67,11 @@
                 android:id="@+id/noLikesTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/timelineItemCaption"
-                android:text="" />
+                android:text="0"
+                android:layout_marginTop="-8dp"
+                android:layout_marginRight="10dp"
+                android:textSize="@dimen/tj_extra_giant_font"
+                android:layout_toLeftOf="@+id/timelineItemFavIcon" />
 
         </RelativeLayout>
     </RelativeLayout>
