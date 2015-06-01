@@ -14,7 +14,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.example.memories.R;
-import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.moods.adapters.FriendsGridAdapter;
 
@@ -25,8 +24,7 @@ public class MoodSelectFriends extends AppCompatActivity {
 
     public static final String TAG = "<SelectFriends>";
     GridView mGridView;
-    List<String> mSelectedFriends;
-    List<Contact> mContactsList = new ArrayList<Contact>();
+    List<Contact> mContactsList;
     FriendsGridAdapter mAdapter;
 
     @Override
@@ -38,17 +36,8 @@ public class MoodSelectFriends extends AppCompatActivity {
         toolbar.setTitle("Select Mood");
         setSupportActionBar(toolbar);
 
-        mSelectedFriends = getIntent().getExtras().getStringArrayList("SELECTED_FRIENDS");
+        mContactsList = getIntent().getExtras().getParcelableArrayList("FRIENDS");
         mGridView = (GridView) findViewById(R.id.friends_list);
-
-        initializeContactsList();
-
-        /*if (mSelectedFriends == null) {
-            mContactsList = new ArrayList<Contact>();
-        } else if (mSelectedFriends.size() > 0) {
-            mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
-        }*/
-
 
         mAdapter = new FriendsGridAdapter(this, mContactsList);
         mGridView.setAdapter(mAdapter);
@@ -88,18 +77,8 @@ public class MoodSelectFriends extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:
-                mSelectedFriends = new ArrayList<String>();
-                for (Contact contact : mContactsList) {
-                    if (!contact.isSelected()) {
-                        mSelectedFriends.remove(contact.getIdOnServer());
-                    } else {
-                        if (!mSelectedFriends.contains(contact.getIdOnServer())) {
-                            mSelectedFriends.add(contact.getIdOnServer());
-                        }
-                    }
-                }
                 Intent returnIntent = new Intent();
-                returnIntent.putStringArrayListExtra("SELECTED_FRIENDS", (ArrayList<String>) mSelectedFriends);
+                returnIntent.putParcelableArrayListExtra("FRIENDS", (ArrayList) mContactsList);
                 setResult(RESULT_OK, returnIntent);
                 finish();
                 return true;
@@ -109,13 +88,5 @@ public class MoodSelectFriends extends AppCompatActivity {
 
     // whenever the activity is called with a list ids of selected friends, fetch all the contacts from the current journey and
     // and mark the contacts as unselected whose ids are not present in the mSelectedFriends
-    private void initializeContactsList(){
-        mContactsList = ContactDataSource.getContactsFromCurrentJourney(this);
-        for(Contact contact : mContactsList){
-            if(!mSelectedFriends.contains(contact.getIdOnServer())){
-                contact.setSelected(false);
-            }
-        }
-    }
 
 }

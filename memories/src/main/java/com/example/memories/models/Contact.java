@@ -1,6 +1,9 @@
 package com.example.memories.models;
 
-public class Contact implements Comparable<Contact> {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Contact implements Comparable<Contact>, Parcelable {
     private String idOnServer;
     private String name;
     private String primaryEmail;
@@ -27,6 +30,21 @@ public class Contact implements Comparable<Contact> {
         this.picLocalUrl = picLocalUrl;
         this.phone_no = phone_no;
         this.isOnBoard = isOnBoard;
+    }
+
+    //To make contact object from parcel
+    public Contact(Parcel parcel) {
+        this.idOnServer = parcel.readString();
+        this.name = parcel.readString();
+        this.primaryEmail = parcel.readString();
+        this.status = parcel.readString();
+        this.picServerUrl = parcel.readString();
+        this.picLocalUrl = parcel.readString();
+        this.phone_no = parcel.readString();
+        this.allJourneyIds = parcel.readString();
+        this.isOnBoard = parcel.readByte() == 1 ? true : false;
+        this.interests = parcel.readString();
+        this.isSelected = parcel.readByte() == 1 ? true : false;
     }
 
     @Override
@@ -122,5 +140,37 @@ public class Contact implements Comparable<Contact> {
         this.isSelected = isSelected;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    //Methods to make Contact class Parcelable
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(idOnServer);
+        parcel.writeString(name);
+        parcel.writeString(primaryEmail);
+        parcel.writeString(status);
+        parcel.writeString(picServerUrl);
+        parcel.writeString(picLocalUrl);
+        parcel.writeString(phone_no);
+        parcel.writeString(allJourneyIds);
+        parcel.writeByte((byte) (isOnBoard ? 1 : 0));
+        parcel.writeString(interests);
+        parcel.writeByte((byte) (isSelected() ? 1 : 0));
+    }
+
+    public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>() {
+
+        public Contact createFromParcel(Parcel in) {
+            return new Contact(in);
+        }
+
+        public Contact[] newArray(int size) {
+            return new Contact[size];
+        }
+    };
 
 }

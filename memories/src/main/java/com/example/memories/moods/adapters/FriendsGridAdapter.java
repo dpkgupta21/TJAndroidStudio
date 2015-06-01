@@ -53,6 +53,7 @@ public class FriendsGridAdapter extends BaseAdapter {
         ImageView overlayImg = (ImageView) convertView.findViewById(R.id.overlayImg);
         TextView friendName = (TextView) convertView.findViewById(R.id.friendName);
 
+        Log.d(TAG, "contact pic url is " + mContactsList.get(position) + position);
         Contact contact = mContactsList.get(position);
 
         if (contact.getPicLocalUrl() != null) {

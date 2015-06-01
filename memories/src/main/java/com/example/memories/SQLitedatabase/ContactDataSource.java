@@ -117,7 +117,8 @@ public class ContactDataSource {
                 + makePlaceholders(buddyIds.length) + ")";
         Cursor cursor = db.rawQuery(query, buddyIds);
         List<Contact> contactsList = getContactsList(cursor, context);
-        Log.d(TAG, "buddies from current journey are " + contactsList.toString());
+        Log.d(TAG, "buddies from current journey are " + contactsList.size());
+
         cursor.close();
         db.close();
         return contactsList;
