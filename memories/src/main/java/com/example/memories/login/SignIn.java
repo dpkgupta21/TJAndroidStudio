@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 
 public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
-    protected static final String TAG = "<SignIn>";
+    protected static final String TAG = null;
     // GCM -----------------------------------
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public CustomResultReceiver mReceiver;
@@ -51,11 +51,11 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     String regid = "";
     private EditText txtEmailAddress;
     private EditText txtPassword;
+    private boolean contactsFetched = false;
+    private boolean memoriesFetched = false;
+    private int REQUEST_FETCH_CONTACTS = 1;
     private int REQUEST_FETCH_MEMORIES = 2;
-    private int REQUEST_FETCH_PROFILE = 3;
     private ProgressDialog pDialog;
-    String emailAddress;
-    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,44 +100,18 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     public void signIn(View v) {
         Log.d(TAG, "signIn() method called");
         // Get a GCM registration id
-
-        // Get username, password from EditText
-        // Check if username, password is filled
-        emailAddress = txtEmailAddress.getText().toString().trim();
-        password = txtPassword.getText().toString().trim();
-
-        if (emailAddress.length() < 0 && password.length() < 0) {
-            Toast.makeText(getApplicationContext(), "Please enter username/password",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        // But before that check for Internet connection
-        if (!HelpMe.isNetworkAvailable(this)) {
-            Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG)
-                    .show();
-            return;
-        }
-
-        pDialog = new ProgressDialog(this);
-        pDialog.show();
-        pDialog.setTitle("Loading your memories...");
         startRegistrationOfGCM(getApplicationContext());
     }
 
 
     public void makeRequestToServer() {
         Log.d(TAG, "makeREqusttoServer method called" + regid);
+        pDialog = new ProgressDialog(this);
+        pDialog.show();
+        // Get username, password from EditText
+        final String emailAddress = txtEmailAddress.getText().toString().trim();
+        String password = txtPassword.getText().toString().trim();
 
-<<<<<<< HEAD
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=" + regid;
-        Log.d(TAG, url);
-
-        CustomJsonRequest jsonObjReq = new CustomJsonRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-=======
         // Add the request to the RequestQueue.
         // But before that check for Internet connection
         if (HelpMe.isNetworkAvailable(this)) {
@@ -166,38 +140,29 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
                                 mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
                                 mServiceIntent.putExtra("RECEIVER", mReceiver);
                                 startService(mServiceIntent);
-                                
                             }
                         }, new Response.ErrorListener() {
->>>>>>> origin/ankit
 
                     @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            updateUserPref(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d(TAG, response.toString());
-                        Log.d(TAG, "calling pullMemoriesService to fetch all journeys and their memories");
-                        Intent mServiceIntent = new Intent(getBaseContext(), PullMemoriesService.class);
-                        mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
-                        mServiceIntent.putExtra("RECEIVER", mReceiver);
-                        startService(mServiceIntent);
+                    public void onErrorResponse(VolleyError error) {
+                        pDialog.hide();
+                        Toast.makeText(getApplicationContext(),
+                                "Username & password donot match!", Toast.LENGTH_LONG)
+                                .show();
                     }
-                }, new Response.ErrorListener() {
+                });
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                pDialog.hide();
-                Toast.makeText(getApplicationContext(),
-                        "Username & password donot match!", Toast.LENGTH_LONG)
-                        .show();
+                queue.add(jsonObjReq);
+
+            } else {
+                // username / password doesn't match
+                Toast.makeText(getApplicationContext(), "Please enter username/password",
+                        Toast.LENGTH_LONG).show();
             }
-        });
-
-        queue.add(jsonObjReq);
-
+        } else {
+            Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 
     private void autoPopulateEmail(EditText emailTxt) {
@@ -355,12 +320,11 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
             @Override
             protected void onPostExecute(String msg) {
-                Log.d(TAG, "onpostexecute called " + msg);
+                Log.d(TAG, msg + "\n");
                 makeRequestToServer();
             }
         }.execute(null, null, null);
     }
 
 }
-
 

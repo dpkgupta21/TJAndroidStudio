@@ -60,8 +60,8 @@ public class NewJourneyDetail extends AppCompatActivity {
     private void createParams() {
 
         jGroupType = "Friends";
-        jBuddyList = Joiner.on(",").join(AppController.buddyList);
-        Log.d(TAG, "buddy list = " + jBuddyList);
+        jBuddyList = (AppController.buddyList == null) ? "" : Joiner.on(",").join(AppController.buddyList);
+        Log.d(TAG, "buddy list = " + jBuddyList + "====" + AppController.buddyList);
 
         // create params to be sent in create new journey api
         params = new HashMap<>();
@@ -173,8 +173,9 @@ public class NewJourneyDetail extends AppCompatActivity {
         JSONArray lapsList = newJourney.getJSONArray("journey_lap_ids");
         JSONArray buddyList = newJourney.getJSONArray("buddy_ids");
 
-        ArrayList<String> buddyArrayList = new ArrayList<>();
-        if (buddyList != null) {
+        ArrayList<String> buddyArrayList = null;
+        if (buddyList.length() > 0) {
+            buddyArrayList = new ArrayList<>();
             int len = buddyList.length();
             for (int i = 0; i < len; i++) {
                 buddyArrayList.add(buddyList.get(i).toString());

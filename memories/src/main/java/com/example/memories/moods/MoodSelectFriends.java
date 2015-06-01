@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
@@ -40,23 +39,8 @@ public class MoodSelectFriends extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mSelectedFriends = getIntent().getExtras().getStringArrayList("SELECTED_FRIENDS");
+        mGridView = (GridView) findViewById(R.id.friends_list);
 
-<<<<<<< HEAD
-        // CHeck if no buddies are present
-        // Show an appropriate messga eif no friends available
-        if (mSelectedFriends.isEmpty() || mSelectedFriends != null) {
-            TextView noBuddiesMsg = (TextView) findViewById(R.id.friends_list_no_buddies_msg);
-            noBuddiesMsg.setVisibility(View.VISIBLE);
-        } else {
-
-            mGridView = (GridView) findViewById(R.id.friends_list);
-            mGridView.setVisibility(View.VISIBLE);
-
-            if (mSelectedFriends == null) {
-                mContactsList = new ArrayList<Contact>();
-            } else if (mSelectedFriends.size() > 0) {
-                mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
-=======
         initializeContactsList();
 
         /*if (mSelectedFriends == null) {
@@ -81,26 +65,8 @@ public class MoodSelectFriends extends AppCompatActivity {
                     mOverlayImg.setVisibility(View.VISIBLE);
                 }
                 mContactsList.get(position).setSelected(!selected);
->>>>>>> origin/ankit
             }
-            mAdapter = new FriendsGridAdapter(this, mContactsList);
-            mGridView.setAdapter(mAdapter);
-
-            mGridView.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ImageView mOverlayImg = (ImageView) view.findViewById(R.id.overlayImg);
-                    Log.d(TAG, "item clicked " + position);
-                    if (mContactsList.get(position).isSelected()) {
-                        mContactsList.get(position).setSelected(false);
-                        mOverlayImg.setVisibility(View.GONE);
-                    } else {
-                        mContactsList.get(position).setSelected(true);
-                        mOverlayImg.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
-        }
+        });
     }
 
     @Override

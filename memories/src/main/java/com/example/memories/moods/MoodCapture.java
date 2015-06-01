@@ -55,13 +55,10 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         moodReasonEditTxt = (EditText) findViewById(R.id.mood_because_of_txt);
         String[] friendIds = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         Log.d(TAG, "all buddys in the journey are" + friendIds);
-        if (friendIds != null) {
+            if (friendIds != null) {
             mSelectedFriends = Arrays.asList(friendIds);
-<<<<<<< HEAD
-=======
             Log.d(TAG, "mselectedFriends are" + mSelectedFriends.isEmpty());
             setSelectedFriends();
->>>>>>> origin/ankit
         }
     }
 

@@ -83,6 +83,10 @@ public class TimeLineAdapter extends BaseAdapter {
         return 0;
     }
 
+    public void updateList(List<Memories> updatedList){
+        memoriesList = updatedList;
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         Log.d(TAG, "get view called");

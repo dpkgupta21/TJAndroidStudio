@@ -13,6 +13,7 @@ import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class PictureDataSource {
 
@@ -206,6 +207,34 @@ public class PictureDataSource {
             cursor.moveToNext();
         }
         return picturesList;
+    }
+
+    // Fetch a random picture of a journey
+    // Used for Active/Past journeys thumbnails
+    public static Picture getRandomPicOfJourney(String jId, Context context) {
+        Log.d(TAG, "in getRandomPicOfJourney");
+
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_JID + " = '" + jId + "'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Log.e(TAG, selectQuery);
+        Cursor c = db.rawQuery(selectQuery, null);
+//        long count = DatabaseUtils.queryNumEntries(db, MySQLiteHelper.TABLE_PICTURE,
+//                MySQLiteHelper.PICTURE_COLUMN_JID + " = ?", new String[]{jId});
+
+        int randomNum = 0;
+        Picture randomPic = null;
+        int count = c.getCount();
+
+        if (count > 0) {
+            Random r = new Random();
+            randomNum = r.nextInt((int) count);
+        }
+
+        if (c.moveToFirst() && c.moveToPosition(randomNum)) {
+            randomPic = getPictures(c).get(0);
+        }
+
+        return randomPic;
     }
 
 }
