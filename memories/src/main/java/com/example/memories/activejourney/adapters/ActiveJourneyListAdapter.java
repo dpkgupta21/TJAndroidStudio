@@ -7,16 +7,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
+import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Journey;
+import com.example.memories.models.Picture;
 import com.example.memories.services.CustomResultReceiver;
 import com.example.memories.services.PullBuddiesService;
+import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +70,17 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         Log.d(TAG, "info are : " + name);
 
         holder.journeyName.setText(name);
+
+        Picture coverPic = PictureDataSource.getRandomPicOfJourney(mDataset.get(position).getIdOnServer(), mContext);
+
+        if (coverPic != null) {
+            try {
+                holder.journeyCoverPic.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(mContext, coverPic.getPicThumbnailPath(), 512, 384));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -73,7 +89,9 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         return mDataset.size();
     }
 
-
+    public void updateList(List<Journey> updatedList){
+        mDataset = updatedList;
+    }
 
 
     // Provide a reference to the views for each data item
@@ -82,11 +100,13 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         public TextView journeyName;
+        public ImageView journeyCoverPic;
 
         public ViewHolder(View v) {
             super(v);
             v.setOnClickListener(this);
             journeyName = (TextView) v.findViewById(R.id.active_journey_list_name);
+            journeyCoverPic = (ImageView) v.findViewById(R.id.active_journey_cover_pic);
         }
 
         // In Recycler views OnItemCLick is handled here
@@ -99,18 +119,18 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             // Fetch all those contacts which are not in the contacts list of current user but are on the journey
             if (journey.getBuddies() != null && journey.getBuddies().isEmpty()) {
                 ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
-                if(!buddyList.isEmpty() && buddyList != null ){
+                if (!buddyList.isEmpty() && buddyList != null) {
                     Intent intent = new Intent(mContext, PullBuddiesService.class);
                     intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
                     intent.putExtra("RECEIVER", mReceiver);
                     intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
                     mContext.startService(intent);
-                }else {
+                } else {
                     Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.getApplicationContext().startActivity(intent);
                 }
-            }else {
+            } else {
                 Log.d(TAG, "all required contacts are already present in the database");
                 Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

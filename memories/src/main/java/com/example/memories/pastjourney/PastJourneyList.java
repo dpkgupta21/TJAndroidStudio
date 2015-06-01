@@ -19,7 +19,7 @@ public class PastJourneyList extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.past_journey_list);
 
-        Cursor c = JourneyDataSource.getAllJourneys(this);
+        Cursor c = JourneyDataSource.getAllPastJourneys(this);
 
         ListView pastJourneyListView = (ListView) findViewById(R.id.pastJourneyList);
         pastJourneyListViewAdapter = new PastJourneyListAdapter(getBaseContext(), c);

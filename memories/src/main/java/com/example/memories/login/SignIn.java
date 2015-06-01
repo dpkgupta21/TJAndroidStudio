@@ -55,7 +55,6 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     private boolean memoriesFetched = false;
     private int REQUEST_FETCH_CONTACTS = 1;
     private int REQUEST_FETCH_MEMORIES = 2;
-    private int REQUEST_FETCH_PROFILE = 3;
     private ProgressDialog pDialog;
 
     @Override
@@ -141,7 +140,6 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
                                 mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
                                 mServiceIntent.putExtra("RECEIVER", mReceiver);
                                 startService(mServiceIntent);
-                                
                             }
                         }, new Response.ErrorListener() {
 
@@ -329,5 +327,4 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     }
 
 }
-
 

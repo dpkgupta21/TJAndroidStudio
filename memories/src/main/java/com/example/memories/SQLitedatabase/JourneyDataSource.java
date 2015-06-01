@@ -35,7 +35,7 @@ public class JourneyDataSource {
         values.put(MySQLiteHelper.JOURNEY_COLUMN_TAGLINE, newJourney.getTagLine());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_GROUPTYPE, newJourney.getGroupType());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY, newJourney.getCreatedBy());
-        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, newJourney.getBuddies().isEmpty() ? "" : Joiner.on(",").join(newJourney.getBuddies()));
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, (newJourney.getBuddies() == null) ? "" : Joiner.on(",").join(newJourney.getBuddies()));
         // values.put(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS,
         // newJourney.getLaps().toString());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_STATUS, newJourney.getJourneyStatus());
@@ -56,7 +56,7 @@ public class JourneyDataSource {
         Log.e(TAG, selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);
 
-        List<Journey> journeyList = getJourneys(mContext, c);
+        List<Journey> journeyList = parseJourneysAsList(mContext, c);
 
         c.close();
         db.close();
@@ -70,29 +70,34 @@ public class JourneyDataSource {
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
                 + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = '" + journeyId + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        List<Journey> journeyList = getJourneys(context, cursor);
+        List<Journey> journeyList = parseJourneysAsList(context, cursor);
         cursor.close();
         db.close();
         Log.d(TAG, "journey fetched successfully");
         return journeyList.get(0);
     }
 
-    public static List<Journey> getPendingJourneys(Context context) {
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
-                + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_PENDING + "'";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        List<Journey> journeyList = getJourneys(context, cursor);
+    public static String[] getBuddyIdsFromJourney(Context context, String journeyId) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        String dbQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + " FROM "
+                + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
+                + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId;
+        Cursor cursor = db.rawQuery(dbQuery, null);
+        String[] buddyIds = null;
+        if (cursor.moveToFirst()) {
+            String buddies = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
+            Log.d(TAG, "Buddies" + buddies);
+            buddyIds = (buddies.isEmpty() ? null : buddies.split(","));
+        }
+        for (String s : buddyIds) {
+            Log.d(TAG, "buddies in array are" + s + ",,,");
+        }
         cursor.close();
         db.close();
-        return journeyList;
+        return buddyIds;
     }
 
     public static List<Journey> getAllActiveJourneys(Context context) {
-
-        Cursor c = getAllJourneys(context);
-        List<Journey> list = getJourneys(context, c);
-        Log.d(TAG, "list is " + list.toString());
 
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_ACTIVE + "'";
         Log.d(TAG, "fetching journeys " + selectQuery);
@@ -100,15 +105,32 @@ public class JourneyDataSource {
         Log.e(TAG, selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        List<Journey> journeyList = getJourneys(context, cursor);
+        List<Journey> journeyList = parseJourneysAsList(context, cursor);
         Log.d(TAG, "total active journeys fetched are " + journeyList.size());
         cursor.close();
         db.close();
         return journeyList;
     }
 
+    public static Cursor getAllPastJourneys(Context context) {
 
-    private static List<Journey> getJourneys(Context context, Cursor cursor) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY;
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Log.e(TAG, selectQuery);
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null) {
+            c.moveToFirst();
+        } else {
+            Log.d(TAG, "no past journeys!!!");
+        }
+//        c.close();
+        db.close();
+        return c;
+    }
+
+
+    private static List<Journey> parseJourneysAsList(Context context, Cursor cursor) {
         List<Journey> journeyList = new ArrayList<Journey>();
         if (cursor.moveToFirst()) {
             Journey journey;
@@ -134,43 +156,5 @@ public class JourneyDataSource {
         return journeyList;
     }
 
-    /**
-     * getting all journeys
-     */
-    public static Cursor getAllJourneys(Context context) {
 
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY;
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        Log.e(TAG, selectQuery);
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        if (c != null) {
-            c.moveToFirst();
-        } else {
-            Log.d(TAG, "no past journeys!!!");
-        }
-//        c.close();
-        db.close();
-        return c;
-    }
-
-    public static String[] getBuddyIdsFromJourney(Context context, String journeyId) {
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        String dbQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + " FROM "
-                + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
-                + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId;
-        Cursor cursor = db.rawQuery(dbQuery, null);
-        String[] buddyIds = null;
-        if (cursor.moveToFirst()) {
-            String buddies = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
-            buddyIds = (buddies == null ? null : buddies.split(","));
-            Log.d(TAG, "buddies List " + buddies);
-        }
-        for(String s : buddyIds){
-            Log.d(TAG, "buddies in array are" + s + ",,,");
-        }
-        cursor.close();
-        db.close();
-        return buddyIds;
-    }
 }

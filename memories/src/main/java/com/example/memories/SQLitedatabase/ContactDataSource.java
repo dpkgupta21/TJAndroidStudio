@@ -103,11 +103,10 @@ public class ContactDataSource {
         return contactsList;
     }
 
-    public static List<Contact> getContactsFromCurrentJourney(Context context) {
+    public static List<Contact> getContactsFromJourney(Context context, String jId) {
         Log.d(TAG, "fetch contacts from current journey");
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        String[] buddyIds = JourneyDataSource.getBuddyIdsFromJourney(context,
-                TJPreferences.getActiveJourneyId(context));
+        String[] buddyIds = JourneyDataSource.getBuddyIdsFromJourney(context, jId);
         Log.d(TAG, "active journey id = " + TJPreferences.getActiveJourneyId(context) + "no of nuddies = " + buddyIds.length);
         for (int i = 0; i < buddyIds.length; i++) {
             buddyIds[i] = buddyIds[i].trim();
@@ -117,7 +116,7 @@ public class ContactDataSource {
                 + makePlaceholders(buddyIds.length) + ")";
         Cursor cursor = db.rawQuery(query, buddyIds);
         List<Contact> contactsList = getContactsList(cursor, context);
-        Log.d(TAG, "buddies from current journey are " + contactsList.size());
+        Log.d(TAG, "buddies from current journey are " + contactsList);
 
         cursor.close();
         db.close();

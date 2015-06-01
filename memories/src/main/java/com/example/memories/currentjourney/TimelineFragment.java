@@ -64,14 +64,7 @@ public class TimelineFragment extends Fragment {
         Log.d(TAG, "user_id = " + TJPreferences.getUserId(getActivity()));
 
         mListView = (ListView) rootView.findViewById(R.id.timelineList);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.timeline_swipe_refresh_layout);
-
-/*        memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
-        mAdapter = new TimeLineAdapter(getActivity(), memoriesList);*/
-
-        Log.d(TAG, "Time line activity started" + TJPreferences.getActiveJourneyId(getActivity()));
-
-//        mListView.setAdapter(mAdapter);
+        mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
         mListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -81,6 +74,9 @@ public class TimelineFragment extends Fragment {
             }
         });
 
+
+        // Swipe to refersh tmline
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.timeline_swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -88,8 +84,8 @@ public class TimelineFragment extends Fragment {
                 // TODO Auto-generated method stub
                 memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(),
                         TJPreferences.getActiveJourneyId(getActivity()));
-                mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
-                mListView.setAdapter(mAdapter);
+                mAdapter.updateList(memoriesList);
+                mAdapter.notifyDataSetChanged();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -135,8 +131,8 @@ public class TimelineFragment extends Fragment {
 
     // Method overridden so that if a new activity is called and Fab menu is opened, it will be closed
     @Override
-    public void onPause(){
-        if(mFab.isExpanded()){
+    public void onPause() {
+        if (mFab.isExpanded()) {
             mFab.collapse();
         }
         super.onPause();
@@ -144,13 +140,13 @@ public class TimelineFragment extends Fragment {
 
     // Onresume of the fragment fetch all the memories from the database and
     // if adapter is null, create new else notifyDataSetChanged()
-    public void onResume (){
+    public void onResume() {
         Log.d(TAG, "on resume() method called from timeline");
         memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
-        if(mAdapter == null) {
+        if (mAdapter == null) {
             mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
             mListView.setAdapter(mAdapter);
-        }else {
+        } else {
             mAdapter.setMemoriesList(memoriesList);
             mAdapter.notifyDataSetChanged();
         }

@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.currentjourney.adapters.JourneyInfoBuddiesListAdapter;
+import com.example.memories.utility.TJPreferences;
 
 /**
  * Created by abhi on 29/05/15.
@@ -41,9 +42,9 @@ public class JourneyInfo extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        Log.d(TAG, "buddies lisr === " + ContactDataSource.getContactsFromCurrentJourney(this));
+        Log.d(TAG, "buddies lisr === " + ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this)));
         // specify an adapter (see also next example)
-        mAdapter = new JourneyInfoBuddiesListAdapter(ContactDataSource.getContactsFromCurrentJourney(this));
+        mAdapter = new JourneyInfoBuddiesListAdapter(ContactDataSource.getContactsFromJourney(this,TJPreferences.getActiveJourneyId(this)));
         mRecyclerView.setAdapter(mAdapter);
 
     }

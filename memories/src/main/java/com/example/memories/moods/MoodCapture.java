@@ -50,14 +50,18 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         selectMoodImgBtn = (ImageButton) findViewById(R.id.mood_select_mood_imgbtn);
         moodText = (TextView) findViewById(R.id.mood_text);
         moodReasonEditTxt = (EditText) findViewById(R.id.mood_because_of_txt);
-        mContactsList = ContactDataSource.getContactsFromCurrentJourney(this);
-        Log.d(TAG, "selected friends list is" + mContactsList.get(0) + mContactsList.get(1));
+        mContactsList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
 
         /*
         String[] friendIds = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         Log.d(TAG, "all buddys in the journey are" + friendIds);
+<<<<<<< HEAD
         if (friendIds != null) {
             mContactsList = Arrays.asList(friendIds);
+=======
+            if (friendIds != null) {
+            mSelectedFriends = Arrays.asList(friendIds);
+>>>>>>> origin/abhi
             Log.d(TAG, "mselectedFriends are" + mSelectedFriends.isEmpty());
             setSelectedFriends();
         }*/

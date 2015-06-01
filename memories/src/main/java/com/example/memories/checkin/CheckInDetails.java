@@ -49,6 +49,45 @@ public class CheckInDetails extends AppCompatActivity {
     private double longi;
     private List<String> mSelectedFriends;
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.checkin_details);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Checkin");
+        setSupportActionBar(toolbar);
+
+        // get the name of the place
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            placeName = extras.getString("placeName");
+            lat = extras.getDouble("latitude");
+            longi = extras.getDouble("longitude");
+            Log.d(TAG, "latitude, longitude " + lat + " " + longi);
+        }
+        //Get all the friends
+        String buddyIds[] = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        if (buddyIds != null) {
+            mSelectedFriends = Arrays.asList(buddyIds);
+        }
+
+        // get the friends list
+/*        Integer buddyCount = getResources().getStringArray(R.array.journey_buddies_list).length - 1;
+        String buddiesList = getResources().getStringArray(R.array.journey_buddies_list)[0]
+                + " and " + buddyCount.toString() + " others";*/
+
+        // update the textview in the layout
+        checkinDetailsCaption = (EditText) findViewById(R.id.checkin_details_caption);
+        checkinDetailsPlace = (TextView) findViewById(R.id.checkin_details_location);
+        checkinDetailsBuddies = (TextView) findViewById(R.id.checkin_friends);
+
+        checkinDetailsPlace.append(placeName);
+        setSelectedFriends();
+
+    }
+
     /**
      * Create a file Uri for saving an image or video
      */
@@ -92,43 +131,6 @@ public class CheckInDetails extends AppCompatActivity {
         return mediaFile;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.checkin_details);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Checkin");
-        setSupportActionBar(toolbar);
-
-        // get the name of the place
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            placeName = extras.getString("placeName");
-            lat = extras.getDouble("latitude");
-            longi = extras.getDouble("longitude");
-            Log.d(TAG, "latitude, longitude " + lat + " " + longi);
-        }
-        //Get all the friends
-        String buddyIds[] = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
-        if (buddyIds != null) {
-            mSelectedFriends = Arrays.asList(buddyIds);
-        }
-
-        // get the friends list
-/*        Integer buddyCount = getResources().getStringArray(R.array.journey_buddies_list).length - 1;
-        String buddiesList = getResources().getStringArray(R.array.journey_buddies_list)[0]
-                + " and " + buddyCount.toString() + " others";*/
-
-        // update the textview in the layout
-        checkinDetailsCaption = (EditText) findViewById(R.id.checkin_details_caption);
-        checkinDetailsPlace = (TextView) findViewById(R.id.checkin_details_location);
-        checkinDetailsBuddies = (TextView) findViewById(R.id.checkin_friends);
-
-        checkinDetailsPlace.append(placeName);
-        setSelectedFriends();
-
-    }
 
     private void setSelectedFriends() {
         if (mSelectedFriends != null) {
