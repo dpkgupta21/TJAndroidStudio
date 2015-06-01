@@ -30,7 +30,7 @@ public class MoodDataSource {
         values.put(MySQLiteHelper.MOOD_COLUMN_CREATED_BY, newMood.getCreatedBy());
         values.put(MySQLiteHelper.MOOD_COLUMN_CREATED_AT, newMood.getCreatedAt());
         values.put(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT, newMood.getUpdatedAt());
-        values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, newMood.getLikedBy());
+        values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, newMood.getLikedBy() == null ? null : Joiner.on(",").join(newMood.getLikedBy()));
 
         long mood_id = db.insert(MySQLiteHelper.TABLE_MOOD, null, values);
         Log.d(TAG, "New mood Inserted!");
@@ -61,7 +61,8 @@ public class MoodDataSource {
             mood.setCreatedBy(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_CREATED_BY)));
             mood.setCreatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_CREATED_AT)));
             mood.setUpdatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT)));
-            mood.setLikedBy(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_LIKED_BY)));
+            String liked = c.getString(c.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            mood.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             mood.setBuddyIds(Arrays.asList((c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID))).split(",")));
             mood.setMood(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MOOD)));
             mood.setReason(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_REASON)));
@@ -82,10 +83,10 @@ public class MoodDataSource {
         db.close();
     }
 
-    public static void updateFavourites(Context context, String memId, String likedBy) {
+    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, likedBy);
+        values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_MOOD, values, MySQLiteHelper.MOOD_COLUMN_ID + " = " + memId, null);
         db.close();
     }

@@ -39,7 +39,7 @@ public class CheckinDataSource {
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY, newCheckIn.getCreatedBy());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CREATED_AT, newCheckIn.getCreatedAt());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT, newCheckIn.getUpdatedAt());
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_LIKED_BY, newCheckIn.getLikedBy());
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_LIKED_BY, newCheckIn.getLikedBy() == null ? null : Joiner.on(",").join(newCheckIn.getLikedBy()));
 
         // insert row
         Long checkin_id = db.insert(MySQLiteHelper.TABLE_CHECKIN, null, values);
@@ -105,10 +105,10 @@ public class CheckinDataSource {
 
     }
 
-    public static void updateFavourites(Context context, String memId, String likedBy) {
+    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_LIKED_BY, likedBy);
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_CHECKIN, values, MySQLiteHelper.CHECKIN_COLUMN_ID + " = "
                 + memId, null);
         db.close();
@@ -158,8 +158,8 @@ public class CheckinDataSource {
                     .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_CREATED_AT)));
             checkin.setUpdatedAt(c.getLong(c
                     .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT)));
-            checkin.setLikedBy(c.getString(c.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LIKED_BY)));
-
+            String liked = c.getString(c.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            checkin.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             checkInsList.add(checkin);
             c.moveToNext();
         }

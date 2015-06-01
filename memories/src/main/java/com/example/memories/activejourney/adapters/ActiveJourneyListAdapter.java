@@ -97,21 +97,26 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             TJPreferences.setActiveJourneyId(mContext, journey.getIdOnServer());
 
             // Fetch all those contacts which are not in the contacts list of current user but are on the journey
-            ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
-            Log.d(TAG, "Total contacts " + buddyList.toString());
-            if (buddyList.size() > 0) {
-                Log.d(TAG, "some contacts not present fetching them");
-                Intent intent = new Intent(mContext, PullBuddiesService.class);
-                intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
-                intent.putExtra("RECEIVER", mReceiver);
-                intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
-                mContext.startService(intent);
-            }else{
+            if (journey.getBuddies() != null && journey.getBuddies().isEmpty()) {
+                ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
+                if(!buddyList.isEmpty() && buddyList != null ){
+                    Intent intent = new Intent(mContext, PullBuddiesService.class);
+                    intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
+                    intent.putExtra("RECEIVER", mReceiver);
+                    intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
+                    mContext.startService(intent);
+                }else {
+                    Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.getApplicationContext().startActivity(intent);
+                }
+            }else {
                 Log.d(TAG, "all required contacts are already present in the database");
                 Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.getApplicationContext().startActivity(intent);
             }
+
         }
     }
 

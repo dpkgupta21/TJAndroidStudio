@@ -8,8 +8,10 @@ import android.util.Log;
 
 import com.example.memories.models.Memories;
 import com.example.memories.models.Note;
+import com.google.common.base.Joiner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NoteDataSource {
@@ -27,7 +29,7 @@ public class NoteDataSource {
         values.put(MySQLiteHelper.NOTES_COLUMN_CREATED_BY, newNote.getCreatedBy());
         values.put(MySQLiteHelper.NOTES_COLUMN_CREATED_AT, newNote.getCreatedAt());
         values.put(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT, newNote.getUpdatedAt());
-        values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, newNote.getLikedBy());
+        values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, newNote.getLikedBy() == null ? null : Joiner.on(",").join(newNote.getLikedBy()));
 
         long note_id = db.insert(MySQLiteHelper.TABLE_NOTES, null, values);
         Log.d(TAG, "New note Inserted!");
@@ -54,8 +56,8 @@ public class NoteDataSource {
                 .getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
         note.setUpdatedAt(cursor.getLong(cursor
                 .getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
-        note.setLikedBy(cursor.getString(cursor
-                .getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LIKED_BY)));
+        String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+        note.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
         note.setContent(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CONTENT)));
         note.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_JID)));
         cursor.close();
@@ -95,7 +97,8 @@ public class NoteDataSource {
             note.setCreatedBy(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_BY)));
             note.setCreatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
             note.setUpdatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
-            note.setLikedBy(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LIKED_BY)));
+            String liked = c.getString(c.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            note.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
 
             notesList.add(note);
             c.moveToNext();
@@ -106,10 +109,10 @@ public class NoteDataSource {
         return notesList;
     }
 
-    public static void updateFavourites(Context context, String memId, String likedBy) {
+    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, likedBy);
+        values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_NOTES, values, MySQLiteHelper.NOTES_COLUMN_ID + " = " + memId, null);
         db.close();
     }

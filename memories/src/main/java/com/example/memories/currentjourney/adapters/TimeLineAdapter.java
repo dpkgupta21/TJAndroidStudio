@@ -31,10 +31,8 @@ import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.LoadBitmapFromPath;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.video.VideoDetail;
-import com.google.common.base.Joiner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TimeLineAdapter extends BaseAdapter {
@@ -54,6 +52,10 @@ public class TimeLineAdapter extends BaseAdapter {
         this.memoriesList = memoriesList;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+    }
+
+    public void setMemoriesList(List<Memories> memoriesList){
+        this.memoriesList = memoriesList;
     }
 
     @Override
@@ -155,20 +157,18 @@ public class TimeLineAdapter extends BaseAdapter {
         holder.timelineItemFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                List<String> list = null;
+                Log.d(TAG, "list is " + list);
                 Memories mem = memoriesList.get(position);
-                Log.d(TAG, "fav button clicked position " + position + mem.getLikedBy());
+                Log.d(TAG, "Memory liked by" + mem.getLikedBy());
                 // check whether the memory has been liked by the user
-                List<String> likedBy = new ArrayList<String>();
-                if (mem.getLikedBy() == null) {
-                    likedBy = new ArrayList<String>();
-                } else {
-                    String array[] = mem.getLikedBy().split(",");
-                    for (String s : array) {
-                        likedBy.add(s);
-                    }
+
+                List<String> likedBy = mem.getLikedBy();
+                if(likedBy == null){
+                    likedBy = new ArrayList();
                 }
-                Log.d(TAG,
-                        "fav button clicked position " + likedBy + TJPreferences.getUserId(context));
+                Log.d(TAG,"fav button clicked position " + likedBy + TJPreferences.getUserId(context));
                 if (likedBy.contains(TJPreferences.getUserId(context))) {
                     likedBy.remove(TJPreferences.getUserId(context));
                     Log.d(TAG, "heart empty");
@@ -181,15 +181,11 @@ public class TimeLineAdapter extends BaseAdapter {
 
                 // update the value in the list and database
                 holder.timelineNoLikesTxt.setText(String.valueOf(likedBy.size()));
-                String finalValue;
                 if (likedBy.size() == 0) {
-                    finalValue = null;
-                } else {
-                    finalValue = Joiner.on(",").join(likedBy);
+                    likedBy = null;
                 }
-                mem.setLikedBy(finalValue);
-                Log.d(TAG, "saving to database" + Joiner.on(",").join(likedBy) + likedBy.size());
-                mem.updateLikedBy(context, mem.getId(), finalValue);
+                mem.setLikedBy(likedBy);
+                mem.updateLikedBy(context, mem.getId(), likedBy);
             }
         });
 
@@ -210,12 +206,14 @@ public class TimeLineAdapter extends BaseAdapter {
                         .getPicLocalUrl()));
             }
         }
-        if (memory.getLikedBy() != null) {
-            List<String> likedBy = Arrays.asList((memory.getLikedBy()).split(","));
-            holder.timelineNoLikesTxt.setText(String.valueOf(likedBy.size()));
-            if (likedBy.contains(TJPreferences.getUserId(context))) {
+        if (memory.getLikedBy() == null){
+            holder.timelineNoLikesTxt.setText("0");
+            holder.timelineItemFavBtn.setImageResource(R.drawable.heart_empty);
+        }else{
+            holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikedBy().size()));
+            if (memory.getLikedBy().contains(TJPreferences.getUserId(context))){
                 holder.timelineItemFavBtn.setImageResource(R.drawable.heart_full);
-            } else {
+            }else {
                 holder.timelineItemFavBtn.setImageResource(R.drawable.heart_empty);
             }
         }
@@ -330,19 +328,21 @@ public class TimeLineAdapter extends BaseAdapter {
                     case HelpMe.TYPE_PICTURE:
                         intent = new Intent(context, PictureDetail.class);
                         intent.putExtra("PICTURE_ID", memory.getId());
+                        context.startActivity(intent);
                         break;
 
                     case HelpMe.TYPE_VIDEO:
                         intent = new Intent(context, VideoDetail.class);
                         intent.putExtra("VIDEO_ID", memory.getId());
+                        context.startActivity(intent);
                         break;
                     case HelpMe.TYPE_AUDIO:
                         intent = new Intent(context, AudioDetail.class);
                         intent.putExtra("AUDIO_ID", memory.getId());
+                        context.startActivity(intent);
                         break;
                 }
                 //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                context.startActivity(intent);
             }
         });
 

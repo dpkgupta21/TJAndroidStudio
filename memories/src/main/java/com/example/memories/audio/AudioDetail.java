@@ -1,6 +1,5 @@
 package com.example.memories.audio;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,25 +17,22 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
-import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Audio;
 import com.example.memories.models.Contact;
 import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
-import com.google.common.base.Joiner;
 
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class AudioDetail extends AppCompatActivity {
 
     private static final String TAG = "<AudioDetail>";
-    List<String> likedBy = new ArrayList<String>();
+    List<String> likedBy;
     private TextView dateBig;
     private TextView date;
     private TextView time;
@@ -84,15 +80,16 @@ public class AudioDetail extends AppCompatActivity {
             mAudio = AudioDataSource.getAudioById(this, extras.getString("AUDIO_ID"));
             audioPath = mAudio.getDataLocalURL(); //path to image
             //setup the state of favourite button
-            if (mAudio.getLikedBy() != null) {
-                List<String> likedBy = Arrays.asList((mAudio.getLikedBy()).split(","));
-                //mFavBtn.setText(String.valueOf(likedBy.size()));
-                if (likedBy.contains(TJPreferences.getUserId(AudioDetail.this))) {
+            if (mAudio.getLikedBy() == null){
+                noLikesTxt.setText("0");
+                mFavBtn.setImageResource(R.drawable.heart_empty);
+            }else{
+                noLikesTxt.setText(String.valueOf(mAudio.getLikedBy().size()));
+                if (mAudio.getLikedBy().contains(TJPreferences.getUserId(AudioDetail.this))){
                     mFavBtn.setImageResource(R.drawable.heart_full);
-                } else {
+                }else {
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 }
-                noLikesTxt.setText(String.valueOf(likedBy.size()));
             }
         }
         //If the activity is started for a newly clicked picture
@@ -136,32 +133,30 @@ public class AudioDetail extends AppCompatActivity {
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (likedBy == null) {
+                List<String> likedBy = mAudio.getLikedBy();
+                if(likedBy == null){
                     likedBy = new ArrayList<String>();
-                    if (mAudio.getLikedBy() != null) {
-                        String array[] = mAudio.getLikedBy().split(",");
-                        for (String s : array) {
-                            likedBy.add(s);
-                        }
-                    }
                 }
+                Log.d(TAG,
+                        "fav button clicked position " + likedBy + TJPreferences.getUserId(AudioDetail.this));
                 if (likedBy.contains(TJPreferences.getUserId(AudioDetail.this))) {
                     likedBy.remove(TJPreferences.getUserId(AudioDetail.this));
+                    Log.d(TAG, "heart empty");
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 } else {
                     likedBy.add(TJPreferences.getUserId(AudioDetail.this));
+                    Log.d(TAG, "heart full");
                     mFavBtn.setImageResource(R.drawable.heart_full);
                 }
+
+                // update the value in the list and database
                 noLikesTxt.setText(String.valueOf(likedBy.size()));
-                String finalValue;
                 if (likedBy.size() == 0) {
-                    finalValue = null;
-                } else {
-                    finalValue = Joiner.on(",").join(likedBy);
+                    likedBy = null;
                 }
-                mAudio.setLikedBy(finalValue);
+                mAudio.setLikedBy(likedBy);
                 if (!isNewAudio) {
-                    mAudio.updateLikedBy(AudioDetail.this, mAudio.getId(), finalValue);
+                    mAudio.updateLikedBy(AudioDetail.this, mAudio.getId(), likedBy);
                 }
             }
         });
@@ -171,7 +166,7 @@ public class AudioDetail extends AppCompatActivity {
         Log.d(TAG, "creating a new audio in local DB");
 
         if (likedBy != null) {
-            mAudio.setLikedBy(Joiner.on(",").join(likedBy));
+            mAudio.setLikedBy(likedBy);
         }
 //        mAudio.setCaption(caption.getText().toString());
         AudioDataSource.createAudio(mAudio, this);
@@ -194,9 +189,10 @@ public class AudioDetail extends AppCompatActivity {
                 if (isNewAudio) {
                     saveAndUploadPic();
                 }
-                Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
+                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                startActivity(i);*/
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -8,8 +8,10 @@ import android.util.Log;
 
 import com.example.memories.models.Memories;
 import com.example.memories.models.Video;
+import com.google.common.base.Joiner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class VideoDataSource {
@@ -30,7 +32,7 @@ public class VideoDataSource {
         values.put(MySQLiteHelper.VIDEO_COLUMN_DATALOCALURL, newVideo.getDataLocalURL());
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_BY, newVideo.getCreatedBy());
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_AT, newVideo.getCreatedAt());
-        values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, newVideo.getLikedBy());
+        values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, newVideo.getLikedBy() == null ? null : Joiner.on(",").join(newVideo.getLikedBy()));
         values.put(MySQLiteHelper.VIDEO_CLOUMN_LOCALTHUMBNAILPATH, newVideo.getLocalThumbPath());
 
         long video_id = db.insert(MySQLiteHelper.TABLE_VIDEO, null, values);
@@ -103,10 +105,10 @@ public class VideoDataSource {
         db.close();
     }
 
-    public static void updateFavourites(Context context, String memId, String likedBy) {
+    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, likedBy);
+        values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_VIDEO, values, MySQLiteHelper.VIDEO_COLUMN_ID + " = "
                 + memId, null);
 
@@ -151,8 +153,8 @@ public class VideoDataSource {
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_CREATED_AT)));
             video.setUpdatedAt(cursor.getLong(cursor
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_UPDATED_AT)));
-            video.setLikedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY)));
+            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            video.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_CLOUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();
@@ -188,8 +190,8 @@ public class VideoDataSource {
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_CREATED_AT)));
             video.setUpdatedAt(cursor.getLong(cursor
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_UPDATED_AT)));
-            video.setLikedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY)));
+            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            video.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_CLOUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();

@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.memories.SQLitedatabase.VideoDataSource;
 
+import java.util.List;
+
 public class Video extends Memories {
     private String caption;
     private String extension;
@@ -19,7 +21,7 @@ public class Video extends Memories {
 
     public Video(String idOnServer, String jId, String memType, String caption, String ext,
                  long size, String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                 long updatedAt, String likedBy, String localThumbPath) {
+                 long updatedAt, List<String> likedBy, String localThumbPath) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -83,7 +85,7 @@ public class Video extends Memories {
         this.dataLocalURL = dataLocalURL;
     }
 
-    public void updateLikedBy(Context context, String memId, String likedBy) {
+    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         VideoDataSource.updateFavourites(context, memId, likedBy);
     }
 

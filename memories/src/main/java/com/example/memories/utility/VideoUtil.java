@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
@@ -77,6 +78,7 @@ public class VideoUtil {
                 public void onErrorResponse(VolleyError error) {
                 }
             });
+            request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             AppController.getInstance().addToRequestQueue(request);
         }
     }
@@ -188,7 +190,7 @@ public class VideoUtil {
         @Override
         protected void onPostExecute(JSONObject object) {
             try {
-                Log.d(TAG, "onPostExecute()");
+                Log.d(TAG, "onPostExecute()" + object);
                 String serverId = object.getJSONObject("video").getString("id");
                 String serverUrl = object.getJSONObject("video")
                         .getJSONObject("video_file").getString("url");
@@ -197,6 +199,8 @@ public class VideoUtil {
                 Log.d(TAG, "video successfully uploaded and serverid successfully saved in database");
             } catch (JSONException ex) {
                 Log.d(TAG, ex.getMessage());
+            }catch (NullPointerException ex){
+                Log.d(TAG, "null pointer exception");
             }
         }
     }

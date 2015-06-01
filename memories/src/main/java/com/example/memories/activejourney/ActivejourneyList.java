@@ -19,6 +19,10 @@ import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.customviews.MyFABView;
 import com.example.memories.newjourney.LapsList;
 import com.example.memories.services.CustomResultReceiver;
+import com.google.common.base.Joiner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ankit on 27/5/15.
@@ -38,6 +42,10 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_journey_list);
+
+
+        List<String> list = new ArrayList<String>();
+        String join = Joiner.on(",").join(list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Active Journeys");

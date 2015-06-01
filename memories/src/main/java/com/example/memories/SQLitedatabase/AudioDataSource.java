@@ -8,8 +8,10 @@ import android.util.Log;
 
 import com.example.memories.models.Audio;
 import com.example.memories.models.Memories;
+import com.google.common.base.Joiner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AudioDataSource {
@@ -30,7 +32,7 @@ public class AudioDataSource {
         values.put(MySQLiteHelper.VOICE_COLUMN_DATALOCALURL, newVoice.getDataLocalURL());
         values.put(MySQLiteHelper.VOICE_COLUMN_CREATEDBY, newVoice.getCreatedBy());
         values.put(MySQLiteHelper.VOICE_COLUMN_CREATEDAT, newVoice.getCreatedAt());
-        values.put(MySQLiteHelper.VOICE_COLUMN_LIKEDBY, newVoice.getLikedBy());
+        values.put(MySQLiteHelper.VOICE_COLUMN_LIKEDBY, newVoice.getLikedBy() == null ? null : Joiner.on(",").join(newVoice.getLikedBy()));
         long voice_id = db.insert(MySQLiteHelper.TABLE_AUDIO, null, values);
         Log.d(TAG, "New audio Inserted!");
 
@@ -91,10 +93,10 @@ public class AudioDataSource {
         db.close();
     }
 
-    public static void updateFavourites(Context context, String memId, String likedBy) {
+    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.VOICE_COLUMN_LIKEDBY, likedBy);
+        values.put(MySQLiteHelper.VOICE_COLUMN_LIKEDBY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_AUDIO, values, MySQLiteHelper.VOICE_COLUMN_ID + " = " + memId, null);
         db.close();
     }
@@ -124,8 +126,8 @@ public class AudioDataSource {
                     .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
             audio.setUpdatedAt(cursor.getLong(cursor
                     .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
-            audio.setLikedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY)));
+            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            audio.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             audioList.add(audio);
             cursor.moveToNext();
         }
@@ -157,8 +159,8 @@ public class AudioDataSource {
                     .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
             audio.setUpdatedAt(cursor.getLong(cursor
                     .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
-            audio.setLikedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY)));
+            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            audio.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             audioList.add(audio);
             cursor.moveToNext();
         }

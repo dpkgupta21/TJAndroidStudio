@@ -21,7 +21,6 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.CheckinDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
-import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.CheckIn;
 import com.example.memories.models.Contact;
 import com.example.memories.utility.CheckinUtil;
@@ -156,7 +155,7 @@ public class CheckInDetails extends AppCompatActivity {
 
         CheckIn newCheckIn = new CheckIn(null, j_id, HelpMe.CHECKIN_TYPE, checkinDetailsCaption
                 .getText().toString().trim(), lat, longi, placeName, null, mSelectedFriends, user_id,
-                HelpMe.getCurrentTime(), HelpMe.getCurrentTime());
+                HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null);
 
         CheckinDataSource.createCheckIn(newCheckIn, this);
         CheckinUtil.uploadCheckin(newCheckIn, this);
@@ -182,9 +181,10 @@ public class CheckInDetails extends AppCompatActivity {
             case R.id.action_done:
                 Log.d(TAG, "done clicked!");
                 createNewCheckinIntoDB();
-                Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
+                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                startActivity(i);*/
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -217,11 +217,9 @@ public class CheckInDetails extends AppCompatActivity {
             } else {
                 // Image capture failed, advise user
             }
-        } else if (requestCode == REQUEST_CODE_SELECT_FRIENDS) {
-            if (resultCode == RESULT_OK) {
-                mSelectedFriends = data.getStringArrayListExtra("SELECTED_FRIENDS");
-                setSelectedFriends();
-            }
+        } else if (requestCode == REQUEST_CODE_SELECT_FRIENDS && requestCode == RESULT_OK) {
+            mSelectedFriends = data.getStringArrayListExtra("SELECTED_FRIENDS");
+            setSelectedFriends();
         }
     }
 

@@ -17,7 +17,7 @@ public class Mood extends Memories {
     }
 
     public Mood(String idOnServer, String jId, String memType, List<String> buddyIds, String mood,
-                String reason, String createdBy, long createdAt, long updatedAt, String likedBy) {
+                String reason, String createdBy, long createdAt, long updatedAt, List<String> likedBy) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -55,7 +55,7 @@ public class Mood extends Memories {
     }
 
 
-    public void updateLikedBy(Context context, String memId, String likedBy) {
+    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         MoodDataSource.updateFavourites(context, memId, likedBy);
     }
 

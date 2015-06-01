@@ -52,6 +52,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     private EditText txtEmailAddress;
     private EditText txtPassword;
     private int REQUEST_FETCH_MEMORIES = 2;
+    private int REQUEST_FETCH_PROFILE = 3;
     private ProgressDialog pDialog;
     String emailAddress;
     String password;
@@ -128,6 +129,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     public void makeRequestToServer() {
         Log.d(TAG, "makeREqusttoServer method called" + regid);
 
+<<<<<<< HEAD
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=" + regid;
@@ -135,6 +137,39 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
 
         CustomJsonRequest jsonObjReq = new CustomJsonRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
+=======
+        // Add the request to the RequestQueue.
+        // But before that check for Internet connection
+        if (HelpMe.isNetworkAvailable(this)) {
+            // Check if username, password is filled
+            if (emailAddress.length() > 0 && password.length() > 0) {
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(this);
+                String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=" + regid;
+                Log.d(TAG, url);
+
+                pDialog.show();
+
+                CustomJsonRequest jsonObjReq = new CustomJsonRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONObject>() {
+
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    updateUserPref(response);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.d(TAG, response.toString());
+                                Log.d(TAG, "calling pullMemoriesService to fetch all journeys and their memories");
+                                Intent mServiceIntent = new Intent(getBaseContext(), PullMemoriesService.class);
+                                mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
+                                mServiceIntent.putExtra("RECEIVER", mReceiver);
+                                startService(mServiceIntent);
+                                
+                            }
+                        }, new Response.ErrorListener() {
+>>>>>>> origin/ankit
 
                     @Override
                     public void onResponse(JSONObject response) {

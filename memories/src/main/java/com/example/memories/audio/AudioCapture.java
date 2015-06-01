@@ -1,6 +1,5 @@
 package com.example.memories.audio;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
-import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Audio;
 import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
@@ -194,9 +192,10 @@ public class AudioCapture extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_done:
                 saveAndUploadAudio();
-                Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
+                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                startActivity(i);*/
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

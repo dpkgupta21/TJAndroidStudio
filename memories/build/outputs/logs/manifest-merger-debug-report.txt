@@ -1,6 +1,8 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -11,8 +13,6 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
 MERGED from TJAndroidStudio:library:unspecified:7:5
@@ -350,10 +350,10 @@ ADDED from AndroidManifest.xml:159:9
 		ADDED from AndroidManifest.xml:160:13
 receiver#com.example.memories.utility.SMSReceiver
 ADDED from AndroidManifest.xml:164:9
-	android:enabled
-		ADDED from AndroidManifest.xml:166:13
 	android:exported
 		ADDED from AndroidManifest.xml:167:13
+	android:enabled
+		ADDED from AndroidManifest.xml:166:13
 	android:name
 		ADDED from AndroidManifest.xml:165:13
 intent-filter#android.provider.Telephony.SMS_RECEIVED
@@ -366,10 +366,10 @@ ADDED from AndroidManifest.xml:169:17
 		ADDED from AndroidManifest.xml:169:25
 meta-data#com.google.android.gms.version
 ADDED from AndroidManifest.xml:173:9
-	android:value
-		ADDED from AndroidManifest.xml:175:13
 	android:name
 		ADDED from AndroidManifest.xml:174:13
+	android:value
+		ADDED from AndroidManifest.xml:175:13
 receiver#com.example.memories.gcm.GcmBroadcastReceiver
 ADDED from AndroidManifest.xml:184:9
 	android:permission

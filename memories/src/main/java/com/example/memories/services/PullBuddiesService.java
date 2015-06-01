@@ -24,9 +24,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ankit on 20/5/15.
@@ -56,7 +54,6 @@ public class PullBuddiesService extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onstart command");
         super.onStartCommand(intent, flags, startId);
-        Log.d(TAG, "onstart command 2");
         mReceiver = intent.getParcelableExtra("RECEIVER");
         REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
         buddyIds = intent.getStringArrayListExtra("BUDDY_IDS");
@@ -70,8 +67,6 @@ public class PullBuddiesService extends IntentService {
         String requestUrl;
         CustomJsonRequest jsonRequest;
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("api_key", TJPreferences.getApiKey(this));
         for (String s : buddyIds) {
             Log.d(TAG, "fetching profiles for buddies ->" + s + ",");
             requestUrl = Constants.URL_USER_SHOW_DETAILS + "/" + s + "?api_key=" + TJPreferences.getApiKey(this);

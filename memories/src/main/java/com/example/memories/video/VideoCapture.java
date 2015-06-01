@@ -44,6 +44,7 @@ public class VideoCapture extends AppCompatActivity {
             Intent i = new Intent(this, VideoDetail.class);
             i.putExtra("VIDEO_PATH", getRealPathFromURI(videoUri));
             startActivity(i);
+            finish();
         }
     }
 

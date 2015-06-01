@@ -8,8 +8,10 @@ import android.util.Log;
 
 import com.example.memories.models.Memories;
 import com.example.memories.models.Picture;
+import com.google.common.base.Joiner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PictureDataSource {
@@ -35,7 +37,9 @@ public class PictureDataSource {
         values.put(MySQLiteHelper.PICTURE_COLUMN_CREATEDBY, newPic.getCreatedBy());
         values.put(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT, newPic.getCreatedAt());
         values.put(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT, newPic.getCreatedAt());
-        values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, newPic.getLikedBy());
+        String likedBy = (newPic.getLikedBy() == null) ? null : Joiner.on(",").join(newPic.getLikedBy());
+        Log.d(TAG, "liked by saved in database is " + likedBy);
+        values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy);
         values.put(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH, newPic.getPicThumbnailPath());
 
         // insert row
@@ -116,10 +120,11 @@ public class PictureDataSource {
         db.close();
     }
 
-    public static void updateFavourites(Context context, String memId, String likedBy) {
+    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy);
+        Log.d(TAG, "liked by value is " + likedBy);
+        values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = "
                 + memId, null);
         db.close();
@@ -153,8 +158,8 @@ public class PictureDataSource {
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT)));
             picture.setUpdatedAt(cursor.getLong(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
-            picture.setLikedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY)));
+            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             picture.setjId(cursor.getString(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
             picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH)));
@@ -192,8 +197,8 @@ public class PictureDataSource {
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT)));
             picture.setUpdatedAt(cursor.getLong(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
-            picture.setLikedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY)));
+            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             picture.setjId(cursor.getString(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
             picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH)));

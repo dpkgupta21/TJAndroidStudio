@@ -35,7 +35,7 @@ public class JourneyDataSource {
         values.put(MySQLiteHelper.JOURNEY_COLUMN_TAGLINE, newJourney.getTagLine());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_GROUPTYPE, newJourney.getGroupType());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY, newJourney.getCreatedBy());
-        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, newJourney.getBuddies() == null ? "" : Joiner.on(",").join(newJourney.getBuddies()));
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, newJourney.getBuddies().isEmpty() ? "" : Joiner.on(",").join(newJourney.getBuddies()));
         // values.put(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS,
         // newJourney.getLaps().toString());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_STATUS, newJourney.getJourneyStatus());
@@ -120,7 +120,7 @@ public class JourneyDataSource {
                 journey.setGroupType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_GROUPTYPE)));
                 journey.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY)));
                 String buddyIds = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
-                journey.setBuddies(Arrays.asList(buddyIds.split(",")));
+                journey.setBuddies(buddyIds.isEmpty() ? null : Arrays.asList(buddyIds.split(",")));
                 Log.d(TAG, "buddy ids fetched from database are " + buddyIds);
                 /*String laps = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS));
                 journey.setLaps(Arrays.asList(laps.split(",")));*/
@@ -162,14 +162,13 @@ public class JourneyDataSource {
         Cursor cursor = db.rawQuery(dbQuery, null);
         String[] buddyIds = null;
         if (cursor.moveToFirst()) {
-            String buddies = cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
-            buddies = buddies.replace("[", "");
-            buddies = buddies.replace("]", "");
-            Log.d(TAG, "buddies List " + cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS)));
-            buddyIds = buddies.split(",");
+            String buddies = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
+            buddyIds = (buddies == null ? null : buddies.split(","));
+            Log.d(TAG, "buddies List " + buddies);
         }
-        Log.d(TAG, "buddy ids are " + buddyIds);
+        for(String s : buddyIds){
+            Log.d(TAG, "buddies in array are" + s + ",,,");
+        }
         cursor.close();
         db.close();
         return buddyIds;
