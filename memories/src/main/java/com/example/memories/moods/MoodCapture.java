@@ -47,23 +47,32 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         toolbar.setTitle("Mood");
         setSupportActionBar(toolbar);
 
+        mSelectedFriends = new ArrayList();
+
         noFriendsSelectedTxt = (TextView) findViewById(R.id.noFriendsSelected);
         selectMoodImgBtn = (ImageButton) findViewById(R.id.mood_select_mood_imgbtn);
         moodText = (TextView) findViewById(R.id.mood_text);
         moodReasonEditTxt = (EditText) findViewById(R.id.mood_because_of_txt);
         String[] friendIds = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        Log.d(TAG, "all buddys in the journey are" + friendIds);
         if (friendIds != null) {
             mSelectedFriends = Arrays.asList(friendIds);
+            Log.d(TAG, "mselectedFriends are" + mSelectedFriends.isEmpty());
+            setSelectedFriends();
         }
     }
 
     private void setSelectedFriends() {
         if (mSelectedFriends != null) {
+            Log.d(TAG, "no of selected frineds" + mSelectedFriends.size());
             if (mSelectedFriends.size() == 0) {
+                Log.d(TAG, "no selected friends");
                 noFriendsSelectedTxt.setText("No friend Selected");
             } else if (mSelectedFriends.size() == 1) {
+                Log.d(TAG, "1 selected friend with id" + mSelectedFriends.get(0) + ",,");
                 noFriendsSelectedTxt.setText(ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName());
             } else if (mSelectedFriends.size() > 1) {
+                Log.d(TAG, "more than 1 selected friend with id" + mSelectedFriends.get(0));
                 noFriendsSelectedTxt.setText(ContactDataSource.getContactById(this, mSelectedFriends.get(0)).getName() + " and " + (mSelectedFriends.size() - 1) + " others");
             }
         }
@@ -71,7 +80,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
 
     public void selectFriends(View v) {
         Intent intent = new Intent(getBaseContext(), MoodSelectFriends.class);
-        intent.putStringArrayListExtra("SELECTED_FRIENDS", mSelectedFriends == null ? null : new ArrayList<String>(mSelectedFriends));
+        intent.putStringArrayListExtra("SELECTED_FRIENDS", mSelectedFriends == null ? null : new ArrayList(mSelectedFriends));
         startActivityForResult(intent, PICK_CONTACTS);
     }
 
@@ -125,13 +134,14 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         return super.onOptionsItemSelected(item);
     }
 
-    /*@Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
+        Log.d(TAG, "on activity result result code is " + resultCode + (resultCode == RESULT_OK));
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             mSelectedFriends = data.getStringArrayListExtra("SELECTED_FRIENDS");
             setSelectedFriends();
         }
-    }*/
+    }
 
     @Override
     public void onEmoticonSelect(String name, int emoticonId) {

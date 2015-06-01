@@ -41,11 +41,15 @@ public class MoodSelectFriends extends AppCompatActivity {
         mSelectedFriends = getIntent().getExtras().getStringArrayList("SELECTED_FRIENDS");
         mGridView = (GridView) findViewById(R.id.friends_list);
 
-        if (mSelectedFriends == null) {
+        initializeContactsList();
+
+        /*if (mSelectedFriends == null) {
             mContactsList = new ArrayList<Contact>();
         } else if (mSelectedFriends.size() > 0) {
             mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
-        }
+        }*/
+
+
         mAdapter = new FriendsGridAdapter(this, mContactsList);
         mGridView.setAdapter(mAdapter);
 
@@ -54,13 +58,13 @@ public class MoodSelectFriends extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageView mOverlayImg = (ImageView) view.findViewById(R.id.overlayImg);
                 Log.d(TAG, "item clicked " + position);
-                if (mContactsList.get(position).isSelected()) {
-                    mContactsList.get(position).setSelected(false);
+                boolean selected = mContactsList.get(position).isSelected();
+                if(selected){
                     mOverlayImg.setVisibility(View.GONE);
-                } else {
-                    mContactsList.get(position).setSelected(true);
+                }else {
                     mOverlayImg.setVisibility(View.VISIBLE);
                 }
+                mContactsList.get(position).setSelected(!selected);
             }
         });
     }
@@ -72,13 +76,13 @@ public class MoodSelectFriends extends AppCompatActivity {
         return true;
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         super.onBackPressed();
         Intent returnIntent = new Intent();
         setResult(RESULT_CANCELED, returnIntent);
         finish();
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -101,6 +105,17 @@ public class MoodSelectFriends extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // whenever the activity is called with a list ids of selected friends, fetch all the contacts from the current journey and
+    // and mark the contacts as unselected whose ids are not present in the mSelectedFriends
+    private void initializeContactsList(){
+        mContactsList = ContactDataSource.getContactsFromCurrentJourney(this);
+        for(Contact contact : mContactsList){
+            if(!mSelectedFriends.contains(contact.getIdOnServer())){
+                contact.setSelected(false);
+            }
+        }
     }
 
 }

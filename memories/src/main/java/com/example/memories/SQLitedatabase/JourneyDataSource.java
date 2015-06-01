@@ -163,10 +163,12 @@ public class JourneyDataSource {
         String[] buddyIds = null;
         if (cursor.moveToFirst()) {
             String buddies = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
-            buddyIds = buddies == null ? null : buddies.split(",");
+            buddyIds = (buddies == null ? null : buddies.split(","));
             Log.d(TAG, "buddies List " + buddies);
         }
-        Log.d(TAG, "buddy ids are " + buddyIds);
+        for(String s : buddyIds){
+            Log.d(TAG, "buddies in array are" + s + ",,,");
+        }
         cursor.close();
         db.close();
         return buddyIds;

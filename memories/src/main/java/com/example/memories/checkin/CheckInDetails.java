@@ -215,11 +215,9 @@ public class CheckInDetails extends AppCompatActivity {
             } else {
                 // Image capture failed, advise user
             }
-        } else if (requestCode == REQUEST_CODE_SELECT_FRIENDS) {
-            if (resultCode == RESULT_OK) {
-                mSelectedFriends = data.getStringArrayListExtra("SELECTED_FRIENDS");
-                setSelectedFriends();
-            }
+        } else if (requestCode == REQUEST_CODE_SELECT_FRIENDS && requestCode == RESULT_OK) {
+            mSelectedFriends = data.getStringArrayListExtra("SELECTED_FRIENDS");
+            setSelectedFriends();
         }
     }
 
