@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.memories.SQLitedatabase.AudioDataSource;
 
+import java.util.List;
+
 public class Audio extends Memories {
     private String extension;
     private long size;
@@ -12,7 +14,7 @@ public class Audio extends Memories {
 
     public Audio(String idOnServer, String jId, String memType, String ext, long size,
                  String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                 long updatedAt, String likedBy) {
+                 long updatedAt, List<String> likedBy) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -62,7 +64,7 @@ public class Audio extends Memories {
         this.dataLocalURL = dataLocalURL;
     }
 
-    public void updateLikedBy(Context context, String memId, String likedBy) {
+    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         AudioDataSource.updateFavourites(context, memId, likedBy);
     }
 }

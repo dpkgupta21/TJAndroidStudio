@@ -91,4 +91,8 @@ public class Journey {
     public void setJourneyStatus(String journeyStatus) {
         this.journeyStatus = journeyStatus;
     }
+
+    public boolean isAdmin(String userId){
+        return userId.equals(this.getIdOnServer());
+    }
 }

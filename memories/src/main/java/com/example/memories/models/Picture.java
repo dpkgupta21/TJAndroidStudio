@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.memories.SQLitedatabase.PictureDataSource;
 
+import java.util.List;
+
 public class Picture extends Memories {
 
     private String caption;
@@ -23,7 +25,7 @@ public class Picture extends Memories {
 
     public Picture(String idOnServer, String jId, String memType, String caption, String ext,
                    long size, String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                   long updatedAt, String likedBy, String picLocalThumbnailPath) {
+                   long updatedAt, List<String> likedBy, String picLocalThumbnailPath) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -95,7 +97,7 @@ public class Picture extends Memories {
         this.picLocalThumbnailPath = picLocalThumbnailPath;
     }
 
-    public void updateLikedBy(Context context, String memId, String likedBy) {
+    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         PictureDataSource.updateFavourites(context, memId, likedBy);
     }
 

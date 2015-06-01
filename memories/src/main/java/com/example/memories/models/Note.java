@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.memories.SQLitedatabase.NoteDataSource;
 
+import java.util.List;
+
 public class Note extends Memories {
 
     private String content;
@@ -14,7 +16,7 @@ public class Note extends Memories {
     }
 
     public Note(String idOnServer, String jId, String memType, String caption, String content,
-                String createdBy, long createdAt, long updatedAt, String likedBy) {
+                String createdBy, long createdAt, long updatedAt, List<String> likedBy) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -43,7 +45,7 @@ public class Note extends Memories {
         this.caption = caption;
     }
 
-    public void updateLikedBy(Context context, String memId, String likedBy) {
+    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         NoteDataSource.updateFavourites(context, memId, likedBy);
     }
 

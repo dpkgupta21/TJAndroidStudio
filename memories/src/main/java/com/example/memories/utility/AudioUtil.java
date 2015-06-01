@@ -197,16 +197,18 @@ public class AudioUtil {
 
         @Override
         protected void onPostExecute(JSONObject object) {
-            try {
-                Log.d(TAG, "onPostExecute()");
-                String serverId = object.getJSONObject("audio").getString("id");
-                String serverUrl = object.getJSONObject("audio")
-                        .getJSONObject("audio_file").getString("url");
-                AudioDataSource.updateServerIdAndUrl(context, audio.getId(), serverId,
-                        serverUrl);
-                Log.d(TAG, "audio successfully uploaded and serverid successfully saved in database");
-            } catch (JSONException ex) {
-                Log.d(TAG, ex.getMessage());
+            if(object != null) {
+                try {
+                    Log.d(TAG, "onPostExecute()");
+                    String serverId = object.getJSONObject("audio").getString("id");
+                    String serverUrl = object.getJSONObject("audio")
+                            .getJSONObject("audio_file").getString("url");
+                    AudioDataSource.updateServerIdAndUrl(context, audio.getId(), serverId,
+                            serverUrl);
+                    Log.d(TAG, "audio successfully uploaded and serverid successfully saved in database");
+                } catch (JSONException ex) {
+                    Log.d(TAG, ex.getMessage());
+                }
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.memories.note;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +11,6 @@ import android.widget.EditText;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.NoteDataSource;
-import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Note;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.NotesUtil;
@@ -62,9 +60,10 @@ public class CreateNotes extends AppCompatActivity {
             case R.id.action_done:
                 Log.d(TAG, "done clicked!");
                 uploadAndSaveNote();
-                Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
+                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                startActivity(i);*/
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

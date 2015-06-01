@@ -247,7 +247,7 @@ public class GcmIntentService extends IntentService {
                 caption = data.getString("caption");
 
                 CheckIn newCheckin = new CheckIn(idOnServer, jId, HelpMe.CHECKIN_TYPE, caption, latitude, longitude,
-                        place_name, null, buddyList, createdBy, createdAt, updatedAt);
+                        place_name, null, buddyList, createdBy, createdAt, updatedAt, null);
 
                 CheckinDataSource.createCheckIn(newCheckin, this);
                 break;

@@ -143,16 +143,18 @@ public class PictureUtilities {
 
         @Override
         protected void onPostExecute(JSONObject object) {
-            try {
-                Log.d(TAG, "onPostExecute()");
-                String serverId = object.getJSONObject("picture").getString("id");
-                String serverUrl = object.getJSONObject("picture")
-                        .getJSONObject("picture_file").getJSONObject("original").getString("url");
-                PictureDataSource.updateServerIdAndUrl(context, picture.getId(), serverId,
-                        serverUrl);
-                Log.d(TAG, "picture successfully uploaded and serverid successfully saved in database");
-            } catch (JSONException ex) {
-                Log.d(TAG, ex.getMessage());
+            if (object != null) {
+                try {
+                    Log.d(TAG, "onPostExecute()");
+                    String serverId = object.getJSONObject("picture").getString("id");
+                    String serverUrl = object.getJSONObject("picture")
+                            .getJSONObject("picture_file").getJSONObject("original").getString("url");
+                    PictureDataSource.updateServerIdAndUrl(context, picture.getId(), serverId,
+                            serverUrl);
+                    Log.d(TAG, "picture successfully uploaded and serverid successfully saved in database");
+                } catch (JSONException ex) {
+                    Log.d(TAG, ex.getMessage());
+                }
             }
         }
     }

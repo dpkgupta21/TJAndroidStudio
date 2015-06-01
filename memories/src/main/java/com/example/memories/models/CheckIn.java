@@ -20,7 +20,7 @@ public class CheckIn extends Memories {
 
     public CheckIn(String idOnServer, String jId, String memType, String caption, double lat,
                    double longi, String checkInPlaceName, String checkInPicURL,
-                   List<String> checkInWith, String createdBy, long createdAt, long updatedAt) {
+                   List<String> checkInWith, String createdBy, long createdAt, long updatedAt, List<String> likedBy) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -33,6 +33,7 @@ public class CheckIn extends Memories {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.likedBy = likedBy;
     }
 
     public String getCaption() {
@@ -83,7 +84,7 @@ public class CheckIn extends Memories {
         this.checkInWith = checkInWith;
     }
 
-    public void updateLikedBy(Context context, String memId, String likedBy) {
+    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         CheckinDataSource.updateFavourites(context, memId, likedBy);
     }
 }

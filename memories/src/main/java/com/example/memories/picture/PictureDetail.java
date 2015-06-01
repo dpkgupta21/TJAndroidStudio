@@ -1,6 +1,5 @@
 package com.example.memories.picture;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -20,28 +19,25 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.PictureDataSource;
-import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Picture;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.PictureUtilities;
 import com.example.memories.utility.TJPreferences;
-import com.google.common.base.Joiner;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class PictureDetail extends AppCompatActivity {
 
     private static final String TAG = "<PhotoDetail>";
-    List<String> likedBy = new ArrayList<String>();
+    List<String> likedBy;
     private ImageView photo;
     private TextView dateBig;
     private TextView date;
@@ -89,15 +85,16 @@ public class PictureDetail extends AppCompatActivity {
             imagePath = mPicture.getDataLocalURL(); //path to image
             localThumbnailPath = mPicture.getPicThumbnailPath();
             //setup the state of favourite button
-            if (mPicture.getLikedBy() != null) {
-                List<String> likedBy = Arrays.asList((mPicture.getLikedBy()).split(","));
-                //mFavBtn.setText(String.valueOf(likedBy.size()));
-                if (likedBy.contains(TJPreferences.getUserId(PictureDetail.this))) {
+            if (mPicture.getLikedBy() == null){
+                noLikesTxt.setText("0");
+                mFavBtn.setImageResource(R.drawable.heart_empty);
+            }else{
+                noLikesTxt.setText(String.valueOf(mPicture.getLikedBy().size()));
+                if (mPicture.getLikedBy().contains(TJPreferences.getUserId(PictureDetail.this))){
                     mFavBtn.setImageResource(R.drawable.heart_full);
-                } else {
+                }else {
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 }
-                noLikesTxt.setText(String.valueOf(likedBy.size()));
             }
         }
         //If the activity is started for a newly clicked picture
@@ -178,32 +175,30 @@ public class PictureDetail extends AppCompatActivity {
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (likedBy == null) {
+                List<String> likedBy = mPicture.getLikedBy();
+                if(likedBy == null){
                     likedBy = new ArrayList<String>();
-                    if (mPicture.getLikedBy() != null) {
-                        String array[] = mPicture.getLikedBy().split(",");
-                        for (String s : array) {
-                            likedBy.add(s);
-                        }
-                    }
                 }
+                Log.d(TAG,
+                        "fav button clicked position " + likedBy + TJPreferences.getUserId(PictureDetail.this));
                 if (likedBy.contains(TJPreferences.getUserId(PictureDetail.this))) {
                     likedBy.remove(TJPreferences.getUserId(PictureDetail.this));
+                    Log.d(TAG, "heart empty");
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 } else {
                     likedBy.add(TJPreferences.getUserId(PictureDetail.this));
+                    Log.d(TAG, "heart full");
                     mFavBtn.setImageResource(R.drawable.heart_full);
                 }
+
+                // update the value in the list and database
                 noLikesTxt.setText(String.valueOf(likedBy.size()));
-                String finalValue;
                 if (likedBy.size() == 0) {
-                    finalValue = null;
-                } else {
-                    finalValue = Joiner.on(",").join(likedBy);
+                    likedBy = null;
                 }
-                mPicture.setLikedBy(finalValue);
+                mPicture.setLikedBy(likedBy);
                 if (!isNewPic) {
-                    mPicture.updateLikedBy(PictureDetail.this, mPicture.getId(), finalValue);
+                    mPicture.updateLikedBy(PictureDetail.this, mPicture.getId(), likedBy);
                 }
             }
         });
@@ -213,7 +208,7 @@ public class PictureDetail extends AppCompatActivity {
         Log.d(TAG, "creating a new picture in local DB");
 
         if (likedBy != null) {
-            mPicture.setLikedBy(Joiner.on(",").join(likedBy));
+            mPicture.setLikedBy(likedBy);
         }
         mPicture.setCaption(caption.getText().toString());
         PictureDataSource.createPicture(mPicture, this);
@@ -236,9 +231,10 @@ public class PictureDetail extends AppCompatActivity {
                 if (isNewPic) {
                     saveAndUploadPic();
                 }
-                Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
+                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                startActivity(i);*/
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

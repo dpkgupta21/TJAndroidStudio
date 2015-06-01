@@ -1,20 +1,27 @@
 package com.example.memories;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.gallery.GalleryBaseActivity;
 import com.example.memories.pastjourney.PastJourneyList;
 import com.example.memories.profile.Profile;
+import com.example.memories.utility.TJPreferences;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +35,11 @@ public class SideMenuDrawer extends Fragment {
     private static final int REQUEST_CODE_UPDATE_PROFILE = 2;
     private View rootView;
 
+    ImageView mProfileImg;
+    TextView mUserName;
+    TextView mUserStatus;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.side_menu_drawer, null);
@@ -37,6 +49,10 @@ public class SideMenuDrawer extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mProfileImg = (ImageView)rootView.findViewById(R.id.sidemenu_profile_pic);
+        mUserName = (TextView)rootView.findViewById(R.id.sidemenu_username);
+        mUserStatus = (TextView)rootView.findViewById(R.id.sidemenu_status);
 
         // Sliding Side Menu Drawer code
         ListView featuresListView = (ListView) rootView.findViewById(R.id.sidemenu_features_list);
@@ -87,5 +103,19 @@ public class SideMenuDrawer extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onResume (){
+        Log.d(TAG, "fragment on resume method called");
+        try {
+            mProfileImg.setImageBitmap(BitmapFactory.decodeStream(new FileInputStream(TJPreferences.getProfileImgPath(getActivity())), null, new BitmapFactory.Options()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ;
+        mUserName.setText(TJPreferences.getUserName(getActivity()));
+        mUserStatus.setText(TJPreferences.getUserStatus(getActivity()));
+        super.onResume();
     }
 }

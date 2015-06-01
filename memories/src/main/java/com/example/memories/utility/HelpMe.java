@@ -1,9 +1,7 @@
 package com.example.memories.utility;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
@@ -14,7 +12,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.provider.MediaStore.Video.Thumbnails;
 import android.util.Log;
@@ -25,7 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -165,21 +161,6 @@ public class HelpMe {
         }
     }
 
-    // Used to fetch an image from a given URI
-    // SAmpled and decoded and bitmap is created
-    public static Bitmap getImageBitmapFromURI(Context mContext, String imageUri) {
-        Uri imageURI = Uri.parse(imageUri);
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), imageURI);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return (bitmap);
-    }
-
     public static Bitmap decodeSampledBitmapFromURI(Context mContext, String resPath, int reqWidth,
                                                     int reqHeight) throws FileNotFoundException {
 
@@ -257,18 +238,6 @@ public class HelpMe {
         return path;
     }
 
-    // pass the actual path of the audio file to be played
-    public static void playAudio(String dataURL, Context context) {
-        Intent intent = new Intent();
-        ComponentName comp = new ComponentName("com.android.music",
-                "com.android.music.MediaPlaybackActivity");
-        intent.setComponent(comp);
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-        File file = new File(dataURL);
-        intent.setDataAndType(Uri.fromFile(file), "audio/*");
-        context.startActivity(intent);
-    }
-
     // Get video thumbnail
     // pass the path of video saved
     public static Bitmap getVideoThumbnail(String path) {
@@ -305,6 +274,10 @@ public class HelpMe {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static boolean isAdmin(Context context){
+        return TJPreferences.getUserId(context).equals(TJPreferences.getActiveJourneyId(context));
     }
 
 }

@@ -20,14 +20,12 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.VideoDataSource;
-import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Video;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.utility.VideoUtil;
-import com.google.common.base.Joiner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,14 +33,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class VideoDetail extends AppCompatActivity {
 
     private static final String TAG = "<VideoDetail>";
-    List<String> likedBy = new ArrayList<String>();
+    List<String> likedBy;
     private ImageView video;
     private TextView dateBig;
     private TextView date;
@@ -89,15 +86,16 @@ public class VideoDetail extends AppCompatActivity {
             videoPath = mVideo.getDataLocalURL(); //path to image
             thumbnailPath = mVideo.getLocalThumbPath();
             //setup the state of favourite button
-            if (mVideo.getLikedBy() != null) {
-                List<String> likedBy = Arrays.asList((mVideo.getLikedBy()).split(","));
-                //mFavBtn.setText(String.valueOf(likedBy.size()));
-                if (likedBy.contains(TJPreferences.getUserId(VideoDetail.this))) {
+            if (mVideo.getLikedBy() == null){
+                noLikesTxt.setText("0");
+                mFavBtn.setImageResource(R.drawable.heart_empty);
+            }else{
+                noLikesTxt.setText(String.valueOf(mVideo.getLikedBy().size()));
+                if (mVideo.getLikedBy().contains(TJPreferences.getUserId(VideoDetail.this))){
                     mFavBtn.setImageResource(R.drawable.heart_full);
-                } else {
+                }else {
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 }
-                noLikesTxt.setText(String.valueOf(likedBy.size()));
             }
         }
         //If the activity is started for a newly clicked picture
@@ -180,41 +178,40 @@ public class VideoDetail extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
+        /*Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        startActivity(intent);*/
+        finish();
     }
 
     private void setFavouriteBtnClickListener() {
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (likedBy == null) {
+                List<String> likedBy = mVideo.getLikedBy();
+                if(likedBy == null){
                     likedBy = new ArrayList<String>();
-                    if (mVideo.getLikedBy() != null) {
-                        String array[] = mVideo.getLikedBy().split(",");
-                        for (String s : array) {
-                            likedBy.add(s);
-                        }
-                    }
                 }
+                Log.d(TAG,
+                        "fav button clicked position " + likedBy + TJPreferences.getUserId(VideoDetail.this));
                 if (likedBy.contains(TJPreferences.getUserId(VideoDetail.this))) {
                     likedBy.remove(TJPreferences.getUserId(VideoDetail.this));
+                    Log.d(TAG, "heart empty");
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 } else {
                     likedBy.add(TJPreferences.getUserId(VideoDetail.this));
+                    Log.d(TAG, "heart full");
                     mFavBtn.setImageResource(R.drawable.heart_full);
                 }
+
+                // update the value in the list and database
                 noLikesTxt.setText(String.valueOf(likedBy.size()));
-                String finalValue;
                 if (likedBy.size() == 0) {
-                    finalValue = null;
-                } else {
-                    finalValue = Joiner.on(",").join(likedBy);
+                    likedBy = null;
                 }
-                mVideo.setLikedBy(finalValue);
+                mVideo.setLikedBy(likedBy);
                 if (!isNewVideo) {
-                    mVideo.updateLikedBy(VideoDetail.this, mVideo.getId(), finalValue);
+                    mVideo.updateLikedBy(VideoDetail.this, mVideo.getId(), likedBy);
                 }
             }
         });
@@ -223,7 +220,7 @@ public class VideoDetail extends AppCompatActivity {
     private void saveAndUploadVideo() {
         Log.d(TAG, "creating a new video in local DB");
         if (likedBy != null) {
-            mVideo.setLikedBy(Joiner.on(",").join(likedBy));
+            mVideo.setLikedBy(likedBy);
         }
         mVideo.setCaption(caption.getText().toString());
         VideoDataSource.createVideo(mVideo, this);
@@ -246,9 +243,10 @@ public class VideoDetail extends AppCompatActivity {
                 if (isNewVideo) {
                     saveAndUploadVideo();
                 }
-                Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
+                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                startActivity(i);*/
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

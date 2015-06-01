@@ -170,6 +170,7 @@ public class CheckInPlacesList extends AppCompatActivity {
                 i.putExtra("latitude", lat);
                 i.putExtra("longitude", longi);
                 startActivity(i);
+                finish();
             }
         });
 

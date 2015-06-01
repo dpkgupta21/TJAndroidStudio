@@ -18,7 +18,6 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
-import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Mood;
 import com.example.memories.moods.adapters.SelectMoodsDialog;
 import com.example.memories.utility.HelpMe;
@@ -54,7 +53,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         moodReasonEditTxt = (EditText) findViewById(R.id.mood_because_of_txt);
         String[] friendIds = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         if (friendIds != null) {
-            mSelectedFriends = Arrays.asList();
+            mSelectedFriends = Arrays.asList(friendIds);
         }
     }
 
@@ -116,22 +115,23 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
                             .show();
                 } else {
                     createNewMoodIntoDB();
-                    Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
+/*                    Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
+                    startActivity(i);*/
+                    finish();
                 }
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             mSelectedFriends = data.getStringArrayListExtra("SELECTED_FRIENDS");
             setSelectedFriends();
         }
-    }
+    }*/
 
     @Override
     public void onEmoticonSelect(String name, int emoticonId) {

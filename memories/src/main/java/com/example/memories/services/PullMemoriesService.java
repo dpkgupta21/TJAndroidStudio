@@ -221,7 +221,7 @@ public class PullMemoriesService extends IntentService {
                         String buddys = memory.getString("buddies");
                         List<String> buddyIds = buddys == null ? null : Arrays.asList(buddys.split(","));
                         CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName, null, buddyIds, createdBy,
-                                createdAt, updatedAt);
+                                createdAt, updatedAt, null);
                         CheckinDataSource.createCheckIn(newCheckIn, PullMemoriesService.this);
 
                         Log.d(TAG, "checkin parsed and saved successfully");

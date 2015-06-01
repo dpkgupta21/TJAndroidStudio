@@ -2,6 +2,8 @@ package com.example.memories.models;
 
 import android.content.Context;
 
+import java.util.List;
+
 public class Memories implements Comparable<Memories> {
     protected String idOnServer;
     protected String jId;
@@ -9,7 +11,7 @@ public class Memories implements Comparable<Memories> {
     protected String createdBy;
     protected long createdAt;
     protected long updatedAt;
-    protected String likedBy;
+    protected List<String> likedBy;
     private String id;
 
     public String getId() {
@@ -60,11 +62,11 @@ public class Memories implements Comparable<Memories> {
         this.updatedAt = updatedAt;
     }
 
-    public String getLikedBy() {
+    public List<String> getLikedBy() {
         return likedBy;
     }
 
-    public void setLikedBy(String likedBy) {
+    public void setLikedBy(List<String> likedBy) {
         this.likedBy = likedBy;
     }
 
@@ -81,7 +83,7 @@ public class Memories implements Comparable<Memories> {
         return (createdAt > child.createdAt) ? -1 : 1;
     }
 
-    public void updateLikedBy(Context context, String memId, String likedBy) {
+    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
 
     }
 
