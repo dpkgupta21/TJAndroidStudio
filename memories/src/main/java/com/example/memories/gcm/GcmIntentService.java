@@ -228,7 +228,7 @@ public class GcmIntentService extends IntentService implements CustomResultRecei
                 caption = data.getString("caption");
 
                 Video newVideo = new Video(idOnServer, jId, HelpMe.VIDEO_TYPE, caption, extension,
-                        size, null, null, createdBy, createdAt, updatedAt, null, null);
+                        size, dataUrl, null, createdBy, createdAt, updatedAt, null, null);
                 //Downloading video and save to database
                 VideoUtil.createNewVideoFromServer(this, newVideo, localThumbUrl);
                 break;

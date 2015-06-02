@@ -19,6 +19,7 @@ import com.example.memories.utility.TJPreferences;
 import com.example.memories.volley.AppController;
 import com.example.memories.volley.CustomJsonRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -83,11 +84,6 @@ public class PullBuddiesService extends IntentService {
                                 String interests = response.getJSONObject("user").getString("interests");
                                 String phone_no = response.getJSONObject("user").getString("phone");
 
-//                                Log.d(TAG , "1");
-//                                Log.d(TAG,"==" + response.getJSONObject("user").getJSONObject("profile_picture"));
-//                                Log.d(TAG,"==" + response.getJSONObject("user").getJSONObject("profile_picture").getJSONObject("thumb"));
-//                                Log.d(TAG,"==" + response.getJSONObject("user").getJSONObject("profile_picture").getJSONObject("thumb").getString("url"));
-
                                 String picServerUrl = response.getJSONObject("user").getJSONObject("profile_picture").getJSONObject("thumb").getString("url");
                                 String picLocalUrl;
                                 String allJourneyIds = response.getJSONObject("user").getString("journey_ids");
@@ -136,8 +132,8 @@ public class PullBuddiesService extends IntentService {
                                         phone_no, allJourneyIds, true, interests);
                                 ContactDataSource.createContact(tempContact, PullBuddiesService.this);
                                 onFinish();
-                            } catch (Exception ex) {
-                                Log.d(TAG, "exception in parsing note received from server" + ex);
+                            } catch (JSONException ex) {
+                                Log.d(TAG, "exception in parsing buddy received from server" + ex);
                             }
 
                         }

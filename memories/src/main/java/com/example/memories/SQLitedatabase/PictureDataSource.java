@@ -59,8 +59,8 @@ public class PictureDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         memoriesList = getPictures(cursor);
-        db.close();
         cursor.close();
+        db.close();
         return memoriesList;
     }
 
@@ -233,6 +233,8 @@ public class PictureDataSource {
         if (c.moveToFirst() && c.moveToPosition(randomNum)) {
             randomPic = getPictures(c).get(0);
         }
+        c.close();
+        db.close();
 
         return randomPic;
     }

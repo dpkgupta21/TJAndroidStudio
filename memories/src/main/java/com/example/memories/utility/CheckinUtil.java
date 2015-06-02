@@ -29,6 +29,7 @@ public class CheckinUtil {
         params.put("checkin[latitude]", (Double) checkin.getLatitude() == null ? null : ((Double) checkin.getLatitude()).toString());
         params.put("checkin[longitude]", (Double) checkin.getLongitude() == null ? null : ((Double) checkin.getLongitude()).toString());
         params.put("checkin[buddies]", checkin.getCheckInWith() == null ? null : checkin.getCheckInWith().toString());
+        params.put("checkin[note]", checkin.getCaption());
         Log.d(TAG, "uploading checkin with parameters " + params);
 
         String url = Constants.TRAVELJAR_API_BASE_URL + "/journeys/"

@@ -1,5 +1,7 @@
 package com.example.memories.picture;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PictureDetail extends AppCompatActivity {
+public class PictureDetail extends AppCompatActivity implements DownloadPicture.OnPictureDownloadListener{
 
     private static final String TAG = "<PhotoDetail>";
     List<String> likedBy;
@@ -52,6 +54,8 @@ public class PictureDetail extends AppCompatActivity {
     private Picture mPicture;
     private boolean isNewPic;
     private TextView noLikesTxt;
+
+    private ProgressDialog pDialog;
 
     private String localThumbnailPath;
 
@@ -76,6 +80,8 @@ public class PictureDetail extends AppCompatActivity {
         mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.photo_detail_profile_image);
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
+
+        pDialog = new ProgressDialog(this);
 
         Bundle extras = getIntent().getExtras();
         //If the activity is started for an already clicked picture
@@ -169,6 +175,23 @@ public class PictureDetail extends AppCompatActivity {
         dateBig.setText(onlyDate.format(resultdate).toString());
         date.setText(fullDate.format(resultdate).toString());
         time.setText(fullTime.format(resultdate).toString());
+
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mPicture.getDataLocalURL() == null){
+                    pDialog.setMessage("Please wait while the picture is getting downloaded");
+                    pDialog.show();
+                    new DownloadPicture(mPicture, PictureDetail.this).startDownloadingPic();
+                }else{
+                    Log.d(TAG, "profile pic is already present in the local so displaying it");
+                    Intent intent = new Intent(PictureDetail.this, DisplayPicture.class);
+                    intent.putExtra("PICTURE_PATH", mPicture.getDataLocalURL());
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
     private void setFavouriteBtnClickListener() {
@@ -241,4 +264,14 @@ public class PictureDetail extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onDownloadPicture(Picture picture) {
+        mPicture = picture;
+        PictureDataSource.updatePicLocalPath(this, picture.getDataLocalURL(), picture.getId());
+        Log.d(TAG, "picture downloaded successfully now displaying it");
+        pDialog.dismiss();
+        Intent intent = new Intent(this, DisplayPicture.class);
+        intent.putExtra("PICTURE_PATH", picture.getDataLocalURL());
+        startActivity(intent);
+    }
 }

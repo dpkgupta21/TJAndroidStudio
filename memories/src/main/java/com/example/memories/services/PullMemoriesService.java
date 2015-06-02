@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +47,7 @@ public class PullMemoriesService extends IntentService {
     private static int REQUEST_CODE;
     private Journey journey;
     private static int count = 0;
+    private static boolean isService = false;
 
     public PullMemoriesService() {
         super("PullMemoriesService");
@@ -71,6 +73,7 @@ public class PullMemoriesService extends IntentService {
     }
 
     private void fetchJourneys() {//user id 26 QTn0lwDmgWTc4K5R4Xlz7g
+        isService = true;
         Log.d(TAG, "fetch journeys");
         String fetchJourneysUrl = Constants.URL_TJ_DOMAIN + "api/v1/journeys?api_key=" + TJPreferences.getApiKey(this) + "&user_id=" + TJPreferences.getUserId(this);
         Log.d(TAG, "url to fetch journeys" + fetchJourneysUrl);
@@ -104,7 +107,11 @@ public class PullMemoriesService extends IntentService {
                                 Log.d(TAG, "buddies list saved in database are " + buddies);
                                 buddies = buddies.replace("[", "");
                                 buddies = buddies.replace("]", "");
-                                buddiesList = Arrays.asList(buddies.split(","));
+                                buddiesList = new ArrayList<>(Arrays.asList(buddies.split(",")));
+
+                                buddiesList.add(createdBy);
+                                buddiesList.remove(TJPreferences.getUserId(PullMemoriesService.this));
+
                                 Log.d(TAG, "buddies list saved in database are " + buddiesList + " blah blah " + buddies);
                                 laps = jsonObject.getJSONArray("journey_lap_ids").toString();
                                 laps.replace("[",  "");
@@ -273,13 +280,16 @@ public class PullMemoriesService extends IntentService {
     }
 
     public static void isFinished(){
-        count--;
-        Log.d(TAG, "not finished" + count);
-        if(count < 0) {
-            Log.d(TAG, "isfimiehd cal;ed" + count);
-            count = 0;
-            Bundle bundle = new Bundle();
-            mReceiver.send(REQUEST_CODE, bundle);
+        if(isService) {
+            count--;
+            Log.d(TAG, "not finished" + count);
+            if (count < 0) {
+                Log.d(TAG, "isfimiehd cal;ed" + count);
+                count = 0;
+                isService = false;
+                Bundle bundle = new Bundle();
+                mReceiver.send(REQUEST_CODE, bundle);
+            }
         }
     }
 }

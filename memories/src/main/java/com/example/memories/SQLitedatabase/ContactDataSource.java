@@ -55,31 +55,33 @@ public class ContactDataSource {
     }
 
     public static List<String> getNonExistingContacts(Context context, List<String> contactIds) {
-        Log.d(TAG, "contacts list is " + contactIds + contactIds.size());
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        List<String> existingContacts;
-        List<String> nonExistingContactsList = null;
+        List<String> existingContacts = new ArrayList<>();
+        List<String> nonExistingContactsList = new ArrayList<>();
         String query = "SELECT " + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " FROM " + MySQLiteHelper.TABLE_CONTACT +
                 " WHERE " + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " IN (" + makePlaceholders(contactIds.size()) + ")";
 
         String[] array = new String[contactIds.size()];
         Cursor cursor = db.rawQuery(query, contactIds.toArray(array));
         String contactId;
+        Log.d(TAG, "contacts from journey are " + contactIds);
         if (cursor.getCount() > 0) {
-            existingContacts = new ArrayList<>();
             if (cursor.moveToFirst()) {
                 do {
+                    Log.d(TAG, "cursor contact id = " + cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER)));
                     contactId = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER));
                     existingContacts.add(contactId);
                 } while (cursor.moveToNext());
             }
-            nonExistingContactsList = new ArrayList<>();
-            for (String id : contactIds) {
-                if (!existingContacts.contains(id)) {
-                    nonExistingContactsList.add(id);
-                }
+        }
+
+        for (String id : contactIds) {
+            if (!existingContacts.contains(id)) {
+                nonExistingContactsList.add(id);
             }
         }
+
+        Log.d(TAG, "non existing contacts list" + nonExistingContactsList);
         cursor.close();
         db.close();
         return nonExistingContactsList;
@@ -119,11 +121,11 @@ public class ContactDataSource {
         String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " WHERE "
                 + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " IN ("
                 + makePlaceholders(buddyIdsStringList.length) + ")";
-        Log.d(TAG, query + buddyIdsStringList);
+        Log.d(TAG, query + buddyIdsStringList[0]);
         Cursor cursor = db.rawQuery(query, buddyIdsStringList);
 
         List<Contact> contactsList = getContactsListFromCursor(cursor, context);
-        Log.d(TAG, "buddies from current journey are " + contactsList.size());
+        Log.d(TAG, "buddies from current journey are " + contactsList.size() + cursor.getCount());
 
         cursor.close();
         db.close();

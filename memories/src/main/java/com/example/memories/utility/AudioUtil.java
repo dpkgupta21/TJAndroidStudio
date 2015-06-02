@@ -2,7 +2,6 @@ package com.example.memories.utility;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 
 import com.example.memories.SQLitedatabase.AudioDataSource;
@@ -19,21 +18,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class AudioUtil {
 
     private static final String TAG = "AUDIO_UTIL";
 
-    public static void downloadAudio(Context context, Audio audio) {
+/*    public static void downloadAudio(Context context, Audio audio) {
         DownloadTask task = (new AudioUtil()).new DownloadTask(context, audio);
         task.execute(audio.getDataServerURL());
-    }
+    }*/
 
     public static void uploadAudio(final Context context, final Audio audio) {
 
@@ -43,7 +36,7 @@ public class AudioUtil {
     }
 
     // No separate thread
-    public static String saveAudio(Context context, Audio audio) {
+    /*public static String saveAudio(Context context, Audio audio) {
         InputStream input = null;
         OutputStream output = null;
         HttpURLConnection connection = null;
@@ -91,9 +84,9 @@ public class AudioUtil {
                 connection.disconnect();
         }
         return fileLocation;
-    }
+    }*/
 
-    private class DownloadTask extends AsyncTask<String, Integer, String> {
+/*    private class DownloadTask extends AsyncTask<String, Integer, String> {
 
         Context context;
         Audio audio;
@@ -159,7 +152,7 @@ public class AudioUtil {
                 AudioDataSource.createAudio(audio, context);
             }
         }
-    }
+    }*/
 
     private class UploadAsyncTask extends AsyncTask<String, Void, JSONObject> {
 
