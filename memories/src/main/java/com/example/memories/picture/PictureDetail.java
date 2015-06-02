@@ -91,7 +91,7 @@ public class PictureDetail extends AppCompatActivity {
             }else{
                 noLikesTxt.setText(String.valueOf(mPicture.getLikedBy().size()));
                 if (mPicture.getLikedBy().contains(TJPreferences.getUserId(PictureDetail.this))){
-                    mFavBtn.setImageResource(R.drawable.heart_full);
+                    mFavBtn.setImageResource(R.drawable.heart_filled_red);
                 }else {
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 }
@@ -188,7 +188,7 @@ public class PictureDetail extends AppCompatActivity {
                 } else {
                     likedBy.add(TJPreferences.getUserId(PictureDetail.this));
                     Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.heart_full);
+                    mFavBtn.setImageResource(R.drawable.heart_filled_red);
                 }
 
                 // update the value in the list and database

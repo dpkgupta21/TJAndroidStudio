@@ -92,7 +92,7 @@ public class VideoDetail extends AppCompatActivity {
             }else{
                 noLikesTxt.setText(String.valueOf(mVideo.getLikedBy().size()));
                 if (mVideo.getLikedBy().contains(TJPreferences.getUserId(VideoDetail.this))){
-                    mFavBtn.setImageResource(R.drawable.heart_full);
+                    mFavBtn.setImageResource(R.drawable.heart_filled_red);
                 }else {
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 }
@@ -201,7 +201,7 @@ public class VideoDetail extends AppCompatActivity {
                 } else {
                     likedBy.add(TJPreferences.getUserId(VideoDetail.this));
                     Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.heart_full);
+                    mFavBtn.setImageResource(R.drawable.heart_filled_red);
                 }
 
                 // update the value in the list and database

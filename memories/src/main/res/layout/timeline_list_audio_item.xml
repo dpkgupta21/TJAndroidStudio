@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/custom_border_gray"
     android:orientation="vertical"
-    android:padding="15dp"
+    android:padding="10dp"
     android:layout_marginBottom="10dp">
 
     <RelativeLayout
@@ -17,15 +17,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/play" />
+            android:src="@drawable/play_audio_red" />
 
         <TextView
             android:id="@+id/text123"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Play Audio"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/timelineItemPlayBtn"
-            android:layout_alignTop="@id/timelineItemPlayBtn"
             android:textColor="@color/black"
             android:textSize="@dimen/tj_large_font" />
 
@@ -34,7 +34,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:text="20 hours ago"
             android:textColor="@color/tj_red_light_text"
             android:textSize="@dimen/tj_small_font"
@@ -55,7 +54,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:background="@color/white">
 
         <com.example.memories.customviews.MyCircularImageView

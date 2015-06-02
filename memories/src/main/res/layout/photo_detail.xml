@@ -1,111 +1,143 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
-    <ImageView
-        android:id="@+id/photo_detail_photo"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:contentDescription="@string/default_string"
-        android:scaleType="centerCrop"
-        android:src="@drawable/banner3" />
+        android:layout_height="fill_parent"
+        android:background="@drawable/custom_border_gray"
+        android:layout_margin="10dp"
+        android:padding="1dp"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/photo_detail_rl1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
+        <RelativeLayout
+            android:id="@+id/photo_detail_rl0"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/white">
 
-        <com.example.memories.customviews.MyCircularImageView
-            android:id="@+id/photo_detail_profile_image"
-            android:layout_width="@dimen/circularProfDimen"
-            android:layout_height="@dimen/circularProfDimen"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="-50dp"
-            android:src="@drawable/abhi" />
+            <ImageView
+                android:id="@+id/photo_detail_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/default_string"
+                android:scaleType="centerCrop"
+                android:src="@drawable/banner3" />
 
-        <ImageButton
-            android:id="@+id/favBtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:contentDescription="@string/default_string"
-            android:src="@drawable/heart_empty" />
+            <com.example.memories.customviews.MyCircularImageView
+                android:id="@+id/photo_detail_profile_image"
+                android:layout_width="@dimen/circularProfDimen"
+                android:layout_height="@dimen/circularProfDimen"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="157dp"
+                android:src="@drawable/profile_image_empty" />
 
-        <TextView
-            android:id="@+id/no_likes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/favBtn"
-            android:text="5 Likes" />
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/photo_detail_rl2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@color/white">
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/photo_detail_date_big"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="07"
-            android:textColor="@color/red"
-            android:textSize="@dimen/tj_giant_font"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:id="@+id/photo_detail_ll2"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/photo_detail_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/photo_detail_date_big"
-            android:text="7 December 2014"
-            android:textSize="@dimen/tj_medium_font" />
+            <RelativeLayout
+                android:id="@+id/photo_detail_rl1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
-        <TextView
-            android:id="@+id/photo_detail_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/photo_detail_date"
-            android:layout_below="@id/photo_detail_date"
-            android:text="Sunday 1:19 pm"
-            android:textSize="@dimen/tj_medium_font" />
+                <ImageButton
+                    android:id="@+id/favBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/white"
+                    android:contentDescription="@string/default_string"
+                    android:src="@drawable/heart_empty" />
 
-        <TextView
-            android:id="@+id/photo_detail_place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Bangalore"
-            android:textSize="@dimen/tj_medium_font" />
+                <TextView
+                    android:id="@+id/no_likes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/tj_extra_giant_font"
+                    android:layout_toLeftOf="@+id/favBtn"
+                    android:text="0" />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/photo_detail_weather"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/photo_detail_place"
-            android:text="30 C : Sunny"
-            android:textSize="@dimen/tj_medium_font" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/photo_detail_rl2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white">
 
-    <EditText
-        android:id="@+id/photo_detail_caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:hint="Give this picture some words!"
-        android:inputType="textMultiLine"
-        android:lines="4" />
+                <TextView
+                    android:id="@+id/photo_detail_date_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="07"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/tj_red_light_text"
+                    android:textSize="50sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/photo_detail_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/photo_detail_date_big"
+                    android:text="7 December 2014"
+                    android:textColor="@color/tj_red_light_text"
+                    android:textSize="@dimen/tj_medium_font" />
+
+                <TextView
+                    android:id="@+id/photo_detail_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/photo_detail_date"
+                    android:layout_below="@id/photo_detail_date"
+                    android:text="Sunday 1:19 pm"
+                    android:textColor="@color/tj_red_light_text"
+                    android:textSize="@dimen/tj_medium_font" />
+
+                <TextView
+                    android:id="@+id/photo_detail_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="Bangalore"
+                    android:textSize="@dimen/tj_medium_font" />
+
+                <TextView
+                    android:id="@+id/photo_detail_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/photo_detail_place"
+                    android:text="30 C : Sunny"
+                    android:textSize="@dimen/tj_medium_font" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/photo_detail_caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="Give this picture some words!"
+                android:inputType="textMultiLine"
+                android:lines="2" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

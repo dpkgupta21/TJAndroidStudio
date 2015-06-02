@@ -34,8 +34,7 @@
     <style name="myAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/tj_red_dark_toolbar</item>
         <item name="colorPrimaryDark">@color/tj_red_light_status_bar</item>
-        <item name="android:statusBarColor">@color/tj_red_light_status_bar</item>
-
+        <!--<item name="android:statusBarColor">@color/tj_red_light_status_bar</item>-->
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 </resources>

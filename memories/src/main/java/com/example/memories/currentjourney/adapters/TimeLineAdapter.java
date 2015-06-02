@@ -180,7 +180,7 @@ public class TimeLineAdapter extends BaseAdapter {
                 } else {
                     likedBy.add(TJPreferences.getUserId(context));
                     Log.d(TAG, "heart full");
-                    holder.timelineItemFavBtn.setImageResource(R.drawable.heart_full);
+                    holder.timelineItemFavBtn.setImageResource(R.drawable.heart_filled_red);
                 }
 
                 // update the value in the list and database
@@ -216,7 +216,7 @@ public class TimeLineAdapter extends BaseAdapter {
         }else{
             holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikedBy().size()));
             if (memory.getLikedBy().contains(TJPreferences.getUserId(context))){
-                holder.timelineItemFavBtn.setImageResource(R.drawable.heart_full);
+                holder.timelineItemFavBtn.setImageResource(R.drawable.heart_filled_red);
             }else {
                 holder.timelineItemFavBtn.setImageResource(R.drawable.heart_empty);
             }

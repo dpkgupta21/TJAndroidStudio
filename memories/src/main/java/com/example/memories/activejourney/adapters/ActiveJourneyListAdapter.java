@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,16 +67,26 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         // - replace the contents of the view with that element
         final Journey journeyItem = mDataset.get(position);
         final String name = journeyItem.getName();
+        final String buddyCount = journeyItem.getBuddies().size() + " people";
+        final String place = "Bangalore";
 
         Log.d(TAG, "info are : " + name);
 
         holder.journeyName.setText(name);
+        holder.journeyBuddyCount.setText(buddyCount);
+        holder.journeyPlace.setText(place);
 
         Picture coverPic = PictureDataSource.getRandomPicOfJourney(mDataset.get(position).getIdOnServer(), mContext);
 
         if (coverPic != null) {
             try {
                 holder.journeyCoverPic.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(mContext, coverPic.getPicThumbnailPath(), 512, 384));
+                AlphaAnimation alpha = new AlphaAnimation(0.5F, 0.5F); // change values as you want
+                alpha.setDuration(0); // Make animation instant
+                alpha.setFillAfter(true); // Tell it to persist after the animation ends
+
+                // And then on your imageview
+                holder.journeyCoverPic.startAnimation(alpha);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -100,12 +111,16 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         public TextView journeyName;
+        public TextView journeyBuddyCount;
+        public TextView journeyPlace;
         public ImageView journeyCoverPic;
 
         public ViewHolder(View v) {
             super(v);
             v.setOnClickListener(this);
             journeyName = (TextView) v.findViewById(R.id.active_journey_list_name);
+            journeyBuddyCount = (TextView) v.findViewById(R.id.active_journey_list_buddy_count);
+            journeyPlace = (TextView) v.findViewById(R.id.active_journey_list_buddy_place);
             journeyCoverPic = (ImageView) v.findViewById(R.id.active_journey_cover_pic);
         }
 

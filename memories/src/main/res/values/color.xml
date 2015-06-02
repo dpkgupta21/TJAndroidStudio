@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--basic common colors-->
     <color name="red">#CC0000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
@@ -41,7 +42,7 @@
     <color name="black_semi_transparent">#B2000000</color>
     <color name="profile_background">#FFAD0E</color>
 
-    <color name="primaryColor">#2196F3</color>
-    <color name="primaryColorDark">#0D47A1</color>
+    <color name="primaryColor">#e84c3d</color>
+    <color name="primaryColorDark">#c83426</color>
 
 </resources>
