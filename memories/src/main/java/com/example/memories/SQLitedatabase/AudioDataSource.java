@@ -46,8 +46,8 @@ public class AudioDataSource {
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         List<Audio> audioList = getAudiosList(context, cursor);
-        db.close();
         cursor.close();
+        db.close();
         return audioList;
     }
 
@@ -70,8 +70,8 @@ public class AudioDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         List<Memories> audioList = getAudioMemoriesList(context, cursor);
-        db.close();
         cursor.close();
+        db.close();
         Log.d(TAG, "audios fetched successfully " + audioList.size());
         return audioList;
     }
@@ -177,8 +177,8 @@ public class AudioDataSource {
             cursor.moveToFirst();
 
         Audio audio = getAudiosList(context, cursor).get(0);
-        db.close();
         cursor.close();
+        db.close();
         return audio;
     }
 

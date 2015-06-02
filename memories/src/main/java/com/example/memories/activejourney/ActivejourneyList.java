@@ -119,7 +119,7 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
-        Log.d(TAG, "sign in contacts fetched successfully");
+        Log.d(TAG, "all contacts of journey which were not present fetched successfully");
     }
 
     @Override

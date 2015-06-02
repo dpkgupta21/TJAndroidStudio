@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.memories.R;
+import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.audio.AudioDetail;
+import com.example.memories.audio.DownloadAudioAsyncTask;
 import com.example.memories.models.Audio;
 import com.example.memories.models.CheckIn;
 import com.example.memories.models.Contact;
@@ -26,7 +28,6 @@ import com.example.memories.models.Picture;
 import com.example.memories.models.Video;
 import com.example.memories.picture.PictureDetail;
 import com.example.memories.utility.AudioPlayer;
-import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.LoadBitmapFromPath;
 import com.example.memories.utility.TJPreferences;
@@ -35,7 +36,7 @@ import com.example.memories.video.VideoDetail;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeLineAdapter extends BaseAdapter {
+public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTask.OnAudioDownloadListener {
 
     private static final String TAG = "TimeLineAdapter";
     Context context;
@@ -46,12 +47,14 @@ public class TimeLineAdapter extends BaseAdapter {
     private boolean isPlaying;
     private AudioPlayer mPlayer;
 
+    private ProgressDialog pDialog;
+
     public TimeLineAdapter(Context context, List<Memories> memoriesList) {
         Log.d(TAG, "constructor called");
         this.context = context;
         this.memoriesList = memoriesList;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        pDialog = new ProgressDialog(context);
     }
 
     public void setMemoriesList(List<Memories> memoriesList){
@@ -231,17 +234,10 @@ public class TimeLineAdapter extends BaseAdapter {
                 Picture pic = (Picture) memoriesList.get(position);
                 if (pic.getPicThumbnailPath() != null) {
                     LoadBitmapFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, 256, 192, context);
-//					try {
-//						holder.timelineItemImage.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(
-//								context, pic.getDataLocalURL(), 680, 250));
-//					} catch (FileNotFoundException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
                     holder.timelineItemCaption.setText(pic.getCaption());
 
                 } else {
-                    Log.d(TAG, "no local data URL set");
+                    Log.d(TAG, "no thumbnail present");
                 }
                 break;
             case 1:
@@ -253,20 +249,18 @@ public class TimeLineAdapter extends BaseAdapter {
 
                         if (!isPlaying) {
                             if (audio.getDataLocalURL() == null) {
-                                ProgressDialog pDialog = new ProgressDialog(context);
                                 pDialog.setMessage("Loading...");
                                 pDialog.show();
-                                audio.setDataLocalURL(AudioUtil.saveAudio(context, audio));
-                                pDialog.dismiss();
+                                DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(TimeLineAdapter.this, audio);
+                                asyncTask.execute();
+                            }else {
+                                mPlayer = new AudioPlayer(audio.getDataLocalURL());
+                                mPlayer.startPlaying();
                             }
-                            mPlayer = new AudioPlayer(audio.getDataLocalURL());
-                            mPlayer.startPlaying();
                         } else {
                             mPlayer.stopPlaying();
                         }
                         isPlaying = !isPlaying;
-
-                        // HelpMe.playAudio(audio.getDataURL(), context);
                     }
                 });
                 Log.d(TAG, "iN AUDIO ENDED HERE");
@@ -351,6 +345,14 @@ public class TimeLineAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    @Override
+    public void onAudioDownload(String audioLocalUrl, Audio audio) {
+        pDialog.dismiss();
+        mPlayer = new AudioPlayer(audioLocalUrl);
+        mPlayer.startPlaying();
+        AudioDataSource.updateDataLocalUrl(context, audio.getId(), audioLocalUrl);
     }
 
     public static class ViewHolder {

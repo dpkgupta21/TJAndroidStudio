@@ -1,5 +1,6 @@
 package com.example.memories.video;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class VideoDetail extends AppCompatActivity {
+public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener{
 
     private static final String TAG = "<VideoDetail>";
     List<String> likedBy;
@@ -54,6 +55,7 @@ public class VideoDetail extends AppCompatActivity {
     private Video mVideo;
     private boolean isNewVideo;
     private TextView noLikesTxt;
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class VideoDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Video");
         setSupportActionBar(toolbar);
+
+        pDialog = new ProgressDialog(this);
 
         currenTime = HelpMe.getCurrentTime();
         video = (ImageView) findViewById(R.id.thumbnail);
@@ -165,12 +169,15 @@ public class VideoDetail extends AppCompatActivity {
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "inside thumbnail onclick listener");
                 if (mVideo.getDataLocalURL() != null) {
+                    Log.d(TAG, "video url is not null");
                     Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(mVideo.getDataLocalURL())));
                     mediaIntent.setDataAndType(Uri.fromFile(new File(mVideo.getDataLocalURL())), "video/*");
                     startActivity(mediaIntent);
                 } else {
-                    VideoUtil.downloadAndPlayVideo(VideoDetail.this, mVideo);
+                    pDialog.setMessage("downloading video please wait");
+                    new DownloadVideoAsyncTask(VideoDetail.this, mVideo).execute();
                 }
             }
         });
@@ -253,6 +260,15 @@ public class VideoDetail extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onVideoDownload(String videoLocalUrl, Video video) {
+        VideoDataSource.updateVideoLocalUrl(this, video.getDataLocalURL(), video.getId());
+        Log.d(TAG, "video downloaded successfully now displaying it");
+        pDialog.dismiss();
+        Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(mVideo.getDataLocalURL())));
+        mediaIntent.setDataAndType(Uri.fromFile(new File(mVideo.getDataLocalURL())), "video/*");
+        startActivity(mediaIntent);
+    }
 }
 
 
