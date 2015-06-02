@@ -30,7 +30,6 @@ import com.example.memories.utility.TJPreferences;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -68,22 +67,23 @@ public class CheckInDetails extends AppCompatActivity {
             Log.d(TAG, "latitude, longitude " + lat + " " + longi);
         }
         //Get all the friends
-        String buddyIds[] = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
-        if (buddyIds != null) {
-            mSelectedFriends = Arrays.asList(buddyIds);
-        }
-
-        // get the friends list
-/*        Integer buddyCount = getResources().getStringArray(R.array.journey_buddies_list).length - 1;
-        String buddiesList = getResources().getStringArray(R.array.journey_buddies_list)[0]
-                + " and " + buddyCount.toString() + " others";*/
+        mSelectedFriends = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
 
         // update the textview in the layout
-        checkinDetailsCaption = (EditText) findViewById(R.id.checkin_details_caption);
-        checkinDetailsPlace = (TextView) findViewById(R.id.checkin_details_location);
-        checkinDetailsBuddies = (TextView) findViewById(R.id.checkin_friends);
+        checkinDetailsCaption = (EditText)
+
+                findViewById(R.id.checkin_details_caption);
+
+        checkinDetailsPlace = (TextView)
+
+                findViewById(R.id.checkin_details_location);
+
+        checkinDetailsBuddies = (TextView)
+
+                findViewById(R.id.checkin_friends);
 
         checkinDetailsPlace.append(placeName);
+
         setSelectedFriends();
 
     }

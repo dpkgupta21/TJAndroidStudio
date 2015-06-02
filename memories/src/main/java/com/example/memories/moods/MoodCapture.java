@@ -29,7 +29,7 @@ import java.util.List;
 
 public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.OnEmoticonSelectListener {
 
-    private static final String TAG = "<CaptureMoods>";
+    private static final String TAG = "<MoodCapture>";
     private static int PICK_CONTACTS = 1;
     TextView noFriendsSelectedTxt;
     private ImageButton selectMoodImgBtn;
@@ -50,21 +50,9 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         selectMoodImgBtn = (ImageButton) findViewById(R.id.mood_select_mood_imgbtn);
         moodText = (TextView) findViewById(R.id.mood_text);
         moodReasonEditTxt = (EditText) findViewById(R.id.mood_because_of_txt);
-        mContactsList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
 
-        /*
-        String[] friendIds = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
-        Log.d(TAG, "all buddys in the journey are" + friendIds);
-<<<<<<< HEAD
-        if (friendIds != null) {
-            mContactsList = Arrays.asList(friendIds);
-=======
-            if (friendIds != null) {
-            mSelectedFriends = Arrays.asList(friendIds);
->>>>>>> origin/abhi
-            Log.d(TAG, "mselectedFriends are" + mSelectedFriends.isEmpty());
-            setSelectedFriends();
-        }*/
+        mContactsList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        Log.d(TAG , "buddies in journey are " + mContactsList.size());
     }
 
     private void setSelectedFriends() {
@@ -104,7 +92,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         String user_id = TJPreferences.getUserId(this);
 
         //Getting the contact ids of the selected contacts
-        List<String> selectedFriends = null;
+        List<String> selectedFriends = new ArrayList<>();
         for(Contact contact : mContactsList){
             if(contact.isSelected()){
                 selectedFriends.add(contact.getIdOnServer());

@@ -64,7 +64,10 @@ public class TimelineFragment extends Fragment {
         Log.d(TAG, "user_id = " + TJPreferences.getUserId(getActivity()));
 
         mListView = (ListView) rootView.findViewById(R.id.timelineList);
+        memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(),
+                TJPreferences.getActiveJourneyId(getActivity()));
         mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
+        mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override

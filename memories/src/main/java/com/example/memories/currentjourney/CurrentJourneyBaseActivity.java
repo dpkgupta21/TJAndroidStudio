@@ -20,6 +20,7 @@ import com.example.memories.customviews.SlidingTabLayout;
 import com.example.memories.moods.MoodCapture;
 import com.example.memories.note.CreateNotes;
 import com.example.memories.picture.PictureCapture;
+import com.example.memories.utility.TJPreferences;
 import com.example.memories.video.VideoCapture;
 
 public class CurrentJourneyBaseActivity extends AppCompatActivity {
@@ -35,7 +36,7 @@ public class CurrentJourneyBaseActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Current Journey");
-        toolbar.setSubtitle(JourneyDataSource.getCurrentJourney(this).getName());
+        toolbar.setSubtitle(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName());
         toolbar.setLogo(R.drawable.ic_launcher);
         setSupportActionBar(toolbar);
 

@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.memories.models.Contact;
-import com.example.memories.utility.TJPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class ContactDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        List<Contact> contacts = getContactsList(cursor, context);
+        List<Contact> contacts = getContactsListFromCursor(cursor, context);
         cursor.close();
         db.close();
 
@@ -66,7 +65,7 @@ public class ContactDataSource {
         String[] array = new String[contactIds.size()];
         Cursor cursor = db.rawQuery(query, contactIds.toArray(array));
         String contactId;
-        if(cursor.getCount() > 0) {
+        if (cursor.getCount() > 0) {
             existingContacts = new ArrayList<>();
             if (cursor.moveToFirst()) {
                 do {
@@ -74,7 +73,7 @@ public class ContactDataSource {
                     existingContacts.add(contactId);
                 } while (cursor.moveToNext());
             }
-            nonExistingContactsList = new ArrayList<String>();
+            nonExistingContactsList = new ArrayList<>();
             for (String id : contactIds) {
                 if (!existingContacts.contains(id)) {
                     nonExistingContactsList.add(id);
@@ -96,7 +95,7 @@ public class ContactDataSource {
                 + makePlaceholders(ids.length) + ")";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         Cursor cursor = db.rawQuery(query, ids);
-        List<Contact> contactsList = getContactsList(cursor, context);
+        List<Contact> contactsList = getContactsListFromCursor(cursor, context);
         Log.d(TAG, "buddies from current journey are " + contactsList.toString());
         cursor.close();
         db.close();
@@ -104,19 +103,27 @@ public class ContactDataSource {
     }
 
     public static List<Contact> getContactsFromJourney(Context context, String jId) {
-        Log.d(TAG, "fetch contacts from current journey");
+        Log.d(TAG, "in getContactsFromJourney");
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        String[] buddyIds = JourneyDataSource.getBuddyIdsFromJourney(context, jId);
-        Log.d(TAG, "active journey id = " + TJPreferences.getActiveJourneyId(context) + "no of nuddies = " + buddyIds.length);
-        for (int i = 0; i < buddyIds.length; i++) {
-            buddyIds[i] = buddyIds[i].trim();
+
+        List<String> buddyIds = JourneyDataSource.getBuddyIdsFromJourney(context, jId);
+        Log.d(TAG, "sie = " + buddyIds.size() + buddyIds.toString());
+
+        if (buddyIds == null || buddyIds.size() == 0) {
+            return null;
         }
+
+        String[] buddyIdsStringList = new String[buddyIds.size()];
+        buddyIdsStringList = buddyIds.toArray(buddyIdsStringList);
+
         String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " WHERE "
                 + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " IN ("
-                + makePlaceholders(buddyIds.length) + ")";
-        Cursor cursor = db.rawQuery(query, buddyIds);
-        List<Contact> contactsList = getContactsList(cursor, context);
-        Log.d(TAG, "buddies from current journey are " + contactsList);
+                + makePlaceholders(buddyIdsStringList.length) + ")";
+        Log.d(TAG, query + buddyIdsStringList);
+        Cursor cursor = db.rawQuery(query, buddyIdsStringList);
+
+        List<Contact> contactsList = getContactsListFromCursor(cursor, context);
+        Log.d(TAG, "buddies from current journey are " + contactsList.size());
 
         cursor.close();
         db.close();
@@ -131,14 +138,14 @@ public class ContactDataSource {
 
         Contact contact = null;
         if (cursor.moveToFirst()) {
-            contact = getContactsList(cursor, context).get(0);
+            contact = getContactsListFromCursor(cursor, context).get(0);
         }
         cursor.close();
         db.close();
         return contact;
     }
 
-    private static List<Contact> getContactsList(Cursor cursor, Context context) {
+    private static List<Contact> getContactsListFromCursor(Cursor cursor, Context context) {
         List<Contact> contactsList = new ArrayList<Contact>();
         Contact contact;
         if (cursor.moveToFirst()) {

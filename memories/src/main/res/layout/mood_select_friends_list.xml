@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,20 +8,20 @@
 
     <TextView
         android:id="@+id/friends_list_no_buddies_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"
-        android:text="You donot have any buddies in this journey."
-        android:layout_centerInParent="true" />
+        android:gravity="center"
+        android:text="You donot have any buddies in this journey." />
 
     <GridView
         android:id="@+id/friends_list"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         android:columnWidth="90dp"
         android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="10dp" />
 
-</RelativeLayout>
+</LinearLayout>

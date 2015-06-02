@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.example.memories.models.Journey;
 import com.example.memories.utility.Constants;
-import com.example.memories.utility.TJPreferences;
 import com.google.common.base.Joiner;
 
 import java.util.ArrayList;
@@ -48,22 +47,6 @@ public class JourneyDataSource {
         return journey_id;
     }
 
-    public static Journey getCurrentJourney(Context mContext) {
-        String currentJourneyId = null;
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
-                + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = '" + TJPreferences.getActiveJourneyId(mContext) + "'";
-        SQLiteDatabase db = MySQLiteHelper.getInstance(mContext).getReadableDatabase();
-        Log.e(TAG, selectQuery);
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        List<Journey> journeyList = parseJourneysAsList(mContext, c);
-
-        c.close();
-        db.close();
-        return journeyList.get(0);
-
-    }
-
     public static Journey getJourneyById(Context context, String journeyId) {
         Log.d(TAG, "inside getJourneyById");
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
@@ -77,21 +60,20 @@ public class JourneyDataSource {
         return journeyList.get(0);
     }
 
-    public static String[] getBuddyIdsFromJourney(Context context, String journeyId) {
+    public static List<String> getBuddyIdsFromJourney(Context context, String journeyId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        String dbQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + " FROM "
+        String dbQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + "," + MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY + " FROM "
                 + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
                 + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId;
         Cursor cursor = db.rawQuery(dbQuery, null);
-        String[] buddyIds = null;
+
+        List<String> buddyIds = new ArrayList<>();
         if (cursor.moveToFirst()) {
             String buddies = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
-            Log.d(TAG, "Buddies" + buddies);
-            buddyIds = (buddies.isEmpty() ? null : buddies.split(","));
+            Log.d(TAG, "Buddies ids list is = " + buddies);
+            buddyIds = (buddies.isEmpty() ? null : new ArrayList<>(Arrays.asList(buddies.split(","))));
         }
-        for (String s : buddyIds) {
-            Log.d(TAG, "buddies in array are" + s + ",,,");
-        }
+
         cursor.close();
         db.close();
         return buddyIds;

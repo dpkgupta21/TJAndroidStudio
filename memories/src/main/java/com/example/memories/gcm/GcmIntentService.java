@@ -13,6 +13,7 @@ import android.util.Log;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.SQLitedatabase.CheckinDataSource;
+import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.SQLitedatabase.NoteDataSource;
@@ -24,9 +25,12 @@ import com.example.memories.models.Mood;
 import com.example.memories.models.Note;
 import com.example.memories.models.Picture;
 import com.example.memories.models.Video;
+import com.example.memories.services.CustomResultReceiver;
+import com.example.memories.services.PullBuddiesService;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.PictureUtilities;
+import com.example.memories.utility.TJPreferences;
 import com.example.memories.utility.VideoUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -44,10 +48,13 @@ import java.util.List;
  * service is finished, it calls {@code completeWakefulIntent()} to release the
  * wake lock.
  */
-public class GcmIntentService extends IntentService {
+public class GcmIntentService extends IntentService implements CustomResultReceiver.Receiver {
     public static final int NOTIFICATION_ID = 1;
     public static final String TAG = "<GcmIntentService>";
     private NotificationManager mNotificationManager;
+    private static final int REQUEST_FETCH_BUDDIES = 1;
+    public CustomResultReceiver mReceiver;
+    private Journey jItem;
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -111,6 +118,9 @@ public class GcmIntentService extends IntentService {
         Log.d(TAG, " parseGcmMessage called");
         String type = bundle.get("type").toString();
         String journeyId;
+        String jName;
+        String tagline;
+        String createdBy;
 
         switch (Integer.parseInt(type)) {
             case HelpMe.TYPE_CREATE_MEMORY:
@@ -130,14 +140,32 @@ public class GcmIntentService extends IntentService {
                 Log.d(TAG, "type = create journey");
 
                 journeyId = bundle.get("id").toString();
+                createdBy = bundle.get("created_by").toString();
+                jName = bundle.get("name").toString();
+                tagline = bundle.get("tag_line").toString();
+
                 Log.d(TAG, "bundle buddy ids are " + bundle.get("buddy_ids"));
                 String buddyIds = (String) bundle.get("buddy_ids");
                 buddyIds = buddyIds.replace("[", "");
                 buddyIds = buddyIds.replace("]", "");
+                List<String> buddyIdsList = new ArrayList<>(Arrays.asList(buddyIds.split(",")));
+                buddyIdsList.add(createdBy);
+                buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
+                jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, Arrays.asList(buddyIds), Constants.JOURNEY_STATUS_ACTIVE);
 
-                Journey newJ = new Journey(journeyId, "deafault", "tagline", "Friends", "90", null, Arrays.asList(buddyIds), Constants.JOURNEY_STATUS_ACTIVE);
-                JourneyDataSource.createJourney(newJ, this);
+                // Check for all budddies if they exixst or not
+                // If not call PullBuddiesService
+                if (buddyIdsList.size() > 0) {
+                    ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(getBaseContext(), buddyIdsList);
+                    if (!buddyList.isEmpty() && buddyList != null) {
+                        Intent intent = new Intent(this, PullBuddiesService.class);
+                        intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
+                        intent.putExtra("RECEIVER", mReceiver);
+                        intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
+                        startService(intent);
+                    }
+                }
 
             default:
                 break;
@@ -151,8 +179,6 @@ public class GcmIntentService extends IntentService {
         String createdBy = data.getString("created_by");
         Long createdAt = HelpMe.getCurrentTime();
         Long updatedAt = HelpMe.getCurrentTime();
-        // Long createdAt = Long.parseLong(data.getString("created_at"));
-        // Long updatedAt = Long.parseLong(data.getString("updated_at"));
         String dataUrl;
         long size;
         String extension;
@@ -166,7 +192,7 @@ public class GcmIntentService extends IntentService {
             case HelpMe.SERVER_PICTURE_TYPE:
                 Log.d(TAG, "its picture type with idOnServer = " + idOnServer);
                 dataUrl = data.getString("data_url");
-                String thumb = data.getString("thumbnail");
+                String thumb = data.getString("thumb");
                 size = Long.parseLong(data.getString("size"));
                 extension = data.getString("extention");
                 caption = "nthing";
@@ -224,7 +250,7 @@ public class GcmIntentService extends IntentService {
                 reason = data.getString("reason");
 
                 buddyIds = new ArrayList<String>();
-                String array[] = data.getString("buddy_ids").split(",");
+                String array[] = data.getString("buddies").split(",");
                 for (String s : array) {
                     buddyIds.add(s);
                 }
@@ -255,5 +281,15 @@ public class GcmIntentService extends IntentService {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        Log.d(TAG, "in onReceiveResult" + resultCode);
+        if (resultCode == REQUEST_FETCH_BUDDIES) {
+            Log.d(TAG, "fetch buddies service completed");
+            JourneyDataSource.createJourney(jItem, this);
+        }
+        Log.d(TAG, "onReceiveResult completed");
     }
 }

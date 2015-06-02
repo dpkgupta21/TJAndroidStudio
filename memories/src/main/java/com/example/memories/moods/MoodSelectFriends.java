@@ -6,12 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.models.Contact;
@@ -37,32 +38,60 @@ public class MoodSelectFriends extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mContactsList = getIntent().getExtras().getParcelableArrayList("FRIENDS");
-        mGridView = (GridView) findViewById(R.id.friends_list);
+        // To avoid Nullpoiner exception in adapter
+        if (mContactsList == null) {
+            mContactsList = new ArrayList<>();
+        }
 
-        mAdapter = new FriendsGridAdapter(this, mContactsList);
-        mGridView.setAdapter(mAdapter);
+        if (mContactsList.size() == 0) {
+            TextView noBuddiesMsg = (TextView) findViewById(R.id.friends_list_no_buddies_msg);
+            noBuddiesMsg.setVisibility(View.VISIBLE);
+        } else {
+            mGridView = (GridView) findViewById(R.id.friends_list);
+            mGridView.setVisibility(View.VISIBLE);
 
-        mGridView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ImageView mOverlayImg = (ImageView) view.findViewById(R.id.overlayImg);
-                Log.d(TAG, "item clicked " + position);
-                boolean selected = mContactsList.get(position).isSelected();
-                if(selected){
-                    mOverlayImg.setVisibility(View.GONE);
-                }else {
-                    mOverlayImg.setVisibility(View.VISIBLE);
+            Log.d(TAG, "buddies in journey are " + mContactsList.size());
+            mAdapter = new FriendsGridAdapter(this, mContactsList);
+            mGridView.setAdapter(mAdapter);
+
+            mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ImageView mOverlayImg = (ImageView) view.findViewById(R.id.overlayImg);
+                    Log.d(TAG, "item clicked " + position);
+                    boolean selected = mContactsList.get(position).isSelected();
+                    if (selected) {
+                        mOverlayImg.setVisibility(View.GONE);
+                    } else {
+                        mOverlayImg.setVisibility(View.VISIBLE);
+                    }
+                    mContactsList.get(position).setSelected(!selected);
                 }
-                mContactsList.get(position).setSelected(!selected);
-            }
-        });
+            });
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, 0, 0, "Done").setIcon(R.drawable.ic_done)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar_with_done_only, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+            case R.id.action_done:
+                Log.d(TAG, "done clicked!");
+                Intent returnIntent = new Intent();
+                returnIntent.putParcelableArrayListExtra("FRIENDS", (ArrayList) mContactsList);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /*@Override
@@ -72,19 +101,6 @@ public class MoodSelectFriends extends AppCompatActivity {
         setResult(RESULT_CANCELED, returnIntent);
         finish();
     }*/
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 0:
-                Intent returnIntent = new Intent();
-                returnIntent.putParcelableArrayListExtra("FRIENDS", (ArrayList) mContactsList);
-                setResult(RESULT_OK, returnIntent);
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     // whenever the activity is called with a list ids of selected friends, fetch all the contacts from the current journey and
     // and mark the contacts as unselected whose ids are not present in the mSelectedFriends
