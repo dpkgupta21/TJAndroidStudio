@@ -153,7 +153,7 @@ public class GcmIntentService extends IntentService implements CustomResultRecei
                 buddyIdsList.add(createdBy);
                 buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
-                jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, Arrays.asList(buddyIds), Constants.JOURNEY_STATUS_ACTIVE);
+                jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE);
 
                 // Check for all budddies if they exixst or not
                 // If not call PullBuddiesService
