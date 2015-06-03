@@ -22,7 +22,7 @@ public class Constants {
     public static final String TRAVELJAR_FOLDER_PICTURE = TRAVELJAR_FOLDER_ROOT + "/Pictures/";
 
     //public static final String TRAVELJAR_API_BASE_URL = "https://www.traveljar.in/api/v1";
-    public static final String TRAVELJAR_API_BASE_URL = "http://192.168.1.3:3000/api/v1";
+    public static final String TRAVELJAR_API_BASE_URL = "http://192.168.1.10:3000/api/v1";
 
     public static final String JOURNEY_STATUS_ACTIVE = "ACTIVE";
     public static final String JOURNEY_STATUS_PENDING = "PENDING";
@@ -42,7 +42,7 @@ public class Constants {
 
     // BASE DOMAIN API
     //public  final static String URL_TJ_DOMAIN = "https://www.traveljar.in/";
-    public final static String URL_TJ_DOMAIN = "http://192.168.1.3:3000/";
+    public final static String URL_TJ_DOMAIN = "http://192.168.1.10:3000/";
 
     // USER APIS
     public static final String URL_SIGN_IN = URL_TJ_DOMAIN + "api/v1/users/login";
@@ -57,5 +57,9 @@ public class Constants {
     // MEMORIES APIS
     public static final String URL_MEMORIES_FETCH_ALL = URL_TJ_DOMAIN + "api/v1/journeys/";
     public static final String URL_MEMORY_UPLOAD = URL_TJ_DOMAIN + "api/v1/journeys/";
+
+    // WEATHER API
+    // OPEN WEATHER MAP
+    public static final String URL_WEATHER_OWM_GET_CURRENT_WEATHER = "http://api.openweathermap.org/data/2.5/weather";
 
 }

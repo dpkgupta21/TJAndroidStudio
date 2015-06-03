@@ -87,4 +87,21 @@ public class CheckIn extends Memories {
     public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         CheckinDataSource.updateFavourites(context, memId, likedBy);
     }
+
+    @Override
+    public String toString(){
+        return "id on server -> " + this.getIdOnServer()+"\n"+
+                "journey id -> " + this.getjId()+"\n"+
+                "memory type -> " + this.getMemType()+"\n"+
+                "created by -> " + this.getCreatedBy()+"\n"+
+                "created at -> " + this.getCreatedAt()+"\n"+
+                "liked by -> " + this.getLikedBy()+"\n"+
+                "checkin caption -> " + this.getCaption()+"\n"+
+                "latitude -> " + this.getLatitude()+"\n"+
+                "longitude -> " + this.getLongitude()+"\n"+
+                "checkin place name -> " + this.getCheckInPlaceName()+"\n"+
+                "checkin with -> " + this.getCheckInWith();
+
+    }
+
 }

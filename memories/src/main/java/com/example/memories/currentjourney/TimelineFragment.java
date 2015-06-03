@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
@@ -26,17 +24,15 @@ import java.util.List;
 public class TimelineFragment extends Fragment {
 
     private static final String TAG = "<TimelineFragment>";
-    public static TimeLineAdapter mAdapter;
-    private SessionManager session;
-    private String j_id;
+
     private ListView mListView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private List<Memories> memoriesList;
-
-
     private FloatingActionsMenu mFab;
     private FrameLayout baseActivityContentOverlay;
     private View rootView;
+
+    public static TimeLineAdapter mAdapter;
+    private List<Memories> memoriesList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,9 +52,10 @@ public class TimelineFragment extends Fragment {
          * redirect user to LoginActivity is he is not logged in
          * */
 
-        session = new SessionManager(getActivity());
+        SessionManager session = new SessionManager(getActivity());
         session.checkLogin(getActivity());
-        j_id = TJPreferences.getActiveJourneyId(getActivity());
+
+        String j_id = TJPreferences.getActiveJourneyId(getActivity());
         Log.d(TAG, "Yes user is logged in.....");
         Log.d(TAG, "j_id = " + j_id);
         Log.d(TAG, "user_id = " + TJPreferences.getUserId(getActivity()));
@@ -68,15 +65,6 @@ public class TimelineFragment extends Fragment {
                 TJPreferences.getActiveJourneyId(getActivity()));
         mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
         mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // selected item
-                Log.d(TAG, "position = " + position + ", and id = " + id + " on view = " + view);
-            }
-        });
-
 
         // Swipe to refersh tmline
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.timeline_swipe_refresh_layout);
@@ -84,7 +72,6 @@ public class TimelineFragment extends Fragment {
 
             @Override
             public void onRefresh() {
-                // TODO Auto-generated method stub
                 memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(),
                         TJPreferences.getActiveJourneyId(getActivity()));
                 mAdapter.updateList(memoriesList);
@@ -92,8 +79,6 @@ public class TimelineFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        j_id = TJPreferences.getActiveJourneyId(getActivity());
 
         // FAB ============================================
         // Configure floating action button
@@ -129,8 +114,10 @@ public class TimelineFragment extends Fragment {
                 return false;
             }
         });
-    }
 
+        // Weather api testing
+
+    }
 
     // Method overridden so that if a new activity is called and Fab menu is opened, it will be closed
     @Override
@@ -155,53 +142,4 @@ public class TimelineFragment extends Fragment {
         }
         super.onResume();
     }
-
-    // On clicking on options in FAB button
-    // Take them to their respective modules/screens
-
-/*    public void onFABClick(View v) {
-        // TODO Auto-generated method stub
-        Intent i;
-        if (mFab.isExpanded()) {
-            mFab.collapse();
-        }
-        switch (v.getId()) {
-            case R.id.button_mood:
-                Log.d(TAG, "set a mood clicked");
-                i = new Intent(getActivity(), MoodCapture.class);
-                startActivity(i);
-                break;
-            case R.id.button_checkin:
-                Log.d(TAG, "checkin clicked");
-                i = new Intent(getActivity(), CheckInPlacesList.class);
-                startActivity(i);
-                break;
-            case R.id.button_photo:
-                Log.d(TAG, "photo clicked");
-                i = new Intent(getActivity(), PictureCapture.class);
-                startActivity(i);
-                break;
-            case R.id.button_note:
-                i = new Intent(getActivity(), CreateNotes.class);
-                startActivity(i);
-                Log.d(TAG, "note clicked");
-                break;
-            case R.id.button_video:
-                Log.d(TAG, "video clicked");
-                i = new Intent(getActivity(), VideoCapture.class);
-                startActivity(i);
-                break;
-            case R.id.button_audio:
-                Log.d(TAG, "audio clicked");
-                i = new Intent(getActivity(), AudioCapture.class);
-                startActivity(i);
-                break;
-        }*/
-
-    //}
-/*
-    @Override
-    public void onClick(View v) {
-        onFABClick(v);
-    }*/
 }

@@ -140,6 +140,19 @@ public class Contact implements Comparable<Contact>, Parcelable {
         this.isSelected = isSelected;
     }
 
+    @Override
+    public String toString(){
+        return "id on server -> " + this.getIdOnServer()+"\n"+
+                "name -> " + this.getName()+"\n"+
+                "primary email -> " + this.getPrimaryEmail()+"\n"+
+                "status -> " + this.getStatus()+"\n"+
+                "pic server url -> " + this.getPicServerUrl()+"\n"+
+                "pic local url -> " + this.getPicLocalUrl()+"\n"+
+                "phone number -> " + this.getPhone_no()+"\n"+
+                "is on board -> " + this.isOnBoard()+"\n"+
+                "all journey ids -> " + this.getAllJourneyIds();
+    }
+
 
     @Override
     public int describeContents() {
