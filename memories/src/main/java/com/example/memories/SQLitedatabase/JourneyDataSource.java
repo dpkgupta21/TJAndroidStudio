@@ -82,7 +82,6 @@ public class JourneyDataSource {
     public static List<Journey> getAllActiveJourneys(Context context) {
 
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_ACTIVE + "'";
-        Log.d(TAG, "fetching journeys " + selectQuery);
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Log.e(TAG, selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -130,9 +129,7 @@ public class JourneyDataSource {
                 journey.setLaps(Arrays.asList(laps.split(",")));*/
                 journey.setJourneyStatus(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_STATUS)));
                 journeyList.add(journey);
-                Log.d(TAG, "everything fine upto here 5");
                 cursor.moveToNext();
-                Log.d(TAG, "everything fine upto here 6");
             }
         }
         return journeyList;

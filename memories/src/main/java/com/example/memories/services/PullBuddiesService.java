@@ -52,14 +52,16 @@ public class PullBuddiesService extends IntentService {
         fetchBuddies();
     }
 
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onstart command");
-        super.onStartCommand(intent, flags, startId);
         mReceiver = intent.getParcelableExtra("RECEIVER");
+        Log.d(TAG, "mreciever = " + mReceiver );
         REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
         buddyIds = intent.getStringArrayListExtra("BUDDY_IDS");
         noRequests = buddyIds.size();
         Log.d(TAG, "no of requets = " + noRequests + buddyIds + ",,,,");
+        super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
 
@@ -151,7 +153,9 @@ public class PullBuddiesService extends IntentService {
         noRequests--;
         if (noRequests == 0) {
             Bundle bundle = new Bundle();
+            Log.d(TAG, "mreciever = " + mReceiver );
             mReceiver.send(REQUEST_CODE, bundle);
+
         }
     }
 

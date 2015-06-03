@@ -102,7 +102,7 @@ public class Journey {
                 "name -> " + this.getName()+"\n"+
                 "tagline -> " + this.getTagLine()+"\n"+
                 "group type -> " + this.getGroupType()+"\n"+
-                "created by -> " + this.getGroupType()+"\n"+
+                "created by -> " + this.getCreatedBy()+"\n"+
                 "laps -> " + this.getLaps()+"\n"+
                 "buddies -> " + this.getBuddies()+"\n"+
                 "journey status -> " + this.getJourneyStatus();

@@ -133,6 +133,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
 
             // Fetch all those contacts which are not in the contacts list of current user but are on the journey
             if (journey.getBuddies() != null && !journey.getBuddies().isEmpty()) {
+                Log.d(TAG, "buddies are = " + journey.getBuddies());
                 ArrayList<String> buddyList = (ArrayList)ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
                 Log.d(TAG, "non existing contacts list is" + buddyList);
                 if (buddyList != null && !buddyList.isEmpty()) {

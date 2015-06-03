@@ -51,9 +51,6 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
     String regid = "";
     private EditText txtEmailAddress;
     private EditText txtPassword;
-    private boolean contactsFetched = false;
-    private boolean memoriesFetched = false;
-    private int REQUEST_FETCH_CONTACTS = 1;
     private int REQUEST_FETCH_MEMORIES = 2;
     private ProgressDialog pDialog;
 

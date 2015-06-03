@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -156,14 +157,23 @@ public class GcmIntentService extends IntentService implements CustomResultRecei
 
                 // Check for all budddies if they exixst or not
                 // If not call PullBuddiesService
+
                 if (buddyIdsList.size() > 0) {
+
                     ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(getBaseContext(), buddyIdsList);
+                    Log.d(TAG, "Updated buddeoes are = " + buddyList.toString() + buddyList.size());
                     if (!buddyList.isEmpty() && buddyList != null) {
+                        mReceiver = new CustomResultReceiver(new Handler());
+                        mReceiver.setReceiver(GcmIntentService.this);
+
                         Intent intent = new Intent(this, PullBuddiesService.class);
                         intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
                         intent.putExtra("RECEIVER", mReceiver);
                         intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
                         startService(intent);
+                    } else {
+                        Log.d(TAG, "There are no non-existing buddied.");
+                        JourneyDataSource.createJourney(jItem, this);
                     }
                 }
 
