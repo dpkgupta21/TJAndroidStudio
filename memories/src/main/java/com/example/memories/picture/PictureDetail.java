@@ -91,18 +91,19 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
             imagePath = mPicture.getDataLocalURL(); //path to image
             localThumbnailPath = mPicture.getPicThumbnailPath();
             //setup the state of favourite button
-            if (mPicture.getLikedBy() == null){
+            if (mPicture.getLikedBy() == null) {
                 noLikesTxt.setText("0");
                 mFavBtn.setImageResource(R.drawable.heart_empty);
-            }else{
+            } else {
                 noLikesTxt.setText(String.valueOf(mPicture.getLikedBy().size()));
-                if (mPicture.getLikedBy().contains(TJPreferences.getUserId(PictureDetail.this))){
+                if (mPicture.getLikedBy().contains(TJPreferences.getUserId(PictureDetail.this))) {
                     mFavBtn.setImageResource(R.drawable.heart_filled_red);
-                }else {
+                } else {
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 }
             }
         }
+
         //If the activity is started for a newly clicked picture
         if (extras.getString("imagePath") != null) {
             Log.d(TAG, "running for a newly clicked picture");
@@ -125,7 +126,6 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                     e.printStackTrace();
                 }
             }
-
 
             mPicture = new Picture(null, TJPreferences.getActiveJourneyId(this), HelpMe.PICTURE_TYPE, caption.getText().toString()
                     .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), currenTime, currenTime, null, localThumbnailPath);
@@ -154,10 +154,8 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         }
         if (profileImgPath != null) {
             try {
-                if (profileImgPath != null) {
-                    Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
-                    mProfileImg.setImageBitmap(bitmap);
-                }
+                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
+                mProfileImg.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -179,11 +177,11 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mPicture.getDataLocalURL() == null){
+                if (mPicture.getDataLocalURL() == null) {
                     pDialog.setMessage("Please wait while the picture is getting downloaded");
                     pDialog.show();
                     new DownloadPicture(mPicture, PictureDetail.this).startDownloadingPic();
-                }else{
+                } else {
                     Log.d(TAG, "profile pic is already present in the local so displaying it");
                     Intent intent = new Intent(PictureDetail.this, DisplayPicture.class);
                     intent.putExtra("PICTURE_PATH", mPicture.getDataLocalURL());
@@ -199,8 +197,8 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
             @Override
             public void onClick(View v) {
                 List<String> likedBy = mPicture.getLikedBy();
-                if(likedBy == null){
-                    likedBy = new ArrayList<String>();
+                if (likedBy == null) {
+                    likedBy = new ArrayList<>();
                 }
                 Log.d(TAG,
                         "fav button clicked position " + likedBy + TJPreferences.getUserId(PictureDetail.this));
@@ -266,7 +264,6 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
 
     @Override
     public void onDownloadPicture(Picture picture) {
-        mPicture = picture;
         PictureDataSource.updatePicLocalPath(this, picture.getDataLocalURL(), picture.getId());
         Log.d(TAG, "picture downloaded successfully now displaying it");
         pDialog.dismiss();

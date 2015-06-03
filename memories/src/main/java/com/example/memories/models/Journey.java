@@ -95,4 +95,16 @@ public class Journey {
     public boolean isAdmin(String userId){
         return userId.equals(this.getIdOnServer());
     }
+
+    @Override
+    public String toString(){
+        return "id on server -> " + this.getIdOnServer()+"\n"+
+                "name -> " + this.getName()+"\n"+
+                "tagline -> " + this.getTagLine()+"\n"+
+                "group type -> " + this.getGroupType()+"\n"+
+                "created by -> " + this.getGroupType()+"\n"+
+                "laps -> " + this.getLaps()+"\n"+
+                "buddies -> " + this.getBuddies()+"\n"+
+                "journey status -> " + this.getJourneyStatus();
+    }
 }

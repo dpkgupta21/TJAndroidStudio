@@ -101,4 +101,18 @@ public class Picture extends Memories {
         PictureDataSource.updateFavourites(context, memId, likedBy);
     }
 
+    @Override
+    public String toString(){
+        return "id on server -> " + this.getIdOnServer()+"\n"+
+                "journey id -> " + this.getjId()+"\n"+
+                "memory type -> " + this.getMemType()+"\n"+
+                "created by -> " + this.getCreatedBy()+"\n"+
+                "created at -> " + this.getCreatedAt()+"\n"+
+                "liked by -> " + this.getLikedBy()+"\n"+
+                "caption -> " + this.getCaption()+"\n"+
+                "picture server url -> " + this.getDataServerURL()+"\n"+
+                "picture local url -> " + this.getDataLocalURL()+"\n"+
+                "picture thumbnail url -> " + this.getPicThumbnailPath();
+    }
+
 }

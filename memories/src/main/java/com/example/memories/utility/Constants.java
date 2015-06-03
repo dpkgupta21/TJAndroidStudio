@@ -58,4 +58,8 @@ public class Constants {
     public static final String URL_MEMORIES_FETCH_ALL = URL_TJ_DOMAIN + "api/v1/journeys/";
     public static final String URL_MEMORY_UPLOAD = URL_TJ_DOMAIN + "api/v1/journeys/";
 
+    // WEATHER API
+    // OPEN WEATHER MAP
+    public static final String URL_WEATHER_OWM_GET_CURRENT_WEATHER = "http://api.openweathermap.org/data/2.5/weather";
+
 }

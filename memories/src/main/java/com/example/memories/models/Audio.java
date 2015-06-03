@@ -77,4 +77,18 @@ public class Audio extends Memories {
     public void setAudioDuration(long audioDuration) {
         this.audioDuration = audioDuration;
     }
+
+    @Override
+    public String toString(){
+        return "id on server -> " + this.getIdOnServer()+"\n"+
+                "journey id -> " + this.getjId()+"\n"+
+                "memory type -> " + this.getMemType()+"\n"+
+                "created by -> " + this.getCreatedBy()+"\n"+
+                "created at -> " + this.getCreatedAt()+"\n"+
+                "liked by -> " + this.getLikedBy()+"\n"+
+                "data server url -> " + this.getDataServerURL()+"\n"+
+                "data local url -> " + this.getDataLocalURL();
+
+
+    }
 }
