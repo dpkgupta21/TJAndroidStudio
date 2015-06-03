@@ -13,8 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.memories.R;
@@ -29,11 +29,18 @@ import java.io.IOException;
 
 public class AudioCapture extends AppCompatActivity {
 
+    private ProgressBar mProgressBar;
+    private ImageButton mRecordBtn;
+    private ImageButton mStopBtn;
+    private ImageButton mPreviewBtn;
+    private ImageButton mRetryBtn;
+    private TextView timerView;
     private static final String TAG = "CaptureVoice";
     private static String mFileName = null;
-    TextView timerView;
+
     Handler timerHandler = new Handler();
     long startTime = 0;
+    long audioDuration;
     Runnable timerRunnable = new Runnable() {
 
         @Override
@@ -45,13 +52,14 @@ public class AudioCapture extends AppCompatActivity {
             seconds = seconds % 60;
             timerView.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
             timerHandler.postDelayed(this, 500);
+            audioDuration = seconds;
         }
     };
-    private LinearLayout startRecording;
+    /*private LinearLayout startRecording;
     private LinearLayout playRecording;
     private ImageView recordImg;
     private TextView recordTxt;
-    private TextView playTxt;
+    private TextView playTxt;*/
     private boolean recording = false;
     private boolean playing = false;
     private MediaRecorder mRecorder = null;
@@ -78,48 +86,66 @@ public class AudioCapture extends AppCompatActivity {
         toolbar.setTitle("Capture Audio");
         setSupportActionBar(toolbar);
 
-        startRecording = (LinearLayout) findViewById(R.id.startRecording);
-        playRecording = (LinearLayout) findViewById(R.id.playRecording);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mRecordBtn = (ImageButton)findViewById(R.id.audio_capture_record_btn);
+        mStopBtn = (ImageButton)findViewById(R.id.audio_capture_stop_btn);
+        mPreviewBtn = (ImageButton)findViewById(R.id.audio_capture_preview_btn);
+        mRetryBtn = (ImageButton)findViewById(R.id.audio_capture_retry_btn);
         timerView = (TextView) findViewById(R.id.timerView);
-        playTxt = (TextView) findViewById(R.id.playTxt);
-        recordImg = (ImageView) findViewById(R.id.recordImg);
-        recordTxt = (TextView) findViewById(R.id.recordTxt);
 
-        startRecording.setOnClickListener(new OnClickListener() {
+        setLayoutForAudioRecord();
+
+        mRecordBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                setLayoutForAudioStop();
                 if (!recording) {
                     Log.d("TAG", "condition 1");
                     startTime = System.currentTimeMillis();
                     timerHandler.postDelayed(timerRunnable, 0);
-                    recordTxt.setText("Stop Recording");
                     startRecording();
-                } else {
-                    Log.d("TAG", "condition 2");
-                    recordTxt.setText("Start Recording");
-                    timerHandler.removeCallbacks(timerRunnable);
-                    stopRecording();
                 }
-                recording = !recording;
+                recording = true;
             }
         });
 
-        playRecording.setOnClickListener(new OnClickListener() {
+        mStopBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recording = false;
+                timerHandler.removeCallbacks(timerRunnable);
+                Log.d(TAG, "audio duration is " + audioDuration);
+                stopRecording();
+                setLayoutForAudioPreview();
+            }
+        });
+
+        mPreviewBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!playing) {
                     startTime = System.currentTimeMillis();
                     timerHandler.postDelayed(timerRunnable, 0);
-                    playTxt.setText("Stop playing");
                     startPlaying();
-                } else {
-                    playTxt.setText("Start playing");
-                    timerHandler.removeCallbacks(timerRunnable);
-                    stopPlaying();
                 }
                 playing = !playing;
             }
         });
+
+        mRetryBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLayoutForAudioRecord();
+                if (playing) {
+                    stopPlaying();
+                    playing = false;
+                }
+                audioDuration = 0;
+                timerHandler.removeCallbacks(timerRunnable);
+                timerView.setText(String.format("00:00:00"));
+            }
+        });
+
     }
 
     @Override
@@ -164,7 +190,7 @@ public class AudioCapture extends AppCompatActivity {
         Audio audio = new Audio(null, TJPreferences.getActiveJourneyId(this), HelpMe.AUDIO_TYPE,
                 "3gp", (new File(mFileName)).length(), null, mFileName,
                 TJPreferences.getUserId(this), System.currentTimeMillis(),
-                System.currentTimeMillis(), null);
+                System.currentTimeMillis(), null, audioDuration);
         AudioDataSource.createAudio(audio, this);
         Log.d(TAG, "new video added in local DB successfully");
         AudioUtil.uploadAudio(this, audio);
@@ -176,6 +202,13 @@ public class AudioCapture extends AppCompatActivity {
             mPlayer.setDataSource(mFileName);
             mPlayer.prepare();
             mPlayer.start();
+            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    playing = false;
+                    timerHandler.removeCallbacks(timerRunnable);
+                }
+            });
         } catch (IOException e) {
             Log.e(TAG, "prepare() failed");
         }
@@ -186,15 +219,33 @@ public class AudioCapture extends AppCompatActivity {
         mPlayer = null;
     }
 
+    private void setLayoutForAudioRecord(){
+        mRecordBtn.setVisibility(View.VISIBLE);
+        mStopBtn.setVisibility(View.GONE);
+        mPreviewBtn.setVisibility(View.GONE);
+        mRetryBtn.setVisibility(View.GONE);
+    }
+
+    private void setLayoutForAudioStop(){
+        mRecordBtn.setVisibility(View.GONE);
+        mStopBtn.setVisibility(View.VISIBLE);
+        mPreviewBtn.setVisibility(View.GONE);
+        mRetryBtn.setVisibility(View.GONE);
+    }
+
+    private void setLayoutForAudioPreview(){
+        mRecordBtn.setVisibility(View.GONE);
+        mStopBtn.setVisibility(View.GONE);
+        mPreviewBtn.setVisibility(View.VISIBLE);
+        mRetryBtn.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_done:
                 saveAndUploadAudio();
-                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);*/
                 finish();
                 return true;
             default:

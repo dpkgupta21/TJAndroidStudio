@@ -148,7 +148,7 @@ public class GcmIntentService extends IntentService implements CustomResultRecei
                 String buddyIds = (String) bundle.get("buddy_ids");
                 buddyIds = buddyIds.replace("[", "");
                 buddyIds = buddyIds.replace("]", "");
-                List<String> buddyIdsList = new ArrayList<>(Arrays.asList(buddyIds.split(",")));
+                List<String> buddyIdsList = new ArrayList(Arrays.asList(buddyIds.split(",")));
                 buddyIdsList.add(createdBy);
                 buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
@@ -213,7 +213,7 @@ public class GcmIntentService extends IntentService implements CustomResultRecei
                 extension = data.getString("extention");
 
                 Audio newAudio = new Audio(idOnServer, jId, HelpMe.AUDIO_TYPE, extension, size,
-                        dataUrl, null, createdBy, createdAt, updatedAt, null);
+                        dataUrl, null, createdBy, createdAt, updatedAt, null, 0);
 
                 AudioDataSource.createAudio(newAudio, this);
                 //AudioUtil.downloadAudio(this, newAudio);

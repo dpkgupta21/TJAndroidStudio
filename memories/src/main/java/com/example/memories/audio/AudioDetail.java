@@ -47,6 +47,7 @@ public class AudioDetail extends AppCompatActivity {
     private Audio mAudio;
     private boolean isNewAudio;
     private TextView noLikesTxt;
+    private long mAudioDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +97,7 @@ public class AudioDetail extends AppCompatActivity {
         if (extras.getString("imagePath") != null) {
             isNewAudio = true;
             audioPath = extras.getString("imagePath");
-            mAudio = new Audio(null, TJPreferences.getActiveJourneyId(this), HelpMe.AUDIO_TYPE, "3gp", 1223, null, audioPath, TJPreferences.getUserId(this), currenTime, currenTime, null);
+            mAudio = new Audio(null, TJPreferences.getActiveJourneyId(this), HelpMe.AUDIO_TYPE, "3gp", 1223, null, audioPath, TJPreferences.getUserId(this), currenTime, currenTime, null, 0);
         }
 
         //Setting fields common in both the cases

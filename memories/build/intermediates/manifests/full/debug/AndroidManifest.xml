@@ -112,7 +112,7 @@
             android:name="com.example.memories.newjourney.LocationList"
             android:label="@string/app_name" />
         <activity
-            android:name="com.example.memories.profile.Profile"
+            android:name="com.example.memories.profile.ProfileActivity"
             android:label="@string/app_name" />
         <activity
             android:name="com.example.memories.profile.ChangePassword"

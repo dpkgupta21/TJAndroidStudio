@@ -4,25 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="300dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/black">
 
         <ImageView
             android:id="@+id/cover_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
+            android:alpha="0.3"
             android:scaleType="fitXY"
+            android:background="@color/translucent"
             android:src="@drawable/abhi" />
+
+        </FrameLayout>
 
         <com.example.memories.customviews.MyCircularImageView
             android:id="@+id/profile_img"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/profile_image_empty" />
 
         <TextView
@@ -33,64 +42,47 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="Abhinav Mittal"
+            android:textSize="20sp"
             android:textColor="@color/white"
             android:textStyle="bold" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#1D3FAD">
 
         <TextView
             android:id="@+id/profile_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:padding="20dp"
+            android:layout_below="@id/profile_name"
+
             android:text="Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum "
             android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_status"
-            android:layout_centerHorizontal="true"
-            android:padding="20dp"
-            android:text="Lives in jhopdi | abcd@pqrmail.com"
-            android:textColor="@color/white" />
-
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/edit_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1D3FAD">
+        android:padding="10dp"
+        android:visibility="gone"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#112C85"
-            android:gravity="center"
-            android:paddingBottom="25dp"
-            android:paddingTop="25dp"
-            android:text="980 miles travelled"
-            android:textColor="@color/white" />
+            android:hint="Name"
+            />
 
-        <TextView
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/edit_status"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#0F2F92"
-            android:gravity="center"
-            android:paddingBottom="25dp"
-            android:paddingTop="25dp"
-            android:text="6 journeys"
-            android:textColor="@color/white" />
+            android:hint="Status"
+            />
 
-    </RelativeLayout>
+    </LinearLayout>
+
 
 </LinearLayout>

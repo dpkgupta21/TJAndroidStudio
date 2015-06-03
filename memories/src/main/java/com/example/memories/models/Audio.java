@@ -11,10 +11,11 @@ public class Audio extends Memories {
     private long size;
     private String dataServerURL;
     private String dataLocalURL;
+    private long audioDuration;
 
     public Audio(String idOnServer, String jId, String memType, String ext, long size,
                  String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                 long updatedAt, List<String> likedBy) {
+                 long updatedAt, List<String> likedBy, long audioDuration) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -26,6 +27,7 @@ public class Audio extends Memories {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.likedBy = likedBy;
+        this.audioDuration = audioDuration;
     }
 
     public Audio() {
@@ -66,5 +68,13 @@ public class Audio extends Memories {
 
     public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         AudioDataSource.updateFavourites(context, memId, likedBy);
+    }
+
+    public long getAudioDuration() {
+        return audioDuration;
+    }
+
+    public void setAudioDuration(long audioDuration) {
+        this.audioDuration = audioDuration;
     }
 }

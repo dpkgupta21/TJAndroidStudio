@@ -186,8 +186,8 @@ public final class R {
 		public static final int abc_list_selector_holo_light = 0x7f02002b;
 		public static final int fab_bg_mini = 0x7f020088;
 		public static final int fab_bg_normal = 0x7f020089;
-		public static final int shadow = 0x7f0200d9;
-		public static final int shadow_mini = 0x7f0200da;
+		public static final int shadow = 0x7f0200da;
+		public static final int shadow_mini = 0x7f0200db;
 	}
 	public static final class id {
 		public static final int action_bar = 0x7f0c005a;
