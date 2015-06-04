@@ -17,8 +17,7 @@ import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Journey;
 import com.example.memories.models.Picture;
-import com.example.memories.services.CustomResultReceiver;
-import com.example.memories.services.PullBuddiesService;
+import com.example.memories.services.PullBuddies;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 
@@ -26,12 +25,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourneyListAdapter.ViewHolder> {
+public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourneyListAdapter.ViewHolder> implements PullBuddies.OnTaskFinishListener{
     private static final String TAG = "<ActiveJListAdapter>";
     private List<Journey> mDataset;
     private Context mContext;
-    private static final int REQUEST_FETCH_BUDDIES = 1;
-    public CustomResultReceiver mReceiver;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ActiveJourneyListAdapter(List<Journey> myDataset, Context context) {
@@ -134,13 +131,11 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             // Fetch all those contacts which are not in the contacts list of current user but are on the journey
             if (journey.getBuddies() != null && !journey.getBuddies().isEmpty()) {
                 ArrayList<String> buddyList = (ArrayList)ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
+
                 Log.d(TAG, "non existing contacts list is" + buddyList);
+
                 if (buddyList != null && !buddyList.isEmpty()) {
-                    Intent intent = new Intent(mContext, PullBuddiesService.class);
-                    intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
-                    intent.putExtra("RECEIVER", mReceiver);
-                    intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
-                    mContext.startService(intent);
+                    new PullBuddies(mContext, buddyList, ActiveJourneyListAdapter.this).fetchBuddies();
                 } else {
                     Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -155,5 +150,14 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
 
         }
     }
+
+
+    @Override
+    public void onFinishTask() {
+        Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.getApplicationContext().startActivity(intent);
+    }
+
 
 }

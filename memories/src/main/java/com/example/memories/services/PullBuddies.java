@@ -1,10 +1,7 @@
 package com.example.memories.services;
 
-import android.app.IntentService;
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.ResultReceiver;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -30,47 +27,30 @@ import java.util.List;
 /**
  * Created by ankit on 20/5/15.
  */
-public class PullBuddiesService extends IntentService {
+public class PullBuddies {
 
     private static final String TAG = "PULL_BUDDIES_SERVICE";
-    List<String> buddyIds;
-    private ResultReceiver mReceiver;
-    private int REQUEST_CODE;
+    List<String> mBuddyIds;
     private int noRequests;
 
-    public PullBuddiesService(String name) {
-        super("PullMemoriesService");
-    }
+    private OnTaskFinishListener mListner;
+    private Context mContext;
 
-    public PullBuddiesService() {
-        super("pull buddies service");
-    }
-
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        Log.d(TAG, "on handle intent called");
-        fetchBuddies();
-    }
-
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onstart command");
-        super.onStartCommand(intent, flags, startId);
-        mReceiver = intent.getParcelableExtra("RECEIVER");
-        REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
-        buddyIds = intent.getStringArrayListExtra("BUDDY_IDS");
+    public PullBuddies(Context context, List<String> buddyIds, OnTaskFinishListener listener) {
+        mListner = listener;
+        mBuddyIds = buddyIds;
+        mContext = context;
         noRequests = buddyIds.size();
-        Log.d(TAG, "no of requets = " + noRequests + buddyIds + ",,,,");
-        return START_STICKY;
     }
 
     public void fetchBuddies() {
-        Log.d(TAG, "fetching profiles" + buddyIds.toString() + ",");
+        Log.d(TAG, "fetching profiles" + mBuddyIds.toString() + ",");
         String requestUrl;
         CustomJsonRequest jsonRequest;
 
-        for (String s : buddyIds) {
+        for (String s : mBuddyIds) {
             Log.d(TAG, "fetching profiles for buddies ->" + s + ",");
-            requestUrl = Constants.URL_USER_SHOW_DETAILS + "/" + s + "?api_key=" + TJPreferences.getApiKey(this);
+            requestUrl = Constants.URL_USER_SHOW_DETAILS + "/" + s + "?api_key=" + TJPreferences.getApiKey(mContext);
             jsonRequest = new CustomJsonRequest(Request.Method.GET, requestUrl, null,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -103,6 +83,8 @@ public class PullBuddiesService extends IntentService {
                                                                 + idOnServer + ".jpeg";
                                                         out = new FileOutputStream(fileName);
                                                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                                                        noRequests--;
+                                                        checkPendingRequests();
                                                     } catch (Exception e) {
                                                         e.printStackTrace();
                                                     } finally {
@@ -123,15 +105,16 @@ public class PullBuddiesService extends IntentService {
                                 } else {
                                     // check whether the gumnaam image already exists
                                     picServerUrl = null;
-                                    HelpMe.createImageIfNotExist(PullBuddiesService.this);
+                                    HelpMe.createImageIfNotExist(mContext);
 
                                     picLocalUrl = Constants.GUMNAAM_IMAGE_URL;
+                                    noRequests--;
+                                    checkPendingRequests();
                                 }
                                 Log.d(TAG, "id = " + idOnServer + "name = " + userName + email + " " + picServerUrl);
                                 Contact tempContact = new Contact(idOnServer, userName, email, status, picServerUrl, picLocalUrl,
                                         phone_no, allJourneyIds, true, interests);
-                                ContactDataSource.createContact(tempContact, PullBuddiesService.this);
-                                onFinish();
+                                ContactDataSource.createContact(tempContact, mContext);
                             } catch (JSONException ex) {
                                 Log.d(TAG, "exception in parsing buddy received from server" + ex);
                             }
@@ -147,12 +130,16 @@ public class PullBuddiesService extends IntentService {
         }
     }
 
-    private void onFinish() {
-        noRequests--;
-        if (noRequests == 0) {
-            Bundle bundle = new Bundle();
-            mReceiver.send(REQUEST_CODE, bundle);
+    private void checkPendingRequests(){
+        Log.d(TAG, "no of pending requests -> " + noRequests);
+        if(noRequests <= 0){
+            Log.d(TAG, "all requests completed now exiting");
+            mListner.onFinishTask();
         }
+    }
+
+    public interface OnTaskFinishListener{
+        void onFinishTask();
     }
 
 }
