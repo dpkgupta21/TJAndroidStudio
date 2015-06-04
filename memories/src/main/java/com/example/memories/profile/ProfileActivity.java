@@ -69,7 +69,7 @@ public class ProfileActivity extends BaseActivity {
 
         mUserName.setText(TJPreferences.getUserName(this));
         mStatus.setText(TJPreferences.getUserStatus(this));
-        
+
         setProfileImage();
 
         mProfileImg.setOnClickListener(null);
