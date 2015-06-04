@@ -14,7 +14,6 @@ import android.util.Log;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.SQLitedatabase.CheckinDataSource;
-import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.SQLitedatabase.NoteDataSource;
@@ -26,8 +25,6 @@ import com.example.memories.models.Mood;
 import com.example.memories.models.Note;
 import com.example.memories.models.Picture;
 import com.example.memories.models.Video;
-import com.example.memories.services.CustomResultReceiver;
-import com.example.memories.services.PullBuddiesService;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.PictureUtilities;
@@ -49,13 +46,10 @@ import java.util.List;
  * service is finished, it calls {@code completeWakefulIntent()} to release the
  * wake lock.
  */
-public class GcmIntentService extends IntentService implements CustomResultReceiver.Receiver {
+public class GcmIntentService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
     public static final String TAG = "<GcmIntentService>";
     private NotificationManager mNotificationManager;
-    private static final int REQUEST_FETCH_BUDDIES = 1;
-    public CustomResultReceiver mReceiver;
-    private Journey jItem;
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -153,29 +147,8 @@ public class GcmIntentService extends IntentService implements CustomResultRecei
                 buddyIdsList.add(createdBy);
                 buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
-                jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE);
-
-                // Check for all budddies if they exixst or not
-                // If not call PullBuddiesService
-
-                if (buddyIdsList.size() > 0) {
-
-                    ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(getBaseContext(), buddyIdsList);
-                    Log.d(TAG, "Updated buddeoes are = " + buddyList.toString() + buddyList.size());
-                    if (!buddyList.isEmpty() && buddyList != null) {
-                        mReceiver = new CustomResultReceiver(new Handler());
-                        mReceiver.setReceiver(GcmIntentService.this);
-
-                        Intent intent = new Intent(this, PullBuddiesService.class);
-                        intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
-                        intent.putExtra("RECEIVER", mReceiver);
-                        intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
-                        startService(intent);
-                    } else {
-                        Log.d(TAG, "There are no non-existing buddied.");
-                        JourneyDataSource.createJourney(jItem, this);
-                    }
-                }
+                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, Arrays.asList(buddyIds), Constants.JOURNEY_STATUS_ACTIVE);
+                JourneyDataSource.createJourney(jItem, this);
 
             default:
                 break;
@@ -282,24 +255,14 @@ public class GcmIntentService extends IntentService implements CustomResultRecei
                 Double longitude = data.getString("longitude") == "null" ? 0.0d : Double.parseDouble(data.getString("longitude"));
                 caption = data.getString("caption");
 
-                CheckIn newCheckin = new CheckIn(idOnServer, jId, HelpMe.CHECKIN_TYPE, caption, latitude, longitude,
+                CheckIn newCheckIn = new CheckIn(idOnServer, jId, HelpMe.CHECKIN_TYPE, caption, latitude, longitude,
                         place_name, null, buddyList, createdBy, createdAt, updatedAt, null);
 
-                CheckinDataSource.createCheckIn(newCheckin, this);
+                CheckinDataSource.createCheckIn(newCheckIn, this);
                 break;
 
             default:
                 break;
         }
-    }
-
-    @Override
-    public void onReceiveResult(int resultCode, Bundle resultData) {
-        Log.d(TAG, "in onReceiveResult" + resultCode);
-        if (resultCode == REQUEST_FETCH_BUDDIES) {
-            Log.d(TAG, "fetch buddies service completed");
-            JourneyDataSource.createJourney(jItem, this);
-        }
-        Log.d(TAG, "onReceiveResult completed");
     }
 }

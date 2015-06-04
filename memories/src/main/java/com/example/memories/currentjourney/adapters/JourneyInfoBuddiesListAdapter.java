@@ -39,7 +39,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
     @Override
     public JourneyInfoBuddiesListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.current_journey_buddies_list_item,
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.current_journey_info_buddies_list_item,
                 parent, false);
         // set the view's size, margins, paddings and layout parameters
         return new ViewHolder(v);

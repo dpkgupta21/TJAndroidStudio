@@ -8,20 +8,20 @@
         android:layout_width="match_parent"
         android:layout_height="300dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@color/black">
-
-        <ImageView
-            android:id="@+id/cover_image"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:alpha="0.3"
-            android:scaleType="fitXY"
-            android:background="@color/translucent"
-            android:src="@drawable/abhi" />
+            android:layout_height="300dp"
+            android:background="@color/black">
+
+            <ImageView
+                android:id="@+id/cover_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:alpha="0.3"
+                android:scaleType="fitXY"
+                android:background="@color/translucent"
+                android:src="@drawable/abhi" />
 
         </FrameLayout>
 
@@ -52,9 +52,18 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/profile_name"
-
             android:text="Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum "
             android:textColor="@color/white" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:minHeight="?attr/actionBarSize">
+
+        </android.support.v7.widget.Toolbar>
 
     </RelativeLayout>
 
@@ -71,16 +80,14 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            />
+            android:hint="Name" />
 
         <EditText
             android:id="@+id/edit_status"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Status"
-            />
+            android:hint="Status" />
 
     </LinearLayout>
 

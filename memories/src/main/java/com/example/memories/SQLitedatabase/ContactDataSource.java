@@ -107,12 +107,14 @@ public class ContactDataSource {
     public static List<Contact> getContactsFromJourney(Context context, String jId) {
         Log.d(TAG, "in getContactsFromJourney");
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        List<Contact> contactsList = new ArrayList<>();
 
         List<String> buddyIds = JourneyDataSource.getBuddyIdsFromJourney(context, jId);
         Log.d(TAG, "sie = " + buddyIds.size() + buddyIds.toString());
 
+        // CHeck if there are any buddies. If not just return
         if (buddyIds == null || buddyIds.size() == 0) {
-            return null;
+            return contactsList;
         }
 
         String[] buddyIdsStringList = new String[buddyIds.size()];
@@ -124,7 +126,7 @@ public class ContactDataSource {
         Log.d(TAG, query + buddyIdsStringList[0]);
         Cursor cursor = db.rawQuery(query, buddyIdsStringList);
 
-        List<Contact> contactsList = getContactsListFromCursor(cursor, context);
+        contactsList = getContactsListFromCursor(cursor, context);
         Log.d(TAG, "buddies from current journey are " + contactsList.size() + cursor.getCount());
 
         cursor.close();

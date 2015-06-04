@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.memories.BaseActivity;
 import com.example.memories.R;
@@ -51,8 +53,6 @@ public class ProfileActivity extends BaseActivity {
     private boolean isStatusUpdated;
 
     private String mProfileImgPath;
-    private String mProfileDir;
-
 
     private Menu mMenu;
 
@@ -60,6 +60,12 @@ public class ProfileActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_new);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.GONE);
+
+        Toolbar toolbarProfile = (Toolbar) findViewById(R.id.toolbar_profile);
+        setSupportActionBar(toolbarProfile);
 
         mProfileImg = (MyCircularImageView) findViewById(R.id.profile_img);
         mCoverImg = (ImageView)findViewById(R.id.cover_image);
@@ -70,8 +76,6 @@ public class ProfileActivity extends BaseActivity {
 
         mUserName.setText(TJPreferences.getUserName(this));
         mStatus.setText(TJPreferences.getUserStatus(this));
-
-        mProfileDir = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES;
 
         setProfileImage();
 
@@ -114,7 +118,6 @@ public class ProfileActivity extends BaseActivity {
             mProfileImgPath = HelpMe.getRealPathFromURI(data.getData(), this);
             Log.d(TAG, "New profile Image Path" + mProfileImgPath);
             try {
-                TJPreferences.setProfileImgPath(this, mProfileImgPath);
                 Bitmap profileImgThumbnail = HelpMe.decodeSampledBitmapFromPath(this,
                         mProfileImgPath, 110, 110);
                 mProfileImg.setImageBitmap(profileImgThumbnail);
@@ -122,39 +125,7 @@ public class ProfileActivity extends BaseActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-/*            RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                    .setEndpoint(Constants.TRAVELJAR_API_BASE_URL).build();
-            TravelJarServices myService = restAdapter.create(TravelJarServices.class);
-
-            isProfilePicUpdated = true;
-            myService.updateProfilePicture(TJPreferences.getUserId(this),
-                    new TypedString(TJPreferences.getApiKey(this)), new TypedFile("image*//*", new File(
-                            mProfileImgPath)), new Callback<String>() {
-                        @Override
-                        public void success(String str, retrofit.client.Response response) {
-                            Log.d(TAG, "image uploaded successfully " + str);
-                            Toast.makeText(ProfileActivity.this, "Profile picture updated successfully", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void failure(RetrofitError retrofitError) {
-                            Log.d(TAG, "error in uploading picture" + retrofitError);
-                            Toast.makeText(ProfileActivity.this, "Profile picture could not be updated", Toast.LENGTH_SHORT).show();
-                            retrofitError.printStackTrace();
-                        }
-                    });
-            File sourceFile = new File(mProfileImgPath);
-            File destinationFile = new File(mProfileDir + "/profile.jpg");
-            try {
-                FileUtils.copyFile(sourceFile, destinationFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
         }
-    }
-
-    private void updareProfileOnServer(){
-
     }
 
     @Override
@@ -173,6 +144,9 @@ public class ProfileActivity extends BaseActivity {
         // Handle action bar actions click
         switch (item.getItemId()) {
             case 0:
+                if(!HelpMe.isNetworkAvailable(this)){
+                    Toast.makeText(this, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
+                }
                 if (!mEditName.getText().toString().equals(TJPreferences.getUserName(this))) {
                     TJPreferences.setUserName(this, mEditName.getText().toString());
                     isNameUpdated = true;
@@ -181,9 +155,13 @@ public class ProfileActivity extends BaseActivity {
                     TJPreferences.setUserStatus(this, mEditStatus.getText().toString());
                     isStatusUpdated = true;
                 }
+                if(isProfilePicUpdated){
+                    TJPreferences.setProfileImgPath(this, mProfileImgPath);
+                }
                 if(isNameUpdated || isStatusUpdated || isProfilePicUpdated){
                     new UpdateProfileAsyncTask().execute();
                 }
+
                 finish();
                 return true;
             case 1:

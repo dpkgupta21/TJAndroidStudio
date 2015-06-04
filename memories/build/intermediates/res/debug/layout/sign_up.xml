@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="@string/name"
+            android:capitalize="words"
             android:inputType="textPersonName"
             android:textColorHint="@color/black"
             android:textSize="@dimen/tj_medium_font" />

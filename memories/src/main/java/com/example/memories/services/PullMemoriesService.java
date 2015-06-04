@@ -1,9 +1,6 @@
 package com.example.memories.services;
 
-import android.app.IntentService;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.ResultReceiver;
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -41,41 +38,25 @@ import java.util.List;
 /**
  * Created by ankit on 22/5/15.
  */
-public class PullMemoriesService extends IntentService {
+public class PullMemoriesService {
     private static final String TAG = "PullMemoriesService";
-    private static ResultReceiver mReceiver;
-    private static int REQUEST_CODE;
     private Journey journey;
+
+    private Context mContext;
+
     private static int count = 0;
     private static boolean isService = false;
+    private static OnTaskFinishListener mListener;
 
-    public PullMemoriesService() {
-        super("PullMemoriesService");
+    public PullMemoriesService(Context context, OnTaskFinishListener listener) {
+        mContext = context;
+        mListener = listener;
     }
 
-    public PullMemoriesService(String name) {
-        super(name);
-    }
-
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, startId, startId);
-        Log.d(TAG, "on start command");
-        mReceiver = intent.getParcelableExtra("RECEIVER");
-        REQUEST_CODE = intent.getIntExtra("REQUEST_CODE", 0);
-        Log.d(TAG, "on start command");
-        return START_STICKY;
-    }
-
-    @Override
-    protected void onHandleIntent(Intent workIntent) {
-        fetchJourneys();
-        Log.d(TAG, "on Handle Intent");
-    }
-
-    private void fetchJourneys() {//user id 26 QTn0lwDmgWTc4K5R4Xlz7g
+    public void fetchJourneys() {
         isService = true;
         Log.d(TAG, "fetch journeys");
-        String fetchJourneysUrl = Constants.URL_TJ_DOMAIN + "api/v1/journeys?api_key=" + TJPreferences.getApiKey(this) + "&user_id=" + TJPreferences.getUserId(this);
+        String fetchJourneysUrl = Constants.URL_JOURNIES_FETCH_ALL + "?api_key=" + TJPreferences.getApiKey(mContext) + "&user_id=" + TJPreferences.getUserId(mContext);
         Log.d(TAG, "url to fetch journeys" + fetchJourneysUrl);
         CustomJsonRequest fetchJourneysRequest = new CustomJsonRequest(Request.Method.GET, fetchJourneysUrl, null,
                 new Response.Listener<JSONObject>() {
@@ -83,7 +64,6 @@ public class PullMemoriesService extends IntentService {
                     public void onResponse(JSONObject response) {
                         try {
                             Log.d(TAG, "=====" + response.getJSONArray("journeys"));
-//                            /JSONArray jsonArray = response.getJSONArray("journeys");
                             JSONObject jsonObject;
                             JSONArray journeyJSONArray = response.getJSONArray("journeys");
                             int length = journeyJSONArray.length();
@@ -110,7 +90,7 @@ public class PullMemoriesService extends IntentService {
                                 buddiesList = new ArrayList<>(Arrays.asList(buddies.split(",")));
 
                                 buddiesList.add(createdBy);
-                                buddiesList.remove(TJPreferences.getUserId(PullMemoriesService.this));
+                                buddiesList.remove(TJPreferences.getUserId(mContext));
 
                                 Log.d(TAG, "buddies list saved in database are " + buddiesList + " blah blah " + buddies);
                                 laps = jsonObject.getJSONArray("journey_lap_ids").toString();
@@ -120,7 +100,7 @@ public class PullMemoriesService extends IntentService {
 
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
                                         createdBy, lapsList, buddiesList, Constants.JOURNEY_STATUS_ACTIVE);
-                                JourneyDataSource.createJourney(journey, PullMemoriesService.this);
+                                JourneyDataSource.createJourney(journey, mContext);
                                 Log.d(TAG, "journey parsed and saved successfully in the database");
 
 
@@ -192,7 +172,7 @@ public class PullMemoriesService extends IntentService {
                         thumbnailUrl = memory.getJSONObject("picture_file").getJSONObject("medium").getString("url");
                         Picture newPic = new Picture(memoryId, journeyId, HelpMe.PICTURE_TYPE, null, "jpg",
                                 100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl);
-                        PictureUtilities.createNewPicFromServer(PullMemoriesService.this, newPic, thumbnailUrl);
+                        PictureUtilities.createNewPicFromServer(mContext, newPic, thumbnailUrl);
                         count++;
                         Log.d(TAG, "picture parsed and saved successfully");
 
@@ -205,7 +185,7 @@ public class PullMemoriesService extends IntentService {
                         Note newNote = new Note(memoryId, journeyId, HelpMe.NOTE_TYPE, caption, content, createdBy,
                                 createdAt, updatedAt, null);
 
-                        NoteDataSource.createNote(newNote, PullMemoriesService.this);
+                        NoteDataSource.createNote(newNote, mContext);
 
                         Log.d(TAG, "note parsed and saved successfully");
 
@@ -218,7 +198,7 @@ public class PullMemoriesService extends IntentService {
                         description = memory.getString("description");
                         Video newVideo = new Video(memoryId, journeyId, HelpMe.VIDEO_TYPE, description,
                                 "png", 1223, null, fileUrl, createdBy, createdAt, updatedAt, null, thumbnailUrl);
-                        VideoUtil.createNewVideoFromServer(PullMemoriesService.this, newVideo, thumbnailUrl);
+                        VideoUtil.createNewVideoFromServer(mContext, newVideo, thumbnailUrl);
                         count++;
                         Log.d(TAG, "video parsed and saved successfully" + thumbnailUrl);
 
@@ -239,7 +219,7 @@ public class PullMemoriesService extends IntentService {
                         List<String> buddyIds = buddys == null ? null : Arrays.asList(buddys.split(","));
                         CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName, null, buddyIds, createdBy,
                                 createdAt, updatedAt, null);
-                        CheckinDataSource.createCheckIn(newCheckIn, PullMemoriesService.this);
+                        CheckinDataSource.createCheckIn(newCheckIn, mContext);
 
                         Log.d(TAG, "checkin parsed and saved successfully");
 
@@ -254,7 +234,7 @@ public class PullMemoriesService extends IntentService {
                         List<String> buddyId = buddy == null ? null : Arrays.asList(buddy.split(","));
                         Mood newMood = new Mood(memoryId, journeyId, HelpMe.MOOD_TYPE, buddyId, mood, reason,
                                 createdBy, createdAt, updatedAt, null);
-                        MoodDataSource.createMood(newMood, PullMemoriesService.this);
+                        MoodDataSource.createMood(newMood, mContext);
 
                         Log.d(TAG, "mood parsed and saved successfully");
 
@@ -267,7 +247,7 @@ public class PullMemoriesService extends IntentService {
 
                         Audio newAudio = new Audio(memoryId, journeyId, HelpMe.AUDIO_TYPE, "3gp", 1122,
                                 fileUrl, null, createdBy, createdAt, updatedAt, null, 0);
-                        AudioDataSource.createAudio(newAudio, PullMemoriesService.this);
+                        AudioDataSource.createAudio(newAudio, mContext);
 
                         Log.d(TAG, "audio parsed and saved successfully");
 
@@ -287,9 +267,13 @@ public class PullMemoriesService extends IntentService {
                 Log.d(TAG, "isfimiehd cal;ed" + count);
                 count = 0;
                 isService = false;
-                Bundle bundle = new Bundle();
-                mReceiver.send(REQUEST_CODE, bundle);
+                mListener.onFinishTask();
             }
         }
     }
+
+    public interface OnTaskFinishListener{
+        void onFinishTask();
+    }
+
 }

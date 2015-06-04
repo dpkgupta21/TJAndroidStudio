@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.memories.R;
 import com.example.memories.activejourney.ActivejourneyList;
-import com.example.memories.services.CustomResultReceiver;
 import com.example.memories.services.PullMemoriesService;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
@@ -39,12 +37,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-public class SignIn extends Activity implements CustomResultReceiver.Receiver {
+public class SignIn extends Activity implements PullMemoriesService.OnTaskFinishListener {
 
     protected static final String TAG = null;
     // GCM -----------------------------------
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public CustomResultReceiver mReceiver;
     String SENDER_ID = Constants.GOOGLE_PROJECT_NUMBER;
     GoogleCloudMessaging gcm;
     Context context;
@@ -59,9 +56,6 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
 
-
-        mReceiver = new CustomResultReceiver(new Handler());
-        mReceiver.setReceiver(this);
         // Session Manager
         SessionManager session = new SessionManager(getApplicationContext());
 
@@ -105,6 +99,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         if(HelpMe.isNetworkAvailable(this)) {
             Log.d(TAG, "makeREqusttoServer method called" + regid);
             pDialog = new ProgressDialog(this);
+            pDialog.setTitle("Loading your memories...");
             pDialog.show();
             // Get username, password from EditText
             final String emailAddress = txtEmailAddress.getText().toString().trim();
@@ -135,10 +130,7 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
                                     Log.d(TAG, response.toString());
                                     Log.d(TAG, "calling pullMemoriesService to fetch all journeys and their memories");
                                     if(HelpMe.isNetworkAvailable(SignIn.this)) {
-                                        Intent mServiceIntent = new Intent(getBaseContext(), PullMemoriesService.class);
-                                        mServiceIntent.putExtra("REQUEST_CODE", REQUEST_FETCH_MEMORIES);
-                                        mServiceIntent.putExtra("RECEIVER", mReceiver);
-                                        startService(mServiceIntent);
+                                        new PullMemoriesService(SignIn.this, SignIn.this).fetchJourneys();
                                     }else{
                                         Toast.makeText(SignIn.this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
                                     }
@@ -200,17 +192,6 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         // download & set the default profile image if does not exist
         HelpMe.createImageIfNotExist(this);
         TJPreferences.setProfileImgPath(this, Constants.GUMNAAM_IMAGE_URL);
-    }
-
-    @Override
-    public void onReceiveResult(int resultCode, Bundle resultData) {
-        if (resultCode == REQUEST_FETCH_MEMORIES) {
-            pDialog.dismiss();
-            Intent i = new Intent(getApplicationContext(), ActivejourneyList.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-        }
-        Log.d(TAG, "signed in");
     }
 
     // GCM methods and declarations
@@ -331,5 +312,13 @@ public class SignIn extends Activity implements CustomResultReceiver.Receiver {
         }.execute(null, null, null);
     }
 
+    @Override
+    public void onFinishTask() {
+        pDialog.dismiss();
+        Intent i = new Intent(getApplicationContext(), ActivejourneyList.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        finish();
+    }
 }
 

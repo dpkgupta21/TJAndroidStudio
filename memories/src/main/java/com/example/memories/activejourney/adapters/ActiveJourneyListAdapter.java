@@ -17,8 +17,7 @@ import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.models.Journey;
 import com.example.memories.models.Picture;
-import com.example.memories.services.CustomResultReceiver;
-import com.example.memories.services.PullBuddiesService;
+import com.example.memories.services.PullBuddies;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 
@@ -26,12 +25,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourneyListAdapter.ViewHolder> {
+public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourneyListAdapter.ViewHolder> implements PullBuddies.OnTaskFinishListener{
     private static final String TAG = "<ActiveJListAdapter>";
     private List<Journey> mDataset;
     private Context mContext;
-    private static final int REQUEST_FETCH_BUDDIES = 1;
-    public CustomResultReceiver mReceiver;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ActiveJourneyListAdapter(List<Journey> myDataset, Context context) {
@@ -67,7 +64,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         // - replace the contents of the view with that element
         final Journey journeyItem = mDataset.get(position);
         final String name = journeyItem.getName();
-        final String buddyCount = journeyItem.getBuddies().size() + " people";
+        final String buddyCount = (journeyItem.getBuddies().size() + 1) + " people";
         final String place = "Bangalore";
 
         Log.d(TAG, "info are : " + name);
@@ -135,13 +132,11 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             if (journey.getBuddies() != null && !journey.getBuddies().isEmpty()) {
                 Log.d(TAG, "buddies are = " + journey.getBuddies());
                 ArrayList<String> buddyList = (ArrayList)ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
+
                 Log.d(TAG, "non existing contacts list is" + buddyList);
+
                 if (buddyList != null && !buddyList.isEmpty()) {
-                    Intent intent = new Intent(mContext, PullBuddiesService.class);
-                    intent.putExtra("REQUEST_CODE", REQUEST_FETCH_BUDDIES);
-                    intent.putExtra("RECEIVER", mReceiver);
-                    intent.putStringArrayListExtra("BUDDY_IDS", buddyList);
-                    mContext.startService(intent);
+                    new PullBuddies(mContext, buddyList, ActiveJourneyListAdapter.this).fetchBuddies();
                 } else {
                     Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -156,5 +151,14 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
 
         }
     }
+
+
+    @Override
+    public void onFinishTask() {
+        Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.getApplicationContext().startActivity(intent);
+    }
+
 
 }

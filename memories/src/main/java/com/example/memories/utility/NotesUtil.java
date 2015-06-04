@@ -29,8 +29,7 @@ public class NotesUtil {
         params.put("note[note]", note.getContent());
         Log.d(TAG, "uploading note with parameters " + params);
 
-        String url = Constants.TRAVELJAR_API_BASE_URL + "/journeys/"
-                + TJPreferences.getActiveJourneyId(context) + "/notes";
+        String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/notes";
         CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.POST, url, params,
                 new Response.Listener<JSONObject>() {
 

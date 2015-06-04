@@ -111,22 +111,6 @@
             android:text="Sunday 1:19 pm"
             android:textSize="@dimen/tj_medium_font" />
 
-        <TextView
-            android:id="@+id/photo_detail_place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Bangalore"
-            android:textSize="@dimen/tj_medium_font" />
-
-        <TextView
-            android:id="@+id/photo_detail_weather"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/photo_detail_place"
-            android:text="30 C : Sunny"
-            android:textSize="@dimen/tj_medium_font" />
     </RelativeLayout>
 
     <EditText

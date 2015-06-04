@@ -62,7 +62,7 @@ public class JourneyDataSource {
 
     public static List<String> getBuddyIdsFromJourney(Context context, String journeyId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        String dbQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + "," + MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY + " FROM "
+        String dbQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + " FROM "
                 + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
                 + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId;
         Cursor cursor = db.rawQuery(dbQuery, null);
@@ -71,7 +71,9 @@ public class JourneyDataSource {
         if (cursor.moveToFirst()) {
             String buddies = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
             Log.d(TAG, "Buddies ids list is = " + buddies);
-            buddyIds = (buddies.isEmpty() ? null : new ArrayList<>(Arrays.asList(buddies.split(","))));
+            if (!buddies.isEmpty()) {
+                buddyIds = Arrays.asList(buddies.split(","));
+            }
         }
 
         cursor.close();

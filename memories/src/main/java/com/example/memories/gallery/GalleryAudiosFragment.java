@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
@@ -23,16 +23,12 @@ public class GalleryAudiosFragment extends Fragment {
 
     private static final String TAG = "GalleryAudioFragment";
     private View rootView;
-    private ImageButton mPlayBtn;
-    private ImageButton mPreviousBtn;
-    private ImageButton mNextBtn;
     private List<Audio> mAudioList;
     private AudioGalleryAdapter mAdapter;
-    private GridView mGridView;
-    private int lastAudio = 0;
-
+    private ListView mListView;
+    private ImageView pauseAudio;
+    private ImageView playAudio;
     private MediaPlayer mPlayer = null;
-    private String lastPlayed;
     private boolean isPlaying = false;
 
     @Override
@@ -45,59 +41,27 @@ public class GalleryAudiosFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mGridView = (GridView) rootView.findViewById(R.id.gridView);
+        mListView = (ListView) rootView.findViewById(R.id.gallery_audio_listview);
+        playAudio = (ImageView) rootView.findViewById(R.id.gallery_audio_list_item_play);
+        pauseAudio = (ImageView) rootView.findViewById(R.id.gallery_audio_list_item_pause);
+
         mAudioList = AudioDataSource.getAllAudios(getActivity());
         Log.d(TAG, "audio list size " + mAudioList.size());
         mAdapter = new AudioGalleryAdapter(getActivity(), mAudioList);
-        mNextBtn = (ImageButton) rootView.findViewById(R.id.next_audio);
-        mPlayBtn = (ImageButton) rootView.findViewById(R.id.play_audio);
-        mPreviousBtn = (ImageButton) rootView.findViewById(R.id.previous_audio);
 
-        mGridView.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
         if (mAudioList.size() > 0) {
-            lastPlayed = mAudioList.get(0).getDataLocalURL();
 
-            mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (isPlaying) {
                         stopPlaying();
                     }
                     startPlaying(mAudioList.get(position).getDataLocalURL());
-                    lastAudio = position;
-                    mPlayBtn.setImageResource(R.drawable.ic_pause_black);
-                }
-            });
-
-            mPlayBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isPlaying) {
-                        mPlayBtn.setImageResource(R.drawable.ic_play_black);
-                        stopPlaying();
-                        isPlaying = !isPlaying;
-                    }
-                }
-            });
-
-            mPreviousBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (lastAudio > 0) {
-                        startPlaying(mAudioList.get(lastAudio - 1).getDataLocalURL());
-                        lastAudio -= 1;
-                    }
-                }
-            });
-
-            mNextBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (lastAudio < mAudioList.size() - 1) {
-                        startPlaying(mAudioList.get(lastAudio + 1).getDataLocalURL());
-                        lastAudio += 1;
-                    }
+                    pauseAudio.setVisibility(View.VISIBLE);
+                    playAudio.setVisibility(View.INVISIBLE);
                 }
             });
         }

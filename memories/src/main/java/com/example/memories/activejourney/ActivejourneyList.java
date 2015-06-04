@@ -17,24 +17,20 @@ import com.example.memories.BaseActivity;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.activejourney.adapters.ActiveJourneyListAdapter;
-import com.example.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.example.memories.customviews.MyFABView;
 import com.example.memories.models.Journey;
 import com.example.memories.newjourney.LapsList;
-import com.example.memories.services.CustomResultReceiver;
-
 import java.util.List;
 
 /**
  * Created by ankit on 27/5/15.
  */
-public class ActivejourneyList extends BaseActivity implements CustomResultReceiver.Receiver {
+public class ActivejourneyList extends BaseActivity{
 
     private static final String TAG = "<ActivejourneyList>";
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private ActiveJourneyListAdapter mAdapter;
-    private static final int REQUEST_FETCH_BUDDIES = 1;
 
     private boolean backPressedToExitOnce = false;
     private Toast toast = null;
@@ -49,7 +45,6 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Active Journeys");
-        toolbar.setLogo(R.drawable.ic_launcher);
 
         allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
 
@@ -102,18 +97,6 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
         });
 
 
-    }
-
-    @Override
-    public void onReceiveResult(int resultCode, Bundle resultData) {
-        Log.d(TAG, "on receive result called " + resultCode);
-        if (resultCode == REQUEST_FETCH_BUDDIES) {
-            Log.d(TAG, "fetch buddies service completed");
-            Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
-        Log.d(TAG, "all contacts of journey which were not present fetched successfully");
     }
 
     @Override
