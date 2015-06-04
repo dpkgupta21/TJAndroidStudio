@@ -129,7 +129,7 @@ public class PullBuddiesService extends IntentService {
 
                                     picLocalUrl = Constants.GUMNAAM_IMAGE_URL;
                                 }
-                                Log.d(TAG, "id = " + idOnServer + "name = " + userName + email + " " + picServerUrl);
+                                Log.d(TAG, "id = " + idOnServer + ",name = " + userName + ",email = " +  email + ", picURL =     " + picServerUrl);
                                 Contact tempContact = new Contact(idOnServer, userName, email, status, picServerUrl, picLocalUrl,
                                         phone_no, allJourneyIds, true, interests);
                                 ContactDataSource.createContact(tempContact, PullBuddiesService.this);

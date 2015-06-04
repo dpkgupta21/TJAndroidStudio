@@ -266,7 +266,7 @@ public class PullMemoriesService extends IntentService {
                         //Long size = Long.parseLong(memory.getJSONObject("memory").getJSONObject("audio_file").getString("size"));
 
                         Audio newAudio = new Audio(memoryId, journeyId, HelpMe.AUDIO_TYPE, "3gp", 1122,
-                                fileUrl, null, createdBy, createdAt, updatedAt, null);
+                                fileUrl, null, createdBy, createdAt, updatedAt, null, 0);
                         AudioDataSource.createAudio(newAudio, PullMemoriesService.this);
 
                         Log.d(TAG, "audio parsed and saved successfully");

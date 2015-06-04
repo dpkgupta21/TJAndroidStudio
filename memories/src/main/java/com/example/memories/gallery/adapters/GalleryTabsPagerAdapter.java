@@ -11,7 +11,7 @@ import com.example.memories.gallery.GalleryVideosFragment;
 
 public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] titles = new String[]{"audio", "video", "pictures", "notes"};
+    private String[] titles = new String[]{"Pictures", "Audios", "Videos", "Notes"};
 
     public GalleryTabsPagerAdapter(FragmentManager fm) {
         super(fm);

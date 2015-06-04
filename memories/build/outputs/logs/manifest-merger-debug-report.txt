@@ -270,7 +270,7 @@ ADDED from AndroidManifest.xml:111:9
 		ADDED from AndroidManifest.xml:113:13
 	android:name
 		ADDED from AndroidManifest.xml:112:13
-activity#com.example.memories.profile.Profile
+activity#com.example.memories.profile.ProfileActivity
 ADDED from AndroidManifest.xml:114:9
 	android:label
 		ADDED from AndroidManifest.xml:116:13

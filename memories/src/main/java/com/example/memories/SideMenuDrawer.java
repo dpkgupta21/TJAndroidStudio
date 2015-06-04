@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.gallery.GalleryBaseActivity;
 import com.example.memories.pastjourney.PastJourneyList;
-import com.example.memories.profile.Profile;
+import com.example.memories.profile.ProfileActivity;
 import com.example.memories.utility.TJPreferences;
 
 import java.io.FileInputStream;
@@ -93,7 +93,7 @@ public class SideMenuDrawer extends Fragment {
                         startActivity(i);
                         break;
                     case 3:
-                        i = new Intent(getActivity(), Profile.class);
+                        i = new Intent(getActivity(), ProfileActivity.class);
                         startActivityForResult(i, REQUEST_CODE_UPDATE_PROFILE);
                         break;
 

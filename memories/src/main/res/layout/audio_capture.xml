@@ -7,55 +7,61 @@
     <include layout="@layout/toolbar" />
 
 
-    <!--<ImageView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:src="@drawable/audio_wave" />-->
-
-    <!--<ProgressBar-->
-        <!--style="?android:attr/progressBarStyleHorizontal"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/progressBar"-->
-        <!--android:layout_gravity="center_horizontal" />-->
-
-    <!--<ImageButton-->
-        <!--android:id="@+id/audio_capture_record_btn"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:src="@drawable/play_audio_red" />-->
-
-    <!--<ImageButton-->
-        <!--android:id="@+id/audio_capture_stop_btn"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:src="@drawable/pause_audio_red" />-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal">-->
-
-        <!--<ImageButton-->
-            <!--android:id="@+id/audio_capture_preview_btn"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:src="@drawable/play_audio_red" />-->
-
-        <!--<ImageButton-->
-            <!--android:id="@+id/audio_capture_retry_btn"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:src="@drawable/sync" />-->
-
-    <!--</LinearLayout>-->
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/audio_wave" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/timerView" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="center_horizontal" />
+
+    <ImageButton
+        android:id="@+id/audio_capture_record_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/play_audio_red" />
+
+    <ImageButton
+        android:id="@+id/audio_capture_stop_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/pause_audio_red" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <ImageButton
+            android:id="@+id/audio_capture_preview_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/play_audio_red" />
+
+        <ImageButton
+            android:id="@+id/audio_capture_retry_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/sync" />
+
+    </LinearLayout>
+
+
+<!--    <TextView
         android:id="@+id/timerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,11 +113,11 @@
             android:gravity="center_horizontal|center_vertical"
             android:orientation="horizontal">
 
-            <!-- <ImageView
+            &lt;!&ndash; <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/action_settings"
-                android:src="@drawable/ic_done" /> -->
+                android:src="@drawable/ic_done" /> &ndash;&gt;
 
             <TextView
                 android:id="@+id/playTxt"
@@ -120,7 +126,7 @@
                 android:text="Play"
                 android:textColor="@color/white" />
         </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 </LinearLayout>

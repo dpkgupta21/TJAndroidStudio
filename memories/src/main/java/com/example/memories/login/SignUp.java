@@ -111,44 +111,49 @@ public class SignUp extends Activity {
     }
 
     public void signUp(View v) {
-        // Get emailAddress, password from EditText
-        emailAddress = txtEmailAddress.getText().toString();
-        password = txtPassword.getText().toString();
-        name = txtName.getText().toString();
 
-        // Email address validation
-        if(!HelpMe.isValidMail(emailAddress)){
-            Toast.makeText(getApplicationContext(), "Please enter a valid email address", Toast.LENGTH_LONG)
-                    .show();
-            return;
-        }
+        if(HelpMe.isNetworkAvailable(this)) {
+            // Get emailAddress, password from EditText
+            emailAddress = txtEmailAddress.getText().toString();
+            password = txtPassword.getText().toString();
+            name = txtName.getText().toString();
 
-        // Check if emailAddress and password is filled
-        if (emailAddress.trim().length() > 0 && password.trim().length() > 0
-                && name.trim().length() > 0) {
-
-            // Check for Internet connection otherwise no use in making request
-            if (HelpMe.isNetworkAvailable(this)) {
-
-                pDialog = new ProgressDialog(this);
-                pDialog.setMessage("Loading...");
-                pDialog.show();
-
-                // Get a GCM registration id
-                startRegistrationOfGCM(getApplicationContext());
-
-                // download & set the default profile image if does not exist
-                HelpMe.createImageIfNotExist(this);
-                TJPreferences.setProfileImgPath(SignUp.this, Constants.GUMNAAM_IMAGE_URL);
-
-            } else {
-                Toast.makeText(getApplicationContext(), "No internet connection please check your internet connection", Toast.LENGTH_LONG)
+            // Email address validation
+            if (!HelpMe.isValidMail(emailAddress)) {
+                Toast.makeText(getApplicationContext(), "Please enter a valid email address", Toast.LENGTH_LONG)
                         .show();
+                return;
             }
-        } else {
-            // user didn't entered emailAddress or password show alert asking him to enter the details
-            Toast.makeText(getApplicationContext(), "Please enter Name, emailAddress & password",
-                    Toast.LENGTH_LONG).show();
+
+            // Check if emailAddress and password is filled
+            if (emailAddress.trim().length() > 0 && password.trim().length() > 0
+                    && name.trim().length() > 0) {
+
+                // Check for Internet connection otherwise no use in making request
+                if (HelpMe.isNetworkAvailable(this)) {
+
+                    pDialog = new ProgressDialog(this);
+                    pDialog.setMessage("Loading...");
+                    pDialog.show();
+
+                    // Get a GCM registration id
+                    startRegistrationOfGCM(getApplicationContext());
+
+                    // download & set the default profile image if does not exist
+                    HelpMe.createImageIfNotExist(this);
+                    TJPreferences.setProfileImgPath(SignUp.this, Constants.GUMNAAM_IMAGE_URL);
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No internet connection please check your internet connection", Toast.LENGTH_LONG)
+                            .show();
+                }
+            } else {
+                // user didn't entered emailAddress or password show alert asking him to enter the details
+                Toast.makeText(getApplicationContext(), "Please enter Name, emailAddress & password",
+                        Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
         }
     }
 

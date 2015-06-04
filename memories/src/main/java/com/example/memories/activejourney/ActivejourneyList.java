@@ -22,9 +22,7 @@ import com.example.memories.customviews.MyFABView;
 import com.example.memories.models.Journey;
 import com.example.memories.newjourney.LapsList;
 import com.example.memories.services.CustomResultReceiver;
-import com.google.common.base.Joiner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,20 +47,14 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_journey_list);
 
-
-        List<String> list = new ArrayList<String>();
-        String join = Joiner.on(",").join(list);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Active Journeys");
         toolbar.setLogo(R.drawable.ic_launcher);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.active_journey_recycler_view);
-        noActivejourneysMsgTxt = (TextView) findViewById(R.id.active_journey_no_buddies_msg);
-
         allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
 
         if (allActiveJourney.size() > 0) {
+            mRecyclerView = (RecyclerView) findViewById(R.id.active_journey_recycler_view);
             mRecyclerView.setVisibility(View.VISIBLE);
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
@@ -76,7 +68,21 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
             mAdapter = new ActiveJourneyListAdapter(allActiveJourney, getApplicationContext());
             mRecyclerView.setAdapter(mAdapter);
 
+            // Add pull to refresh functionality
+            mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.active_journey_swipe_refresh_layout);
+            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+                @Override
+                public void onRefresh() {
+                    allActiveJourney = JourneyDataSource.getAllActiveJourneys(getBaseContext());
+                    mAdapter.updateList(allActiveJourney);
+                    mAdapter.notifyDataSetChanged();
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            });
+
         } else {
+            noActivejourneysMsgTxt = (TextView) findViewById(R.id.active_journey_no_buddies_msg);
             noActivejourneysMsgTxt.setVisibility(View.VISIBLE);
         }
 
@@ -95,19 +101,7 @@ public class ActivejourneyList extends BaseActivity implements CustomResultRecei
             }
         });
 
-        // Add pull to refresh functionality
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.active_journey_swipe_refresh_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
-            @Override
-            public void onRefresh() {
-                // TODO Auto-generated method stub
-                allActiveJourney = JourneyDataSource.getAllActiveJourneys(getBaseContext());
-                mAdapter.updateList(allActiveJourney);
-                mAdapter.notifyDataSetChanged();
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
     }
 
     @Override
