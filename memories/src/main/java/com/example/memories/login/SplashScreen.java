@@ -10,7 +10,6 @@ import android.view.View;
 import com.example.memories.R;
 import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.services.CustomResultReceiver;
-import com.example.memories.services.PullContactsService;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
@@ -44,12 +43,6 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
             Intent intent = new Intent(getBaseContext(), ActivejourneyList.class);
             startActivity(intent);
             finish();
-        } else {
-            //Creates a new Intent to fetch all the contacts and check who all are on traveljar.
-            Intent intent = new Intent(getBaseContext(), PullContactsService.class);
-            intent.putExtra("RECEIVER", mReceiver);
-            intent.putExtra("REQUEST_CODE", REQUEST_FETCH_CONTACTS);
-            startService(intent);
         }
 
     }

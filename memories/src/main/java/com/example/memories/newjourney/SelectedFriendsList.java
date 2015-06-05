@@ -1,6 +1,8 @@
 package com.example.memories.newjourney;
 
 import android.app.ActionBar;
+import android.app.ActivityManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
@@ -19,12 +20,15 @@ import android.widget.MultiAutoCompleteTextView;
 import com.example.memories.R;
 import com.example.memories.models.Contact;
 import com.example.memories.newjourney.adapters.SelectedFriendsListAdapter;
+import com.example.memories.services.PullContactsService;
 import com.example.memories.volley.AppController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SelectedFriendsList extends AppCompatActivity {
 
@@ -32,6 +36,9 @@ public class SelectedFriendsList extends AppCompatActivity {
     public static List<Contact> selectedList;
     public static SelectedFriendsListAdapter contactListViewAdapter;
     private ActionBar actionBar;
+    private ListView contactListView;
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,43 @@ public class SelectedFriendsList extends AppCompatActivity {
 
         selectedList = new ArrayList<Contact>();
 
-        ListView contactListView = (ListView) findViewById(R.id.addFriendsList);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.show();
+
+        contactListView = (ListView) findViewById(R.id.addFriendsList);
+
+        boolean isServiceRunning = false;
+        ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if ("com.example.MyService".equals(service.service.getClassName())) {
+                isServiceRunning = true;
+            }
+        }
+        if(!isServiceRunning){
+            initializeData();
+        }else {
+            final Timer t = new Timer();
+            //Set the schedule function and rate
+            t.scheduleAtFixedRate(new TimerTask() {
+                                      @Override
+                                      public void run() {
+                                          //Called each time when 1000 milliseconds (1 second) (the period parameter)
+                                          if(PullContactsService.isServiceFinished()){
+                                              t.cancel();
+                                              initializeData();
+                                          }
+                                      }
+
+                                  },
+                //Set how long before to start calling the TimerTask (in milliseconds)
+                    0,
+                //Set the amount of time between each execution (in milliseconds)
+                    6000);
+        }
+    }
+
+    private void initializeData(){
+        mProgressDialog.dismiss();
         contactListViewAdapter = new SelectedFriendsListAdapter(this, selectedList);
         contactListView.setAdapter(contactListViewAdapter);
 
@@ -57,7 +100,7 @@ public class SelectedFriendsList extends AppCompatActivity {
         macTv.setAdapter(aaStr);
         macTv.setThreshold(1);
         macTv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        macTv.setOnItemClickListener(new OnItemClickListener() {
+        macTv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -73,7 +116,6 @@ public class SelectedFriendsList extends AppCompatActivity {
                 macTv.setText(null);
             }
         });
-
     }
 
     public void goToAllContactList(View v) {

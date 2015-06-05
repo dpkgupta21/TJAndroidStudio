@@ -20,6 +20,7 @@ import com.example.memories.activejourney.adapters.ActiveJourneyListAdapter;
 import com.example.memories.customviews.MyFABView;
 import com.example.memories.models.Journey;
 import com.example.memories.newjourney.LapsList;
+import com.example.memories.services.PullContactsService;
 import com.google.common.base.Joiner;
 
 import java.util.ArrayList;
@@ -89,6 +90,8 @@ public class ActivejourneyList extends BaseActivity{
                 Log.d(TAG, "FAB clicked");
                 Intent i = new Intent(getBaseContext(), LapsList.class);
                 startActivity(i);
+                i = new Intent(getBaseContext(), PullContactsService.class);
+                startService(i);
             }
         });
 
