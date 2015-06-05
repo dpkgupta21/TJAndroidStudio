@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PictureDetail extends AppCompatActivity implements DownloadPicture.OnPictureDownloadListener{
+public class PictureDetail extends AppCompatActivity implements DownloadPicture.OnPictureDownloadListener {
 
     private static final String TAG = "<PhotoDetail>";
     List<String> likedBy;
@@ -44,10 +44,9 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
     private TextView dateBig;
     private TextView date;
     private TextView time;
-    private TextView place;
-    private TextView weather;
     private EditText caption;
     private ImageView mProfileImg;
+    private TextView profileName;
     private ImageButton mFavBtn;
     private long currenTime;
     private String imagePath;
@@ -66,7 +65,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         Log.d(TAG, "entrerd photo details");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Picture");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
 
         currenTime = HelpMe.getCurrentTime();
@@ -74,22 +73,23 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
         time = (TextView) findViewById(R.id.photo_detail_time);
-        place = (TextView) findViewById(R.id.photo_detail_place);
-        weather = (TextView) findViewById(R.id.photo_detail_weather);
         caption = (EditText) findViewById(R.id.photo_detail_caption);
         mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.photo_detail_profile_image);
+        profileName = (TextView) findViewById(R.id.photo_detail_profile_name);
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
 
         pDialog = new ProgressDialog(this);
 
         Bundle extras = getIntent().getExtras();
+
         //If the activity is started for an already clicked picture
         if (extras.getString("PICTURE_ID") != null) {
             Log.d(TAG, "running for an already created picture");
             mPicture = PictureDataSource.getPictureById(this, extras.getString("PICTURE_ID"));
             imagePath = mPicture.getDataLocalURL(); //path to image
             localThumbnailPath = mPicture.getPicThumbnailPath();
+            profileName.setText(ContactDataSource.getContactById(getBaseContext(), mPicture.getCreatedBy()).getName());
             //setup the state of favourite button
             if (mPicture.getLikedBy() == null) {
                 noLikesTxt.setText("0");
@@ -102,12 +102,14 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 }
             }
+            caption.setText(mPicture.getCaption());
         }
 
         //If the activity is started for a newly clicked picture
         if (extras.getString("imagePath") != null) {
             Log.d(TAG, "running for a newly clicked picture");
             isNewPic = true;
+            profileName.setText(TJPreferences.getUserName(getBaseContext()));
             imagePath = extras.getString("imagePath");
             Bitmap thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), 512, 384);
             localThumbnailPath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" + System.currentTimeMillis() + ".jpg";

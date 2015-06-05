@@ -280,4 +280,21 @@ public class HelpMe {
         return TJPreferences.getUserId(context).equals(TJPreferences.getActiveJourneyId(context));
     }
 
+    //Parsing date from 2015-05-08T12:38:49.777Z (UTC format) to yyyy-MM-dd kk:mm:ss and return the timestamp
+    public long getTimeStampFromDate(String dateStr){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+        // date coming from server is in the format 2015-05-08T12:38:49.777Z and we want to convert it to above format
+        // so first remove T and everything after '.' from the string we are getting
+        dateStr = dateStr.split("\\.")[0];
+        dateStr.replace("T", " ");
+        Date date = null;
+        try {
+            date = format.parse(dateStr);
+            System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
+    }
+
 }

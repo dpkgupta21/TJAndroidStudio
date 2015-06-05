@@ -74,8 +74,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
         time = (TextView) findViewById(R.id.photo_detail_time);
-        place = (TextView) findViewById(R.id.photo_detail_place);
-        weather = (TextView) findViewById(R.id.photo_detail_weather);
         caption = (EditText) findViewById(R.id.video_detail_caption);
         mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.profilePic);
@@ -101,6 +99,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                     mFavBtn.setImageResource(R.drawable.heart_empty);
                 }
             }
+            caption.setText(mVideo.getCaption());
         }
         //If the activity is started for a newly clicked picture
         if (extras.getString("VIDEO_PATH") != null) {

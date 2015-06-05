@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,14 +19,18 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.memories.R;
+import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.activejourney.ActivejourneyList;
+import com.example.memories.models.Contact;
 import com.example.memories.services.PullMemoriesService;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
 import com.example.memories.utility.TJPreferences;
+import com.example.memories.volley.AppController;
 import com.example.memories.volley.CustomJsonRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -34,6 +39,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
@@ -48,8 +55,13 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
     String regid = "";
     private EditText txtEmailAddress;
     private EditText txtPassword;
-    private int REQUEST_FETCH_MEMORIES = 2;
     private ProgressDialog pDialog;
+
+    private boolean isProfilePicDownloaded;
+    private boolean isMemoryFetched;
+
+    private static int REQUEST_FETCH_MEMORIES = 1;
+    private static int REQUEST_DOWNLOAD_PROFILE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +111,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
         if(HelpMe.isNetworkAvailable(this)) {
             Log.d(TAG, "makeREqusttoServer method called" + regid);
             pDialog = new ProgressDialog(this);
+            pDialog.setTitle("Loading your memories...");
             pDialog.show();
             // Get username, password from EditText
             final String emailAddress = txtEmailAddress.getText().toString().trim();
@@ -122,14 +135,14 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     try {
-                                        updateUserPref(response);
+                                        saveUser(response);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                     Log.d(TAG, response.toString());
                                     Log.d(TAG, "calling pullMemoriesService to fetch all journeys and their memories");
                                     if(HelpMe.isNetworkAvailable(SignIn.this)) {
-                                        new PullMemoriesService(SignIn.this, SignIn.this).fetchJourneys();
+                                        new PullMemoriesService(SignIn.this, SignIn.this, REQUEST_FETCH_MEMORIES).fetchJourneys();
                                     }else{
                                         Toast.makeText(SignIn.this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
                                     }
@@ -173,14 +186,65 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
         }
     }
 
-    private void updateUserPref(JSONObject res) throws JSONException {
+    private void saveUser(JSONObject res) throws JSONException {
         JSONObject userItem = res.getJSONObject("user_register");
-        String id = userItem.getString("id");
+        final String id = userItem.getString("id");
         String name = userItem.getString("name");
         String email = userItem.getString("email");
         String phone = userItem.getString("phone");
         String api_key = userItem.getString("api_key");
+        String status = userItem.getString("status");
+        String interest = userItem.getString("interests");
+        final String picServerUrl = userItem.getJSONObject("profile_picture").getJSONObject("original").getString("url");
+        String picLocalUrl;
+        String allJourneyIds = userItem.getJSONArray("journey_ids").toString();
 
+        // Fetching the profile image of the user
+        if (picServerUrl != "null") {
+            picLocalUrl = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + id + ".jpeg";
+            TJPreferences.setProfileImgPath(this, picLocalUrl);
+            ImageRequest request = new ImageRequest(picServerUrl,
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap bitmap) {
+                            FileOutputStream out = null;
+                            try {
+                                File tjDir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
+                                if (!tjDir.exists()) {
+                                    tjDir.mkdirs();
+                                }
+                                String fileName = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES
+                                        + id + ".jpeg";
+                                out = new FileOutputStream(fileName);
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                                onFinishTask(REQUEST_DOWNLOAD_PROFILE);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                try {
+                                    if (out != null) {
+                                        out.close();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }, 0, 0, null, new Response.ErrorListener() {
+                public void onErrorResponse(VolleyError error) {
+                    //TODO on error response update the picLocalUrl in database as well as preference as null
+                    TJPreferences.setProfileImgPath(SignIn.this, Constants.GUMNAAM_IMAGE_URL);
+                }
+            });
+            AppController.getInstance().addToRequestQueue(request);
+        } else {
+            // check whether the gumnaam image already exists
+            HelpMe.createImageIfNotExist(this);
+        }
+        Contact contact = new Contact(id, name, email, status, picServerUrl, null, phone, allJourneyIds, false, interest);
+        ContactDataSource.createContact(contact, this);
+
+        //saving the preferences
         TJPreferences.setUserId(this, id);
         TJPreferences.setUserName(this, name);
         TJPreferences.setEmail(this, email);
@@ -312,12 +376,20 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
     }
 
     @Override
-    public void onFinishTask() {
-        pDialog.dismiss();
-        Intent i = new Intent(getApplicationContext(), ActivejourneyList.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        finish();
+    public void onFinishTask(int requestCode) {
+        if(requestCode == REQUEST_FETCH_MEMORIES){
+            isMemoryFetched = true;
+        }
+        if(requestCode == REQUEST_DOWNLOAD_PROFILE){
+            isProfilePicDownloaded = true;
+        }
+        if(isMemoryFetched && isProfilePicDownloaded) {
+            pDialog.dismiss();
+            Intent i = new Intent(getApplicationContext(), ActivejourneyList.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+        }
     }
 }
 

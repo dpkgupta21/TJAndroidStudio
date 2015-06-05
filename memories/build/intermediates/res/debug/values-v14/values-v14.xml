@@ -7,14 +7,6 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values-v14/styles.xml -->
-    <eat-comment/>
-    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">true</item>
-        <item name="color">@android:color/black</item>
-    </style>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values-v14/values.xml -->
-    <eat-comment/>
     <style name="Platform.AppCompat" parent="Platform.V14.AppCompat"/>
     <style name="Platform.AppCompat.Light" parent="Platform.V14.AppCompat.Light"/>
     <style name="Platform.V14.AppCompat" parent="Platform.V12.AppCompat">
@@ -28,13 +20,5 @@
 
         <item name="android:listPreferredItemPaddingLeft">@dimen/abc_list_item_padding_horizontal_material</item>
         <item name="android:listPreferredItemPaddingRight">@dimen/abc_list_item_padding_horizontal_material</item>
-    </style>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values-v14/styles.xml -->
-    <eat-comment/>
-    <style name="myAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/tj_red_dark_toolbar</item>
-        <item name="colorPrimaryDark">@color/tj_red_light_status_bar</item>
-        <!--<item name="android:statusBarColor">@color/tj_red_light_status_bar</item>-->
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 </resources>

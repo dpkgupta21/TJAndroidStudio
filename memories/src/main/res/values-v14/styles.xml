@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="myAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/tj_red_dark_toolbar</item>
-        <item name="colorPrimaryDark">@color/tj_red_light_status_bar</item>
-        <!--<item name="android:statusBarColor">@color/tj_red_light_status_bar</item>-->
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-    </style>
-
-    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">true</item>
-        <item name="color">@android:color/black</item>
-    </style>
-
 </resources>

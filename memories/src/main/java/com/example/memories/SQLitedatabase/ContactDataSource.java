@@ -29,6 +29,7 @@ public class ContactDataSource {
         values.put(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS, newContact.getAllJourneyIds());
         values.put(MySQLiteHelper.CONTACT_COLUMN_INTERESTS, newContact.getInterests());
         values.put(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD, newContact.isOnBoard() ? 1 : 0);
+        values.put(MySQLiteHelper.CONTACT_COLUMN_STATUS, newContact.getStatus());
 
         // insert row
         long contact_id = 0;
@@ -107,12 +108,14 @@ public class ContactDataSource {
     public static List<Contact> getContactsFromJourney(Context context, String jId) {
         Log.d(TAG, "in getContactsFromJourney");
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        List<Contact> contactsList = new ArrayList<>();
 
         List<String> buddyIds = JourneyDataSource.getBuddyIdsFromJourney(context, jId);
         Log.d(TAG, "sie = " + buddyIds.size() + buddyIds.toString());
 
+        // CHeck if there are any buddies. If not just return
         if (buddyIds == null || buddyIds.size() == 0) {
-            return null;
+            return contactsList;
         }
 
         String[] buddyIdsStringList = new String[buddyIds.size()];
@@ -124,7 +127,7 @@ public class ContactDataSource {
         Log.d(TAG, query + buddyIdsStringList[0]);
         Cursor cursor = db.rawQuery(query, buddyIdsStringList);
 
-        List<Contact> contactsList = getContactsListFromCursor(cursor, context);
+        contactsList = getContactsListFromCursor(cursor, context);
         Log.d(TAG, "buddies from current journey are " + contactsList.size() + cursor.getCount());
 
         cursor.close();
@@ -147,8 +150,38 @@ public class ContactDataSource {
         return contact;
     }
 
+/*    public static void updateStatus(Context context, String contactId, String status) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.CONTACT_COLUMN_STATUS, status);
+        db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contactId, null);
+        db.close();
+    }
+
+    // this can update both the localPicUrl as well as ServerPicUrl
+    // here give column value either MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL OR MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL
+    public static void updatePicUrl(Context context, String contactId, String url, String column) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(column, url);
+        db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contactId, null);
+        db.close();
+    }*/
+
+    public static void updateContact(Context context, String contactId, String[] columnValues, String... columns) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        int i = 0;
+        for(String column : columns){
+            values.put(column, columnValues[i]);
+            i++;
+        }
+        db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contactId, null);
+        db.close();
+    }
+
     private static List<Contact> getContactsListFromCursor(Cursor cursor, Context context) {
-        List<Contact> contactsList = new ArrayList<Contact>();
+        List<Contact> contactsList = new ArrayList<>();
         Contact contact;
         if (cursor.moveToFirst()) {
             do {
@@ -172,6 +205,8 @@ public class ContactDataSource {
                 contact.setOnBoard(cursor.getInt(cursor
                         .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD)) == 1 ? true
                         : false);
+                contact.setStatus((cursor.getString(cursor
+                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_STATUS))));
 
                 contactsList.add(contact);
             } while (cursor.moveToNext());

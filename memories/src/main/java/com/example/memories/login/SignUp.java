@@ -20,7 +20,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.memories.R;
+import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.activejourney.ActivejourneyList;
+import com.example.memories.models.Contact;
 import com.example.memories.newjourney.LapsList;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
@@ -62,7 +64,6 @@ public class SignUp extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
-
 
         // Session Manager
         SessionManager session = new SessionManager(this);
@@ -217,6 +218,9 @@ public class SignUp extends Activity {
         String email = userItem.getString("email");
         String phone = userItem.getString("phone");
         String api_key = userItem.getString("api_key");
+
+        Contact contact = new Contact(id, name, email, null, null, Constants.GUMNAAM_IMAGE_URL, phone, null, false, null);
+        ContactDataSource.createContact(contact, this);
 
         TJPreferences.setUserId(this, id);
         TJPreferences.setUserName(this, name);

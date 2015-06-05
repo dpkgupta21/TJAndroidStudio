@@ -3,7 +3,6 @@ package com.example.memories.currentjourney;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.memories.BaseActivity;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.audio.AudioCapture;
@@ -23,7 +23,7 @@ import com.example.memories.picture.PictureCapture;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.video.VideoCapture;
 
-public class CurrentJourneyBaseActivity extends AppCompatActivity {
+public class CurrentJourneyBaseActivity extends BaseActivity {
 
     private static final String TAG = "<CurJourneyActivity>";
     private SlidingTabLayout mSlidingTabLayout;
@@ -37,8 +37,6 @@ public class CurrentJourneyBaseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Current Journey");
         toolbar.setSubtitle(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName());
-        toolbar.setLogo(R.drawable.ic_launcher);
-        setSupportActionBar(toolbar);
 
         mViewPager = (ViewPager) findViewById(R.id.timeline_viewpager);
         mViewPager.setAdapter(new CurrentJourneyTabsAdapter(getSupportFragmentManager()));

@@ -41,6 +41,7 @@ import java.util.List;
 public class PullMemoriesService {
     private static final String TAG = "PullMemoriesService";
     private Journey journey;
+    private static int REQUEST_CODE;
 
     private Context mContext;
 
@@ -48,15 +49,16 @@ public class PullMemoriesService {
     private static boolean isService = false;
     private static OnTaskFinishListener mListener;
 
-    public PullMemoriesService(Context context, OnTaskFinishListener listener) {
+    public PullMemoriesService(Context context, OnTaskFinishListener listener, int REQUEST_CODE) {
         mContext = context;
         mListener = listener;
+        this.REQUEST_CODE = REQUEST_CODE;
     }
 
     public void fetchJourneys() {
         isService = true;
         Log.d(TAG, "fetch journeys");
-        String fetchJourneysUrl = Constants.URL_TJ_DOMAIN + "api/v1/journeys?api_key=" + TJPreferences.getApiKey(mContext) + "&user_id=" + TJPreferences.getUserId(mContext);
+        String fetchJourneysUrl = Constants.URL_JOURNIES_FETCH_ALL + "?api_key=" + TJPreferences.getApiKey(mContext) + "&user_id=" + TJPreferences.getUserId(mContext);
         Log.d(TAG, "url to fetch journeys" + fetchJourneysUrl);
         CustomJsonRequest fetchJourneysRequest = new CustomJsonRequest(Request.Method.GET, fetchJourneysUrl, null,
                 new Response.Listener<JSONObject>() {
@@ -267,13 +269,13 @@ public class PullMemoriesService {
                 Log.d(TAG, "isfimiehd cal;ed" + count);
                 count = 0;
                 isService = false;
-                mListener.onFinishTask();
+                mListener.onFinishTask(REQUEST_CODE);
             }
         }
     }
 
     public interface OnTaskFinishListener{
-        void onFinishTask();
+        void onFinishTask(int REQUEST_CODES);
     }
 
 }

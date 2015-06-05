@@ -64,7 +64,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         // - replace the contents of the view with that element
         final Journey journeyItem = mDataset.get(position);
         final String name = journeyItem.getName();
-        final String buddyCount = journeyItem.getBuddies().size() + " people";
+        final String buddyCount = (journeyItem.getBuddies().size() + 1) + " people";
         final String place = "Bangalore";
 
         Log.d(TAG, "info are : " + name);
@@ -130,6 +130,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
 
             // Fetch all those contacts which are not in the contacts list of current user but are on the journey
             if (journey.getBuddies() != null && !journey.getBuddies().isEmpty()) {
+                Log.d(TAG, "buddies are = " + journey.getBuddies());
                 ArrayList<String> buddyList = (ArrayList)ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
 
                 Log.d(TAG, "non existing contacts list is" + buddyList);

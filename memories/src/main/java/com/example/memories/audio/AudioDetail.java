@@ -67,8 +67,6 @@ public class AudioDetail extends AppCompatActivity {
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
         time = (TextView) findViewById(R.id.photo_detail_time);
-        place = (TextView) findViewById(R.id.photo_detail_place);
-        weather = (TextView) findViewById(R.id.photo_detail_weather);
         caption = (EditText) findViewById(R.id.voice_detail_caption);
         mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.profilePic);

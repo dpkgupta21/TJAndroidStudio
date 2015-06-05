@@ -87,7 +87,7 @@ public class DownloadAudioAsyncTask extends AsyncTask<String, Integer, String> {
     }
 
     public interface OnAudioDownloadListener{
-        void onAudioDownload(String auidoLocalUrl, Audio audio);
+        void onAudioDownload(String audioLocalUrl, Audio audio);
     }
 
 }

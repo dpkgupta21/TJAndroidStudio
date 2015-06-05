@@ -42,7 +42,6 @@ public class AudioCapture extends AppCompatActivity {
     long startTime = 0;
     long audioDuration;
     Runnable timerRunnable = new Runnable() {
-
         @Override
         public void run() {
             long millis = System.currentTimeMillis() - startTime;

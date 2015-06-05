@@ -2,6 +2,7 @@ package com.example.memories.gallery;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
 import com.example.memories.BaseActivity;
 import com.example.memories.R;
@@ -17,6 +18,9 @@ public class GalleryBaseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_base_activity);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Gallery");
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(new GalleryTabsPagerAdapter(getSupportFragmentManager()));

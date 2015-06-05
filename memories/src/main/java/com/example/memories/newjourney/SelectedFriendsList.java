@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -27,8 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class SelectedFriendsList extends AppCompatActivity {
 
@@ -37,6 +36,22 @@ public class SelectedFriendsList extends AppCompatActivity {
     public static SelectedFriendsListAdapter contactListViewAdapter;
     private ActionBar actionBar;
     private ListView contactListView;
+
+    // handler and runnable are used to check(every 1 second) from PullContactsService.java whether all the contacts have been fetched
+    Handler timerHandler = new Handler();
+    Runnable timerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if(PullContactsService.isServiceFinished()){
+                //If fetching of contacts is finished, initialize the adapter and listview as well as remove the handler callback
+                Log.d(TAG, "service is finished" + PullContactsService.isServiceFinished());
+                timerHandler.removeCallbacks(timerRunnable);
+                initializeData();
+            }else {
+                timerHandler.postDelayed(this, 10000);
+            }
+        }
+    };
 
     private ProgressDialog mProgressDialog;
 
@@ -53,37 +68,27 @@ public class SelectedFriendsList extends AppCompatActivity {
         selectedList = new ArrayList<Contact>();
 
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.show();
 
         contactListView = (ListView) findViewById(R.id.addFriendsList);
 
         boolean isServiceRunning = false;
         ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if ("com.example.MyService".equals(service.service.getClassName())) {
+            if ("com.example.memories.services.PullContactsService".equals(service.service.getClassName())) {
                 isServiceRunning = true;
+
             }
         }
         if(!isServiceRunning){
+            //The service has already completed
+            Log.d(TAG, "pull contacts service has already finished");
             initializeData();
         }else {
-            final Timer t = new Timer();
-            //Set the schedule function and rate
-            t.scheduleAtFixedRate(new TimerTask() {
-                                      @Override
-                                      public void run() {
-                                          //Called each time when 1000 milliseconds (1 second) (the period parameter)
-                                          if(PullContactsService.isServiceFinished()){
-                                              t.cancel();
-                                              initializeData();
-                                          }
-                                      }
-
-                                  },
-                //Set how long before to start calling the TimerTask (in milliseconds)
-                    0,
-                //Set the amount of time between each execution (in milliseconds)
-                    6000);
+            //Service is not yet complete so start the handler to check if the service is finished (time period 1 second)
+            Log.d(TAG, "pull contacts service is still running so waiting for the service to stop");
+            mProgressDialog.setMessage("Please wait while we check who all from your contacts are on traveljar");
+            mProgressDialog.show();
+            timerHandler.postDelayed(timerRunnable, 0);
         }
     }
 

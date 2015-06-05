@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.memories.BaseActivity;
 import com.example.memories.R;
+import com.example.memories.SQLitedatabase.ContactDataSource;
+import com.example.memories.SQLitedatabase.MySQLiteHelper;
 import com.example.memories.customviews.MyCircularImageView;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
@@ -33,6 +36,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ProfileActivity extends BaseActivity {
@@ -59,6 +64,12 @@ public class ProfileActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_new);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.GONE);
+
+        Toolbar toolbarProfile = (Toolbar) findViewById(R.id.toolbar_profile);
+        setSupportActionBar(toolbarProfile);
 
         mProfileImg = (MyCircularImageView) findViewById(R.id.profile_img);
         mCoverImg = (ImageView)findViewById(R.id.cover_image);
@@ -137,22 +148,33 @@ public class ProfileActivity extends BaseActivity {
         // Handle action bar actions click
         switch (item.getItemId()) {
             case 0:
-                if(!HelpMe.isNetworkAvailable(this)){
+                if(!HelpMe.isNetworkAvailable(this)) {
+                    List<String> columns = new ArrayList<>();
+                    List<String> columnNames = new ArrayList<>();
                     Toast.makeText(this, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
-                }
-                if (!mEditName.getText().toString().equals(TJPreferences.getUserName(this))) {
-                    TJPreferences.setUserName(this, mEditName.getText().toString());
-                    isNameUpdated = true;
-                }
-                if(!mEditStatus.getText().toString().equals(TJPreferences.getUserStatus(this))){
-                    TJPreferences.setUserStatus(this, mEditStatus.getText().toString());
-                    isStatusUpdated = true;
-                }
-                if(isProfilePicUpdated){
-                    TJPreferences.setProfileImgPath(this, mProfileImgPath);
-                }
-                if(isNameUpdated || isStatusUpdated || isProfilePicUpdated){
-                    new UpdateProfileAsyncTask().execute();
+                    if (!mEditName.getText().toString().equals(TJPreferences.getUserName(this))) {
+                        TJPreferences.setUserName(this, mEditName.getText().toString());
+                        isNameUpdated = true;
+                        columns.add(mEditName.getText().toString());
+                        columnNames.add(MySQLiteHelper.CONTACT_COLUMN_NAME);
+                    }
+                    if (!mEditStatus.getText().toString().equals(TJPreferences.getUserStatus(this))) {
+                        TJPreferences.setUserStatus(this, mEditStatus.getText().toString());
+                        isStatusUpdated = true;
+                        columns.add(mEditStatus.getText().toString());
+                        columnNames.add(MySQLiteHelper.CONTACT_COLUMN_STATUS);
+                    }
+                    if (isProfilePicUpdated) {
+                        TJPreferences.setProfileImgPath(this, mProfileImgPath);
+                        columns.add(mProfileImgPath);
+                        columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL);
+                    }
+                    if (isNameUpdated || isStatusUpdated || isProfilePicUpdated) {
+                        new UpdateProfileAsyncTask().execute();
+                        String columnNamesArray[] = new String[columnNames.size()];
+                        String columnValuesArray[] = new String[columnNames.size()];
+                        ContactDataSource.updateContact(ProfileActivity.this, TJPreferences.getUserId(ProfileActivity.this), columns.toArray(columnValuesArray), columnNames.toArray(columnNamesArray));
+                    }
                 }
 
                 finish();

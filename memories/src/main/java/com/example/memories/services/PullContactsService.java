@@ -40,7 +40,7 @@ public class PullContactsService extends IntentService {
     private ArrayList<String> allPhoneList;
     private ArrayList<String> allEmailList;
 
-    private static int noRequests;
+    private static int noRequests = -1;
 
     public PullContactsService() {
         super("PullContactsService");
@@ -81,39 +81,39 @@ public class PullContactsService extends IntentService {
                 //String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 
                 // If no name present skip that contact
-                    if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                                new String[]{id}, null);
-
-                        while (pCur.moveToNext()) {
-                            //phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                            //allPhoneList.add(phone);
-                            allPhoneList.add(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                            nameCount++;
-                            break;
-                        }
-                        pCur.close();
-                    }
-
-                    Cursor emailCur = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-                            null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
+                if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                    Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
                             new String[]{id}, null);
 
-                    while (emailCur.moveToNext()) {
+                    while (pCur.moveToNext()) {
+                        //phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        //allPhoneList.add(phone);
+                        allPhoneList.add(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                        nameCount++;
+                        break;
+                    }
+                    pCur.close();
+                }
+
+                Cursor emailCur = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+                        null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
+                        new String[]{id}, null);
+
+                while (emailCur.moveToNext()) {
 //                        emailContact = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
 //                        allEmailList.add(emailContact);
-                        allEmailList.add(emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
-                        emailCount++;
-                    }
+                    allEmailList.add(emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
+                    emailCount++;
+                }
                 emailCur.close();
 
-                    // if (phone != null || emailContact != null) {
+                // if (phone != null || emailContact != null) {
 
 //                    Log.d(TAG, "-------------------------");
 //                    Log.d(TAG, "Id :" + totalContacts);
 
-                    totalContacts++;
+                totalContacts++;
             }
         }
 
@@ -236,7 +236,7 @@ public class PullContactsService extends IntentService {
             } else {
 
                 // check whether the gumnaam image already exists
-
+                noRequests--;
                 picServerUrl = null;
                 picLocalUrl = Constants.GUMNAAM_IMAGE_URL;
             }
@@ -249,19 +249,17 @@ public class PullContactsService extends IntentService {
     }
 
     public static boolean isServiceFinished(){
-        return !(noRequests == 0);
+        Log.d(TAG, "no of requests = " + noRequests);
+        return noRequests == 0;
     }
 
     /*    private static final String TAG = "Pull_contacts_service";
-
     public PullContactsService() {
         super("name");
     }
-
     public PullContactsService(String name) {
         super(name);
     }
-
     @Override
     protected void onHandleIntent(Intent intent) {
         ContentResolver cr = getContentResolver();
@@ -278,41 +276,32 @@ public class PullContactsService extends IntentService {
             }
         }
     }
-
     private class UploadAsyncTask extends AsyncTask<String, Void, JSONObject> {
-
         Context context;
         Cursor cursor;
         private ArrayList<String> allPhoneList;
         private ArrayList<String> allEmailList;
-
         public UploadAsyncTask(Context context, Cursor cursor) {
             this.context = context;
             this.cursor = cursor;
         }
-
         @Override
         protected JSONObject doInBackground(String... maps) {
-
             int cursorPos = cursor.getPosition();
             Log.d(TAG, "fetching contacts from cursor position"+cursorPos);
             allPhoneList = new ArrayList<>();
             allEmailList = new ArrayList<>();
-
             ContentResolver cr = getContentResolver();
             int i = 0;
                 do {
-
                     String id = cursor.getString(cursor.getColumnIndex(BaseColumns._ID));
                     //Log.d(TAG, "id " + id + " cursor position -> " + cursorPos);
                     //String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-
                     // If no name present skip that contact
                     if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
                         Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                                 null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
                                 new String[]{id}, null);
-
                         while (pCur.moveToNext()) {
                             //phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                             //allPhoneList.add(phone);
@@ -321,27 +310,21 @@ public class PullContactsService extends IntentService {
                         }
                         pCur.close();
                     }
-
                     Cursor emailCur = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,
                             null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
                             new String[]{id}, null);
-
                     while (emailCur.moveToNext()) {
                         allEmailList.add(emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
                     }
                     emailCur.close();
-
                     i++;
-
                     Log.d(TAG, "i -> " + i + " " + cursorPos);
                 }while (cursor.moveToNext() && i <= 200);
                 Log.d(TAG, "successfully fetched contacts for cursor starting from" + cursorPos);
             return null;
         }
-
         @Override
         protected void onPostExecute(JSONObject object) {
-
         }
     }*/
 

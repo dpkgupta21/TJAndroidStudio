@@ -19,6 +19,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String CONTACT_COLUMN_ALL_JIDS = "allJourneyIds";
     public static final String CONTACT_COLUMN_INTERESTS = "interests";
     public static final String CONTACT_COLUMN_ISONBOARD = "isOnBoard";
+    public static final String CONTACT_COLUMN_STATUS = "status";
     private static final String CREATE_TABLE_CONTACT = "create table " + TABLE_CONTACT + "("
             + CONTACT_COLUMN_ID_ONSERVER + " text primary key, "
             + CONTACT_COLUMN_NAME + " text ,"
@@ -28,6 +29,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + CONTACT_COLUMN_PHONE + " text ,"
             + CONTACT_COLUMN_ALL_JIDS + " text ,"
             + CONTACT_COLUMN_INTERESTS + " text ,"
+            + CONTACT_COLUMN_STATUS + " text ,"
             + CONTACT_COLUMN_ISONBOARD + " integer " + ");";
     // Table JOURNEY fields
     public static final String TABLE_JOURNEY = "JOURNEY";
