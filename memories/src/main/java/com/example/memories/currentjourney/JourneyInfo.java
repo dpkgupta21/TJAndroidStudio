@@ -1,5 +1,6 @@
 package com.example.memories.currentjourney;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -95,6 +96,8 @@ public class JourneyInfo extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_add_buddy:
                 Log.d(TAG, "action_add_buddy clicked!");
+                Intent i = new Intent(this, JourneyInfoFriendsList.class);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

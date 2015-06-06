@@ -5,6 +5,13 @@
 
     <include layout="@layout/toolbar" />
 
+    <AutoCompleteTextView
+        android:id="@+id/new_journey_location_list_autocomplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type in your Location" />
+
+
     <ListView
         android:id="@+id/new_journey_location_list"
         android:layout_width="fill_parent"

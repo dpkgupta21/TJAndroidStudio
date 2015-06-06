@@ -18,8 +18,10 @@ import com.example.memories.utility.HelpMe;
 import com.example.memories.volley.AppController;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -182,10 +184,16 @@ public class AddLap extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 String result = data.getStringExtra("result");
-                fromLocation.setText(result);
+
+                List<String> placeDetails = Arrays.asList(result.split(","));
+                int len = placeDetails.size();
+                fromLocation.setText(placeDetails.get(0));
             } else if (requestCode == 2) {
                 String result = data.getStringExtra("result");
-                toLocation.setText(result);
+
+                List<String> placeDetails = Arrays.asList(result.split(","));
+                int len = placeDetails.size();
+                toLocation.setText(placeDetails.get(0));
             }
         }
         if (resultCode == RESULT_CANCELED) {

@@ -214,7 +214,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + CHECKIN_COLUMN_CREATED_AT + " text ,"
             + CHECKIN_COLUMN_UPDATED_AT + " text ,"
             + CHECKIN_COLUMN_LIKED_BY + " text " + ");";
-    public static final String TABLE_NOTES = "NOTES";
+
+    public static final String TABLE_NOTES = "NOTE";
     public static final String NOTES_COLUMN_ID = "_id";
     public static final String NOTES_COLUMN_ID_ONSERVER = "idOnServer";
     public static final String NOTES_COLUMN_JID = "journeyId";
@@ -236,6 +237,28 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + NOTES_COLUMN_CREATED_AT + " integer ,"
             + NOTES_COLUMN_UPDATED_AT + " integer ,"
             + NOTES_COLUMN_LIKED_BY + " text " + ");";
+
+
+    public static final String TABLE_PLACE = "PLACE";
+    public static final String PLACE_COLUMN_ID = "_id";
+    public static final String PLACE_COLUMN_ID_ONSERVER = "idOnServer";
+    public static final String PLACE_COLUMN_ID_ON_GOOGLE = "idOnGoogle";
+    public static final String PLACE_COLUMN_COUNTRY = "country";
+    public static final String PLACE_COLUMN_STATE = "state";
+    public static final String PLACE_COLUMN_CITY = "city";
+    public static final String PLACE_COLUMN_CREATED_BY = "createdBy";
+    public static final String PLACE_COLUMN_CREATED_AT = "createdAt";
+
+    private static final String CREATE_TABLE_PLACE = "create table if not exists " + TABLE_PLACE + "("
+            + PLACE_COLUMN_ID + " integer primary key autoincrement, "
+            + PLACE_COLUMN_ID_ONSERVER + " text, "
+            + PLACE_COLUMN_ID_ON_GOOGLE + " text ,"
+            + PLACE_COLUMN_COUNTRY + " text ,"
+            + PLACE_COLUMN_STATE + " text ,"
+            + PLACE_COLUMN_CITY + " text ,"
+            + PLACE_COLUMN_CREATED_BY + " text ,"
+            + PLACE_COLUMN_CREATED_AT + " integer " + ");";
+
     private static final String TAG = "<<MySQLiteHelper>>";
     private static final String DATABASE_NAME = "memories.db";
     private static final int DATABASE_VERSION = 2;
@@ -263,6 +286,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.delete(TABLE_PICTURE, null, null);
         db.delete(TABLE_TIMELINE, null, null);
         db.delete(TABLE_VIDEO, null, null);
+        db.delete(TABLE_PLACE, null, null);
     }
 
     @Override
@@ -285,6 +309,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.d(TAG, "NOTES table created!");
         database.execSQL(CREATE_TABLE_MOOD);
         Log.d(TAG, "MOOD table created!");
+        database.execSQL(CREATE_TABLE_PLACE);
+        Log.d(TAG, "PLACE table created!");
     }
 
     @Override
@@ -299,6 +325,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_VIDEO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHECKIN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOOD);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACE);
         onCreate(db);
     }
 

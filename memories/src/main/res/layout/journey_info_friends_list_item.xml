@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="10dp">
+
+    <com.example.memories.customviews.MyCircularImageView
+        android:id="@+id/journey_info_friends_list_contact_image"
+        android:layout_width="75sp"
+        android:layout_height="75sp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/abhi" />
+
+    <TextView
+        android:id="@+id/journey_info_friends_list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/journey_info_friends_list_contact_image"
+        android:text="Content not available"
+        android:textSize="@dimen/tj_medium_font" />
+
+
+</RelativeLayout>

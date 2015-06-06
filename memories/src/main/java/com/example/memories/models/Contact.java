@@ -47,11 +47,6 @@ public class Contact implements Comparable<Contact>, Parcelable {
         this.isSelected = parcel.readByte() == 1 ? true : false;
     }
 
-    @Override
-    public int compareTo(Contact child) {
-        return name.compareTo(child.name);
-    }
-
     public String getIdOnServer() {
         return idOnServer;
     }
@@ -141,15 +136,15 @@ public class Contact implements Comparable<Contact>, Parcelable {
     }
 
     @Override
-    public String toString(){
-        return "id on server -> " + this.getIdOnServer()+"\n"+
-                "name -> " + this.getName()+"\n"+
-                "primary email -> " + this.getPrimaryEmail()+"\n"+
-                "status -> " + this.getStatus()+"\n"+
-                "pic server url -> " + this.getPicServerUrl()+"\n"+
-                "pic local url -> " + this.getPicLocalUrl()+"\n"+
-                "phone number -> " + this.getPhone_no()+"\n"+
-                "is on board -> " + this.isOnBoard()+"\n"+
+    public String toString() {
+        return "id on server -> " + this.getIdOnServer() + "\n" +
+                "name -> " + this.getName() + "\n" +
+                "primary email -> " + this.getPrimaryEmail() + "\n" +
+                "status -> " + this.getStatus() + "\n" +
+                "pic server url -> " + this.getPicServerUrl() + "\n" +
+                "pic local url -> " + this.getPicLocalUrl() + "\n" +
+                "phone number -> " + this.getPhone_no() + "\n" +
+                "is on board -> " + this.isOnBoard() + "\n" +
                 "all journey ids -> " + this.getAllJourneyIds();
     }
 
@@ -173,6 +168,25 @@ public class Contact implements Comparable<Contact>, Parcelable {
         parcel.writeByte((byte) (isOnBoard ? 1 : 0));
         parcel.writeString(interests);
         parcel.writeByte((byte) (isSelected() ? 1 : 0));
+    }
+
+    @Override
+    public int compareTo(Contact child) {
+        return name.compareTo(child.name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Contact)) {
+            return false;
+        }
+        Contact other = (Contact) o;
+        return idOnServer.equals(other.idOnServer);
+    }
+
+    @Override
+    public int hashCode() {
+        return idOnServer.hashCode();
     }
 
     public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>() {

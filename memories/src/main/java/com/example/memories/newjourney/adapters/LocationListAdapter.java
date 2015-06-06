@@ -28,7 +28,6 @@ public class LocationListAdapter extends ArrayAdapter<String> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
 
-        Log.d(TAG, "1");
         // reuse views
         if (rowView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
@@ -39,7 +38,6 @@ public class LocationListAdapter extends ArrayAdapter<String> {
             rowView.setTag(viewHolder);
         }
 
-        Log.d(TAG, "4");
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
         String n = names.get(position);
