@@ -80,6 +80,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
 
         pDialog = new ProgressDialog(this);
+        pDialog.setCanceledOnTouchOutside(false);
 
         Bundle extras = getIntent().getExtras();
 

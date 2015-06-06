@@ -135,6 +135,7 @@ public class SignUp extends Activity {
 
                     pDialog = new ProgressDialog(this);
                     pDialog.setMessage("Loading...");
+                    pDialog.setCanceledOnTouchOutside(false);
                     pDialog.show();
 
                     // Get a GCM registration id

@@ -68,6 +68,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         setSupportActionBar(toolbar);
 
         pDialog = new ProgressDialog(this);
+        pDialog.setCanceledOnTouchOutside(false);
 
         currenTime = HelpMe.getCurrentTime();
         video = (ImageView) findViewById(R.id.thumbnail);

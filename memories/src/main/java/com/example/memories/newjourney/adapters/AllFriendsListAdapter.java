@@ -23,8 +23,8 @@ import java.util.List;
 public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filterable {
 
     protected static final String TAG = null;
-    private final List<Contact> originalList;
-    private final Activity context;
+    private List<Contact> originalList;
+    private Activity context;
     private List<Contact> list;
 
     public AllFriendsListAdapter(Activity context, List<Contact> list) {
@@ -32,6 +32,10 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
         this.context = context;
         this.list = list;
         this.originalList = list;
+    }
+
+    public void updateList(List<Contact> contactList){
+        originalList = contactList;
     }
 
     @Override

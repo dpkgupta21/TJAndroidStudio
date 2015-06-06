@@ -55,6 +55,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         this.memoriesList = memoriesList;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pDialog = new ProgressDialog(context);
+        pDialog.setCanceledOnTouchOutside(false);
     }
 
     public void setMemoriesList(List<Memories> memoriesList){

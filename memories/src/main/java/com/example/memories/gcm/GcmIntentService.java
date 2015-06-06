@@ -169,6 +169,7 @@ public class GcmIntentService extends IntentService {
         String mood;
         List<String> buddyIds;
         String reason;
+        long audioDuration;
 
         switch (memType) {
             case HelpMe.SERVER_PICTURE_TYPE:
@@ -193,9 +194,10 @@ public class GcmIntentService extends IntentService {
                 dataUrl = data.getString("data_url");
                 size = Long.parseLong(data.getString("size"));
                 extension = data.getString("extention");
+                audioDuration = data.getString("duration") == "null" ? 0 : Long.parseLong(data.getString("duration"));
 
                 Audio newAudio = new Audio(idOnServer, jId, HelpMe.AUDIO_TYPE, extension, size,
-                        dataUrl, null, createdBy, createdAt, updatedAt, null, 0);
+                        dataUrl, null, createdBy, createdAt, updatedAt, null, audioDuration);
 
                 AudioDataSource.createAudio(newAudio, this);
                 //AudioUtil.downloadAudio(this, newAudio);

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.memories.models.Contact;
+import com.example.memories.utility.TJPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,21 @@ public class ContactDataSource {
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         List<Contact> contacts = getContactsListFromCursor(cursor, context);
+
+        // If contacts contains own contact remove itgetAllContacts
+        int i = -1;
+        for(Contact contact : contacts){
+            Log.d(TAG, "contact id for " + (i+1) + "is " + contact.getIdOnServer() + TJPreferences.getUserId(context));
+            if(contact.getIdOnServer().equals(TJPreferences.getUserId(context))){
+                i++;
+                break;
+            }
+            i++;
+        }
+        if(i > -1){
+            contacts.remove(i);
+        }
+
         cursor.close();
         db.close();
 

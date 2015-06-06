@@ -35,7 +35,9 @@ public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsy
         mContext = context;
         mAudioList = audioList;
         mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setMessage("please wait while we are downloading your file");
+
     }
 
     @Override

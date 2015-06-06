@@ -5,6 +5,8 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -40,6 +42,7 @@ public class PullContactsService extends IntentService {
     private ArrayList<String> allPhoneList;
     private ArrayList<String> allEmailList;
 
+    private ResultReceiver mReceiver;
     private static int noRequests = -1;
 
     public PullContactsService() {
@@ -52,6 +55,9 @@ public class PullContactsService extends IntentService {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, startId, startId);
+        if(intent.hasExtra("RECEIVER")){
+            mReceiver = intent.getParcelableExtra("RECEIVER");
+        }
         Log.d(TAG, "on start command");
         return START_STICKY;
     }
@@ -216,6 +222,7 @@ public class PullContactsService extends IntentService {
                                     out = new FileOutputStream(fileName);
                                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                                     noRequests--;
+                                    onFinish();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 } finally {
@@ -237,6 +244,7 @@ public class PullContactsService extends IntentService {
 
                 // check whether the gumnaam image already exists
                 noRequests--;
+                onFinish();
                 picServerUrl = null;
                 picLocalUrl = Constants.GUMNAAM_IMAGE_URL;
             }
@@ -251,6 +259,13 @@ public class PullContactsService extends IntentService {
     public static boolean isServiceFinished(){
         Log.d(TAG, "no of requests = " + noRequests);
         return noRequests == 0;
+    }
+
+    public void onFinish(){
+        if(noRequests == 0 && mReceiver != null){
+            Bundle bundle = new Bundle();
+            mReceiver.send(0, bundle);
+        }
     }
 
     /*    private static final String TAG = "Pull_contacts_service";

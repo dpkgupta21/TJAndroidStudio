@@ -113,6 +113,7 @@ public class NewJourneyDetail extends AppCompatActivity {
 
                 final ProgressDialog pDialog = new ProgressDialog(this);
                 pDialog.setMessage("Loading...");
+                pDialog.setCanceledOnTouchOutside(false);
                 pDialog.show();
 
                 CustomJsonRequest newJourneyReq = new CustomJsonRequest(Request.Method.POST, url,

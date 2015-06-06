@@ -171,6 +171,7 @@ public class AudioUtil {
             entityBuilder.addPart("audio[audio_file]", new FileBody(new File(audio.getDataLocalURL())));
             entityBuilder.addTextBody("audio[user_id]", audio.getCreatedBy());
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
+            entityBuilder.addTextBody("audio[duration]", String.valueOf(audio.getAudioDuration()));
 
 
             String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/audios";

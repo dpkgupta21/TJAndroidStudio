@@ -1,6 +1,9 @@
 package com.example.memories.newjourney;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -16,16 +19,23 @@ import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.newjourney.adapters.AllFriendsListAdapter;
+import com.example.memories.services.CustomResultReceiver;
+import com.example.memories.services.PullContactsService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AllFriendsList extends AppCompatActivity {
+public class AllFriendsList extends AppCompatActivity implements CustomResultReceiver.Receiver{
     private static final String TAG = "AllFriendsList";
     private AllFriendsListAdapter mAdapter;
     private List<Contact> list;
     private List<Contact> selectedList;
+
+    private ListView listView;
+
+    private ProgressDialog mDialog;
+    CustomResultReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,12 @@ public class AllFriendsList extends AppCompatActivity {
         toolbar.setTitle("Add Friends");
         setSupportActionBar(toolbar);
 
+        mDialog = new ProgressDialog(this);
+        mDialog.setMessage("please wait while we fetch your contacts from server");
+
+        mReceiver = new CustomResultReceiver(new Handler());
+        mReceiver.setReceiver(this);
+
         Log.d(TAG, "1");
         // fetch all names from phone address book stored in local DB-- COntact
         list = new ArrayList<Contact>();
@@ -43,7 +59,7 @@ public class AllFriendsList extends AppCompatActivity {
         Collections.sort(list);
 
         Log.d(TAG, "2");
-        ListView listView = (ListView) findViewById(R.id.all_contacts_listview);
+        listView = (ListView) findViewById(R.id.all_contacts_listview);
         mAdapter = new AllFriendsListAdapter(this, list);
         listView.setAdapter(mAdapter);
 
@@ -75,7 +91,7 @@ public class AllFriendsList extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_items_laps, menu);
+        inflater.inflate(R.menu.new_journey_selected_friends, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -85,6 +101,12 @@ public class AllFriendsList extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_next:
                 goToNext();
+                return true;
+            case R.id.action_refresh:
+                Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+                intent.putExtra("RECEIVER", mReceiver);
+                startService(intent);
+                mDialog.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -111,4 +133,17 @@ public class AllFriendsList extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        mDialog.dismiss();
+        list = ContactDataSource.getAllContacts(this);
+        Collections.sort(list);
+        if(mAdapter == null){
+            mAdapter = new AllFriendsListAdapter(this, list);
+            listView.setAdapter(mAdapter);
+        }else {
+            mAdapter.updateList(list);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 }

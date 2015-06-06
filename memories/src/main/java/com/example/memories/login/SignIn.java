@@ -112,6 +112,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
             Log.d(TAG, "makeREqusttoServer method called" + regid);
             pDialog = new ProgressDialog(this);
             pDialog.setTitle("Loading your memories...");
+            pDialog.setCanceledOnTouchOutside(false);
             pDialog.show();
             // Get username, password from EditText
             final String emailAddress = txtEmailAddress.getText().toString().trim();

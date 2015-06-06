@@ -143,6 +143,7 @@ public class PullMemoriesService {
         String likedBy;
         String fileSize;
         Picture pic;
+        long audioDuration;
 
 
         Long createdAt = HelpMe.getCurrentTime();
@@ -245,10 +246,12 @@ public class PullMemoriesService {
                         createdBy = memory.getString("user_id");
                         memoryId = memory.getString("id");
                         fileUrl = memory.getJSONObject("audio_file").getString("url");
+                        audioDuration = memory.getString("duration") == "null" ? 0 : Long.parseLong(memory.getString("duration"));
+
                         //Long size = Long.parseLong(memory.getJSONObject("memory").getJSONObject("audio_file").getString("size"));
 
                         Audio newAudio = new Audio(memoryId, journeyId, HelpMe.AUDIO_TYPE, "3gp", 1122,
-                                fileUrl, null, createdBy, createdAt, updatedAt, null, 0);
+                                fileUrl, null, createdBy, createdAt, updatedAt, null, audioDuration);
                         AudioDataSource.createAudio(newAudio, mContext);
 
                         Log.d(TAG, "audio parsed and saved successfully");
