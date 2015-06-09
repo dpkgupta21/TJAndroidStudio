@@ -39,7 +39,7 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
         notifyItemRemoved(position);
     }
 
-    public void updateContactsList(List<Contact> contactsList){
+    public void updateContactsList(List<Contact> contactsList) {
         mDataset = contactsList;
     }
 
@@ -109,7 +109,6 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
         public void onClick(View v) {
             Log.d(TAG, getAdapterPosition() + "===" + getLayoutPosition());
             Contact journey = mDataset.get(getLayoutPosition());
-
 
 
         }

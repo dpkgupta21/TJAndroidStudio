@@ -6,7 +6,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.memories.SQLitedatabase.NoteDataSource;
+import com.example.memories.SQLitedatabase.CheckinDataSource;
 import com.example.memories.models.CheckIn;
 import com.example.memories.volley.AppController;
 import com.example.memories.volley.CustomJsonRequest;
@@ -22,26 +22,27 @@ public class CheckinUtil {
     public static void uploadCheckin(final CheckIn checkin, final Context context) {
 
         String uploadRequestTag = "UPLOAD_CHECKIN";
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("api_key", TJPreferences.getApiKey(context));
         params.put("checkin[user_id]", checkin.getCreatedBy());
         params.put("checkin[place_name]", checkin.getCheckInPlaceName());
-        params.put("checkin[latitude]", (Double) checkin.getLatitude() == null ? null : ((Double) checkin.getLatitude()).toString());
-        params.put("checkin[longitude]", (Double) checkin.getLongitude() == null ? null : ((Double) checkin.getLongitude()).toString());
+        params.put("checkin[latitude]", String.valueOf(checkin.getLatitude()));
+        params.put("checkin[longitude]", String.valueOf(checkin.getLongitude()));
         params.put("checkin[buddies]", checkin.getCheckInWith() == null ? null : checkin.getCheckInWith().toString());
         params.put("checkin[note]", checkin.getCaption());
         Log.d(TAG, "uploading checkin with parameters " + params);
 
         String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/checkins";
+        Log.d(TAG, "uploading checkin on url " +  url);
+
         CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.POST, url, params,
                 new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, "checkin uploaded successfully" + response);
                         try {
                             String serverId = response.getJSONObject("checkin").getString("id");
-                            NoteDataSource.updateServerId(context.getApplicationContext(), checkin.getId(), serverId);
+                            CheckinDataSource.updateServerId(context.getApplicationContext(), checkin.getId(), serverId);
                         } catch (Exception ex) {
                             Log.d(TAG, "exception in parsing checkin received from server" + ex);
                         }
@@ -50,7 +51,8 @@ public class CheckinUtil {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "error in uploading checkin" + error);
+                Log.d(TAG, "error in uploading checkin");
+                error.printStackTrace();
             }
         });
         AppController.getInstance().addToRequestQueue(uploadRequest, uploadRequestTag);

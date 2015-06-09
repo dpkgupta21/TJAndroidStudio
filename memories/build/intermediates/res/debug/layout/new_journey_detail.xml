@@ -20,7 +20,7 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <EditText
+        <com.example.memories.customviews.MyEditTextView
             android:id="@+id/new_journey_detail_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:hint="Journey Name"
             android:inputType="text" />
 
-        <EditText
+        <com.example.memories.customviews.MyEditTextView
             android:id="@+id/new_journey_detail_tagline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

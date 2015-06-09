@@ -171,6 +171,8 @@ public class VideoUtil {
             entityBuilder.addPart("video[video_file]", new FileBody(new File(video.getDataLocalURL())));
             entityBuilder.addTextBody("video[user_id]", video.getCreatedBy());
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
+            entityBuilder.addTextBody("video[latitude]", String.valueOf(video.getLatitude()));
+            entityBuilder.addTextBody("video[longitude]", String.valueOf(video.getLongitude()));
 
             String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/videos";
             HttpPost updateProfileRequest = new HttpPost(url);
@@ -199,41 +201,10 @@ public class VideoUtil {
                 Log.d(TAG, "video successfully uploaded and serverid successfully saved in database");
             } catch (JSONException ex) {
                 Log.d(TAG, ex.getMessage());
-            }catch (NullPointerException ex){
+            } catch (NullPointerException ex) {
                 Log.d(TAG, "null pointer exception");
             }
         }
     }
 
 }
-
-
-/*RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constants.TRAVELJAR_API_BASE_URL).build();
-		TravelJarServices myService = restAdapter.create(TravelJarServices.class);
-
-		myService.uploadVideo(TJPreferences.getActiveJourneyId(context), new TypedString(
-				TJPreferences.getApiKey(context)),
-				new TypedString(TJPreferences.getUserId(context)), new TypedFile("video/*",
-						new File(video.getDataLocalURL())), new Callback<String>() {
-					@Override
-					public void success(String str, retrofit.client.Response response) {
-						try {
-							Log.d(TAG, "video uploaded successfully " + str);
-							JSONObject object = new JSONObject(str);
-							String serverId = object.getJSONObject("video").getString("id");
-							String serverUrl = object.getJSONObject("video")
-									.getJSONObject("video_file").getString("url");
-							VideoDataSource.updateServerIdAndUrl(context, video.getId(), serverId,
-									serverUrl);
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-
-					@Override
-					public void failure(RetrofitError retrofitError) {
-						Log.d(TAG, "error in uploading video" + retrofitError);
-						retrofitError.printStackTrace();
-					}
-				});*/

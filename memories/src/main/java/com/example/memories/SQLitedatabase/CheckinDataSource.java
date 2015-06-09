@@ -40,6 +40,8 @@ public class CheckinDataSource {
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CREATED_AT, newCheckIn.getCreatedAt());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT, newCheckIn.getUpdatedAt());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_LIKED_BY, newCheckIn.getLikedBy() == null ? null : Joiner.on(",").join(newCheckIn.getLikedBy()));
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE, newCheckIn.getLatitude());
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE, newCheckIn.getLongitude());
 
         // insert row
         Long checkin_id = db.insert(MySQLiteHelper.TABLE_CHECKIN, null, values);
@@ -141,9 +143,7 @@ public class CheckinDataSource {
             checkin.setjId(c.getString(c.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_JID)));
             checkin.setMemType(c.getString(c.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_MEM_TYPE)));
             checkin.setCaption(c.getString(c.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_CAPTION)));
-            checkin.setLatitude(c.getLong(c.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE)));
-            checkin.setLongitude(c.getLong(c
-                    .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE)));
+
             checkin.setCheckInPlaceName(c.getString(c
                     .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PLACE_NAME)));
             checkin.setCheckInPicURL(c.getString(c
@@ -160,6 +160,9 @@ public class CheckinDataSource {
                     .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT)));
             String liked = c.getString(c.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
             checkin.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
+
+            checkin.setLatitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE)));
+            checkin.setLongitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE)));
             checkInsList.add(checkin);
             c.moveToNext();
         }

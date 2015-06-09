@@ -10,16 +10,16 @@
         android:id="@+id/journey_info_friends_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:scrollbars="vertical" />
-    
-    <TextView
+        android:scrollbars="vertical"
+        android:visibility="gone" />
+
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/journey_info_friends_list_no_buddies_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="No other friends left"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
 </LinearLayout>

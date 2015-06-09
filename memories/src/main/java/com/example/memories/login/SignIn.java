@@ -49,6 +49,8 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
     protected static final String TAG = null;
     // GCM -----------------------------------
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static int REQUEST_FETCH_MEMORIES = 1;
+    private static int REQUEST_DOWNLOAD_PROFILE = 2;
     String SENDER_ID = Constants.GOOGLE_PROJECT_NUMBER;
     GoogleCloudMessaging gcm;
     Context context;
@@ -56,12 +58,8 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
     private EditText txtEmailAddress;
     private EditText txtPassword;
     private ProgressDialog pDialog;
-
     private boolean isProfilePicDownloaded;
     private boolean isMemoryFetched;
-
-    private static int REQUEST_FETCH_MEMORIES = 1;
-    private static int REQUEST_DOWNLOAD_PROFILE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +106,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
 
 
     public void makeRequestToServer() {
-        if(HelpMe.isNetworkAvailable(this)) {
+        if (HelpMe.isNetworkAvailable(this)) {
             Log.d(TAG, "makeREqusttoServer method called" + regid);
             pDialog = new ProgressDialog(this);
             pDialog.setTitle("Loading your memories...");
@@ -142,9 +140,9 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
                                     }
                                     Log.d(TAG, response.toString());
                                     Log.d(TAG, "calling pullMemoriesService to fetch all journeys and their memories");
-                                    if(HelpMe.isNetworkAvailable(SignIn.this)) {
+                                    if (HelpMe.isNetworkAvailable(SignIn.this)) {
                                         new PullMemoriesService(SignIn.this, SignIn.this, REQUEST_FETCH_MEMORIES).fetchJourneys();
-                                    }else{
+                                    } else {
                                         Toast.makeText(SignIn.this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -170,7 +168,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
                 Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG)
                         .show();
             }
-        }else{
+        } else {
             Toast.makeText(this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
         }
     }
@@ -235,12 +233,15 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
                 public void onErrorResponse(VolleyError error) {
                     //TODO on error response update the picLocalUrl in database as well as preference as null
                     TJPreferences.setProfileImgPath(SignIn.this, Constants.GUMNAAM_IMAGE_URL);
+                    HelpMe.createImageIfNotExist(SignIn.this);
+                    onFinishTask(REQUEST_DOWNLOAD_PROFILE);
                 }
             });
             AppController.getInstance().addToRequestQueue(request);
         } else {
             // check whether the gumnaam image already exists
             HelpMe.createImageIfNotExist(this);
+            onFinishTask(REQUEST_DOWNLOAD_PROFILE);
         }
         Contact contact = new Contact(id, name, email, status, picServerUrl, null, phone, allJourneyIds, false, interest);
         ContactDataSource.createContact(contact, this);
@@ -378,13 +379,14 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
 
     @Override
     public void onFinishTask(int requestCode) {
-        if(requestCode == REQUEST_FETCH_MEMORIES){
+        Log.d(TAG, "on Finish Task called with request code " + requestCode);
+        if (requestCode == REQUEST_FETCH_MEMORIES) {
             isMemoryFetched = true;
         }
-        if(requestCode == REQUEST_DOWNLOAD_PROFILE){
+        if (requestCode == REQUEST_DOWNLOAD_PROFILE) {
             isProfilePicDownloaded = true;
         }
-        if(isMemoryFetched && isProfilePicDownloaded) {
+        if (isMemoryFetched && isProfilePicDownloaded) {
             pDialog.dismiss();
             Intent i = new Intent(getApplicationContext(), ActivejourneyList.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -125,6 +125,9 @@ public class PictureUtilities {
             entityBuilder.addPart("picture[picture_file]", new FileBody(new File(picture.getDataLocalURL())));
             entityBuilder.addTextBody("picture[user_id]", picture.getCreatedBy());
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
+            entityBuilder.addTextBody("picture[latitude]", String.valueOf(picture.getLatitude()));
+            entityBuilder.addTextBody("picture[longitude]", String.valueOf(picture.getLongitude()));
+            entityBuilder.addTextBody("picture[caption]", picture.getCaption());
 
             String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/pictures";
             HttpPost updateProfileRequest = new HttpPost(url);
@@ -160,33 +163,3 @@ public class PictureUtilities {
     }
 }
 
-
-
-/*RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constants.TRAVELJAR_API_BASE_URL).build();
-		TravelJarServices myService = restAdapter.create(TravelJarServices.class);
-
-		myService.uploadPicture(TJPreferences.getActiveJourneyId(context), new TypedString(
-				TJPreferences.getApiKey(context)),
-				new TypedString(TJPreferences.getUserId(context)),
-				new TypedFile("image*//*",
-                new File(picture.getDataLocalURL())),
-				new Callback<String>() {
-					@Override
-					public void success(String str, retrofit.client.Response response) {
-						try {
-							Log.d(TAG, "image uploaded successfully " + str);
-							JSONObject object = new JSONObject(str);
-							Log.d(TAG, "image uploaded successfully " + object.getJSONObject("picture").getString("id"));
-							Log.d(TAG, "image uploaded successfully " + object.getJSONObject("picture_file").getJSONObject("original").getString("url"));
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-
-					@Override
-					public void failure(RetrofitError retrofitError) {
-						Log.d(TAG, "error in uploading picture" + retrofitError);
-						retrofitError.printStackTrace();
-					}
-				});*/

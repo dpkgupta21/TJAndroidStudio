@@ -27,6 +27,8 @@ public class NotesUtil {
         params.put("api_key", TJPreferences.getApiKey(context));
         params.put("note[user_id]", note.getCreatedBy());
         params.put("note[note]", note.getContent());
+        params.put("note[latitude]", String.valueOf(note.getLatitude()));
+        params.put("note[longitude]", String.valueOf(note.getLongitude()));
         Log.d(TAG, "uploading note with parameters " + params);
 
         String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/notes";

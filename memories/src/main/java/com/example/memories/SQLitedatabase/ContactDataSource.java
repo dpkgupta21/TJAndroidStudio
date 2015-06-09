@@ -53,15 +53,15 @@ public class ContactDataSource {
 
         // If contacts contains own contact remove itgetAllContacts
         int i = -1;
-        for(Contact contact : contacts){
-            Log.d(TAG, "contact id for " + (i+1) + "is " + contact.getIdOnServer() + TJPreferences.getUserId(context));
-            if(contact.getIdOnServer().equals(TJPreferences.getUserId(context))){
+        for (Contact contact : contacts) {
+            Log.d(TAG, "contact id for " + (i + 1) + "is " + contact.getIdOnServer() + TJPreferences.getUserId(context));
+            if (contact.getIdOnServer().equals(TJPreferences.getUserId(context))) {
                 i++;
                 break;
             }
             i++;
         }
-        if(i > -1){
+        if (i > -1) {
             contacts.remove(i);
         }
 
@@ -188,7 +188,7 @@ public class ContactDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
         int i = 0;
-        for(String column : columns){
+        for (String column : columns) {
             values.put(column, columnValues[i]);
             i++;
         }

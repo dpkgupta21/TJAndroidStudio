@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         style="@android:style/TextAppearance.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:maxHeight="20dp"
         android:minHeight="20dp" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/upload_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

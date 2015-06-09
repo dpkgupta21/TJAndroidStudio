@@ -21,18 +21,18 @@ public class DisplayPicture extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.picture_display);
-        
+
         Log.d(TAG, "display picture with path " + mPictureLocalPath);
 
         mPictureLocalPath = getIntent().getExtras().getString("PICTURE_PATH");
-        mImageView = (ImageView)findViewById(R.id.picture_image_view);
+        mImageView = (ImageView) findViewById(R.id.picture_image_view);
 
         mImageView.setImageBitmap(BitmapFactory.decodeFile(mPictureLocalPath));
 
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         super.onBackPressed();
         finish();
     }

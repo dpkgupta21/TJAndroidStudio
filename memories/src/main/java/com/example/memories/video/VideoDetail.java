@@ -17,12 +17,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.VideoDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Video;
+import com.example.memories.services.GPSTracker;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener{
+public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener {
 
     private static final String TAG = "<VideoDetail>";
     List<String> likedBy;
@@ -66,6 +68,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Video");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
@@ -89,15 +92,15 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
             videoPath = mVideo.getDataLocalURL(); //path to image
             thumbnailPath = mVideo.getLocalThumbPath();
             //setup the state of favourite button
-            if (mVideo.getLikedBy() == null){
+            if (mVideo.getLikedBy() == null) {
                 noLikesTxt.setText("0");
-                mFavBtn.setImageResource(R.drawable.heart_empty);
-            }else{
+                mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
+            } else {
                 noLikesTxt.setText(String.valueOf(mVideo.getLikedBy().size()));
-                if (mVideo.getLikedBy().contains(TJPreferences.getUserId(VideoDetail.this))){
-                    mFavBtn.setImageResource(R.drawable.heart_filled_red);
-                }else {
-                    mFavBtn.setImageResource(R.drawable.heart_empty);
+                if (mVideo.getLikedBy().contains(TJPreferences.getUserId(VideoDetail.this))) {
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
+                } else {
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
                 }
             }
             caption.setText(mVideo.getCaption());
@@ -125,8 +128,19 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
             }
             isNewVideo = true;
             videoPath = extras.getString("VIDEO_PATH");
+
+            Double lat = 0.0d;
+            Double longi = 0.0d;
+            GPSTracker gps = new GPSTracker(this);
+            if (gps.canGetLocation()) {
+                lat = gps.getLatitude(); // returns latitude
+                longi = gps.getLongitude(); // returns longitude
+            } else {
+                Toast.makeText(getApplicationContext(), "Network issues. Try later.",
+                        Toast.LENGTH_LONG).show();
+            }
             mVideo = new Video(null, TJPreferences.getActiveJourneyId(this), HelpMe.VIDEO_TYPE, caption.getText().toString()
-                    .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), currenTime, currenTime, null, thumbnailPath);
+                    .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), currenTime, currenTime, null, thumbnailPath, lat, longi);
         }
 
         //Setting fields common in both the cases
@@ -184,7 +198,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         /*Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);*/
@@ -196,7 +210,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
             @Override
             public void onClick(View v) {
                 List<String> likedBy = mVideo.getLikedBy();
-                if(likedBy == null){
+                if (likedBy == null) {
                     likedBy = new ArrayList<String>();
                 }
                 Log.d(TAG,
@@ -204,11 +218,11 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                 if (likedBy.contains(TJPreferences.getUserId(VideoDetail.this))) {
                     likedBy.remove(TJPreferences.getUserId(VideoDetail.this));
                     Log.d(TAG, "heart empty");
-                    mFavBtn.setImageResource(R.drawable.heart_empty);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
                 } else {
                     likedBy.add(TJPreferences.getUserId(VideoDetail.this));
                     Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.heart_filled_red);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 }
 
                 // update the value in the list and database
@@ -250,11 +264,12 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                 if (isNewVideo) {
                     saveAndUploadVideo();
                 }
-                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);*/
                 finish();
                 return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

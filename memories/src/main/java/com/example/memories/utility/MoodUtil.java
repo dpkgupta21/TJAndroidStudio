@@ -29,6 +29,9 @@ public class MoodUtil {
         params.put("mood[mood]", mood.getMood());
         params.put("mood[reason]", mood.getReason());
         params.put("mood[buddies]", Joiner.on(",").join(mood.getBuddyIds()));
+        params.put("mood[latitude]", String.valueOf(mood.getLatitude()));
+        params.put("mood[longitude]", String.valueOf(mood.getLongitude()));
+
         Log.d(TAG, "uploading mood with parameters " + params);
 
         String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/moods";

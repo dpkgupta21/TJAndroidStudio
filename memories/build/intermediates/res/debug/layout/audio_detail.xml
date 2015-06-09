@@ -48,7 +48,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp">
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/no_likes"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -60,7 +60,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:contentDescription="@string/default_string"
-            android:src="@drawable/heart_empty" />
+            android:src="@drawable/ic_favourite_empty" />
 
     </LinearLayout>
 
@@ -72,7 +72,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/white">
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/photo_detail_date_big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             android:textSize="@dimen/tj_giant_font"
             android:textStyle="bold" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/photo_detail_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             android:text="7 December 2014"
             android:textSize="@dimen/tj_medium_font" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/photo_detail_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
 
     </RelativeLayout>
 
-    <EditText
+    <com.example.memories.customviews.MyEditTextView
         android:id="@+id/voice_detail_caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -33,6 +33,7 @@ import com.example.memories.utility.LoadBitmapFromPath;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.video.VideoDetail;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         pDialog.setCanceledOnTouchOutside(false);
     }
 
-    public void setMemoriesList(List<Memories> memoriesList){
+    public void setMemoriesList(List<Memories> memoriesList) {
         this.memoriesList = memoriesList;
     }
 
@@ -87,7 +88,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         return 0;
     }
 
-    public void updateList(List<Memories> updatedList){
+    public void updateList(List<Memories> updatedList) {
         memoriesList = updatedList;
     }
 
@@ -173,18 +174,18 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                 // check whether the memory has been liked by the user
 
                 List<String> likedBy = mem.getLikedBy();
-                if(likedBy == null){
+                if (likedBy == null) {
                     likedBy = new ArrayList();
                 }
-                Log.d(TAG,"fav button clicked position " + likedBy + TJPreferences.getUserId(context));
+                Log.d(TAG, "fav button clicked position " + likedBy + TJPreferences.getUserId(context));
                 if (likedBy.contains(TJPreferences.getUserId(context))) {
                     likedBy.remove(TJPreferences.getUserId(context));
                     Log.d(TAG, "heart empty");
-                    holder.timelineItemFavBtn.setImageResource(R.drawable.heart_empty);
+                    holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
                 } else {
                     likedBy.add(TJPreferences.getUserId(context));
                     Log.d(TAG, "heart full");
-                    holder.timelineItemFavBtn.setImageResource(R.drawable.heart_filled_red);
+                    holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 }
 
                 // update the value in the list and database
@@ -205,8 +206,11 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         // if the memory is from current user
         Log.d(TAG, "Iam executing" + memory.getCreatedBy() + TJPreferences.getUserId(context));
         if (memory.getCreatedBy().equals(TJPreferences.getUserId(context))) {
-            holder.timeLineProfileImg.setImageBitmap(BitmapFactory
-                    .decodeFile(TJPreferences.getProfileImgPath(context)));
+            try {
+                holder.timeLineProfileImg.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context, TJPreferences.getProfileImgPath(context), 90, 90));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         } else {
             Contact contact = ContactDataSource.getContactById(context, memory.getCreatedBy());
             if (contact != null) {
@@ -214,15 +218,15 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                         .getPicLocalUrl()));
             }
         }
-        if (memory.getLikedBy() == null){
+        if (memory.getLikedBy() == null) {
             holder.timelineNoLikesTxt.setText("0");
-            holder.timelineItemFavBtn.setImageResource(R.drawable.heart_empty);
-        }else{
+            holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
+        } else {
             holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikedBy().size()));
-            if (memory.getLikedBy().contains(TJPreferences.getUserId(context))){
-                holder.timelineItemFavBtn.setImageResource(R.drawable.heart_filled_red);
-            }else {
-                holder.timelineItemFavBtn.setImageResource(R.drawable.heart_empty);
+            if (memory.getLikedBy().contains(TJPreferences.getUserId(context))) {
+                holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
+            } else {
+                holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
             }
         }
 
@@ -254,7 +258,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                                 pDialog.show();
                                 DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(TimeLineAdapter.this, audio);
                                 asyncTask.execute();
-                            }else {
+                            } else {
                                 mPlayer = new AudioPlayer(audio.getDataLocalURL());
                                 mPlayer.startPlaying();
                             }

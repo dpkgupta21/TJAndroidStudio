@@ -72,7 +72,7 @@ public class ProfileActivity extends BaseActivity {
         setSupportActionBar(toolbarProfile);
 
         mProfileImg = (MyCircularImageView) findViewById(R.id.profile_img);
-        mCoverImg = (ImageView)findViewById(R.id.cover_image);
+        mCoverImg = (ImageView) findViewById(R.id.cover_image);
         mUserName = (TextView) findViewById(R.id.profile_name);
         mStatus = (TextView) findViewById(R.id.profile_status);
         mEditName = (EditText) findViewById(R.id.edit_name);
@@ -148,10 +148,9 @@ public class ProfileActivity extends BaseActivity {
         // Handle action bar actions click
         switch (item.getItemId()) {
             case 0:
-                if(!HelpMe.isNetworkAvailable(this)) {
+                if (HelpMe.isNetworkAvailable(this)) {
                     List<String> columns = new ArrayList<>();
                     List<String> columnNames = new ArrayList<>();
-                    Toast.makeText(this, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
                     if (!mEditName.getText().toString().equals(TJPreferences.getUserName(this))) {
                         TJPreferences.setUserName(this, mEditName.getText().toString());
                         isNameUpdated = true;
@@ -165,6 +164,7 @@ public class ProfileActivity extends BaseActivity {
                         columnNames.add(MySQLiteHelper.CONTACT_COLUMN_STATUS);
                     }
                     if (isProfilePicUpdated) {
+                        Log.d(TAG, "profile image path " + mProfileImgPath);
                         TJPreferences.setProfileImgPath(this, mProfileImgPath);
                         columns.add(mProfileImgPath);
                         columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL);
@@ -175,12 +175,14 @@ public class ProfileActivity extends BaseActivity {
                         String columnValuesArray[] = new String[columnNames.size()];
                         ContactDataSource.updateContact(ProfileActivity.this, TJPreferences.getUserId(ProfileActivity.this), columns.toArray(columnValuesArray), columnNames.toArray(columnNamesArray));
                     }
+                }else{
+                    Toast.makeText(this, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
                 }
 
                 finish();
                 return true;
             case 1:
-                LinearLayout layout = (LinearLayout)findViewById(R.id.edit_layout);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.edit_layout);
                 layout.setVisibility(View.VISIBLE);
                 mEditName.setText(TJPreferences.getUserName(this));
                 mEditStatus.setText(TJPreferences.getUserStatus(this));
@@ -208,13 +210,13 @@ public class ProfileActivity extends BaseActivity {
             MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
             entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
-            if(isProfilePicUpdated){
+            if (isProfilePicUpdated) {
                 entityBuilder.addPart("user[profile_picture]", new FileBody(new File(mProfileImgPath)));
             }
             if (isNameUpdated) {
                 entityBuilder.addTextBody("user[name]", mEditName.getText().toString());
             }
-            if(isStatusUpdated){
+            if (isStatusUpdated) {
                 entityBuilder.addTextBody("user[status]", mEditStatus.getText().toString());
             }
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(getBaseContext()));

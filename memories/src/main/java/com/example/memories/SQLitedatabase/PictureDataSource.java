@@ -42,6 +42,8 @@ public class PictureDataSource {
         Log.d(TAG, "liked by saved in database is " + likedBy);
         values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy);
         values.put(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH, newPic.getPicThumbnailPath());
+        values.put(MySQLiteHelper.PICTURE_COLUMN_LATITUDE, newPic.getLatitude());
+        values.put(MySQLiteHelper.PICTURE_COLUMN_LATITUDE, newPic.getLongitude());
 
         // insert row
         Long picture_id = db.insert(MySQLiteHelper.TABLE_PICTURE, null, values);
@@ -163,6 +165,10 @@ public class PictureDataSource {
             picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             picture.setjId(cursor.getString(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
+            picture.setLatitude(cursor.getDouble(cursor
+                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LATITUDE)));
+            picture.setLongitude(cursor.getDouble(cursor
+                    .getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LONGITUDE)));
             picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH)));
             picturesList.add(picture);
             cursor.moveToNext();
@@ -198,6 +204,10 @@ public class PictureDataSource {
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT)));
             picture.setUpdatedAt(cursor.getLong(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
+            picture.setLatitude(cursor.getDouble(cursor
+                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LATITUDE)));
+            picture.setLongitude(cursor.getDouble(cursor
+                    .getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LONGITUDE)));
             String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
             picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
             picture.setjId(cursor.getString(cursor

@@ -69,8 +69,7 @@ public class CheckInPlacesList extends AppCompatActivity {
         if (HelpMe.isNetworkAvailable(getBaseContext())) {
             Log.d(TAG, "network available");
             GPSTracker gps = new GPSTracker(this);
-            // gps enabled
-            // return boolean true/false
+            // gps enabled return boolean true/false
             if (gps.canGetLocation()) {
                 lat = gps.getLatitude(); // returns latitude
                 longi = gps.getLongitude(); // returns longitude
@@ -94,7 +93,7 @@ public class CheckInPlacesList extends AppCompatActivity {
 
     private void hideProgressDialog() {
         if (pDialog.isShowing())
-            pDialog.hide();
+            pDialog.dismiss();
     }
 
     /**
@@ -165,7 +164,7 @@ public class CheckInPlacesList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // selected item
                 String placeName = placeList.get(position).get("name");
-                Intent i = new Intent(getApplicationContext(), CheckInDetails.class);
+                Intent i = new Intent(CheckInPlacesList.this, CheckInDetails.class);
                 i.putExtra("placeName", placeName);
                 i.putExtra("latitude", lat);
                 i.putExtra("longitude", longi);

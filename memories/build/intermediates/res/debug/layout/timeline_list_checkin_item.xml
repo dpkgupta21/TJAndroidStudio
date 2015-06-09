@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/custom_border_gray"
+    android:orientation="vertical"
     android:padding="10dp">
 
     <RelativeLayout
@@ -18,7 +18,7 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/ic_profile" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/timelineItemUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textColor="@color/black"
             android:textStyle="bold" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/timelineItemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,9 +45,9 @@
             android:layout_alignParentRight="true"
             android:background="@color/white"
             android:contentDescription="@string/default_string"
-            android:src="@drawable/heart_empty" />
+            android:src="@drawable/ic_favourite_empty" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
 
     </RelativeLayout>
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/timelineItemCaption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

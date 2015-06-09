@@ -40,19 +40,30 @@ import java.util.List;
  */
 public class PullMemoriesService {
     private static final String TAG = "PullMemoriesService";
-    private Journey journey;
     private static int REQUEST_CODE;
-
-    private Context mContext;
-
     private static int count = 0;
     private static boolean isService = false;
     private static OnTaskFinishListener mListener;
+    private Journey journey;
+    private Context mContext;
 
     public PullMemoriesService(Context context, OnTaskFinishListener listener, int REQUEST_CODE) {
         mContext = context;
         mListener = listener;
         this.REQUEST_CODE = REQUEST_CODE;
+    }
+
+    public static void isFinished() {
+        if (isService) {
+            count--;
+            Log.d(TAG, "not finished" + count);
+            if (count < 0) {
+                Log.d(TAG, "isfinished called" + count);
+                count = 0;
+                isService = false;
+                mListener.onFinishTask(REQUEST_CODE);
+            }
+        }
     }
 
     public void fetchJourneys() {
@@ -79,6 +90,7 @@ public class PullMemoriesService {
                             List<String> buddiesList;
                             JSONArray memoriesList;
 
+
                             for (int i = 0; i < length; i++) {
                                 jsonObject = journeyJSONArray.getJSONObject(i);
                                 idOnServer = jsonObject.getString("id");
@@ -96,8 +108,6 @@ public class PullMemoriesService {
 
                                 Log.d(TAG, "buddies list saved in database are " + buddiesList + " blah blah " + buddies);
                                 laps = jsonObject.getJSONArray("journey_lap_ids").toString();
-                                laps.replace("[",  "");
-                                laps.replace("]", "");
                                 lapsList = Arrays.asList(laps.split(","));
 
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
@@ -107,7 +117,7 @@ public class PullMemoriesService {
 
 
                                 memoriesList = jsonObject.getJSONArray("memories");
-                                if(memoriesList != null){
+                                if (memoriesList != null) {
                                     Log.d(TAG, "there are no memories");
                                     saveMemories(jsonObject.getJSONArray("memories"), idOnServer);
                                 }
@@ -133,7 +143,6 @@ public class PullMemoriesService {
         Log.d(TAG, "saving memories " + memoriesArray);
         int i;
         JSONObject memory;
-        int memoryType;
         String createdBy;
         String memoryId;
         String fileUrl;
@@ -145,6 +154,8 @@ public class PullMemoriesService {
         Picture pic;
         long audioDuration;
 
+        Double latitude;
+        Double longitude;
 
         Long createdAt = HelpMe.getCurrentTime();
         Long updatedAt = HelpMe.getCurrentTime();
@@ -173,8 +184,12 @@ public class PullMemoriesService {
 
                         fileUrl = memory.getJSONObject("picture_file").getJSONObject("original").getString("url");
                         thumbnailUrl = memory.getJSONObject("picture_file").getJSONObject("medium").getString("url");
+
+                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+
                         Picture newPic = new Picture(memoryId, journeyId, HelpMe.PICTURE_TYPE, null, "jpg",
-                                100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl);
+                                100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
                         PictureUtilities.createNewPicFromServer(mContext, newPic, thumbnailUrl);
                         count++;
                         Log.d(TAG, "picture parsed and saved successfully");
@@ -185,8 +200,12 @@ public class PullMemoriesService {
                         memoryId = memory.getString("id");
                         String content = memory.getString("note");
                         String caption = null;//memory.getJSONObject("memory").getString("caption");
+
+                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+
                         Note newNote = new Note(memoryId, journeyId, HelpMe.NOTE_TYPE, caption, content, createdBy,
-                                createdAt, updatedAt, null);
+                                createdAt, updatedAt, null, latitude, longitude);
 
                         NoteDataSource.createNote(newNote, mContext);
 
@@ -199,8 +218,12 @@ public class PullMemoriesService {
                         fileUrl = memory.getJSONObject("video_file").getString("url");
                         thumbnailUrl = memory.getJSONObject("video_file").getString("thumb");
                         description = memory.getString("description");
+
+                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+
                         Video newVideo = new Video(memoryId, journeyId, HelpMe.VIDEO_TYPE, description,
-                                "png", 1223, null, fileUrl, createdBy, createdAt, updatedAt, null, thumbnailUrl);
+                                "png", 1223, null, fileUrl, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
                         VideoUtil.createNewVideoFromServer(mContext, newVideo, thumbnailUrl);
                         count++;
                         Log.d(TAG, "video parsed and saved successfully" + thumbnailUrl);
@@ -210,12 +233,10 @@ public class PullMemoriesService {
                         createdBy = memory.getString("user_id");
                         memoryId = memory.getString("id");
                         Log.d(TAG, "parsing checkin");
-                        String lat = memory.getString("latitude");
-                        String lon = memory.getString("longitude");
 
-                        Double latitude = (lat == "null" ? 0.0 : Double.parseDouble(lat));
-                        Log.d(TAG, "latitude is " + latitude);
-                        Double longitude = (lon == "null" ? 0.0 : Double.parseDouble(lon));
+                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+
                         String placeName = memory.getString("place_name");
                         String note = memory.getString("note");
                         String buddys = memory.getString("buddies");
@@ -235,8 +256,12 @@ public class PullMemoriesService {
                         String reason = memory.getString("reason");
                         String buddy = memory.getString("buddies");
                         List<String> buddyId = buddy == null ? null : Arrays.asList(buddy.split(","));
+
+                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+
                         Mood newMood = new Mood(memoryId, journeyId, HelpMe.MOOD_TYPE, buddyId, mood, reason,
-                                createdBy, createdAt, updatedAt, null);
+                                createdBy, createdAt, updatedAt, null, latitude, longitude);
                         MoodDataSource.createMood(newMood, mContext);
 
                         Log.d(TAG, "mood parsed and saved successfully");
@@ -246,12 +271,14 @@ public class PullMemoriesService {
                         createdBy = memory.getString("user_id");
                         memoryId = memory.getString("id");
                         fileUrl = memory.getJSONObject("audio_file").getString("url");
-                        audioDuration = memory.getString("duration") == "null" ? 0 : Long.parseLong(memory.getString("duration"));
+                        //audioDuration = memory.getString("duration") == "null" ? 0 : Long.parseLong(memory.getString("duration"));
 
                         //Long size = Long.parseLong(memory.getJSONObject("memory").getJSONObject("audio_file").getString("size"));
 
+                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
                         Audio newAudio = new Audio(memoryId, journeyId, HelpMe.AUDIO_TYPE, "3gp", 1122,
-                                fileUrl, null, createdBy, createdAt, updatedAt, null, audioDuration);
+                                fileUrl, null, createdBy, createdAt, updatedAt, null, 0, latitude, longitude);
                         AudioDataSource.createAudio(newAudio, mContext);
 
                         Log.d(TAG, "audio parsed and saved successfully");
@@ -264,20 +291,7 @@ public class PullMemoriesService {
         }
     }
 
-    public static void isFinished(){
-        if(isService) {
-            count--;
-            Log.d(TAG, "not finished" + count);
-            if (count < 0) {
-                Log.d(TAG, "isfimiehd cal;ed" + count);
-                count = 0;
-                isService = false;
-                mListener.onFinishTask(REQUEST_CODE);
-            }
-        }
-    }
-
-    public interface OnTaskFinishListener{
+    public interface OnTaskFinishListener {
         void onFinishTask(int REQUEST_CODES);
     }
 

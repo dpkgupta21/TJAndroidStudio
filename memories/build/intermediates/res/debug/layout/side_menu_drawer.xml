@@ -21,7 +21,7 @@
             android:layout_marginTop="0dp"
             android:src="@drawable/abhi" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/sidemenu_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/sidemenu_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

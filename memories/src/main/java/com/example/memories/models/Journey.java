@@ -92,19 +92,19 @@ public class Journey {
         this.journeyStatus = journeyStatus;
     }
 
-    public boolean isAdmin(String userId){
+    public boolean isAdmin(String userId) {
         return userId.equals(this.getIdOnServer());
     }
 
     @Override
-    public String toString(){
-        return "id on server -> " + this.getIdOnServer()+"\n"+
-                "name -> " + this.getName()+"\n"+
-                "tagline -> " + this.getTagLine()+"\n"+
-                "group type -> " + this.getGroupType()+"\n"+
-                "created by -> " + this.getCreatedBy()+"\n"+
-                "laps -> " + this.getLaps()+"\n"+
-                "buddies -> " + this.getBuddies()+"\n"+
+    public String toString() {
+        return "id on server -> " + this.getIdOnServer() + "\n" +
+                "name -> " + this.getName() + "\n" +
+                "tagline -> " + this.getTagLine() + "\n" +
+                "group type -> " + this.getGroupType() + "\n" +
+                "created by -> " + this.getCreatedBy() + "\n" +
+                "laps -> " + this.getLaps() + "\n" +
+                "buddies -> " + this.getBuddies() + "\n" +
                 "journey status -> " + this.getJourneyStatus();
     }
 }

@@ -20,6 +20,7 @@ import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.VideoDataSource;
@@ -39,6 +40,8 @@ public class GalleryVideosFragment extends Fragment {
     private List<Video> mVideoList;
     private VideoGalleryAdapter mAdapter;
 
+    private LinearLayout mLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.gallery_videos, container, false);
@@ -55,10 +58,10 @@ public class GalleryVideosFragment extends Fragment {
         mVideoList = VideoDataSource.getAllVideos(getActivity());
         mAdapter = new VideoGalleryAdapter(getActivity(), mVideoList);
 
-        mGridView.setAdapter(mAdapter);
+        mLayout = (LinearLayout) rootView.findViewById(R.id.gallery_video_layout);
 
         if (mVideoList.size() > 0) {
-
+            mGridView.setAdapter(mAdapter);
             // long press selection of the pictures
             mGridView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
             mGridView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
@@ -140,6 +143,8 @@ public class GalleryVideosFragment extends Fragment {
                     startActivity(mediaIntent);
                 }
             });
+        }else {
+            mLayout.setBackgroundResource(R.drawable.img_no_video);
         }
     }
 }

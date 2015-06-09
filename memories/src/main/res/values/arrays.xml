@@ -37,4 +37,12 @@
         <item>Vellore</item>
     </string-array>
 
+    <string-array name="settings_items">
+        <item>Goa</item>
+        <item>Bangalore</item>
+        <item>Jaipur</item>
+        <item>Alwar</item>
+        <item>Vellore</item>
+    </string-array>
+
 </resources>

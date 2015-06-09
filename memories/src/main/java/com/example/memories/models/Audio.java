@@ -15,7 +15,7 @@ public class Audio extends Memories {
 
     public Audio(String idOnServer, String jId, String memType, String ext, long size,
                  String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                 long updatedAt, List<String> likedBy, long audioDuration) {
+                 long updatedAt, List<String> likedBy, long audioDuration, Double latitude, Double longitude) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -28,6 +28,8 @@ public class Audio extends Memories {
         this.updatedAt = updatedAt;
         this.likedBy = likedBy;
         this.audioDuration = audioDuration;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Audio() {
@@ -79,14 +81,14 @@ public class Audio extends Memories {
     }
 
     @Override
-    public String toString(){
-        return "id on server -> " + this.getIdOnServer()+"\n"+
-                "journey id -> " + this.getjId()+"\n"+
-                "memory type -> " + this.getMemType()+"\n"+
-                "created by -> " + this.getCreatedBy()+"\n"+
-                "created at -> " + this.getCreatedAt()+"\n"+
-                "liked by -> " + this.getLikedBy()+"\n"+
-                "data server url -> " + this.getDataServerURL()+"\n"+
+    public String toString() {
+        return "id on server -> " + this.getIdOnServer() + "\n" +
+                "journey id -> " + this.getjId() + "\n" +
+                "memory type -> " + this.getMemType() + "\n" +
+                "created by -> " + this.getCreatedBy() + "\n" +
+                "created at -> " + this.getCreatedAt() + "\n" +
+                "liked by -> " + this.getLikedBy() + "\n" +
+                "data server url -> " + this.getDataServerURL() + "\n" +
                 "data local url -> " + this.getDataLocalURL();
 
 

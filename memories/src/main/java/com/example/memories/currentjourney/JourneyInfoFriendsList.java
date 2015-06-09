@@ -27,17 +27,15 @@ import java.util.List;
 /**
  * Created by abhi on 06/06/15.
  */
-public class JourneyInfoFriendsList extends AppCompatActivity implements CustomResultReceiver.Receiver{
+public class JourneyInfoFriendsList extends AppCompatActivity implements CustomResultReceiver.Receiver {
 
     private static final String TAG = "<JInfoFriendsList>";
+    CustomResultReceiver mReceiver;
     private List<Contact> allContactsList;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private JourneyInfoFriendsListAdapter mAdapter;
     private List<Contact> allBuddiesList;
-
-    CustomResultReceiver mReceiver;
-
     private ProgressDialog mDialog;
 
     @Override
@@ -114,9 +112,9 @@ public class JourneyInfoFriendsList extends AppCompatActivity implements CustomR
         Log.d(TAG, allBuddiesList.size() + "====" + allContactsList.size());
         allContactsList.removeAll(allBuddiesList);
         Log.d(TAG, allBuddiesList.size() + "====" + allContactsList.size());
-        if(mAdapter == null){
+        if (mAdapter == null) {
             mAdapter = new JourneyInfoFriendsListAdapter(allContactsList, getApplicationContext());
-        }else{
+        } else {
             mAdapter.updateContactsList(allContactsList);
             mAdapter.notifyDataSetChanged();
         }

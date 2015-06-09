@@ -25,25 +25,22 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <EditText
+        <com.example.memories.customviews.MyEditTextView
             android:id="@+id/checkin_details_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint=" Write here something about your check-in"
             android:inputType="textMultiLine"
-            android:lines="3">
+            android:lines="3"/>
 
-            <requestFocus />
-        </EditText>
-
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/checkin_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="@dimen/tj_large_font" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/checkin_details_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

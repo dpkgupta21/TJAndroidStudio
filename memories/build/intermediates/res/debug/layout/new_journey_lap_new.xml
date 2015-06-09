@@ -9,16 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/tj_gray_bg"
-        android:padding="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
                 android:onClick="listFromPlaces"
                 android:orientation="vertical">
 
-                <TextView
+                <com.example.memories.customviews.MyTextView
                     android:id="@+id/new_journey_location_new_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                     android:textColor="@color/tj_orange"
                     android:textSize="@dimen/tj_medium_font" />
 
-                <TextView
+                <com.example.memories.customviews.MyTextView
                     android:id="@+id/new_journey_location_new_from_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:onClick="listToPlaces"
                 android:orientation="vertical">
 
-                <TextView
+                <com.example.memories.customviews.MyTextView
                     android:id="@+id/new_journey_location_new_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                     android:textColor="@color/tj_orange"
                     android:textSize="@dimen/tj_medium_font" />
 
-                <TextView
+                <com.example.memories.customviews.MyTextView
                     android:id="@+id/new_journey_location_new_to_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:onClick="showCalendar"
             android:orientation="vertical">
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                 android:textColor="@color/tj_orange"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:id="@+id/new_journey_location_new_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mode of Transport"
@@ -198,7 +198,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time of Day"

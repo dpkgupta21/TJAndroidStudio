@@ -130,15 +130,15 @@ public class PullBuddies {
         }
     }
 
-    private void checkPendingRequests(){
+    private void checkPendingRequests() {
         Log.d(TAG, "no of pending requests -> " + noRequests);
-        if(noRequests <= 0){
+        if (noRequests <= 0) {
             Log.d(TAG, "all requests completed now exiting");
             mListner.onFinishTask();
         }
     }
 
-    public interface OnTaskFinishListener{
+    public interface OnTaskFinishListener {
         void onFinishTask();
     }
 

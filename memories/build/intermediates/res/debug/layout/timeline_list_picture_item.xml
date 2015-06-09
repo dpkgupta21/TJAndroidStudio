@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="1dp"
-    android:background="@drawable/custom_border_gray">
+    android:background="@drawable/custom_border_gray"
+    android:padding="1dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:id="@+id/timelineItemCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:id="@+id/timelineItemTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,17 +62,17 @@
                 android:layout_alignParentRight="true"
                 android:background="@color/white"
                 android:contentDescription="@string/default_string"
-                android:src="@drawable/heart_empty" />
+                android:src="@drawable/ic_favourite_empty" />
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:id="@+id/noLikesTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:layout_marginTop="-8dp"
                 android:layout_marginRight="10dp"
-                android:textSize="@dimen/tj_extra_giant_font"
-                android:layout_toLeftOf="@+id/timelineItemFavIcon" />
+                android:layout_marginTop="-8dp"
+                android:layout_toLeftOf="@+id/timelineItemFavIcon"
+                android:text="0"
+                android:textSize="@dimen/tj_extra_giant_font" />
 
         </RelativeLayout>
     </RelativeLayout>

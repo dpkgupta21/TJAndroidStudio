@@ -1,9 +1,10 @@
+<!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg">
+    android:background="@drawable/ic_splash">
 
-    <!-- Layout starts upside down -->
+    &lt;!&ndash; Layout starts upside down &ndash;&gt;
 
     <LinearLayout
         android:id="@+id/new_here_layout"
@@ -15,14 +16,14 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/new_here_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New here?"
             android:textColor="@color/white" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/create_account_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,11 +42,11 @@
         android:layout_above="@id/new_here_layout"
         android:layout_centerHorizontal="true"
         android:layout_margin="15dp"
-        android:background="@color/signin_box"
         android:orientation="vertical"
         android:padding="20dp">
+        &lt;!&ndash;#AB0007&ndash;&gt;
 
-        <EditText
+        <com.example.memories.customviews.MyEditTextView
             android:id="@+id/signInEmailTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +56,7 @@
             android:textColorHint="@color/black"
             android:textSize="@dimen/tj_medium_font" />
 
-        <EditText
+        <com.example.memories.customviews.MyEditTextView
             android:id="@+id/signInPasswordTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,13 +96,110 @@
             android:textSize="@dimen/tj_medium_font" />
     </LinearLayout>
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/signin_heading_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/sign_in_box_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
+        android:text="SIGN IN"
+        android:textColor="@color/white"
+        android:textSize="@dimen/tj_large_font"
+        android:textStyle="bold" />
+
+</RelativeLayout>-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_splash">
+
+    <!-- Layout starts upside down -->
+
+    <LinearLayout
+        android:id="@+id/new_here_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/new_here_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New here?"
+            android:textColor="@color/white" />
+
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/create_account_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:clickable="true"
+            android:onClick="goToSignUp"
+            android:text="CREATE ACCOUNT"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sign_in_box_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/new_here_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <!--#AB0007-->
+
+        <com.example.memories.customviews.MyEditTextView
+            android:id="@+id/signInEmailTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <com.example.memories.customviews.MyEditTextView
+            android:id="@+id/signInPasswordTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/signInBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:onClick="signIn"
+            android:text="SIGN IN"
+            android:clickable="true"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/tj_medium_font" />
+
+    </LinearLayout>
+
+    <com.example.memories.customviews.MyTextView
+        android:id="@+id/signin_heading_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="SIGN IN"
         android:textColor="@color/white"
         android:textSize="@dimen/tj_large_font"

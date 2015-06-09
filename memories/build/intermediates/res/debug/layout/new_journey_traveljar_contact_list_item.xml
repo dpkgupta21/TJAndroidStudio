@@ -18,7 +18,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/all_contacts_contact_image">
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/all_contacts_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             android:textSize="@dimen/tj_medium_font"
             android:textStyle="bold" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/all_contacts_contact_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

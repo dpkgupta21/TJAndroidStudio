@@ -11,7 +11,10 @@ public class Memories implements Comparable<Memories> {
     protected String createdBy;
     protected long createdAt;
     protected long updatedAt;
+    protected Double latitude;
+    protected Double longitude;
     protected List<String> likedBy;
+
     private String id;
 
     public String getId() {
@@ -87,4 +90,19 @@ public class Memories implements Comparable<Memories> {
 
     }
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 }

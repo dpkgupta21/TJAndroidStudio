@@ -27,17 +27,16 @@ import java.util.List;
 /**
  * Created by ankit on 27/5/15.
  */
-public class ActivejourneyList extends BaseActivity{
+public class ActivejourneyList extends BaseActivity {
 
     private static final String TAG = "<ActivejourneyList>";
+    List<Journey> allActiveJourney;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private ActiveJourneyListAdapter mAdapter;
-
     private boolean backPressedToExitOnce = false;
     private Toast toast = null;
     private TextView noActivejourneysMsgTxt;
-    List<Journey> allActiveJourney;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
@@ -99,8 +98,6 @@ public class ActivejourneyList extends BaseActivity{
                 startService(i);
             }
         });
-
-
     }
 
     @Override

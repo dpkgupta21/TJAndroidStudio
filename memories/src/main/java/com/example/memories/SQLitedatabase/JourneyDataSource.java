@@ -97,7 +97,7 @@ public class JourneyDataSource {
 
     public static Cursor getAllPastJourneys(Context context) {
 
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY;
+        String selectQuery = "SELECT * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_FINISHED + "'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Log.e(TAG, selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);
@@ -112,6 +112,14 @@ public class JourneyDataSource {
         return c;
     }
 
+    public static void updateJourneyStatus(Context context, String journeyId, String journeyStatus) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_STATUS, journeyStatus);
+        db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId, null);
+        Log.d(TAG, "journey status updated successfully");
+        db.close();
+    }
 
     private static List<Journey> parseJourneysAsList(Context context, Cursor cursor) {
         List<Journey> journeyList = new ArrayList<Journey>();

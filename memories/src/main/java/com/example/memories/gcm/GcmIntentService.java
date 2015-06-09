@@ -146,7 +146,7 @@ public class GcmIntentService extends IntentService {
                 buddyIdsList.add(createdBy);
                 buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
-                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, Arrays.asList(buddyIds), Constants.JOURNEY_STATUS_ACTIVE);
+                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE);
                 JourneyDataSource.createJourney(jItem, this);
 
             default:
@@ -169,6 +169,8 @@ public class GcmIntentService extends IntentService {
         String mood;
         List<String> buddyIds;
         String reason;
+        Double latitude = data.getString("latitude") == "null" ? 0.0d : Double.parseDouble(data.getString("latitude"));
+        Double longitude = data.getString("longitude") == "null" ? 0.0d : Double.parseDouble(data.getString("longitude"));
         long audioDuration;
 
         switch (memType) {
@@ -178,11 +180,13 @@ public class GcmIntentService extends IntentService {
                 String thumb = data.getString("thumb");
                 size = Long.parseLong(data.getString("size"));
                 extension = data.getString("extention");
-                caption = "nthing";
+                caption = data.getString("caption");
+
+                Log.d(TAG, "caption is " + caption);
 
                 Picture newPic = new Picture(idOnServer, jId, HelpMe.PICTURE_TYPE, caption, extension,
                         size, dataUrl, null, createdBy,
-                        createdAt, updatedAt, null, null);
+                        createdAt, updatedAt, null, null, latitude, longitude);
                 PictureUtilities.createNewPicFromServer(this, newPic, thumb);
 
                 //PictureUtilities.downloadPicFromURL(this, newPic);
@@ -197,7 +201,7 @@ public class GcmIntentService extends IntentService {
                 audioDuration = data.getString("duration") == "null" ? 0 : Long.parseLong(data.getString("duration"));
 
                 Audio newAudio = new Audio(idOnServer, jId, HelpMe.AUDIO_TYPE, extension, size,
-                        dataUrl, null, createdBy, createdAt, updatedAt, null, audioDuration);
+                        dataUrl, null, createdBy, createdAt, updatedAt, null, audioDuration, latitude, longitude);
 
                 AudioDataSource.createAudio(newAudio, this);
                 //AudioUtil.downloadAudio(this, newAudio);
@@ -212,7 +216,7 @@ public class GcmIntentService extends IntentService {
                 caption = data.getString("caption");
 
                 Video newVideo = new Video(idOnServer, jId, HelpMe.VIDEO_TYPE, caption, extension,
-                        size, dataUrl, null, createdBy, createdAt, updatedAt, null, null);
+                        size, dataUrl, null, createdBy, createdAt, updatedAt, null, null, latitude, longitude);
                 //Downloading video and save to database
                 VideoUtil.createNewVideoFromServer(this, newVideo, localThumbUrl);
                 break;
@@ -223,7 +227,7 @@ public class GcmIntentService extends IntentService {
                 caption = data.getString("caption");
 
                 Note newNote = new Note(idOnServer, jId, HelpMe.NOTE_TYPE, caption, content, createdBy,
-                        createdAt, updatedAt, null);
+                        createdAt, updatedAt, null, latitude, longitude);
 
                 NoteDataSource.createNote(newNote, this);
                 break;
@@ -240,7 +244,7 @@ public class GcmIntentService extends IntentService {
                 }
 
                 Mood newMood = new Mood(idOnServer, jId, HelpMe.MOOD_TYPE, buddyIds, mood, reason,
-                        createdBy, createdAt, updatedAt, null);
+                        createdBy, createdAt, updatedAt, null, latitude, longitude);
 
                 MoodDataSource.createMood(newMood, this);
                 break;
@@ -252,8 +256,6 @@ public class GcmIntentService extends IntentService {
                 buddies = buddies.replace("]", "");
                 List<String> buddyList = Arrays.asList(buddies.split(","));
                 String place_name = data.getString("place_name");
-                Double latitude = data.getString("latitude") == "null" ? 0.0d : Double.parseDouble(data.getString("latitude"));
-                Double longitude = data.getString("longitude") == "null" ? 0.0d : Double.parseDouble(data.getString("longitude"));
                 caption = data.getString("caption");
 
                 CheckIn newCheckIn = new CheckIn(idOnServer, jId, HelpMe.CHECKIN_TYPE, caption, latitude, longitude,

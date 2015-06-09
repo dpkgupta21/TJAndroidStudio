@@ -6,7 +6,7 @@
     android:background="@drawable/abhi"
     android:padding="10dp">
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/past_journey_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:textSize="@dimen/tj_large_font"
         android:textStyle="bold" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/past_journey_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:textSize="@dimen/tj_large_font"
         android:textStyle="bold" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/past_journey_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

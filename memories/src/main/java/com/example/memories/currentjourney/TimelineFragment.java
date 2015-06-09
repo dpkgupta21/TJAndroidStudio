@@ -24,14 +24,12 @@ import java.util.List;
 public class TimelineFragment extends Fragment {
 
     private static final String TAG = "<TimelineFragment>";
-
+    public static TimeLineAdapter mAdapter;
     private ListView mListView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FloatingActionsMenu mFab;
     private FrameLayout baseActivityContentOverlay;
     private View rootView;
-
-    public static TimeLineAdapter mAdapter;
     private List<Memories> memoriesList;
 
     @Override

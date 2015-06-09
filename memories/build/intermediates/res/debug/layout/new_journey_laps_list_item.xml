@@ -6,7 +6,7 @@
     android:background="@drawable/custom_border_gray"
     android:padding="15dp">
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:textColor="@color/tj_orange"
         android:textSize="@dimen/tj_medium_font" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/new_journey_location_lap_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:textSize="@dimen/tj_medium_font"
         android:textStyle="bold" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/new_journey_location_lap_conveyance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:textSize="@dimen/tj_medium_font"
         android:textStyle="bold" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         android:textColor="@color/tj_orange"
         android:textSize="@dimen/tj_medium_font" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/new_journey_location_lap_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
 
     <!-- Bottom half -->
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
         android:textColor="@color/tj_orange"
         android:textSize="@dimen/tj_medium_font" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/new_journey_location_lap_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/barcode" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/time_of_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
         android:textColor="@color/tj_orange"
         android:textSize="@dimen/tj_medium_font" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/new_journey_location_lap_timeofday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

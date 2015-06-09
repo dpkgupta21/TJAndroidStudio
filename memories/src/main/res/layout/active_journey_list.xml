@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/active_journey_no_buddies_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:visibility="gone"
-        android:text="You donot have any buddies in this journey."
-        android:layout_centerInParent="true" />
+        android:text="You donot have any active journeys."
+        android:visibility="gone" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/active_journey_swipe_refresh_layout"
@@ -22,8 +22,8 @@
             android:id="@+id/active_journey_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:visibility="gone" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
 

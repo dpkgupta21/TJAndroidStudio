@@ -4,6 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Contact implements Comparable<Contact>, Parcelable {
+    public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>() {
+
+        public Contact createFromParcel(Parcel in) {
+            return new Contact(in);
+        }
+
+        public Contact[] newArray(int size) {
+            return new Contact[size];
+        }
+    };
     private String idOnServer;
     private String name;
     private String primaryEmail;
@@ -148,7 +158,6 @@ public class Contact implements Comparable<Contact>, Parcelable {
                 "all journey ids -> " + this.getAllJourneyIds();
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -188,16 +197,5 @@ public class Contact implements Comparable<Contact>, Parcelable {
     public int hashCode() {
         return idOnServer.hashCode();
     }
-
-    public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>() {
-
-        public Contact createFromParcel(Parcel in) {
-            return new Contact(in);
-        }
-
-        public Contact[] newArray(int size) {
-            return new Contact[size];
-        }
-    };
 
 }

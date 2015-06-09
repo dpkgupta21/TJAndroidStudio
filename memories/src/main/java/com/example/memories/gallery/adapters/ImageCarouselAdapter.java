@@ -1,10 +1,12 @@
 package com.example.memories.gallery.adapters;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +15,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.memories.R;
+import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Picture;
+import com.example.memories.picture.DownloadPicture;
 import com.example.memories.utility.HelpMe;
-import com.example.memories.utility.PictureUtilities;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class ImageCarouselAdapter extends PagerAdapter {
+public class ImageCarouselAdapter extends PagerAdapter implements DownloadPicture.OnPictureDownloadListener{
+    private static final String TAG = "ImageCarouselAdapter";
     private Activity _activity;
     private List<Picture> mPictureList;
     private LayoutInflater inflater;
+    private ProgressDialog pDialog;
 
     // constructor
     public ImageCarouselAdapter(Activity activity, List<Picture> pictureList) {
         _activity = activity;
         mPictureList = pictureList;
+        pDialog = new ProgressDialog(_activity);
+        pDialog.setMessage("Downloading image please wait");
     }
 
     @Override
@@ -66,7 +73,8 @@ public class ImageCarouselAdapter extends PagerAdapter {
                 e.printStackTrace();
             }
         } else {
-            PictureUtilities.downloadPicFromURL(_activity, mPictureList.get(position), imgDisplay);
+            pDialog.show();
+            new DownloadPicture(mPictureList.get(position), this, imgDisplay).startDownloadingPic();
         }
 
         // close button click event
@@ -76,7 +84,7 @@ public class ImageCarouselAdapter extends PagerAdapter {
                 _activity.finish();
             }
         });
-        ((ViewPager) container).addView(viewLayout);
+        container.addView(viewLayout);
         return viewLayout;
     }
 
@@ -85,10 +93,17 @@ public class ImageCarouselAdapter extends PagerAdapter {
         ((ViewPager) container).removeView((RelativeLayout) object);
     }
 
-    private int imageWidthPixel() {
+    @Override
+    public void onDownloadPicture(Picture picture, ImageView imgView) {
+        PictureDataSource.updatePicLocalPath(_activity, picture.getDataLocalURL(), picture.getId());
+        Log.d(TAG, "picture downloaded successfully now displaying it");
+        pDialog.dismiss();
         DisplayMetrics displayMetrics = _activity.getResources().getDisplayMetrics();
-        int width = (int) (displayMetrics.widthPixels - 30 / displayMetrics.density) / 3;
-        return width;
+        try {
+            imgView.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, picture.getDataLocalURL(), displayMetrics.widthPixels,
+                    displayMetrics.heightPixels));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
-
 }

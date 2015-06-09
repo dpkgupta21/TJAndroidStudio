@@ -15,7 +15,7 @@
         <FrameLayout
             android:id="@+id/content_activity_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
+            android:layout_height="match_parent"/>
 
         <!-- activity view -->
         <!--<RelativeLayout

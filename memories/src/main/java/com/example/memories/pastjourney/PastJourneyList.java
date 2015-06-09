@@ -2,6 +2,7 @@ package com.example.memories.pastjourney;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.example.memories.BaseActivity;
@@ -20,6 +21,8 @@ public class PastJourneyList extends BaseActivity {
         setContentView(R.layout.past_journey_list);
 
         Cursor c = JourneyDataSource.getAllPastJourneys(this);
+
+        Log.d(TAG, "cursor length is " + c.getCount());
 
         ListView pastJourneyListView = (ListView) findViewById(R.id.pastJourneyList);
         pastJourneyListViewAdapter = new PastJourneyListAdapter(getBaseContext(), c);

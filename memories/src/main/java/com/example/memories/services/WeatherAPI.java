@@ -78,11 +78,11 @@ public class WeatherAPI {
         return weatherItem;
     }
 
-    public interface WeatherInfo{
+    public interface WeatherInfo {
         void getWeatherInfo(Weather weather);
     }
 
-    public class Weather{
+    public class Weather {
         private String tempInCelcius;
         private String weatherDescp;
         private String weatherMain;

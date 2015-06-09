@@ -2,12 +2,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="15dp">
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/noFriendsSelected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,19 +14,19 @@
 
     <ImageButton
         android:id="@+id/mood_select_friend_imgbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:onClick="selectFriends"
-        android:src="@drawable/profile_image_empty" />
+        android:src="@drawable/add70" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/mood_text_select_friend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select Friend"
         android:textSize="@dimen/tj_medium_font" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/mood_text_is"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,14 +42,14 @@
         android:onClick="selectMood"
         android:src="@drawable/boss" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/mood_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Excited"
         android:textSize="@dimen/tj_medium_font" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/mood_text_because_of"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,14 +58,11 @@
         android:textSize="@dimen/tj_extra_giant_font"
         android:textStyle="bold" />
 
-    <EditText
+    <com.example.memories.customviews.MyEditTextView
         android:id="@+id/mood_because_of_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textMultiLine">
-
-        <requestFocus />
-    </EditText>
+        android:inputType="textMultiLine"/>
 
 </LinearLayout>

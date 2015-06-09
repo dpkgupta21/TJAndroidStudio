@@ -13,16 +13,16 @@
         android:layout_marginTop="50dp"
         android:src="@drawable/ic_launcher" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/textView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:textSize="@dimen/tj_large_font"
         android:padding="10dp"
         android:text="@string/number_verification2"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/tj_large_font" />
 
 
     <Button
@@ -31,9 +31,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:background="@drawable/rounded_corner_button"
-        android:text="CONTINUE"
-        android:padding="5dp"
         android:onClick="goToActiveJourneys"
+        android:padding="5dp"
+        android:text="CONTINUE"
         android:textColor="@color/white"
         android:textStyle="bold" />
 

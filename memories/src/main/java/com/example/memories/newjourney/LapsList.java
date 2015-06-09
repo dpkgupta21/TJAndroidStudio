@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.memories.R;
@@ -22,6 +23,9 @@ public class LapsList extends AppCompatActivity {
 
     protected static final String TAG = "<LapsList>";
     private LapsListAdapter lapsListViewAdapter;
+    private ImageView noLapsPlaceholderImg;
+    private ImageView getStartedImg;
+    ListView lapsListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +34,8 @@ public class LapsList extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Travel Plan");
-        toolbar.setNavigationIcon(R.drawable.next);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Add lap FAB Button
         final MyFABView fabButton = new MyFABView.Builder(this)
@@ -49,11 +53,19 @@ public class LapsList extends AppCompatActivity {
             }
         });
 
-        ListView lapsListView = (ListView) findViewById(R.id.new_journey_location_listview);
-        lapsListViewAdapter = new LapsListAdapter(this,
-                ((AppController) getApplicationContext()).lapsList);
-        lapsListView.setAdapter(lapsListViewAdapter);
+        lapsListView = (ListView) findViewById(R.id.new_journey_location_listview);
+        noLapsPlaceholderImg = (ImageView)findViewById(R.id.no_laps_placeholder);
+        getStartedImg = (ImageView)findViewById(R.id.no_laps_get_started);
 
+        if(((AppController) getApplicationContext()).lapsList.size() == 0){
+            noLapsPlaceholderImg.setVisibility(View.VISIBLE);
+            getStartedImg.setVisibility(View.VISIBLE);
+            lapsListView.setVisibility(View.GONE);
+        }else{
+            lapsListViewAdapter = new LapsListAdapter(this,
+                    ((AppController) getApplicationContext()).lapsList);
+            lapsListView.setAdapter(lapsListViewAdapter);
+        }
     }
 
     @Override
@@ -69,6 +81,9 @@ public class LapsList extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_next:
                 goToNext();
+                return true;
+            case android.R.id.home:
+                this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

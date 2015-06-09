@@ -17,7 +17,7 @@ public class Mood extends Memories {
     }
 
     public Mood(String idOnServer, String jId, String memType, List<String> buddyIds, String mood,
-                String reason, String createdBy, long createdAt, long updatedAt, List<String> likedBy) {
+                String reason, String createdBy, long createdAt, long updatedAt, List<String> likedBy, Double latitude, Double longitude) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -28,6 +28,8 @@ public class Mood extends Memories {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.likedBy = likedBy;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public List<String> getBuddyIds() {
@@ -60,15 +62,15 @@ public class Mood extends Memories {
     }
 
     @Override
-    public String toString(){
-        return "id on server -> " + this.getIdOnServer()+"\n"+
-                "journey id -> " + this.getjId()+"\n"+
-                "memory type -> " + this.getMemType()+"\n"+
-                "created by -> " + this.getCreatedBy()+"\n"+
-                "created at -> " + this.getCreatedAt()+"\n"+
-                "liked by -> " + this.getLikedBy()+"\n"+
-                "mood -> " + this.getMood()+"\n"+
-                "reason -> " + this.getReason()+"\n"+
+    public String toString() {
+        return "id on server -> " + this.getIdOnServer() + "\n" +
+                "journey id -> " + this.getjId() + "\n" +
+                "memory type -> " + this.getMemType() + "\n" +
+                "created by -> " + this.getCreatedBy() + "\n" +
+                "created at -> " + this.getCreatedAt() + "\n" +
+                "liked by -> " + this.getLikedBy() + "\n" +
+                "mood -> " + this.getMood() + "\n" +
+                "reason -> " + this.getReason() + "\n" +
                 "buddies -> " + this.getBuddyIds();
     }
 }

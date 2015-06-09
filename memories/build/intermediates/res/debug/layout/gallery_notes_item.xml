@@ -3,7 +3,7 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip">
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/galleryNoteItemtext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

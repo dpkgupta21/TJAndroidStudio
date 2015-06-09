@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="125dp"
     android:background="@color/tj_gray_bg"
-    android:paddingTop="5dp"
     android:paddingLeft="5dp"
-    android:paddingRight="5dp">
+    android:paddingRight="5dp"
+    android:paddingTop="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,34 +22,34 @@
                 android:id="@+id/active_journey_cover_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/abhi"
                 android:alpha="0.5"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/abhi" />
 
         </FrameLayout>
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/active_journey_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Journey Name"
             android:shadowColor="@color/tj_medium_gray"
-            android:shadowRadius="1.5"
             android:shadowDx="2"
             android:shadowDy="2"
+            android:shadowRadius="1.5"
+            android:text="Journey Name"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/active_journey_list_buddy_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:padding="5dp"
             android:text="Some buddies"
             android:textColor="@color/white"
             android:textSize="16sp" />
@@ -58,26 +58,26 @@
             android:id="@+id/active_journey_list_buddy_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/add70"
-            android:layout_marginBottom="5dp"
             android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@id/active_journey_list_buddy_count" />
+            android:layout_marginBottom="5dp"
+            android:layout_toLeftOf="@id/active_journey_list_buddy_count"
+            android:src="@drawable/add70" />
 
 
         <ImageView
             android:id="@+id/active_journey_list_place_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/facebook30"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
-            android:layout_alignParentBottom="true" />
+            android:src="@drawable/facebook30" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/active_journey_list_buddy_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
             android:layout_toRightOf="@id/active_journey_list_place_icon"
             android:text="Some place"
             android:textColor="@color/white"

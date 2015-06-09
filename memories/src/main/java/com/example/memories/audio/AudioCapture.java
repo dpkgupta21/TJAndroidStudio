@@ -16,10 +16,12 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.models.Audio;
+import com.example.memories.services.GPSTracker;
 import com.example.memories.utility.AudioUtil;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
@@ -29,18 +31,17 @@ import java.io.IOException;
 
 public class AudioCapture extends AppCompatActivity {
 
+    private static final String TAG = "CaptureVoice";
+    private static String mFileName = null;
+    Handler timerHandler = new Handler();
+    long startTime = 0;
+    long audioDuration;
     private ProgressBar mProgressBar;
     private ImageButton mRecordBtn;
     private ImageButton mStopBtn;
     private ImageButton mPreviewBtn;
     private ImageButton mRetryBtn;
     private TextView timerView;
-    private static final String TAG = "CaptureVoice";
-    private static String mFileName = null;
-
-    Handler timerHandler = new Handler();
-    long startTime = 0;
-    long audioDuration;
     Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
@@ -84,12 +85,13 @@ public class AudioCapture extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Capture Audio");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mRecordBtn = (ImageButton)findViewById(R.id.audio_capture_record_btn);
-        mStopBtn = (ImageButton)findViewById(R.id.audio_capture_stop_btn);
-        mPreviewBtn = (ImageButton)findViewById(R.id.audio_capture_preview_btn);
-        mRetryBtn = (ImageButton)findViewById(R.id.audio_capture_retry_btn);
+        mRecordBtn = (ImageButton) findViewById(R.id.audio_capture_record_btn);
+        mStopBtn = (ImageButton) findViewById(R.id.audio_capture_stop_btn);
+        mPreviewBtn = (ImageButton) findViewById(R.id.audio_capture_preview_btn);
+        mRetryBtn = (ImageButton) findViewById(R.id.audio_capture_retry_btn);
         timerView = (TextView) findViewById(R.id.timerView);
 
         setLayoutForAudioRecord();
@@ -186,10 +188,21 @@ public class AudioCapture extends AppCompatActivity {
     }
 
     private void saveAndUploadAudio() {
+
+        Double lat = 0.0d;
+        Double longi = 0.0d;
+        GPSTracker gps = new GPSTracker(this);
+        if (gps.canGetLocation()) {
+            lat = gps.getLatitude(); // returns latitude
+            longi = gps.getLongitude(); // returns longitude
+        } else {
+            Toast.makeText(getApplicationContext(), "Network issues. Try later.",
+                    Toast.LENGTH_LONG).show();
+        }
         Audio audio = new Audio(null, TJPreferences.getActiveJourneyId(this), HelpMe.AUDIO_TYPE,
                 "3gp", (new File(mFileName)).length(), null, mFileName,
                 TJPreferences.getUserId(this), System.currentTimeMillis(),
-                System.currentTimeMillis(), null, audioDuration);
+                System.currentTimeMillis(), null, audioDuration, lat, longi);
         AudioDataSource.createAudio(audio, this);
         Log.d(TAG, "new video added in local DB successfully");
         AudioUtil.uploadAudio(this, audio);
@@ -218,21 +231,21 @@ public class AudioCapture extends AppCompatActivity {
         mPlayer = null;
     }
 
-    private void setLayoutForAudioRecord(){
+    private void setLayoutForAudioRecord() {
         mRecordBtn.setVisibility(View.VISIBLE);
         mStopBtn.setVisibility(View.GONE);
         mPreviewBtn.setVisibility(View.GONE);
         mRetryBtn.setVisibility(View.GONE);
     }
 
-    private void setLayoutForAudioStop(){
+    private void setLayoutForAudioStop() {
         mRecordBtn.setVisibility(View.GONE);
         mStopBtn.setVisibility(View.VISIBLE);
         mPreviewBtn.setVisibility(View.GONE);
         mRetryBtn.setVisibility(View.GONE);
     }
 
-    private void setLayoutForAudioPreview(){
+    private void setLayoutForAudioPreview() {
         mRecordBtn.setVisibility(View.GONE);
         mStopBtn.setVisibility(View.GONE);
         mPreviewBtn.setVisibility(View.VISIBLE);
@@ -246,6 +259,9 @@ public class AudioCapture extends AppCompatActivity {
             case R.id.action_done:
                 saveAndUploadAudio();
                 finish();
+                return true;
+            case android.R.id.home:
+                this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

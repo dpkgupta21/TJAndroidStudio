@@ -113,11 +113,12 @@ public class SignUp extends Activity {
 
     public void signUp(View v) {
 
-        if(HelpMe.isNetworkAvailable(this)) {
+        if (HelpMe.isNetworkAvailable(this)) {
             // Get emailAddress, password from EditText
             emailAddress = txtEmailAddress.getText().toString();
             password = txtPassword.getText().toString();
             name = txtName.getText().toString();
+            name = name.substring(0, 1).toUpperCase() + name.substring(1);
 
             // Email address validation
             if (!HelpMe.isValidMail(emailAddress)) {
@@ -154,7 +155,7 @@ public class SignUp extends Activity {
                 Toast.makeText(getApplicationContext(), "Please enter Name, emailAddress & password",
                         Toast.LENGTH_LONG).show();
             }
-        }else {
+        } else {
             Toast.makeText(this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
         }
     }

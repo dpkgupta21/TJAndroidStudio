@@ -26,16 +26,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AllFriendsList extends AppCompatActivity implements CustomResultReceiver.Receiver{
+public class AllFriendsList extends AppCompatActivity implements CustomResultReceiver.Receiver {
     private static final String TAG = "AllFriendsList";
+    CustomResultReceiver mReceiver;
     private AllFriendsListAdapter mAdapter;
     private List<Contact> list;
     private List<Contact> selectedList;
-
     private ListView listView;
-
     private ProgressDialog mDialog;
-    CustomResultReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +43,7 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Add Friends");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDialog = new ProgressDialog(this);
         mDialog.setMessage("please wait while we fetch your contacts from server");
@@ -108,6 +107,9 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
                 startService(intent);
                 mDialog.show();
                 return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -115,7 +117,7 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
 
     private void goToNext() {
         Log.d(TAG, "done is clicked!!!");
-        selectedList = new ArrayList<Contact>();
+        selectedList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isSelected()) {
                 selectedList.add(list.get(i));
@@ -138,10 +140,10 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
         mDialog.dismiss();
         list = ContactDataSource.getAllContacts(this);
         Collections.sort(list);
-        if(mAdapter == null){
+        if (mAdapter == null) {
             mAdapter = new AllFriendsListAdapter(this, list);
             listView.setAdapter(mAdapter);
-        }else {
+        } else {
             mAdapter.updateList(list);
             mAdapter.notifyDataSetChanged();
         }

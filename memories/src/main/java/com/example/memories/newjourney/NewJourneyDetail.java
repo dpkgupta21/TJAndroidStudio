@@ -52,6 +52,7 @@ public class NewJourneyDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Journey Details");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mJourneyName = (EditText) findViewById(R.id.new_journey_detail_name);
         mJourneyTagLine = (EditText) findViewById(R.id.new_journey_detail_tagline);

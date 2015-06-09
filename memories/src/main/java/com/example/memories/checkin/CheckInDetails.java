@@ -48,7 +48,6 @@ public class CheckInDetails extends AppCompatActivity {
     private double longi;
     private List<String> mSelectedFriends;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +56,7 @@ public class CheckInDetails extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Checkin");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // get the name of the place
         Bundle extras = getIntent().getExtras();
@@ -70,22 +70,42 @@ public class CheckInDetails extends AppCompatActivity {
         mSelectedFriends = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
 
         // update the textview in the layout
-        checkinDetailsCaption = (EditText)
-
-                findViewById(R.id.checkin_details_caption);
-
-        checkinDetailsPlace = (TextView)
-
-                findViewById(R.id.checkin_details_location);
-
-        checkinDetailsBuddies = (TextView)
-
-                findViewById(R.id.checkin_friends);
-
+        checkinDetailsCaption = (EditText) findViewById(R.id.checkin_details_caption);
+        checkinDetailsPlace = (TextView) findViewById(R.id.checkin_details_location);
+        checkinDetailsBuddies = (TextView)findViewById(R.id.checkin_friends);
         checkinDetailsPlace.append(placeName);
-
         setSelectedFriends();
 
+    }
+
+    private void setSelectedFriends() {
+        if (mSelectedFriends != null) {
+            String checkinWithText = "";
+            if (mSelectedFriends.size() > 0) {
+                Contact contact = ContactDataSource.getContactById(this, mSelectedFriends.get(0));
+                if (mSelectedFriends.size() == 1) {
+                    checkinWithText += "- with " + ((contact == null) ? "" : contact.getName());
+                } else {
+                    checkinWithText += "- with " + ((contact == null) ? "" : contact.getName()) + " and " + (mSelectedFriends.size() - 1) + " others";
+                }
+            }
+            checkinDetailsBuddies.setText(checkinWithText);
+        }
+    }
+
+    private void createNewCheckinIntoDB() {
+        Log.d(TAG, "creating a new checkin in local DB");
+
+        String j_id = TJPreferences.getActiveJourneyId(this);
+        String user_id = TJPreferences.getUserId(this);
+
+        CheckIn newCheckIn = new CheckIn(null, j_id, HelpMe.CHECKIN_TYPE, checkinDetailsCaption
+                .getText().toString().trim(), lat, longi, placeName, null, mSelectedFriends, user_id,
+                HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null);
+
+        Log.d(TAG, "latitude -> " + newCheckIn.getLatitude() + " longitude -> " + longi + newCheckIn.getLongitude());
+        CheckinDataSource.createCheckIn(newCheckIn, this);
+        CheckinUtil.uploadCheckin(newCheckIn, this);
     }
 
     /**
@@ -131,36 +151,6 @@ public class CheckInDetails extends AppCompatActivity {
         return mediaFile;
     }
 
-
-    private void setSelectedFriends() {
-        if (mSelectedFriends != null) {
-            String checkinWithText = "";
-            if (mSelectedFriends.size() > 0) {
-                Contact contact = ContactDataSource.getContactById(this, mSelectedFriends.get(0));
-                if (mSelectedFriends.size() == 1) {
-                    checkinWithText += "- with " + ((contact == null) ? "" : contact.getName());
-                } else {
-                    checkinWithText += "- with " + ((contact == null) ? "" : contact.getName()) + " and " + (mSelectedFriends.size() - 1) + " others";
-                }
-            }
-            checkinDetailsBuddies.setText(checkinWithText);
-        }
-    }
-
-    private void createNewCheckinIntoDB() {
-        Log.d(TAG, "creating a new checkin in local DB");
-
-        String j_id = TJPreferences.getActiveJourneyId(this);
-        String user_id = TJPreferences.getUserId(this);
-
-        CheckIn newCheckIn = new CheckIn(null, j_id, HelpMe.CHECKIN_TYPE, checkinDetailsCaption
-                .getText().toString().trim(), lat, longi, placeName, null, mSelectedFriends, user_id,
-                HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null);
-
-        CheckinDataSource.createCheckIn(newCheckIn, this);
-        CheckinUtil.uploadCheckin(newCheckIn, this);
-    }
-
     public void goToPlaceList(View v) {
         Intent i = new Intent(getApplicationContext(), CheckInPlacesList.class);
         i.putExtra("placeName", placeName);
@@ -185,6 +175,9 @@ public class CheckInDetails extends AppCompatActivity {
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);*/
                 finish();
+                return true;
+            case android.R.id.home:
+                this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

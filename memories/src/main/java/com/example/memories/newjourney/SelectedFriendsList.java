@@ -34,26 +34,24 @@ public class SelectedFriendsList extends AppCompatActivity {
     private static final String TAG = "<SelectedFriendsList>";
     public static List<Contact> selectedList;
     public static SelectedFriendsListAdapter contactListViewAdapter;
-    private ActionBar actionBar;
-    private ListView contactListView;
-
     // handler and runnable are used to check(every 1 second) from PullContactsService.java whether all the contacts have been fetched
     Handler timerHandler = new Handler();
+    private ActionBar actionBar;
+    private ListView contactListView;
+    private ProgressDialog mProgressDialog;
     Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
-            if(PullContactsService.isServiceFinished()){
+            if (PullContactsService.isServiceFinished()) {
                 //If fetching of contacts is finished, initialize the adapter and listview as well as remove the handler callback
                 Log.d(TAG, "service is finished" + PullContactsService.isServiceFinished());
                 timerHandler.removeCallbacks(timerRunnable);
                 initializeData();
-            }else {
+            } else {
                 timerHandler.postDelayed(this, 10000);
             }
         }
     };
-
-    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +62,7 @@ public class SelectedFriendsList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Select Friends");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         selectedList = new ArrayList<Contact>();
 
@@ -79,20 +78,21 @@ public class SelectedFriendsList extends AppCompatActivity {
 
             }
         }
-        if(!isServiceRunning){
+        if (!isServiceRunning) {
             //The service has already completed
             Log.d(TAG, "pull contacts service has already finished");
             initializeData();
-        }else {
+        } else {
             //Service is not yet complete so start the handler to check if the service is finished (time period 1 second)
             Log.d(TAG, "pull contacts service is still running so waiting for the service to stop");
             mProgressDialog.setMessage("Please wait while we check who all from your contacts are on traveljar");
             mProgressDialog.show();
+            mProgressDialog.setCanceledOnTouchOutside(false);
             timerHandler.postDelayed(timerRunnable, 0);
         }
     }
 
-    private void initializeData(){
+    private void initializeData() {
         mProgressDialog.dismiss();
         contactListViewAdapter = new SelectedFriendsListAdapter(this, selectedList);
         contactListView.setAdapter(contactListViewAdapter);
@@ -141,6 +141,9 @@ public class SelectedFriendsList extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_next:
                 goToNext();
+                return true;
+            case android.R.id.home:
+                this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

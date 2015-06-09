@@ -18,15 +18,14 @@ import java.net.URL;
  */
 public class DownloadAudioAsyncTask extends AsyncTask<String, Integer, String> {
 
+    private static final String TAG = "DOWNLOAD_ASYNC_TASK";
     private OnAudioDownloadListener mListener;
     private Audio mAudio;
 
-    public DownloadAudioAsyncTask(OnAudioDownloadListener listener, Audio audio){
+    public DownloadAudioAsyncTask(OnAudioDownloadListener listener, Audio audio) {
         mListener = listener;
         mAudio = audio;
     }
-
-    private static final String TAG = "DOWNLOAD_ASYNC_TASK";
 
     @Override
     protected String doInBackground(String... params) {
@@ -86,7 +85,7 @@ public class DownloadAudioAsyncTask extends AsyncTask<String, Integer, String> {
         }
     }
 
-    public interface OnAudioDownloadListener{
+    public interface OnAudioDownloadListener {
         void onAudioDownload(String audioLocalUrl, Audio audio);
     }
 

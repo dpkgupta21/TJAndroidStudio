@@ -30,6 +30,8 @@ public class NoteDataSource {
         values.put(MySQLiteHelper.NOTES_COLUMN_CREATED_AT, newNote.getCreatedAt());
         values.put(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT, newNote.getUpdatedAt());
         values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, newNote.getLikedBy() == null ? null : Joiner.on(",").join(newNote.getLikedBy()));
+        values.put(MySQLiteHelper.NOTES_COLUMN_LATITUDE, newNote.getLatitude());
+        values.put(MySQLiteHelper.NOTES_COLUMN_LATITUDE, newNote.getLongitude());
 
         long note_id = db.insert(MySQLiteHelper.TABLE_NOTES, null, values);
         Log.d(TAG, "New note Inserted!");
@@ -98,8 +100,12 @@ public class NoteDataSource {
             note.setCreatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
             note.setUpdatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
             String liked = c.getString(c.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-            note.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
+            note.setLikedBy(liked == null ? null : new ArrayList<>(Arrays.asList(liked)));
 
+            note.setLatitude(c.getDouble(c
+                    .getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LATITUDE)));
+            note.setLongitude(c.getDouble(c
+                    .getColumnIndex(MySQLiteHelper.NOTES_CLOUMN_LONGITUDE)));
             notesList.add(note);
             c.moveToNext();
         }

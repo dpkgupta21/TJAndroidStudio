@@ -34,7 +34,7 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
         this.originalList = list;
     }
 
-    public void updateList(List<Contact> contactList){
+    public void updateList(List<Contact> contactList) {
         originalList = contactList;
     }
 

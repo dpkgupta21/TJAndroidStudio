@@ -3,6 +3,7 @@ package com.example.memories.picture;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,14 +22,15 @@ public class DownloadPicture {
     private static final String TAG = "DownloadPicture";
     private Picture picture;
     private OnPictureDownloadListener mListener;
+    private ImageView imgView;
 
 
-    public DownloadPicture(Picture picture, OnPictureDownloadListener listener){
+    public DownloadPicture(Picture picture, OnPictureDownloadListener listener, ImageView imgView) {
         this.picture = picture;
         mListener = listener;
     }
 
-    public void startDownloadingPic(){
+    public void startDownloadingPic() {
         Log.d(TAG, "download pic called");
         String picServerUrl = picture.getDataServerURL();
         final String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/pic_" + System.currentTimeMillis() + ".jpg";
@@ -41,7 +43,7 @@ public class DownloadPicture {
                         out = new FileOutputStream(imagePath);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                         picture.setDataLocalURL(imagePath);
-                        mListener.onDownloadPicture(picture);
+                        mListener.onDownloadPicture(picture, imgView);
                         Log.d(TAG, "picture downloaded successfully");
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -60,12 +62,12 @@ public class DownloadPicture {
                 }
             });
             AppController.getInstance().addToRequestQueue(request);
-        }else{
+        } else {
             Log.d(TAG, "pic server url is null");
         }
     }
 
-    public interface OnPictureDownloadListener{
-        void onDownloadPicture(Picture picture);
+    public interface OnPictureDownloadListener {
+        void onDownloadPicture(Picture picture, ImageView  imgView);
     }
 }

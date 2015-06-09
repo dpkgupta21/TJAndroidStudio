@@ -17,7 +17,7 @@ import com.example.memories.utility.AudioPlayer;
 
 import java.util.List;
 
-public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsyncTask.OnAudioDownloadListener{
+public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsyncTask.OnAudioDownloadListener {
 
     private static final String TAG = "AUDIO_GALLERY_ADAPTER";
     private Context mContext;
@@ -65,9 +65,9 @@ public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsy
         final ImageButton playAudio = (ImageButton) convertView.findViewById(R.id.gallery_audio_list_item_play);
 
         //If current audio is being played than put pause button else put play button
-        if(currentPlayingAudioId.equals(audio.getId())){
+        if (currentPlayingAudioId.equals(audio.getId())) {
             playAudio.setImageResource(R.drawable.pause_audio_red);
-        }else {
+        } else {
             playAudio.setImageResource(R.drawable.play_audio_red);
         }
 
@@ -82,7 +82,7 @@ public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsy
                         mProgressDialog.show();
                         DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(AudioGalleryAdapter.this, audio);
                         asyncTask.execute();
-                    }else {
+                    } else {
                         mPlayer = new AudioPlayer(audio.getDataLocalURL());
                         mPlayer.startPlaying();
                     }
@@ -95,13 +95,13 @@ public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsy
                     mPlayer.stopPlaying();
 
                     //If play clicked for the audio which is already playing than stop that audio
-                    if(currentPlayingAudioId.equals(audio.getId())) {
+                    if (currentPlayingAudioId.equals(audio.getId())) {
                         Log.d(TAG, "play audio button clicked for the audio which was already playing");
                         playAudio.setImageResource(R.drawable.play_audio_red);
                         currentPlayingAudioId = "-1";
                         lastPlayingAudioPosition = -1;
                         isPlaying = false;
-                    }else{
+                    } else {
                         //If play clicked and another audio is also playing than stop that audio and play the requested one
                         Log.d(TAG, "play audio button clicked for the audio other than audio which is playing");
                         mPlayer = new AudioPlayer(audio.getDataLocalURL());

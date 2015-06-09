@@ -6,7 +6,7 @@
     android:background="@color/black"
     android:paddingTop="20dp">
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/imageTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_marginRight="20dp"
         android:src="@drawable/delete85" />
 
-    <NetworkImageView
+    <ImageView
         android:id="@+id/detailImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,7 +32,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="20dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/banner" />
+        android:adjustViewBounds="true"/>
 
 </RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/gallery_photos_detail_item.xml -->

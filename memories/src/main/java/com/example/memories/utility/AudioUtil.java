@@ -35,124 +35,6 @@ public class AudioUtil {
 
     }
 
-    // No separate thread
-    /*public static String saveAudio(Context context, Audio audio) {
-        InputStream input = null;
-        OutputStream output = null;
-        HttpURLConnection connection = null;
-        String fileLocation = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath() + "/aud_" + System.currentTimeMillis()
-                + ".mp3";
-        URL downloadUrl;
-        try {
-            downloadUrl = new URL(audio.getDataServerURL());
-            Log.d(TAG, "started downloading audio ");
-            connection = (HttpURLConnection) downloadUrl.openConnection();
-            connection.connect();
-
-            // expect HTTP 200 OK, so we don't mistakenly save error report
-            // instead of the file
-            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                return "Server returned HTTP " + connection.getResponseCode() + " "
-                        + connection.getResponseMessage();
-            }
-
-            // download the file
-            input = connection.getInputStream();
-            output = new FileOutputStream(fileLocation);
-
-            byte data[] = new byte[4096];
-            int count;
-            while ((count = input.read(data)) != -1) {
-                output.write(data, 0, count);
-            }
-            audio.setDataLocalURL(fileLocation);
-            Log.d(TAG, "download finished");
-            AudioDataSource.updateDataLocalUrl(context, audio.getId(), fileLocation);
-            Log.d(TAG, "updated audio local url in database successfully");
-        } catch (Exception e) {
-            return e.toString();
-        } finally {
-            try {
-                if (output != null)
-                    output.close();
-                if (input != null)
-                    input.close();
-            } catch (IOException ignored) {
-            }
-
-            if (connection != null)
-                connection.disconnect();
-        }
-        return fileLocation;
-    }*/
-
-/*    private class DownloadTask extends AsyncTask<String, Integer, String> {
-
-        Context context;
-        Audio audio;
-
-        public DownloadTask(Context context, Audio audio) {
-            this.context = context;
-            this.audio = audio;
-        }
-
-        @Override
-        protected String doInBackground(String... url) {
-            Log.d(TAG, "inside download task do in background");
-            InputStream input = null;
-            OutputStream output = null;
-            HttpURLConnection connection = null;
-            String fileLocation = Constants.TRAVELJAR_FOLDER_AUDIO + System.currentTimeMillis()
-                    + ".mp3";
-            URL downloadUrl;
-            try {
-                downloadUrl = new URL(url[0]);
-                Log.d(TAG, "started downloading");
-                connection = (HttpURLConnection) downloadUrl.openConnection();
-                connection.connect();
-
-                // expect HTTP 200 OK, so we don't mistakenly save error report
-                // instead of the file
-                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    return "Server returned HTTP " + connection.getResponseCode() + " "
-                            + connection.getResponseMessage();
-                }
-
-                // download the file
-                input = connection.getInputStream();
-                output = new FileOutputStream(fileLocation);
-
-                byte data[] = new byte[4096];
-                int count;
-                while ((count = input.read(data)) != -1) {
-                    output.write(data, 0, count);
-                }
-                audio.setDataLocalURL(fileLocation);
-                Log.d(TAG, "download finished");
-            } catch (Exception e) {
-                return e.toString();
-            } finally {
-                try {
-                    if (output != null)
-                        output.close();
-                    if (input != null)
-                        input.close();
-                } catch (IOException ignored) {
-                }
-
-                if (connection != null)
-                    connection.disconnect();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result == null) {
-                AudioDataSource.createAudio(audio, context);
-            }
-        }
-    }*/
 
     private class UploadAsyncTask extends AsyncTask<String, Void, JSONObject> {
 
@@ -172,7 +54,8 @@ public class AudioUtil {
             entityBuilder.addTextBody("audio[user_id]", audio.getCreatedBy());
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
             entityBuilder.addTextBody("audio[duration]", String.valueOf(audio.getAudioDuration()));
-
+            entityBuilder.addTextBody("audio[latitude]", String.valueOf(audio.getLatitude()));
+            entityBuilder.addTextBody("audio[longitude]", String.valueOf(audio.getLongitude()));
 
             String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/audios";
             HttpPost updateProfileRequest = new HttpPost(url);
@@ -191,7 +74,7 @@ public class AudioUtil {
 
         @Override
         protected void onPostExecute(JSONObject object) {
-            if(object != null) {
+            if (object != null) {
                 try {
                     Log.d(TAG, "onPostExecute()");
                     String serverId = object.getJSONObject("audio").getString("id");
@@ -208,35 +91,3 @@ public class AudioUtil {
     }
 
 }
-
-/*RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constants.TRAVELJAR_API_BASE_URL).build();
-		TravelJarServices myService = restAdapter.create(TravelJarServices.class);
-
-		myService.uploadAudio(TJPreferences.getActiveJourneyId(context), new TypedString(
-				TJPreferences.getApiKey(context)),
-				new TypedString(TJPreferences.getUserId(context)), new TypedFile("audio/*",
-						new File(audio.getDataLocalURL())), new Callback<String>() {
-					@Override
-					public void success(String str, retrofit.client.Response response) {
-						Log.d(TAG, "audio uploaded successfully " + str);
-						JSONObject object;
-						try {
-							object = new JSONObject(str);
-							String serverId = object.getJSONObject("audio").getString("id");
-							String serverUrl = object.getJSONObject("audio")
-									.getJSONObject("audio_file").getString("url");
-							Log.d(TAG, "audio uploaded successfully " + serverId + serverUrl);
-							AudioDataSource.updateServerIdAndUrl(context, audio.getId(), serverId,
-									serverUrl);
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-
-					@Override
-					public void failure(RetrofitError retrofitError) {
-						Log.d(TAG, "error in uploading audio " + retrofitError);
-						retrofitError.printStackTrace();
-					}
-				});*/

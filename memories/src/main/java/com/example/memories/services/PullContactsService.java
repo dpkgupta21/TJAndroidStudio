@@ -38,12 +38,11 @@ import java.util.Map;
 public class PullContactsService extends IntentService {
 
     private static final String TAG = "<PullContactsService>";
+    private static int noRequests = -1;
     private ArrayList<Contact> list;
     private ArrayList<String> allPhoneList;
     private ArrayList<String> allEmailList;
-
     private ResultReceiver mReceiver;
-    private static int noRequests = -1;
 
     public PullContactsService() {
         super("PullContactsService");
@@ -53,9 +52,14 @@ public class PullContactsService extends IntentService {
         super(name);
     }
 
+    public static boolean isServiceFinished() {
+        Log.d(TAG, "no of requests = " + noRequests);
+        return noRequests == 0;
+    }
+
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, startId, startId);
-        if(intent.hasExtra("RECEIVER")){
+        if (intent.hasExtra("RECEIVER")) {
             mReceiver = intent.getParcelableExtra("RECEIVER");
         }
         Log.d(TAG, "on start command");
@@ -237,6 +241,8 @@ public class PullContactsService extends IntentService {
                             }
                         }, 0, 0, null, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
+                        noRequests--;
+                        onFinish();
                     }
                 });
                 AppController.getInstance().addToRequestQueue(request);
@@ -256,13 +262,8 @@ public class PullContactsService extends IntentService {
         }
     }
 
-    public static boolean isServiceFinished(){
-        Log.d(TAG, "no of requests = " + noRequests);
-        return noRequests == 0;
-    }
-
-    public void onFinish(){
-        if(noRequests == 0 && mReceiver != null){
+    public void onFinish() {
+        if (noRequests == 0 && mReceiver != null) {
             Bundle bundle = new Bundle();
             mReceiver.send(0, bundle);
         }

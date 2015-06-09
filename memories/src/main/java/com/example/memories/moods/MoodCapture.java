@@ -20,6 +20,7 @@ import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Mood;
 import com.example.memories.moods.adapters.SelectMoodsDialog;
+import com.example.memories.services.GPSTracker;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.MoodUtil;
 import com.example.memories.utility.TJPreferences;
@@ -45,6 +46,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Mood");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         noFriendsSelectedTxt = (TextView) findViewById(R.id.noFriendsSelected);
         selectMoodImgBtn = (ImageButton) findViewById(R.id.mood_select_mood_imgbtn);
@@ -52,13 +54,13 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         moodReasonEditTxt = (EditText) findViewById(R.id.mood_because_of_txt);
 
         mContactsList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
-        Log.d(TAG , "buddies in journey are " + mContactsList.size());
+        Log.d(TAG, "buddies in journey are " + mContactsList.size());
     }
 
     private void setSelectedFriends() {
         List<Contact> selectedFriends = new ArrayList<>();
-        for(Contact contact : mContactsList){
-            if(contact.isSelected()){
+        for (Contact contact : mContactsList) {
+            if (contact.isSelected()) {
                 selectedFriends.add(contact);
             }
         }
@@ -76,7 +78,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
 
     public void selectFriends(View v) {
         Intent intent = new Intent(getBaseContext(), MoodSelectFriends.class);
-        intent.putParcelableArrayListExtra("FRIENDS", mContactsList == null ? null : (ArrayList)mContactsList);
+        intent.putParcelableArrayListExtra("FRIENDS", mContactsList == null ? null : (ArrayList) mContactsList);
         startActivityForResult(intent, PICK_CONTACTS);
     }
 
@@ -93,15 +95,26 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
 
         //Getting the contact ids of the selected contacts
         List<String> selectedFriends = new ArrayList<>();
-        for(Contact contact : mContactsList){
-            if(contact.isSelected()){
+        for (Contact contact : mContactsList) {
+            if (contact.isSelected()) {
                 selectedFriends.add(contact.getIdOnServer());
             }
         }
 
+        Double lat = 0.0d;
+        Double longi = 0.0d;
+        GPSTracker gps = new GPSTracker(this);
+        if (gps.canGetLocation()) {
+            lat = gps.getLatitude(); // returns latitude
+            longi = gps.getLongitude(); // returns longitude
+        } else {
+            Toast.makeText(getApplicationContext(), "Network issues. Try later.",
+                    Toast.LENGTH_LONG).show();
+        }
+
         Mood newMood = new Mood(null, j_id, HelpMe.MOOD_TYPE, selectedFriends, moodText
                 .getText().toString(), moodReasonEditTxt.getText().toString(), user_id,
-                HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null);
+                HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null, lat, longi);
 
         MoodDataSource.createMood(newMood, this);
         MoodUtil.uploadMood(newMood, this);
@@ -133,6 +146,9 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
                     startActivity(i);*/
                     finish();
                 }
+                return true;
+            case android.R.id.home:
+                this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

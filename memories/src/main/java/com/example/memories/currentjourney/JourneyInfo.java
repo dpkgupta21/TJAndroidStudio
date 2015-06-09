@@ -1,15 +1,20 @@
 package com.example.memories.currentjourney;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.memories.R;
@@ -18,6 +23,9 @@ import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.currentjourney.adapters.JourneyInfoBuddiesListAdapter;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Journey;
+import com.example.memories.pastjourney.PastJourneyList;
+import com.example.memories.utility.Constants;
+import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 
 import java.util.List;
@@ -37,6 +45,10 @@ public class JourneyInfo extends AppCompatActivity {
     private Journey mJourney;
     private TextView journeyBuddyCount;
 
+    private Button mExitGroup;
+    private Button mEndJourney;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +62,64 @@ public class JourneyInfo extends AppCompatActivity {
         journeyCreatedBy = (TextView) findViewById(R.id.journey_info_created_by);
         journeyBuddyCount = (TextView) findViewById(R.id.journey_info_buddies_count);
         mJourney = JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(this));
+
+        mExitGroup = (Button)findViewById(R.id.journey_info_exit_group);
+        mEndJourney = (Button)findViewById(R.id.journey_info_end_journey);
+
+        if(HelpMe.isAdmin(this)){
+            Log.d(TAG, "user is admin");
+            mExitGroup.setVisibility(View.GONE);
+            mEndJourney.setVisibility(View.VISIBLE);
+        }else {
+            Log.d(TAG, "user is not admin");
+            mExitGroup.setVisibility(View.VISIBLE);
+            mEndJourney.setVisibility(View.GONE);
+        }
+
+        mExitGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(JourneyInfo.this)
+                        .setTitle("Exit Group")
+                        .setMessage("Under Construction")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+
+        mEndJourney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(JourneyInfo.this)
+                        .setTitle("End Journey")
+                        .setMessage("Are you sure you end this journey?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                JourneyDataSource.updateJourneyStatus(JourneyInfo.this, TJPreferences.getActiveJourneyId(JourneyInfo.this), Constants.JOURNEY_STATUS_FINISHED);
+                                Intent intent = new Intent(JourneyInfo.this, PastJourneyList.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
 
         if (mJourney != null) {
             journeyName.setText(mJourney.getName());
@@ -79,6 +149,7 @@ public class JourneyInfo extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new JourneyInfoBuddiesListAdapter(allBuddiesList);
+        mRecyclerView.getLayoutParams().height = convertDpToPixels(allBuddiesList.size() * 110);
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -102,6 +173,11 @@ public class JourneyInfo extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private int convertDpToPixels(int dp){
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+        return (int)px;
     }
 
 }

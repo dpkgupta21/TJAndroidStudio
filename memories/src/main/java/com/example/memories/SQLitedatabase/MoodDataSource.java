@@ -31,6 +31,8 @@ public class MoodDataSource {
         values.put(MySQLiteHelper.MOOD_COLUMN_CREATED_AT, newMood.getCreatedAt());
         values.put(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT, newMood.getUpdatedAt());
         values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, newMood.getLikedBy() == null ? null : Joiner.on(",").join(newMood.getLikedBy()));
+        values.put(MySQLiteHelper.MOOD_COLUMN_LATITUDE, newMood.getLatitude());
+        values.put(MySQLiteHelper.MOOD_COLUMN_LATITUDE, newMood.getLongitude());
 
         long mood_id = db.insert(MySQLiteHelper.TABLE_MOOD, null, values);
         Log.d(TAG, "New mood Inserted!");
@@ -66,6 +68,8 @@ public class MoodDataSource {
             mood.setBuddyIds(Arrays.asList((c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID))).split(",")));
             mood.setMood(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MOOD)));
             mood.setReason(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_REASON)));
+            mood.setLatitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_LATITUDE)));
+            mood.setLongitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.MOOD_CLOUMN_LONGITUDE)));
             moodsList.add(mood);
             c.moveToNext();
         }

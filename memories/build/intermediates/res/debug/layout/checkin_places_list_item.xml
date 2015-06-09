@@ -21,7 +21,7 @@
 
         <!-- checkin_place name -->
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/checkin_place_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
 
         <!-- checkin_place address -->
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/checkin_place_address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:text="Phuket, Thailand"
             android:textSize="12sp" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/checkin_place_count"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

@@ -36,6 +36,7 @@ public class MoodSelectFriends extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Select Mood");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mContactsList = getIntent().getExtras().getParcelableArrayList("FRIENDS");
         // To avoid Nullpoiner exception in adapter
@@ -88,6 +89,9 @@ public class MoodSelectFriends extends AppCompatActivity {
                 returnIntent.putParcelableArrayListExtra("FRIENDS", (ArrayList) mContactsList);
                 setResult(RESULT_OK, returnIntent);
                 finish();
+                return true;
+            case android.R.id.home:
+                this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

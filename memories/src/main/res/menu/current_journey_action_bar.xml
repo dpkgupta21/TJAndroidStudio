@@ -5,7 +5,7 @@
     <!-- Journey Details Icon -->
     <item
         android:id="@+id/action_info"
-        android:icon="@drawable/sync"
+        android:icon="@drawable/ic_journey_info"
         android:title="@string/default_string"
         app:showAsAction="always" />
 </menu>

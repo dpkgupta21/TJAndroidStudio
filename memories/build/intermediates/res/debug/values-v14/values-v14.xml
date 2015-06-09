@@ -12,13 +12,21 @@
     <style name="Platform.V14.AppCompat" parent="Platform.V12.AppCompat">
         <item name="android:actionModeSelectAllDrawable">?actionModeSelectAllDrawable</item>
 
-        <item name="android:listPreferredItemPaddingLeft">@dimen/abc_list_item_padding_horizontal_material</item>
-        <item name="android:listPreferredItemPaddingRight">@dimen/abc_list_item_padding_horizontal_material</item>
+        <item name="android:listPreferredItemPaddingLeft">
+            @dimen/abc_list_item_padding_horizontal_material
+        </item>
+        <item name="android:listPreferredItemPaddingRight">
+            @dimen/abc_list_item_padding_horizontal_material
+        </item>
     </style>
     <style name="Platform.V14.AppCompat.Light" parent="Platform.V12.AppCompat.Light">
         <item name="android:actionModeSelectAllDrawable">?actionModeSelectAllDrawable</item>
 
-        <item name="android:listPreferredItemPaddingLeft">@dimen/abc_list_item_padding_horizontal_material</item>
-        <item name="android:listPreferredItemPaddingRight">@dimen/abc_list_item_padding_horizontal_material</item>
+        <item name="android:listPreferredItemPaddingLeft">
+            @dimen/abc_list_item_padding_horizontal_material
+        </item>
+        <item name="android:listPreferredItemPaddingRight">
+            @dimen/abc_list_item_padding_horizontal_material
+        </item>
     </style>
 </resources>

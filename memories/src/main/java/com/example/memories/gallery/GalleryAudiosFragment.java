@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
@@ -22,6 +23,7 @@ public class GalleryAudiosFragment extends Fragment {
     private List<Audio> mAudioList;
     private AudioGalleryAdapter mAdapter;
     private ListView mListView;
+    private RelativeLayout mLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,12 +36,17 @@ public class GalleryAudiosFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mListView = (ListView) rootView.findViewById(R.id.gallery_audio_listview);
+        mLayout = (RelativeLayout)rootView.findViewById(R.id.gallery_audio_layout);
 
         mAudioList = AudioDataSource.getAllAudios(getActivity());
+        if(mAudioList.size() == 0){
+            mLayout.setBackgroundResource(R.drawable.img_no_audio);
+        }else {
+            mAdapter = new AudioGalleryAdapter(getActivity(), mAudioList);
+            mListView.setAdapter(mAdapter);
+            mLayout.setBackgroundColor(getResources().getColor(R.color.white));
+        }
         Log.d(TAG, "audio list size " + mAudioList.size());
-        mAdapter = new AudioGalleryAdapter(getActivity(), mAudioList);
-
-        mListView.setAdapter(mAdapter);
 
     }
 }

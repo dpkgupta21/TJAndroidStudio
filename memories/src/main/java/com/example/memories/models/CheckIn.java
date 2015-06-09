@@ -8,8 +8,6 @@ import java.util.List;
 
 public class CheckIn extends Memories {
     private String caption;
-    private double latitude;
-    private double longitude;
     private String checkInPlaceName;
     private String checkInPicURL;
     private List<String> checkInWith;
@@ -42,18 +40,6 @@ public class CheckIn extends Memories {
 
     public void setCaption(String caption) {
         this.caption = caption;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
     }
 
     public void setLongitude(double longitude) {
@@ -89,17 +75,17 @@ public class CheckIn extends Memories {
     }
 
     @Override
-    public String toString(){
-        return "id on server -> " + this.getIdOnServer()+"\n"+
-                "journey id -> " + this.getjId()+"\n"+
-                "memory type -> " + this.getMemType()+"\n"+
-                "created by -> " + this.getCreatedBy()+"\n"+
-                "created at -> " + this.getCreatedAt()+"\n"+
-                "liked by -> " + this.getLikedBy()+"\n"+
-                "checkin caption -> " + this.getCaption()+"\n"+
-                "latitude -> " + this.getLatitude()+"\n"+
-                "longitude -> " + this.getLongitude()+"\n"+
-                "checkin place name -> " + this.getCheckInPlaceName()+"\n"+
+    public String toString() {
+        return "id on server -> " + this.getIdOnServer() + "\n" +
+                "journey id -> " + this.getjId() + "\n" +
+                "memory type -> " + this.getMemType() + "\n" +
+                "created by -> " + this.getCreatedBy() + "\n" +
+                "created at -> " + this.getCreatedAt() + "\n" +
+                "liked by -> " + this.getLikedBy() + "\n" +
+                "checkin caption -> " + this.getCaption() + "\n" +
+                "latitude -> " + this.getLatitude() + "\n" +
+                "longitude -> " + this.getLongitude() + "\n" +
+                "checkin place name -> " + this.getCheckInPlaceName() + "\n" +
                 "checkin with -> " + this.getCheckInWith();
 
     }

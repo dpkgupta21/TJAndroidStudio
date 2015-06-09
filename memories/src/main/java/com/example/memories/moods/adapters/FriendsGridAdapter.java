@@ -25,12 +25,13 @@ public class FriendsGridAdapter extends BaseAdapter {
         mContext = context;
         mContactsList = contactsList;
         Log.d(TAG, mContactsList.size() + "------")
-;       Log.d(TAG, mContactsList.get(0).getName());
+        ;
+        Log.d(TAG, mContactsList.get(0).getName());
     }
 
     @Override
     public int getCount() {
-        Log.d(TAG,"==" +  mContactsList.size());
+        Log.d(TAG, "==" + mContactsList.size());
         return mContactsList.size();
     }
 

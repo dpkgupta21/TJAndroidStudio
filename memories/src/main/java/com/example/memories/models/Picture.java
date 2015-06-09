@@ -6,7 +6,8 @@ import com.example.memories.SQLitedatabase.PictureDataSource;
 
 import java.util.List;
 
-public class Picture extends Memories {
+public class
+        Picture extends Memories {
 
     private String caption;
     private String extension;
@@ -25,7 +26,7 @@ public class Picture extends Memories {
 
     public Picture(String idOnServer, String jId, String memType, String caption, String ext,
                    long size, String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                   long updatedAt, List<String> likedBy, String picLocalThumbnailPath) {
+                   long updatedAt, List<String> likedBy, String picLocalThumbnailPath, Double latitude, Double longitude) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -39,6 +40,8 @@ public class Picture extends Memories {
         this.updatedAt = updatedAt;
         this.likedBy = likedBy;
         this.picLocalThumbnailPath = picLocalThumbnailPath;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getCaption() {
@@ -102,16 +105,16 @@ public class Picture extends Memories {
     }
 
     @Override
-    public String toString(){
-        return "id on server -> " + this.getIdOnServer()+"\n"+
-                "journey id -> " + this.getjId()+"\n"+
-                "memory type -> " + this.getMemType()+"\n"+
-                "created by -> " + this.getCreatedBy()+"\n"+
-                "created at -> " + this.getCreatedAt()+"\n"+
-                "liked by -> " + this.getLikedBy()+"\n"+
-                "caption -> " + this.getCaption()+"\n"+
-                "picture server url -> " + this.getDataServerURL()+"\n"+
-                "picture local url -> " + this.getDataLocalURL()+"\n"+
+    public String toString() {
+        return "id on server -> " + this.getIdOnServer() + "\n" +
+                "journey id -> " + this.getjId() + "\n" +
+                "memory type -> " + this.getMemType() + "\n" +
+                "created by -> " + this.getCreatedBy() + "\n" +
+                "created at -> " + this.getCreatedAt() + "\n" +
+                "liked by -> " + this.getLikedBy() + "\n" +
+                "caption -> " + this.getCaption() + "\n" +
+                "picture server url -> " + this.getDataServerURL() + "\n" +
+                "picture local url -> " + this.getDataLocalURL() + "\n" +
                 "picture thumbnail url -> " + this.getPicThumbnailPath();
     }
 

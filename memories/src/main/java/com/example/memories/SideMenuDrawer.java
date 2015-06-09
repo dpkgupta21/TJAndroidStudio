@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -18,6 +19,7 @@ import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.gallery.GalleryBaseActivity;
 import com.example.memories.pastjourney.PastJourneyList;
 import com.example.memories.profile.ProfileActivity;
+import com.example.memories.settings.Settings;
 import com.example.memories.utility.TJPreferences;
 
 import java.io.FileInputStream;
@@ -33,12 +35,11 @@ public class SideMenuDrawer extends Fragment {
 
     private static final String TAG = "<BaseActivity>";
     private static final int REQUEST_CODE_UPDATE_PROFILE = 2;
-    private View rootView;
-
     ImageView mProfileImg;
     TextView mUserName;
     TextView mUserStatus;
-
+    private View rootView;
+    private ImageButton settingsButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,15 +51,17 @@ public class SideMenuDrawer extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mProfileImg = (ImageView)rootView.findViewById(R.id.sidemenu_profile_pic);
-        mUserName = (TextView)rootView.findViewById(R.id.sidemenu_username);
-        mUserStatus = (TextView)rootView.findViewById(R.id.sidemenu_status);
+        mProfileImg = (ImageView) rootView.findViewById(R.id.sidemenu_profile_pic);
+        mUserName = (TextView) rootView.findViewById(R.id.sidemenu_username);
+        mUserStatus = (TextView) rootView.findViewById(R.id.sidemenu_status);
+
+        settingsButton = (ImageButton)rootView.findViewById(R.id.sidemenu_settings);
 
         // Sliding Side Menu Drawer code
         ListView featuresListView = (ListView) rootView.findViewById(R.id.sidemenu_features_list);
         ArrayList<Map<String, String>> featuresList = new ArrayList<>();
-        Integer[] categoryIconArray = {R.drawable.timeline, R.drawable.map32, R.drawable.stack21,
-                R.drawable.cookies};
+        Integer[] categoryIconArray = {R.drawable.timeline, R.drawable.ic_past_journeys, R.drawable.ic_gallery,
+                R.drawable.ic_profile};
         String[] hashMapKeys = {"icon", "title"};
 
         Integer len = getResources().getStringArray(R.array.sidemenu_features_list).length;
@@ -103,10 +106,19 @@ public class SideMenuDrawer extends Fragment {
             }
         });
 
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Settings.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
     @Override
-    public void onResume (){
+    public void onResume() {
         Log.d(TAG, "fragment on resume method called");
         try {
             mProfileImg.setImageBitmap(BitmapFactory.decodeStream(new FileInputStream(TJPreferences.getProfileImgPath(getActivity())), null, new BitmapFactory.Options()));

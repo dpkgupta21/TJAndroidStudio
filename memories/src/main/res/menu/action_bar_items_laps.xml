@@ -5,7 +5,7 @@
     <!-- Next Icon -->
     <item
         android:id="@+id/action_next"
-        android:icon="@drawable/next"
+        android:icon="@drawable/ic_forward"
         android:title="@string/default_string"
         app:showAsAction="ifRoom" />
 

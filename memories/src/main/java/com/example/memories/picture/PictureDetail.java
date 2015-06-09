@@ -17,12 +17,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Picture;
+import com.example.memories.services.GPSTracker;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.PictureUtilities;
@@ -67,6 +69,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         currenTime = HelpMe.getCurrentTime();
         photo = (ImageView) findViewById(R.id.photo_detail_photo);
@@ -94,13 +97,13 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
             //setup the state of favourite button
             if (mPicture.getLikedBy() == null) {
                 noLikesTxt.setText("0");
-                mFavBtn.setImageResource(R.drawable.heart_empty);
+                mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
             } else {
                 noLikesTxt.setText(String.valueOf(mPicture.getLikedBy().size()));
                 if (mPicture.getLikedBy().contains(TJPreferences.getUserId(PictureDetail.this))) {
-                    mFavBtn.setImageResource(R.drawable.heart_filled_red);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 } else {
-                    mFavBtn.setImageResource(R.drawable.heart_empty);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
                 }
             }
             caption.setText(mPicture.getCaption());
@@ -130,8 +133,19 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 }
             }
 
+            Double lat = 0.0d;
+            Double longi = 0.0d;
+            GPSTracker gps = new GPSTracker(this);
+            if (gps.canGetLocation()) {
+                lat = gps.getLatitude(); // returns latitude
+                longi = gps.getLongitude(); // returns longitude
+            } else {
+                Toast.makeText(getApplicationContext(), "Network issues. Try later.",
+                        Toast.LENGTH_LONG).show();
+            }
+
             mPicture = new Picture(null, TJPreferences.getActiveJourneyId(this), HelpMe.PICTURE_TYPE, caption.getText().toString()
-                    .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), currenTime, currenTime, null, localThumbnailPath);
+                    .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), currenTime, currenTime, null, localThumbnailPath, lat, longi);
         }
 
         //Setting fields common in both the cases
@@ -183,7 +197,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 if (mPicture.getDataLocalURL() == null) {
                     pDialog.setMessage("Please wait while the picture is getting downloaded");
                     pDialog.show();
-                    new DownloadPicture(mPicture, PictureDetail.this).startDownloadingPic();
+                    new DownloadPicture(mPicture, PictureDetail.this, null).startDownloadingPic();
                 } else {
                     Log.d(TAG, "profile pic is already present in the local so displaying it");
                     Intent intent = new Intent(PictureDetail.this, DisplayPicture.class);
@@ -208,11 +222,11 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 if (likedBy.contains(TJPreferences.getUserId(PictureDetail.this))) {
                     likedBy.remove(TJPreferences.getUserId(PictureDetail.this));
                     Log.d(TAG, "heart empty");
-                    mFavBtn.setImageResource(R.drawable.heart_empty);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
                 } else {
                     likedBy.add(TJPreferences.getUserId(PictureDetail.this));
                     Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.heart_filled_red);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 }
 
                 // update the value in the list and database
@@ -260,13 +274,16 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 startActivity(i);*/
                 finish();
                 return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     @Override
-    public void onDownloadPicture(Picture picture) {
+    public void onDownloadPicture(Picture picture, ImageView imgView) {
         PictureDataSource.updatePicLocalPath(this, picture.getDataLocalURL(), picture.getId());
         Log.d(TAG, "picture downloaded successfully now displaying it");
         pDialog.dismiss();

@@ -19,15 +19,14 @@ import java.net.URL;
 
 public class DownloadVideoAsyncTask extends AsyncTask<String, Integer, String> {
 
+    private static final String TAG = "DOWNLOAD_ASYNC_TASK";
     private OnVideoDownloadListener mListener;
     private Video mVideo;
 
-    public DownloadVideoAsyncTask(OnVideoDownloadListener listener, Video video){
+    public DownloadVideoAsyncTask(OnVideoDownloadListener listener, Video video) {
         mListener = listener;
         mVideo = video;
     }
-
-    private static final String TAG = "DOWNLOAD_ASYNC_TASK";
 
     @Override
     protected String doInBackground(String... url) {
@@ -87,7 +86,7 @@ public class DownloadVideoAsyncTask extends AsyncTask<String, Integer, String> {
         }
     }
 
-    public interface OnVideoDownloadListener{
+    public interface OnVideoDownloadListener {
         void onVideoDownload(String videoLocalUrl, Video video);
     }
 

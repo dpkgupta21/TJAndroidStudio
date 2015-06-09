@@ -19,8 +19,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:alpha="0.3"
-                android:scaleType="fitXY"
                 android:background="@color/translucent"
+                android:scaleType="fitXY"
                 android:src="@drawable/abhi" />
 
         </FrameLayout>
@@ -29,12 +29,12 @@
             android:id="@+id/profile_img"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:adjustViewBounds="true"
-            android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:adjustViewBounds="true"
             android:src="@drawable/profile_image_empty" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,16 +42,16 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="Abhinav Mittal"
-            android:textSize="20sp"
             android:textColor="@color/white"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/profile_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/profile_name"
+            android:layout_centerHorizontal="true"
             android:text="Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum "
             android:textColor="@color/white" />
 
@@ -60,8 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:minHeight="?attr/actionBarSize">
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </android.support.v7.widget.Toolbar>
 
@@ -71,22 +71,22 @@
         android:id="@+id/edit_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="10dp"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:visibility="gone">
 
-        <EditText
+        <com.example.memories.customviews.MyEditTextView
             android:id="@+id/edit_name"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:hint="Name" />
 
-        <EditText
+        <com.example.memories.customviews.MyEditTextView
             android:id="@+id/edit_status"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:hint="Status" />
 
     </LinearLayout>

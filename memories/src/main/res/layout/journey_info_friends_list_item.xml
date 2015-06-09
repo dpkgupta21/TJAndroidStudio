@@ -13,7 +13,7 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/abhi" />
 
-    <TextView
+    <com.example.memories.customviews.MyTextView
         android:id="@+id/journey_info_friends_list_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

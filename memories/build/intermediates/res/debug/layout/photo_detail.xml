@@ -4,7 +4,6 @@
     android:orientation="vertical">
 
 
-
     <RelativeLayout
         android:id="@+id/photo_detail_rl0"
         android:layout_width="match_parent"
@@ -23,24 +22,24 @@
             android:id="@+id/photo_detail_profile_image"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="15dp"
-            android:src="@drawable/profile_image_empty"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/profile_image_empty" />
 
-        <TextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/photo_detail_profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/photo_detail_profile_image"
-            android:textColor="@color/white"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="10dp"
-            android:textSize="20sp"
             android:layout_marginBottom="55dp"
-            android:text="Some Name"/>
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/photo_detail_profile_image"
+            android:text="Some Name"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <include layout="@layout/toolbar" />
 
@@ -50,10 +49,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/custom_border_gray"
         android:layout_margin="10dp"
-        android:padding="10dp"
-        android:orientation="vertical">
+        android:background="@drawable/custom_border_gray"
+        android:orientation="vertical"
+        android:padding="10dp">
 
 
         <RelativeLayout
@@ -71,30 +70,30 @@
                 android:layout_marginLeft="10dp"
                 android:background="@color/white"
                 android:contentDescription="@string/default_string"
-                android:src="@drawable/heart_empty" />
+                android:src="@drawable/ic_favourite_empty" />
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:id="@+id/no_likes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textSize="@dimen/tj_extra_giant_font"
                 android:layout_toLeftOf="@+id/favBtn"
-                android:text="0" />
+                android:text="0"
+                android:textSize="@dimen/tj_extra_giant_font" />
 
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:id="@+id/photo_detail_date_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:text="07"
-                android:layout_centerVertical="true"
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="50sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:id="@+id/photo_detail_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,7 +103,7 @@
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <TextView
+            <com.example.memories.customviews.MyTextView
                 android:id="@+id/photo_detail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,7 +115,7 @@
 
         </RelativeLayout>
 
-        <EditText
+        <com.example.memories.customviews.MyEditTextView
             android:id="@+id/photo_detail_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,7 +125,6 @@
             android:lines="2" />
 
     </LinearLayout>
-
 
 
 </LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/photo_detail.xml -->
