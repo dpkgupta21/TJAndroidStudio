@@ -143,6 +143,14 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                     .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), currenTime, currenTime, null, thumbnailPath, lat, longi);
         }
 
+
+        // If the picture is created by someone else than remove the caption field
+        Log.d(TAG, "video created by ->" + mVideo.getCreatedBy() + "user id ->" + TJPreferences.getUserId(this));
+        if(mVideo.getCreatedBy() != TJPreferences.getUserId(this)){
+            Log.d(TAG, "the picture has not been created by the logged in user hence removing caption option");
+            caption.setVisibility(View.GONE);
+        }
+
         //Setting fields common in both the cases
         video.setImageBitmap(BitmapFactory.decodeFile(thumbnailPath));
 
@@ -263,6 +271,11 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                 Log.d(TAG, "done clicked!");
                 if (isNewVideo) {
                     saveAndUploadVideo();
+                }
+                //Check if the text of the caption has been changed. If yes than make a request to the server
+                if(caption.getText().toString() != mVideo.getCaption()){
+                    Log.d(TAG, "the picture's caption has been changed so updating on server");
+                    VideoUtil.updateCaption(mVideo, caption.getText().toString(), getBaseContext());
                 }
                 finish();
                 return true;

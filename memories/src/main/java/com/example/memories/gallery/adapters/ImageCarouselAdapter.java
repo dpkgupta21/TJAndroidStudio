@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,11 +44,12 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((RelativeLayout) object);
+        return view == object;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+
         ImageView imgDisplay;
         ImageView btnClose;
         TextView imgTitle;
@@ -74,6 +74,7 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
             }
         } else {
             pDialog.show();
+            Log.d(TAG, "downloading picture for position" + position);
             new DownloadPicture(mPictureList.get(position), this, imgDisplay).startDownloadingPic();
         }
 
@@ -90,7 +91,7 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        ((ViewPager) container).removeView((RelativeLayout) object);
+        container.removeView((RelativeLayout) object);
     }
 
     @Override

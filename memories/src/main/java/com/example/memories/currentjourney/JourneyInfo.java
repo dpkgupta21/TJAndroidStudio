@@ -15,8 +15,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
@@ -27,8 +31,15 @@ import com.example.memories.pastjourney.PastJourneyList;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
+import com.example.memories.volley.AppController;
+import com.example.memories.volley.CustomJsonRequest;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by abhi on 29/05/15.
@@ -47,7 +58,7 @@ public class JourneyInfo extends AppCompatActivity {
 
     private Button mExitGroup;
     private Button mEndJourney;
-
+    private ImageView mCoverImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +76,9 @@ public class JourneyInfo extends AppCompatActivity {
 
         mExitGroup = (Button)findViewById(R.id.journey_info_exit_group);
         mEndJourney = (Button)findViewById(R.id.journey_info_end_journey);
+        mCoverImage = (ImageView)findViewById(R.id.journey_info_cover_image);
+
+        setCoverImage();
 
         if(HelpMe.isAdmin(this)){
             Log.d(TAG, "user is admin");
@@ -105,6 +119,7 @@ public class JourneyInfo extends AppCompatActivity {
                         .setMessage("Are you sure you end this journey?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                endJourneyOnServer();
                                 JourneyDataSource.updateJourneyStatus(JourneyInfo.this, TJPreferences.getActiveJourneyId(JourneyInfo.this), Constants.JOURNEY_STATUS_FINISHED);
                                 Intent intent = new Intent(JourneyInfo.this, PastJourneyList.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -178,6 +193,36 @@ public class JourneyInfo extends AppCompatActivity {
     private int convertDpToPixels(int dp){
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
         return (int)px;
+    }
+
+    private void setCoverImage(){
+        int[] drawables = new int[]{R.drawable.img_journey_info_1, R.drawable.img_journey_info_2, R.drawable.img_journey_info_3, R.drawable.img_journey_info_4, R.drawable.img_journey_info_5, R.drawable.img_journey_info_6,};
+        Random rand = new Random();
+        // nextInt is normally exclusive of the top value so add 1 to make it inclusive
+        int randomNum = rand.nextInt((5 - 0) + 1) + 0;
+        mCoverImage.setImageResource(drawables[randomNum]);
+    }
+
+    private void endJourneyOnServer(){
+        String url = Constants.URL_CREATE_JOURNEY + "/" +TJPreferences.getActiveJourneyId(this);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("api_key", TJPreferences.getApiKey(this));
+        params.put("journey[completed_at]", "2015-06-09T06:09:06.258Z");
+        CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, "journey with id " + TJPreferences.getActiveJourneyId(JourneyInfo.this) + "completed successfully on server" + response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "journey could not be completed at server" + error);
+                error.printStackTrace();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(uploadRequest);
     }
 
 }

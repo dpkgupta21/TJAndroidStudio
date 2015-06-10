@@ -23,6 +23,7 @@ public class Constants {
     // 3. MEMORIES APIS
     public static final String URL_JOURNIES_FETCH_ALL = URL_TJ_DOMAIN + "api/v1/journeys/";
     public static final String URL_MEMORY_UPLOAD = URL_TJ_DOMAIN + "api/v1/journeys/";
+    public static final String URL_MEMORY_UPDATE = URL_TJ_DOMAIN + "api/v1/journeys/";
 
     // =================================================================================
 

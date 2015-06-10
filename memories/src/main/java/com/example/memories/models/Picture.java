@@ -106,7 +106,8 @@ public class
 
     @Override
     public String toString() {
-        return "id on server -> " + this.getIdOnServer() + "\n" +
+        return "id -> " + this.getId() + "\n" +
+                "id on server -> " + this.getIdOnServer() + "\n" +
                 "journey id -> " + this.getjId() + "\n" +
                 "memory type -> " + this.getMemType() + "\n" +
                 "created by -> " + this.getCreatedBy() + "\n" +

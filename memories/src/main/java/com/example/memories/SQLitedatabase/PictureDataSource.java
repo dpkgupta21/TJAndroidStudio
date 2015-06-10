@@ -39,7 +39,6 @@ public class PictureDataSource {
         values.put(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT, newPic.getCreatedAt());
         values.put(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT, newPic.getCreatedAt());
         String likedBy = (newPic.getLikedBy() == null) ? null : Joiner.on(",").join(newPic.getLikedBy());
-        Log.d(TAG, "liked by saved in database is " + likedBy);
         values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy);
         values.put(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH, newPic.getPicThumbnailPath());
         values.put(MySQLiteHelper.PICTURE_COLUMN_LATITUDE, newPic.getLatitude());
@@ -47,7 +46,7 @@ public class PictureDataSource {
 
         // insert row
         Long picture_id = db.insert(MySQLiteHelper.TABLE_PICTURE, null, values);
-        Log.d(TAG, "New Picture Inserted! with ");
+        Log.d(TAG, "New Picture Inserted! with id" + picture_id);
 
         db.close();
 
@@ -80,13 +79,15 @@ public class PictureDataSource {
     }
 
     public static Picture getPictureById(Context context, String picId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_ID + " = " + picId;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_ID + " = '" + picId + "'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.d(TAG, "get picture by id" + cursor.getCount() + " " + selectQuery);
         Picture pic = null;
         if (cursor.moveToFirst()) {
             pic = getPictures(cursor).get(0);
         }
+        Log.d(TAG, "get all pictures" + getAllPictures(context).size());
         cursor.close();
         db.close();
         return pic;
@@ -113,6 +114,7 @@ public class PictureDataSource {
         values.put(MySQLiteHelper.PICTURE_COLUMN_DATASERVERURL, serverUrl);
         db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = " + picId, null);
         db.close();
+        Log.d(TAG, "server id and server url saved succesfully");
     }
 
     public static void updatePicLocalPath(Context context, String newPath, String picId) {
@@ -130,6 +132,14 @@ public class PictureDataSource {
         values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = "
                 + memId, null);
+        db.close();
+    }
+
+    public static void updateCaption(Context context, String caption, String picId) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.PICTURE_COLUMN_CAPTION, caption);
+        db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = " + picId, null);
         db.close();
     }
 

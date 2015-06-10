@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
@@ -14,6 +16,7 @@ import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Picture;
 import com.example.memories.services.PullMemoriesService;
 import com.example.memories.volley.AppController;
+import com.example.memories.volley.CustomJsonRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -28,6 +31,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PictureUtilities {
 
@@ -146,20 +151,50 @@ public class PictureUtilities {
 
         @Override
         protected void onPostExecute(JSONObject object) {
+            // If upload is successful than set server id and data server url received from response and create new picture in db
+            //else save the picture as it is
             if (object != null) {
                 try {
-                    Log.d(TAG, "onPostExecute()");
+                    Log.d(TAG, "onPostExecute()" + picture);
                     String serverId = object.getJSONObject("picture").getString("id");
                     String serverUrl = object.getJSONObject("picture")
                             .getJSONObject("picture_file").getJSONObject("original").getString("url");
-                    PictureDataSource.updateServerIdAndUrl(context, picture.getId(), serverId,
-                            serverUrl);
-                    Log.d(TAG, "picture successfully uploaded and serverid successfully saved in database");
+                    picture.setIdOnServer(serverId);
+                    picture.setDataServerURL(serverUrl);
                 } catch (JSONException ex) {
                     Log.d(TAG, ex.getMessage());
                 }
             }
+            PictureDataSource.createPicture(picture, context);
         }
     }
+
+    public static void updateCaption(final Picture picture, final String caption, final Context context){
+        if(!HelpMe.isNetworkAvailable(context)){
+            Toast.makeText(context, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
+        }else {
+            String url = Constants.URL_MEMORY_UPDATE + TJPreferences.getActiveJourneyId(context) + "/pictures/" + picture.getIdOnServer();
+            Map<String, String> params = new HashMap<>();
+            params.put("api_key", TJPreferences.getApiKey(context));
+            params.put("picture[description]", TJPreferences.getApiKey(context));
+            CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d(TAG, "picture caption updated successfully" + response);
+                            PictureDataSource.updateCaption(context, caption, picture.getId());
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d(TAG, "error in updating picture caption" + error);
+                    error.printStackTrace();
+                }
+            });
+            AppController.getInstance().addToRequestQueue(uploadRequest);
+        }
+    }
+
 }
 

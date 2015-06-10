@@ -64,7 +64,6 @@ public class AudioDetail extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         currenTime = HelpMe.getCurrentTime();
         audioThumbnail = (ImageView) findViewById(R.id.playAudio);
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
@@ -111,6 +110,8 @@ public class AudioDetail extends AppCompatActivity {
             }
             mAudio = new Audio(null, TJPreferences.getActiveJourneyId(this), HelpMe.AUDIO_TYPE, "3gp", 1223, null, audioPath, TJPreferences.getUserId(this), currenTime, currenTime, null, 0, lat, longi);
         }
+
+
 
         //Setting fields common in both the cases
         //Profile picture

@@ -198,6 +198,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
         String picLocalUrl;
         String allJourneyIds = userItem.getJSONArray("journey_ids").toString();
 
+
         // Fetching the profile image of the user
         if (picServerUrl != "null") {
             picLocalUrl = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + id + ".jpeg";

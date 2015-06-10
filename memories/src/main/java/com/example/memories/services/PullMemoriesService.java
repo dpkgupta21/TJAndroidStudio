@@ -89,6 +89,7 @@ public class PullMemoriesService {
                             String buddies;
                             List<String> buddiesList;
                             JSONArray memoriesList;
+                            String journeyStatus;
 
 
                             for (int i = 0; i < length; i++) {
@@ -110,8 +111,11 @@ public class PullMemoriesService {
                                 laps = jsonObject.getJSONArray("journey_lap_ids").toString();
                                 lapsList = Arrays.asList(laps.split(","));
 
+                                journeyStatus = jsonObject.getString("completed_at").equals("null") ? Constants.JOURNEY_STATUS_ACTIVE : Constants.JOURNEY_STATUS_FINISHED;
+//                                Log.d(TAG, "journey status " + journeyStatus + jsonObject.getString("created_at") + jsonObject.getString("created_at").equals("null"));
+
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
-                                        createdBy, lapsList, buddiesList, Constants.JOURNEY_STATUS_ACTIVE);
+                                        createdBy, lapsList, buddiesList, journeyStatus);
                                 JourneyDataSource.createJourney(journey, mContext);
                                 Log.d(TAG, "journey parsed and saved successfully in the database");
 

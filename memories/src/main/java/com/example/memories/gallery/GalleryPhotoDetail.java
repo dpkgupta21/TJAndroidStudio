@@ -24,6 +24,10 @@ public class GalleryPhotoDetail extends Activity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.imagePager);
         mPicturesList = PictureDataSource.getAllPictures(this);
+        //Just for testing purpose remove after testing
+        for(Picture pic : mPicturesList){
+            PictureDataSource.updatePicLocalPath(this, null, pic.getId());
+        }
 
         ImageCarouselAdapter adapter = new ImageCarouselAdapter(this,
                 mPicturesList);

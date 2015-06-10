@@ -19,6 +19,7 @@ import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.PictureDataSource;
@@ -35,6 +36,7 @@ public class GalleryPhotosFragment extends Fragment {
     private ActionBar actionBar;
     private List<Picture> mImageList;
     private ImageGalleryAdapter mAdapter;
+    private LinearLayout mLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class GalleryPhotosFragment extends Fragment {
         mImageList = PictureDataSource.getAllPictures(getActivity());
         mAdapter = new ImageGalleryAdapter(getActivity(), mImageList);
 
-        mGridView.setAdapter(mAdapter);
+        mLayout = (LinearLayout)rootView.findViewById(R.id.layout);
 
         if (mImageList.size() > 0) {
             // long press selection of the pictures
@@ -130,6 +132,8 @@ public class GalleryPhotosFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+        }else {
+            //mLayout.setBackgroundResource(R.drawable.img_no_video);
         }
     }
 }

@@ -127,6 +127,14 @@ public class VideoDataSource {
         db.close();
     }
 
+    public static void updateCaption(Context context, String caption, String videoId) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.VIDEO_COLUMN_CAPTION, caption);
+        db.update(MySQLiteHelper.TABLE_VIDEO, values, MySQLiteHelper.VIDEO_COLUMN_ID + " = " + videoId, null);
+        db.close();
+    }
+
     private static List<Memories> getVideosMemoryList(Cursor cursor, Context context) {
         List<Memories> videosList = new ArrayList<Memories>();
         cursor.moveToFirst();

@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
@@ -15,6 +17,7 @@ import com.example.memories.SQLitedatabase.VideoDataSource;
 import com.example.memories.models.Video;
 import com.example.memories.services.PullMemoriesService;
 import com.example.memories.volley.AppController;
+import com.example.memories.volley.CustomJsonRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -33,6 +36,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VideoUtil {
 
@@ -204,6 +209,33 @@ public class VideoUtil {
             } catch (NullPointerException ex) {
                 Log.d(TAG, "null pointer exception");
             }
+        }
+    }
+
+    public static void updateCaption(final Video video, final String caption, final Context context){
+        if(!HelpMe.isNetworkAvailable(context)){
+            Toast.makeText(context, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
+        }else {
+            String url = Constants.URL_MEMORY_UPDATE + TJPreferences.getActiveJourneyId(context) + "/videos/" + video.getIdOnServer();
+            Map<String, String> params = new HashMap<>();
+            params.put("api_key", TJPreferences.getApiKey(context));
+            params.put("video[description]", TJPreferences.getApiKey(context));
+            CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d(TAG, "picture caption updated successfully" + response);
+                            VideoDataSource.updateCaption(context, caption, video.getId());
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d(TAG, "error in updating picture caption" + error);
+                    error.printStackTrace();
+                }
+            });
+            AppController.getInstance().addToRequestQueue(uploadRequest);
         }
     }
 

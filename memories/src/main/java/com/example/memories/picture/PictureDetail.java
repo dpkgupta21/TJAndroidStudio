@@ -91,6 +91,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         if (extras.getString("PICTURE_ID") != null) {
             Log.d(TAG, "running for an already created picture");
             mPicture = PictureDataSource.getPictureById(this, extras.getString("PICTURE_ID"));
+            Log.d(TAG, "picture fetched is" + mPicture);
             imagePath = mPicture.getDataLocalURL(); //path to image
             localThumbnailPath = mPicture.getPicThumbnailPath();
             profileName.setText(ContactDataSource.getContactById(getBaseContext(), mPicture.getCreatedBy()).getName());
@@ -146,6 +147,13 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
 
             mPicture = new Picture(null, TJPreferences.getActiveJourneyId(this), HelpMe.PICTURE_TYPE, caption.getText().toString()
                     .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), currenTime, currenTime, null, localThumbnailPath, lat, longi);
+        }
+
+        // If the picture is created by someone else than remove the caption field
+        Log.d(TAG, "video created by ->" + mPicture.getCreatedBy() + "user id ->" + TJPreferences.getUserId(this));
+        if(!mPicture.getCreatedBy().equals(TJPreferences.getUserId(this))){
+            Log.d(TAG, "the picture has not been created by the logged in user hence removing caption option");
+            caption.setVisibility(View.GONE);
         }
 
         //Setting fields common in both the cases
@@ -243,13 +251,12 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
     }
 
     private void saveAndUploadPic() {
-        Log.d(TAG, "creating a new picture in local DB");
 
         if (likedBy != null) {
             mPicture.setLikedBy(likedBy);
         }
         mPicture.setCaption(caption.getText().toString());
-        PictureDataSource.createPicture(mPicture, this);
+        //PictureDataSource.createPicture(mPicture, this);
         PictureUtilities.uploadPicture(this, mPicture);
     }
 
@@ -269,9 +276,11 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 if (isNewPic) {
                     saveAndUploadPic();
                 }
-                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);*/
+                //Check if the text of the caption has been changed. If yes than make a request to the server
+                else if(caption.getText().toString() != mPicture.getCaption()){
+                    Log.d(TAG, "the picture's caption has been changed so updating on server" + mPicture);
+                    PictureUtilities.updateCaption(mPicture, caption.getText().toString(), getBaseContext());
+                }
                 finish();
                 return true;
             case android.R.id.home:
