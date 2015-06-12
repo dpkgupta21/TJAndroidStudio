@@ -120,7 +120,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     break;
 
                 case HelpMe.TYPE_VIDEO:
-                    convertView = mInflater.inflate(R.layout.timeline_list_picture_item, null);
+                    convertView = mInflater.inflate(R.layout.timeline_list_video_item, null);
                     holder.timelineItemImage = (ImageView) convertView
                             .findViewById(R.id.timelineItemImage);
                     holder.timelineItemCaption = (TextView) convertView
