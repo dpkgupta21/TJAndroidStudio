@@ -133,7 +133,6 @@
 
             <LinearLayout
                 android:id="@+id/new_journey_location_new_conveyance_bar"
-                style="@android:style/ButtonBar"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
@@ -145,6 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/toggle_flight"
                     android:onClick="conveyanceToggle"
                     android:textOff=""
@@ -158,6 +158,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/toggle_car"
                     android:onClick="conveyanceToggle"
+                    android:layout_marginRight="5dp"
                     android:textOff=""
                     android:textOn="" />
 
@@ -169,6 +170,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/toggle_train"
                     android:onClick="conveyanceToggle"
+                    android:layout_marginRight="5dp"
                     android:textOff=""
                     android:textOn="" />
 
@@ -183,15 +185,44 @@
                     android:textOff=""
                     android:textOn="" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/walkToggle"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_walk"
+                    android:onClick="conveyanceToggle"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <ToggleButton
+                    android:id="@+id/busToggle"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_bus"
+                    android:onClick="conveyanceToggle"
+                    android:textOff=""
+                    android:textOn="" />
+
         </LinearLayout>
 
-        <View
+<!--        <View
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:layout_marginTop="10dp"
             android:background="#c0c0c0" />
 
-        <!-- Time of day -->
+        &lt;!&ndash; Time of day &ndash;&gt;
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -257,7 +288,7 @@
                     android:textOff=""
                     android:textOn="" />
             </LinearLayout>
-        </LinearLayout>
+        </LinearLayout>-->
 
 
         <Button
@@ -273,4 +304,6 @@
 
     </LinearLayout>
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/new_journey_lap_new.xml -->
+</LinearLayout>
+    </LinearLayout>
+<!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/new_journey_lap_new.xml -->

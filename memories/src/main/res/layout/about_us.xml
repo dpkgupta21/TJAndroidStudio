@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/aboutUsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="About Traveljar"
+        android:textColor="@color/md_blue"
+        android:textSize="@dimen/tj_large_font" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_blue" />
+
+    <TextView
+        android:id="@+id/aboutUsVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:text="Version: 1.0.0"
+        android:textColor="@color/tj_dark_gray"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/aboutUsCopyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Copyright @ Traveljar 2015"
+        android:textColor="@color/tj_dark_gray"
+        android:textSize="16sp" />
+
+</LinearLayout>

@@ -206,7 +206,6 @@ public class ProfileActivity extends BaseActivity {
 
         @Override
         protected String doInBackground(Map<String, String>... maps) {
-            Log.d(TAG, "api key" + TJPreferences.getApiKey(ProfileActivity.this));
             MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
             entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
@@ -220,8 +219,11 @@ public class ProfileActivity extends BaseActivity {
                 entityBuilder.addTextBody("user[status]", mEditStatus.getText().toString());
             }
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(getBaseContext()));
+            entityBuilder.addTextBody("user[red_id]", TJPreferences.getGcmRegId(getBaseContext()));
 
+            Log.d(TAG, "reg id is " + TJPreferences.getGcmRegId(getBaseContext()));
             String url = Constants.URL_UPDATE_USER_DETAILS + TJPreferences.getUserId(getBaseContext());
+            Log.d(TAG, "url is " + url);
 
             HttpPut updateProfileRequest = new HttpPut(url);
 

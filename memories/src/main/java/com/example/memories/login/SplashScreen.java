@@ -3,24 +3,34 @@ package com.example.memories.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import com.example.memories.R;
 import com.example.memories.activejourney.ActivejourneyList;
-import com.example.memories.services.CustomResultReceiver;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.SessionManager;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class SplashScreen extends Activity implements CustomResultReceiver.Receiver {
+public class SplashScreen extends Activity {
     private static final String TAG = "<SplashScreen>";
-    public CustomResultReceiver mReceiver;
     private SessionManager session;
-    private int REQUEST_FETCH_CONTACTS = 1;
+    private ViewPager mViewPager;
+    private SplashScreenPagerAdapter mAdapter;
+    private Map<Integer, String> mPictures;
+    private List<Integer> mPictureIdsList;
+
+    private RadioGroup mSwipeIndicator;
+    // List of Ids of radio buttons for displaying the dot of currently displayed picture
+    private List<Integer> mRadioButtonIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +40,6 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
 
         // Session class instance
         session = new SessionManager(getApplicationContext());
-
-        mReceiver = new CustomResultReceiver(new Handler());
-        mReceiver.setReceiver(this);
-
         createTravelJarInitials();
 
         // check if already logged in
@@ -43,6 +49,61 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
             Intent intent = new Intent(getBaseContext(), ActivejourneyList.class);
             startActivity(intent);
             finish();
+        }
+
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        populateRadioButtonIds();
+        populateSplashBackgrounds();
+
+        mAdapter = new SplashScreenPagerAdapter(this, mPictures, mPictureIdsList);
+        mViewPager.setAdapter(mAdapter);
+
+        mSwipeIndicator = (RadioGroup)findViewById(R.id.swipe_indicator_radio_group);
+        mSwipeIndicator.check(mRadioButtonIds.get(0));
+
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mSwipeIndicator.clearCheck();
+                mSwipeIndicator.check(mRadioButtonIds.get(position));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void populateRadioButtonIds(){
+        mRadioButtonIds = new ArrayList<>();
+        mRadioButtonIds.add(R.id.pic1_indicator);
+        mRadioButtonIds.add(R.id.pic2_indicator);
+        mRadioButtonIds.add(R.id.pic3_indicator);
+    }
+
+    private void populateSplashBackgrounds(){
+        mPictures = new HashMap<>();
+
+        List<String> mPictureTextList = new ArrayList<>();
+        mPictureTextList.add("Hey there! Iam using traveljar");
+        mPictureTextList.add("Capture Save and Share memorable moments at your Trip!");
+        mPictureTextList.add("We capture audios, videos, notes, moods, pictures and much more");
+
+        mPictureIdsList = new ArrayList<>();
+        mPictureIdsList.add(R.drawable.splash_bg1);
+        mPictureIdsList.add(R.drawable.splash_bg2);
+        mPictureIdsList.add(R.drawable.splash_bg3);
+
+        int i = 0;
+        for(Integer a : mPictureIdsList){
+            mPictures.put(a, mPictureTextList.get(i));
+            i++;
         }
 
     }
@@ -87,12 +148,5 @@ public class SplashScreen extends Activity implements CustomResultReceiver.Recei
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
-
-    @Override
-    public void onReceiveResult(int resultCode, Bundle resultData) {
-        if (resultCode == REQUEST_FETCH_CONTACTS) {
-            Log.d(TAG, "fetch contacts service completed");
-        }
-        ;
-    }
 }
+

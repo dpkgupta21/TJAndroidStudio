@@ -1,7 +1,9 @@
 package com.example.memories.settings;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.example.memories.R;
+import com.example.memories.utility.SessionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,20 +74,33 @@ public class Settings extends AppCompatActivity{
                 Intent i;
                 switch (position) {
                     case 0:
-
                         break;
                     case 1:
-
+                        AboutUsDialog aboutUsDialog = new AboutUsDialog();
+                        aboutUsDialog.show(getSupportFragmentManager(), "ABOUT US");
                         break;
                     case 2:
-                        break;
+                        new AlertDialog.Builder(Settings.this)
+                                .setTitle("Logout")
+                                .setMessage("Are you sure you want to logout?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        new SessionManager(Settings.this).logoutUser(Settings.this);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                     case 3:
 
                         break;
                     case 4:
                         break;
                     case 5:
-
                         break;
                 }
             }
@@ -101,9 +117,6 @@ public class Settings extends AppCompatActivity{
     }
 
     private void initializeSettingsIconIdsList() {
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
         settingsIconIdsList.add(String.valueOf(R.drawable.logout));
         settingsIconIdsList.add(String.valueOf(R.drawable.logout));
         settingsIconIdsList.add(String.valueOf(R.drawable.logout));

@@ -29,11 +29,9 @@
         <item>Vellore</item>
     </string-array>
     <string-array name="settings_items">
-        <item>Goa</item>
-        <item>Bangalore</item>
-        <item>Jaipur</item>
-        <item>Alwar</item>
-        <item>Vellore</item>
+        <item>General Settings</item>
+        <item>About Us</item>
+        <item>Logout</item>
     </string-array>
     <string-array name="sidemenu_features_list">
         <item>Active Journeys</item>

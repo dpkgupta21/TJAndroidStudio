@@ -68,6 +68,8 @@ public class HelpMe {
     public static final String CONVEYANCE_CAR = "Car";
     public static final String CONVEYANCE_TRAIN = "Train";
     public static final String CONVEYANCE_SHIP = "Ship";
+    public static final String CONVEYANCE_BUS = "Bus";
+    public static final String CONVEYANCE_WALK = "Walk";
     public static final String TIME_OF_DAY_MORNING = "Morning";
     public static final String TIME_OF_DAY_AFTERNOON = "Afternoon";
     public static final String TIME_OF_DAY_EVENING = "Evening";

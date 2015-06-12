@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -26,6 +27,7 @@ public class LapsList extends AppCompatActivity {
     private ImageView noLapsPlaceholderImg;
     private ImageView getStartedImg;
     ListView lapsListView;
+    private ImageButton mEditJourney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class LapsList extends AppCompatActivity {
         toolbar.setTitle("Travel Plan");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mEditJourney = (ImageButton) findViewById(R.id.edit_journey_lap);
 
         // Add lap FAB Button
         final MyFABView fabButton = new MyFABView.Builder(this)

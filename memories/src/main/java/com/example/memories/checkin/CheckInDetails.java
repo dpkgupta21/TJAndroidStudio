@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.CheckinDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
-import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.models.CheckIn;
 import com.example.memories.models.Contact;
 import com.example.memories.utility.CheckinUtil;
@@ -46,7 +45,7 @@ public class CheckInDetails extends AppCompatActivity {
     private TextView checkinDetailsBuddies;
     private double lat;
     private double longi;
-    private List<String> mSelectedFriends;
+    private List<Contact> mContactsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,41 +65,59 @@ public class CheckInDetails extends AppCompatActivity {
             longi = extras.getDouble("longitude");
             Log.d(TAG, "latitude, longitude " + lat + " " + longi);
         }
-        //Get all the friends
-        mSelectedFriends = JourneyDataSource.getBuddyIdsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+
+        mContactsList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        Log.d(TAG, "buddies in journey are " + mContactsList.size());
 
         // update the textview in the layout
         checkinDetailsCaption = (EditText) findViewById(R.id.checkin_details_caption);
         checkinDetailsPlace = (TextView) findViewById(R.id.checkin_details_location);
         checkinDetailsBuddies = (TextView)findViewById(R.id.checkin_friends);
         checkinDetailsPlace.append(placeName);
+
+        for(Contact contact : mContactsList){
+            contact.setSelected(true);
+        }
         setSelectedFriends();
 
     }
 
     private void setSelectedFriends() {
-        if (mSelectedFriends != null) {
-            String checkinWithText = "";
-            if (mSelectedFriends.size() > 0) {
-                Contact contact = ContactDataSource.getContactById(this, mSelectedFriends.get(0));
-                if (mSelectedFriends.size() == 1) {
-                    checkinWithText += "- with " + ((contact == null) ? "" : contact.getName());
-                } else {
-                    checkinWithText += "- with " + ((contact == null) ? "" : contact.getName()) + " and " + (mSelectedFriends.size() - 1) + " others";
-                }
+        List<Contact> selectedFriends = new ArrayList<>();
+        for (Contact contact : mContactsList) {
+            if (contact.isSelected()) {
+                selectedFriends.add(contact);
             }
-            checkinDetailsBuddies.setText(checkinWithText);
         }
+        String checkinWithText = "";
+        if (selectedFriends.size() > 0) {
+            Contact contact = ContactDataSource.getContactById(this, selectedFriends.get(0).getIdOnServer());
+            if (selectedFriends.size() == 1) {
+                checkinWithText += "- with " + ((contact == null) ? "" : contact.getName());
+            } else {
+                checkinWithText += "- with " + ((contact == null) ? "" : contact.getName()) + " and " + (selectedFriends.size() - 1) + " others";
+            }
+        }
+        checkinDetailsBuddies.setText(checkinWithText);
+
     }
 
     private void createNewCheckinIntoDB() {
         Log.d(TAG, "creating a new checkin in local DB");
 
+        //Getting the contact ids of the selected contacts
+        List<String> selectedFriends = new ArrayList<>();
+        for (Contact contact : mContactsList) {
+            if (contact.isSelected()) {
+                selectedFriends.add(contact.getIdOnServer());
+            }
+        }
+
         String j_id = TJPreferences.getActiveJourneyId(this);
         String user_id = TJPreferences.getUserId(this);
 
         CheckIn newCheckIn = new CheckIn(null, j_id, HelpMe.CHECKIN_TYPE, checkinDetailsCaption
-                .getText().toString().trim(), lat, longi, placeName, null, mSelectedFriends, user_id,
+                .getText().toString().trim(), lat, longi, placeName, null, selectedFriends, user_id,
                 HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null);
 
         Log.d(TAG, "latitude -> " + newCheckIn.getLatitude() + " longitude -> " + longi + newCheckIn.getLongitude());
@@ -186,7 +203,7 @@ public class CheckInDetails extends AppCompatActivity {
 
     public void goToBuddyList(View v) {
         Intent intent = new Intent(getApplicationContext(), CheckInFriendsList.class);
-        intent.putStringArrayListExtra("SELECTED_FRIENDS", mSelectedFriends == null ? null : new ArrayList<String>(mSelectedFriends));
+        intent.putParcelableArrayListExtra("FRIENDS", mContactsList == null ? null : (ArrayList) mContactsList);
         startActivityForResult(intent, REQUEST_CODE_SELECT_FRIENDS);
     }
 
@@ -196,7 +213,7 @@ public class CheckInDetails extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "6" + requestCode + "--" + resultCode + "--" + data);
+        Log.d(TAG, "6" + requestCode + "--" + resultCode + "--" + RESULT_OK);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // Image captured and saved to fileUri specified in the Intent
@@ -205,13 +222,15 @@ public class CheckInDetails extends AppCompatActivity {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 img.setImageBitmap(photo);
 
-            } else if (resultCode == RESULT_CANCELED) {
-                // User cancelled the image capture
-            } else {
-                // Image capture failed, advise user
             }
-        } else if (requestCode == REQUEST_CODE_SELECT_FRIENDS && requestCode == RESULT_OK) {
-            mSelectedFriends = data.getStringArrayListExtra("SELECTED_FRIENDS");
+        }
+
+        if (requestCode == REQUEST_CODE_SELECT_FRIENDS && resultCode == RESULT_OK) {
+            mContactsList = data.getParcelableArrayListExtra("FRIENDS");
+            Log.d(TAG, "from on activity result" + mContactsList);
+            for(Contact c : mContactsList){
+                Log.d(TAG, "is selected" + c.isSelected());
+            }
             setSelectedFriends();
         }
     }

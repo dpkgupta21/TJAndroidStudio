@@ -14,7 +14,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.example.memories.R;
-import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.checkin.adapter.CheckInFriendsListAdapter;
 import com.example.memories.models.Contact;
 
@@ -26,8 +25,7 @@ public class CheckInFriendsList extends AppCompatActivity {
 
     private static final String TAG = "CHECKIN_FRIENDS_LIST";
     GridView mGridView;
-    List<String> mSelectedFriends;
-    List<Contact> mContactsList = new ArrayList<Contact>();
+    List<Contact> mContactsList;
     CheckInFriendsListAdapter mAdapter;
 
     @Override
@@ -39,15 +37,14 @@ public class CheckInFriendsList extends AppCompatActivity {
         toolbar.setTitle("Select Friends");
         setSupportActionBar(toolbar);
 
-        mSelectedFriends = getIntent().getExtras().getStringArrayList("SELECTED_FRIENDS");
+        mContactsList = getIntent().getExtras().getParcelableArrayList("FRIENDS");
+        // To avoid Nullpoiner exception in adapter
+        if (mContactsList == null) {
+            mContactsList = new ArrayList<>();
+        }
 
         mGridView = (GridView) findViewById(R.id.checkin_buddy_gridview);
 
-        if (mSelectedFriends == null) {
-            mContactsList = new ArrayList<Contact>();
-        } else if (mSelectedFriends.size() > 0) {
-            mContactsList = ContactDataSource.getContactsListFromIds(this, mSelectedFriends);
-        }
         mAdapter = new CheckInFriendsListAdapter(this, mContactsList);
         mGridView.setAdapter(mAdapter);
 
@@ -56,13 +53,13 @@ public class CheckInFriendsList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageView mOverlayImg = (ImageView) view.findViewById(R.id.overlayImg);
                 Log.d(TAG, "item clicked " + position);
-                if (mContactsList.get(position).isSelected()) {
-                    mContactsList.get(position).setSelected(false);
+                boolean selected = mContactsList.get(position).isSelected();
+                if (selected) {
                     mOverlayImg.setVisibility(View.GONE);
                 } else {
-                    mContactsList.get(position).setSelected(true);
                     mOverlayImg.setVisibility(View.VISIBLE);
                 }
+                mContactsList.get(position).setSelected(!selected);
             }
         });
 
@@ -87,19 +84,9 @@ public class CheckInFriendsList extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:
-                // remove the contacts from mSelectedFriends which have been unselected and add which are selected
-                mSelectedFriends = new ArrayList<String>();
-                for (Contact contact : mContactsList) {
-                    if (!contact.isSelected()) {
-                        mSelectedFriends.remove(contact.getIdOnServer());
-                    } else {
-                        if (!mSelectedFriends.contains(contact.getIdOnServer())) {
-                            mSelectedFriends.add(contact.getIdOnServer());
-                        }
-                    }
-                }
                 Intent returnIntent = new Intent();
-                returnIntent.putStringArrayListExtra("SELECTED_FRIENDS", (ArrayList<String>) mSelectedFriends);
+                returnIntent.putParcelableArrayListExtra("FRIENDS", (ArrayList) mContactsList);
+                Log.d(TAG, "from friends list" + mContactsList);
                 setResult(RESULT_OK, returnIntent);
                 finish();
                 return true;

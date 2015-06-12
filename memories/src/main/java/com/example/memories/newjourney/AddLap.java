@@ -7,10 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.memories.R;
@@ -37,12 +37,17 @@ public class AddLap extends AppCompatActivity {
     private ToggleButton toggleFlight;
     private ToggleButton toggleShip;
     private ToggleButton toggleTrain;
+    private ToggleButton toggleWalk;
+    private ToggleButton toggleBus;
     private ActionBar actionBar;
-    private ToggleButton toggleMorning;
+/*    private ToggleButton toggleMorning;
     private ToggleButton toggleAfternoon;
     private ToggleButton toggleEvening;
-    private ToggleButton toggleNight;
+    private ToggleButton toggleNight;*/
     private String timeOfDayMode;
+
+    private boolean editMode;
+    private int editLapIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +67,12 @@ public class AddLap extends AppCompatActivity {
         toggleFlight = (ToggleButton) findViewById(R.id.flightToggle);
         toggleTrain = (ToggleButton) findViewById(R.id.trainToggle);
         toggleShip = (ToggleButton) findViewById(R.id.shipToggle);
-        toggleMorning = (ToggleButton) findViewById(R.id.morningToggle);
+        toggleWalk = (ToggleButton) findViewById(R.id.walkToggle);
+        toggleBus = (ToggleButton) findViewById(R.id.busToggle);
+        /*toggleMorning = (ToggleButton) findViewById(R.id.morningToggle);
         toggleAfternoon = (ToggleButton) findViewById(R.id.afternoonToggle);
         toggleEvening = (ToggleButton) findViewById(R.id.eveningToggle);
-        toggleNight = (ToggleButton) findViewById(R.id.nightToggle);
+        toggleNight = (ToggleButton) findViewById(R.id.nightToggle);*/
 
         // Set up date picker
         Calendar calendar = Calendar.getInstance();
@@ -79,6 +86,16 @@ public class AddLap extends AppCompatActivity {
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
+
+        if(getIntent().hasExtra("EDIT_JOURNEY_POSITION")){
+            editMode = true;
+            editLapIndex = getIntent().getIntExtra("EDIT_JOURNEY_POSITION", -1);
+            Map<String, String> lap = ((AppController) getApplicationContext()).lapsList.get(editLapIndex);
+            dateLocation.setText(lap.get("date"));
+
+
+        }
+
     }
 
     public void listFromPlaces(View v) {
@@ -91,7 +108,7 @@ public class AddLap extends AppCompatActivity {
         startActivityForResult(i, 2);
     }
 
-    public void conveyanceToggle(View v) {
+/*    public void conveyanceToggle(View v) {
         conveyanceOff();
         switch (v.getId()) {
             case R.id.flightToggle:
@@ -110,6 +127,72 @@ public class AddLap extends AppCompatActivity {
                 toggleShip.setChecked(true);
                 conveyanceMode = HelpMe.CONVEYANCE_SHIP;
                 break;
+            case R.id.walkToggle:
+                Toast.makeText(this, "toggle state" + toggleWalk.isChecked(), Toast.LENGTH_SHORT).show();
+//                toggleWalk.setChecked(true);
+                conveyanceMode = HelpMe.CONVEYANCE_SHIP;
+                break;
+            default:
+                break;
+        }
+    }*/
+
+    public void conveyanceToggle(View v) {
+        switch (v.getId()) {
+            case R.id.flightToggle:
+                if(toggleFlight.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_FLIGHT;
+                    conveyanceOff();
+                    toggleFlight.setChecked(true);
+                }else {
+                    conveyanceMode = null;
+                }
+                break;
+            case R.id.carToggle:
+                if(toggleCar.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_CAR;
+                    conveyanceOff();
+                    toggleCar.setChecked(true);
+                }else {
+                    conveyanceMode = null;
+                }
+                break;
+            case R.id.trainToggle:
+                if(toggleTrain.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_TRAIN;
+                    conveyanceOff();
+                    toggleTrain.setChecked(true);
+                }else {
+                    conveyanceMode = null;
+                }
+                break;
+            case R.id.shipToggle:
+                if(toggleShip.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_SHIP;
+                    conveyanceOff();
+                    toggleShip.setChecked(true);
+                }else {
+                    conveyanceMode = null;
+                }
+                break;
+            case R.id.walkToggle:
+                if(toggleWalk.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_WALK;
+                    conveyanceOff();
+                    toggleWalk.setChecked(true);
+                }else {
+                    conveyanceMode = null;
+                }
+                break;
+            case R.id.busToggle:
+                if(toggleBus.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_BUS;
+                    conveyanceOff();
+                    toggleBus.setChecked(true);
+                }else {
+                    conveyanceMode = null;
+                }
+                break;
             default:
                 break;
         }
@@ -121,9 +204,11 @@ public class AddLap extends AppCompatActivity {
         toggleCar.setChecked(false);
         toggleShip.setChecked(false);
         toggleTrain.setChecked(false);
+        toggleBus.setChecked(false);
+        toggleWalk.setChecked(false);
     }
 
-    public void timeOfDayToggle(View v) {
+/*    public void timeOfDayToggle(View v) {
         timeOfDayOff();
         Log.d(TAG, "timeOfDayToggle called");
         switch (v.getId()) {
@@ -146,15 +231,15 @@ public class AddLap extends AppCompatActivity {
             default:
                 break;
         }
-    }
+    }*/
 
     // toggles off all the timeOfDay modes
-    private void timeOfDayOff() {
+    /*private void timeOfDayOff() {
         toggleMorning.setChecked(false);
         toggleAfternoon.setChecked(false);
         toggleEvening.setChecked(false);
         toggleNight.setChecked(false);
-    }
+    }*/
 
     // opens the calendar mode to select date
     public void showCalendar(View v) {
@@ -164,18 +249,23 @@ public class AddLap extends AppCompatActivity {
     // save the details
     // And send back them to LapsList list screen
     public void updateDone(View v) {
-        Intent i = new Intent(getBaseContext(), LapsList.class);
 
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("from", fromLocation.getText().toString());
-        map.put("to", toLocation.getText().toString());
-        map.put("date", dateLocation.getText().toString());
-        map.put("conveyance", conveyanceMode);
-        map.put("timeOfTheDay", timeOfDayMode);
-        ((AppController) getApplicationContext()).lapsList.add(map);
+        if(conveyanceMode == null){
+            Toast.makeText(this, "Please select the conveyence mode", Toast.LENGTH_SHORT).show();
+        }else {
+            Intent i = new Intent(getBaseContext(), LapsList.class);
 
-        startActivity(i);
-        finish();
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("from", fromLocation.getText().toString());
+            map.put("to", toLocation.getText().toString());
+            map.put("date", dateLocation.getText().toString());
+            map.put("conveyance", conveyanceMode);
+            map.put("timeOfTheDay", timeOfDayMode);
+            ((AppController) getApplicationContext()).lapsList.add(map);
+
+            startActivity(i);
+            finish();
+        }
     }
 
     @Override

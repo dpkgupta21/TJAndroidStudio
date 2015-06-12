@@ -4,7 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/custom_border_gray"
-    android:padding="15dp">
+    android:paddingLeft="15dp"
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp">
+
+    <ImageButton
+        android:id="@+id/edit_journey_lap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_edit_grey"/>
 
     <com.example.memories.customviews.MyTextView
         android:id="@+id/from"
@@ -44,6 +54,7 @@
         android:layout_alignParentTop="true"
         android:text="To"
         android:textColor="@color/tj_orange"
+        android:layout_marginRight="15dp"
         android:textSize="@dimen/tj_medium_font" />
 
     <com.example.memories.customviews.MyTextView
@@ -53,6 +64,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/from"
         android:text="Goa"
+        android:layout_marginRight="15dp"
         android:textSize="@dimen/tj_medium_font"
         android:textStyle="bold" />
 
@@ -104,6 +116,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/middle_line"
         android:text="Time Of Day"
+        android:layout_marginRight="15dp"
         android:textColor="@color/tj_orange"
         android:textSize="@dimen/tj_medium_font" />
 
@@ -114,6 +127,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/time_of_day"
         android:text="4 hours"
+        android:layout_marginRight="15dp"
         android:textSize="@dimen/tj_medium_font"
         android:textStyle="bold" />
 

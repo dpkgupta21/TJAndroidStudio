@@ -1,14 +1,17 @@
 package com.example.memories.newjourney.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.memories.R;
+import com.example.memories.newjourney.AddLap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,16 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
                     .findViewById(R.id.new_journey_location_lap_conveyance);
             viewHolder.timeOfDay = (TextView) rowView
                     .findViewById(R.id.new_journey_location_lap_timeofday);
+            viewHolder.editBtn = (ImageButton) rowView
+                    .findViewById(R.id.edit_journey_lap);
+            viewHolder.editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, AddLap.class);
+                    i.putExtra("EDIT_JOURNEY_POSITION", position);
+                    context.startActivity(i);
+                }
+            });
             rowView.setTag(viewHolder);
         }
 
@@ -67,5 +80,6 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
         public TextView date;
         public TextView conveyance;
         public TextView timeOfDay;
+        public ImageButton editBtn;
     }
 }

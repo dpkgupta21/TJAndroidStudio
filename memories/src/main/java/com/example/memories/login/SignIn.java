@@ -218,6 +218,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
                                 out = new FileOutputStream(fileName);
                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                                 onFinishTask(REQUEST_DOWNLOAD_PROFILE);
+                                TJPreferences.setProfileImgPath(SignIn.this, fileName);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             } finally {
@@ -233,7 +234,6 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
                     }, 0, 0, null, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
                     //TODO on error response update the picLocalUrl in database as well as preference as null
-                    TJPreferences.setProfileImgPath(SignIn.this, Constants.GUMNAAM_IMAGE_URL);
                     HelpMe.createImageIfNotExist(SignIn.this);
                     onFinishTask(REQUEST_DOWNLOAD_PROFILE);
                 }
@@ -254,6 +254,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
         TJPreferences.setPhone(this, phone);
         TJPreferences.setApiKey(this, api_key);
         TJPreferences.setLoggedIn(this, true);
+        TJPreferences.setUserStatus(this, status);
 
         // download & set the default profile image if does not exist
         HelpMe.createImageIfNotExist(this);
@@ -396,4 +397,3 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
         }
     }
 }
-

@@ -207,7 +207,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         Log.d(TAG, "Iam executing" + memory.getCreatedBy() + TJPreferences.getUserId(context));
         if (memory.getCreatedBy().equals(TJPreferences.getUserId(context))) {
             try {
-                holder.timeLineProfileImg.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context, TJPreferences.getProfileImgPath(context), 90, 90));
+                holder.timeLineProfileImg.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context, TJPreferences.getProfileImgPath(context), 80, 80));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
