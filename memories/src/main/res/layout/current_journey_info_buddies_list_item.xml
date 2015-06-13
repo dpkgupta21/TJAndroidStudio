@@ -11,7 +11,7 @@
         android:layout_height="75dp"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:src="@drawable/profile_image_empty" />
+        android:src="@drawable/gumnaam_profile_image" />
 
     <com.example.memories.customviews.MyTextView
         android:id="@+id/cur_journey_buddies_name"

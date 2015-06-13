@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.newjourney.AddLap;
+import com.example.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +45,6 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
             viewHolder.date = (TextView) rowView.findViewById(R.id.new_journey_location_lap_date);
             viewHolder.conveyance = (TextView) rowView
                     .findViewById(R.id.new_journey_location_lap_conveyance);
-            viewHolder.timeOfDay = (TextView) rowView
-                    .findViewById(R.id.new_journey_location_lap_timeofday);
             viewHolder.editBtn = (ImageButton) rowView
                     .findViewById(R.id.edit_journey_lap);
             viewHolder.editBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,13 +63,11 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
         String f = lapsList.get(position).get("from");
         String t = lapsList.get(position).get("to");
         String d = lapsList.get(position).get("date");
-        String c = lapsList.get(position).get("conveyance");
-        String dur = lapsList.get(position).get("timeOfTheDay");
+        String c = HelpMe.getConveyanceMode(Integer.parseInt(lapsList.get(position).get("conveyance")));
         holder.from.setText(f);
         holder.to.setText(t);
         holder.date.setText(d);
         holder.conveyance.setText(c);
-        holder.timeOfDay.setText(dur);
         return rowView;
     }
 
@@ -79,7 +76,6 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
         public TextView to;
         public TextView date;
         public TextView conveyance;
-        public TextView timeOfDay;
         public ImageButton editBtn;
     }
 }

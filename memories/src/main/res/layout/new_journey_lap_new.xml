@@ -214,95 +214,20 @@
                     android:textOff=""
                     android:textOn="" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-<!--        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="10dp"
-            android:background="#c0c0c0" />
-
-        &lt;!&ndash; Time of day &ndash;&gt;
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.example.memories.customviews.MyTextView
-                android:layout_width="wrap_content"
+            <com.example.memories.customviews.MyButtonView
+                android:id="@+id/new_journey_location_new_btn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Time of Day"
-                android:textColor="@color/tj_orange"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rounded_corner_button"
+                android:onClick="updateDone"
+                android:text="Update"
+                android:textColor="@color/white"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <LinearLayout
-                android:id="@+id/new_journey_location_new_time_bar"
-                style="@android:style/ButtonBar"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:orientation="horizontal">
-
-                <ToggleButton
-                    android:id="@+id/morningToggle"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/toggle_morning"
-                    android:onClick="timeOfDayToggle"
-                    android:textOff=""
-                    android:textOn="" />
-
-                <ToggleButton
-                    android:id="@+id/afternoonToggle"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/toggle_afternoon"
-                    android:onClick="timeOfDayToggle"
-                    android:textOff=""
-                    android:textOn="" />
-
-                <ToggleButton
-                    android:id="@+id/eveningToggle"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/toggle_evening"
-                    android:onClick="timeOfDayToggle"
-                    android:textOff=""
-                    android:textOn="" />
-
-                <ToggleButton
-                    android:id="@+id/nightToggle"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/toggle_night"
-                    android:onClick="timeOfDayToggle"
-                    android:textOff=""
-                    android:textOn="" />
-            </LinearLayout>
-        </LinearLayout>-->
-
-
-        <Button
-            android:id="@+id/new_journey_location_new_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/rounded_corner_button"
-            android:onClick="updateDone"
-            android:text="Update"
-            android:textColor="@color/white"
-            android:textSize="@dimen/tj_medium_font" />
+        </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>
-    </LinearLayout>

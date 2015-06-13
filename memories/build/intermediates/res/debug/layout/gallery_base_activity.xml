@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-
+        app:contentInsetStart="0dp"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <LinearLayout
@@ -19,7 +19,9 @@
             <com.example.memories.customviews.SlidingTabLayout
                 android:id="@+id/sliding_tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/tj_red_dark_toolbar"
+                />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -30,4 +32,4 @@
         android:layout_weight="1"
         android:background="@android:color/white" />
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/gallery_base_activity.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/gallery_base_activity.xml -->

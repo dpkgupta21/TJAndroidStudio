@@ -19,7 +19,7 @@ public class AppController extends Application {
     public static final String TAG = AppController.class.getSimpleName();
     public static ArrayList<String> buddyList;
     private static AppController mInstance;
-    public ArrayList<Map<String, String>> lapsList;
+    public static ArrayList<Map<String, String>> lapsList;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
 

@@ -1,0 +1,12 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="@color/tj_picture_capture_green" />
+    <!-- this one is ths color of the Rounded Button -->
+    <corners
+       android:bottomLeftRadius="0sp"
+        android:topLeftRadius="0sp"
+        android:bottomRightRadius="3sp"
+        android:topRightRadius="3sp" />
+
+</shape>

@@ -10,7 +10,7 @@
         android:layout_height="75sp"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:src="@drawable/ic_profile" />
+        android:src="@drawable/gumnaam_profile_image" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

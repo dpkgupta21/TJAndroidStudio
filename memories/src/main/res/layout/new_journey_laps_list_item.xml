@@ -1,134 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/new_journey_location_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/custom_border_gray"
-    android:paddingLeft="15dp"
-    android:paddingBottom="15dp"
-    android:paddingTop="15dp">
+    android:orientation="vertical"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/custom_border_gray">
+
 
     <ImageButton
         android:id="@+id/edit_journey_lap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_edit_grey"/>
+        android:layout_gravity="right"
+        android:background="@color/white"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_edit_grey" />
 
-    <com.example.memories.customviews.MyTextView
-        android:id="@+id/from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="From"
-        android:textColor="@color/tj_orange"
-        android:textSize="@dimen/tj_medium_font" />
-
-    <com.example.memories.customviews.MyTextView
-        android:id="@+id/new_journey_location_lap_from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/from"
-        android:text="Bangalore"
-        android:textSize="@dimen/tj_medium_font"
-        android:textStyle="bold" />
-
-    <com.example.memories.customviews.MyTextView
-        android:id="@+id/new_journey_location_lap_conveyance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Car"
-        android:textSize="@dimen/tj_medium_font"
-        android:textStyle="bold" />
-
-    <com.example.memories.customviews.MyTextView
-        android:id="@+id/to"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="To"
-        android:textColor="@color/tj_orange"
-        android:layout_marginRight="15dp"
-        android:textSize="@dimen/tj_medium_font" />
-
-    <com.example.memories.customviews.MyTextView
-        android:id="@+id/new_journey_location_lap_to"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/from"
-        android:text="Goa"
-        android:layout_marginRight="15dp"
-        android:textSize="@dimen/tj_medium_font"
-        android:textStyle="bold" />
-
-    <!-- Top half -->
-
-    <ImageView
-        android:id="@+id/middle_line"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/new_journey_location_lap_from"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/line" />
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
 
-    <!-- Bottom half -->
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="From"
+            android:textColor="@color/tj_orange"
+            android:textSize="@dimen/tj_medium_font" />
 
-    <com.example.memories.customviews.MyTextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/middle_line"
-        android:text="Travel date"
-        android:textColor="@color/tj_orange"
-        android:textSize="@dimen/tj_medium_font" />
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/new_journey_location_lap_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/from"
+            android:text="Bangalore"
+            android:textSize="@dimen/tj_medium_font"
+            android:textStyle="bold" />
 
-    <com.example.memories.customviews.MyTextView
-        android:id="@+id/new_journey_location_lap_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/date"
-        android:text="25th Dec&apos;14"
-        android:textSize="@dimen/tj_medium_font"
-        android:textStyle="bold" />
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/middle_line"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="50dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/barcode" />
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="To"
+            android:textColor="@color/tj_orange"
+            android:layout_marginRight="15dp"
+            android:textSize="@dimen/tj_medium_font" />
 
-    <com.example.memories.customviews.MyTextView
-        android:id="@+id/time_of_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/middle_line"
-        android:text="Time Of Day"
-        android:layout_marginRight="15dp"
-        android:textColor="@color/tj_orange"
-        android:textSize="@dimen/tj_medium_font" />
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/new_journey_location_lap_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/from"
+            android:text="Goa"
+            android:layout_marginRight="15dp"
+            android:textSize="@dimen/tj_medium_font"
+            android:textStyle="bold" />
 
-    <com.example.memories.customviews.MyTextView
-        android:id="@+id/new_journey_location_lap_timeofday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/time_of_day"
-        android:text="4 hours"
-        android:layout_marginRight="15dp"
-        android:textSize="@dimen/tj_medium_font"
-        android:textStyle="bold" />
+        <!-- Top half -->
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/middle_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/new_journey_location_lap_from"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/line" />
+
+        <!-- Bottom half -->
+
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/middle_line"
+            android:text="Travel date"
+            android:textColor="@color/tj_orange"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/new_journey_location_lap_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date"
+            android:text="25th Dec&apos;14"
+            android:textSize="@dimen/tj_medium_font"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/middle_line"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/barcode" />
+
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/conveyance_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/middle_line"
+            android:text="Conveyance"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/tj_orange"
+            android:textSize="@dimen/tj_medium_font" />
+
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/new_journey_location_lap_conveyance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/conveyance_txt"
+            android:layout_marginRight="15dp"
+            android:text="Car"
+            android:textSize="@dimen/tj_medium_font"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</LinearLayout>

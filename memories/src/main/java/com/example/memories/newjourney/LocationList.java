@@ -29,7 +29,7 @@ public class LocationList extends AppCompatActivity {
         setContentView(R.layout.new_journey_location_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Select Location");
         setSupportActionBar(toolbar);
 
         AutoCompleteTextView autocompleteView = (AutoCompleteTextView) findViewById(R.id.new_journey_location_list_autocomplete);

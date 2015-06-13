@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values-v11/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values-v11/values.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat.Inverse">
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
@@ -43,19 +43,17 @@
     <style name="Base.V11.Theme.AppCompat.Dialog" parent="Base.V7.Theme.AppCompat.Dialog">
         <item name="android:buttonBarStyle">@style/Widget.AppCompat.ButtonBar.AlertDialog</item>
         <item name="android:borderlessButtonStyle">@style/Widget.AppCompat.Button.Borderless</item>
-        <item name="android:windowCloseOnTouchOutside">
-            @bool/abc_config_closeDialogWhenTouchOutside
-        </item>
+        <item name="android:windowCloseOnTouchOutside">@bool/abc_config_closeDialogWhenTouchOutside</item>
     </style>
     <style name="Base.V11.Theme.AppCompat.Light.Dialog" parent="Base.V7.Theme.AppCompat.Light.Dialog">
         <item name="android:buttonBarStyle">@style/Widget.AppCompat.ButtonBar.AlertDialog</item>
         <item name="android:borderlessButtonStyle">@style/Widget.AppCompat.Button.Borderless</item>
-        <item name="android:windowCloseOnTouchOutside">
-            @bool/abc_config_closeDialogWhenTouchOutside
-        </item>
+        <item name="android:windowCloseOnTouchOutside">@bool/abc_config_closeDialogWhenTouchOutside</item>
     </style>
-    <style name="Base.Widget.AppCompat.ProgressBar" parent="android:Widget.Holo.ProgressBar"/>
-    <style name="Base.Widget.AppCompat.ProgressBar.Horizontal" parent="android:Widget.Holo.ProgressBar.Horizontal"/>
+    <style name="Base.Widget.AppCompat.ProgressBar" parent="android:Widget.Holo.ProgressBar">
+    </style>
+    <style name="Base.Widget.AppCompat.ProgressBar.Horizontal" parent="android:Widget.Holo.ProgressBar.Horizontal">
+    </style>
     <style name="Base.Widget.AppCompat.Spinner" parent="android:Widget.Holo.Spinner">
         <item name="android:background">@drawable/abc_spinner_mtrl_am_alpha</item>
         <item name="android:dropDownSelector">?attr/listChoiceBackgroundIndicator</item>
@@ -76,9 +74,7 @@
         <item name="android:colorForeground">@color/bright_foreground_material_dark</item>
         <item name="android:colorForegroundInverse">@color/bright_foreground_material_light</item>
         <item name="android:colorBackground">@color/background_material_dark</item>
-        <item name="android:colorBackgroundCacheHint">
-            @color/abc_background_cache_hint_selector_material_dark
-        </item>
+        <item name="android:colorBackgroundCacheHint">@color/abc_background_cache_hint_selector_material_dark</item>
         <item name="android:disabledAlpha">@dimen/abc_disabled_alpha_material_dark</item>
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:windowBackground">@color/background_material_dark</item>
@@ -86,39 +82,28 @@
         <!-- Text colors -->
         <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>
         <item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_light</item>
-        <item name="android:textColorPrimaryDisableOnly">
-            @color/abc_primary_text_disable_only_material_dark
-        </item>
+        <item name="android:textColorPrimaryDisableOnly">@color/abc_primary_text_disable_only_material_dark</item>
         <item name="android:textColorSecondary">@color/abc_secondary_text_material_dark</item>
-        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_light
-        </item>
+        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_light</item>
         <item name="android:textColorTertiary">@color/abc_secondary_text_material_dark</item>
-        <item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_light
-        </item>
+        <item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_light</item>
         <item name="android:textColorHint">@color/hint_foreground_material_dark</item>
         <item name="android:textColorHintInverse">@color/hint_foreground_material_light</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material_dark</item>
         <item name="android:textColorHighlightInverse">@color/highlighted_text_material_light</item>
         <item name="android:textColorLink">@color/link_text_material_dark</item>
         <item name="android:textColorLinkInverse">@color/link_text_material_light</item>
-        <item name="android:textColorAlertDialogListItem">@color/abc_primary_text_material_dark
-        </item>
+        <item name="android:textColorAlertDialogListItem">@color/abc_primary_text_material_dark</item>
 
         <!-- Text styles -->
         <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
         <item name="android:textAppearanceInverse">@style/TextAppearance.AppCompat.Inverse</item>
         <item name="android:textAppearanceLarge">@style/TextAppearance.AppCompat.Large</item>
-        <item name="android:textAppearanceLargeInverse">
-            @style/TextAppearance.AppCompat.Large.Inverse
-        </item>
+        <item name="android:textAppearanceLargeInverse">@style/TextAppearance.AppCompat.Large.Inverse</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.AppCompat.Medium</item>
-        <item name="android:textAppearanceMediumInverse">
-            @style/TextAppearance.AppCompat.Medium.Inverse
-        </item>
+        <item name="android:textAppearanceMediumInverse">@style/TextAppearance.AppCompat.Medium.Inverse</item>
         <item name="android:textAppearanceSmall">@style/TextAppearance.AppCompat.Small</item>
-        <item name="android:textAppearanceSmallInverse">
-            @style/TextAppearance.AppCompat.Small.Inverse
-        </item>
+        <item name="android:textAppearanceSmallInverse">@style/TextAppearance.AppCompat.Small.Inverse</item>
 
         <item name="android:listChoiceIndicatorSingle">@drawable/abc_btn_radio_material</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/abc_btn_check_material</item>
@@ -140,9 +125,7 @@
         <item name="android:colorForeground">@color/bright_foreground_material_light</item>
         <item name="android:colorForegroundInverse">@color/bright_foreground_material_dark</item>
         <item name="android:colorBackground">@color/background_material_light</item>
-        <item name="android:colorBackgroundCacheHint">
-            @color/abc_background_cache_hint_selector_material_light
-        </item>
+        <item name="android:colorBackgroundCacheHint">@color/abc_background_cache_hint_selector_material_light</item>
         <item name="android:disabledAlpha">@dimen/abc_disabled_alpha_material_light</item>
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:windowBackground">@color/background_material_light</item>
@@ -151,40 +134,28 @@
         <item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>
         <item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_dark</item>
         <item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>
-        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_dark
-        </item>
+        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_dark</item>
         <item name="android:textColorTertiary">@color/abc_secondary_text_material_light</item>
         <item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_dark</item>
-        <item name="android:textColorPrimaryDisableOnly">
-            @color/abc_primary_text_disable_only_material_light
-        </item>
-        <item name="android:textColorPrimaryInverseDisableOnly">
-            @color/abc_primary_text_disable_only_material_dark
-        </item>
+        <item name="android:textColorPrimaryDisableOnly">@color/abc_primary_text_disable_only_material_light</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">@color/abc_primary_text_disable_only_material_dark</item>
         <item name="android:textColorHint">@color/hint_foreground_material_light</item>
         <item name="android:textColorHintInverse">@color/hint_foreground_material_dark</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material_light</item>
         <item name="android:textColorHighlightInverse">@color/highlighted_text_material_dark</item>
         <item name="android:textColorLink">@color/link_text_material_light</item>
         <item name="android:textColorLinkInverse">@color/link_text_material_dark</item>
-        <item name="android:textColorAlertDialogListItem">@color/abc_primary_text_material_light
-        </item>
+        <item name="android:textColorAlertDialogListItem">@color/abc_primary_text_material_light</item>
 
         <!-- Text styles -->
         <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
         <item name="android:textAppearanceInverse">@style/TextAppearance.AppCompat.Inverse</item>
         <item name="android:textAppearanceLarge">@style/TextAppearance.AppCompat.Large</item>
-        <item name="android:textAppearanceLargeInverse">
-            @style/TextAppearance.AppCompat.Large.Inverse
-        </item>
+        <item name="android:textAppearanceLargeInverse">@style/TextAppearance.AppCompat.Large.Inverse</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.AppCompat.Medium</item>
-        <item name="android:textAppearanceMediumInverse">
-            @style/TextAppearance.AppCompat.Medium.Inverse
-        </item>
+        <item name="android:textAppearanceMediumInverse">@style/TextAppearance.AppCompat.Medium.Inverse</item>
         <item name="android:textAppearanceSmall">@style/TextAppearance.AppCompat.Small</item>
-        <item name="android:textAppearanceSmallInverse">
-            @style/TextAppearance.AppCompat.Small.Inverse
-        </item>
+        <item name="android:textAppearanceSmallInverse">@style/TextAppearance.AppCompat.Small.Inverse</item>
 
         <item name="android:listChoiceIndicatorSingle">@drawable/abc_btn_radio_material</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/abc_btn_check_material</item>

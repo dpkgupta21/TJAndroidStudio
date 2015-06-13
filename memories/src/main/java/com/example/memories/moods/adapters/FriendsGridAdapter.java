@@ -64,7 +64,7 @@ public class FriendsGridAdapter extends BaseAdapter {
             Bitmap bitmap = BitmapFactory.decodeFile(contact.getPicLocalUrl(), new BitmapFactory.Options());
             profileImg.setImageBitmap(bitmap);
         } else {
-            profileImg.setImageResource(R.drawable.ic_profile);
+            profileImg.setImageResource(R.drawable.gumnaam_profile_image);
         }
 
         friendName.setText(mContactsList.get(position).getName());

@@ -17,20 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <!-- activity view -->
-        <!--<RelativeLayout
-            android:layout_width="match_parent"
-            android:background="#fff"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:textColor="#000"
-                android:text="Activity Content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>-->
-
         <fragment
             android:id="@+id/fragment_drawer"
             android:name="com.example.memories.SideMenuDrawer"
@@ -56,4 +42,4 @@
 
     </android.support.v4.widget.DrawerLayout>
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/base_activity.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/base_activity.xml -->

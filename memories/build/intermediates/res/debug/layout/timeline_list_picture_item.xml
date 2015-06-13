@@ -24,7 +24,7 @@
             android:layout_below="@id/timelineItemImage"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="-35dp"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/gumnaam_profile_image" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -77,4 +77,4 @@
         </RelativeLayout>
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_picture_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_picture_item.xml -->

@@ -290,7 +290,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
 
     @Override
     public void onVideoDownload(String videoLocalUrl, Video video) {
-        VideoDataSource.updateVideoLocalUrl(this, video.getDataLocalURL(), video.getId());
+        VideoDataSource.updateVideoLocalUrl(this, video.getId(), video.getDataLocalURL());
         Log.d(TAG, "video downloaded successfully now displaying it");
         pDialog.dismiss();
         Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(mVideo.getDataLocalURL())));

@@ -10,7 +10,7 @@
         android:layout_height="75sp"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:src="@drawable/ic_profile" />
+        android:src="@drawable/gumnaam_profile_image" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -43,4 +43,4 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true" />
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/new_journey_traveljar_contact_list_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/new_journey_traveljar_contact_list_item.xml -->

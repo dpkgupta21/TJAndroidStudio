@@ -32,14 +32,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HelpMe {
-    public static final String PREFS_NAME = "TravelJarPrefs";
-    public static final String IS_SIGNED_UP = "isSignedUp";
     // GCM notification type codes
     // don't change them -- are synced with server
     public static final int TYPE_CREATE_MEMORY = 1;
     public static final int TYPE_UPDATE_MEMORY = 2;
     public static final int TYPE_DELETE_MEMORY = 3;
     public static final int TYPE_CREATE_JOURNEY = 4;
+
     // Type = picture/audio/video/note
     // don't change them -- are synced with server
     public static final String PICTURE_TYPE = "0";
@@ -64,20 +63,37 @@ public class HelpMe {
     public static final int TYPE_MOOD = 5;
     public static final int TYPE_MAX_COUNT = 6;
 
-    public static final String CONVEYANCE_FLIGHT = "Flight";
-    public static final String CONVEYANCE_CAR = "Car";
-    public static final String CONVEYANCE_TRAIN = "Train";
-    public static final String CONVEYANCE_SHIP = "Ship";
-    public static final String CONVEYANCE_BUS = "Bus";
-    public static final String CONVEYANCE_WALK = "Walk";
-    public static final String TIME_OF_DAY_MORNING = "Morning";
-    public static final String TIME_OF_DAY_AFTERNOON = "Afternoon";
-    public static final String TIME_OF_DAY_EVENING = "Evening";
-    public static final String TIME_OF_DAY_NIGHT = "Night";
+    public static final int CONVEYANCE_FLIGHT = 1; // "Flight";
+    public static final int CONVEYANCE_CAR = 2; //"Car";
+    public static final int CONVEYANCE_TRAIN = 3; // "Train";
+    public static final int CONVEYANCE_SHIP = 4; //"Ship";
+    public static final int CONVEYANCE_BUS = 6; //"Bus";
+    public static final int CONVEYANCE_WALK = 5; //"Walk";
+
     // To fetch dates from getDate()
     public static final int DATE_FULL = 1;
     private static final String TAG = "<HelpMe>";
     public static Context mContext;
+
+
+    // get name of transport from codes
+    public static String getConveyanceMode(int c) {
+        switch (c) {
+            case 1:
+                return "FLight";
+            case 2:
+                return "Car";
+            case 3:
+                return "Train";
+            case 4:
+                return "Ship";
+            case 5:
+                return "Walking";
+            case 6:
+                return "Bus";
+        }
+        return null;
+    }
 
     public HelpMe() {
         Calendar rightNow = Calendar.getInstance();
@@ -265,7 +281,7 @@ public class HelpMe {
                 Log.d(TAG, "made new directory with name = " + Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
                 dir.mkdirs();
             }
-            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_profile);
+            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.gumnaam_profile_image);
             File file = new File(Constants.GUMNAAM_IMAGE_URL);
             FileOutputStream outStream;
             try {

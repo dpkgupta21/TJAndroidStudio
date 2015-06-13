@@ -62,7 +62,7 @@
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/gumnaam_profile_image" />
 
         <ImageButton
             android:id="@+id/timelineItemFavIcon"
@@ -86,4 +86,4 @@
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->

@@ -115,8 +115,8 @@ public class JourneyInfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(JourneyInfo.this)
-                        .setTitle("End Journey")
-                        .setMessage("Are you sure you end this journey?")
+                        .setTitle("Finish Journey?")
+                        .setMessage("Are you sure you finish this journey? You will not be able to resume the journey again. It will stop for all your friends in this journey as well. ")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 endJourneyOnServer();
@@ -208,6 +208,7 @@ public class JourneyInfo extends AppCompatActivity {
         Map<String, String> params = new HashMap<String, String>();
         params.put("api_key", TJPreferences.getApiKey(this));
         params.put("journey[completed_at]", "2015-06-09T06:09:06.258Z");
+
         CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
                 new Response.Listener<JSONObject>() {
 

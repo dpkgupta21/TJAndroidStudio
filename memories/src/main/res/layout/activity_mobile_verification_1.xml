@@ -53,7 +53,7 @@
             android:maxLength="10"/>
     </LinearLayout>
 
-    <Button
+    <com.example.memories.customviews.MyButtonView
         android:id="@+id/number_ver1_bt_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

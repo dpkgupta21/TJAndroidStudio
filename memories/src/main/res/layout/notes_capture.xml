@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
-        android:hint="Type here"
+        android:hint="What's on your mind?"
         android:inputType="textMultiLine"
         android:padding="15dp" />
 

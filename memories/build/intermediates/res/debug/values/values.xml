@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/arrays.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/arrays.xml -->
     <eat-comment/>
     <string-array name="contacts_list">
         <item>John Cena</item>
@@ -39,7 +39,7 @@
         <item>Gallery</item>
         <item>Profile</item>
     </string-array>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -56,10 +56,10 @@
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="accent">#ffc400</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
@@ -67,23 +67,21 @@
     <color name="background_floating_material_light">#ffeeeeee</color>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="black">#000000</color>
     <color name="black_semi_transparent">#B2000000</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
-    <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light
-    </color>
-    <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark
-    </color>
+    <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
+    <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark</color>
     <color name="bright_foreground_material_dark">@android:color/white</color>
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/common_colors.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/common_colors.xml -->
     <eat-comment/>
     <color name="common_action_bar_splitter">#d2d2d2</color>
     <color name="common_signin_btn_dark_text_default">@android:color/white</color>
@@ -95,7 +93,7 @@
     <color name="common_signin_btn_light_text_disabled">#FFAAAAAA</color>
     <color name="common_signin_btn_light_text_focused">#FF737373</color>
     <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
@@ -103,24 +101,22 @@
     <color name="dim_foreground_material_light">#ff323232</color>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
-    <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark
-    </color>
-    <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light
-    </color>
+    <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>
+    <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light</color>
     <color name="link_text_material_dark">@color/material_deep_teal_200</color>
     <color name="link_text_material_light">@color/material_deep_teal_500</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_500">#5677fc</color>
     <color name="material_blue_600">#4e6cef</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_grey_800">#ff37474f</color>
     <color name="material_blue_grey_900">#ff263238</color>
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="md_blue">#0075BC</color>
     <color name="photo_tint">#88101010</color>
@@ -128,7 +124,7 @@
     <color name="primaryColor">#e84c3d</color>
     <color name="primaryColorDark">#c83426</color>
     <color name="primary_dark">#512da8</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
@@ -138,11 +134,11 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4Dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="profile_background">#FFAD0E</color>
     <color name="red">#CC0000</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <color name="ripple_material_dark">#4dffffff</color>
     <color name="ripple_material_light">#1f000000</color>
@@ -150,16 +146,16 @@
     <color name="secondary_text_default_material_light">#8a000000</color>
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
     <color name="secondary_text_disabled_material_light">#24000000</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="signin_box">#CCFFFFFF</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <color name="switch_thumb_disabled_material_dark">#ff616161</color>
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="text_primary">#D9FFFFFF</color>
     <color name="text_secondary">#D9000000</color>
@@ -172,6 +168,8 @@
     <color name="tj_light_gray">#EEEEEE</color>
     <color name="tj_medium_gray">#666666</color>
     <color name="tj_orange">#FFA31A</color>
+    <color name="tj_picture_capture_green">#60ee82</color>
+    <color name="tj_picture_capture_red">#ee5e5e</color>
     <color name="tj_red_dark_icons">#ff0032</color>
     <color name="tj_red_dark_toolbar">#e84c3d</color>
     <color name="tj_red_light_status_bar">#c83426</color>
@@ -180,7 +178,7 @@
     <color name="translucent">#CC000000</color>
     <color name="transparent">#00000000</color>
     <color name="transparent_black">#80000000</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/wallet_colors.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/wallet_colors.xml -->
     <eat-comment/>
     <color name="wallet_bright_foreground_disabled_holo_light">#ffb2b2b2</color>
     <color name="wallet_bright_foreground_holo_dark">#fff3f3f3</color>
@@ -195,7 +193,7 @@
     <color name="wallet_hint_foreground_holo_light">#808080</color>
     <color name="wallet_holo_blue_light">#ff33b5e5</color>
     <color name="wallet_link_text_light">#0000ee</color>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="white">#FFFFFF</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="none" value="0"/><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr name="homeAsUpIndicator"/><attr format="dimension" name="itemPadding"/><attr format="boolean" name="hideOnContentScroll"/><attr format="dimension" name="contentInsetStart"/><attr format="dimension" name="contentInsetEnd"/><attr format="dimension" name="contentInsetLeft"/><attr format="dimension" name="contentInsetRight"/><attr format="dimension" name="elevation"/><attr format="reference" name="popupTheme"/></declare-styleable>
@@ -231,7 +229,7 @@
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
     <declare-styleable name="WalletFragmentOptions"><attr format="enum" name="appTheme"><enum name="holo_dark" value="0"/><enum name="holo_light" value="1"/></attr><attr format="enum" name="environment"><enum name="production" value="1"/><enum name="sandbox" value="0"/><enum name="strict_sandbox" value="2"/></attr><attr format="reference" name="fragmentStyle"/><attr format="enum" name="fragmentMode"><enum name="buyButton" value="1"/><enum name="selectionDetails" value="2"/></attr></declare-styleable>
     <declare-styleable name="WalletFragmentStyle"><attr format="dimension" name="buyButtonHeight"><enum name="match_parent" value="-1"/><enum name="wrap_content" value="-2"/></attr><attr format="dimension" name="buyButtonWidth"><enum name="match_parent" value="-1"/><enum name="wrap_content" value="-2"/></attr><attr format="enum" name="buyButtonText"><enum name="buy_with_google" value="1"/><enum name="buy_now" value="2"/><enum name="book_now" value="3"/></attr><attr format="enum" name="buyButtonAppearance"><enum name="classic" value="1"/><enum name="grayscale" value="2"/><enum name="monochrome" value="3"/></attr><attr format="reference" name="maskedWalletDetailsTextAppearance"/><attr format="reference" name="maskedWalletDetailsHeaderTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsBackground"/><attr format="reference" name="maskedWalletDetailsButtonTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsButtonBackground"/><attr format="color" name="maskedWalletDetailsLogoTextColor"/><attr format="enum" name="maskedWalletDetailsLogoImageType"><enum name="classic" value="1"/><enum name="monochrome" value="2"/></attr></declare-styleable>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
@@ -271,9 +269,7 @@
     <dimen name="abc_edit_text_inset_horizontal_material">4dp</dimen>
     <dimen name="abc_edit_text_inset_top_material">10dp</dimen>
     <dimen name="abc_floating_window_z">16dp</dimen>
-    <dimen name="abc_list_item_padding_horizontal_material">
-        @dimen/abc_action_bar_content_inset_material
-    </dimen>
+    <dimen name="abc_list_item_padding_horizontal_material">@dimen/abc_action_bar_content_inset_material</dimen>
     <dimen name="abc_panel_menu_list_width">296dp</dimen>
     <dimen name="abc_search_view_preferred_width">320dip</dimen>
     <dimen name="abc_search_view_text_min_width">160dip</dimen>
@@ -295,12 +291,12 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="circularProfDimen">100dp</dimen>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -308,7 +304,7 @@
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
     <eat-comment/>
     <dimen name="fab_actions_spacing">16dp</dimen>
     <dimen name="fab_icon_size">24dp</dimen>
@@ -320,7 +316,7 @@
     <dimen name="fab_size_mini">40dp</dimen>
     <dimen name="fab_size_normal">56dp</dimen>
     <dimen name="fab_stroke_width">1dp</dimen>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="layer_width">300dp</dimen>
     <dimen name="offset_width">48dp</dimen>
@@ -332,35 +328,35 @@
     <dimen name="tj_large_font">22sp</dimen>
     <dimen name="tj_medium_font">18sp</dimen>
     <dimen name="tj_small_font">14sp</dimen>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
     <eat-comment/>
     <item name="fab_expand_menu_button" type="id"/>
     <item name="fab_label" type="id"/>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <item name="home" type="id"/>
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/library/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/library/unspecified/res/values/values.xml -->
     <eat-comment/>
     <item name="selected_view" type="id"/>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <item name="split_action_bar" type="id"/>
     <item name="up" type="id"/>
     <integer name="abc_config_activityDefaultDur">220</integer>
     <integer name="abc_config_activityShortDur">150</integer>
     <integer name="abc_max_action_buttons">2</integer>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/version.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/version.xml -->
     <eat-comment/>
     <integer name="google_play_services_version">6171000</integer>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
@@ -379,14 +375,14 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/admob_strings.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="accept">Accept</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="app_name">TravelJar</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/common_strings.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/common_strings.xml -->
     <eat-comment/>
     <string name="common_android_wear_notification_needs_update_text">An application requires an update to the Android Wear app.</string>
     <string name="common_android_wear_update_text">This app won\'t run unless you update the Android Wear app.</string>
@@ -416,19 +412,19 @@
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/admob_strings.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="create_calendar_message">Allow Ad to create a calendar event?</string>
     <string name="create_calendar_title">Create calendar event</string>
     <string name="decline">Decline</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="default_note">Start by doing what\'s necessary, then do what\'s possible, and suddenly you are doing the impossible.</string>
     <string name="default_string">Lorem ipsum</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="define_FloatingActionButton"/>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="drawer_close">close</string>
     <string name="drawer_open">open</string>
@@ -439,7 +435,7 @@
     <string name="gallery_photo">Travel Jar Photos</string>
     <string name="gallery_video">Travel Jar Videos</string>
     <string name="hello_world">Hello world!</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="library_FloatingActionButton_author">Oleksandr Melnykov</string>
     <string name="library_FloatingActionButton_authorWebsite">https://github.com/makovkastar/FloatingActionButton</string>
@@ -450,20 +446,20 @@
     <string name="library_FloatingActionButton_libraryWebsite">https://github.com/makovkastar/FloatingActionButton</string>
     <string name="library_FloatingActionButton_licenseId">mit</string>
     <string name="library_FloatingActionButton_repositoryLink">https://github.com/makovkastar/FloatingActionButton</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="name"><i>First Name</i></string>
     <string name="number_verification1">To let your friends find and add you please add your phone number and verify</string>
     <string name="number_verification2">"Congrats! Your number is verified. Let's explore the world now!"</string>
     <string name="password"><i>Password</i></string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/admob_strings.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="store_picture_message">"Allow Ad to store image in Picture gallery?"</string>
     <string name="store_picture_title">Save image</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/wallet_strings.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/wallet_strings.xml -->
     <eat-comment/>
     <string name="wallet_buy_button_place_holder" translation_description="Text on a button that allows a user to make a payment with Google Wallet [CHAR LIMIT=30]">Buy with Google</string>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
@@ -552,8 +548,10 @@
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
     </style>
-    <style name="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large" parent="TextAppearance.AppCompat.Menu"/>
-    <style name="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" parent="TextAppearance.AppCompat.Menu"/>
+    <style name="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large" parent="TextAppearance.AppCompat.Menu">
+    </style>
+    <style name="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" parent="TextAppearance.AppCompat.Menu">
+    </style>
     <style name="Base.TextAppearance.AppCompat.Medium">
         <item name="android:textSize">@dimen/abc_text_size_medium_material</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
@@ -628,16 +626,21 @@
     <style name="Base.TextAppearance.AppCompat.Widget.DropDownItem" parent="android:TextAppearance.Small">
         <item name="android:textColor">?android:attr/textColorPrimaryDisableOnly</item>
     </style>
-    <style name="Base.TextAppearance.AppCompat.Widget.PopupMenu.Large" parent="TextAppearance.AppCompat.Menu"/>
-    <style name="Base.TextAppearance.AppCompat.Widget.PopupMenu.Small" parent="TextAppearance.AppCompat.Menu"/>
+    <style name="Base.TextAppearance.AppCompat.Widget.PopupMenu.Large" parent="TextAppearance.AppCompat.Menu">
+    </style>
+    <style name="Base.TextAppearance.AppCompat.Widget.PopupMenu.Small" parent="TextAppearance.AppCompat.Menu">
+    </style>
     <style name="Base.TextAppearance.AppCompat.Widget.Switch" parent="TextAppearance.AppCompat.Button"/>
     <style name="Base.TextAppearance.AppCompat.Widget.TextView.SpinnerItem" parent="TextAppearance.AppCompat.Menu"/>
     <style name="Base.TextAppearance.Widget.AppCompat.ExpandedMenu.Item" parent="android:TextAppearance.Medium">
         <item name="android:textColor">?android:attr/textColorPrimaryDisableOnly</item>
     </style>
-    <style name="Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle"/>
-    <style name="Base.TextAppearance.Widget.AppCompat.Toolbar.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title"/>
-    <style name="Base.Theme.AppCompat" parent="Base.V7.Theme.AppCompat"/>
+    <style name="Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+    </style>
+    <style name="Base.TextAppearance.Widget.AppCompat.Toolbar.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+    </style>
+    <style name="Base.Theme.AppCompat" parent="Base.V7.Theme.AppCompat">
+    </style>
     <style name="Base.Theme.AppCompat.CompactMenu" parent="">
         <item name="android:itemTextAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:listViewStyle">@style/Widget.AppCompat.ListView.Menu</item>
@@ -659,7 +662,8 @@
         <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
     </style>
     <style name="Base.Theme.AppCompat.DialogWhenLarge" parent="Theme.AppCompat"/>
-    <style name="Base.Theme.AppCompat.Light" parent="Base.V7.Theme.AppCompat.Light"/>
+    <style name="Base.Theme.AppCompat.Light" parent="Base.V7.Theme.AppCompat.Light">
+    </style>
     <style name="Base.Theme.AppCompat.Light.DarkActionBar" parent="Base.Theme.AppCompat.Light">
         <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="actionBarWidgetTheme">@null</item>
@@ -697,21 +701,15 @@
         <item name="android:colorForeground">@color/bright_foreground_material_dark</item>
         <item name="android:colorForegroundInverse">@color/bright_foreground_material_light</item>
         <item name="android:colorBackground">@color/background_material_dark</item>
-        <item name="android:colorBackgroundCacheHint">
-            @color/abc_background_cache_hint_selector_material_dark
-        </item>
+        <item name="android:colorBackgroundCacheHint">@color/abc_background_cache_hint_selector_material_dark</item>
 
         <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>
         <item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_light</item>
-        <item name="android:textColorPrimaryDisableOnly">
-            @color/abc_primary_text_disable_only_material_dark
-        </item>
+        <item name="android:textColorPrimaryDisableOnly">@color/abc_primary_text_disable_only_material_dark</item>
         <item name="android:textColorSecondary">@color/abc_secondary_text_material_dark</item>
-        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_light
-        </item>
+        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_light</item>
         <item name="android:textColorTertiary">@color/abc_secondary_text_material_dark</item>
-        <item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_light
-        </item>
+        <item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_light</item>
         <item name="android:textColorHint">@color/hint_foreground_material_dark</item>
         <item name="android:textColorHintInverse">@color/hint_foreground_material_light</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material_dark</item>
@@ -734,23 +732,16 @@
         <item name="android:colorForeground">@color/bright_foreground_material_light</item>
         <item name="android:colorForegroundInverse">@color/bright_foreground_material_dark</item>
         <item name="android:colorBackground">@color/background_material_light</item>
-        <item name="android:colorBackgroundCacheHint">
-            @color/abc_background_cache_hint_selector_material_light
-        </item>
+        <item name="android:colorBackgroundCacheHint">@color/abc_background_cache_hint_selector_material_light</item>
 
         <item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>
         <item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_dark</item>
         <item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>
-        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_dark
-        </item>
+        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_dark</item>
         <item name="android:textColorTertiary">@color/abc_secondary_text_material_light</item>
         <item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_dark</item>
-        <item name="android:textColorPrimaryDisableOnly">
-            @color/abc_primary_text_disable_only_material_light
-        </item>
-        <item name="android:textColorPrimaryInverseDisableOnly">
-            @color/abc_primary_text_disable_only_material_dark
-        </item>
+        <item name="android:textColorPrimaryDisableOnly">@color/abc_primary_text_disable_only_material_light</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">@color/abc_primary_text_disable_only_material_dark</item>
         <item name="android:textColorHint">@color/hint_foreground_material_light</item>
         <item name="android:textColorHintInverse">@color/hint_foreground_material_dark</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material_light</item>
@@ -792,9 +783,7 @@
         <item name="actionBarSize">@dimen/abc_action_bar_default_height_material</item>
         <item name="actionBarDivider">?attr/dividerVertical</item>
         <item name="actionBarItemBackground">?attr/selectableItemBackgroundBorderless</item>
-        <item name="actionMenuTextAppearance">
-            @style/TextAppearance.AppCompat.Widget.ActionBar.Menu
-        </item>
+        <item name="actionMenuTextAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Menu</item>
         <item name="actionMenuTextColor">?android:attr/textColorPrimaryDisableOnly</item>
 
         <!-- Dropdown Spinner Attributes -->
@@ -805,8 +794,7 @@
         <item name="actionModeBackground">@drawable/abc_cab_background_top_material</item>
         <item name="actionModeSplitBackground">?attr/colorPrimaryDark</item>
         <item name="actionModeCloseDrawable">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
-        <item name="actionModeCloseButtonStyle">@style/Widget.AppCompat.ActionButton.CloseMode
-        </item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.AppCompat.ActionButton.CloseMode</item>
 
         <item name="actionModeCutDrawable">@drawable/abc_ic_menu_cut_mtrl_alpha</item>
         <item name="actionModeCopyDrawable">@drawable/abc_ic_menu_copy_mtrl_am_alpha</item>
@@ -827,11 +815,8 @@
         <item name="listPreferredItemHeight">64dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
-        <item name="listPreferredItemPaddingLeft">@dimen/abc_list_item_padding_horizontal_material
-        </item>
-        <item name="listPreferredItemPaddingRight">
-            @dimen/abc_list_item_padding_horizontal_material
-        </item>
+        <item name="listPreferredItemPaddingLeft">@dimen/abc_list_item_padding_horizontal_material</item>
+        <item name="listPreferredItemPaddingRight">@dimen/abc_list_item_padding_horizontal_material</item>
 
         <!-- Spinner styles -->
         <item name="spinnerStyle">@style/Widget.AppCompat.Spinner</item>
@@ -844,12 +829,8 @@
 
         <!-- Popup Menu styles -->
         <item name="popupMenuStyle">@style/Widget.AppCompat.PopupMenu</item>
-        <item name="textAppearanceLargePopupMenu">
-            @style/TextAppearance.AppCompat.Widget.PopupMenu.Large
-        </item>
-        <item name="textAppearanceSmallPopupMenu">
-            @style/TextAppearance.AppCompat.Widget.PopupMenu.Small
-        </item>
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.AppCompat.Widget.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.AppCompat.Widget.PopupMenu.Small</item>
         <item name="listPopupWindowStyle">@style/Widget.AppCompat.ListPopupWindow</item>
         <item name="dropDownListViewStyle">@style/Widget.AppCompat.ListView.DropDown</item>
 
@@ -857,21 +838,15 @@
         <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
         <item name="android:dropDownItemStyle">@style/Widget.AppCompat.DropDownItem.Spinner</item>
         <item name="textColorSearchUrl">@color/abc_search_url_text</item>
-        <item name="textAppearanceSearchResultTitle">
-            @style/TextAppearance.AppCompat.SearchResult.Title
-        </item>
-        <item name="textAppearanceSearchResultSubtitle">
-            @style/TextAppearance.AppCompat.SearchResult.Subtitle
-        </item>
+        <item name="textAppearanceSearchResultTitle">@style/TextAppearance.AppCompat.SearchResult.Title</item>
+        <item name="textAppearanceSearchResultSubtitle">@style/TextAppearance.AppCompat.SearchResult.Subtitle</item>
 
         <!-- ShareActionProvider attributes -->
         <item name="activityChooserViewStyle">@style/Widget.AppCompat.ActivityChooserView</item>
 
         <!-- Toolbar styles -->
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
-        <item name="toolbarNavigationButtonStyle">
-            @style/Widget.AppCompat.Toolbar.Button.Navigation
-        </item>
+        <item name="toolbarNavigationButtonStyle">@style/Widget.AppCompat.Toolbar.Button.Navigation</item>
 
         <item name="editTextStyle">@style/Widget.AppCompat.EditText</item>
         <item name="editTextBackground">@drawable/abc_edit_text_material</item>
@@ -903,8 +878,7 @@
         <item name="android:textAppearanceButton">@style/TextAppearance.AppCompat.Button</item>
 
         <item name="buttonBarStyle">@style/Widget.AppCompat.ButtonBar</item>
-        <item name="buttonBarButtonStyle">@style/Widget.AppCompat.Button.ButtonBar.AlertDialog
-        </item>
+        <item name="buttonBarButtonStyle">@style/Widget.AppCompat.Button.ButtonBar.AlertDialog</item>
         <item name="buttonBarPositiveButtonStyle">?attr/buttonBarButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">?attr/buttonBarButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">?attr/buttonBarButtonStyle</item>
@@ -932,9 +906,7 @@
 
         <item name="android:windowFrame">@null</item>
         <item name="android:windowTitleStyle">@style/Base.DialogWindowTitle.AppCompat</item>
-        <item name="android:windowTitleBackgroundStyle">
-            @style/Base.DialogWindowTitleBackground.AppCompat
-        </item>
+        <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
         <item name="android:windowBackground">@drawable/abc_dialog_material_background_dark</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -968,8 +940,7 @@
         <item name="actionBarTabBarStyle">@style/Widget.AppCompat.Light.ActionBar.TabBar</item>
         <item name="actionBarTabTextStyle">@style/Widget.AppCompat.Light.ActionBar.TabText</item>
         <item name="actionButtonStyle">@style/Widget.AppCompat.Light.ActionButton</item>
-        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.Light.ActionButton.Overflow
-        </item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.Light.ActionButton.Overflow</item>
         <item name="actionOverflowMenuStyle">@style/Widget.AppCompat.Light.PopupMenu.Overflow</item>
         <item name="actionBarStyle">@style/Widget.AppCompat.Light.ActionBar.Solid</item>
         <item name="actionBarSplitStyle">?attr/actionBarStyle</item>
@@ -978,9 +949,7 @@
         <item name="actionBarSize">@dimen/abc_action_bar_default_height_material</item>
         <item name="actionBarDivider">?attr/dividerVertical</item>
         <item name="actionBarItemBackground">?attr/selectableItemBackgroundBorderless</item>
-        <item name="actionMenuTextAppearance">
-            @style/TextAppearance.AppCompat.Widget.ActionBar.Menu
-        </item>
+        <item name="actionMenuTextAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Menu</item>
         <item name="actionMenuTextColor">?android:attr/textColorPrimaryDisableOnly</item>
 
         <!-- Action Mode -->
@@ -988,8 +957,7 @@
         <item name="actionModeBackground">@drawable/abc_cab_background_top_material</item>
         <item name="actionModeSplitBackground">?attr/colorPrimaryDark</item>
         <item name="actionModeCloseDrawable">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
-        <item name="actionModeCloseButtonStyle">@style/Widget.AppCompat.ActionButton.CloseMode
-        </item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.AppCompat.ActionButton.CloseMode</item>
 
         <item name="actionModeCutDrawable">@drawable/abc_ic_menu_cut_mtrl_alpha</item>
         <item name="actionModeCopyDrawable">@drawable/abc_ic_menu_copy_mtrl_am_alpha</item>
@@ -998,8 +966,7 @@
         <item name="actionModeShareDrawable">@drawable/abc_ic_menu_share_mtrl_alpha</item>
 
         <!-- Dropdown Spinner Attributes -->
-        <item name="actionDropDownStyle">@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar
-        </item>
+        <item name="actionDropDownStyle">@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar</item>
 
         <!-- Panel attributes -->
         <item name="panelMenuListWidth">@dimen/abc_panel_menu_list_width</item>
@@ -1014,11 +981,8 @@
         <item name="listPreferredItemHeight">64dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
-        <item name="listPreferredItemPaddingLeft">@dimen/abc_list_item_padding_horizontal_material
-        </item>
-        <item name="listPreferredItemPaddingRight">
-            @dimen/abc_list_item_padding_horizontal_material
-        </item>
+        <item name="listPreferredItemPaddingLeft">@dimen/abc_list_item_padding_horizontal_material</item>
+        <item name="listPreferredItemPaddingRight">@dimen/abc_list_item_padding_horizontal_material</item>
 
         <!-- Spinner styles -->
         <item name="spinnerStyle">@style/Widget.AppCompat.Spinner</item>
@@ -1031,12 +995,8 @@
 
         <!-- Popup Menu styles -->
         <item name="popupMenuStyle">@style/Widget.AppCompat.Light.PopupMenu</item>
-        <item name="textAppearanceLargePopupMenu">
-            @style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large
-        </item>
-        <item name="textAppearanceSmallPopupMenu">
-            @style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small
-        </item>
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small</item>
         <item name="listPopupWindowStyle">@style/Widget.AppCompat.ListPopupWindow</item>
         <item name="dropDownListViewStyle">@style/Widget.AppCompat.ListView.DropDown</item>
 
@@ -1044,21 +1004,15 @@
         <item name="searchViewStyle">@style/Widget.AppCompat.Light.SearchView</item>
         <item name="android:dropDownItemStyle">@style/Widget.AppCompat.DropDownItem.Spinner</item>
         <item name="textColorSearchUrl">@color/abc_search_url_text</item>
-        <item name="textAppearanceSearchResultTitle">
-            @style/TextAppearance.AppCompat.SearchResult.Title
-        </item>
-        <item name="textAppearanceSearchResultSubtitle">
-            @style/TextAppearance.AppCompat.SearchResult.Subtitle
-        </item>
+        <item name="textAppearanceSearchResultTitle">@style/TextAppearance.AppCompat.SearchResult.Title</item>
+        <item name="textAppearanceSearchResultSubtitle">@style/TextAppearance.AppCompat.SearchResult.Subtitle</item>
 
         <!-- ShareActionProvider attributes -->
         <item name="activityChooserViewStyle">@style/Widget.AppCompat.ActivityChooserView</item>
 
         <!-- Toolbar styles -->
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
-        <item name="toolbarNavigationButtonStyle">
-            @style/Widget.AppCompat.Toolbar.Button.Navigation
-        </item>
+        <item name="toolbarNavigationButtonStyle">@style/Widget.AppCompat.Toolbar.Button.Navigation</item>
 
         <item name="editTextStyle">@style/Widget.AppCompat.EditText</item>
         <item name="editTextBackground">@drawable/abc_edit_text_material</item>
@@ -1090,8 +1044,7 @@
         <item name="android:textAppearanceButton">@style/TextAppearance.AppCompat.Button</item>
 
         <item name="buttonBarStyle">@style/Widget.AppCompat.ButtonBar</item>
-        <item name="buttonBarButtonStyle">@style/Widget.AppCompat.Button.ButtonBar.AlertDialog
-        </item>
+        <item name="buttonBarButtonStyle">@style/Widget.AppCompat.Button.ButtonBar.AlertDialog</item>
         <item name="buttonBarPositiveButtonStyle">?attr/buttonBarButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">?attr/buttonBarButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">?attr/buttonBarButtonStyle</item>
@@ -1119,9 +1072,7 @@
 
         <item name="android:windowFrame">@null</item>
         <item name="android:windowTitleStyle">@style/Base.DialogWindowTitle.AppCompat</item>
-        <item name="android:windowTitleBackgroundStyle">
-            @style/Base.DialogWindowTitleBackground.AppCompat
-        </item>
+        <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
         <item name="android:windowBackground">@drawable/abc_dialog_material_background_light</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -1142,8 +1093,7 @@
         <item name="height">?attr/actionBarSize</item>
 
         <item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
-        <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle
-        </item>
+        <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
 
         <item name="background">@null</item>
         <item name="backgroundStacked">@null</item>
@@ -1214,8 +1164,7 @@
         <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
         <item name="height">?attr/actionBarSize</item>
         <item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionMode.Title</item>
-        <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle
-        </item>
+        <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle</item>
         <item name="closeItemLayout">@layout/abc_action_mode_close_item_material</item>
     </style>
     <style name="Base.Widget.AppCompat.ActivityChooserView" parent="">
@@ -1291,8 +1240,7 @@
         <item name="topBottomBarArrowSize">11.31dp</item>
     </style>
     <style name="Base.Widget.AppCompat.DropDownItem.Spinner" parent="">
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.DropDownItem
-        </item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.DropDownItem</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
         <item name="android:gravity">center_vertical</item>
@@ -1304,23 +1252,25 @@
     </style>
     <style name="Base.Widget.AppCompat.Light.ActionBar" parent="Base.Widget.AppCompat.ActionBar">
         <item name="actionButtonStyle">@style/Widget.AppCompat.Light.ActionButton</item>
-        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.Light.ActionButton.Overflow
-        </item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.Light.ActionButton.Overflow</item>
     </style>
     <style name="Base.Widget.AppCompat.Light.ActionBar.Solid">
         <item name="background">?attr/colorPrimary</item>
         <item name="backgroundStacked">?attr/colorPrimary</item>
         <item name="backgroundSplit">?attr/colorPrimary</item>
     </style>
-    <style name="Base.Widget.AppCompat.Light.ActionBar.TabBar" parent="Base.Widget.AppCompat.ActionBar.TabBar"/>
-    <style name="Base.Widget.AppCompat.Light.ActionBar.TabText" parent="Base.Widget.AppCompat.ActionBar.TabText"/>
+    <style name="Base.Widget.AppCompat.Light.ActionBar.TabBar" parent="Base.Widget.AppCompat.ActionBar.TabBar">
+    </style>
+    <style name="Base.Widget.AppCompat.Light.ActionBar.TabText" parent="Base.Widget.AppCompat.ActionBar.TabText">
+    </style>
     <style name="Base.Widget.AppCompat.Light.ActionBar.TabText.Inverse" parent="Base.Widget.AppCompat.Light.ActionBar.TabText">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium.Inverse</item>
     </style>
     <style name="Base.Widget.AppCompat.Light.ActionBar.TabView" parent="Base.Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/abc_tab_indicator_material</item>
     </style>
-    <style name="Base.Widget.AppCompat.Light.PopupMenu" parent="@style/Widget.AppCompat.ListPopupWindow"/>
+    <style name="Base.Widget.AppCompat.Light.PopupMenu" parent="@style/Widget.AppCompat.ListPopupWindow">
+    </style>
     <style name="Base.Widget.AppCompat.Light.PopupMenu.Overflow">
         <item name="overlapAnchor">true</item>
         <item name="android:dropDownHorizontalOffset">-4dip</item>
@@ -1343,19 +1293,22 @@
         <item name="android:listSelector">?attr/listChoiceBackgroundIndicator</item>
         <item name="android:divider">?attr/dividerHorizontal</item>
     </style>
-    <style name="Base.Widget.AppCompat.PopupMenu" parent="@style/Widget.AppCompat.ListPopupWindow"/>
+    <style name="Base.Widget.AppCompat.PopupMenu" parent="@style/Widget.AppCompat.ListPopupWindow">
+    </style>
     <style name="Base.Widget.AppCompat.PopupMenu.Overflow">
         <item name="overlapAnchor">true</item>
         <item name="android:dropDownHorizontalOffset">-4dip</item>
     </style>
-    <style name="Base.Widget.AppCompat.PopupWindow" parent="android:Widget.PopupWindow"/>
+    <style name="Base.Widget.AppCompat.PopupWindow" parent="android:Widget.PopupWindow">
+    </style>
     <style name="Base.Widget.AppCompat.ProgressBar" parent="android:Widget.ProgressBar">
         <item name="android:minWidth">@dimen/abc_action_bar_progress_bar_size</item>
         <item name="android:maxWidth">@dimen/abc_action_bar_progress_bar_size</item>
         <item name="android:minHeight">@dimen/abc_action_bar_progress_bar_size</item>
         <item name="android:maxHeight">@dimen/abc_action_bar_progress_bar_size</item>
     </style>
-    <style name="Base.Widget.AppCompat.ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal"/>
+    <style name="Base.Widget.AppCompat.ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal">
+    </style>
     <style name="Base.Widget.AppCompat.RatingBar" parent="android:Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/abc_ratingbar_full_material</item>
         <item name="android:indeterminateDrawable">@drawable/abc_ratingbar_full_material</item>
@@ -1402,17 +1355,13 @@
         <item name="android:background">@drawable/abc_spinner_textfield_background_material</item>
     </style>
     <style name="Base.Widget.AppCompat.TextView.SpinnerItem" parent="android:Widget.TextView.SpinnerItem">
-        <item name="android:textAppearance">
-            @style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem
-        </item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
     </style>
     <style name="Base.Widget.AppCompat.Toolbar" parent="android:Widget">
         <item name="titleTextAppearance">@style/TextAppearance.Widget.AppCompat.Toolbar.Title</item>
-        <item name="subtitleTextAppearance">
-            @style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle
-        </item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="titleMargins">4dp</item>
         <item name="maxButtonHeight">56dp</item>
@@ -1425,13 +1374,13 @@
         <item name="android:scaleType">center</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@android:color/black</item>
     </style>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
@@ -1440,9 +1389,7 @@
         <item name="android:colorForeground">@color/bright_foreground_material_dark</item>
         <item name="android:colorForegroundInverse">@color/bright_foreground_material_light</item>
         <item name="android:colorBackground">@color/background_material_dark</item>
-        <item name="android:colorBackgroundCacheHint">
-            @color/abc_background_cache_hint_selector_material_dark
-        </item>
+        <item name="android:colorBackgroundCacheHint">@color/abc_background_cache_hint_selector_material_dark</item>
         <item name="android:disabledAlpha">@dimen/abc_disabled_alpha_material_dark</item>
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:windowBackground">@color/background_material_dark</item>
@@ -1450,15 +1397,11 @@
         <!-- Text colors -->
         <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>
         <item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_light</item>
-        <item name="android:textColorPrimaryDisableOnly">
-            @color/abc_primary_text_disable_only_material_dark
-        </item>
+        <item name="android:textColorPrimaryDisableOnly">@color/abc_primary_text_disable_only_material_dark</item>
         <item name="android:textColorSecondary">@color/abc_secondary_text_material_dark</item>
-        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_light
-        </item>
+        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_light</item>
         <item name="android:textColorTertiary">@color/abc_secondary_text_material_dark</item>
-        <item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_light
-        </item>
+        <item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_light</item>
         <item name="android:textColorHint">@color/hint_foreground_material_dark</item>
         <item name="android:textColorHintInverse">@color/hint_foreground_material_light</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material_dark</item>
@@ -1468,17 +1411,11 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
         <item name="android:textAppearanceInverse">@style/TextAppearance.AppCompat.Inverse</item>
         <item name="android:textAppearanceLarge">@style/TextAppearance.AppCompat.Large</item>
-        <item name="android:textAppearanceLargeInverse">
-            @style/TextAppearance.AppCompat.Large.Inverse
-        </item>
+        <item name="android:textAppearanceLargeInverse">@style/TextAppearance.AppCompat.Large.Inverse</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.AppCompat.Medium</item>
-        <item name="android:textAppearanceMediumInverse">
-            @style/TextAppearance.AppCompat.Medium.Inverse
-        </item>
+        <item name="android:textAppearanceMediumInverse">@style/TextAppearance.AppCompat.Medium.Inverse</item>
         <item name="android:textAppearanceSmall">@style/TextAppearance.AppCompat.Small</item>
-        <item name="android:textAppearanceSmallInverse">
-            @style/TextAppearance.AppCompat.Small.Inverse
-        </item>
+        <item name="android:textAppearanceSmallInverse">@style/TextAppearance.AppCompat.Small.Inverse</item>
 
         <item name="android:listChoiceIndicatorSingle">@drawable/abc_btn_radio_material</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/abc_btn_check_material</item>
@@ -1490,9 +1427,7 @@
         <item name="android:colorForeground">@color/bright_foreground_material_light</item>
         <item name="android:colorForegroundInverse">@color/bright_foreground_material_dark</item>
         <item name="android:colorBackground">@color/background_material_light</item>
-        <item name="android:colorBackgroundCacheHint">
-            @color/abc_background_cache_hint_selector_material_light
-        </item>
+        <item name="android:colorBackgroundCacheHint">@color/abc_background_cache_hint_selector_material_light</item>
         <item name="android:disabledAlpha">@dimen/abc_disabled_alpha_material_light</item>
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:windowBackground">@color/background_material_light</item>
@@ -1501,16 +1436,11 @@
         <item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>
         <item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_dark</item>
         <item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>
-        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_dark
-        </item>
+        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_dark</item>
         <item name="android:textColorTertiary">@color/abc_secondary_text_material_light</item>
         <item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_dark</item>
-        <item name="android:textColorPrimaryDisableOnly">
-            @color/abc_primary_text_disable_only_material_light
-        </item>
-        <item name="android:textColorPrimaryInverseDisableOnly">
-            @color/abc_primary_text_disable_only_material_dark
-        </item>
+        <item name="android:textColorPrimaryDisableOnly">@color/abc_primary_text_disable_only_material_light</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">@color/abc_primary_text_disable_only_material_dark</item>
         <item name="android:textColorHint">@color/hint_foreground_material_light</item>
         <item name="android:textColorHintInverse">@color/hint_foreground_material_dark</item>
         <item name="android:textColorHighlight">@color/highlighted_text_material_light</item>
@@ -1520,17 +1450,11 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
         <item name="android:textAppearanceInverse">@style/TextAppearance.AppCompat.Inverse</item>
         <item name="android:textAppearanceLarge">@style/TextAppearance.AppCompat.Large</item>
-        <item name="android:textAppearanceLargeInverse">
-            @style/TextAppearance.AppCompat.Large.Inverse
-        </item>
+        <item name="android:textAppearanceLargeInverse">@style/TextAppearance.AppCompat.Large.Inverse</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.AppCompat.Medium</item>
-        <item name="android:textAppearanceMediumInverse">
-            @style/TextAppearance.AppCompat.Medium.Inverse
-        </item>
+        <item name="android:textAppearanceMediumInverse">@style/TextAppearance.AppCompat.Medium.Inverse</item>
         <item name="android:textAppearanceSmall">@style/TextAppearance.AppCompat.Small</item>
-        <item name="android:textAppearanceSmallInverse">
-            @style/TextAppearance.AppCompat.Small.Inverse
-        </item>
+        <item name="android:textAppearanceSmallInverse">@style/TextAppearance.AppCompat.Small.Inverse</item>
 
         <item name="android:listChoiceIndicatorSingle">@drawable/abc_btn_radio_material</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/abc_btn_check_material</item>
@@ -1542,21 +1466,16 @@
         <item name="selectableItemBackground">@drawable/abc_item_background_holo_dark</item>
 
         <!-- SearchView styles -->
-        <item name="android:autoCompleteTextViewStyle">
-            @style/Widget.AppCompat.AutoCompleteTextView
-        </item>
+        <item name="android:autoCompleteTextViewStyle">@style/Widget.AppCompat.AutoCompleteTextView</item>
         <item name="android:dropDownItemStyle">@style/Widget.AppCompat.DropDownItem.Spinner</item>
     </style>
     <style name="Platform.ThemeOverlay.AppCompat.Light" parent="">
         <item name="actionBarItemBackground">@drawable/abc_item_background_holo_light</item>
-        <item name="actionDropDownStyle">@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar
-        </item>
+        <item name="actionDropDownStyle">@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar</item>
         <item name="selectableItemBackground">@drawable/abc_item_background_holo_light</item>
 
         <!-- SearchView attributes -->
-        <item name="android:autoCompleteTextViewStyle">
-            @style/Widget.AppCompat.Light.AutoCompleteTextView
-        </item>
+        <item name="android:autoCompleteTextViewStyle">@style/Widget.AppCompat.Light.AutoCompleteTextView</item>
         <item name="android:dropDownItemStyle">@style/Widget.AppCompat.DropDownItem.Spinner</item>
     </style>
     <style name="RtlOverlay.Widget.AppCompat.ActionBar.TitleItem" parent="android:Widget">
@@ -1564,8 +1483,7 @@
         <item name="android:paddingRight">8dp</item>
     </style>
     <style name="RtlOverlay.Widget.AppCompat.ActionButton.Overflow" parent="Base.Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:paddingLeft">@dimen/abc_action_bar_overflow_padding_start_material
-        </item>
+        <item name="android:paddingLeft">@dimen/abc_action_bar_overflow_padding_start_material</item>
         <item name="android:paddingRight">@dimen/abc_action_bar_overflow_padding_end_material</item>
     </style>
     <style name="RtlOverlay.Widget.AppCompat.PopupMenuItem" parent="android:Widget">
@@ -1598,8 +1516,7 @@
         <item name="android:layout_marginLeft">@dimen/abc_dropdownitem_text_padding_left</item>
     </style>
     <style name="RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation" parent="Base.Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="android:paddingLeft">@dimen/abc_action_bar_navigation_padding_start_material
-        </item>
+        <item name="android:paddingLeft">@dimen/abc_action_bar_navigation_padding_start_material</item>
     </style>
     <style name="TextAppearance.AppCompat" parent="Base.TextAppearance.AppCompat"/>
     <style name="TextAppearance.AppCompat.Body1" parent="Base.TextAppearance.AppCompat.Body1"/>
@@ -1616,48 +1533,67 @@
     <style name="TextAppearance.AppCompat.Large.Inverse" parent="Base.TextAppearance.AppCompat.Large.Inverse"/>
     <style name="TextAppearance.AppCompat.Light.SearchResult.Subtitle" parent="TextAppearance.AppCompat.SearchResult.Subtitle"/>
     <style name="TextAppearance.AppCompat.Light.SearchResult.Title" parent="TextAppearance.AppCompat.SearchResult.Title"/>
-    <style name="TextAppearance.AppCompat.Light.Widget.PopupMenu.Large" parent="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"/>
-    <style name="TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" parent="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"/>
+    <style name="TextAppearance.AppCompat.Light.Widget.PopupMenu.Large" parent="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large">
+    </style>
+    <style name="TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" parent="Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small">
+    </style>
     <style name="TextAppearance.AppCompat.Medium" parent="Base.TextAppearance.AppCompat.Medium"/>
     <style name="TextAppearance.AppCompat.Medium.Inverse" parent="Base.TextAppearance.AppCompat.Medium.Inverse"/>
     <style name="TextAppearance.AppCompat.Menu" parent="Base.TextAppearance.AppCompat.Menu"/>
-    <style name="TextAppearance.AppCompat.SearchResult.Subtitle" parent="Base.TextAppearance.AppCompat.SearchResult.Subtitle"/>
-    <style name="TextAppearance.AppCompat.SearchResult.Title" parent="Base.TextAppearance.AppCompat.SearchResult.Title"/>
+    <style name="TextAppearance.AppCompat.SearchResult.Subtitle" parent="Base.TextAppearance.AppCompat.SearchResult.Subtitle">
+    </style>
+    <style name="TextAppearance.AppCompat.SearchResult.Title" parent="Base.TextAppearance.AppCompat.SearchResult.Title">
+    </style>
     <style name="TextAppearance.AppCompat.Small" parent="Base.TextAppearance.AppCompat.Small"/>
     <style name="TextAppearance.AppCompat.Small.Inverse" parent="Base.TextAppearance.AppCompat.Small.Inverse"/>
     <style name="TextAppearance.AppCompat.Subhead" parent="Base.TextAppearance.AppCompat.Subhead"/>
     <style name="TextAppearance.AppCompat.Subhead.Inverse" parent="Base.TextAppearance.AppCompat.Subhead.Inverse"/>
     <style name="TextAppearance.AppCompat.Title" parent="Base.TextAppearance.AppCompat.Title"/>
     <style name="TextAppearance.AppCompat.Title.Inverse" parent="Base.TextAppearance.AppCompat.Title.Inverse"/>
-    <style name="TextAppearance.AppCompat.Widget.ActionBar.Menu" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"/>
-    <style name="TextAppearance.AppCompat.Widget.ActionBar.Subtitle" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"/>
-    <style name="TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"/>
-    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title"/>
-    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"/>
-    <style name="TextAppearance.AppCompat.Widget.ActionMode.Subtitle" parent="Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Menu" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu">
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Subtitle" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse">
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title">
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.ActionMode.Subtitle" parent="Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle">
+    </style>
     <style name="TextAppearance.AppCompat.Widget.ActionMode.Subtitle.Inverse" parent="TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
-    <style name="TextAppearance.AppCompat.Widget.ActionMode.Title" parent="Base.TextAppearance.AppCompat.Widget.ActionMode.Title"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionMode.Title" parent="Base.TextAppearance.AppCompat.Widget.ActionMode.Title">
+    </style>
     <style name="TextAppearance.AppCompat.Widget.ActionMode.Title.Inverse" parent="TextAppearance.AppCompat.Widget.ActionMode.Title"/>
-    <style name="TextAppearance.AppCompat.Widget.DropDownItem" parent="Base.TextAppearance.AppCompat.Widget.DropDownItem"/>
-    <style name="TextAppearance.AppCompat.Widget.PopupMenu.Large" parent="Base.TextAppearance.AppCompat.Widget.PopupMenu.Large"/>
-    <style name="TextAppearance.AppCompat.Widget.PopupMenu.Small" parent="Base.TextAppearance.AppCompat.Widget.PopupMenu.Small"/>
+    <style name="TextAppearance.AppCompat.Widget.DropDownItem" parent="Base.TextAppearance.AppCompat.Widget.DropDownItem">
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.PopupMenu.Large" parent="Base.TextAppearance.AppCompat.Widget.PopupMenu.Large">
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.PopupMenu.Small" parent="Base.TextAppearance.AppCompat.Widget.PopupMenu.Small">
+    </style>
     <style name="TextAppearance.AppCompat.Widget.Switch" parent="Base.TextAppearance.AppCompat.Widget.Switch"/>
     <style name="TextAppearance.AppCompat.Widget.TextView.SpinnerItem" parent="Base.TextAppearance.AppCompat.Widget.TextView.SpinnerItem"/>
-    <style name="TextAppearance.Widget.AppCompat.ExpandedMenu.Item" parent="Base.TextAppearance.Widget.AppCompat.ExpandedMenu.Item"/>
-    <style name="TextAppearance.Widget.AppCompat.Toolbar.Subtitle" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"/>
-    <style name="TextAppearance.Widget.AppCompat.Toolbar.Title" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Title"/>
+    <style name="TextAppearance.Widget.AppCompat.ExpandedMenu.Item" parent="Base.TextAppearance.Widget.AppCompat.ExpandedMenu.Item">
+    </style>
+    <style name="TextAppearance.Widget.AppCompat.Toolbar.Subtitle" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+    </style>
+    <style name="TextAppearance.Widget.AppCompat.Toolbar.Title" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Title">
+    </style>
     <style name="Theme.AppCompat" parent="Base.Theme.AppCompat"/>
     <style name="Theme.AppCompat.CompactMenu" parent="Base.Theme.AppCompat.CompactMenu"/>
     <style name="Theme.AppCompat.Dialog" parent="Base.Theme.AppCompat.Dialog"/>
     <style name="Theme.AppCompat.Dialog.Alert" parent="Base.Theme.AppCompat.Dialog.Alert"/>
     <style name="Theme.AppCompat.Dialog.MinWidth" parent="Base.Theme.AppCompat.Dialog.MinWidth"/>
-    <style name="Theme.AppCompat.DialogWhenLarge" parent="Base.Theme.AppCompat.DialogWhenLarge"/>
+    <style name="Theme.AppCompat.DialogWhenLarge" parent="Base.Theme.AppCompat.DialogWhenLarge">
+    </style>
     <style name="Theme.AppCompat.Light" parent="Base.Theme.AppCompat.Light"/>
     <style name="Theme.AppCompat.Light.DarkActionBar" parent="Base.Theme.AppCompat.Light.DarkActionBar"/>
     <style name="Theme.AppCompat.Light.Dialog" parent="Base.Theme.AppCompat.Light.Dialog"/>
     <style name="Theme.AppCompat.Light.Dialog.Alert" parent="Base.Theme.AppCompat.Light.Dialog.Alert"/>
     <style name="Theme.AppCompat.Light.Dialog.MinWidth" parent="Base.Theme.AppCompat.Light.Dialog.MinWidth"/>
-    <style name="Theme.AppCompat.Light.DialogWhenLarge" parent="Base.Theme.AppCompat.Light.DialogWhenLarge"/>
+    <style name="Theme.AppCompat.Light.DialogWhenLarge" parent="Base.Theme.AppCompat.Light.DialogWhenLarge">
+    </style>
     <style name="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -1666,24 +1602,24 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/admob_iap_style.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/admob_iap_style.xml -->
     <eat-comment/>
     <style name="Theme.IAPTheme" parent="android:Theme">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowIsFloating">true</item>
+    <item name="android:backgroundDimEnabled">false</item>
+  </style>
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
     <style name="ThemeOverlay.AppCompat" parent="Base.ThemeOverlay.AppCompat"/>
     <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Dark" parent="Base.ThemeOverlay.AppCompat.Dark"/>
     <style name="ThemeOverlay.AppCompat.Dark.ActionBar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Light" parent="Base.ThemeOverlay.AppCompat.Light"/>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/wallet_styles.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/res/values/wallet_styles.xml -->
     <eat-comment/>
     <style name="WalletFragmentDefaultButtonTextAppearance">
         <item name="android:textColor">@color/wallet_primary_text_holo_light</item>
@@ -1709,34 +1645,35 @@
         <item name="buyButtonWidth">match_parent</item>
         <item name="buyButtonText">buy_with_google</item>
         <item name="buyButtonAppearance">classic</item>
-        <item name="maskedWalletDetailsTextAppearance">
-            @style/WalletFragmentDefaultDetailsTextAppearance
-        </item>
-        <item name="maskedWalletDetailsHeaderTextAppearance">
-            @style/WalletFragmentDefaultDetailsHeaderTextAppearance
-        </item>
+        <item name="maskedWalletDetailsTextAppearance">@style/WalletFragmentDefaultDetailsTextAppearance</item>
+        <item name="maskedWalletDetailsHeaderTextAppearance">@style/WalletFragmentDefaultDetailsHeaderTextAppearance</item>
         <item name="maskedWalletDetailsBackground">@color/wallet_bright_foreground_holo_light</item>
         <item name="maskedWalletDetailsButtonBackground">@android:drawable/btn_default</item>
-        <item name="maskedWalletDetailsButtonTextAppearance">
-            @style/WalletFragmentDefaultButtonTextAppearance
-        </item>
-        <item name="maskedWalletDetailsLogoTextColor">@color/wallet_bright_foreground_holo_dark
-        </item>
+        <item name="maskedWalletDetailsButtonTextAppearance">@style/WalletFragmentDefaultButtonTextAppearance</item>
+        <item name="maskedWalletDetailsLogoTextColor">@color/wallet_bright_foreground_holo_dark</item>
         <item name="maskedWalletDetailsLogoImageType">classic</item>
     </style>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.0/res/values/values.xml -->
     <eat-comment/>
-    <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar"/>
-    <style name="Widget.AppCompat.ActionBar.Solid" parent="Base.Widget.AppCompat.ActionBar.Solid"/>
-    <style name="Widget.AppCompat.ActionBar.TabBar" parent="Base.Widget.AppCompat.ActionBar.TabBar"/>
-    <style name="Widget.AppCompat.ActionBar.TabText" parent="Base.Widget.AppCompat.ActionBar.TabText"/>
-    <style name="Widget.AppCompat.ActionBar.TabView" parent="Base.Widget.AppCompat.ActionBar.TabView"/>
+    <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar">
+    </style>
+    <style name="Widget.AppCompat.ActionBar.Solid" parent="Base.Widget.AppCompat.ActionBar.Solid">
+    </style>
+    <style name="Widget.AppCompat.ActionBar.TabBar" parent="Base.Widget.AppCompat.ActionBar.TabBar">
+    </style>
+    <style name="Widget.AppCompat.ActionBar.TabText" parent="Base.Widget.AppCompat.ActionBar.TabText">
+    </style>
+    <style name="Widget.AppCompat.ActionBar.TabView" parent="Base.Widget.AppCompat.ActionBar.TabView">
+    </style>
     <style name="Widget.AppCompat.ActionButton" parent="Base.Widget.AppCompat.ActionButton"/>
     <style name="Widget.AppCompat.ActionButton.CloseMode" parent="Base.Widget.AppCompat.ActionButton.CloseMode"/>
     <style name="Widget.AppCompat.ActionButton.Overflow" parent="RtlOverlay.Widget.AppCompat.ActionButton.Overflow"/>
-    <style name="Widget.AppCompat.ActionMode" parent="Base.Widget.AppCompat.ActionMode"/>
-    <style name="Widget.AppCompat.ActivityChooserView" parent="Base.Widget.AppCompat.ActivityChooserView"/>
-    <style name="Widget.AppCompat.AutoCompleteTextView" parent="Base.Widget.AppCompat.AutoCompleteTextView"/>
+    <style name="Widget.AppCompat.ActionMode" parent="Base.Widget.AppCompat.ActionMode">
+    </style>
+    <style name="Widget.AppCompat.ActivityChooserView" parent="Base.Widget.AppCompat.ActivityChooserView">
+    </style>
+    <style name="Widget.AppCompat.AutoCompleteTextView" parent="Base.Widget.AppCompat.AutoCompleteTextView">
+    </style>
     <style name="Widget.AppCompat.Button" parent="Base.Widget.AppCompat.Button"/>
     <style name="Widget.AppCompat.Button.Borderless" parent="Base.Widget.AppCompat.Button.Borderless"/>
     <style name="Widget.AppCompat.Button.Borderless.Colored" parent="Base.Widget.AppCompat.Button.Borderless.Colored"/>
@@ -1751,15 +1688,22 @@
         <item name="color">?attr/colorControlNormal</item>
     </style>
     <style name="Widget.AppCompat.DropDownItem.Spinner" parent="RtlOverlay.Widget.AppCompat.Search.DropDown.Text"/>
-    <style name="Widget.AppCompat.EditText" parent="Base.Widget.AppCompat.EditText"/>
-    <style name="Widget.AppCompat.Light.ActionBar" parent="Base.Widget.AppCompat.Light.ActionBar"/>
-    <style name="Widget.AppCompat.Light.ActionBar.Solid" parent="Base.Widget.AppCompat.Light.ActionBar.Solid"/>
+    <style name="Widget.AppCompat.EditText" parent="Base.Widget.AppCompat.EditText">
+    </style>
+    <style name="Widget.AppCompat.Light.ActionBar" parent="Base.Widget.AppCompat.Light.ActionBar">
+    </style>
+    <style name="Widget.AppCompat.Light.ActionBar.Solid" parent="Base.Widget.AppCompat.Light.ActionBar.Solid">
+    </style>
     <style name="Widget.AppCompat.Light.ActionBar.Solid.Inverse"/>
-    <style name="Widget.AppCompat.Light.ActionBar.TabBar" parent="Base.Widget.AppCompat.Light.ActionBar.TabBar"/>
+    <style name="Widget.AppCompat.Light.ActionBar.TabBar" parent="Base.Widget.AppCompat.Light.ActionBar.TabBar">
+    </style>
     <style name="Widget.AppCompat.Light.ActionBar.TabBar.Inverse"/>
-    <style name="Widget.AppCompat.Light.ActionBar.TabText" parent="Base.Widget.AppCompat.Light.ActionBar.TabText"/>
-    <style name="Widget.AppCompat.Light.ActionBar.TabText.Inverse" parent="Base.Widget.AppCompat.Light.ActionBar.TabText.Inverse"/>
-    <style name="Widget.AppCompat.Light.ActionBar.TabView" parent="Base.Widget.AppCompat.Light.ActionBar.TabView"/>
+    <style name="Widget.AppCompat.Light.ActionBar.TabText" parent="Base.Widget.AppCompat.Light.ActionBar.TabText">
+    </style>
+    <style name="Widget.AppCompat.Light.ActionBar.TabText.Inverse" parent="Base.Widget.AppCompat.Light.ActionBar.TabText.Inverse">
+    </style>
+    <style name="Widget.AppCompat.Light.ActionBar.TabView" parent="Base.Widget.AppCompat.Light.ActionBar.TabView">
+    </style>
     <style name="Widget.AppCompat.Light.ActionBar.TabView.Inverse"/>
     <style name="Widget.AppCompat.Light.ActionButton" parent="Widget.AppCompat.ActionButton"/>
     <style name="Widget.AppCompat.Light.ActionButton.CloseMode" parent="Widget.AppCompat.ActionButton.CloseMode"/>
@@ -1770,19 +1714,28 @@
     <style name="Widget.AppCompat.Light.DropDownItem.Spinner" parent="Widget.AppCompat.DropDownItem.Spinner"/>
     <style name="Widget.AppCompat.Light.ListPopupWindow" parent="Widget.AppCompat.ListPopupWindow"/>
     <style name="Widget.AppCompat.Light.ListView.DropDown" parent="Widget.AppCompat.ListView.DropDown"/>
-    <style name="Widget.AppCompat.Light.PopupMenu" parent="Base.Widget.AppCompat.Light.PopupMenu"/>
-    <style name="Widget.AppCompat.Light.PopupMenu.Overflow" parent="Base.Widget.AppCompat.Light.PopupMenu.Overflow"/>
+    <style name="Widget.AppCompat.Light.PopupMenu" parent="Base.Widget.AppCompat.Light.PopupMenu">
+    </style>
+    <style name="Widget.AppCompat.Light.PopupMenu.Overflow" parent="Base.Widget.AppCompat.Light.PopupMenu.Overflow">
+    </style>
     <style name="Widget.AppCompat.Light.SearchView" parent="Widget.AppCompat.SearchView"/>
     <style name="Widget.AppCompat.Light.Spinner.DropDown.ActionBar" parent="Widget.AppCompat.Spinner.DropDown.ActionBar"/>
-    <style name="Widget.AppCompat.ListPopupWindow" parent="Base.Widget.AppCompat.ListPopupWindow"/>
+    <style name="Widget.AppCompat.ListPopupWindow" parent="Base.Widget.AppCompat.ListPopupWindow">
+    </style>
     <style name="Widget.AppCompat.ListView" parent="Base.Widget.AppCompat.ListView"/>
     <style name="Widget.AppCompat.ListView.DropDown" parent="Base.Widget.AppCompat.ListView.DropDown"/>
-    <style name="Widget.AppCompat.ListView.Menu" parent="Base.Widget.AppCompat.ListView.Menu"/>
-    <style name="Widget.AppCompat.PopupMenu" parent="Base.Widget.AppCompat.PopupMenu"/>
-    <style name="Widget.AppCompat.PopupMenu.Overflow" parent="Base.Widget.AppCompat.PopupMenu.Overflow"/>
-    <style name="Widget.AppCompat.PopupWindow" parent="Base.Widget.AppCompat.PopupWindow"/>
-    <style name="Widget.AppCompat.ProgressBar" parent="Base.Widget.AppCompat.ProgressBar"/>
-    <style name="Widget.AppCompat.ProgressBar.Horizontal" parent="Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+    <style name="Widget.AppCompat.ListView.Menu" parent="Base.Widget.AppCompat.ListView.Menu">
+    </style>
+    <style name="Widget.AppCompat.PopupMenu" parent="Base.Widget.AppCompat.PopupMenu">
+    </style>
+    <style name="Widget.AppCompat.PopupMenu.Overflow" parent="Base.Widget.AppCompat.PopupMenu.Overflow">
+    </style>
+    <style name="Widget.AppCompat.PopupWindow" parent="Base.Widget.AppCompat.PopupWindow">
+    </style>
+    <style name="Widget.AppCompat.ProgressBar" parent="Base.Widget.AppCompat.ProgressBar">
+    </style>
+    <style name="Widget.AppCompat.ProgressBar.Horizontal" parent="Base.Widget.AppCompat.ProgressBar.Horizontal">
+    </style>
     <style name="Widget.AppCompat.RatingBar" parent="Base.Widget.AppCompat.RatingBar"/>
     <style name="Widget.AppCompat.SearchView" parent="Base.Widget.AppCompat.SearchView"/>
     <style name="Widget.AppCompat.SearchView.ActionBar" parent="Base.Widget.AppCompat.SearchView.ActionBar"/>
@@ -1793,7 +1746,7 @@
     <style name="Widget.AppCompat.TextView.SpinnerItem" parent="Base.Widget.AppCompat.TextView.SpinnerItem"/>
     <style name="Widget.AppCompat.Toolbar" parent="Base.Widget.AppCompat.Toolbar"/>
     <style name="Widget.AppCompat.Toolbar.Button.Navigation" parent="RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation"/>
-    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>

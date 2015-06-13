@@ -113,7 +113,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_splash">
+    android:background="@drawable/login_bg">
 
     <!-- Layout starts upside down -->
 
@@ -206,4 +206,4 @@
         android:textStyle="bold" />
 
 </RelativeLayout>
-<!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/sign_in.xml -->
+<!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/sign_in.xml -->

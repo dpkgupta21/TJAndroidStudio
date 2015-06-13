@@ -58,16 +58,15 @@ public class LapsList extends AppCompatActivity {
         });
 
         lapsListView = (ListView) findViewById(R.id.new_journey_location_listview);
-        noLapsPlaceholderImg = (ImageView)findViewById(R.id.no_laps_placeholder);
-        getStartedImg = (ImageView)findViewById(R.id.no_laps_get_started);
+        noLapsPlaceholderImg = (ImageView) findViewById(R.id.no_laps_placeholder);
+        getStartedImg = (ImageView) findViewById(R.id.no_laps_get_started);
 
-        if(((AppController) getApplicationContext()).lapsList.size() == 0){
+        if (AppController.lapsList.size() == 0) {
             noLapsPlaceholderImg.setVisibility(View.VISIBLE);
             getStartedImg.setVisibility(View.VISIBLE);
             lapsListView.setVisibility(View.GONE);
-        }else{
-            lapsListViewAdapter = new LapsListAdapter(this,
-                    ((AppController) getApplicationContext()).lapsList);
+        } else {
+            lapsListViewAdapter = new LapsListAdapter(this, AppController.lapsList);
             lapsListView.setAdapter(lapsListViewAdapter);
         }
     }

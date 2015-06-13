@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/ic_ship_selected" android:state_checked="true" />
-    <item android:drawable="@drawable/ic_ship_not_seleted" android:state_checked="false" />
+    <item android:drawable="@drawable/ic_ship_not_selected" android:state_checked="false" />
 
-</selector><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/drawable/toggle_ship.xml -->
+</selector><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/drawable/toggle_ship.xml -->
