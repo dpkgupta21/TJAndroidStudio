@@ -38,6 +38,8 @@ public class AddLap extends AppCompatActivity {
     private ToggleButton toggleTrain;
     private ToggleButton toggleWalk;
     private ToggleButton toggleBus;
+    private ToggleButton toggleBike;
+    private ToggleButton toggleCarpet;
 
     private boolean editMode;
     private int editLapIndex;
@@ -62,6 +64,8 @@ public class AddLap extends AppCompatActivity {
         toggleShip = (ToggleButton) findViewById(R.id.shipToggle);
         toggleWalk = (ToggleButton) findViewById(R.id.walkToggle);
         toggleBus = (ToggleButton) findViewById(R.id.busToggle);
+        toggleBike = (ToggleButton) findViewById(R.id.bikeToggle);
+        toggleCarpet = (ToggleButton) findViewById(R.id.carpetToggle);
 
         // Set up date picker
         Calendar calendar = Calendar.getInstance();
@@ -156,6 +160,24 @@ public class AddLap extends AppCompatActivity {
                     conveyanceMode = -1;
                 }
                 break;
+            case R.id.bikeToggle:
+                if (toggleBike.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_BIKE;
+                    conveyanceOff();
+                    toggleBike.setChecked(true);
+                } else {
+                    conveyanceMode = -1;
+                }
+                break;
+            case R.id.carpetToggle:
+                if (toggleCarpet.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_CARPET;
+                    conveyanceOff();
+                    toggleCarpet.setChecked(true);
+                } else {
+                    conveyanceMode = -1;
+                }
+                break;
             default:
                 break;
         }
@@ -169,6 +191,8 @@ public class AddLap extends AppCompatActivity {
         toggleTrain.setChecked(false);
         toggleBus.setChecked(false);
         toggleWalk.setChecked(false);
+        toggleBike.setChecked(false);
+        toggleCarpet.setChecked(false);
     }
 
     // opens the calendar mode to select date
@@ -222,6 +246,12 @@ public class AddLap extends AppCompatActivity {
                 break;
             case 6:
                 toggleBus.setChecked(true);
+                break;
+            case 7:
+                toggleBike.setChecked(true);
+                break;
+            case 8:
+                toggleCarpet.setChecked(true);
                 break;
         }
     }

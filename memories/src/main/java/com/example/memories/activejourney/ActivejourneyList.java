@@ -8,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +19,6 @@ import com.example.memories.BaseActivity;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.activejourney.adapters.ActiveJourneyListAdapter;
-import com.example.memories.customviews.MyFABView;
 import com.example.memories.models.Journey;
 import com.example.memories.newjourney.LapsList;
 import com.example.memories.services.PullContactsService;
@@ -81,23 +82,6 @@ public class ActivejourneyList extends BaseActivity {
             noActivejourneysMsgTxt = (TextView) findViewById(R.id.active_journey_no_buddies_msg);
             noActivejourneysMsgTxt.setVisibility(View.VISIBLE);
         }
-
-        // Add lap FAB Button
-        final MyFABView fabButton = new MyFABView.Builder(this)
-                .withDrawable(getResources().getDrawable(R.drawable.plus79))
-                .withButtonColor(getResources().getColor(R.color.tj_orange))
-                .withGravity(Gravity.BOTTOM | Gravity.RIGHT).withMargins(0, 0, 16, 16).create();
-
-        fabButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "FAB clicked");
-                Intent i = new Intent(getBaseContext(), LapsList.class);
-                startActivity(i);
-                i = new Intent(getBaseContext(), PullContactsService.class);
-                startService(i);
-            }
-        });
     }
 
     @Override
@@ -141,5 +125,28 @@ public class ActivejourneyList extends BaseActivity {
             this.toast.cancel();
         }
         super.onPause();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.active_journey_action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+            case R.id.action_add_journey:
+                Log.d(TAG, "new journey clicked!");
+                Intent i = new Intent(getBaseContext(), LapsList.class);
+                startActivity(i);
+                i = new Intent(getBaseContext(), PullContactsService.class);
+                startService(i);
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

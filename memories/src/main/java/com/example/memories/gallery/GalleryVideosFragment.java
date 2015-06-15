@@ -2,6 +2,7 @@ package com.example.memories.gallery;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -27,11 +28,12 @@ import com.example.memories.SQLitedatabase.VideoDataSource;
 import com.example.memories.gallery.adapters.ImageGalleryAdapter;
 import com.example.memories.gallery.adapters.VideoGalleryAdapter;
 import com.example.memories.models.Video;
+import com.example.memories.video.DownloadVideoAsyncTask;
 
 import java.io.File;
 import java.util.List;
 
-public class GalleryVideosFragment extends Fragment {
+public class GalleryVideosFragment extends Fragment implements DownloadVideoAsyncTask.OnVideoDownloadListener{
 
     private static final String TAG = "<GalleryPhotosFragment>";
     private static GridView mGridView;
@@ -41,6 +43,7 @@ public class GalleryVideosFragment extends Fragment {
     private VideoGalleryAdapter mAdapter;
 
     private LinearLayout mLayout;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class GalleryVideosFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mGridView = (GridView) rootView.findViewById(R.id.videos_grid_view);
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Downloading Video please wait");
 
         mVideoList = VideoDataSource.getAllVideos(getActivity());
         mAdapter = new VideoGalleryAdapter(getActivity(), mVideoList);
@@ -124,27 +129,29 @@ public class GalleryVideosFragment extends Fragment {
             // click on an individual photo
             // Take to the detail page in a swipable gallery
             mGridView.setOnItemClickListener(new OnItemClickListener() {
-
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-
-                    // String mimeType =
-                    // MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                    // mVideoList.get(position).getExtension());
-                    Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(
-                            mVideoList.get(position).getDataLocalURL())));
-                    // Log.d(TAG, "Uri is " + Uri.fromFile(new
-                    // File(mVideoList.get(position).getDataURL())));
-                    // Log.d(TAG, "file path is " +
-                    // mVideoList.get(position).getDataURL());
-                    mediaIntent.setDataAndType(
-                            Uri.fromFile(new File(mVideoList.get(position).getDataLocalURL())),
-                            "video/*");
-                    startActivity(mediaIntent);
+                    if(mVideoList.get(position).getDataLocalURL() != null) {
+                        Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(mVideoList.get(position).getDataLocalURL())));
+                        mediaIntent.setDataAndType(Uri.fromFile(new File(mVideoList.get(position).getDataLocalURL())), "video/*");
+                        startActivity(mediaIntent);
+                    }else {
+                        mProgressDialog.show();
+                        new DownloadVideoAsyncTask(GalleryVideosFragment.this, mVideoList.get(position)).execute();
+                    }
                 }
             });
         }else {
             mLayout.setBackgroundResource(R.drawable.img_no_video);
         }
+    }
+
+    @Override
+    public void onVideoDownload(String videoLocalUrl, Video video) {
+        mProgressDialog.dismiss();
+        VideoDataSource.updateVideoLocalUrl(getActivity(), video.getId(), video.getDataLocalURL());
+        Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(video.getDataLocalURL())));
+        mediaIntent.setDataAndType(Uri.fromFile(new File(video.getDataLocalURL())), "video/*");
+        startActivity(mediaIntent);
     }
 }

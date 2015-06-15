@@ -69,6 +69,8 @@ public class HelpMe {
     public static final int CONVEYANCE_SHIP = 4; //"Ship";
     public static final int CONVEYANCE_BUS = 6; //"Bus";
     public static final int CONVEYANCE_WALK = 5; //"Walk";
+    public static final int CONVEYANCE_BIKE = 5; //"Bike";
+    public static final int CONVEYANCE_CARPET = 5; //"Carpet";
 
     // To fetch dates from getDate()
     public static final int DATE_FULL = 1;
@@ -80,7 +82,7 @@ public class HelpMe {
     public static String getConveyanceMode(int c) {
         switch (c) {
             case 1:
-                return "FLight";
+                return "Flight";
             case 2:
                 return "Car";
             case 3:
@@ -91,6 +93,10 @@ public class HelpMe {
                 return "Walking";
             case 6:
                 return "Bus";
+            case 7:
+                return "Bike/Cycling";
+            case 8:
+                return "Magical Carpet";
         }
         return null;
     }

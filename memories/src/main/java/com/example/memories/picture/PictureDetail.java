@@ -67,7 +67,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         Log.d(TAG, "entrerd photo details");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.black_semi_transparent));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
