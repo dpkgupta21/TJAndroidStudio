@@ -132,7 +132,7 @@ public class PictureUtilities {
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
             entityBuilder.addTextBody("picture[latitude]", String.valueOf(picture.getLatitude()));
             entityBuilder.addTextBody("picture[longitude]", String.valueOf(picture.getLongitude()));
-            entityBuilder.addTextBody("picture[caption]", picture.getCaption());
+            entityBuilder.addTextBody("picture[description]", picture.getCaption());
 
             String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/pictures";
             HttpPost updateProfileRequest = new HttpPost(url);

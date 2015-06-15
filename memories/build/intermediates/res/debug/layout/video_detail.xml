@@ -125,15 +125,11 @@
 
         </RelativeLayout>
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/video_detail_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:hint="Give this picture some words!"
-            android:inputType="textMultiLine"
-            android:layout_marginTop="30dp"
-            android:lines="2" />
+            android:padding="10dp"/>
 
     </LinearLayout>
 

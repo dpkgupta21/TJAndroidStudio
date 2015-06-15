@@ -2,6 +2,7 @@ package com.example.memories.pastjourney;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -19,6 +20,9 @@ public class PastJourneyList extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.past_journey_list);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Past Journeys");
 
         Cursor c = JourneyDataSource.getAllPastJourneys(this);
 

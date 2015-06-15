@@ -9,7 +9,7 @@
         android:id="@+id/photo_detail_rl0"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@color/white">
+        android:background="@color/black">
 
         <ImageView
             android:id="@+id/photo_detail_photo"
@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/default_string"
             android:scaleType="centerCrop"
-            android:src="@drawable/banner3" />
+            android:alpha="0.5" />
 
         <com.example.memories.customviews.MyCircularImageView
             android:id="@+id/photo_detail_profile_image"
@@ -28,7 +28,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
-            android:src="@drawable/profile_image_empty" />
+            android:src="@drawable/gumnaam_profile_image" />
 
         <com.example.memories.customviews.MyTextView
             android:id="@+id/photo_detail_profile_name"
@@ -116,14 +116,11 @@
 
         </RelativeLayout>
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.example.memories.customviews.MyTextView
             android:id="@+id/photo_detail_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:hint="Give this picture some words!"
-            android:inputType="textMultiLine"
-            android:lines="2" />
+            android:padding="10dp"/>
 
     </LinearLayout>
 

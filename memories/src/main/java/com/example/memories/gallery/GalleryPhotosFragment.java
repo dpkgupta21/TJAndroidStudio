@@ -60,6 +60,7 @@ public class GalleryPhotosFragment extends Fragment {
 
         if (mImageList.size() > 0) {
             // long press selection of the pictures
+            mGridView.setAdapter(mAdapter);
             mGridView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
             mGridView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
                 private Integer noOfItemsSelected = 0;
@@ -133,7 +134,7 @@ public class GalleryPhotosFragment extends Fragment {
                 }
             });
         }else {
-            //mLayout.setBackgroundResource(R.drawable.img_no_video);
+            mLayout.setBackgroundResource(R.drawable.img_no_pic);
         }
     }
 }

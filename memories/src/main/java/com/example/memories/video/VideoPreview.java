@@ -55,11 +55,12 @@ public class VideoPreview extends AppCompatActivity {
     private Video mVideo;
     private TextView noLikesTxt;
     private ProgressDialog pDialog;
+    private TextView createdByName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.video_detail);
+        setContentView(R.layout.video_preview);
         Log.d(TAG, "entrerd video details");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -79,6 +80,7 @@ public class VideoPreview extends AppCompatActivity {
         mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.profilePic);
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
+        createdByName = (TextView) findViewById(R.id.photo_detail_profile_name);
 
         String thumbnailPath;
         Bundle extras = getIntent().getExtras();
@@ -100,6 +102,8 @@ public class VideoPreview extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        createdByName.setText(TJPreferences.getUserName(this));
 
         Double lat = 0.0d;
         Double longi = 0.0d;

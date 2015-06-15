@@ -24,8 +24,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="CLick on the images to toggle them!"
+            android:text="Tap on the images to toggle them"
             android:textSize="24sp"
             android:textStyle="bold" />
 

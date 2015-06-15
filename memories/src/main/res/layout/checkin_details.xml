@@ -4,18 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
-    <ImageButton
-        android:id="@+id/checkin_details_image"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="130dp"
-        android:adjustViewBounds="true"
-        android:background="@color/tj_orange"
-        android:contentDescription="@string/default_string"
-        android:onClick="goToCamera"
-        android:scaleType="fitXY"
-        android:src="@drawable/eiffel_tower" />
+        android:layout_height="225dp">
+
+        <ImageButton
+            android:id="@+id/checkin_details_image"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/tj_orange"
+            android:contentDescription="@string/default_string"
+            android:onClick="goToCamera"
+            android:scaleType="fitXY"
+            android:src="@drawable/eiffel_tower" />
+
+        <include layout="@layout/toolbar" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -23,6 +29,7 @@
         android:layout_weight="1"
         android:background="@color/tj_light_gray"
         android:orientation="vertical"
+        android:paddingTop="40dp"
         android:padding="10dp">
 
         <com.example.memories.customviews.MyEditTextView
@@ -31,7 +38,7 @@
             android:layout_height="wrap_content"
             android:hint=" Write here something about your check-in"
             android:inputType="textMultiLine"
-            android:lines="3"/>
+            android:lines="1" />
 
         <com.example.memories.customviews.MyTextView
             android:id="@+id/checkin_friends"
@@ -77,16 +84,6 @@
             android:contentDescription="@string/default_string"
             android:onClick="goToBuddyList"
             android:src="@drawable/add70" />
-
-        <ImageButton
-            android:id="@+id/checkin_details_mood_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/transparent"
-            android:contentDescription="@string/default_string"
-            android:onClick="goToMoods"
-            android:src="@drawable/emoticon117" />
 
         <ImageButton
             android:id="@+id/checkin_details_place_btn"

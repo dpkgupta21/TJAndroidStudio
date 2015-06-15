@@ -1,6 +1,5 @@
 package com.example.memories.newjourney;
 
-import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
@@ -31,7 +30,7 @@ public class AddLap extends AppCompatActivity {
     private TextView fromLocation;
     private TextView toLocation;
     private TextView dateLocation;
-    private String conveyanceMode;
+    private int conveyanceMode;
     private DatePickerDialog datePickerDialog;
     private ToggleButton toggleCar;
     private ToggleButton toggleFlight;
@@ -39,12 +38,8 @@ public class AddLap extends AppCompatActivity {
     private ToggleButton toggleTrain;
     private ToggleButton toggleWalk;
     private ToggleButton toggleBus;
-    private ActionBar actionBar;
-/*    private ToggleButton toggleMorning;
-    private ToggleButton toggleAfternoon;
-    private ToggleButton toggleEvening;
-    private ToggleButton toggleNight;*/
-    private String timeOfDayMode;
+    private ToggleButton toggleBike;
+    private ToggleButton toggleCarpet;
 
     private boolean editMode;
     private int editLapIndex;
@@ -69,14 +64,12 @@ public class AddLap extends AppCompatActivity {
         toggleShip = (ToggleButton) findViewById(R.id.shipToggle);
         toggleWalk = (ToggleButton) findViewById(R.id.walkToggle);
         toggleBus = (ToggleButton) findViewById(R.id.busToggle);
-        /*toggleMorning = (ToggleButton) findViewById(R.id.morningToggle);
-        toggleAfternoon = (ToggleButton) findViewById(R.id.afternoonToggle);
-        toggleEvening = (ToggleButton) findViewById(R.id.eveningToggle);
-        toggleNight = (ToggleButton) findViewById(R.id.nightToggle);*/
+        toggleBike = (ToggleButton) findViewById(R.id.bikeToggle);
+        toggleCarpet = (ToggleButton) findViewById(R.id.carpetToggle);
 
         // Set up date picker
         Calendar calendar = Calendar.getInstance();
-        final SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE, d MMM, ''yy", Locale.US);
+        final SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE, d MMM yyyy", Locale.US);
         datePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -87,13 +80,16 @@ public class AddLap extends AppCompatActivity {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
 
-        if(getIntent().hasExtra("EDIT_JOURNEY_POSITION")){
+        if (getIntent().hasExtra("EDIT_JOURNEY_POSITION")) {
             editMode = true;
             editLapIndex = getIntent().getIntExtra("EDIT_JOURNEY_POSITION", -1);
             Map<String, String> lap = ((AppController) getApplicationContext()).lapsList.get(editLapIndex);
             dateLocation.setText(lap.get("date"));
+            fromLocation.setText(lap.get("from"));
+            toLocation.setText(lap.get("to"));
 
-
+            // parse string into int codes and set appropraite toggle button to true
+            setConveyanceMode(Integer.parseInt(lap.get("conveyance")));
         }
 
     }
@@ -108,89 +104,78 @@ public class AddLap extends AppCompatActivity {
         startActivityForResult(i, 2);
     }
 
-/*    public void conveyanceToggle(View v) {
-        conveyanceOff();
-        switch (v.getId()) {
-            case R.id.flightToggle:
-                toggleFlight.setChecked(true);
-                conveyanceMode = HelpMe.CONVEYANCE_FLIGHT;
-                break;
-            case R.id.carToggle:
-                toggleCar.setChecked(true);
-                conveyanceMode = HelpMe.CONVEYANCE_CAR;
-                break;
-            case R.id.trainToggle:
-                toggleTrain.setChecked(true);
-                conveyanceMode = HelpMe.CONVEYANCE_TRAIN;
-                break;
-            case R.id.shipToggle:
-                toggleShip.setChecked(true);
-                conveyanceMode = HelpMe.CONVEYANCE_SHIP;
-                break;
-            case R.id.walkToggle:
-                Toast.makeText(this, "toggle state" + toggleWalk.isChecked(), Toast.LENGTH_SHORT).show();
-//                toggleWalk.setChecked(true);
-                conveyanceMode = HelpMe.CONVEYANCE_SHIP;
-                break;
-            default:
-                break;
-        }
-    }*/
-
     public void conveyanceToggle(View v) {
         switch (v.getId()) {
             case R.id.flightToggle:
-                if(toggleFlight.isChecked()) {
+                if (toggleFlight.isChecked()) {
                     conveyanceMode = HelpMe.CONVEYANCE_FLIGHT;
                     conveyanceOff();
                     toggleFlight.setChecked(true);
-                }else {
-                    conveyanceMode = null;
+                } else {
+                    conveyanceMode = -1;
                 }
                 break;
             case R.id.carToggle:
-                if(toggleCar.isChecked()) {
+                if (toggleCar.isChecked()) {
                     conveyanceMode = HelpMe.CONVEYANCE_CAR;
                     conveyanceOff();
                     toggleCar.setChecked(true);
-                }else {
-                    conveyanceMode = null;
+                } else {
+                    conveyanceMode = -1;
                 }
                 break;
             case R.id.trainToggle:
-                if(toggleTrain.isChecked()) {
+                if (toggleTrain.isChecked()) {
                     conveyanceMode = HelpMe.CONVEYANCE_TRAIN;
                     conveyanceOff();
                     toggleTrain.setChecked(true);
-                }else {
-                    conveyanceMode = null;
+                } else {
+                    conveyanceMode = -1;
                 }
                 break;
             case R.id.shipToggle:
-                if(toggleShip.isChecked()) {
+                if (toggleShip.isChecked()) {
                     conveyanceMode = HelpMe.CONVEYANCE_SHIP;
                     conveyanceOff();
                     toggleShip.setChecked(true);
-                }else {
-                    conveyanceMode = null;
+                } else {
+                    conveyanceMode = -1;
                 }
                 break;
             case R.id.walkToggle:
-                if(toggleWalk.isChecked()) {
+                if (toggleWalk.isChecked()) {
                     conveyanceMode = HelpMe.CONVEYANCE_WALK;
                     conveyanceOff();
                     toggleWalk.setChecked(true);
-                }else {
-                    conveyanceMode = null;
+                } else {
+                    conveyanceMode = -1;
                 }
                 break;
             case R.id.busToggle:
-                if(toggleBus.isChecked()) {
+                if (toggleBus.isChecked()) {
                     conveyanceMode = HelpMe.CONVEYANCE_BUS;
                     conveyanceOff();
                     toggleBus.setChecked(true);
-                }else {
-                    conveyanceMode = null;
+                } else {
+                    conveyanceMode = -1;
+                }
+                break;
+            case R.id.bikeToggle:
+                if (toggleBike.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_BIKE;
+                    conveyanceOff();
+                    toggleBike.setChecked(true);
+                } else {
+                    conveyanceMode = -1;
+                }
+                break;
+            case R.id.carpetToggle:
+                if (toggleCarpet.isChecked()) {
+                    conveyanceMode = HelpMe.CONVEYANCE_CARPET;
+                    conveyanceOff();
+                    toggleCarpet.setChecked(true);
+                } else {
+                    conveyanceMode = -1;
                 }
                 break;
             default:
@@ -206,40 +191,9 @@ public class AddLap extends AppCompatActivity {
         toggleTrain.setChecked(false);
         toggleBus.setChecked(false);
         toggleWalk.setChecked(false);
+        toggleBike.setChecked(false);
+        toggleCarpet.setChecked(false);
     }
-
-/*    public void timeOfDayToggle(View v) {
-        timeOfDayOff();
-        Log.d(TAG, "timeOfDayToggle called");
-        switch (v.getId()) {
-            case R.id.morningToggle:
-                toggleMorning.setChecked(true);
-                timeOfDayMode = HelpMe.TIME_OF_DAY_MORNING;
-                break;
-            case R.id.afternoonToggle:
-                toggleAfternoon.setChecked(true);
-                timeOfDayMode = HelpMe.TIME_OF_DAY_AFTERNOON;
-                break;
-            case R.id.eveningToggle:
-                toggleEvening.setChecked(true);
-                timeOfDayMode = HelpMe.TIME_OF_DAY_EVENING;
-                break;
-            case R.id.nightToggle:
-                toggleNight.setChecked(true);
-                timeOfDayMode = HelpMe.TIME_OF_DAY_NIGHT;
-                break;
-            default:
-                break;
-        }
-    }*/
-
-    // toggles off all the timeOfDay modes
-    /*private void timeOfDayOff() {
-        toggleMorning.setChecked(false);
-        toggleAfternoon.setChecked(false);
-        toggleEvening.setChecked(false);
-        toggleNight.setChecked(false);
-    }*/
 
     // opens the calendar mode to select date
     public void showCalendar(View v) {
@@ -250,21 +204,55 @@ public class AddLap extends AppCompatActivity {
     // And send back them to LapsList list screen
     public void updateDone(View v) {
 
-        if(conveyanceMode == null){
+        if (conveyanceMode == -1) {
             Toast.makeText(this, "Please select the conveyence mode", Toast.LENGTH_SHORT).show();
-        }else {
-            Intent i = new Intent(getBaseContext(), LapsList.class);
+        } else {
 
-            Map<String, String> map = new HashMap<String, String>();
+            Map<String, String> map;
+            if (editMode) {
+                map = AppController.lapsList.get(editLapIndex);
+            } else {
+                map = new HashMap<>();
+                AppController.lapsList.add(map);
+            }
+
             map.put("from", fromLocation.getText().toString());
             map.put("to", toLocation.getText().toString());
             map.put("date", dateLocation.getText().toString());
-            map.put("conveyance", conveyanceMode);
-            map.put("timeOfTheDay", timeOfDayMode);
-            ((AppController) getApplicationContext()).lapsList.add(map);
+            map.put("conveyance", String.valueOf(conveyanceMode));
 
+            Intent i = new Intent(getBaseContext(), LapsList.class);
             startActivity(i);
             finish();
+        }
+    }
+
+    private void setConveyanceMode(int c) {
+        switch (c) {
+            case 1:
+                toggleFlight.setChecked(true);
+                break;
+            case 2:
+                toggleCar.setChecked(true);
+                break;
+            case 3:
+                toggleTrain.setChecked(true);
+                break;
+            case 4:
+                toggleShip.setChecked(true);
+                break;
+            case 5:
+                toggleWalk.setChecked(true);
+                break;
+            case 6:
+                toggleBus.setChecked(true);
+                break;
+            case 7:
+                toggleBike.setChecked(true);
+                break;
+            case 8:
+                toggleCarpet.setChecked(true);
+                break;
         }
     }
 
@@ -276,13 +264,11 @@ public class AddLap extends AppCompatActivity {
                 String result = data.getStringExtra("result");
 
                 List<String> placeDetails = Arrays.asList(result.split(","));
-                int len = placeDetails.size();
                 fromLocation.setText(placeDetails.get(0));
             } else if (requestCode == 2) {
                 String result = data.getStringExtra("result");
 
                 List<String> placeDetails = Arrays.asList(result.split(","));
-                int len = placeDetails.size();
                 toLocation.setText(placeDetails.get(0));
             }
         }
@@ -290,6 +276,6 @@ public class AddLap extends AppCompatActivity {
             // Write your code if there's no result
         }
 
-    }// onActivityResult
+    }
 
 }

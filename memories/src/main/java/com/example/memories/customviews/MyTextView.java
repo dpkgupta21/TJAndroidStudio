@@ -23,7 +23,7 @@ public class MyTextView extends TextView {
     }
 
     private void init() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/segoeui.ttf");
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/OmnesLig.ttf");
         setTypeface(tf);
     }
 

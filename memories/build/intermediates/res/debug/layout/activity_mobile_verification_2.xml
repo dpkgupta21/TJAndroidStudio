@@ -25,7 +25,7 @@
         android:textSize="@dimen/tj_large_font" />
 
 
-    <Button
+    <com.example.memories.customviews.MyButtonView
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

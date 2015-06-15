@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-
+        app:contentInsetStart="0dp"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <LinearLayout
@@ -19,7 +19,9 @@
             <com.example.memories.customviews.SlidingTabLayout
                 android:id="@+id/sliding_tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/tj_red_dark_toolbar"
+                />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 

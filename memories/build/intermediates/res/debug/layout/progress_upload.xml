@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <Button
+    <com.example.memories.customviews.MyButtonView
         android:id="@+id/upload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

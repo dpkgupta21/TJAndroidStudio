@@ -9,25 +9,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
 import com.example.memories.SQLitedatabase.VideoDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Video;
-import com.example.memories.services.GPSTracker;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
-import com.example.memories.utility.VideoUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,7 +40,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     private TextView time;
     private TextView place;
     private TextView weather;
-    private EditText caption;
     private ImageView mProfileImg;
     private ImageButton mFavBtn;
     private long currenTime;
@@ -54,6 +47,8 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     private Video mVideo;
     private TextView noLikesTxt;
     private ProgressDialog pDialog;
+    private TextView createdByName;
+    private TextView mVideoCaption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +58,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Video");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -74,10 +70,11 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
         time = (TextView) findViewById(R.id.photo_detail_time);
-        caption = (EditText) findViewById(R.id.video_detail_caption);
         mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.profilePic);
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
+        createdByName = (TextView) findViewById(R.id.photo_detail_profile_name);
+        mVideoCaption = (TextView) findViewById(R.id.video_detail_caption);
 
         String thumbnailPath;
         Bundle extras = getIntent().getExtras();
@@ -96,40 +93,24 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                 mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
             }
         }
-        caption.setText(mVideo.getCaption());
-
-        Double lat = 0.0d;
-        Double longi = 0.0d;
-        GPSTracker gps = new GPSTracker(this);
-        if (gps.canGetLocation()) {
-            lat = gps.getLatitude(); // returns latitude
-            longi = gps.getLongitude(); // returns longitude
-        } else {
-            Toast.makeText(getApplicationContext(), "Network issues. Try later.",
-                    Toast.LENGTH_LONG).show();
-        }
-        mVideo = new Video(null, TJPreferences.getActiveJourneyId(this), HelpMe.VIDEO_TYPE, caption.getText().toString()
-                .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), currenTime, currenTime, null, thumbnailPath, lat, longi);
-
-        // If the picture is created by someone else than remove the caption field
-        Log.d(TAG, "video created by ->" + mVideo.getCreatedBy() + "user id ->" + TJPreferences.getUserId(this));
-        if(!mVideo.getCreatedBy().equals(TJPreferences.getUserId(this))){
-            Log.d(TAG, "the picture has not been created by the logged in user hence removing caption option");
-            caption.setVisibility(View.GONE);
-        }
 
         //Setting fields common in both the cases
         video.setImageBitmap(BitmapFactory.decodeFile(thumbnailPath));
+        mVideoCaption.setText(mVideo.getCaption());
 
 
-        //Profile picture
+        //Profile picture and name
         String profileImgPath;
+        String createdBy;
         if (!mVideo.getCreatedBy().equals(TJPreferences.getUserId(this))) {
             Contact contact = ContactDataSource.getContactById(this, mVideo.getCreatedBy());
             profileImgPath = contact.getPicLocalUrl();
+            createdBy = contact.getName();
         } else {
             profileImgPath = TJPreferences.getProfileImgPath(this);
+            createdBy = TJPreferences.getUserName(VideoDetail.this);
         }
+        createdByName.setText(createdBy);
         try {
             if (profileImgPath != null) {
                 Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
@@ -175,9 +156,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        /*Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);*/
         finish();
     }
 
@@ -213,22 +191,10 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_with_done_only, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.action_done:
-                //Check if the text of the caption has been changed. If yes than make a request to the server
-                if(!caption.getText().toString().equals(mVideo.getCaption())){
-                    Log.d(TAG, "the picture's caption has been changed so updating on server");
-                    VideoUtil.updateCaption(mVideo, caption.getText().toString(), getBaseContext());
-                }
                 finish();
                 return true;
             case android.R.id.home:
@@ -242,7 +208,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
 
     @Override
     public void onVideoDownload(String videoLocalUrl, Video video) {
-        VideoDataSource.updateVideoLocalUrl(this, video.getDataLocalURL(), video.getId());
+        VideoDataSource.updateVideoLocalUrl(this, video.getId(), video.getDataLocalURL());
         Log.d(TAG, "video downloaded successfully now displaying it");
         pDialog.dismiss();
         Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(mVideo.getDataLocalURL())));

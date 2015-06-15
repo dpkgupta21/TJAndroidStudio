@@ -15,7 +15,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:background="#AB0007"
+        android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
@@ -25,11 +25,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#AB0007"
+            android:background="@color/white"
             android:onClick="goToSignUp"
             android:text="I&apos;m New"
-
-            android:textColor="@color/white" />
+            android:textSize="20sp"
+            android:textColor="@color/black" />
 
         <com.example.memories.customviews.MyButtonView
             android:id="@+id/splash_signin_btn"
@@ -37,10 +37,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#AB0007"
+            android:background="@color/white"
             android:onClick="goToSignIn"
+            android:textSize="20sp"
             android:text="Sign In"
-            android:textColor="@color/white" />
+            android:textColor="@color/black" />
     </LinearLayout>
 
 <!--    <RadioGroup

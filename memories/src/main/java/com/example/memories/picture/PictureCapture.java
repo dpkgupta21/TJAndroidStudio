@@ -44,7 +44,7 @@ public class PictureCapture extends AppCompatActivity {
     }
 
     public void okPic(View v) {
-        Intent i = new Intent(getBaseContext(), PictureDetail.class);
+        Intent i = new Intent(getBaseContext(), PicturePreview.class);
         i.putExtra("imagePath", imagePath);
         startActivity(i);
         finish();

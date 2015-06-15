@@ -97,9 +97,9 @@ public class PullContactsService extends IntentService {
         String sortOrder = ContactsContract.Contacts.SORT_KEY_ALTERNATIVE;
 
         Uri uri = ContactsContract.CommonDataKinds.Contactables.CONTENT_URI;
-// we could also use Uri uri = ContactsContract.Data.CONTENT_URI;
+        // we could also use Uri uri = ContactsContract.Data.CONTENT_URI;
 
-// ok, let's work...
+        // ok, let's work...
         Cursor cursor = getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
 
         final int mimeTypeIdx = cursor.getColumnIndex(ContactsContract.Data.MIMETYPE);
@@ -131,24 +131,24 @@ public class PullContactsService extends IntentService {
         Log.d(TAG, "contacts fetching completed here");
         cursor.close();
 
-        int i, j, size_emails, size_phones;
+        int i, size_emails, size_phones;
 
         allPhoneList = new ArrayList<>();
         allEmailList = new ArrayList<>();
         contactsList = new ArrayList<>();
 
-        for(AddressBookContact addressBookContact : list){
+        for (AddressBookContact addressBookContact : list) {
             size_emails = addressBookContact.getEmails() == null ? 0 : addressBookContact.getEmails().size();
-            for(i = 0; i < size_emails; i++){
+            for (i = 0; i < size_emails; i++) {
                 allEmailList.add(addressBookContact.getEmails().valueAt(i));
             }
             size_phones = addressBookContact.getPhones() == null ? 0 : addressBookContact.getPhones().size();
-            for(i = 0; i < size_phones; i++){
+            for (i = 0; i < size_phones; i++) {
                 allPhoneList.add(addressBookContact.getPhones().valueAt(i));
             }
         }
-        Log.d(TAG, "arraylist is " + allEmailList);
-        Log.d(TAG, "arraylist is " + allPhoneList);
+        Log.d(TAG, "email list count is " + allEmailList.size());
+        Log.d(TAG, "phone list count is " + allPhoneList.size());
 
         CheckTJContacts();
         // Collections.sort(list);
@@ -367,11 +367,11 @@ class AddressBookContact {
         this.res = res;
     }
 
-    public LongSparseArray<String> getEmails(){
+    public LongSparseArray<String> getEmails() {
         return emails;
     }
 
-    public LongSparseArray<String> getPhones(){
+    public LongSparseArray<String> getPhones() {
         return phones;
     }
 

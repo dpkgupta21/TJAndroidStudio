@@ -35,8 +35,8 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
         setContentView(R.layout.current_journey_base_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Current Journey");
-        toolbar.setSubtitle(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName());
+        toolbar.setTitle(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName());
+        toolbar.setSubtitle(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getTagLine());
 
         mViewPager = (ViewPager) findViewById(R.id.timeline_viewpager);
         mViewPager.setAdapter(new CurrentJourneyTabsAdapter(getSupportFragmentManager()));

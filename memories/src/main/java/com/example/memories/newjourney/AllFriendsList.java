@@ -53,7 +53,7 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
 
         Log.d(TAG, "1");
         // fetch all names from phone address book stored in local DB-- COntact
-        list = new ArrayList<Contact>();
+        list = new ArrayList<>();
         list = ContactDataSource.getAllContacts(this);
         Collections.sort(list);
 
@@ -103,6 +103,7 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
                 return true;
             case R.id.action_refresh:
                 Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+                Log.d(TAG, "starting intent for pull contacts service");
                 intent.putExtra("RECEIVER", mReceiver);
                 startService(intent);
                 mDialog.show();

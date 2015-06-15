@@ -1,42 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:layout_height="fill_parent">
 
     <ImageView
         android:id="@+id/capture_photos_image_preview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1.0"
         android:adjustViewBounds="true"
         android:background="@color/black" />
 
     <LinearLayout
         android:id="@+id/capture_photos_preview_footer"
-        style="@android:style/ButtonBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <ImageButton
+        <com.example.memories.customviews.MyButtonView
             android:id="@+id/capture_photos_preview_cancel"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
+            android:background="@drawable/rounded_left_side_red"
             android:onClick="retakePic"
-            android:src="@drawable/delete85" />
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="Retake" />
 
-        <ImageButton
+        <com.example.memories.customviews.MyButtonView
             android:id="@+id/capture_photos_preview_ok"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:background="@drawable/rounded_right_side_green"
+            android:layout_weight="1.4"
+            android:textSize="20sp"
             android:onClick="okPic"
-            android:src="@drawable/check35" />
+            android:textColor="@color/white"
+            android:text="Done" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

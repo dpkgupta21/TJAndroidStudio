@@ -32,7 +32,7 @@
             android:layout_below="@id/timelineItemImage"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="-35dp"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/gumnaam_profile_image" />
 
         <RelativeLayout
             android:layout_width="match_parent"

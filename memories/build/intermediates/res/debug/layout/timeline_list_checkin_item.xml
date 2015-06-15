@@ -16,7 +16,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginRight="15dp"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/gumnaam_profile_image" />
 
         <com.example.memories.customviews.MyTextView
             android:id="@+id/timelineItemUserName"

@@ -172,6 +172,8 @@
     <color name="tj_light_gray">#EEEEEE</color>
     <color name="tj_medium_gray">#666666</color>
     <color name="tj_orange">#FFA31A</color>
+    <color name="tj_picture_capture_green">#60ee82</color>
+    <color name="tj_picture_capture_red">#ee5e5e</color>
     <color name="tj_red_dark_icons">#ff0032</color>
     <color name="tj_red_dark_toolbar">#e84c3d</color>
     <color name="tj_red_light_status_bar">#c83426</color>

@@ -1,6 +1,7 @@
 package com.example.memories.picture;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -52,7 +53,6 @@ public class PicturePreview extends AppCompatActivity {
     private long currenTime;
     private String imagePath;
     private Picture mPicture;
-    private boolean isNewPic;
     private TextView noLikesTxt;
 
     private ProgressDialog pDialog;
@@ -62,8 +62,8 @@ public class PicturePreview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.photo_detail);
-        Log.d(TAG, "entrerd photo preview");
+        setContentView(R.layout.picture_preview);
+        Log.d(TAG, "entrerd photo details");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.black_semi_transparent));
@@ -86,8 +86,7 @@ public class PicturePreview extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        if (extras.getString("imagePath") != null) {
-            isNewPic = true;
+            Log.d(TAG, "running for a newly clicked picture");
             profileName.setText(TJPreferences.getUserName(getBaseContext()));
             imagePath = extras.getString("imagePath");
             Bitmap thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), 512, 384);
@@ -121,23 +120,19 @@ public class PicturePreview extends AppCompatActivity {
 
             mPicture = new Picture(null, TJPreferences.getActiveJourneyId(this), HelpMe.PICTURE_TYPE, caption.getText().toString()
                     .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), currenTime, currenTime, null, localThumbnailPath, lat, longi);
-        }
 
         photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
 
         //Profile picture
         Log.d(TAG, "setting the profile picture" + mPicture.getCreatedBy());
-        String profileImgPath;
-        profileImgPath = TJPreferences.getProfileImgPath(this);
-        if (profileImgPath != null) {
+        if (TJPreferences.getProfileImgPath(this) != null) {
             try {
-                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
+                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, TJPreferences.getProfileImgPath(this), 100, 100);
                 mProfileImg.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
-        Log.d(TAG, "profile picture set successfully");
 
         setFavouriteBtnClickListener();
 
@@ -150,6 +145,15 @@ public class PicturePreview extends AppCompatActivity {
         dateBig.setText(onlyDate.format(resultdate).toString());
         date.setText(fullDate.format(resultdate).toString());
         time.setText(fullTime.format(resultdate).toString());
+
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PicturePreview.this, DisplayPicture.class);
+                intent.putExtra("PICTURE_PATH", mPicture.getDataLocalURL());
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -179,14 +183,12 @@ public class PicturePreview extends AppCompatActivity {
                     likedBy = null;
                 }
                 mPicture.setLikedBy(likedBy);
-                if (!isNewPic) {
-                    mPicture.updateLikedBy(PicturePreview.this, mPicture.getId(), likedBy);
-                }
             }
         });
     }
 
     private void saveAndUploadPic() {
+
         if (likedBy != null) {
             mPicture.setLikedBy(likedBy);
         }
@@ -207,14 +209,8 @@ public class PicturePreview extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_done:
                 Log.d(TAG, "done clicked!");
-                if (isNewPic) {
-                    saveAndUploadPic();
-                }
+                saveAndUploadPic();
                 //Check if the text of the caption has been changed. If yes than make a request to the server
-                else if(caption.getText().toString() != mPicture.getCaption()){
-                    Log.d(TAG, "the picture's caption has been changed so updating on server" + mPicture);
-                    PictureUtilities.updateCaption(mPicture, caption.getText().toString(), getBaseContext());
-                }
                 finish();
                 return true;
             case android.R.id.home:

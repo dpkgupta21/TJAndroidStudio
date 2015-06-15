@@ -62,7 +62,7 @@
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/gumnaam_profile_image" />
 
         <ImageButton
             android:id="@+id/timelineItemFavIcon"

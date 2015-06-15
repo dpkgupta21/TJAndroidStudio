@@ -61,7 +61,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
             Bitmap bitmap = BitmapFactory.decodeFile(picLocalURL, new BitmapFactory.Options());
             holder.buddyPicImageView.setImageBitmap(bitmap);
         } else {
-            holder.buddyPicImageView.setImageResource(R.drawable.ic_profile);
+            holder.buddyPicImageView.setImageResource(R.drawable.gumnaam_profile_image);
         }
 
         holder.buddyName.setText(name);

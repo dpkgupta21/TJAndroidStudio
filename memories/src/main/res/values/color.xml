@@ -20,6 +20,9 @@
 
     <color name="tj_black_text">#f3f3f3</color>
 
+    <color name="tj_picture_capture_red">#ee5e5e</color>
+    <color name="tj_picture_capture_green">#60ee82</color>
+
 
     <!-- old ones-->
     <color name="tj_orange">#FFA31A</color>

@@ -128,6 +128,8 @@ public class NewJourneyDetail extends AppCompatActivity {
                         }
                         try {
                             createNewJourneyInDB(response);
+                            AppController.lapsList.clear();
+                            AppController.buddyList.clear();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -1,7 +1,9 @@
 package com.example.memories.newjourney;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,9 +20,11 @@ import android.widget.ListView;
 import com.example.memories.R;
 import com.example.memories.customviews.MyFABView;
 import com.example.memories.newjourney.adapters.LapsListAdapter;
+import com.example.memories.services.CustomResultReceiver;
+import com.example.memories.services.PullContactsService;
 import com.example.memories.volley.AppController;
 
-public class LapsList extends AppCompatActivity {
+public class LapsList extends AppCompatActivity implements CustomResultReceiver.Receiver{
 
     protected static final String TAG = "<LapsList>";
     private LapsListAdapter lapsListViewAdapter;
@@ -28,6 +32,8 @@ public class LapsList extends AppCompatActivity {
     private ImageView getStartedImg;
     ListView lapsListView;
     private ImageButton mEditJourney;
+    ProgressDialog mDialog;
+    CustomResultReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +64,15 @@ public class LapsList extends AppCompatActivity {
         });
 
         lapsListView = (ListView) findViewById(R.id.new_journey_location_listview);
-        noLapsPlaceholderImg = (ImageView)findViewById(R.id.no_laps_placeholder);
-        getStartedImg = (ImageView)findViewById(R.id.no_laps_get_started);
+        noLapsPlaceholderImg = (ImageView) findViewById(R.id.no_laps_placeholder);
+        getStartedImg = (ImageView) findViewById(R.id.no_laps_get_started);
 
-        if(((AppController) getApplicationContext()).lapsList.size() == 0){
+        if (AppController.lapsList.size() == 0) {
             noLapsPlaceholderImg.setVisibility(View.VISIBLE);
             getStartedImg.setVisibility(View.VISIBLE);
             lapsListView.setVisibility(View.GONE);
-        }else{
-            lapsListViewAdapter = new LapsListAdapter(this,
-                    ((AppController) getApplicationContext()).lapsList);
+        } else {
+            lapsListViewAdapter = new LapsListAdapter(this, AppController.lapsList);
             lapsListView.setAdapter(lapsListViewAdapter);
         }
     }
@@ -95,6 +100,19 @@ public class LapsList extends AppCompatActivity {
     }
 
     private void goToNext() {
+        mDialog = new ProgressDialog(this);
+        mReceiver = new CustomResultReceiver(new Handler());
+        mReceiver.setReceiver(this);
+        Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+        intent.putExtra("RECEIVER", mReceiver);
+        startService(intent);
+        mDialog.show();
+
+    }
+
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        mDialog.dismiss();
         Intent i = new Intent(getBaseContext(), SelectedFriendsList.class);
         startActivity(i);
     }

@@ -98,19 +98,6 @@
 
     </RelativeLayout>
 
-    <com.example.memories.customviews.MyEditTextView
-        android:id="@+id/voice_detail_caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:gravity="top"
-        android:hint="Give this voice some words!"
-        android:inputType="textMultiLine"
-        android:lines="6"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
-
 </LinearLayout>
 
     <!--

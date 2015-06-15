@@ -2,22 +2,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
     <com.example.memories.customviews.MyTextView
         android:id="@+id/noFriendsSelected"
-        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />
 
     <ImageButton
         android:id="@+id/mood_select_friend_imgbtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
         android:onClick="selectFriends"
-        android:src="@drawable/add70" />
+        android:src="@drawable/gumnaam_profile_image" />
 
     <com.example.memories.customviews.MyTextView
         android:id="@+id/mood_text_select_friend"

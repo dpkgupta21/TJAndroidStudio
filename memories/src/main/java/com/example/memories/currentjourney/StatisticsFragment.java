@@ -1,7 +1,6 @@
 package com.example.memories.currentjourney;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -36,7 +35,7 @@ public class StatisticsFragment extends Fragment {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://192.168.1.10:3000/timecapsule/new?j_id=1"));
+                Intent intent = new Intent(getActivity(), TimecapsulePlayer.class);
                 getActivity().startActivity(intent);
             }
         });

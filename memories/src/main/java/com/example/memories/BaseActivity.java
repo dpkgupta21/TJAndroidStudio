@@ -39,7 +39,6 @@ public class BaseActivity extends AppCompatActivity {
 
         nitView();
         if (toolbar != null) {
-            Log.d(TAG, "found toolbar");
             toolbar.setTitle("Navigation Drawer");
             setSupportActionBar(toolbar);
         }
