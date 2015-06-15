@@ -43,6 +43,8 @@ public class AddLap extends AppCompatActivity {
 
     private boolean editMode;
     private int editLapIndex;
+    private List<String> fromLocationList;
+    private List<String> toLocationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,10 +218,30 @@ public class AddLap extends AppCompatActivity {
                 AppController.lapsList.add(map);
             }
 
-            map.put("from", fromLocation.getText().toString());
-            map.put("to", toLocation.getText().toString());
-            map.put("date", dateLocation.getText().toString());
+            if (fromLocationList.size() == 3) {
+                map.put("fromCity", fromLocationList.get(0));
+                map.put("fromState", fromLocationList.get(1));
+                map.put("fromCountry", fromLocationList.get(2));
+
+            } else {
+                map.put("fromCity", fromLocationList.get(0));
+                map.put("fromState", fromLocationList.get(0));
+                map.put("fromCountry", fromLocationList.get(1));
+            }
+
+            if (toLocationList.size() == 3) {
+                map.put("toCity", toLocationList.get(0));
+                map.put("toState", toLocationList.get(1));
+                map.put("toCountry", toLocationList.get(2));
+            } else {
+                map.put("toCity", toLocationList.get(0));
+                map.put("toState", toLocationList.get(0));
+                map.put("toCountry", toLocationList.get(1));
+            }
+
+            map.put("date", String.valueOf(System.currentTimeMillis() / 1000));
             map.put("conveyance", String.valueOf(conveyanceMode));
+
 
             Intent i = new Intent(getBaseContext(), LapsList.class);
             startActivity(i);
@@ -263,13 +285,13 @@ public class AddLap extends AppCompatActivity {
             if (requestCode == 1) {
                 String result = data.getStringExtra("result");
 
-                List<String> placeDetails = Arrays.asList(result.split(","));
-                fromLocation.setText(placeDetails.get(0));
+                fromLocationList = Arrays.asList(result.split(","));
+                fromLocation.setText(fromLocationList.get(0));
             } else if (requestCode == 2) {
                 String result = data.getStringExtra("result");
 
-                List<String> placeDetails = Arrays.asList(result.split(","));
-                toLocation.setText(placeDetails.get(0));
+                toLocationList = Arrays.asList(result.split(","));
+                toLocation.setText(toLocationList.get(0));
             }
         }
         if (resultCode == RESULT_CANCELED) {

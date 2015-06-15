@@ -11,13 +11,17 @@ public class Journey {
     private List<String> laps;
     private List<String> buddies;
     private String journeyStatus;
+    private long createdAt;
+    private long updatedAt;
+    private long completedAt;
 
     public Journey() {
 
     }
 
     public Journey(String idOnServer, String name, String tagLine, String groupType,
-                   String createdBy, List<String> jLaps, List<String> buddies, String journeyStatus) {
+                   String createdBy, List<String> jLaps, List<String> buddies, String journeyStatus
+            , long createdAt, long updatedAt, long completedAt) {
         this.idOnServer = idOnServer;
         this.name = name;
         this.tagLine = tagLine;
@@ -26,10 +30,41 @@ public class Journey {
         this.laps = jLaps;
         this.buddies = buddies;
         this.journeyStatus = journeyStatus;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.completedAt = completedAt;
     }
 
     public String getIdOnServer() {
         return idOnServer;
+    }
+
+    public void setIdOnServer(String idOnServer) {
+        this.idOnServer = idOnServer;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public long getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(long completedAt) {
+        this.completedAt = completedAt;
     }
 
     public void setId(String idOnServer) {

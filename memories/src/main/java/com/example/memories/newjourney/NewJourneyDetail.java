@@ -77,17 +77,26 @@ public class NewJourneyDetail extends AppCompatActivity {
             // it can be properly passed to backend when creating new journey
 
             int currentPosition = 0;
-            for (Map<String, String> lap : ((AppController) getApplicationContext()).lapsList) {
-                params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_id]",
-                        "1");
+            for (Map<String, String> lap : AppController.lapsList) {
+                // Get source info
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_city_name]",
+                        lap.get("source_city_name"));
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_state_name]",
+                        lap.get("source_state_name"));
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_country_name]",
+                        lap.get("source_country_name"));
+
+                // Get destination info
                 params.put("journey[journey_laps_attributes[" + currentPosition
-                        + "]][destination_id]", "2");
+                        + "]][destination_city_name]", lap.get("destination_city_name"));
+                params.put("journey[journey_laps_attributes[" + currentPosition
+                        + "]][destination_state_name]", lap.get("destination_state_name"));
+                params.put("journey[journey_laps_attributes[" + currentPosition
+                        + "]][destination_country_name]", lap.get("destination_country_name"));
+
                 params.put(
                         "journey[journey_laps_attributes[" + currentPosition + "]][travel_mode]",
-                        "car");
-                params.put(
-                        "journey[journey_laps_attributes[" + currentPosition + "]][time_of_day]",
-                        "morning");
+                        lap.get("conveyance"));
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][start_date]",
                         lap.get("date"));
 
