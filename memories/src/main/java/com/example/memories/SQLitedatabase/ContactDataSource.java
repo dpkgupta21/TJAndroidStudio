@@ -169,7 +169,7 @@ public class ContactDataSource {
 /*    public static void updateStatus(Context context, String contactId, String status) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.CONTACT_COLUMN_STATUS, status);
+CCCC
         db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contactId, null);
         db.close();
     }
@@ -195,6 +195,31 @@ public class ContactDataSource {
         db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contactId, null);
         db.close();
     }
+
+    public static void createNewContact(Contact contact, Context context){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Contact updateContact = ContactDataSource.getContactById(context, contact.getIdOnServer());
+        if(updateContact == null){
+            createContact(contact, context);
+        }else {
+            //Update the whole contact
+            ContentValues values = new ContentValues();
+            values.put(MySQLiteHelper.CONTACT_COLUMN_NAME, contact.getName());
+            values.put(MySQLiteHelper.CONTACT_COLUMN_EMAIL, contact.getPrimaryEmail());
+            values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhone_no());
+            values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL, contact.getPicServerUrl());
+            values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL, contact.getPicLocalUrl());
+            values.put(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS, contact.getAllJourneyIds());
+            values.put(MySQLiteHelper.CONTACT_COLUMN_INTERESTS, contact.getInterests());
+            values.put(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD, contact.isOnBoard() ? 1 : 0);
+            values.put(MySQLiteHelper.CONTACT_COLUMN_STATUS, contact.getStatus());
+            db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contact.getIdOnServer(), null);
+            db.close();
+        }
+    }
+
+
+
 
     private static List<Contact> getContactsListFromCursor(Cursor cursor, Context context) {
         List<Contact> contactsList = new ArrayList<>();

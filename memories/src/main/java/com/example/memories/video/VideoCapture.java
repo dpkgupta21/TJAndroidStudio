@@ -41,7 +41,7 @@ public class VideoCapture extends AppCompatActivity {
 //            moveFileToTravelJarDir(getRealPathFromURI(videoUri));
 //			saveAndUploadVideo();
 
-            Intent i = new Intent(this, VideoDetail.class);
+            Intent i = new Intent(this, VideoPreview.class);
             i.putExtra("VIDEO_PATH", getRealPathFromURI(videoUri));
             startActivity(i);
             finish();

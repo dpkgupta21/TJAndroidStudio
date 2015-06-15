@@ -25,15 +25,12 @@ import com.example.memories.SQLitedatabase.VideoDataSource;
 import com.example.memories.models.Contact;
 import com.example.memories.models.Video;
 import com.example.memories.services.GPSTracker;
-import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.utility.VideoUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +52,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     private long currenTime;
     private String videoPath;
     private Video mVideo;
-    private boolean isNewVideo;
     private TextView noLikesTxt;
     private ProgressDialog pDialog;
 
@@ -83,70 +79,41 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         mProfileImg = (ImageView) findViewById(R.id.profilePic);
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
 
-        String thumbnailPath = null;
+        String thumbnailPath;
         Bundle extras = getIntent().getExtras();
-        //If the activity is started for an already clicked video
-        if (extras.getString("VIDEO_ID") != null) {
-            Log.d(TAG, "running for an already existing video");
-            mVideo = VideoDataSource.getVideoById(extras.getString("VIDEO_ID"), this);
-            videoPath = mVideo.getDataLocalURL(); //path to image
-            thumbnailPath = mVideo.getLocalThumbPath();
-            //setup the state of favourite button
-            if (mVideo.getLikedBy() == null) {
-                noLikesTxt.setText("0");
+        mVideo = VideoDataSource.getVideoById(extras.getString("VIDEO_ID"), this);
+        videoPath = mVideo.getDataLocalURL(); //path to image
+        thumbnailPath = mVideo.getLocalThumbPath();
+        //setup the state of favourite button
+        if (mVideo.getLikedBy() == null) {
+            noLikesTxt.setText("0");
+            mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
+        } else {
+            noLikesTxt.setText(String.valueOf(mVideo.getLikedBy().size()));
+            if (mVideo.getLikedBy().contains(TJPreferences.getUserId(VideoDetail.this))) {
+                mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
+            } else {
                 mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-            } else {
-                noLikesTxt.setText(String.valueOf(mVideo.getLikedBy().size()));
-                if (mVideo.getLikedBy().contains(TJPreferences.getUserId(VideoDetail.this))) {
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                } else {
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                }
             }
-            caption.setText(mVideo.getCaption());
         }
-        //If the activity is started for a newly clicked picture
-        if (extras.getString("VIDEO_PATH") != null) {
-            Log.d(TAG, "running for a already clicked video");
-            videoPath = extras.getString("VIDEO_PATH");
-            Bitmap bitmap = HelpMe.getVideoThumbnail(videoPath);
-            FileOutputStream out = null;
-            thumbnailPath = Constants.TRAVELJAR_FOLDER_VIDEO + "vid_" + System.currentTimeMillis() + ".mp4";
-            try {
-                out = new FileOutputStream(thumbnailPath);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (out != null) {
-                        out.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            isNewVideo = true;
-            videoPath = extras.getString("VIDEO_PATH");
+        caption.setText(mVideo.getCaption());
 
-            Double lat = 0.0d;
-            Double longi = 0.0d;
-            GPSTracker gps = new GPSTracker(this);
-            if (gps.canGetLocation()) {
-                lat = gps.getLatitude(); // returns latitude
-                longi = gps.getLongitude(); // returns longitude
-            } else {
-                Toast.makeText(getApplicationContext(), "Network issues. Try later.",
-                        Toast.LENGTH_LONG).show();
-            }
-            mVideo = new Video(null, TJPreferences.getActiveJourneyId(this), HelpMe.VIDEO_TYPE, caption.getText().toString()
-                    .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), currenTime, currenTime, null, thumbnailPath, lat, longi);
+        Double lat = 0.0d;
+        Double longi = 0.0d;
+        GPSTracker gps = new GPSTracker(this);
+        if (gps.canGetLocation()) {
+            lat = gps.getLatitude(); // returns latitude
+            longi = gps.getLongitude(); // returns longitude
+        } else {
+            Toast.makeText(getApplicationContext(), "Network issues. Try later.",
+                    Toast.LENGTH_LONG).show();
         }
-
+        mVideo = new Video(null, TJPreferences.getActiveJourneyId(this), HelpMe.VIDEO_TYPE, caption.getText().toString()
+                .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), currenTime, currenTime, null, thumbnailPath, lat, longi);
 
         // If the picture is created by someone else than remove the caption field
         Log.d(TAG, "video created by ->" + mVideo.getCreatedBy() + "user id ->" + TJPreferences.getUserId(this));
-        if(mVideo.getCreatedBy() != TJPreferences.getUserId(this)){
+        if(!mVideo.getCreatedBy().equals(TJPreferences.getUserId(this))){
             Log.d(TAG, "the picture has not been created by the logged in user hence removing caption option");
             caption.setVisibility(View.GONE);
         }
@@ -207,6 +174,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         /*Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);*/
@@ -219,7 +187,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
             public void onClick(View v) {
                 List<String> likedBy = mVideo.getLikedBy();
                 if (likedBy == null) {
-                    likedBy = new ArrayList<String>();
+                    likedBy = new ArrayList<>();
                 }
                 Log.d(TAG,
                         "fav button clicked position " + likedBy + TJPreferences.getUserId(VideoDetail.this));
@@ -239,21 +207,9 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                     likedBy = null;
                 }
                 mVideo.setLikedBy(likedBy);
-                if (!isNewVideo) {
-                    mVideo.updateLikedBy(VideoDetail.this, mVideo.getId(), likedBy);
-                }
+                mVideo.updateLikedBy(VideoDetail.this, mVideo.getId(), likedBy);
             }
         });
-    }
-
-    private void saveAndUploadVideo() {
-        Log.d(TAG, "creating a new video in local DB");
-        if (likedBy != null) {
-            mVideo.setLikedBy(likedBy);
-        }
-        mVideo.setCaption(caption.getText().toString());
-        VideoDataSource.createVideo(mVideo, this);
-        VideoUtil.uploadVideo(this, mVideo);
     }
 
     @Override
@@ -268,12 +224,8 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.action_done:
-                Log.d(TAG, "done clicked!");
-                if (isNewVideo) {
-                    saveAndUploadVideo();
-                }
                 //Check if the text of the caption has been changed. If yes than make a request to the server
-                if(caption.getText().toString() != mVideo.getCaption()){
+                if(!caption.getText().toString().equals(mVideo.getCaption())){
                     Log.d(TAG, "the picture's caption has been changed so updating on server");
                     VideoUtil.updateCaption(mVideo, caption.getText().toString(), getBaseContext());
                 }

@@ -114,7 +114,7 @@ public class PullBuddies {
                                 Log.d(TAG, "id = " + idOnServer + "name = " + userName + email + " " + picServerUrl);
                                 Contact tempContact = new Contact(idOnServer, userName, email, status, picServerUrl, picLocalUrl,
                                         phone_no, allJourneyIds, true, interests);
-                                ContactDataSource.createContact(tempContact, mContext);
+                                ContactDataSource.createNewContact(tempContact, mContext);
                             } catch (JSONException ex) {
                                 Log.d(TAG, "exception in parsing buddy received from server" + ex);
                             }
