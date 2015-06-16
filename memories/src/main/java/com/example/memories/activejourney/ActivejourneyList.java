@@ -61,8 +61,8 @@ public class ActivejourneyList extends BaseActivity {
             mRecyclerView.setLayoutManager(mLayoutManager);
 
             // specify an adapter (see also next example)
-            mAdapter = new ActiveJourneyListAdapter(allActiveJourney, getApplicationContext());
-            mRecyclerView.setAdapter(mAdapter);
+/*            mAdapter = new ActiveJourneyListAdapter(allActiveJourney, getApplicationContext());
+            mRecyclerView.setAdapter(mAdapter);*/
 
             // Add pull to refresh functionality
             mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.active_journey_swipe_refresh_layout);
@@ -145,4 +145,23 @@ public class ActivejourneyList extends BaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void onResume() {
+        allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
+        if(allActiveJourney.size() > 0){
+            if(mAdapter == null){
+                mAdapter = new ActiveJourneyListAdapter(allActiveJourney, this);
+                mRecyclerView.setAdapter(mAdapter);
+            }else {
+                mAdapter.updateList(allActiveJourney);
+                mAdapter.notifyDataSetChanged();
+            }
+        }else {
+            noActivejourneysMsgTxt = (TextView) findViewById(R.id.active_journey_no_buddies_msg);
+            noActivejourneysMsgTxt.setVisibility(View.VISIBLE);
+        }
+
+        super.onResume();
+    }
+
 }

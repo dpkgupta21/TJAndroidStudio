@@ -115,7 +115,7 @@ public class PullMemoriesService {
 //                                Log.d(TAG, "journey status " + journeyStatus + jsonObject.getString("created_at") + jsonObject.getString("created_at").equals("null"));
 
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
-                                        createdBy, lapsList, buddiesList, journeyStatus);
+                                        createdBy, lapsList, buddiesList, journeyStatus, System.currentTimeMillis(), System.currentTimeMillis(), System.currentTimeMillis());
                                 JourneyDataSource.createJourney(journey, mContext);
                                 Log.d(TAG, "journey parsed and saved successfully in the database");
 

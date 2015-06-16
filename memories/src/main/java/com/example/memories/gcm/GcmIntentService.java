@@ -146,7 +146,7 @@ public class GcmIntentService extends IntentService {
                 buddyIdsList.add(createdBy);
                 buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
-                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE);
+                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, System.currentTimeMillis(), System.currentTimeMillis(), System.currentTimeMillis());
                 JourneyDataSource.createJourney(jItem, this);
 
             default:

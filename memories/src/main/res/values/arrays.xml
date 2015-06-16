@@ -38,6 +38,7 @@
     </string-array>
 
     <string-array name="settings_items">
+        <item>Account</item>
         <item>General Settings</item>
         <item>About Us</item>
         <item>Logout</item>

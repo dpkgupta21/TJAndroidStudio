@@ -38,6 +38,9 @@ public class JourneyDataSource {
         // values.put(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS,
         // newJourney.getLaps().toString());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_STATUS, newJourney.getJourneyStatus());
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_CREATED_AT, newJourney.getCreatedAt());
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT, newJourney.getUpdatedAt());
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_COMPELTED_AT, newJourney.getCompletedAt());
 
         // insert row
         long journey_id = db.insert(MySQLiteHelper.TABLE_JOURNEY, null, values);
@@ -138,6 +141,9 @@ public class JourneyDataSource {
                 /*String laps = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS));
                 journey.setLaps(Arrays.asList(laps.split(",")));*/
                 journey.setJourneyStatus(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_STATUS)));
+                journey.setCreatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATED_AT)));
+                journey.setUpdatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT)));
+                journey.setCompletedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_COMPELTED_AT)));
                 journeyList.add(journey);
                 cursor.moveToNext();
             }

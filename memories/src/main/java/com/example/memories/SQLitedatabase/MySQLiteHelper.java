@@ -26,12 +26,15 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String JOURNEY_COLUMN_ID_ONSERVER = "idOnServer";
     public static final String JOURNEY_COLUMN_NAME = "name";
     public static final String JOURNEY_COLUMN_TAGLINE = "tagLine";
-    public static final String JOURNEY_COLUMN_COVERPIC = "coverPic";
     public static final String JOURNEY_COLUMN_CREATEDBY = "createdBy";
     public static final String JOURNEY_COLUMN_GROUPTYPE = "groupType";
     public static final String JOURNEY_COLUMN_BUDDY_IDS = "buddyIds";
     public static final String JOURNEY_COLUMN_JOURNEY_LAPS = "journeyLapIds";
     public static final String JOURNEY_COLUMN_STATUS = "journeyStatus";
+    public static final String JOURNEY_COLUMN_CREATED_AT = "createdAt";
+    public static final String JOURNEY_COLUMN_UPDATED_AT = "updatedAt";
+    public static final String JOURNEY_COLUMN_COMPELTED_AT = "completedAt";
+
     // Table TIMELINE fields
     public static final String TABLE_TIMELINE = "TIMELINE";
     public static final String TIMELINE_COLUMN_ID = "_id";
@@ -165,12 +168,15 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + JOURNEY_COLUMN_ID_ONSERVER + " text, "
             + JOURNEY_COLUMN_NAME + " text ,"
             + JOURNEY_COLUMN_TAGLINE + " text,"
-            + JOURNEY_COLUMN_COVERPIC + " text ,"
             + JOURNEY_COLUMN_CREATEDBY + " text ,"
             + JOURNEY_COLUMN_GROUPTYPE + " text ,"
             + JOURNEY_COLUMN_BUDDY_IDS + " text ,"
             + JOURNEY_COLUMN_JOURNEY_LAPS + " text ,"
+            + JOURNEY_COLUMN_CREATED_AT + " integer ,"
+            + JOURNEY_COLUMN_UPDATED_AT + " integer ,"
+            + JOURNEY_COLUMN_COMPELTED_AT + " integer ,"
             + JOURNEY_COLUMN_STATUS + " text " + ");";
+
     private static final String CREATE_TABLE_TIMELINE = "create table " + TABLE_TIMELINE + "("
             + TIMELINE_COLUMN_ID + " integer primary key autoincrement, "
             + TIMELINE_COLUMN_ID_ONSERVER + " text ,"

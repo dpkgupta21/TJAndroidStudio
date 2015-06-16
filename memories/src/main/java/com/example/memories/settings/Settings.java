@@ -74,6 +74,7 @@ public class Settings extends AppCompatActivity{
                 Intent i;
                 switch (position) {
                     case 0:
+                        //Account Settings
                         break;
                     case 1:
                         AboutUsDialog aboutUsDialog = new AboutUsDialog();
