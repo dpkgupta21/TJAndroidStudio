@@ -194,6 +194,7 @@ public class PicturePreview extends AppCompatActivity {
         mPicture.setCaption(caption.getText().toString());
         long id = PictureDataSource.createPicture(mPicture, this);
         mPicture.setId(String.valueOf(id));
+        Log.d(TAG, "id of picture is " + String.valueOf(id) + mPicture.getId());
         Intent intent = new Intent(this, UploadPictureService.class);
         intent.putExtra("PICTURE", mPicture);
         startService(intent);

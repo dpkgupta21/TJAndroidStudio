@@ -15,7 +15,7 @@ public class Memories implements Comparable<Memories> {
     protected Double longitude;
     protected List<String> likedBy;
 
-    private String id;
+    protected String id;
 
     public String getId() {
         return id;

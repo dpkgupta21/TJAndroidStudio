@@ -10,6 +10,17 @@ import java.util.List;
 
 public class Picture extends Memories implements Parcelable{
 
+    public static final Parcelable.Creator<Picture> CREATOR = new Parcelable.Creator<Picture>() {
+
+        public Picture createFromParcel(Parcel in) {
+            return new Picture(in);
+        }
+
+        public Picture[] newArray(int size) {
+            return new Picture[size];
+        }
+    };
+
     private String caption;
     private String extension;
     private long size;
@@ -23,24 +34,6 @@ public class Picture extends Memories implements Parcelable{
 
     public Picture() {
 
-    }
-
-    public Picture(Parcel parcel){
-        this.idOnServer = parcel.readString();
-        this.jId = parcel.readString();
-        this.memType = parcel.readString();
-        this.createdBy = parcel.readString();
-        this.createdAt = parcel.readLong();
-        this.updatedAt = parcel.readLong();
-        this.latitude = parcel.readDouble();
-        this.longitude = parcel.readDouble();
-        parcel.readStringList(likedBy);
-        this.caption = parcel.readString();
-        this.extension = parcel.readString();
-        this.size = parcel.readLong();
-        this.dataServerURL = parcel.readString();
-        this.dataLocalURL = parcel.readString();
-        this.picLocalThumbnailPath = parcel.readString();
     }
 
     public Picture(String idOnServer, String jId, String memType, String caption, String ext,
@@ -61,6 +54,25 @@ public class Picture extends Memories implements Parcelable{
         this.picLocalThumbnailPath = picLocalThumbnailPath;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Picture(Parcel parcel){
+        id = parcel.readString();
+        idOnServer = parcel.readString();
+        jId = parcel.readString();
+        memType = parcel.readString();
+        createdBy = parcel.readString();
+        createdAt = parcel.readLong();
+        updatedAt = parcel.readLong();
+        latitude = parcel.readDouble();
+        longitude = parcel.readDouble();
+        likedBy = parcel.readArrayList(null);
+        caption = parcel.readString();
+        extension = parcel.readString();
+        size = parcel.readLong();
+        dataServerURL = parcel.readString();
+        dataLocalURL = parcel.readString();
+        picLocalThumbnailPath = parcel.readString();
     }
 
     public String getCaption() {
@@ -125,16 +137,16 @@ public class Picture extends Memories implements Parcelable{
 
     @Override
     public String toString() {
-        return "id -> " + this.getId() + "\n" +
-                "id on server -> " + this.getIdOnServer() + "\n" +
-                "journey id -> " + this.getjId() + "\n" +
-                "memory type -> " + this.getMemType() + "\n" +
-                "created by -> " + this.getCreatedBy() + "\n" +
-                "created at -> " + this.getCreatedAt() + "\n" +
-                "liked by -> " + this.getLikedBy() + "\n" +
-                "caption -> " + this.getCaption() + "\n" +
-                "picture server url -> " + this.getDataServerURL() + "\n" +
-                "picture local url -> " + this.getDataLocalURL() + "\n" +
+        return "id -> " + this.getId() +
+                "id on server -> " + this.getIdOnServer() +
+                "journey id -> " + this.getjId() +
+                "memory type -> " + this.getMemType() +
+                "created by -> " + this.getCreatedBy() +
+                "created at -> " + this.getCreatedAt() +
+                "liked by -> " + this.getLikedBy() +
+                "caption -> " + this.getCaption() +
+                "picture server url -> " + this.getDataServerURL() +
+                "picture local url -> " + this.getDataLocalURL() +
                 "picture thumbnail url -> " + this.getPicThumbnailPath();
     }
 
@@ -145,6 +157,7 @@ public class Picture extends Memories implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(id);
         parcel.writeString(idOnServer);
         parcel.writeString(jId);
         parcel.writeString(memType);

@@ -41,7 +41,7 @@ public class UploadPictureService extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, startId, startId);
         picture = intent.getParcelableExtra("PICTURE");
-        Log.d(TAG, "upload picture service has started");
+        Log.d(TAG, "upload picture service has started for picture" + picture.getId());
         return START_STICKY;
     }
 

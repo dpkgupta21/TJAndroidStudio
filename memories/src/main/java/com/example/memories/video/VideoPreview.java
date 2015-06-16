@@ -26,7 +26,6 @@ import com.example.memories.services.GPSTracker;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
-import com.example.memories.utility.VideoUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -201,8 +200,12 @@ public class VideoPreview extends AppCompatActivity {
             mVideo.setLikedBy(likedBy);
         }
         mVideo.setCaption(caption.getText().toString());
-        VideoDataSource.createVideo(mVideo, this);
-        VideoUtil.uploadVideo(this, mVideo);
+        long id = VideoDataSource.createVideo(mVideo, this);
+        mVideo.setId(String.valueOf(id));
+        Intent intent = new Intent(this, UploadVideoService.class);
+        intent.putExtra("VIDEO", mVideo);
+        startService(intent);
+//        VideoUtil.uploadVideo(this, mVideo);
     }
 
     @Override
