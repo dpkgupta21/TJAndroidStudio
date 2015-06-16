@@ -11,7 +11,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/logo_embross" />
 
     <com.example.memories.customviews.MyTextView
         android:id="@+id/textView1"

@@ -69,8 +69,8 @@ public class HelpMe {
     public static final int CONVEYANCE_SHIP = 4; //"Ship";
     public static final int CONVEYANCE_BUS = 6; //"Bus";
     public static final int CONVEYANCE_WALK = 5; //"Walk";
-    public static final int CONVEYANCE_BIKE = 5; //"Bike";
-    public static final int CONVEYANCE_CARPET = 5; //"Carpet";
+    public static final int CONVEYANCE_BIKE = 7; //"Bike";
+    public static final int CONVEYANCE_CARPET = 8; //"Carpet";
 
     // To fetch dates from getDate()
     public static final int DATE_FULL = 1;
@@ -143,8 +143,8 @@ public class HelpMe {
         }
     }
 
-
     public static String getDate(long timestamp, int type) {
+        timestamp = timestamp * 1000;
         SimpleDateFormat onlyDate = new SimpleDateFormat("dd");
         SimpleDateFormat fullDate = new SimpleDateFormat("dd MMM yyyy");
         SimpleDateFormat fullTime = new SimpleDateFormat("hh:mm aaa, EEE");
@@ -152,6 +152,7 @@ public class HelpMe {
 
         switch (type) {
             case DATE_FULL:
+                Log.d(TAG, fullDate.format(resultdate).toString());
                 return fullDate.format(resultdate).toString();
             default:
                 break;
