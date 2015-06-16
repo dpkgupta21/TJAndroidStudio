@@ -133,7 +133,7 @@ public class NewJourneyDetail extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
                         if (pDialog != null) {
-                            pDialog.hide();
+                            pDialog.dismiss();
                         }
                         try {
                             createNewJourneyInDB(response);
@@ -152,7 +152,7 @@ public class NewJourneyDetail extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d(TAG, "Error: " + error.getMessage());
-                        pDialog.hide();
+                        pDialog.dismiss();
                         Toast.makeText(
                                 getApplicationContext(),
                                 "There are some issues creating your journey please try again",

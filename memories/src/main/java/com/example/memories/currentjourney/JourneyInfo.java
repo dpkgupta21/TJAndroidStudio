@@ -164,7 +164,7 @@ public class JourneyInfo extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new JourneyInfoBuddiesListAdapter(allBuddiesList);
-        mRecyclerView.getLayoutParams().height = convertDpToPixels(allBuddiesList.size() * 110);
+        mRecyclerView.getLayoutParams().height = convertDpToPixels(allBuddiesList.size() * 90);
         mRecyclerView.setAdapter(mAdapter);
 
     }

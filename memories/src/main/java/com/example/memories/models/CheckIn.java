@@ -76,16 +76,16 @@ public class CheckIn extends Memories {
 
     @Override
     public String toString() {
-        return "id on server -> " + this.getIdOnServer() + "\n" +
-                "journey id -> " + this.getjId() + "\n" +
-                "memory type -> " + this.getMemType() + "\n" +
-                "created by -> " + this.getCreatedBy() + "\n" +
-                "created at -> " + this.getCreatedAt() + "\n" +
-                "liked by -> " + this.getLikedBy() + "\n" +
-                "checkin caption -> " + this.getCaption() + "\n" +
-                "latitude -> " + this.getLatitude() + "\n" +
-                "longitude -> " + this.getLongitude() + "\n" +
-                "checkin place name -> " + this.getCheckInPlaceName() + "\n" +
+        return "id on server -> " + this.getIdOnServer() +
+                "journey id -> " + this.getjId() +
+                "memory type -> " + this.getMemType() +
+                "created by -> " + this.getCreatedBy() +
+                "created at -> " + this.getCreatedAt() +
+                "liked by -> " + this.getLikedBy() +
+                "checkin caption -> " + this.getCaption() +
+                "latitude -> " + this.getLatitude() +
+                "longitude -> " + this.getLongitude() +
+                "checkin place name -> " + this.getCheckInPlaceName() +
                 "checkin with -> " + this.getCheckInWith();
 
     }

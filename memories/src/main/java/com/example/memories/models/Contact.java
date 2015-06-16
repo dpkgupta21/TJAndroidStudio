@@ -148,14 +148,14 @@ public class Contact implements Comparable<Contact>, Parcelable {
 
     @Override
     public String toString() {
-        return "id on server -> " + this.getIdOnServer() + "\n" +
-                "name -> " + this.getName() + "\n" +
-                "primary email -> " + this.getPrimaryEmail() + "\n" +
-                "status -> " + this.getStatus() + "\n" +
-                "pic server url -> " + this.getPicServerUrl() + "\n" +
-                "pic local url -> " + this.getPicLocalUrl() + "\n" +
-                "phone number -> " + this.getPhone_no() + "\n" +
-                "is on board -> " + this.isOnBoard() + "\n" +
+        return "id on server -> " + this.getIdOnServer() +
+                "name -> " + this.getName() +
+                "primary email -> " + this.getPrimaryEmail() +
+                "status -> " + this.getStatus() +
+                "pic server url -> " + this.getPicServerUrl() +
+                "pic local url -> " + this.getPicLocalUrl() +
+                "phone number -> " + this.getPhone_no() +
+                "is on board -> " + this.isOnBoard() +
                 "all journey ids -> " + this.getAllJourneyIds();
     }
 

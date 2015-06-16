@@ -63,14 +63,14 @@ public class Mood extends Memories {
 
     @Override
     public String toString() {
-        return "id on server -> " + this.getIdOnServer() + "\n" +
-                "journey id -> " + this.getjId() + "\n" +
-                "memory type -> " + this.getMemType() + "\n" +
-                "created by -> " + this.getCreatedBy() + "\n" +
-                "created at -> " + this.getCreatedAt() + "\n" +
-                "liked by -> " + this.getLikedBy() + "\n" +
-                "mood -> " + this.getMood() + "\n" +
-                "reason -> " + this.getReason() + "\n" +
+        return "id on server -> " + this.getIdOnServer() +
+                "journey id -> " + this.getjId() +
+                "memory type -> " + this.getMemType() +
+                "created by -> " + this.getCreatedBy() +
+                "created at -> " + this.getCreatedAt() +
+                "liked by -> " + this.getLikedBy() +
+                "mood -> " + this.getMood() +
+                "reason -> " + this.getReason() +
                 "buddies -> " + this.getBuddyIds();
     }
 }

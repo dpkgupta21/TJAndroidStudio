@@ -150,7 +150,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            pDialog.hide();
+                            pDialog.dismiss();
                             Toast.makeText(getApplicationContext(),
                                     "Username & password donot match!", Toast.LENGTH_LONG)
                                     .show();

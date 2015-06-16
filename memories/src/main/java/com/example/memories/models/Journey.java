@@ -133,13 +133,13 @@ public class Journey implements Comparable<Journey> {
 
     @Override
     public String toString() {
-        return "id on server -> " + this.getIdOnServer() + "\n" +
-                "name -> " + this.getName() + "\n" +
-                "tagline -> " + this.getTagLine() + "\n" +
-                "group type -> " + this.getGroupType() + "\n" +
-                "created by -> " + this.getCreatedBy() + "\n" +
-                "laps -> " + this.getLaps() + "\n" +
-                "buddies -> " + this.getBuddies() + "\n" +
+        return "id on server -> " + this.getIdOnServer() +
+                "name -> " + this.getName() +
+                "tagline -> " + this.getTagLine() +
+                "group type -> " + this.getGroupType() +
+                "created by -> " + this.getCreatedBy() +
+                "laps -> " + this.getLaps() +
+                "buddies -> " + this.getBuddies() +
                 "journey status -> " + this.getJourneyStatus();
     }
 

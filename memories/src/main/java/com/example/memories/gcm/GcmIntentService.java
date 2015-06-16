@@ -267,7 +267,7 @@ public class GcmIntentService extends IntentService {
                 mood = data.getString("mood");
                 reason = data.getString("reason");
 
-                buddyIds = new ArrayList<String>();
+                buddyIds = new ArrayList<>();
                 String array[] = data.getString("buddies").split(",");
                 for (String s : array) {
                     buddyIds.add(s);

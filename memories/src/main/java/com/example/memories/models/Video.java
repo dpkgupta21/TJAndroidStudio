@@ -1,12 +1,26 @@
 package com.example.memories.models;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.example.memories.SQLitedatabase.VideoDataSource;
 
 import java.util.List;
 
-public class Video extends Memories {
+public class Video extends Memories implements Parcelable {
+
+    public static final Parcelable.Creator<Picture> CREATOR = new Parcelable.Creator<Picture>() {
+
+        public Picture createFromParcel(Parcel in) {
+            return new Picture(in);
+        }
+
+        public Picture[] newArray(int size) {
+            return new Picture[size];
+        }
+    };
+
     private String caption;
     private String extension;
     private long size;
@@ -37,6 +51,25 @@ public class Video extends Memories {
         this.localThumbPath = localThumbPath;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Video(Parcel parcel){
+        id = parcel.readString();
+        idOnServer = parcel.readString();
+        jId = parcel.readString();
+        memType = parcel.readString();
+        createdBy = parcel.readString();
+        createdAt = parcel.readLong();
+        updatedAt = parcel.readLong();
+        latitude = parcel.readDouble();
+        longitude = parcel.readDouble();
+        likedBy = parcel.readArrayList(null);
+        caption = parcel.readString();
+        extension = parcel.readString();
+        size = parcel.readLong();
+        dataServerURL = parcel.readString();
+        dataLocalURL = parcel.readString();
+        localThumbPath = parcel.readString();
     }
 
     public boolean isChecked() {
@@ -111,6 +144,31 @@ public class Video extends Memories {
                 "picture server url -> " + this.getDataServerURL() + "\n" +
                 "picture local url -> " + this.getDataLocalURL() + "\n" +
                 "picture thumbnail url -> " + this.getLocalThumbPath();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(id);
+        parcel.writeString(idOnServer);
+        parcel.writeString(jId);
+        parcel.writeString(memType);
+        parcel.writeString(createdBy);
+        parcel.writeLong(createdAt);
+        parcel.writeLong(updatedAt);
+        parcel.writeDouble(latitude);
+        parcel.writeDouble(longitude);
+        parcel.writeStringList(likedBy);
+        parcel.writeString(caption);
+        parcel.writeString(extension);
+        parcel.writeLong(size);
+        parcel.writeString(dataServerURL);
+        parcel.writeString(dataLocalURL);
+        parcel.writeString(localThumbPath);
     }
 
 }
