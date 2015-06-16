@@ -75,12 +75,18 @@ public class Settings extends AppCompatActivity{
                 switch (position) {
                     case 0:
                         //Account Settings
+                        Intent intent = new Intent(Settings.this, AccountSettings.class);
+                        startActivity(intent);
                         break;
                     case 1:
-                        AboutUsDialog aboutUsDialog = new AboutUsDialog();
-                        aboutUsDialog.show(getSupportFragmentManager(), "ABOUT US");
+                        //General Settings
                         break;
                     case 2:
+                        //About Us
+                        AboutUsDialog aboutUsDialog = new AboutUsDialog();
+                        aboutUsDialog.show(getSupportFragmentManager(), "ABOUT US");
+                    case 3:
+                        //Logout
                         new AlertDialog.Builder(Settings.this)
                                 .setTitle("Logout")
                                 .setMessage("Are you sure you want to logout?")
@@ -96,8 +102,6 @@ public class Settings extends AppCompatActivity{
                                 })
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
-                    case 3:
-
                         break;
                     case 4:
                         break;

@@ -89,7 +89,7 @@ public class VideoPreview extends AppCompatActivity {
         thumbnailPath = Constants.TRAVELJAR_FOLDER_VIDEO + "vid_" + System.currentTimeMillis() + ".mp4";
         try {
             out = new FileOutputStream(thumbnailPath);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

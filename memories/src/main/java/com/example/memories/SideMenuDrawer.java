@@ -97,7 +97,7 @@ public class SideMenuDrawer extends Fragment {
                         break;
                     case 3:
                         i = new Intent(getActivity(), ProfileActivity.class);
-                        startActivityForResult(i, REQUEST_CODE_UPDATE_PROFILE);
+                        startActivity(i);
                         break;
 
                     default:

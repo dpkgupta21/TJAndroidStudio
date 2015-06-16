@@ -179,6 +179,7 @@ public class NewJourneyDetail extends AppCompatActivity {
 
         String idOnServer = newJourney.getString("id");
         String name = newJourney.getString("name");
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
         String tag_line = newJourney.getString("tag_line");
         String group_relationship = newJourney.getString("group_relationship");
         String created_by_id = newJourney.getString("created_by_id");

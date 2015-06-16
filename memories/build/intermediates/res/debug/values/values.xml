@@ -2,6 +2,12 @@
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
     <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/arrays.xml -->
     <eat-comment/>
+    <string-array name="account_setting_items">
+        <item>Registered Email id</item>
+        <item>Registered Phone number</item>
+        <item>Update phone number</item>
+        <item>Change Password</item>
+    </string-array>
     <string-array name="contacts_list">
         <item>John Cena</item>
         <item>Dwayne Jhonson</item>

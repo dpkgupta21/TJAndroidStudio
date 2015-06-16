@@ -179,7 +179,6 @@ public class ProfileActivity extends BaseActivity {
                     Toast.makeText(this, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
                 }
 
-                finish();
                 return true;
             case 1:
                 LinearLayout layout = (LinearLayout) findViewById(R.id.edit_layout);

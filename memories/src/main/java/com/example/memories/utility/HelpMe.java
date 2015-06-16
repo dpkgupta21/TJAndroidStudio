@@ -106,7 +106,7 @@ public class HelpMe {
     }
 
     public static long getCurrentTime() {
-        return System.currentTimeMillis();
+        return (System.currentTimeMillis()/1000);
     }
 
     // CHeck for Internet connection
@@ -153,6 +153,7 @@ public class HelpMe {
         switch (type) {
             case DATE_FULL:
                 Log.d(TAG, fullDate.format(resultdate).toString());
+                Log.d(TAG, "timestamp = " + timestamp + ", formatted date = " + resultdate + " ===" + fullDate.format(resultdate).toString());
                 return fullDate.format(resultdate).toString();
             default:
                 break;
@@ -294,7 +295,7 @@ public class HelpMe {
             try {
                 Log.d(TAG, bm + "====" + file);
                 outStream = new FileOutputStream(file);
-                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
                 outStream.flush();
                 outStream.close();
             } catch (Exception e) {

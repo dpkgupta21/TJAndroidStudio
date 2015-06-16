@@ -1,12 +1,11 @@
 package com.example.memories.picture;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -65,7 +64,7 @@ public class PictureCapture extends AppCompatActivity {
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             }
         }
@@ -85,45 +84,40 @@ public class PictureCapture extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "intent data is" + data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView img = (ImageView) findViewById(R.id.capture_photos_image_preview);
             Bitmap bitmap = null;
             try {
                 bitmap = BitmapFactory.decodeFile(imagePath);
             } catch (Exception ex) {
-
             }
 
-            //bitmap = getAdjustedBitmap(this, bitmap);
+            int rotation = getImageRotationInDegrees();
+            if(rotation != 0){
+                bitmap = getAdjustedBitmap(bitmap, rotation);
+                Log.d(TAG, "calling replace image");
+                replaceImg(bitmap);
+                Log.d("TAG", "bitmap compressed successfully");
+            }
             img.setImageBitmap(bitmap);
-            //new replacePictureTask().execute(new Object[]{new File(imagePath), bitmap});
+//            new replacePictureTask().execute(new Object[]{new File(imagePath), bitmap});
         }
     }
 
-    public Bitmap getAdjustedBitmap(Context context, Bitmap bitmap) {
-
-        int rotate = 0;
+    private int getImageRotationInDegrees(){
         try {
-            File imageFile = new File(imagePath);
-            ExifInterface exif = new ExifInterface(imageFile.getAbsolutePath());
-            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL);
-
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    rotate = 270;
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    rotate = 180;
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    rotate = 90;
-                    break;
-            }
-        } catch (Exception e) {
+            ExifInterface exif = new ExifInterface(imagePath);
+            int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
+            else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
+            else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        return 0;
+    }
+
+    public Bitmap getAdjustedBitmap(Bitmap bitmap, int rotate) {
         Matrix matrix = new Matrix();
         matrix.postRotate(rotate);
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix,
@@ -131,31 +125,22 @@ public class PictureCapture extends AppCompatActivity {
         return bitmap;
     }
 
-    private class replacePictureTask extends AsyncTask<Object, Integer, String> {
-
-        @Override
-        protected String doInBackground(Object... url) {
-            Log.d("TAG", "inside download task do in background");
-            File file = (File) url[0];
-            Bitmap bitmap = (Bitmap) url[1];
-            file.delete();
-            //FileOutputStream fOut = null;
+    private void replaceImg(Bitmap bitmap){
+        File file = new File(imagePath);
+        file.delete();
+        FileOutputStream fOut = null;
+        try {
+            fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
             try {
-                FileOutputStream fOut = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                Log.d("TAG", "fine till here");
-            } catch (FileNotFoundException e) {
+                fOut.flush();
+                fOut.close();
+            } catch (IOException e) {
                 e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result == null) {
-
             }
         }
     }
-
 }

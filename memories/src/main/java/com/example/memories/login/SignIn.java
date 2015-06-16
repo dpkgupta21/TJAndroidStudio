@@ -193,6 +193,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
         String phone = userItem.getString("phone");
         String api_key = userItem.getString("api_key");
         String status = userItem.getString("status");
+        status = (status == "null") ? "Those who travel are not lost" : status;
         String interest = userItem.getString("interests");
         final String picServerUrl = userItem.getJSONObject("profile_picture").getJSONObject("original").getString("url");
         String picLocalUrl;

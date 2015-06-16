@@ -22,6 +22,7 @@ import com.example.memories.activejourney.adapters.ActiveJourneyListAdapter;
 import com.example.memories.models.Journey;
 import com.example.memories.newjourney.LapsList;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,6 +49,7 @@ public class ActivejourneyList extends BaseActivity {
         toolbar.setTitle("Active Journeys");
 
         allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
+        Collections.sort(allActiveJourney);
 
         if (allActiveJourney.size() > 0) {
             mRecyclerView = (RecyclerView) findViewById(R.id.active_journey_recycler_view);

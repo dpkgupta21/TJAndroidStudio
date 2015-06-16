@@ -20,11 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.memories.R;
+import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Picture;
 import com.example.memories.services.GPSTracker;
 import com.example.memories.utility.Constants;
 import com.example.memories.utility.HelpMe;
-import com.example.memories.utility.PictureUtilities;
 import com.example.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
@@ -94,7 +94,7 @@ public class PicturePreview extends AppCompatActivity {
             FileOutputStream out = null;
             try {
                 out = new FileOutputStream(localThumbnailPath);
-                thumbnail.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+                thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -188,12 +188,16 @@ public class PicturePreview extends AppCompatActivity {
     }
 
     private void saveAndUploadPic() {
-
         if (likedBy != null) {
             mPicture.setLikedBy(likedBy);
         }
         mPicture.setCaption(caption.getText().toString());
-        PictureUtilities.uploadPicture(this, mPicture);
+        long id = PictureDataSource.createPicture(mPicture, this);
+        mPicture.setId(String.valueOf(id));
+        Intent intent = new Intent(this, UploadPictureService.class);
+        intent.putExtra("PICTURE", mPicture);
+        startService(intent);
+        //PictureUtilities.uploadPicture(this, mPicture);
     }
 
     @Override
@@ -210,7 +214,6 @@ public class PicturePreview extends AppCompatActivity {
             case R.id.action_done:
                 Log.d(TAG, "done clicked!");
                 saveAndUploadPic();
-                //Check if the text of the caption has been changed. If yes than make a request to the server
                 finish();
                 return true;
             case android.R.id.home:
