@@ -1,6 +1,7 @@
 package com.example.memories.newjourney.adapters;
 
 import android.app.Activity;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,9 @@ public class MultiAutoCompleteViewAdapter extends ArrayAdapter<Contact> implemen
             holder.contact_info.setText(list.get(position).getPrimaryEmail());
         } else {
             holder.contact_info.setText(list.get(position).getPhone_no());
+        }
+        if (list.get(position).getPicLocalUrl() != null) {
+            holder.img.setImageBitmap(BitmapFactory.decodeFile(list.get(position).getPicLocalUrl()));
         }
 
         return view;
