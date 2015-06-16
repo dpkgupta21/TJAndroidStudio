@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar" />
+
+    <com.example.memories.customviews.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/tj_medium_font"
+        android:textStyle="bold"
+        android:text="Email"
+        android:textColor="#78C257"/>
+
+    <com.example.memories.customviews.MyTextView
+        android:id="@+id/user_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/tj_large_font"
+        android:text="Email" />
+
+    <com.example.memories.customviews.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/tj_large_font"
+        android:textStyle="bold"
+        android:text="Phone"
+        android:textColor="#78C257"/>
+
+    <com.example.memories.customviews.MyTextView
+        android:id="@+id/user_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/tj_large_font"
+        android:text="Phone" />
+
+    <com.example.memories.customviews.MyButtonView
+        android:id="@+id/update_phone_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Update Phone"
+        android:padding="10dp"
+        android:background="@drawable/rounded_corner_button"
+        />
+
+    <com.example.memories.customviews.MyButtonView
+        android:id="@+id/update_password_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Update Password"
+        android:padding="10dp"
+        android:background="@drawable/rounded_corner_button"
+        />
+
+
+</LinearLayout>

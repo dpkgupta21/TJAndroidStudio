@@ -2,6 +2,12 @@
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
     <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/arrays.xml -->
     <eat-comment/>
+    <string-array name="account_setting_items">
+        <item>Registered Email id</item>
+        <item>Registered Phone number</item>
+        <item>Update phone number</item>
+        <item>Change Password</item>
+    </string-array>
     <string-array name="contacts_list">
         <item>John Cena</item>
         <item>Dwayne Jhonson</item>
@@ -29,6 +35,7 @@
         <item>Vellore</item>
     </string-array>
     <string-array name="settings_items">
+        <item>Account</item>
         <item>General Settings</item>
         <item>About Us</item>
         <item>Logout</item>
