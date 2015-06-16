@@ -60,13 +60,14 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
 
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
-        String f = lapsList.get(position).get("from");
-        String t = lapsList.get(position).get("to");
+        String f = lapsList.get(position).get("fromCity");
+        String t = lapsList.get(position).get("toCity");
         String d = lapsList.get(position).get("date");
         String c = HelpMe.getConveyanceMode(Integer.parseInt(lapsList.get(position).get("conveyance")));
         holder.from.setText(f);
         holder.to.setText(t);
-        holder.date.setText(d);
+        holder.date.setText(HelpMe.getDate(Long.parseLong(d), 1));
+        Log.d(TAG, d + "===" + HelpMe.getDate(Long.parseLong(d), 1));
         holder.conveyance.setText(c);
         return rowView;
     }

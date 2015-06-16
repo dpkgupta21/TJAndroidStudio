@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Contact implements Comparable<Contact>, Parcelable {
+
     public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>() {
 
         public Contact createFromParcel(Parcel in) {

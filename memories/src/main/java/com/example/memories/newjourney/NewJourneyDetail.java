@@ -80,19 +80,19 @@ public class NewJourneyDetail extends AppCompatActivity {
             for (Map<String, String> lap : AppController.lapsList) {
                 // Get source info
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_city_name]",
-                        lap.get("source_city_name"));
+                        lap.get("fromCity"));
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_state_name]",
-                        lap.get("source_state_name"));
+                        lap.get("fromState"));
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_country_name]",
-                        lap.get("source_country_name"));
+                        lap.get("fromCountry"));
 
                 // Get destination info
                 params.put("journey[journey_laps_attributes[" + currentPosition
-                        + "]][destination_city_name]", lap.get("destination_city_name"));
+                        + "]][destination_city_name]", lap.get("toCity"));
                 params.put("journey[journey_laps_attributes[" + currentPosition
-                        + "]][destination_state_name]", lap.get("destination_state_name"));
+                        + "]][destination_state_name]", lap.get("toState"));
                 params.put("journey[journey_laps_attributes[" + currentPosition
-                        + "]][destination_country_name]", lap.get("destination_country_name"));
+                        + "]][destination_country_name]", lap.get("toCountry"));
 
                 params.put(
                         "journey[journey_laps_attributes[" + currentPosition + "]][travel_mode]",

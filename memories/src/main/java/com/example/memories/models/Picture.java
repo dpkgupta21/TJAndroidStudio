@@ -1,13 +1,14 @@
 package com.example.memories.models;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.example.memories.SQLitedatabase.PictureDataSource;
 
 import java.util.List;
 
-public class
-        Picture extends Memories {
+public class Picture extends Memories implements Parcelable{
 
     private String caption;
     private String extension;
@@ -22,6 +23,24 @@ public class
 
     public Picture() {
 
+    }
+
+    public Picture(Parcel parcel){
+        this.idOnServer = parcel.readString();
+        this.jId = parcel.readString();
+        this.memType = parcel.readString();
+        this.createdBy = parcel.readString();
+        this.createdAt = parcel.readLong();
+        this.updatedAt = parcel.readLong();
+        this.latitude = parcel.readDouble();
+        this.longitude = parcel.readDouble();
+        parcel.readStringList(likedBy);
+        this.caption = parcel.readString();
+        this.extension = parcel.readString();
+        this.size = parcel.readLong();
+        this.dataServerURL = parcel.readString();
+        this.dataLocalURL = parcel.readString();
+        this.picLocalThumbnailPath = parcel.readString();
     }
 
     public Picture(String idOnServer, String jId, String memType, String caption, String ext,
@@ -119,4 +138,27 @@ public class
                 "picture thumbnail url -> " + this.getPicThumbnailPath();
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(idOnServer);
+        parcel.writeString(jId);
+        parcel.writeString(memType);
+        parcel.writeString(createdBy);
+        parcel.writeLong(createdAt);
+        parcel.writeLong(updatedAt);
+        parcel.writeDouble(latitude);
+        parcel.writeDouble(longitude);
+        parcel.writeStringList(likedBy);
+        parcel.writeString(caption);
+        parcel.writeString(extension);
+        parcel.writeLong(size);
+        parcel.writeString(dataServerURL);
+        parcel.writeString(dataLocalURL);
+        parcel.writeString(picLocalThumbnailPath);
+    }
 }

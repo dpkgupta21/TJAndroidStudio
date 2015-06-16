@@ -152,7 +152,7 @@ public class PictureUtilities {
         @Override
         protected void onPostExecute(JSONObject object) {
             // If upload is successful than set server id and data server url received from response and create new picture in db
-            //else save the picture as it is
+            //else save the icture as it is
             if (object != null) {
                 try {
                     Log.d(TAG, "onPostExecute()" + picture);
@@ -165,7 +165,7 @@ public class PictureUtilities {
                     Log.d(TAG, ex.getMessage());
                 }
             }
-            PictureDataSource.createPicture(picture, context);
+            PictureDataSource.updateServerIdAndUrl(context, picture.getId(), picture.getIdOnServer(), picture.getDataServerURL());
         }
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.example.memories.utility.HelpMe;
 import com.example.memories.volley.AppController;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -69,6 +71,17 @@ public class AddLap extends AppCompatActivity {
         toggleBike = (ToggleButton) findViewById(R.id.bikeToggle);
         toggleCarpet = (ToggleButton) findViewById(R.id.carpetToggle);
 
+        // Initializing the 2 location arrays
+        fromLocationList = new ArrayList<>();
+        fromLocationList.add("Bangalore");
+        fromLocationList.add("Karnataka");
+        fromLocationList.add("India");
+
+        toLocationList = new ArrayList<>();
+        toLocationList.add("Delhi");
+        toLocationList.add("New Delhi");
+        toLocationList.add("India");
+
         // Set up date picker
         Calendar calendar = Calendar.getInstance();
         final SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE, d MMM yyyy", Locale.US);
@@ -85,10 +98,10 @@ public class AddLap extends AppCompatActivity {
         if (getIntent().hasExtra("EDIT_JOURNEY_POSITION")) {
             editMode = true;
             editLapIndex = getIntent().getIntExtra("EDIT_JOURNEY_POSITION", -1);
-            Map<String, String> lap = ((AppController) getApplicationContext()).lapsList.get(editLapIndex);
-            dateLocation.setText(lap.get("date"));
-            fromLocation.setText(lap.get("from"));
-            toLocation.setText(lap.get("to"));
+            Map<String, String> lap = AppController.lapsList.get(editLapIndex);
+            dateLocation.setText(HelpMe.getDate(Long.parseLong(lap.get("date")), 1));
+            fromLocation.setText(lap.get("fromCity"));
+            toLocation.setText(lap.get("toCity"));
 
             // parse string into int codes and set appropraite toggle button to true
             setConveyanceMode(Integer.parseInt(lap.get("conveyance")));
@@ -205,7 +218,6 @@ public class AddLap extends AppCompatActivity {
     // save the details
     // And send back them to LapsList list screen
     public void updateDone(View v) {
-
         if (conveyanceMode == -1) {
             Toast.makeText(this, "Please select the conveyence mode", Toast.LENGTH_SHORT).show();
         } else {
@@ -218,12 +230,14 @@ public class AddLap extends AppCompatActivity {
                 AppController.lapsList.add(map);
             }
 
+            // Received locatino has city, state and country
             if (fromLocationList.size() == 3) {
                 map.put("fromCity", fromLocationList.get(0));
                 map.put("fromState", fromLocationList.get(1));
                 map.put("fromCountry", fromLocationList.get(2));
 
-            } else {
+            }// Received locatino has ONLY state and country
+            else {
                 map.put("fromCity", fromLocationList.get(0));
                 map.put("fromState", fromLocationList.get(0));
                 map.put("fromCountry", fromLocationList.get(1));
@@ -240,7 +254,7 @@ public class AddLap extends AppCompatActivity {
             }
 
             map.put("date", String.valueOf(System.currentTimeMillis() / 1000));
-            map.put("conveyance", String.valueOf(conveyanceMode));
+            map.put("conveyance", (String.valueOf(conveyanceMode) == "") ? HelpMe.getConveyanceMode(8) : String.valueOf(conveyanceMode));
 
 
             Intent i = new Intent(getBaseContext(), LapsList.class);
@@ -283,11 +297,13 @@ public class AddLap extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
+                Log.d(TAG, "returned from 'from' location");
                 String result = data.getStringExtra("result");
 
                 fromLocationList = Arrays.asList(result.split(","));
                 fromLocation.setText(fromLocationList.get(0));
             } else if (requestCode == 2) {
+                Log.d(TAG, "returned from 'to' location");
                 String result = data.getStringExtra("result");
 
                 toLocationList = Arrays.asList(result.split(","));
