@@ -118,10 +118,10 @@ public class Settings extends AppCompatActivity{
     }
 
     private void initializeSettingsIconIdsList() {
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
+        settingsIconIdsList.add(String.valueOf(R.drawable.settings_account));
+        settingsIconIdsList.add(String.valueOf(R.drawable.settings_general));
+        settingsIconIdsList.add(String.valueOf(R.drawable.settings_about));
+        settingsIconIdsList.add(String.valueOf(R.drawable.settings_logout));
         settingsIconIdsList.add(String.valueOf(R.drawable.logout));
         settingsIconIdsList.add(String.valueOf(R.drawable.logout));
         settingsIconIdsList.add(String.valueOf(R.drawable.logout));
