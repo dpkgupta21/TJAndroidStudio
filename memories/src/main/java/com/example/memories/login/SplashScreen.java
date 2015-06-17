@@ -96,9 +96,9 @@ public class SplashScreen extends Activity {
         mPictureTextList.add("We capture audios, videos, notes, moods, pictures and much more");
 
         mPictureIdsList = new ArrayList<>();
-        mPictureIdsList.add(R.drawable.splash_bg1);
-        mPictureIdsList.add(R.drawable.splash_bg2);
-        mPictureIdsList.add(R.drawable.splash_bg3);
+        mPictureIdsList.add(R.drawable.img_splash_1);
+        mPictureIdsList.add(R.drawable.img_splash_2);
+        mPictureIdsList.add(R.drawable.img_splash_3);
 
         int i = 0;
         for(Integer a : mPictureIdsList){

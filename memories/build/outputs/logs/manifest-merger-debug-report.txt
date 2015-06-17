@@ -1,8 +1,6 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -13,6 +11,8 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
 MERGED from TJAndroidStudio:library:unspecified:7:5
@@ -24,7 +24,7 @@ MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.android.support:appcompat-v7:22.2.0:20:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
-MERGED from com.google.android.gms:play-services:6.1.71:20:5
+MERGED from com.google.android.gms:play-services:6.1.71:15:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
 	android:targetSdkVersion
 		ADDED from AndroidManifest.xml:9:9
@@ -106,7 +106,7 @@ MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from com.android.support:appcompat-v7:22.2.0:22:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
-MERGED from com.google.android.gms:play-services:6.1.71:21:5
+MERGED from com.google.android.gms:play-services:6.1.71:16:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
 	android:label
 		ADDED from AndroidManifest.xml:35:9
@@ -386,10 +386,10 @@ ADDED from AndroidManifest.xml:179:9
 		ADDED from AndroidManifest.xml:180:13
 receiver#com.example.memories.utility.SMSReceiver
 ADDED from AndroidManifest.xml:184:9
-	android:exported
-		ADDED from AndroidManifest.xml:187:13
 	android:enabled
 		ADDED from AndroidManifest.xml:186:13
+	android:exported
+		ADDED from AndroidManifest.xml:187:13
 	android:name
 		ADDED from AndroidManifest.xml:185:13
 intent-filter#android.provider.Telephony.SMS_RECEIVED
@@ -402,10 +402,10 @@ ADDED from AndroidManifest.xml:189:17
 		ADDED from AndroidManifest.xml:189:25
 meta-data#com.google.android.gms.version
 ADDED from AndroidManifest.xml:193:9
-	android:name
-		ADDED from AndroidManifest.xml:194:13
 	android:value
 		ADDED from AndroidManifest.xml:195:13
+	android:name
+		ADDED from AndroidManifest.xml:194:13
 receiver#com.example.memories.gcm.GcmBroadcastReceiver
 ADDED from AndroidManifest.xml:204:9
 	android:permission

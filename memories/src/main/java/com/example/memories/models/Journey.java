@@ -2,7 +2,7 @@ package com.example.memories.models;
 
 import java.util.List;
 
-public class Journey {
+public class Journey implements Comparable<Journey> {
     private String idOnServer;
     private String name;
     private String tagLine;
@@ -141,5 +141,14 @@ public class Journey {
                 "laps -> " + this.getLaps() +
                 "buddies -> " + this.getBuddies() +
                 "journey status -> " + this.getJourneyStatus();
+    }
+
+    @Override
+    public int compareTo(Journey another) {
+        if (this.createdAt > (another.createdAt)) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 }

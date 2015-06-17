@@ -16,7 +16,7 @@
     <dimen name="tj_giant_font">30sp</dimen>
     <dimen name="tj_extra_giant_font">40sp</dimen>
 
-    <dimen name="circularProfDimen">100dp</dimen>
+    <dimen name="circularProfDimen">75dp</dimen>
 
 
 </resources>

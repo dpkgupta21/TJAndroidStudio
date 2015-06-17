@@ -8,10 +8,9 @@ import com.example.memories.SQLitedatabase.PictureDataSource;
 
 import java.util.List;
 
-public class Picture extends Memories implements Parcelable{
+public class Picture extends Memories implements Parcelable {
 
     public static final Parcelable.Creator<Picture> CREATOR = new Parcelable.Creator<Picture>() {
-
         public Picture createFromParcel(Parcel in) {
             return new Picture(in);
         }

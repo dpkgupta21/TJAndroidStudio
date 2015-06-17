@@ -2273,6 +2273,7 @@ containing a value of this type.
         public static final int img_journey_info_4=0x7f0200ae;
         public static final int img_journey_info_5=0x7f0200af;
         public static final int img_journey_info_6=0x7f0200b0;
+<<<<<<< HEAD
         public static final int img_no_active_journey=0x7f0200b1;
         public static final int img_no_audio=0x7f0200b2;
         public static final int img_no_laps=0x7f0200b3;
@@ -2331,6 +2332,68 @@ containing a value of this type.
         public static final int toggle_walk=0x7f0200e7;
         public static final int upload119=0x7f0200e8;
         public static final int waaaht=0x7f0200e9;
+=======
+        public static final int img_no_audio=0x7f0200b1;
+        public static final int img_no_laps=0x7f0200b2;
+        public static final int img_no_note=0x7f0200b3;
+        public static final int img_no_photos=0x7f0200b4;
+        public static final int img_no_pic=0x7f0200b5;
+        public static final int img_no_video=0x7f0200b6;
+        public static final int img_selected=0x7f0200b7;
+        public static final int jar=0x7f0200b8;
+        public static final int kiss=0x7f0200b9;
+        public static final int line=0x7f0200ba;
+        public static final int list_item_bg_normal=0x7f0200bb;
+        public static final int list_item_bg_pressed=0x7f0200bc;
+        public static final int list_selector=0x7f0200bd;
+        public static final int login_bg=0x7f0200be;
+        public static final int logo_embross=0x7f0200bf;
+        public static final int logout=0x7f0200c0;
+        public static final int matrix=0x7f0200c1;
+        public static final int next=0x7f0200c2;
+        public static final int next_audio_red=0x7f0200c3;
+        public static final int notification_template_icon_bg=0x7f0200ec;
+        public static final int or=0x7f0200c4;
+        public static final int pause_audio_red=0x7f0200c5;
+        public static final int play_audio_red=0x7f0200c6;
+        public static final int plus79=0x7f0200c7;
+        public static final int powered_by_google_dark=0x7f0200c8;
+        public static final int powered_by_google_light=0x7f0200c9;
+        public static final int prev_audio_red=0x7f0200ca;
+        public static final int rap=0x7f0200cb;
+        public static final int rounded_corner_button=0x7f0200cc;
+        public static final int rounded_corner_button_blue=0x7f0200cd;
+        public static final int rounded_left_side_red=0x7f0200ce;
+        public static final int rounded_right_side_green=0x7f0200cf;
+        public static final int sad=0x7f0200d0;
+        public static final int settings=0x7f0200d1;
+        public static final int settings_about=0x7f0200d2;
+        public static final int settings_account=0x7f0200d3;
+        public static final int settings_general=0x7f0200d4;
+        public static final int settings_logout=0x7f0200d5;
+        public static final int shadow=0x7f0200d6;
+        public static final int shadow_mini=0x7f0200d7;
+        public static final int shame=0x7f0200d8;
+        public static final int small35=0x7f0200d9;
+        public static final int smile=0x7f0200da;
+        public static final int spiderman=0x7f0200db;
+        public static final int splash_bg1=0x7f0200dc;
+        public static final int splash_bg2=0x7f0200dd;
+        public static final int splash_bg3=0x7f0200de;
+        public static final int splash_screen_custom_radio_buttons=0x7f0200df;
+        public static final int sync=0x7f0200e0;
+        public static final int timeline=0x7f0200e1;
+        public static final int toggle_bike=0x7f0200e2;
+        public static final int toggle_bus=0x7f0200e3;
+        public static final int toggle_car=0x7f0200e4;
+        public static final int toggle_carpet=0x7f0200e5;
+        public static final int toggle_flight=0x7f0200e6;
+        public static final int toggle_ship=0x7f0200e7;
+        public static final int toggle_train=0x7f0200e8;
+        public static final int toggle_walk=0x7f0200e9;
+        public static final int upload119=0x7f0200ea;
+        public static final int waaaht=0x7f0200eb;
+>>>>>>> origin/abhi
     }
     public static final class id {
         public static final int aboutUsCopyright=0x7f0c006b;

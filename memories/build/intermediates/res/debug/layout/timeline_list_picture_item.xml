@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/timelineItemImage"
             android:layout_width="match_parent"
-            android:layout_height="125dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/abhi" />
 
@@ -23,15 +23,27 @@
             android:layout_height="@dimen/circularProfDimen"
             android:layout_below="@id/timelineItemImage"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="-35dp"
+            android:layout_marginTop="-45dp"
             android:src="@drawable/gumnaam_profile_image" />
+
+        <com.example.memories.customviews.MyTextView
+            android:id="@id/timelineItemUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Some Name"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_alignTop="@id/timelineItemUserImage"
+            android:layout_toRightOf="@id/timelineItemUserImage"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/timelineItemUserImage"
             android:background="@color/white"
-            android:paddingBottom="10dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
@@ -41,9 +53,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
+                android:textSize="18sp"
                 android:text="Picture/Video default text"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/black" />
 
             <com.example.memories.customviews.MyTextView
                 android:id="@+id/timelineItemTime"
@@ -51,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/timelineItemCaption"
                 android:text="20 hours ago"
+                android:layout_marginTop="1dp"
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="@dimen/tj_small_font"
                 android:textStyle="italic" />
@@ -69,12 +82,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="-8dp"
                 android:layout_toLeftOf="@+id/timelineItemFavIcon"
                 android:text="0"
-                android:textSize="@dimen/tj_extra_giant_font" />
+                android:textSize="30sp" />
 
         </RelativeLayout>
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_picture_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_picture_item.xml -->

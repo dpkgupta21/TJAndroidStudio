@@ -32,4 +32,4 @@
         android:contentDescription="@string/default_string"
         android:text="Content not available" />
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/new_journey_selected_friends_list_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/new_journey_selected_friends_list_item.xml -->

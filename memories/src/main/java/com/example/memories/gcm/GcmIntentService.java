@@ -111,11 +111,42 @@ public class GcmIntentService extends IntentService {
     private void parseGcmMessage(Bundle bundle) {
         Log.d(TAG, " parseGcmMessage called");
         String type = bundle.get("type").toString();
+
+        // buddy_ids are recieved in format [5,6,7]
+        String userIds = bundle.getString("buddy_ids");
+        userIds = userIds.replace("[", "");
+        userIds = userIds.replace("]", "");
+
+        String[] userIdsArray = userIds.split(",");
+        Log.d(TAG, userIdsArray[0]);
+        List<String> userIdList = new ArrayList<>();
+        for (String s : userIdsArray) {
+            userIdList.add(s);
+        }
+
+        Log.d(TAG, "1.3" + userIdList.toString());
         String journeyId;
         String jName;
         String tagline;
         String createdBy;
+        long createdAt;
+        long updatedAt;
+        long completedAt;
 
+
+        Log.d(TAG, "1.1");
+        // COde to verify correct receipient
+        // Check for user id
+        // If userId is not present in the list, ignore this message
+        Log.d(TAG, "====" +  (!userIdList.contains(TJPreferences.getUserId(getBaseContext()))));
+        if (!userIdList.contains(TJPreferences.getUserId(getBaseContext()))) {
+            Log.d(TAG, "gcm notification ignored ");
+            return;
+        } else {
+            Log.d(TAG, "gcm notification passesd ");
+        }
+
+        Log.d(TAG, "1.4");
         switch (Integer.parseInt(type)) {
             case HelpMe.TYPE_CREATE_MEMORY:
                 String memType = bundle.get("memory_type").toString();
@@ -137,6 +168,9 @@ public class GcmIntentService extends IntentService {
                 createdBy = bundle.get("created_by").toString();
                 jName = bundle.get("name").toString();
                 tagline = bundle.get("tag_line").toString();
+                createdAt = Long.parseLong(bundle.getString("created_at"));
+                updatedAt = Long.parseLong(bundle.getString("updated_at"));
+                completedAt = bundle.getString("completed_at") == "null" ? 0 : Long.parseLong(bundle.getString("completed_at"));
 
                 Log.d(TAG, "bundle buddy ids are " + bundle.get("buddy_ids"));
                 String buddyIds = (String) bundle.get("buddy_ids");
@@ -146,7 +180,7 @@ public class GcmIntentService extends IntentService {
                 buddyIdsList.add(createdBy);
                 buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
-                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, System.currentTimeMillis(), System.currentTimeMillis(), System.currentTimeMillis());
+                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt);
                 JourneyDataSource.createJourney(jItem, this);
 
             default:
@@ -159,8 +193,8 @@ public class GcmIntentService extends IntentService {
         Log.d(TAG, "createMemory called");
         String idOnServer = data.getString("id");
         String createdBy = data.getString("created_by");
-        Long createdAt = HelpMe.getCurrentTime();
-        Long updatedAt = HelpMe.getCurrentTime();
+        long createdAt = Long.parseLong(data.getString("created_at"));
+        long updatedAt = Long.parseLong(data.getString("updated_at"));
         String dataUrl;
         long size;
         String extension;
@@ -188,9 +222,6 @@ public class GcmIntentService extends IntentService {
                         size, dataUrl, null, createdBy,
                         createdAt, updatedAt, null, null, latitude, longitude);
                 PictureUtilities.createNewPicFromServer(this, newPic, thumb);
-
-                //PictureUtilities.downloadPicFromURL(this, newPic);
-                //PictureDataSource.createPicture(newPic, this);
                 break;
 
             case HelpMe.SERVER_AUDIO_TYPE:
@@ -204,7 +235,6 @@ public class GcmIntentService extends IntentService {
                         dataUrl, null, createdBy, createdAt, updatedAt, null, audioDuration, latitude, longitude);
 
                 AudioDataSource.createAudio(newAudio, this);
-                //AudioUtil.downloadAudio(this, newAudio);
                 break;
 
             case HelpMe.SERVER_VIDEO_TYPE:

@@ -44,8 +44,6 @@ public class VideoPreview extends AppCompatActivity {
     private TextView dateBig;
     private TextView date;
     private TextView time;
-    private TextView place;
-    private TextView weather;
     private EditText caption;
     private ImageView mProfileImg;
     private ImageButton mFavBtn;

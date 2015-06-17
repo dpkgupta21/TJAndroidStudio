@@ -154,6 +154,8 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
             holder.timelineItemTime = (TextView) convertView.findViewById(R.id.timelineItemTime);
             holder.timelineItemFavBtn = (ImageButton) convertView
                     .findViewById(R.id.timelineItemFavIcon);
+            holder.timelineItemUserName = (TextView) convertView
+                    .findViewById(R.id.timelineItemUserName);
 
             convertView.setTag(holder);
         } else {
@@ -202,6 +204,8 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         // DATE --
         final Memories memory = memoriesList.get(position);
         holder.timelineItemTime.setText(HelpMe.getDate(memory.getCreatedAt(), HelpMe.DATE_FULL));
+        Log.d(TAG, ContactDataSource.getContactById(context, memory.getCreatedBy()) + memory.getCreatedBy() + "!!!");
+        holder.timelineItemUserName.setText(ContactDataSource.getContactById(context, memory.getCreatedBy()).getName());
 
         // if the memory is from current user
         Log.d(TAG, "Iam executing" + memory.getCreatedBy() + TJPreferences.getUserId(context));
@@ -369,5 +373,6 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         public ImageButton timelineItemAudioPlayBtn;
         public ImageView timeLineProfileImg;
         public TextView timelineNoLikesTxt;
+        public TextView timelineItemUserName;
     }
 }
