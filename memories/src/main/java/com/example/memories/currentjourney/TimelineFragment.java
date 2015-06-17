@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.flotingmenulibrary.FloatingActionsMenu;
 import com.example.memories.R;
@@ -31,6 +32,7 @@ public class TimelineFragment extends Fragment {
     private FrameLayout baseActivityContentOverlay;
     private View rootView;
     private List<Memories> memoriesList;
+    private RelativeLayout mLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class TimelineFragment extends Fragment {
          * redirect user to LoginActivity is he is not logged in
          * */
 
+        mLayout = (RelativeLayout) rootView.findViewById(R.id.timeline_layout);
+
         SessionManager session = new SessionManager(getActivity());
         session.checkLogin(getActivity());
 
@@ -61,8 +65,15 @@ public class TimelineFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.timelineList);
         memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(),
                 TJPreferences.getActiveJourneyId(getActivity()));
-        mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
-        mListView.setAdapter(mAdapter);
+        Log.d(TAG, "no of memories = " + memoriesList.size());
+        if(memoriesList.size() > 0) {
+            Log.d(TAG, "no of memories > 0");
+            mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
+            mListView.setAdapter(mAdapter);
+        }else {
+            Log.d(TAG, "no of memories = 0 ");
+                    mLayout.setBackgroundResource(R.drawable.img_no_timeline_item);
+        }
 
         // Swipe to refersh tmline
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.timeline_swipe_refresh_layout);

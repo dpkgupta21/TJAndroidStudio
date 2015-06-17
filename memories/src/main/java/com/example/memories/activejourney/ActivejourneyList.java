@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class ActivejourneyList extends BaseActivity {
     private Toast toast = null;
     private TextView noActivejourneysMsgTxt;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private LinearLayout mLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class ActivejourneyList extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Active Journeys");
+
+        mLayout  = (LinearLayout)findViewById(R.id.active_journey_layout);
 
         allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
 
@@ -78,8 +82,10 @@ public class ActivejourneyList extends BaseActivity {
             });
 
         } else {
-            noActivejourneysMsgTxt = (TextView) findViewById(R.id.active_journey_no_buddies_msg);
-            noActivejourneysMsgTxt.setVisibility(View.VISIBLE);
+            mLayout.setBackgroundResource(R.drawable.img_no_active_journey);
+/*            noActivejourneysMsgTxt = (TextView) findViewById(R.id.active_journey_no_buddies_msg);
+            noActivejourneysMsgTxt.setVisibility(View.VISIBLE);*/
+
         }
     }
 
