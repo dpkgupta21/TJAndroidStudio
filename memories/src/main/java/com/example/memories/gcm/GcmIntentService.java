@@ -170,7 +170,7 @@ public class GcmIntentService extends IntentService {
                 tagline = bundle.get("tag_line").toString();
                 createdAt = Long.parseLong(bundle.getString("created_at"));
                 updatedAt = Long.parseLong(bundle.getString("updated_at"));
-                completedAt = Long.parseLong(bundle.getString("completed_at"));
+                completedAt = bundle.getString("completed_at") == "null" ? 0 : Long.parseLong(bundle.getString("completed_at"));
 
                 Log.d(TAG, "bundle buddy ids are " + bundle.get("buddy_ids"));
                 String buddyIds = (String) bundle.get("buddy_ids");

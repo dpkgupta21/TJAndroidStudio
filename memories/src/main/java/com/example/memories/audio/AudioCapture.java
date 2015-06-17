@@ -83,7 +83,7 @@ public class AudioCapture extends AppCompatActivity {
         setContentView(R.layout.audio_capture);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Capture Audio");
+        toolbar.setTitle("Audio");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

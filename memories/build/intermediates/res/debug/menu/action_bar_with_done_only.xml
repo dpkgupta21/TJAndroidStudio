@@ -5,8 +5,7 @@
     <!-- Done Button -->
     <item
         android:id="@+id/action_done"
-        android:icon="@drawable/ic_done"
-        android:title="@string/default_string"
-        app:showAsAction="always" />
+        android:title="Done"
+        app:showAsAction="withText|always" />
 
 </menu><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/menu/action_bar_with_done_only.xml -->

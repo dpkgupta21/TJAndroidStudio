@@ -61,6 +61,7 @@ public class SelectedFriendsListAdapter extends ArrayAdapter<Contact> {
         ViewHolder holder = (ViewHolder) rowView.getTag();
         String n = names.get(position).getName();
         holder.name.setText(n);
+        Log.d(TAG, "pic local url for contact = " + names.get(position).getPicLocalUrl());
         if (names.get(position).getPicLocalUrl() != null) {
             holder.image.setImageBitmap(BitmapFactory.decodeFile(names.get(position).getPicLocalUrl()));
         }
