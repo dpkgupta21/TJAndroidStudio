@@ -1,6 +1,8 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -11,8 +13,6 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
 MERGED from TJAndroidStudio:library:unspecified:7:5
@@ -384,49 +384,55 @@ ADDED from AndroidManifest.xml:179:9
 		ADDED from AndroidManifest.xml:181:13
 	android:name
 		ADDED from AndroidManifest.xml:180:13
-receiver#com.example.memories.utility.SMSReceiver
-ADDED from AndroidManifest.xml:184:9
-	android:enabled
-		ADDED from AndroidManifest.xml:186:13
+service#com.example.memories.video.UploadVideoService
+ADDED from AndroidManifest.xml:183:9
 	android:exported
-		ADDED from AndroidManifest.xml:187:13
-	android:name
 		ADDED from AndroidManifest.xml:185:13
+	android:name
+		ADDED from AndroidManifest.xml:184:13
+receiver#com.example.memories.utility.SMSReceiver
+ADDED from AndroidManifest.xml:188:9
+	android:exported
+		ADDED from AndroidManifest.xml:191:13
+	android:enabled
+		ADDED from AndroidManifest.xml:190:13
+	android:name
+		ADDED from AndroidManifest.xml:189:13
 intent-filter#android.provider.Telephony.SMS_RECEIVED
-ADDED from AndroidManifest.xml:188:13
+ADDED from AndroidManifest.xml:192:13
 	android:priority
-		ADDED from AndroidManifest.xml:188:28
+		ADDED from AndroidManifest.xml:192:28
 action#android.provider.Telephony.SMS_RECEIVED
-ADDED from AndroidManifest.xml:189:17
+ADDED from AndroidManifest.xml:193:17
 	android:name
-		ADDED from AndroidManifest.xml:189:25
+		ADDED from AndroidManifest.xml:193:25
 meta-data#com.google.android.gms.version
-ADDED from AndroidManifest.xml:193:9
+ADDED from AndroidManifest.xml:197:9
+	android:name
+		ADDED from AndroidManifest.xml:198:13
 	android:value
-		ADDED from AndroidManifest.xml:195:13
-	android:name
-		ADDED from AndroidManifest.xml:194:13
+		ADDED from AndroidManifest.xml:199:13
 receiver#com.example.memories.gcm.GcmBroadcastReceiver
-ADDED from AndroidManifest.xml:204:9
+ADDED from AndroidManifest.xml:208:9
 	android:permission
-		ADDED from AndroidManifest.xml:206:13
+		ADDED from AndroidManifest.xml:210:13
 	android:name
-		ADDED from AndroidManifest.xml:205:13
+		ADDED from AndroidManifest.xml:209:13
 intent-filter#com.example.memories+com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:207:13
+ADDED from AndroidManifest.xml:211:13
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from AndroidManifest.xml:210:17
-	android:name
-		ADDED from AndroidManifest.xml:210:25
-action#com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:212:17
-	android:name
-		ADDED from AndroidManifest.xml:212:25
-category#com.example.memories
 ADDED from AndroidManifest.xml:214:17
 	android:name
-		ADDED from AndroidManifest.xml:214:27
-service#com.example.memories.gcm.GcmIntentService
-ADDED from AndroidManifest.xml:224:9
+		ADDED from AndroidManifest.xml:214:25
+action#com.google.android.c2dm.intent.REGISTRATION
+ADDED from AndroidManifest.xml:216:17
 	android:name
-		ADDED from AndroidManifest.xml:224:18
+		ADDED from AndroidManifest.xml:216:25
+category#com.example.memories
+ADDED from AndroidManifest.xml:218:17
+	android:name
+		ADDED from AndroidManifest.xml:218:27
+service#com.example.memories.gcm.GcmIntentService
+ADDED from AndroidManifest.xml:228:9
+	android:name
+		ADDED from AndroidManifest.xml:228:18

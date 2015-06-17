@@ -65,15 +65,10 @@ public class TimelineFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.timelineList);
         memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(),
                 TJPreferences.getActiveJourneyId(getActivity()));
+
+        mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
+        mListView.setAdapter(mAdapter);
         Log.d(TAG, "no of memories = " + memoriesList.size());
-        if(memoriesList.size() > 0) {
-            Log.d(TAG, "no of memories > 0");
-            mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
-            mListView.setAdapter(mAdapter);
-        }else {
-            Log.d(TAG, "no of memories = 0 ");
-                    mLayout.setBackgroundResource(R.drawable.img_no_timeline_item);
-        }
 
         // Swipe to refersh tmline
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.timeline_swipe_refresh_layout);
@@ -142,12 +137,16 @@ public class TimelineFragment extends Fragment {
     public void onResume() {
         Log.d(TAG, "on resume() method called from timeline");
         memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
-        if (mAdapter == null) {
-            mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
-            mListView.setAdapter(mAdapter);
-        } else {
-            mAdapter.setMemoriesList(memoriesList);
-            mAdapter.notifyDataSetChanged();
+        if(memoriesList.size() > 0) {
+            if (mAdapter == null) {
+                mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
+                mListView.setAdapter(mAdapter);
+            } else {
+                mAdapter.setMemoriesList(memoriesList);
+                mAdapter.notifyDataSetChanged();
+            }
+        }else {
+            mLayout.setBackgroundResource(R.drawable.img_no_timeline_item);
         }
         super.onResume();
     }

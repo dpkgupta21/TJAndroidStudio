@@ -118,11 +118,11 @@ public class SelectedFriendsList extends AppCompatActivity {
     }
 
     private void goToNext() {
+        AppController.buddyList = new ArrayList<>();
         // save all the selected friend's id in "buddyList" in AppCOntroller
         int len = selectedList.size();
 
         if (len > 0) {
-            AppController.buddyList = new ArrayList<>();
             for (int i = 0; i < len; i++) {
                 AppController.buddyList.add(selectedList.get(i).getIdOnServer());
                 Log.d(TAG, "ids are" + selectedList.get(i).getIdOnServer());

@@ -67,6 +67,7 @@ public class JourneyInfo extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Journey Info");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
 
         journeyName = (TextView) findViewById(R.id.journey_info_journey_name);

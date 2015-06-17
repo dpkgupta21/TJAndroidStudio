@@ -84,6 +84,14 @@
             android:text="0"
             android:textSize="@dimen/tj_extra_giant_font" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timelineItemUserName"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/timelineItemUserImage"
+            android:layout_toEndOf="@+id/timelineItemUserImage" />
+
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->
+</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->

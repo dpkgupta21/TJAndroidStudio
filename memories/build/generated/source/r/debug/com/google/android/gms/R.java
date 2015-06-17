@@ -97,12 +97,12 @@ public final class R {
 		public static final int common_signin_btn_text_normal_light = 0x7f020067;
 		public static final int common_signin_btn_text_pressed_dark = 0x7f020068;
 		public static final int common_signin_btn_text_pressed_light = 0x7f020069;
-		public static final int ic_plusone_medium_off_client = 0x7f02009b;
-		public static final int ic_plusone_small_off_client = 0x7f02009c;
-		public static final int ic_plusone_standard_off_client = 0x7f02009d;
-		public static final int ic_plusone_tall_off_client = 0x7f02009e;
-		public static final int powered_by_google_dark = 0x7f0200ca;
-		public static final int powered_by_google_light = 0x7f0200cb;
+		public static final int ic_plusone_medium_off_client = 0x7f02009c;
+		public static final int ic_plusone_small_off_client = 0x7f02009d;
+		public static final int ic_plusone_standard_off_client = 0x7f02009e;
+		public static final int ic_plusone_tall_off_client = 0x7f02009f;
+		public static final int powered_by_google_dark = 0x7f0200ce;
+		public static final int powered_by_google_light = 0x7f0200cf;
 	}
 	public static final class id {
 		public static final int book_now = 0x7f0c0037;
@@ -124,7 +124,7 @@ public final class R {
 		public static final int selectionDetails = 0x7f0c0035;
 		public static final int strict_sandbox = 0x7f0c0033;
 		public static final int terrain = 0x7f0c001f;
-		public static final int text2 = 0x7f0c011d;
+		public static final int text2 = 0x7f0c011f;
 		public static final int wrap_content = 0x7f0c0029;
 	}
 	public static final class integer {

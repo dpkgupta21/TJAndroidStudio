@@ -179,6 +179,10 @@
         <service
             android:name="com.example.memories.picture.UploadPictureService"
             android:exported="false" />
+
+        <service
+            android:name="com.example.memories.video.UploadVideoService"
+            android:exported="false" />
         
         <!--To recive and read text messages -->
         <receiver

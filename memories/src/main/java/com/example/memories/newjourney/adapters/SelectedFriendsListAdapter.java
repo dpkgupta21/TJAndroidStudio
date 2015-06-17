@@ -39,6 +39,7 @@ public class SelectedFriendsListAdapter extends ArrayAdapter<Contact> {
             ViewHolder viewHolder = new ViewHolder();
 
             viewHolder.name = (TextView) rowView.findViewById(R.id.add_friends_contact_name);
+            viewHolder.contactInfo = (TextView) rowView.findViewById(R.id.add_friends_contact_info);
             viewHolder.image = (ImageView) rowView.findViewById(R.id.add_friends_contact_image);
             viewHolder.deleteIcon = (ImageView) rowView
                     .findViewById(R.id.add_friends_contact_remove_btn);
@@ -65,6 +66,12 @@ public class SelectedFriendsListAdapter extends ArrayAdapter<Contact> {
         if (names.get(position).getPicLocalUrl() != null) {
             holder.image.setImageBitmap(BitmapFactory.decodeFile(names.get(position).getPicLocalUrl()));
         }
+
+        if (names.get(position).getPhone_no() == null || names.get(position).getPhone_no() == "") {
+            holder.contactInfo.setText(names.get(position).getPrimaryEmail());
+        } else {
+            holder.contactInfo.setText(names.get(position).getPhone_no());
+        }
         // holder.image.setImageResource(resId);
         return rowView;
     }
@@ -73,5 +80,6 @@ public class SelectedFriendsListAdapter extends ArrayAdapter<Contact> {
         public TextView name;
         public ImageView image;
         public ImageView deleteIcon;
+        public TextView contactInfo;
     }
 }

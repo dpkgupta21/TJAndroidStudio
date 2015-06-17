@@ -56,7 +56,7 @@ public class GalleryPhotosFragment extends Fragment {
         mImageList = PictureDataSource.getAllPictures(getActivity());
         mAdapter = new ImageGalleryAdapter(getActivity(), mImageList);
 
-        mLayout = (LinearLayout)rootView.findViewById(R.id.layout);
+        mLayout = (LinearLayout)rootView.findViewById(R.id.gallery_photos_layout);
 
         if (mImageList.size() > 0) {
             // long press selection of the pictures

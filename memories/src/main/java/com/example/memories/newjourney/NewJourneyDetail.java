@@ -198,7 +198,7 @@ public class NewJourneyDetail extends AppCompatActivity {
 
         // Add it to the Database
         Journey newJ = new Journey(idOnServer, name, tag_line, group_relationship, created_by_id,
-                null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE, System.currentTimeMillis(), System.currentTimeMillis(), System.currentTimeMillis());
+                null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE, HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), 0);
         JourneyDataSource.createJourney(newJ, getBaseContext());
         TJPreferences.setActiveJourneyId(this, idOnServer);
     }

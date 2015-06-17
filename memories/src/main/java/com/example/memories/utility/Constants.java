@@ -7,8 +7,8 @@ public class Constants {
     // SERVER API URLS ==========================================
 
     // BASE DOMAIN API
-    public final static String URL_TJ_DOMAIN = "https://www.traveljar.in/";
-//    public final static String URL_TJ_DOMAIN = "http://192.168.1.10:3000/";
+//    public final static String URL_TJ_DOMAIN = "https://www.traveljar.in/";
+    public final static String URL_TJ_DOMAIN = "http://192.168.1.10:3000/";
 
     // 1. USER APIS
     public static final String URL_SIGN_IN = URL_TJ_DOMAIN + "api/v1/users/login";
@@ -45,7 +45,7 @@ public class Constants {
     public static final String TRAVELJAR_FOLDER_ROOT = Environment.getExternalStorageDirectory().getAbsolutePath() + "/TJar";
     public static final String TRAVELJAR_FOLDER_PROFILE = TRAVELJAR_FOLDER_ROOT + "/Profile/";
     public static final String TRAVELJAR_FOLDER_BUDDY_PROFILES = TRAVELJAR_FOLDER_ROOT + "/buddy profiles/";
-    public static final String GUMNAAM_IMAGE_URL = TRAVELJAR_FOLDER_BUDDY_PROFILES + "gumnaam.jpg";
+    public static final String GUMNAAM_IMAGE_URL = TRAVELJAR_FOLDER_BUDDY_PROFILES + "gumnaam_profile_image.jpg";
     public static final String TRAVELJAR_FOLDER_VIDEO = TRAVELJAR_FOLDER_ROOT + "/videos/";
     public static final String TRAVELJAR_FOLDER_AUDIO = TRAVELJAR_FOLDER_ROOT + "/audio/";
     public static final String TRAVELJAR_FOLDER_PICTURE = TRAVELJAR_FOLDER_ROOT + "/Pictures/";

@@ -16,6 +16,7 @@ import com.example.memories.SQLitedatabase.CheckinDataSource;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
 import com.example.memories.SQLitedatabase.MoodDataSource;
 import com.example.memories.SQLitedatabase.NoteDataSource;
+import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.currentjourney.TimelineFragment;
 import com.example.memories.models.Audio;
 import com.example.memories.models.CheckIn;
@@ -113,18 +114,28 @@ public class GcmIntentService extends IntentService {
         String type = bundle.get("type").toString();
 
         // buddy_ids are recieved in format [5,6,7]
-        String userIds = bundle.getString("buddy_ids");
+        String userIds = bundle.get("user_ids").toString();
+        Log.d(TAG, "user ids from gcm are" + userIds);
         userIds = userIds.replace("[", "");
         userIds = userIds.replace("]", "");
 
-        String[] userIdsArray = userIds.split(",");
-        Log.d(TAG, userIdsArray[0]);
-        List<String> userIdList = new ArrayList<>();
-        for (String s : userIdsArray) {
-            userIdList.add(s);
-        }
+        List<String> userIdList = new ArrayList<>(Arrays.asList(userIds.split(",")));
 
         Log.d(TAG, "1.3" + userIdList.toString());
+
+/*
+        // buddy_ids are recieved in format [5,6,7]
+        String userIds = bundle.get("buddies").toString();
+        Log.d(TAG, "1.3" + userIds);
+        userIds = userIds.replace("[", "");
+        userIds = userIds.replace("]", "");
+
+        Log.d(TAG, "buddy ids from gcm are" + userIds);
+        List<String> userIdList = new ArrayList<>(Arrays.asList(userIds.split(",")));
+        Log.d(TAG, "1.3" + userIdList.toString());
+*/
+
+
         String journeyId;
         String jName;
         String tagline;
@@ -170,7 +181,8 @@ public class GcmIntentService extends IntentService {
                 tagline = bundle.get("tag_line").toString();
                 createdAt = Long.parseLong(bundle.getString("created_at"));
                 updatedAt = Long.parseLong(bundle.getString("updated_at"));
-                completedAt = bundle.getString("completed_at") == "null" ? 0 : Long.parseLong(bundle.getString("completed_at"));
+                completedAt = 0;
+                //completedAt = bundle.getString("completed_at") == "null" ? 0 : Long.parseLong(bundle.getString("completed_at"));
 
                 Log.d(TAG, "bundle buddy ids are " + bundle.get("buddy_ids"));
                 String buddyIds = (String) bundle.get("buddy_ids");
@@ -182,6 +194,9 @@ public class GcmIntentService extends IntentService {
 
                 Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt);
                 JourneyDataSource.createJourney(jItem, this);
+                if(ActivejourneyList.isActivityVisible()){
+                    ActivejourneyList.getInstance().refreshJourneysList();
+                }
 
             default:
                 break;
