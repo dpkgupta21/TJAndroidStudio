@@ -10,14 +10,14 @@ import java.util.List;
 
 public class Video extends Memories implements Parcelable {
 
-    public static final Parcelable.Creator<Picture> CREATOR = new Parcelable.Creator<Picture>() {
+    public static final Parcelable.Creator<Video> CREATOR = new Parcelable.Creator<Video>() {
 
-        public Picture createFromParcel(Parcel in) {
-            return new Picture(in);
+        public Video createFromParcel(Parcel in) {
+            return new Video(in);
         }
 
-        public Picture[] newArray(int size) {
-            return new Picture[size];
+        public Video[] newArray(int size) {
+            return new Video[size];
         }
     };
 

@@ -77,9 +77,6 @@ public class ActivejourneyList extends BaseActivity {
 
         mLayout  = (LinearLayout)findViewById(R.id.active_journey_layout);
 
-        allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
-        Collections.sort(allActiveJourney);
-
         mRecyclerView = (RecyclerView) findViewById(R.id.active_journey_recycler_view);
         mRecyclerView.setVisibility(View.VISIBLE);
         // use this setting to improve performance if you know that changes
@@ -89,6 +86,8 @@ public class ActivejourneyList extends BaseActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        refreshJourneys();
 
         /*if(allActiveJourney.size() > 0){
             mAdapter = new ActiveJourneyListAdapter(allActiveJourney, this);
@@ -103,10 +102,7 @@ public class ActivejourneyList extends BaseActivity {
 
             @Override
             public void onRefresh() {
-                allActiveJourney = JourneyDataSource.getAllActiveJourneys(getBaseContext());
-                Collections.sort(allActiveJourney);
-                mAdapter.updateList(allActiveJourney);
-                mAdapter.notifyDataSetChanged();
+                refreshJourneys();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
             });
@@ -176,8 +172,7 @@ public class ActivejourneyList extends BaseActivity {
         }
     }
 
-    @Override
-    public void onResume() {
+    private void refreshJourneys(){
         allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
         Collections.sort(allActiveJourney);
         if(allActiveJourney.size() > 0){
@@ -191,6 +186,11 @@ public class ActivejourneyList extends BaseActivity {
         }else {
             mLayout.setBackgroundResource(R.drawable.img_no_active_journey);
         }
+    }
+
+    @Override
+    public void onResume() {
+        refreshJourneys();
         activityResumed();
         super.onResume();
     }

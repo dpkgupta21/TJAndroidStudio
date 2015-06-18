@@ -39,6 +39,8 @@ public class SelectedFriendsList extends AppCompatActivity {
     private ListView contactListView;
     private ProgressDialog mProgressDialog;
 
+    private MultiAutoCompleteViewAdapter  adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +74,7 @@ public class SelectedFriendsList extends AppCompatActivity {
 
         allContactsList = ContactDataSource.getAllContacts(this);
 
-        final MultiAutoCompleteViewAdapter  adapter = new MultiAutoCompleteViewAdapter(this, allContactsList);
+        adapter = new MultiAutoCompleteViewAdapter(this, allContactsList);
         macTv.setAdapter(adapter);
         macTv.setThreshold(1);
         macTv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -81,7 +83,7 @@ public class SelectedFriendsList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Contact contact = adapter.getFilteredContactAtPosition(position);
-                if(!selectedList.contains(contact)){
+                if (!selectedList.contains(contact)) {
                     selectedList.add(contact);
                     contactListViewAdapter.notifyDataSetChanged();
                 }
@@ -131,6 +133,14 @@ public class SelectedFriendsList extends AppCompatActivity {
 
         Intent i = new Intent(getBaseContext(), NewJourneyDetail.class);
         startActivity(i);
+    }
+
+    @Override
+    public void onResume(){
+        allContactsList = ContactDataSource.getAllContacts(this);
+        adapter.updateList(allContactsList);
+        adapter.notifyDataSetChanged();
+        super.onResume();
     }
 
 }

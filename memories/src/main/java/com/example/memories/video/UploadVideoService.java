@@ -25,6 +25,7 @@ import java.io.File;
  * Created by ankit on 17/6/15.
  */
 public class UploadVideoService extends IntentService{
+
     private Video video;
 
     private static final String TAG = "UploadVideoService";
@@ -40,7 +41,7 @@ public class UploadVideoService extends IntentService{
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, startId, startId);
         video = intent.getParcelableExtra("VIDEO");
-        Log.d(TAG, "upload video service has started for picture" + video.getId());
+        Log.d(TAG, "upload video service has started for video" + video.getId());
         return START_STICKY;
     }
 

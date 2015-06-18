@@ -133,8 +133,12 @@ public class NumberVerificationActivity extends Activity {
 
     @Override
     protected void onStop() {
-        unregisterReceiver(sendBroadcastReceiver);
-        unregisterReceiver(deliveryBroadcastReceiver);
+        try {
+            unregisterReceiver(sendBroadcastReceiver);
+            unregisterReceiver(deliveryBroadcastReceiver);
+        }catch (IllegalArgumentException ex){
+            Log.d(TAG, "exception in unregistering receiver" + ex);
+        }
         super.onStop();
     }
 

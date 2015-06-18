@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/timelineItemImage"
             android:layout_width="match_parent"
-            android:layout_height="125dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/abhi" />
 
@@ -21,9 +21,9 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:src="@drawable/ic_play_video"
-            android:layout_alignParentTop="true"
+            android:layout_marginTop="72dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"/>
+            />
 
         <com.example.memories.customviews.MyCircularImageView
             android:id="@+id/timelineItemUserImage"

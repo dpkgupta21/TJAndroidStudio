@@ -4,35 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginRight="5dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginTop="5dp"
-    android:background="@drawable/custom_border_gray">
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp">
 
-
-    <ImageButton
-        android:id="@+id/edit_journey_lap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@color/white"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/ic_edit_grey" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_border_gray"
+        android:paddingBottom="15dp"
         android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:paddingTop="15dp">
+
+        <ImageButton
+            android:id="@+id/edit_journey_lap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_overflow" />
 
         <com.example.memories.customviews.MyTextView
             android:id="@+id/from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/edit_journey_lap"
             android:text="From"
             android:textColor="@color/tj_orange"
             android:textSize="@dimen/tj_medium_font" />
@@ -53,10 +53,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/edit_journey_lap"
+            android:layout_marginRight="15dp"
             android:text="To"
             android:textColor="@color/tj_orange"
-            android:layout_marginRight="15dp"
             android:textSize="@dimen/tj_medium_font" />
 
         <com.example.memories.customviews.MyTextView
@@ -65,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@id/from"
-            android:text="Goa"
             android:layout_marginRight="15dp"
+            android:text="Goa"
             android:textSize="@dimen/tj_medium_font"
             android:textStyle="bold" />
 
@@ -117,8 +117,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@id/middle_line"
-            android:text="Conveyance"
             android:layout_marginRight="15dp"
+            android:text="Conveyance"
             android:textColor="@color/tj_orange"
             android:textSize="@dimen/tj_medium_font" />
 

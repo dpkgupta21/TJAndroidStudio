@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.example.memories.R;
 import com.example.memories.models.Video;
-import com.example.memories.utility.LoadThumbnailFromPath;
+import com.example.memories.utility.LoadScaledBitmapFromPath;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class VideoGalleryAdapter extends BaseAdapter {
             holder.overlayImgView.setVisibility(View.VISIBLE);
         }
 
-        LoadThumbnailFromPath.loadBitmap(mVideoList.get(position).getDataLocalURL(), holder.imgView, mContext);
+        LoadScaledBitmapFromPath.loadBitmap(mVideoList.get(position).getLocalThumbPath(), holder.imgView, 150, 150, mContext);
         holder.overlayImgView.setImageResource(R.drawable.img_selected);
         return rowView;
     }

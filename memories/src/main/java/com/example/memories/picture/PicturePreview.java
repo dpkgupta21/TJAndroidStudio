@@ -30,9 +30,7 @@ import com.example.memories.utility.TJPreferences;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -136,15 +134,9 @@ public class PicturePreview extends AppCompatActivity {
 
         setFavouriteBtnClickListener();
 
-        // set other details
-        SimpleDateFormat onlyDate = new SimpleDateFormat("dd");
-        SimpleDateFormat fullDate = new SimpleDateFormat("dd MMM yyyy");
-        SimpleDateFormat fullTime = new SimpleDateFormat("hh:mm aaa, EEE");
-        Date resultdate = new Date(currenTime);
-
-        dateBig.setText(onlyDate.format(resultdate).toString());
-        date.setText(fullDate.format(resultdate).toString());
-        time.setText(fullTime.format(resultdate).toString());
+        dateBig.setText(HelpMe.getDate(mPicture.getCreatedAt(), HelpMe.DATE_ONLY));
+        date.setText(HelpMe.getDate(mPicture.getCreatedAt(), HelpMe.DATE_FULL));
+        time.setText(HelpMe.getDate(mPicture.getCreatedAt(), HelpMe.TIME_ONLY));
 
         photo.setOnClickListener(new View.OnClickListener() {
             @Override

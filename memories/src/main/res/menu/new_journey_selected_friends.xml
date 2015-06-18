@@ -11,7 +11,7 @@
     <!-- Next Icon -->
     <item
         android:id="@+id/action_next"
-        android:icon="@drawable/ic_forward"
+        android:icon="@drawable/ic_done"
         android:title="@string/default_string"
         app:showAsAction="always" />
 

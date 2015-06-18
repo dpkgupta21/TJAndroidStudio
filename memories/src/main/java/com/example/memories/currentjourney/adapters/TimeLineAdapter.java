@@ -29,7 +29,7 @@ import com.example.memories.models.Video;
 import com.example.memories.picture.PictureDetail;
 import com.example.memories.utility.AudioPlayer;
 import com.example.memories.utility.HelpMe;
-import com.example.memories.utility.LoadBitmapFromPath;
+import com.example.memories.utility.LoadThumbFromPath;
 import com.example.memories.utility.TJPreferences;
 import com.example.memories.video.VideoDetail;
 
@@ -242,7 +242,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
 
                 Picture pic = (Picture) memoriesList.get(position);
                 if (pic.getPicThumbnailPath() != null) {
-                    LoadBitmapFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, 256, 192, context);
+                    LoadThumbFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, 256, 192, context);
                     holder.timelineItemCaption.setText(pic.getCaption());
 
                 } else {
@@ -281,7 +281,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
 
 //                LoadThumbnailFromPath.loadBitmap(vid.getDataLocalURL(), holder.timelineItemImage, context);
                 holder.timelineItemCaption.setText(vid.getCaption());
-                LoadBitmapFromPath.loadBitmap(vid.getLocalThumbPath(), holder.timelineItemImage, 256, 192, context);
+                LoadThumbFromPath.loadBitmap(vid.getLocalThumbPath(), holder.timelineItemImage, 256, 192, context);
                 //holder.timelineItemImage.setImageBitmap(HelpMe.getVideoThumbnail(vid.getDataURL()));
                 break;
 

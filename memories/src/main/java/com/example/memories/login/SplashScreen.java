@@ -97,8 +97,8 @@ public class SplashScreen extends Activity {
 
         mPictureIdsList = new ArrayList<>();
         mPictureIdsList.add(R.drawable.img_splash_1);
-        mPictureIdsList.add(R.drawable.img_splash_2);
         mPictureIdsList.add(R.drawable.img_splash_3);
+        mPictureIdsList.add(R.drawable.img_splash_2);
 
         int i = 0;
         for(Integer a : mPictureIdsList){

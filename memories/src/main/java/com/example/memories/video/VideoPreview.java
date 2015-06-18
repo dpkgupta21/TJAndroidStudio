@@ -31,9 +31,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class VideoPreview extends AppCompatActivity {
@@ -80,6 +78,7 @@ public class VideoPreview extends AppCompatActivity {
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
         createdByName = (TextView) findViewById(R.id.photo_detail_profile_name);
 
+        //Extract thumbnail and save it
         String thumbnailPath;
         Bundle extras = getIntent().getExtras();
         videoPath = extras.getString("VIDEO_PATH");
@@ -130,15 +129,9 @@ public class VideoPreview extends AppCompatActivity {
         setFavouriteBtnClickListener();
         setThumbnailClickListener();
 
-        // set other details
-        SimpleDateFormat onlyDate = new SimpleDateFormat("dd");
-        SimpleDateFormat fullDate = new SimpleDateFormat("dd MMM yyyy");
-        SimpleDateFormat fullTime = new SimpleDateFormat("hh:mm aaa, EEE");
-        Date resultdate = new Date(currenTime);
-
-        dateBig.setText(onlyDate.format(resultdate).toString());
-        date.setText(fullDate.format(resultdate).toString());
-        time.setText(fullTime.format(resultdate).toString());
+        dateBig.setText(HelpMe.getDate(mVideo.getCreatedAt(), HelpMe.DATE_ONLY));
+        date.setText(HelpMe.getDate(mVideo.getCreatedAt(), HelpMe.DATE_FULL));
+        time.setText(HelpMe.getDate(mVideo.getCreatedAt(), HelpMe.TIME_ONLY));
     }
 
     private void setThumbnailClickListener() {

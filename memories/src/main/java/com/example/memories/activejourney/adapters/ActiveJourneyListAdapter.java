@@ -64,12 +64,14 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         // - replace the contents of the view with that element
         final Journey journeyItem = mDataset.get(position);
         final String name = journeyItem.getName();
+        final String tagline = journeyItem.getTagLine();
         final String buddyCount = (journeyItem.getBuddies().size() + 1) + " people";
         final String place = "Bangalore";
 
         Log.d(TAG, "info are : " + name + journeyItem.getIdOnServer());
 
         holder.journeyName.setText(name);
+        holder.journeyTagline.setText(tagline);
         holder.journeyBuddyCount.setText(buddyCount);
         holder.journeyPlace.setText(place);
 
@@ -114,6 +116,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         public TextView journeyName;
+        public TextView journeyTagline;
         public TextView journeyBuddyCount;
         public TextView journeyPlace;
         public ImageView journeyCoverPic;
@@ -122,6 +125,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             super(v);
             v.setOnClickListener(this);
             journeyName = (TextView) v.findViewById(R.id.active_journey_list_name);
+            journeyTagline = (TextView) v.findViewById(R.id.active_journey_list_tagline);
             journeyBuddyCount = (TextView) v.findViewById(R.id.active_journey_list_buddy_count);
             journeyPlace = (TextView) v.findViewById(R.id.active_journey_list_buddy_place);
             journeyCoverPic = (ImageView) v.findViewById(R.id.active_journey_cover_pic);

@@ -25,9 +25,7 @@ import com.example.memories.utility.TJPreferences;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener {
@@ -38,11 +36,8 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     private TextView dateBig;
     private TextView date;
     private TextView time;
-    private TextView place;
-    private TextView weather;
     private ImageView mProfileImg;
     private ImageButton mFavBtn;
-    private long currenTime;
     private String videoPath;
     private Video mVideo;
     private TextView noLikesTxt;
@@ -65,7 +60,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
 
-        currenTime = HelpMe.getCurrentTime();
+        //currenTime = HelpMe.getCurrentTime();
         video = (ImageView) findViewById(R.id.thumbnail);
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
@@ -123,16 +118,9 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         setFavouriteBtnClickListener();
         setThumbnailClickListener();
 
-
-        // set other details
-        SimpleDateFormat onlyDate = new SimpleDateFormat("dd");
-        SimpleDateFormat fullDate = new SimpleDateFormat("dd MMM yyyy");
-        SimpleDateFormat fullTime = new SimpleDateFormat("hh:mm aaa, EEE");
-        Date resultdate = new Date(currenTime);
-
-        dateBig.setText(onlyDate.format(resultdate).toString());
-        date.setText(fullDate.format(resultdate).toString());
-        time.setText(fullTime.format(resultdate).toString());
+        dateBig.setText(HelpMe.getDate(mVideo.getCreatedAt(), HelpMe.DATE_ONLY));
+        date.setText(HelpMe.getDate(mVideo.getCreatedAt(), HelpMe.DATE_FULL));
+        time.setText(HelpMe.getDate(mVideo.getCreatedAt(), HelpMe.TIME_ONLY));
     }
 
     private void setThumbnailClickListener() {

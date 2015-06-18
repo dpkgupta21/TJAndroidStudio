@@ -185,6 +185,7 @@ public class PullMemoriesService {
 
                         createdBy = memory.getString("user_id");
                         memoryId = memory.getString("id");
+                        description = memory.getString("description").equals("null") ? "" : memory.getString("description");
 
                         fileUrl = memory.getJSONObject("picture_file").getJSONObject("original").getString("url");
                         thumbnailUrl = memory.getJSONObject("picture_file").getJSONObject("medium").getString("url");
@@ -192,7 +193,7 @@ public class PullMemoriesService {
                         latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
                         longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
 
-                        Picture newPic = new Picture(memoryId, journeyId, HelpMe.PICTURE_TYPE, null, "jpg",
+                        Picture newPic = new Picture(memoryId, journeyId, HelpMe.PICTURE_TYPE, description, "jpg",
                                 100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
                         PictureUtilities.createNewPicFromServer(mContext, newPic, thumbnailUrl);
                         count++;
@@ -221,7 +222,7 @@ public class PullMemoriesService {
                         memoryId = memory.getString("id");
                         fileUrl = memory.getJSONObject("video_file").getString("url");
                         thumbnailUrl = memory.getJSONObject("video_file").getString("thumb");
-                        description = memory.getString("description");
+                        description = memory.getString("description").equals("null") ? "" : memory.getString("description");
 
                         latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
                         longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));

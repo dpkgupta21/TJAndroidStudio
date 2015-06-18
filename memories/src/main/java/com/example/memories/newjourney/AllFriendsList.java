@@ -133,7 +133,6 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
         // MDShareFile.contactList.addAll(selectedList);
         SelectedFriendsList.contactListViewAdapter.notifyDataSetChanged();
         AllFriendsList.this.finish();
-
     }
 
     @Override
@@ -142,9 +141,11 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
         list = ContactDataSource.getAllContacts(this);
         Collections.sort(list);
         if (mAdapter == null) {
+            Log.d(TAG, "on receive result called with null");
             mAdapter = new AllFriendsListAdapter(this, list);
             listView.setAdapter(mAdapter);
         } else {
+            Log.d(TAG, "on receive result called with not null");
             mAdapter.updateList(list);
             mAdapter.notifyDataSetChanged();
         }

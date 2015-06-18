@@ -22,7 +22,7 @@
                 android:id="@+id/active_journey_cover_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.5"
+                android:alpha="0.6"
                 android:scaleType="centerCrop"
                 android:src="@drawable/abhi" />
 
@@ -32,15 +32,27 @@
             android:id="@+id/active_journey_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
             android:shadowColor="@color/tj_medium_gray"
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="1.5"
             android:text="Journey Name"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
+
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/active_journey_list_tagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/active_journey_list_name"
+            android:text="Journey tagline"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="italic" />
 
 
         <com.example.memories.customviews.MyTextView

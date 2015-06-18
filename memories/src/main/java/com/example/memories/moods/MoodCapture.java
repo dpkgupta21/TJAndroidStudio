@@ -37,6 +37,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
     private TextView moodText;
     private EditText moodReasonEditTxt;
     private List<Contact> mContactsList;
+    private List<Contact> selectedFriends = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,6 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
     }
 
     private void setSelectedFriends() {
-        List<Contact> selectedFriends = new ArrayList<>();
         for (Contact contact : mContactsList) {
             if (contact.isSelected()) {
                 selectedFriends.add(contact);
@@ -133,7 +133,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.action_done:
-                if (mContactsList.size() == 0) {
+                if (selectedFriends.size() == 0) {
                     Toast.makeText(this, "please select at least one friend", Toast.LENGTH_SHORT)
                             .show();
                 } else if (moodReasonEditTxt.getText().toString() == null) {

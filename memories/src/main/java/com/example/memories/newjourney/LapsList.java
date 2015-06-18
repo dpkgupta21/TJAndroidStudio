@@ -58,6 +58,7 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
             public void onClick(View v) {
                 Log.d(TAG, "FAB clicked");
                 Intent i = new Intent(getBaseContext(), AddLap.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
             }
@@ -115,6 +116,7 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
     public void onReceiveResult(int resultCode, Bundle resultData) {
         mDialog.dismiss();
         Intent i = new Intent(getBaseContext(), SelectedFriendsList.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 

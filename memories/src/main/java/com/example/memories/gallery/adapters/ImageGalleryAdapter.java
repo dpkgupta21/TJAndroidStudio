@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.example.memories.R;
 import com.example.memories.models.Picture;
-import com.example.memories.utility.LoadBitmapFromPath;
+import com.example.memories.utility.LoadScaledBitmapFromPath;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class ImageGalleryAdapter extends BaseAdapter {
             holder.overlayImgView.setVisibility(View.VISIBLE);
         }
 
-        LoadBitmapFromPath.loadBitmap(mImgList.get(position).getPicThumbnailPath(), holder.imgView, 100, 100, mContext);
+        LoadScaledBitmapFromPath.loadBitmap(mImgList.get(position).getPicThumbnailPath(), holder.imgView, 150, 150, mContext);
 
         holder.overlayImgView.setImageResource(R.drawable.img_selected);
         return rowView;

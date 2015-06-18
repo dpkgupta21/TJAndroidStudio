@@ -74,6 +74,8 @@ public class HelpMe {
 
     // To fetch dates from getDate()
     public static final int DATE_FULL = 1;
+    public static final int DATE_ONLY = 2;
+    public static final int TIME_ONLY = 3;
     private static final String TAG = "<HelpMe>";
     public static Context mContext;
 
@@ -155,6 +157,14 @@ public class HelpMe {
                 Log.d(TAG, fullDate.format(resultdate).toString());
                 Log.d(TAG, "timestamp = " + timestamp + ", formatted date = " + resultdate + " ===" + fullDate.format(resultdate).toString());
                 return fullDate.format(resultdate).toString();
+            case DATE_ONLY:
+                Log.d(TAG, fullDate.format(resultdate).toString());
+                Log.d(TAG, "timestamp = " + timestamp + ", formatted date = " + resultdate + " ===" + fullDate.format(resultdate).toString());
+                return onlyDate.format(resultdate).toString();
+            case TIME_ONLY:
+                Log.d(TAG, fullDate.format(resultdate).toString());
+                Log.d(TAG, "timestamp = " + timestamp + ", formatted date = " + resultdate + " ===" + fullDate.format(resultdate).toString());
+                return fullTime.format(resultdate).toString();
             default:
                 break;
         }
@@ -229,6 +239,14 @@ public class HelpMe {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeStream(new FileInputStream(resPath), null, options);
     }
+
+    /*returns the bitmap from the path without downscaling the image */
+    public static Bitmap getBitmapFromPath(String filePath){
+        File imageFile = new File(filePath);
+        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), new BitmapFactory.Options());
+        return bitmap;
+    }
+
 
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth,
                                             int reqHeight) {
