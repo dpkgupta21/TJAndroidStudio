@@ -230,6 +230,14 @@ public class HelpMe {
         return BitmapFactory.decodeStream(new FileInputStream(resPath), null, options);
     }
 
+    /*returns the bitmap from the path without downscaling the image */
+    public static Bitmap getBitmapFromPath(String filePath){
+        File imageFile = new File(filePath);
+        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), new BitmapFactory.Options());
+        return bitmap;
+    }
+
+
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth,
                                             int reqHeight) {
         // Raw height and width of image

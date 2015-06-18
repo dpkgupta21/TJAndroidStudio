@@ -22,7 +22,7 @@ import java.util.List;
 
 public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filterable {
 
-    protected static final String TAG = null;
+    protected static final String TAG = "AllFriendsListAdapter";
     private List<Contact> originalList;
     private Activity context;
     private List<Contact> list;
@@ -36,6 +36,7 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
 
     public void updateList(List<Contact> contactList) {
         originalList = contactList;
+        list = contactList;
     }
 
     @Override
@@ -45,9 +46,9 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, originalList.get(position).getName());
         View view = null;
         if (convertView == null) {
-            Log.d(TAG, "convert view iss null" + list.size() + "position = " + position);
             LayoutInflater inflator = context.getLayoutInflater();
             view = inflator.inflate(R.layout.new_journey_traveljar_contact_list_item, null);
             final ViewHolder viewHolder = new ViewHolder();

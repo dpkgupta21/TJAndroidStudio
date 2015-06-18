@@ -54,9 +54,8 @@ public class AddLap extends AppCompatActivity {
         setContentView(R.layout.new_journey_lap_new);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("New Location");
+        toolbar.setTitle("New Lap");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setNavigationIcon(R.drawable.next);
         setSupportActionBar(toolbar);
 
         fromLocation = (TextView) findViewById(R.id.new_journey_location_new_from);
@@ -258,6 +257,7 @@ public class AddLap extends AppCompatActivity {
 
 
             Intent i = new Intent(getBaseContext(), LapsList.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
             finish();
         }

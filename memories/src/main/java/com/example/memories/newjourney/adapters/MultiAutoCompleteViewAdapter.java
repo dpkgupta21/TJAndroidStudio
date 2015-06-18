@@ -21,8 +21,8 @@ import java.util.List;
 public class MultiAutoCompleteViewAdapter extends ArrayAdapter<Contact> implements Filterable {
 
     protected static final String TAG = null;
-    private final List<Contact> originalList;
-    private final Activity context;
+    private List<Contact> originalList;
+    private Activity context;
     private List<Contact> list;
 
     public MultiAutoCompleteViewAdapter(Activity context, List<Contact> list) {
@@ -31,6 +31,11 @@ public class MultiAutoCompleteViewAdapter extends ArrayAdapter<Contact> implemen
         this.list = list;
         originalList = list;
         Log.d(TAG, "list is " + list);
+    }
+
+    public void updateList(List<Contact> contactList){
+        this.list = contactList;
+        originalList = contactList;
     }
 
     public Contact getFilteredContactAtPosition(int position){

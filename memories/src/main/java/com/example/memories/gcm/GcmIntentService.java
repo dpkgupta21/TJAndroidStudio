@@ -228,7 +228,7 @@ public class GcmIntentService extends IntentService {
                 dataUrl = data.getString("data_url");
                 String thumb = data.getString("thumb");
                 size = Long.parseLong(data.getString("size"));
-                extension = data.getString("extention");
+                extension = data.getString("extension");
                 caption = data.getString("caption");
 
                 Log.d(TAG, "caption is " + caption);

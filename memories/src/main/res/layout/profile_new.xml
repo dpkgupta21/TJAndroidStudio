@@ -32,6 +32,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:src="@drawable/gumnaam_profile_image" />
 
         <com.example.memories.customviews.MyTextView
@@ -41,7 +42,6 @@
             android:layout_below="@id/profile_img"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Abhinav Mittal"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -52,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/profile_name"
             android:layout_centerHorizontal="true"
-            android:text="Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum "
             android:textColor="@color/white" />
 
         <android.support.v7.widget.Toolbar
@@ -80,14 +79,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Name" />
+            android:hint="Name"
+            android:inputType="textPersonName"/>
 
         <com.example.memories.customviews.MyEditTextView
             android:id="@+id/edit_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Status" />
+            android:hint="Status"
+            android:inputType="textPersonName"/>
 
     </LinearLayout>
 

@@ -215,6 +215,7 @@ public class PullContactsService extends IntentService {
         JSONArray allUsers = response.getJSONArray("users");
         int len = allUsers.length();
         Contact tempContact;
+        Log.d(TAG, "buddies on traveljar " + response);
         Log.d(TAG, "Inserting into local DB total users = " + len);
         noRequests = len;
 
@@ -281,6 +282,7 @@ public class PullContactsService extends IntentService {
             ContactDataSource.createContact(tempContact, this);
             contactsList.add(tempContact);
         }
+        onFinish();
     }
 
     public void onFinish() {
@@ -290,104 +292,41 @@ public class PullContactsService extends IntentService {
         }
     }
 
-/*    private List<Contact> getPhoneContactsList() {
-        Log.d(TAG, "started scanning phone contacts");
-        Integer nameCount = 0;
-        Integer emailCount = 0;
-        Integer totalContacts = 0;
-        allPhoneList = new ArrayList<>();
-        allEmailList = new ArrayList<>();
+    class AddressBookContact {
+        private long id;
+        private Resources res;
+        private String name;
+        private LongSparseArray<String> emails;
+        private LongSparseArray<String> phones;
 
-        list = new ArrayList<Contact>();
-        ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-        Log.d(TAG, "total count of the contacts cursor is " + cur.getCount());
+        AddressBookContact(long id, String name, Resources res) {
+            this.id = id;
+            this.name = name;
+            this.res = res;
+        }
 
-        if (cur.getCount() > 0) {
-            while (cur.moveToNext()) {
-                String id = cur.getString(cur.getColumnIndex(BaseColumns._ID));
-                //String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+        public LongSparseArray<String> getEmails() {
+            return emails;
+        }
 
-                // If no name present skip that contact
-                if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                    Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            new String[]{id}, null);
+        public LongSparseArray<String> getPhones() {
+            return phones;
+        }
 
-                    while (pCur.moveToNext()) {
-                        //phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        //allPhoneList.add(phone);
-                        allPhoneList.add(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                        nameCount++;
-                        break;
-                    }
-                    pCur.close();
-                }
-
-                Cursor emailCur = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-                        null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
-                        new String[]{id}, null);
-
-                while (emailCur.moveToNext()) {
-//                        emailContact = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-//                        allEmailList.add(emailContact);
-                    allEmailList.add(emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
-                    emailCount++;
-                }
-                emailCur.close();
-
-                // if (phone != null || emailContact != null) {
-
-//                    Log.d(TAG, "-------------------------");
-//                    Log.d(TAG, "Id :" + totalContacts);
-
-                totalContacts++;
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        public void addEmail(int type, String address) {
+            if (emails == null) {
+                emails = new LongSparseArray<String>();
             }
+            emails.put(type, address);
         }
 
-        Log.d(TAG, "phone contacts scanning complete" + " : names count = " + nameCount + " : email count = " + emailCount);
-
-        CheckTJContacts();
-        // Collections.sort(list);
-        return list;
-    }*/
-
-}
-
-class AddressBookContact {
-    private long id;
-    private Resources res;
-    private String name;
-    private LongSparseArray<String> emails;
-    private LongSparseArray<String> phones;
-
-    AddressBookContact(long id, String name, Resources res) {
-        this.id = id;
-        this.name = name;
-        this.res = res;
-    }
-
-    public LongSparseArray<String> getEmails() {
-        return emails;
-    }
-
-    public LongSparseArray<String> getPhones() {
-        return phones;
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void addEmail(int type, String address) {
-        if (emails == null) {
-            emails = new LongSparseArray<String>();
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        public void addPhone(int type, String number) {
+            if (phones == null) {
+                phones = new LongSparseArray<String>();
+            }
+            phones.put(type, number);
         }
-        emails.put(type, address);
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void addPhone(int type, String number) {
-        if (phones == null) {
-            phones = new LongSparseArray<String>();
-        }
-        phones.put(type, number);
     }
 }

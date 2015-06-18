@@ -80,6 +80,7 @@ public class VideoPreview extends AppCompatActivity {
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
         createdByName = (TextView) findViewById(R.id.photo_detail_profile_name);
 
+        //Extract thumbnail and save it
         String thumbnailPath;
         Bundle extras = getIntent().getExtras();
         videoPath = extras.getString("VIDEO_PATH");

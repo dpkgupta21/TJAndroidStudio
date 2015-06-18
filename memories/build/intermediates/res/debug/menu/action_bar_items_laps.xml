@@ -5,8 +5,8 @@
     <!-- Next Icon -->
     <item
         android:id="@+id/action_next"
-        android:icon="@drawable/ic_forward"
-        android:title="@string/default_string"
-        app:showAsAction="ifRoom" />
+        android:title="Next"
+        app:showAsAction="always"
+        />
 
 </menu><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/menu/action_bar_items_laps.xml -->

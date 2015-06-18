@@ -2,8 +2,10 @@ package com.example.memories.newjourney.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -39,7 +41,7 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
             LayoutInflater inflater = context.getLayoutInflater();
             rowView = inflater.inflate(R.layout.new_journey_laps_list_item, null);
             // configure view holder
-            ViewHolder viewHolder = new ViewHolder();
+            final ViewHolder viewHolder = new ViewHolder();
             viewHolder.from = (TextView) rowView.findViewById(R.id.new_journey_location_lap_from);
             viewHolder.to = (TextView) rowView.findViewById(R.id.new_journey_location_lap_to);
             viewHolder.date = (TextView) rowView.findViewById(R.id.new_journey_location_lap_date);
@@ -50,9 +52,27 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
             viewHolder.editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(context, AddLap.class);
-                    i.putExtra("EDIT_JOURNEY_POSITION", position);
-                    context.startActivity(i);
+                    final PopupMenu popup = new PopupMenu(context, viewHolder.editBtn);
+                    popup.getMenuInflater().inflate(R.menu.lap_card_dropdown_items, popup.getMenu());
+                    popup.show();
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()){
+                                case R.id.edit_lap:
+                                    Intent i = new Intent(context, AddLap.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    i.putExtra("EDIT_JOURNEY_POSITION", position);
+                                    context.startActivity(i);
+                                    break;
+                                case R.id.remove_lap:
+                                    lapsList.remove(position);
+                                    LapsListAdapter.this.notifyDataSetChanged();
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
                 }
             });
             rowView.setTag(viewHolder);

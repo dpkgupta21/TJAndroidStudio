@@ -45,6 +45,8 @@ public class VideoCapture extends AppCompatActivity {
             i.putExtra("VIDEO_PATH", getRealPathFromURI(videoUri));
             startActivity(i);
             finish();
+        }else if(resultCode == RESULT_CANCELED){
+            finish();
         }
     }
 

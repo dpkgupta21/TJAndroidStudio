@@ -100,7 +100,7 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
-    @Override
+/*    @Override
     public void onBackPressed() {
         if (!mEditStatus.getText().toString().equals(TJPreferences.getUserStatus(this))) {
             TJPreferences.setUserStatus(this, mEditStatus.getText().toString());
@@ -117,7 +117,7 @@ public class ProfileActivity extends BaseActivity {
         setResult(RESULT_OK, intent);
         Log.d(TAG, "on back pressed called " + intent + RESULT_OK);
         finish();
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
