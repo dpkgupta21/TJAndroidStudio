@@ -76,6 +76,15 @@
             android:text="0"
             android:textSize="@dimen/tj_extra_giant_font" />
 
+        <TextView
+            android:id="@+id/timelineItemUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:layout_alignBottom="@+id/noLikesTxt"
+            android:layout_toRightOf="@+id/timelineItemUserImage"
+            android:layout_toEndOf="@+id/timelineItemUserImage" />
+
     </RelativeLayout>
 
 </LinearLayout>

@@ -55,7 +55,7 @@ public class CreateNotes extends AppCompatActivity {
 
         Note note = new Note("", TJPreferences.getActiveJourneyId(this), HelpMe.NOTE_TYPE, "Note",
                 mNoteContent.getText().toString().trim(), TJPreferences.getUserId(this),
-                System.currentTimeMillis(), System.currentTimeMillis(), null, lat, longi);
+                HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null, lat, longi);
         NoteDataSource.createNote(note, this);
         NotesUtil.uploadNotes(note, this);
     }

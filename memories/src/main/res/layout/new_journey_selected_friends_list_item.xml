@@ -17,8 +17,9 @@
         android:id="@+id/add_friends_contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/add_friends_contact_image"
+        android:layout_alignParentTop="@id/add_friends_contact_image"
+        android:layout_marginTop="10dp"
         android:text="Content not available"
         android:textSize="@dimen/tj_medium_font" />
 
@@ -31,5 +32,16 @@
         android:background="@drawable/delete85"
         android:contentDescription="@string/default_string"
         android:text="Content not available" />
+
+    <TextView
+        android:id="@+id/add_friends_contact_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact Info"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/tj_medium_font"
+        android:layout_below="@+id/add_friends_contact_name"
+        android:layout_toRightOf="@+id/add_friends_contact_image"
+        android:layout_toEndOf="@+id/add_friends_contact_image" />
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,32 @@ public class ActivejourneyList extends BaseActivity {
     private Toast toast = null;
     private TextView noActivejourneysMsgTxt;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private LinearLayout mLayout;
+
+    /*activityVisible will track the visible state of the activity which
+    * will be used to refresh the listview when gcm notification arrives*/
+    private static boolean activityVisible;
+    public static boolean isActivityVisible() {
+        return activityVisible;
+    }
+
+    public static void activityResumed() {
+        activityVisible = true;
+    }
+
+    public static void activityPaused() {
+        activityVisible = false;
+    }
+
+    private static ActivejourneyList instance;
+
+    public ActivejourneyList(){
+        instance = this;
+    }
+
+    public static ActivejourneyList getInstance(){
+        return instance == null ? new ActivejourneyList() : instance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,41 +75,41 @@ public class ActivejourneyList extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Active Journeys");
 
+        mLayout  = (LinearLayout)findViewById(R.id.active_journey_layout);
+
         allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
         Collections.sort(allActiveJourney);
 
-        if (allActiveJourney.size() > 0) {
-            mRecyclerView = (RecyclerView) findViewById(R.id.active_journey_recycler_view);
-            mRecyclerView.setVisibility(View.VISIBLE);
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
-            mRecyclerView.setHasFixedSize(true);
+        mRecyclerView = (RecyclerView) findViewById(R.id.active_journey_recycler_view);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
 
-            // use a linear layout manager
-            mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
-            mRecyclerView.setLayoutManager(mLayoutManager);
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-            // specify an adapter (see also next example)
-/*            mAdapter = new ActiveJourneyListAdapter(allActiveJourney, getApplicationContext());
-            mRecyclerView.setAdapter(mAdapter);*/
+        /*if(allActiveJourney.size() > 0){
+            mAdapter = new ActiveJourneyListAdapter(allActiveJourney, this);
+            mRecyclerView.setAdapter(mAdapter);
+        }else {
+            mLayout.setBackgroundResource(R.drawable.img_no_active_journey);
+        }*/
 
-            // Add pull to refresh functionality
-            mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.active_journey_swipe_refresh_layout);
-            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        // Add pull to refresh functionality
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.active_journey_swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
-                @Override
-                public void onRefresh() {
-                    allActiveJourney = JourneyDataSource.getAllActiveJourneys(getBaseContext());
-                    mAdapter.updateList(allActiveJourney);
-                    mAdapter.notifyDataSetChanged();
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
+            @Override
+            public void onRefresh() {
+                allActiveJourney = JourneyDataSource.getAllActiveJourneys(getBaseContext());
+                Collections.sort(allActiveJourney);
+                mAdapter.updateList(allActiveJourney);
+                mAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
             });
-
-        } else {
-            noActivejourneysMsgTxt = (TextView) findViewById(R.id.active_journey_no_buddies_msg);
-            noActivejourneysMsgTxt.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -125,6 +152,7 @@ public class ActivejourneyList extends BaseActivity {
         if (this.toast != null) {
             this.toast.cancel();
         }
+        activityPaused();
         super.onPause();
     }
 
@@ -148,8 +176,10 @@ public class ActivejourneyList extends BaseActivity {
         }
     }
 
+    @Override
     public void onResume() {
         allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
+        Collections.sort(allActiveJourney);
         if(allActiveJourney.size() > 0){
             if(mAdapter == null){
                 mAdapter = new ActiveJourneyListAdapter(allActiveJourney, this);
@@ -159,11 +189,17 @@ public class ActivejourneyList extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
             }
         }else {
-            noActivejourneysMsgTxt = (TextView) findViewById(R.id.active_journey_no_buddies_msg);
-            noActivejourneysMsgTxt.setVisibility(View.VISIBLE);
+            mLayout.setBackgroundResource(R.drawable.img_no_active_journey);
         }
-
+        activityResumed();
         super.onResume();
     }
 
+    /*This method will be called by GCMIntentService if the activity is visible to refresh the listview*/
+    public void refreshJourneysList(){
+        Intent intent = getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        startActivity(intent);
+    }
 }

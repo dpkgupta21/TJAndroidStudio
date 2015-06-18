@@ -85,6 +85,7 @@ public class Settings extends AppCompatActivity{
                         //About Us
                         AboutUsDialog aboutUsDialog = new AboutUsDialog();
                         aboutUsDialog.show(getSupportFragmentManager(), "ABOUT US");
+                        break;
                     case 3:
                         //Logout
                         new AlertDialog.Builder(Settings.this)

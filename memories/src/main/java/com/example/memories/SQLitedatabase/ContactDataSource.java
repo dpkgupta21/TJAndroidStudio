@@ -18,28 +18,35 @@ public class ContactDataSource {
 
     // ------------------------ "contacts" table methods ----------------//
 
-    public static long createContact(Contact newContact, Context context) {
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+    public static long createContact(Contact contact, Context context) {
+
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER, newContact.getIdOnServer());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_NAME, newContact.getName());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_EMAIL, newContact.getPrimaryEmail());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, newContact.getPhone_no());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL, newContact.getPicServerUrl());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL, newContact.getPicLocalUrl());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS, newContact.getAllJourneyIds());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_INTERESTS, newContact.getInterests());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD, newContact.isOnBoard() ? 1 : 0);
-        values.put(MySQLiteHelper.CONTACT_COLUMN_STATUS, newContact.getStatus());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER, contact.getIdOnServer());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_NAME, contact.getName());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_EMAIL, contact.getPrimaryEmail());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhone_no());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL, contact.getPicServerUrl());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL, contact.getPicLocalUrl());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS, contact.getAllJourneyIds());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_INTERESTS, contact.getInterests());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD, contact.isOnBoard() ? 1 : 0);
+        values.put(MySQLiteHelper.CONTACT_COLUMN_STATUS, contact.getStatus());
 
-        // insert row
-        long contact_id = 0;
-        try {
-            contact_id = db.insertOrThrow(MySQLiteHelper.TABLE_CONTACT, null, values);
-        } catch (Exception ex) {
-            Log.d(TAG, "contact already exists so not inserting excccceptiononon");
+        long contact_id;
+        //Check if the contact is already present in the database
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        Contact c = ContactDataSource.getContactById(context, contact.getIdOnServer());
+        if(c == null){
+            //contact is not present on the database so create a new one
+            Log.d(TAG, "contact is not present on the database so create a new one" + contact);
+            contact_id = db.insert(MySQLiteHelper.TABLE_CONTACT, null, values);
+            Log.d(TAG, "contact id after saving is " + contact_id);
+        }else {
+            //contact is already present on the database so updating the existing one
+            Log.d(TAG, "contact is already present on the database so updating the existing one");
+            db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contact.getIdOnServer(), null);
+            contact_id = Long.parseLong(contact.getIdOnServer());
         }
-
         db.close();
         return contact_id;
     }
@@ -54,7 +61,6 @@ public class ContactDataSource {
         // If contacts contains own contact remove itgetAllContacts
         int i = -1;
         for (Contact contact : contacts) {
-            Log.d(TAG, "contact id for " + (i + 1) + "is " + contact.getIdOnServer() + TJPreferences.getUserId(context));
             if (contact.getIdOnServer().equals(TJPreferences.getUserId(context))) {
                 i++;
                 break;
@@ -196,6 +202,7 @@ CCCC
         db.close();
     }
 
+/*
     public static void createNewContact(Contact contact, Context context){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Contact updateContact = ContactDataSource.getContactById(context, contact.getIdOnServer());
@@ -217,6 +224,7 @@ CCCC
             db.close();
         }
     }
+*/
 
 
 

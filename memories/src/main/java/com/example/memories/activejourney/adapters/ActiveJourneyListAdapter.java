@@ -142,8 +142,10 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
                 Log.d(TAG, "non existing contacts list is" + buddyList);
 
                 if (buddyList != null && !buddyList.isEmpty()) {
+                    Log.d(TAG, "some buddies need to be fetched from server hence fetching from server" + buddyList.size());
                     new PullBuddies(mContext, buddyList, ActiveJourneyListAdapter.this).fetchBuddies();
                 } else {
+                    Log.d(TAG, "no buddy to be fetched from server hence starting current activity");
                     Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.getApplicationContext().startActivity(intent);

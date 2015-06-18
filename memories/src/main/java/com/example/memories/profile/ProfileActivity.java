@@ -1,5 +1,6 @@
 package com.example.memories.profile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -51,6 +52,7 @@ public class ProfileActivity extends BaseActivity {
     private TextView mStatus;
     private EditText mEditName;
     private EditText mEditStatus;
+    private ProgressDialog mDialog;
 
     private boolean isProfilePicUpdated;
     private boolean isNameUpdated;
@@ -77,6 +79,8 @@ public class ProfileActivity extends BaseActivity {
         mStatus = (TextView) findViewById(R.id.profile_status);
         mEditName = (EditText) findViewById(R.id.edit_name);
         mEditStatus = (EditText) findViewById(R.id.edit_status);
+
+        mDialog = new ProgressDialog(this);
 
         mUserName.setText(TJPreferences.getUserName(this));
         mStatus.setText(TJPreferences.getUserStatus(this));
@@ -170,10 +174,14 @@ public class ProfileActivity extends BaseActivity {
                         columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL);
                     }
                     if (isNameUpdated || isStatusUpdated || isProfilePicUpdated) {
+                        mDialog.setMessage("Updating your profile");
+                        mDialog.show();
                         new UpdateProfileAsyncTask().execute();
                         String columnNamesArray[] = new String[columnNames.size()];
                         String columnValuesArray[] = new String[columnNames.size()];
                         ContactDataSource.updateContact(ProfileActivity.this, TJPreferences.getUserId(ProfileActivity.this), columns.toArray(columnValuesArray), columnNames.toArray(columnNamesArray));
+                    }else {
+                        finish();
                     }
                 }else{
                     Toast.makeText(this, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
@@ -207,7 +215,6 @@ public class ProfileActivity extends BaseActivity {
         protected String doInBackground(Map<String, String>... maps) {
             MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
             entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-
             if (isProfilePicUpdated) {
                 entityBuilder.addPart("user[profile_picture]", new FileBody(new File(mProfileImgPath)));
             }
@@ -232,8 +239,15 @@ public class ProfileActivity extends BaseActivity {
             try {
                 response = new DefaultHttpClient().execute(updateProfileRequest);
                 Log.d("User", "response on profile Update" + response.getStatusLine());
+                mDialog.dismiss();
+                Intent intent = getIntent();
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                startActivity(intent);
             } catch (IOException e) {
                 Log.d("User", "error in updating profile" + e.getMessage());
+                mDialog.dismiss();
+                Toast.makeText(ProfileActivity.this, "Unable to update Profile please try after some time", Toast.LENGTH_SHORT).show();
             }
             return null;
         }

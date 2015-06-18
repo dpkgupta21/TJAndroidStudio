@@ -34,6 +34,18 @@
             android:layout_marginTop="-35dp"
             android:src="@drawable/gumnaam_profile_image" />
 
+        <com.example.memories.customviews.MyTextView
+            android:id="@+id/timelineItemUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Some Name"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_alignTop="@id/timelineItemUserImage"
+            android:layout_toRightOf="@id/timelineItemUserImage"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

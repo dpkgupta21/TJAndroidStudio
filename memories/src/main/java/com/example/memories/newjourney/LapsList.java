@@ -101,6 +101,7 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
 
     private void goToNext() {
         mDialog = new ProgressDialog(this);
+        mDialog.setMessage("Please wait while we are fetching your contacts");
         mReceiver = new CustomResultReceiver(new Handler());
         mReceiver.setReceiver(this);
         Intent intent = new Intent(getBaseContext(), PullContactsService.class);

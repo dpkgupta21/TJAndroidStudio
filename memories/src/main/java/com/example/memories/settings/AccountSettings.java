@@ -8,8 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.memories.R;
+import com.example.memories.utility.HelpMe;
 import com.example.memories.utility.TJPreferences;
 
 public class AccountSettings extends AppCompatActivity implements UpdatePhoneDialog.OnPhoneUpdateListener{
@@ -43,14 +45,22 @@ public class AccountSettings extends AppCompatActivity implements UpdatePhoneDia
         updatePhoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new UpdatePhoneDialog().show(getSupportFragmentManager(), "UPDATE_PHONE");
+                if(!HelpMe.isNetworkAvailable(AccountSettings.this)) {
+                    Toast.makeText(AccountSettings.this, "Network unavailable, please connect to the network and try again", Toast.LENGTH_SHORT).show();
+                }else {
+                    new UpdatePhoneDialog().show(getSupportFragmentManager(), "UPDATE_PHONE");
+                }
             }
         });
 
         updatePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new UpdatePasswordDialog().show(getSupportFragmentManager(), "UPDATE_PASSWORD");
+                if(!HelpMe.isNetworkAvailable(AccountSettings.this)) {
+                    Toast.makeText(AccountSettings.this, "Network unavailable, please connect to the network and try again", Toast.LENGTH_SHORT).show();
+                }else {
+                    new UpdatePasswordDialog().show(getSupportFragmentManager(), "UPDATE_PASSWORD");
+                }
             }
         });
     }

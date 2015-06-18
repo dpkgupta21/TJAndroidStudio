@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,8 @@ public class SideMenuDrawer extends Fragment {
     private View rootView;
     private ImageButton settingsButton;
 
+    private DrawerLayout mDrawerLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.side_menu_drawer, null);
@@ -56,6 +60,8 @@ public class SideMenuDrawer extends Fragment {
         mUserStatus = (TextView) rootView.findViewById(R.id.sidemenu_status);
 
         settingsButton = (ImageButton)rootView.findViewById(R.id.sidemenu_settings);
+
+        mDrawerLayout = (DrawerLayout)getActivity().findViewById(R.id.drawerLayout);
 
         // Sliding Side Menu Drawer code
         ListView featuresListView = (ListView) rootView.findViewById(R.id.sidemenu_features_list);
@@ -84,18 +90,22 @@ public class SideMenuDrawer extends Fragment {
                 Intent i;
                 switch (position) {
                     case 0:
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                         i = new Intent(getActivity(), ActivejourneyList.class);
                         startActivity(i);
                         break;
                     case 1:
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                         i = new Intent(getActivity(), PastJourneyList.class);
                         startActivity(i);
                         break;
                     case 2:
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                         i = new Intent(getActivity(), GalleryBaseActivity.class);
                         startActivity(i);
                         break;
                     case 3:
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                         i = new Intent(getActivity(), ProfileActivity.class);
                         startActivity(i);
                         break;
