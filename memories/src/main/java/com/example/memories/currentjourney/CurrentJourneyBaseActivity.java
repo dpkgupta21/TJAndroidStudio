@@ -13,6 +13,7 @@ import android.view.View;
 import com.example.memories.BaseActivity;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.JourneyDataSource;
+import com.example.memories.activejourney.ActivejourneyList;
 import com.example.memories.audio.AudioCapture;
 import com.example.memories.checkin.CheckInPlacesList;
 import com.example.memories.currentjourney.adapters.CurrentJourneyTabsAdapter;
@@ -104,4 +105,13 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, ActivejourneyList.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
 }

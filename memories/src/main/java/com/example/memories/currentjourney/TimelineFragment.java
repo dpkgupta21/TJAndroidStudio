@@ -63,12 +63,8 @@ public class TimelineFragment extends Fragment {
         Log.d(TAG, "user_id = " + TJPreferences.getUserId(getActivity()));
 
         mListView = (ListView) rootView.findViewById(R.id.timelineList);
-        memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(),
-                TJPreferences.getActiveJourneyId(getActivity()));
 
-        mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
-        mListView.setAdapter(mAdapter);
-        Log.d(TAG, "no of memories = " + memoriesList.size());
+        loadMemoriesList();
 
         // Swipe to refersh tmline
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.timeline_swipe_refresh_layout);
@@ -76,10 +72,7 @@ public class TimelineFragment extends Fragment {
 
             @Override
             public void onRefresh() {
-                memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(),
-                        TJPreferences.getActiveJourneyId(getActivity()));
-                mAdapter.updateList(memoriesList);
-                mAdapter.notifyDataSetChanged();
+                loadMemoriesList();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -132,22 +125,33 @@ public class TimelineFragment extends Fragment {
         super.onPause();
     }
 
-    // Onresume of the fragment fetch all the memories from the database and
-    // if adapter is null, create new else notifyDataSetChanged()
-    public void onResume() {
-        Log.d(TAG, "on resume() method called from timeline");
-        memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
+    private void loadMemoriesList(){
+        memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));        Log.d(TAG, "no of memories = " + memoriesList.size());
+        Log.d(TAG, "no of memories = " + memoriesList.size());
         if(memoriesList.size() > 0) {
+            mListView.setVisibility(View.VISIBLE);
             if (mAdapter == null) {
+                Log.d(TAG, "mAdapter is null");
                 mAdapter = new TimeLineAdapter(getActivity(), memoriesList);
                 mListView.setAdapter(mAdapter);
             } else {
+                Log.d(TAG, "mAdapter is not null " + mListView.getVisibility() + View.VISIBLE);
                 mAdapter.setMemoriesList(memoriesList);
                 mAdapter.notifyDataSetChanged();
+                mListView.setAdapter(mAdapter);
             }
         }else {
+            Log.d(TAG, "no of memories < 0");
+            mListView.setVisibility(View.GONE);
             mLayout.setBackgroundResource(R.drawable.img_no_timeline_item);
         }
+    }
+
+    // Onresume of the fragment fetch all the memories from the database and
+    // if adapter is null, create new else notifyDataSetChanged()
+    public void onResume() {
+        loadMemoriesList();
+        Log.d(TAG, "on resume() method called from timeline");
         super.onResume();
     }
 }

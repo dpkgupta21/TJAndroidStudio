@@ -105,7 +105,6 @@
                 android:id="@+id/new_journey_location_new_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thu, 25 Dec"
                 android:textSize="@dimen/tj_giant_font"
                 android:textStyle="bold" />
         </LinearLayout>

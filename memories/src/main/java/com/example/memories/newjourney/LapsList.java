@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +33,9 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
     private ImageButton mEditJourney;
     ProgressDialog mDialog;
     CustomResultReceiver mReceiver;
+
+    //Id for the menu item 'next'
+    private static final int ID_ACTION_ITEM_NEXT = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,9 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_items_laps, menu);
+        if(AppController.lapsList.size() > 0){
+            menu.add(0, ID_ACTION_ITEM_NEXT, 0, "Next").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -89,7 +92,7 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case R.id.action_next:
+            case ID_ACTION_ITEM_NEXT:
                 goToNext();
                 return true;
             case android.R.id.home:
@@ -120,4 +123,10 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
         startActivity(i);
     }
 
+    @Override
+    public void onResume(){
+        //Invalidate the menu for the visibility of the next option in the menu
+        invalidateOptionsMenu();
+        super.onResume();
+    }
 }

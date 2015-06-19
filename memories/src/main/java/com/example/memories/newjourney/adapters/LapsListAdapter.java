@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.newjourney.AddLap;
+import com.example.memories.newjourney.LapsList;
 import com.example.memories.utility.HelpMe;
 
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
                                 case R.id.remove_lap:
                                     lapsList.remove(position);
                                     LapsListAdapter.this.notifyDataSetChanged();
+                                    ((LapsList)context).invalidateOptionsMenu();
                                     break;
                             }
                             return false;

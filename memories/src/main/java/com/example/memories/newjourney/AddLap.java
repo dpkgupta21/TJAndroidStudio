@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -84,6 +85,9 @@ public class AddLap extends AppCompatActivity {
         // Set up date picker
         Calendar calendar = Calendar.getInstance();
         final SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE, d MMM yyyy", Locale.US);
+        //Set the current date initially
+        dateLocation.setText(dateFormatter.format(new Date()));
+
         datePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
