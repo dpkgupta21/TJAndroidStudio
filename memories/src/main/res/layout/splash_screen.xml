@@ -19,7 +19,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <com.example.memories.customviews.MyButtonView
+        <com.traveljar.memories.customviews.MyButtonView
             android:id="@+id/splash_signup_btn"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
@@ -31,7 +31,7 @@
             android:textSize="20sp"
             android:textColor="@color/black" />
 
-        <com.example.memories.customviews.MyButtonView
+        <com.traveljar.memories.customviews.MyButtonView
             android:id="@+id/splash_signin_btn"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"

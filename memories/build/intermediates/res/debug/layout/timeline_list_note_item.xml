@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/timelineItemCaption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             android:textSize="@dimen/tj_large_font"
             android:textStyle="bold" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/timelineItemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:textStyle="italic" />
     </RelativeLayout>
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/timelineItemContent"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <com.example.memories.customviews.MyCircularImageView
+        <com.traveljar.memories.customviews.MyCircularImageView
             android:id="@+id/timelineItemUserImage"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
@@ -66,7 +66,7 @@
             android:contentDescription="@string/default_string"
             android:src="@drawable/ic_favourite_empty" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,4 +87,4 @@
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_note_item.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_note_item.xml -->

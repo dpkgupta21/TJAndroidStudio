@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <com.example.memories.customviews.MyCircularImageView
+    <com.traveljar.memories.customviews.MyCircularImageView
         android:id="@+id/all_contacts_contact_image"
         android:layout_width="75sp"
         android:layout_height="75sp"
@@ -18,7 +18,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/all_contacts_contact_image">
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/all_contacts_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             android:textSize="@dimen/tj_medium_font"
             android:textStyle="bold" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/all_contacts_contact_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

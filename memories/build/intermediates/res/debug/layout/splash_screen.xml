@@ -19,7 +19,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <com.example.memories.customviews.MyButtonView
+        <com.traveljar.memories.customviews.MyButtonView
             android:id="@+id/splash_signup_btn"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
@@ -31,7 +31,7 @@
             android:textSize="20sp"
             android:textColor="@color/black" />
 
-        <com.example.memories.customviews.MyButtonView
+        <com.traveljar.memories.customviews.MyButtonView
             android:id="@+id/splash_signin_btn"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
@@ -86,4 +86,4 @@
     </RadioGroup>
 
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/splash_screen.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/splash_screen.xml -->

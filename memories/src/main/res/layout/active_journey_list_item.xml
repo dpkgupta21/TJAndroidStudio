@@ -28,7 +28,7 @@
 
         </FrameLayout>
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/active_journey_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/active_journey_list_tagline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:textStyle="italic" />
 
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/active_journey_list_buddy_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             android:layout_marginBottom="5dp"
             android:src="@drawable/facebook30" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/active_journey_list_buddy_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

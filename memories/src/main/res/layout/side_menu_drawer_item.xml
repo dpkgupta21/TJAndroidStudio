@@ -15,7 +15,7 @@
         android:paddingRight="10dp"
         android:src="@drawable/hamburger" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/side_menu_cloud_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

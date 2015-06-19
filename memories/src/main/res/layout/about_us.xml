@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/aboutUsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:layout_height="1dp"
         android:background="@color/md_blue" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/aboutUsVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:textColor="@color/tj_dark_gray"
         android:textSize="16sp" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/aboutUsCopyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

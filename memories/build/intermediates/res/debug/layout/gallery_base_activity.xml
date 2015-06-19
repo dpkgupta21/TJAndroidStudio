@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.example.memories.customviews.SlidingTabLayout
+            <com.traveljar.memories.customviews.SlidingTabLayout
                 android:id="@+id/sliding_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,4 +32,4 @@
         android:layout_weight="1"
         android:background="@android:color/white" />
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/gallery_base_activity.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/gallery_base_activity.xml -->

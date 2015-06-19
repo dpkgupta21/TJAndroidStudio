@@ -19,7 +19,7 @@
 
         <fragment
             android:id="@+id/fragment_drawer"
-            android:name="com.example.memories.SideMenuDrawer"
+            android:name="com.traveljar.memories.SideMenuDrawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="left|start" />
@@ -42,4 +42,4 @@
 
     </android.support.v4.widget.DrawerLayout>
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/base_activity.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/base_activity.xml -->

@@ -5,7 +5,7 @@
     android:gravity="center_vertical"
     android:padding="10dp">
 
-    <com.example.memories.customviews.MyCircularImageView
+    <com.traveljar.memories.customviews.MyCircularImageView
         android:id="@+id/journey_info_friends_list_contact_image"
         android:layout_width="75sp"
         android:layout_height="75sp"
@@ -13,7 +13,7 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/abhi" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/journey_info_friends_list_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

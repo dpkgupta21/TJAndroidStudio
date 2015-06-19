@@ -14,7 +14,7 @@
         android:layout_marginTop="39dp"
         android:src="@drawable/logo_embross" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/textView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         android:layout_marginTop="17dp"
         android:orientation="horizontal">
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/number_ver1_country_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:inputType="phone"
             android:text="+91"/>
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/number_ver1_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:maxLength="10"/>
     </LinearLayout>
 
-    <com.example.memories.customviews.MyButtonView
+    <com.traveljar.memories.customviews.MyButtonView
         android:id="@+id/number_ver1_bt_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         android:textColor="@color/white"
         android:textStyle="bold" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/number_ver1_verifying_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
         android:text="Verifying, Please wait..."
         android:visibility="gone" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/number_ver1_countdown_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,4 +85,4 @@
         android:textSize="@dimen/tj_extra_giant_font"
         android:visibility="gone" />
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/activity_mobile_verification_1.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/activity_mobile_verification_1.xml -->

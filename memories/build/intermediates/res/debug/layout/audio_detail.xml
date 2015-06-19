@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_mic" />
 
-        <com.example.memories.customviews.MyCircularImageView
+        <com.traveljar.memories.customviews.MyCircularImageView
             android:id="@+id/profilePic"
             android:layout_width="70dp"
             android:layout_height="70dp"
@@ -55,7 +55,7 @@
             android:contentDescription="@string/default_string"
             android:src="@drawable/ic_favourite_empty" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/no_likes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             android:textSize="@dimen/tj_extra_giant_font" />
 
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/photo_detail_date_big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             android:textSize="50sp"
             android:textStyle="bold" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/photo_detail_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
             android:textColor="@color/tj_red_light_text"
             android:textSize="@dimen/tj_medium_font" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/photo_detail_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp">
 
-            <com.example.memories.customviews.MyTextView
+            <MyTextView
                 android:id="@+id/no_likes"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -134,7 +134,7 @@
             android:layout_marginTop="10dp"
             android:background="@color/white">
 
-            <com.example.memories.customviews.MyTextView
+            <MyTextView
                 android:id="@+id/photo_detail_date_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                 android:textSize="@dimen/tj_giant_font"
                 android:textStyle="bold" />
 
-            <com.example.memories.customviews.MyTextView
+            <MyTextView
                 android:id="@+id/photo_detail_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                 android:text="7 December 2014"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <com.example.memories.customviews.MyTextView
+            <MyTextView
                 android:id="@+id/photo_detail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -164,4 +164,4 @@
 
         </RelativeLayout>
     -->
-<!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/audio_detail.xml -->
+<!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/audio_detail.xml -->

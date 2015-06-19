@@ -16,14 +16,14 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <com.example.memories.customviews.MyTextView
+        <MyTextView
             android:id="@+id/already_signed_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Already Signed?"
             android:textColor="@color/white" />
 
-        <com.example.memories.customviews.MyTextView
+        <MyTextView
             android:id="@+id/sign_in_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <com.example.memories.customviews.MyEditTextView
+        <MyEditTextView
             android:id="@+id/signupNameTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             android:textColorHint="@color/black"
             android:textSize="@dimen/tj_medium_font" />
 
-        <com.example.memories.customviews.MyEditTextView
+        <MyEditTextView
             android:id="@+id/signupEmailTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:textColorHint="@color/black"
             android:textSize="@dimen/tj_medium_font" />
 
-        <com.example.memories.customviews.MyEditTextView
+        <MyEditTextView
             android:id="@+id/signupPasswordTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
             android:textColorHint="@color/black"
             android:textSize="@dimen/tj_medium_font" />
 
-        <com.example.memories.customviews.MyButtonView
+        <MyButtonView
             android:id="@+id/signupBtn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             android:layout_marginTop="15dp"
             android:src="@drawable/or" />
 
-        <com.example.memories.customviews.MyButtonView
+        <MyButtonView
             android:id="@+id/fbSignUpBtn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
             android:textSize="@dimen/tj_medium_font" />
     </LinearLayout>
 
-    <com.example.memories.customviews.MyTextView
+    <MyTextView
         android:id="@+id/signup_heading_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -138,14 +138,14 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/already_signed_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Already Signed?"
             android:textColor="@color/white" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/sign_in_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/signupNameTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -179,7 +179,7 @@
             android:textColorHint="@color/white"
             android:textSize="@dimen/tj_medium_font" />
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/signupEmailTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
             android:textColorHint="@color/white"
             android:textSize="@dimen/tj_medium_font" />
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/signupPasswordTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
             android:textColorHint="@color/white"
             android:textSize="@dimen/tj_medium_font" />
 
-        <com.example.memories.customviews.MyButtonView
+        <com.traveljar.memories.customviews.MyButtonView
             android:id="@+id/signupBtn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
 
     </LinearLayout>
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/signup_heading_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

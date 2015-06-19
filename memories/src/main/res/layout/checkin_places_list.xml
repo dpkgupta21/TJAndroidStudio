@@ -6,7 +6,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.example.memories.customviews.MyEditTextView
+    <com.traveljar.memories.customviews.MyEditTextView
         android:id="@+id/checkin_places_search"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

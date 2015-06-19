@@ -25,7 +25,7 @@
 
         </FrameLayout>
 
-        <com.example.memories.customviews.MyCircularImageView
+        <com.traveljar.memories.customviews.MyCircularImageView
             android:id="@+id/profile_img"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -35,7 +35,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/gumnaam_profile_image" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/profile_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         android:padding="10dp"
         android:visibility="gone">
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/edit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:hint="Name"
             android:inputType="textPersonName"/>
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/edit_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

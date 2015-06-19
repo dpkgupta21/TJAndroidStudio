@@ -20,7 +20,7 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/new_journey_detail_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:hint="Journey Name"
             android:inputType="text" />
 
-        <com.example.memories.customviews.MyEditTextView
+        <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/new_journey_detail_tagline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:hint="Your group&apos;s tagline"
             android:inputType="textShortMessage" />
 
-        <com.example.memories.customviews.MyButtonView
+        <com.traveljar.memories.customviews.MyButtonView
             android:id="@+id/new_journey_detail_create_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

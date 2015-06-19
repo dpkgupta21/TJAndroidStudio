@@ -7,7 +7,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -17,7 +17,7 @@
         android:text="Email"
         android:textColor="#78C257"/>
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/user_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:textSize="@dimen/tj_large_font"
         android:text="Email" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -36,7 +36,7 @@
         android:text="Phone"
         android:textColor="#78C257"/>
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/user_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         android:textSize="@dimen/tj_large_font"
         android:text="Phone" />
 
-    <com.example.memories.customviews.MyButtonView
+    <com.traveljar.memories.customviews.MyButtonView
         android:id="@+id/update_phone_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         android:background="@drawable/rounded_corner_button"
         />
 
-    <com.example.memories.customviews.MyButtonView
+    <com.traveljar.memories.customviews.MyButtonView
         android:id="@+id/update_password_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

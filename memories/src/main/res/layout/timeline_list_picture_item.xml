@@ -17,7 +17,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/abhi" />
 
-        <com.example.memories.customviews.MyCircularImageView
+        <com.traveljar.memories.customviews.MyCircularImageView
             android:id="@+id/timelineItemUserImage"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
@@ -26,7 +26,7 @@
             android:layout_marginTop="-45dp"
             android:src="@drawable/gumnaam_profile_image" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/timelineItemUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <com.example.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextView
                 android:id="@+id/timelineItemCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 android:text="Picture/Video default text"
                 android:textColor="@color/black" />
 
-            <com.example.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextView
                 android:id="@+id/timelineItemTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                 android:contentDescription="@string/default_string"
                 android:src="@drawable/ic_favourite_empty" />
 
-            <com.example.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextView
                 android:id="@+id/noLikesTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

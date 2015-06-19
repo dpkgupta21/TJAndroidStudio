@@ -26,7 +26,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/abhi" />
 
-                <com.example.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextView
                     android:id="@+id/journey_info_created_by"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white" />
 
-                <com.example.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextView
                     android:id="@+id/journey_info_journey_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:id="@+id/buddies_layout"
                 >
 
-                <com.example.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PARTICIPANTS"
@@ -68,7 +68,7 @@
                     android:textSize="16sp"
                     android:textColor="@color/tj_red_light_text"/>
 
-                <com.example.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextView
                     android:id="@+id/journey_info_buddies_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
 
             </RelativeLayout>
 
-            <com.example.memories.customviews.MyButtonView
+            <com.traveljar.memories.customviews.MyButtonView
                 android:id="@+id/journey_info_exit_group"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                 android:layout_below="@+id/buddies_layout"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <com.example.memories.customviews.MyButtonView
+            <com.traveljar.memories.customviews.MyButtonView
                 android:id="@+id/journey_info_end_journey"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

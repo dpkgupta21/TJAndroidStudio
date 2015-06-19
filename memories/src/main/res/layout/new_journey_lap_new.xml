@@ -27,7 +27,7 @@
                 android:onClick="listFromPlaces"
                 android:orientation="vertical">
 
-                <com.example.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextView
                     android:id="@+id/new_journey_location_new_from_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                     android:textColor="@color/tj_orange"
                     android:textSize="@dimen/tj_medium_font" />
 
-                <com.example.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextView
                     android:id="@+id/new_journey_location_new_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:onClick="listToPlaces"
                 android:orientation="vertical">
 
-                <com.example.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextView
                     android:id="@+id/new_journey_location_new_to_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                     android:textColor="@color/tj_orange"
                     android:textSize="@dimen/tj_medium_font" />
 
-                <com.example.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextView
                     android:id="@+id/new_journey_location_new_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             android:onClick="showCalendar"
             android:orientation="vertical">
 
-            <com.example.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 android:textColor="@color/tj_orange"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <com.example.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextView
                 android:id="@+id/new_journey_location_new_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
 
             android:orientation="vertical">
 
-            <com.example.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MODE OF TRANSPORT"
@@ -240,7 +240,7 @@
 
             </LinearLayout>
 
-            <com.example.memories.customviews.MyButtonView
+            <com.traveljar.memories.customviews.MyButtonView
                 android:id="@+id/new_journey_location_new_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

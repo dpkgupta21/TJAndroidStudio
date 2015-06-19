@@ -11,7 +11,7 @@
         android:background="@drawable/banner3"
         android:padding="10dp">
 
-        <com.example.memories.customviews.MyCircularImageView
+        <com.traveljar.memories.customviews.MyCircularImageView
             android:id="@+id/sidemenu_profile_pic"
             android:layout_width="100sp"
             android:layout_height="100sp"
@@ -21,7 +21,7 @@
             android:layout_marginTop="0dp"
             android:src="@drawable/abhi" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/sidemenu_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:textSize="18sp"
             android:textColor="@color/white" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/sidemenu_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

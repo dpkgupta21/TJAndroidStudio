@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.memories.MainActivity">
+    tools:context="com.traveljar.memories.MainActivity">
 
     <item
         android:id="@+id/action_settings"
@@ -10,4 +10,4 @@
         app:showAsAction="never" />
 
 </menu>
-<!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/menu/main.xml -->
+<!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/menu/main.xml -->

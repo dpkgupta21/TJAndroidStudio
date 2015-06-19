@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.memories.customviews.MyButtonView
+    <com.traveljar.memories.customviews.MyButtonView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View time capsule"

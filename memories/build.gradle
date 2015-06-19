@@ -3,13 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 21
     buildToolsVersion "22.0.1"
-
     defaultConfig {
-        applicationId "com.example.memories"
-        minSdkVersion 15
+        applicationId "com.traveljar.memories"
+        minSdkVersion 16
         targetSdkVersion 21
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -20,10 +18,11 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    compile project(':library')
     compile project(':flotingMenuLibrary')
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.google.code.gson:gson:2.3.1'

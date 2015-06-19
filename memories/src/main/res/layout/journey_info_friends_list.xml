@@ -13,7 +13,7 @@
         android:scrollbars="vertical"
         android:visibility="gone" />
 
-    <com.example.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/journey_info_friends_list_no_buddies_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

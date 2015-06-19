@@ -1,0 +1,30 @@
+package com.traveljar.memories.SQLitedatabase;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.traveljar.memories.models.Memories;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class MemoriesDataSource {
+
+    private static final String TAG = "<MemoriesDS>";
+
+    public static List<Memories> getAllMemoriesList(Context context, String journeyId) {
+        List<Memories> memoriesList = new ArrayList<Memories>();
+        memoriesList.addAll(PictureDataSource.getPictureMemoriesFromJourney(context, journeyId));
+        memoriesList.addAll(AudioDataSource.getAudioMemoriesForJourney(context, journeyId));
+        memoriesList.addAll(CheckinDataSource.getAllCheckinsList(context, journeyId));
+        memoriesList.addAll(NoteDataSource.getAllNotesList(context, journeyId));
+        memoriesList.addAll(VideoDataSource.getAllVideoMemories(context, journeyId));
+        memoriesList.addAll(MoodDataSource.getMoodsFromJourney(context, journeyId));
+        Collections.sort(memoriesList);
+
+        Log.d(TAG, "total memories =" + memoriesList.size());
+        return memoriesList;
+    }
+
+}

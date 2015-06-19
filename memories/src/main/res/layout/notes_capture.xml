@@ -6,7 +6,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.example.memories.customviews.MyEditTextView
+    <com.traveljar.memories.customviews.MyEditTextView
         android:id="@+id/noteContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

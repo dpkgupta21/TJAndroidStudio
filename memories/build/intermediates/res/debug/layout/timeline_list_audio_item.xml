@@ -19,7 +19,7 @@
             android:layout_alignParentLeft="true"
             android:src="@drawable/play_audio_red" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/text123"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/tj_large_font" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/timelineItemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         android:layout_height="75dp"
         android:background="@color/white">
 
-        <com.example.memories.customviews.MyCircularImageView
+        <com.traveljar.memories.customviews.MyCircularImageView
             android:id="@+id/timelineItemUserImage"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
@@ -74,7 +74,7 @@
             android:contentDescription="@string/default_string"
             android:src="@drawable/ic_favourite_empty" />
 
-        <com.example.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,4 +94,4 @@
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->
