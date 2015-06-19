@@ -16,7 +16,7 @@ public class Note extends Memories {
     }
 
     public Note(String idOnServer, String jId, String memType, String caption, String content,
-                String createdBy, long createdAt, long updatedAt, List<String> likedBy, Double latitude, Double longitude) {
+                String createdBy, long createdAt, long updatedAt, List<Like> likes, Double latitude, Double longitude) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -25,7 +25,7 @@ public class Note extends Memories {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.likedBy = likedBy;
+        this.likes = likes;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -57,7 +57,7 @@ public class Note extends Memories {
                 "memory type -> " + this.getMemType() +
                 "created by -> " + this.getCreatedBy() +
                 "created at -> " + this.getCreatedAt() +
-                "liked by -> " + this.getLikedBy() +
+                "liked by -> " + this.getLikes() +
                 "content -> " + this.getContent() +
                 "caption -> " + this.getCaption();
     }

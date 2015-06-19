@@ -11,7 +11,6 @@ import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Note;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class NoteDataSource {
@@ -29,7 +28,7 @@ public class NoteDataSource {
         values.put(MySQLiteHelper.NOTES_COLUMN_CREATED_BY, newNote.getCreatedBy());
         values.put(MySQLiteHelper.NOTES_COLUMN_CREATED_AT, newNote.getCreatedAt());
         values.put(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT, newNote.getUpdatedAt());
-        values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, newNote.getLikedBy() == null ? null : Joiner.on(",").join(newNote.getLikedBy()));
+/*        values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, newNote.getLikedBy() == null ? null : Joiner.on(",").join(newNote.getLikedBy()));*/
         values.put(MySQLiteHelper.NOTES_COLUMN_LATITUDE, newNote.getLatitude());
         values.put(MySQLiteHelper.NOTES_COLUMN_LATITUDE, newNote.getLongitude());
 
@@ -58,8 +57,9 @@ public class NoteDataSource {
                 .getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
         note.setUpdatedAt(cursor.getLong(cursor
                 .getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
-        String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-        note.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
+/*        String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+        note.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
+        note.setLikes(LikeDataSource.getLikeIdsForMemory(context, note.getIdOnServer()));
         note.setContent(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CONTENT)));
         note.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_JID)));
         cursor.close();
@@ -73,6 +73,12 @@ public class NoteDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER, serverId);
         db.update(MySQLiteHelper.TABLE_NOTES, values, MySQLiteHelper.NOTES_COLUMN_ID + " = " + noteId, null);
+        db.close();
+    }
+
+    public static void deleteNote(Context context, String noteId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_ID + "=?", new String[]{noteId});
         db.close();
     }
 
@@ -99,8 +105,9 @@ public class NoteDataSource {
             note.setCreatedBy(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_BY)));
             note.setCreatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
             note.setUpdatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
-            String liked = c.getString(c.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-            note.setLikedBy(liked == null ? null : new ArrayList<>(Arrays.asList(liked)));
+            /*String liked = c.getString(c.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            note.setLikedBy(liked == null ? null : new ArrayList<>(Arrays.asList(liked)));*/
+            note.setLikes(LikeDataSource.getLikeIdsForMemory(context, note.getIdOnServer()));
 
             note.setLatitude(c.getDouble(c
                     .getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LATITUDE)));

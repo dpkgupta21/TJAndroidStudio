@@ -1,10 +1,7 @@
 package com.traveljar.memories.models;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 
 import java.util.List;
 
@@ -37,7 +34,7 @@ public class Picture extends Memories implements Parcelable {
 
     public Picture(String idOnServer, String jId, String memType, String caption, String ext,
                    long size, String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                   long updatedAt, List<String> likedBy, String picLocalThumbnailPath, Double latitude, Double longitude) {
+                   long updatedAt, List<Like> likes, String picLocalThumbnailPath, Double latitude, Double longitude) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -49,7 +46,7 @@ public class Picture extends Memories implements Parcelable {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.likedBy = likedBy;
+        this.likes = likes;
         this.picLocalThumbnailPath = picLocalThumbnailPath;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -65,7 +62,7 @@ public class Picture extends Memories implements Parcelable {
         updatedAt = parcel.readLong();
         latitude = parcel.readDouble();
         longitude = parcel.readDouble();
-        likedBy = parcel.readArrayList(null);
+        parcel.readTypedList(likes, Like.CREATOR);
         caption = parcel.readString();
         extension = parcel.readString();
         size = parcel.readLong();
@@ -130,9 +127,9 @@ public class Picture extends Memories implements Parcelable {
         this.picLocalThumbnailPath = picLocalThumbnailPath;
     }
 
-    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
+    /*public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         PictureDataSource.updateFavourites(context, memId, likedBy);
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -142,7 +139,7 @@ public class Picture extends Memories implements Parcelable {
                 "memory type -> " + this.getMemType() +
                 "created by -> " + this.getCreatedBy() +
                 "created at -> " + this.getCreatedAt() +
-                "liked by -> " + this.getLikedBy() +
+                "liked by -> " + this.getLikes() +
                 "caption -> " + this.getCaption() +
                 "picture server url -> " + this.getDataServerURL() +
                 "picture local url -> " + this.getDataLocalURL() +
@@ -165,7 +162,7 @@ public class Picture extends Memories implements Parcelable {
         parcel.writeLong(updatedAt);
         parcel.writeDouble(latitude);
         parcel.writeDouble(longitude);
-        parcel.writeStringList(likedBy);
+        parcel.writeTypedList(likes);
         parcel.writeString(caption);
         parcel.writeString(extension);
         parcel.writeLong(size);

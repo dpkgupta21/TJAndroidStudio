@@ -1,115 +1,3 @@
-<!--
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/ic_splash">
-
-    &lt;!&ndash; Layout starts upside down &ndash;&gt;
-
-    <LinearLayout
-        android:id="@+id/new_here_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <MyTextView
-            android:id="@+id/new_here_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New here?"
-            android:textColor="@color/white" />
-
-        <MyTextView
-            android:id="@+id/create_account_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:clickable="true"
-            android:onClick="goToSignUp"
-            android:text="CREATE ACCOUNT"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/sign_in_box_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/new_here_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
-        android:orientation="vertical"
-        android:padding="20dp">
-        &lt;!&ndash;#AB0007&ndash;&gt;
-
-        <MyEditTextView
-            android:id="@+id/signInEmailTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"
-            android:textColorHint="@color/black"
-            android:textSize="@dimen/tj_medium_font" />
-
-        <MyEditTextView
-            android:id="@+id/signInPasswordTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:textColorHint="@color/black"
-            android:textSize="@dimen/tj_medium_font" />
-
-        <MyButtonView
-            android:id="@+id/signInBtn"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_corner_button"
-            android:onClick="signIn"
-            android:text="SIGN IN"
-            android:textColor="@color/white"
-            android:textSize="@dimen/tj_medium_font" />
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/or" />
-
-        <MyButtonView
-            android:id="@+id/fbSignInBtn"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_corner_button_blue"
-            android:onClick="fbSignIn"
-            android:text="FACEBOOK LOGIN"
-            android:textColor="@color/white"
-            android:textSize="@dimen/tj_medium_font" />
-    </LinearLayout>
-
-    <MyTextView
-        android:id="@+id/signin_heading_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/sign_in_box_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:text="SIGN IN"
-        android:textColor="@color/white"
-        android:textSize="@dimen/tj_large_font"
-        android:textStyle="bold" />
-
-</RelativeLayout>-->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -179,17 +67,16 @@
             android:textColor="@color/white"
             android:textSize="@dimen/tj_medium_font" />
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyButtonView
             android:id="@+id/signInBtn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:onClick="signIn"
             android:text="SIGN IN"
-            android:clickable="true"
+            android:background="@drawable/rounded_corner_button"
             android:textColor="@color/white"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/tj_medium_font" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -206,8 +93,8 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
         android:id="@+id/imageView"
         android:layout_below="@+id/signin_heading_txt"
         android:layout_centerHorizontal="true"

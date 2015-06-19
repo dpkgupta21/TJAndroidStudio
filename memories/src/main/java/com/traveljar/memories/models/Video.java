@@ -1,12 +1,10 @@
 package com.traveljar.memories.models;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.traveljar.memories.SQLitedatabase.VideoDataSource;
-
 import java.util.List;
+
 
 public class Video extends Memories implements Parcelable {
 
@@ -35,7 +33,7 @@ public class Video extends Memories implements Parcelable {
 
     public Video(String idOnServer, String jId, String memType, String caption, String ext,
                  long size, String dataServerURL, String dataLocalURL, String createdBy, long createdAt,
-                 long updatedAt, List<String> likedBy, String localThumbPath, Double latitude, Double longitude) {
+                 long updatedAt, List<Like> likes, String localThumbPath, Double latitude, Double longitude) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -47,7 +45,7 @@ public class Video extends Memories implements Parcelable {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.likedBy = likedBy;
+        this.likes = likes;
         this.localThumbPath = localThumbPath;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -63,8 +61,10 @@ public class Video extends Memories implements Parcelable {
         updatedAt = parcel.readLong();
         latitude = parcel.readDouble();
         longitude = parcel.readDouble();
-        likedBy = parcel.readArrayList(null);
-        caption = parcel.readString();
+/*        List<Like> likesList = null;
+        parcel.readList(likesList, List.class.getClassLoader());
+        likes = likesList;*/
+        parcel.readTypedList(likes, Like.CREATOR);
         extension = parcel.readString();
         size = parcel.readLong();
         dataServerURL = parcel.readString();
@@ -120,9 +120,9 @@ public class Video extends Memories implements Parcelable {
         this.dataLocalURL = dataLocalURL;
     }
 
-    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
+/*    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         VideoDataSource.updateFavourites(context, memId, likedBy);
-    }
+    }*/
 
     public String getLocalThumbPath() {
         return localThumbPath;
@@ -139,7 +139,6 @@ public class Video extends Memories implements Parcelable {
                 "memory type -> " + this.getMemType() + "\n" +
                 "created by -> " + this.getCreatedBy() + "\n" +
                 "created at -> " + this.getCreatedAt() + "\n" +
-                "liked by -> " + this.getLikedBy() + "\n" +
                 "caption -> " + this.getCaption() + "\n" +
                 "picture server url -> " + this.getDataServerURL() + "\n" +
                 "picture local url -> " + this.getDataLocalURL() + "\n" +
@@ -162,7 +161,8 @@ public class Video extends Memories implements Parcelable {
         parcel.writeLong(updatedAt);
         parcel.writeDouble(latitude);
         parcel.writeDouble(longitude);
-        parcel.writeStringList(likedBy);
+        parcel.writeTypedList(likes);
+//        parcel.writeStringList(likedBy);
         parcel.writeString(caption);
         parcel.writeString(extension);
         parcel.writeLong(size);

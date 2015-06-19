@@ -6,14 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.google.common.base.Joiner;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Picture;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
 
 public class PictureDataSource {
 
@@ -38,8 +37,8 @@ public class PictureDataSource {
         values.put(MySQLiteHelper.PICTURE_COLUMN_CREATEDBY, newPic.getCreatedBy());
         values.put(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT, newPic.getCreatedAt());
         values.put(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT, newPic.getCreatedAt());
-        String likedBy = (newPic.getLikedBy() == null) ? null : Joiner.on(",").join(newPic.getLikedBy());
-        values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy);
+/*        String likedBy = (newPic.getLikedBy() == null) ? null : Joiner.on(",").join(newPic.getLikedBy());
+        values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy);*/
         values.put(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH, newPic.getPicThumbnailPath());
         values.put(MySQLiteHelper.PICTURE_COLUMN_LATITUDE, newPic.getLatitude());
         values.put(MySQLiteHelper.PICTURE_COLUMN_LATITUDE, newPic.getLongitude());
@@ -59,7 +58,7 @@ public class PictureDataSource {
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE;
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        memoriesList = getPictures(cursor);
+        memoriesList = getPictures(cursor, context);
         cursor.close();
         db.close();
         return memoriesList;
@@ -71,7 +70,7 @@ public class PictureDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        List<Memories> memoriesList = getPictureMemories(cursor);
+        List<Memories> memoriesList = getPictureMemories(cursor, context);
         cursor.close();
         db.close();
         Log.d(TAG, "pictures fetched successfully " + memoriesList.size());
@@ -85,7 +84,7 @@ public class PictureDataSource {
         Log.d(TAG, "get picture by id" + cursor.getCount() + " " + selectQuery);
         Picture pic = null;
         if (cursor.moveToFirst()) {
-            pic = getPictures(cursor).get(0);
+            pic = getPictures(cursor, context).get(0);
         }
         Log.d(TAG, "get all pictures" + getAllPictures(context).size());
         cursor.close();
@@ -99,7 +98,7 @@ public class PictureDataSource {
                 + MySQLiteHelper.PICTURE_COLUMN_JID + " = " + journeyId;
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        memoriesList = getPictureMemories(cursor);
+        memoriesList = getPictureMemories(cursor, context);
 
         cursor.close();
         db.close();
@@ -125,7 +124,7 @@ public class PictureDataSource {
         db.close();
     }
 
-    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
+/*    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
         Log.d(TAG, "liked by value is " + likedBy);
@@ -133,7 +132,7 @@ public class PictureDataSource {
         db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = "
                 + memId, null);
         db.close();
-    }
+    }*/
 
     public static void updateCaption(Context context, String caption, String picId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
@@ -143,8 +142,14 @@ public class PictureDataSource {
         db.close();
     }
 
+    public static void deletePicture(Context context, String pictureId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_PICTURE, MySQLiteHelper.PICTURE_COLUMN_ID + "=?", new String[]{pictureId});
+        db.close();
+    }
+
     // This method returns list of picture objects from the cursor
-    private static List<Picture> getPictures(Cursor cursor) {
+    private static List<Picture> getPictures(Cursor cursor, Context context) {
         List<Picture> picturesList = new ArrayList<Picture>();
         cursor.moveToFirst();
         Picture picture;
@@ -171,8 +176,9 @@ public class PictureDataSource {
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT)));
             picture.setUpdatedAt(cursor.getLong(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
-            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-            picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
+/*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
+            picture.setLikes(LikeDataSource.getLikeIdsForMemory(context, picture.getIdOnServer()));
             picture.setjId(cursor.getString(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
             picture.setLatitude(cursor.getDouble(cursor
@@ -187,7 +193,7 @@ public class PictureDataSource {
     }
 
     // This method creates a list of picture memories objects from the cursor
-    private static List<Memories> getPictureMemories(Cursor cursor) {
+    private static List<Memories> getPictureMemories(Cursor cursor, Context context) {
         List<Memories> picturesList = new ArrayList<Memories>();
         cursor.moveToFirst();
         Picture picture;
@@ -218,8 +224,9 @@ public class PictureDataSource {
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LATITUDE)));
             picture.setLongitude(cursor.getDouble(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LONGITUDE)));
-            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-            picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
+            /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+            picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
+            picture.setLikes(LikeDataSource.getLikeIdsForMemory(context, picture.getIdOnServer()));
             picture.setjId(cursor.getString(cursor
                     .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
             picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH)));
@@ -251,7 +258,7 @@ public class PictureDataSource {
         }
 
         if (c.moveToFirst() && c.moveToPosition(randomNum)) {
-            randomPic = getPictures(c).get(0);
+            randomPic = getPictures(c, context).get(0);
         }
         c.close();
         db.close();

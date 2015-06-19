@@ -16,25 +16,30 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.audio.AudioDetail;
 import com.traveljar.memories.audio.DownloadAudioAsyncTask;
+import com.traveljar.memories.checkin.CheckinDetail;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
+import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.models.Video;
+import com.traveljar.memories.moods.MoodDetail;
+import com.traveljar.memories.note.NoteDetail;
 import com.traveljar.memories.picture.PictureDetail;
 import com.traveljar.memories.utility.AudioPlayer;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.LoadThumbFromPath;
+import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.video.VideoDetail;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTask.OnAudioDownloadListener {
@@ -169,9 +174,31 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
             @Override
             public void onClick(View v) {
 
-                List<String> list = null;
-                Log.d(TAG, "list is " + list);
                 Memories mem = memoriesList.get(position);
+                String likeId = mem.isMemoryLikedByCurrentUser(context);// Check if memory liked by current user
+                Like like;
+                if(likeId == null){
+                    //If not liked, create a new like object, save it to local, update on server
+                    Log.d(TAG, "memory is not already liked so liking it");
+                    like = new Like(null, null, mem.getjId(), mem.getIdOnServer(), TJPreferences.getUserId(context), mem.getMemType());
+                    like.setId(String.valueOf(LikeDataSource.createLike(like, context)));
+                    mem.getLikes().add(like);
+                    holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
+                    MemoriesUtil.likeMemory(context, like);
+                }else {
+                    // If already liked, delete from local database, delete from server
+                    Log.d(TAG, "memory is not already liked so removing the like");
+                    like = mem.getLikeById(likeId);
+                    holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
+                    LikeDataSource.deleteLike(context, like);
+                    mem.getLikes().remove(like);
+                    MemoriesUtil.unlikeMemory(context, like);
+                }
+                holder.timelineNoLikesTxt.setText(String.valueOf(mem.getLikes().size()));
+
+
+/*                List<String> list = null;
+                Log.d(TAG, "list is " + list);
                 Log.d(TAG, "Memory liked by" + mem.getLikedBy());
                 // check whether the memory has been liked by the user
 
@@ -179,11 +206,12 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                 if (likedBy == null) {
                     likedBy = new ArrayList();
                 }
-                Log.d(TAG, "fav button clicked position " + likedBy + TJPreferences.getUserId(context));
                 if (likedBy.contains(TJPreferences.getUserId(context))) {
                     likedBy.remove(TJPreferences.getUserId(context));
                     Log.d(TAG, "heart empty");
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
+                    Like like = new Like(null, null, mem.getjId(), mem.getIdOnServer(), TJPreferences.getUserId(context), mem.getMemType());
+                    MemoriesUtil.unlikeMemory(context, like);
                 } else {
                     likedBy.add(TJPreferences.getUserId(context));
                     Log.d(TAG, "heart full");
@@ -196,7 +224,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     likedBy = null;
                 }
                 mem.setLikedBy(likedBy);
-                mem.updateLikedBy(context, mem.getId(), likedBy);
+                mem.updateLikedBy(context, mem.getId(), likedBy);*/
             }
         });
 
@@ -222,7 +250,11 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                         .getPicLocalUrl()));
             }
         }
-        if (memory.getLikedBy() == null) {
+
+        //set the favourites count
+        holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikes().size()));
+        holder.timelineItemFavBtn.setImageResource(memory.isMemoryLikedByCurrentUser(context) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
+/*        if (memory.getLikes() == null) {
             holder.timelineNoLikesTxt.setText("0");
             holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
         } else {
@@ -232,7 +264,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
             } else {
                 holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
             }
-        }
+        }*/
 
         Log.d(TAG, "3.2");
 
@@ -346,6 +378,21 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     case HelpMe.TYPE_AUDIO:
                         intent = new Intent(context, AudioDetail.class);
                         intent.putExtra("AUDIO_ID", memory.getId());
+                        context.startActivity(intent);
+                        break;
+                    case HelpMe.TYPE_NOTE:
+                        intent = new Intent(context, NoteDetail.class);
+                        intent.putExtra("NOTE_ID", memory.getId());
+                        context.startActivity(intent);
+                        break;
+                    case HelpMe.TYPE_CHECKIN:
+                        intent = new Intent(context, CheckinDetail.class);
+                        intent.putExtra("CHECKIN_ID", memory.getId());
+                        context.startActivity(intent);
+                        break;
+                    case HelpMe.TYPE_MOOD:
+                        intent = new Intent(context, MoodDetail.class);
+                        intent.putExtra("MOOD_ID", memory.getId());
                         context.startActivity(intent);
                         break;
                 }

@@ -112,7 +112,6 @@ public class ContactDataSource {
 
     // This method will take a list of contact Ids and return a List of Contacts corresponding to those Ids
     public static List<Contact> getContactsListFromIds(Context context, List<String> contactIds) {
-        Log.d(TAG, "fetching contacts list corresponding to contact ids list");
         String[] ids = new String[contactIds.size()];
         ids = contactIds.toArray(ids);
         String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " WHERE "
@@ -121,7 +120,6 @@ public class ContactDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         Cursor cursor = db.rawQuery(query, ids);
         List<Contact> contactsList = getContactsListFromCursor(cursor, context);
-        Log.d(TAG, "buddies from current journey are " + contactsList.toString());
         cursor.close();
         db.close();
         return contactsList;

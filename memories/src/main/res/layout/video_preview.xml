@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white">
 
-            <ImageButton
+<!--            <ImageButton
                 android:id="@+id/favBtn"
                 android:layout_width="35dp"
                 android:layout_height="30dp"
@@ -89,7 +89,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/favBtn"
                 android:text="0"
-                android:textSize="@dimen/tj_extra_giant_font" />
+                android:textSize="@dimen/tj_extra_giant_font" />-->
 
 
             <com.traveljar.memories.customviews.MyTextView

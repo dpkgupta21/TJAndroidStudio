@@ -57,10 +57,13 @@
             android:name="com.traveljar.memories.checkin.CheckInPlacesList"
             android:label="@string/app_name" />
         <activity
-            android:name="com.traveljar.memories.checkin.CheckInDetails"
+            android:name="com.traveljar.memories.checkin.CheckInPreview"
             android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.checkin.CheckInFriendsList"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.traveljar.memories.checkin.CheckinDetail"
             android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.picture.PictureCapture"
@@ -133,7 +136,13 @@
             android:name="com.traveljar.memories.note.CreateNotes"
             android:label="@string/app_name" />
         <activity
+            android:name="com.traveljar.memories.note.NoteDetail"
+            android:label="@string/app_name" />
+        <activity
             android:name="com.traveljar.memories.moods.MoodSelectFriends"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.traveljar.memories.moods.MoodDetail"
             android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.retrofit.MultiPartUpload"

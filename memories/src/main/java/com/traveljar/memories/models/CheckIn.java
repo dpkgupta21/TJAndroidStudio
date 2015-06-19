@@ -1,10 +1,7 @@
 package com.traveljar.memories.models;
 
-import android.content.Context;
-
-import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
-
 import java.util.List;
+
 
 public class CheckIn extends Memories {
     private String caption;
@@ -31,7 +28,7 @@ public class CheckIn extends Memories {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.likedBy = likedBy;
+        this.likes = likes;
     }
 
     public String getCaption() {
@@ -70,9 +67,9 @@ public class CheckIn extends Memories {
         this.checkInWith = checkInWith;
     }
 
-    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
+/*    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         CheckinDataSource.updateFavourites(context, memId, likedBy);
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -81,7 +78,7 @@ public class CheckIn extends Memories {
                 "memory type -> " + this.getMemType() +
                 "created by -> " + this.getCreatedBy() +
                 "created at -> " + this.getCreatedAt() +
-                "liked by -> " + this.getLikedBy() +
+                "liked by -> " + this.getLikes() +
                 "checkin caption -> " + this.getCaption() +
                 "latitude -> " + this.getLatitude() +
                 "longitude -> " + this.getLongitude() +

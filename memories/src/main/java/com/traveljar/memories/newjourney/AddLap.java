@@ -58,6 +58,7 @@ public class AddLap extends AppCompatActivity {
         toolbar.setTitle("New Lap");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
+        getSupportActionBar().setElevation(100);
 
         fromLocation = (TextView) findViewById(R.id.new_journey_location_new_from);
         toLocation = (TextView) findViewById(R.id.new_journey_location_new_to);
@@ -98,6 +99,7 @@ public class AddLap extends AppCompatActivity {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
 
+        //If lap is opened in edit mode
         if (getIntent().hasExtra("EDIT_JOURNEY_POSITION")) {
             editMode = true;
             editLapIndex = getIntent().getIntExtra("EDIT_JOURNEY_POSITION", -1);
@@ -108,7 +110,13 @@ public class AddLap extends AppCompatActivity {
 
             // parse string into int codes and set appropraite toggle button to true
             setConveyanceMode(Integer.parseInt(lap.get("conveyance")));
+        }else {
+            //Set default conveyence mode to magical carpet
+            toggleCarpet.setChecked(true);
+            conveyanceMode = HelpMe.CONVEYANCE_CARPET;
         }
+
+
 
     }
 
