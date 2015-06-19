@@ -46,6 +46,7 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
         toolbar.setTitle("Travel Plan");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(100);
 
         mEditJourney = (ImageButton) findViewById(R.id.edit_journey_lap);
 
@@ -82,7 +83,7 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(AppController.lapsList.size() > 0){
+        if(AppController.lapsList.size() > 0) {
             menu.add(0, ID_ACTION_ITEM_NEXT, 0, "Next").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return super.onCreateOptionsMenu(menu);

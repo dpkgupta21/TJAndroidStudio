@@ -2,6 +2,8 @@ package com.example.memories.models;
 
 import android.content.Context;
 
+import com.example.memories.utility.TJPreferences;
+
 import java.util.List;
 
 public class Memories implements Comparable<Memories> {
@@ -13,7 +15,7 @@ public class Memories implements Comparable<Memories> {
     protected long updatedAt;
     protected Double latitude;
     protected Double longitude;
-    protected List<String> likedBy;
+    protected List<Like> likes;
 
     protected String id;
 
@@ -65,12 +67,12 @@ public class Memories implements Comparable<Memories> {
         this.updatedAt = updatedAt;
     }
 
-    public List<String> getLikedBy() {
-        return likedBy;
+    public List<Like> getLikes() {
+        return likes;
     }
 
-    public void setLikedBy(List<String> likedBy) {
-        this.likedBy = likedBy;
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
     }
 
     public String getMemType() {
@@ -86,9 +88,9 @@ public class Memories implements Comparable<Memories> {
         return (createdAt > child.createdAt) ? -1 : 1;
     }
 
-    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
+/*    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
 
-    }
+    }*/
 
     public Double getLatitude() {
         return latitude;
@@ -104,5 +106,23 @@ public class Memories implements Comparable<Memories> {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String isMemoryLikedByCurrentUser(Context context){
+        for(Like like : likes){
+            if (like.getUserId().equals(TJPreferences.getUserId(context))) {
+                return like.getId();
+            }
+        }
+        return null;
+    }
+
+    public Like getLikeById(String likeId){
+        for(Like like : likes){
+            if (like.getId().equals(likeId)) {
+                return like;
+            }
+        }
+        return null;
     }
 }

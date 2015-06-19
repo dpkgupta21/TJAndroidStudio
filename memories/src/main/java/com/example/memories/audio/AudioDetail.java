@@ -14,14 +14,16 @@ import android.widget.TextView;
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.AudioDataSource;
 import com.example.memories.SQLitedatabase.ContactDataSource;
+import com.example.memories.SQLitedatabase.LikeDataSource;
 import com.example.memories.models.Audio;
 import com.example.memories.models.Contact;
+import com.example.memories.models.Like;
 import com.example.memories.utility.HelpMe;
+import com.example.memories.utility.MemoriesUtil;
 import com.example.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -70,8 +72,11 @@ public class AudioDetail extends AppCompatActivity {
         Log.d(TAG, "running for an already created audio");
         mAudio = AudioDataSource.getAudioById(this, extras.getString("AUDIO_ID"));
         audioPath = mAudio.getDataLocalURL(); //path to image
+
         //setup the state of favourite button
-        if (mAudio.getLikedBy() == null) {
+        noLikesTxt.setText(String.valueOf(mAudio.getLikes().size()));
+        mFavBtn.setImageResource(mAudio.isMemoryLikedByCurrentUser(this) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
+/*        if (mAudio.getLikedBy() == null) {
             noLikesTxt.setText("0");
             mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
         } else {
@@ -81,7 +86,7 @@ public class AudioDetail extends AppCompatActivity {
             } else {
                 mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
             }
-        }
+        }*/
 
         //Profile picture
         String profileImgPath;
@@ -116,7 +121,27 @@ public class AudioDetail extends AppCompatActivity {
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> likedBy = mAudio.getLikedBy();
+                String likeId = mAudio.isMemoryLikedByCurrentUser(AudioDetail.this);// Check if memory liked by current user
+                Like like;
+                if (likeId == null) {
+                    //If not liked, create a new like object, save it to local, update on server
+                    Log.d(TAG, "video is not already liked so liking it");
+                    like = new Like(null, null, mAudio.getjId(), mAudio.getIdOnServer(), TJPreferences.getUserId(AudioDetail.this), mAudio.getMemType());
+                    like.setId(String.valueOf(LikeDataSource.createLike(like, AudioDetail.this)));
+                    mAudio.getLikes().add(like);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
+                    MemoriesUtil.likeMemory(AudioDetail.this, like);
+                } else {
+                    // If already liked, delete from local database, delete from server
+                    Log.d(TAG, "memory is not already liked so removing the like");
+                    like = mAudio.getLikeById(likeId);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
+                    LikeDataSource.deleteLike(AudioDetail.this, like);
+                    mAudio.getLikes().remove(like);
+                    MemoriesUtil.unlikeMemory(AudioDetail.this, like);
+                }
+                noLikesTxt.setText(String.valueOf(mAudio.getLikes().size()));
+                /*List<String> likedBy = mAudio.getLikedBy();
                 if (likedBy == null) {
                     likedBy = new ArrayList<>();
                 }
@@ -138,7 +163,7 @@ public class AudioDetail extends AppCompatActivity {
                     likedBy = null;
                 }
                 mAudio.setLikedBy(likedBy);
-                mAudio.updateLikedBy(AudioDetail.this, mAudio.getId(), likedBy);
+                mAudio.updateLikedBy(AudioDetail.this, mAudio.getId(), likedBy);*/
             }
         });
     }

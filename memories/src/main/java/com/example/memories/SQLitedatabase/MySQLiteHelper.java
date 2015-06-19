@@ -152,6 +152,24 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String PLACE_COLUMN_CITY = "city";
     public static final String PLACE_COLUMN_CREATED_BY = "createdBy";
     public static final String PLACE_COLUMN_CREATED_AT = "createdAt";
+
+    //Table Likes
+    public static final String TABLE_LIKE = "LIKE";
+    public static final String LIKE_COLUMN_ID = "_id";
+    public static final String LIKE_COLUMN_ID_ONSERVER = "idOnServer";
+    public static final String LIKE_COLUMN_JOURNEY_ID = "journeyId";
+    public static final String LIKE_COLUMN_MEMORABLE_ID = "memorableId";
+    public static final String LIKE_COLUMN_USER_ID = "userId";
+    public static final String LIKE_COLUMN_MEM_TYPE = "memType";
+
+    private static final String CREATE_TABLE_LIKE = "create table " + TABLE_LIKE + "("
+            + LIKE_COLUMN_ID + " integer primary key autoincrement, "
+            + LIKE_COLUMN_ID_ONSERVER + " text , "
+            + LIKE_COLUMN_JOURNEY_ID + " text ,"
+            + LIKE_COLUMN_MEMORABLE_ID + " text,"
+            + LIKE_COLUMN_USER_ID + " text ,"
+            + LIKE_COLUMN_MEM_TYPE + " text " + ");";
+
     private static final String CREATE_TABLE_CONTACT = "create table " + TABLE_CONTACT + "("
             + CONTACT_COLUMN_ID_ONSERVER + " text primary key, "
             + CONTACT_COLUMN_NAME + " text ,"
@@ -320,6 +338,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.delete(TABLE_TIMELINE, null, null);
         db.delete(TABLE_VIDEO, null, null);
         db.delete(TABLE_PLACE, null, null);
+        db.delete(TABLE_LIKE, null, null);
     }
 
     @Override
@@ -344,6 +363,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.d(TAG, "MOOD table created!");
         database.execSQL(CREATE_TABLE_PLACE);
         Log.d(TAG, "PLACE table created!");
+        database.execSQL(CREATE_TABLE_LIKE);
+        Log.d(TAG, "LIKE table created!");
     }
 
     @Override

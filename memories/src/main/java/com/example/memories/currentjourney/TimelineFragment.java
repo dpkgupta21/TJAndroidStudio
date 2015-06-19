@@ -64,7 +64,7 @@ public class TimelineFragment extends Fragment {
 
         mListView = (ListView) rootView.findViewById(R.id.timelineList);
 
-        loadMemoriesList();
+        //loadMemoriesList();
 
         // Swipe to refersh tmline
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.timeline_swipe_refresh_layout);

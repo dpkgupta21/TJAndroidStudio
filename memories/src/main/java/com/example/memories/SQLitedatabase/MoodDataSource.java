@@ -30,7 +30,7 @@ public class MoodDataSource {
         values.put(MySQLiteHelper.MOOD_COLUMN_CREATED_BY, newMood.getCreatedBy());
         values.put(MySQLiteHelper.MOOD_COLUMN_CREATED_AT, newMood.getCreatedAt());
         values.put(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT, newMood.getUpdatedAt());
-        values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, newMood.getLikedBy() == null ? null : Joiner.on(",").join(newMood.getLikedBy()));
+/*        values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, newMood.getLikedBy() == null ? null : Joiner.on(",").join(newMood.getLikedBy()));*/
         values.put(MySQLiteHelper.MOOD_COLUMN_LATITUDE, newMood.getLatitude());
         values.put(MySQLiteHelper.MOOD_COLUMN_LATITUDE, newMood.getLongitude());
 
@@ -42,41 +42,58 @@ public class MoodDataSource {
         return mood_id;
     }
 
+    public static Mood getMoodById(String id, Context context) {
+        Log.d(TAG, "fetching one mood item from DB with id =" + id);
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.query(MySQLiteHelper.TABLE_MOOD, null,
+                MySQLiteHelper.MOOD_COLUMN_ID + "=?", new String[]{String.valueOf(id)}, null,
+                null, null, null);
+
+        List<Memories> moodsList = getMoodsFromCursor(cursor, context);
+        cursor.close();
+        db.close();
+        return (Mood)moodsList.get(0);
+
+    }
+
+    private static List<Memories> getMoodsFromCursor(Cursor cursor, Context context){
+        List<Memories> moodsList = new ArrayList<>();
+        Mood mood;
+        if(cursor.moveToFirst()) {
+            do {
+                mood = new Mood();
+
+                mood.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_ID)));
+                mood.setIdOnServer(cursor.getString(cursor
+                        .getColumnIndex(MySQLiteHelper.MOOD_COLUMN_ID_ONSERVER)));
+                mood.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_JID)));
+                mood.setMemType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MEM_TYPE)));
+                mood.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_CREATED_BY)));
+                mood.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_CREATED_AT)));
+                mood.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT)));
+                /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
+                mood.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
+                mood.setLikes(LikeDataSource.getLikeIdsForMemory(context, mood.getIdOnServer()));
+                mood.setBuddyIds(Arrays.asList((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID))).split(",")));
+                mood.setMood(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MOOD)));
+                mood.setReason(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_REASON)));
+                mood.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_LATITUDE)));
+                mood.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.MOOD_CLOUMN_LONGITUDE)));
+                moodsList.add(mood);
+            }while (cursor.moveToNext());
+        }
+        return moodsList;
+    }
+
     public static List<Memories> getMoodsFromJourney(Context context, String journeyId) {
-        List<Memories> moodsList = new ArrayList<Memories>();
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_MOOD + " WHERE "
                 + MySQLiteHelper.MOOD_COLUMN_JID + " = " + journeyId;
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
-
-        Log.d(TAG, "cursor length" + c.getCount() + journeyId);
-        c.moveToFirst();
-        Mood mood;
-        while (!c.isAfterLast()) {
-            mood = new Mood();
-
-            mood.setId(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_ID)));
-            mood.setIdOnServer(c.getString(c
-                    .getColumnIndex(MySQLiteHelper.MOOD_COLUMN_ID_ONSERVER)));
-            mood.setjId(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_JID)));
-            mood.setMemType(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MEM_TYPE)));
-            mood.setCreatedBy(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_CREATED_BY)));
-            mood.setCreatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_CREATED_AT)));
-            mood.setUpdatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT)));
-            String liked = c.getString(c.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-            mood.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));
-            mood.setBuddyIds(Arrays.asList((c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID))).split(",")));
-            mood.setMood(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MOOD)));
-            mood.setReason(c.getString(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_REASON)));
-            mood.setLatitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_LATITUDE)));
-            mood.setLongitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.MOOD_CLOUMN_LONGITUDE)));
-            moodsList.add(mood);
-            c.moveToNext();
-        }
+        List<Memories> memoriesList = getMoodsFromCursor(c, context);
         c.close();
         db.close();
-
-        return moodsList;
+        return memoriesList;
     }
 
     public static void updateServerId(Context context, String moodId, String serverId) {
@@ -87,12 +104,18 @@ public class MoodDataSource {
         db.close();
     }
 
-    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
+    public static void deleteMood(Context context, String moodId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_COLUMN_ID + "=?", new String[]{moodId});
+        db.close();
+    }
+
+/*    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_MOOD, values, MySQLiteHelper.MOOD_COLUMN_ID + " = " + memId, null);
         db.close();
-    }
+    }*/
 
 }

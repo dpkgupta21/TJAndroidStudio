@@ -16,14 +16,16 @@ import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
+import com.example.memories.SQLitedatabase.LikeDataSource;
 import com.example.memories.SQLitedatabase.PictureDataSource;
 import com.example.memories.models.Contact;
+import com.example.memories.models.Like;
 import com.example.memories.models.Picture;
 import com.example.memories.utility.HelpMe;
+import com.example.memories.utility.MemoriesUtil;
 import com.example.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PictureDetail extends AppCompatActivity implements DownloadPicture.OnPictureDownloadListener {
@@ -82,8 +84,9 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         localThumbnailPath = mPicture.getPicThumbnailPath();
 
         //setup the state of favourite button
-
-        if (mPicture.getLikedBy() == null) {
+        noLikesTxt.setText(String.valueOf(mPicture.getLikes().size()));
+        mFavBtn.setImageResource(mPicture.isMemoryLikedByCurrentUser(this) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
+ /*       if (mPicture.getLikedBy() == null) {
             noLikesTxt.setText("0");
             mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
         } else {
@@ -93,7 +96,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
             } else {
                 mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
             }
-        }
+        }*/
 
         photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
         mPictureCaption.setText(mPicture.getCaption());
@@ -151,7 +154,27 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> likedBy = mPicture.getLikedBy();
+                String likeId = mPicture.isMemoryLikedByCurrentUser(PictureDetail.this);// Check if memory liked by current user
+                Like like;
+                if (likeId == null) {
+                    //If not liked, create a new like object, save it to local, update on server
+                    Log.d(TAG, "video is not already liked so liking it");
+                    like = new Like(null, null, mPicture.getjId(), mPicture.getIdOnServer(), TJPreferences.getUserId(PictureDetail.this), mPicture.getMemType());
+                    like.setId(String.valueOf(LikeDataSource.createLike(like, PictureDetail.this)));
+                    mPicture.getLikes().add(like);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
+                    MemoriesUtil.likeMemory(PictureDetail.this, like);
+                } else {
+                    // If already liked, delete from local database, delete from server
+                    Log.d(TAG, "memory is not already liked so removing the like");
+                    like = mPicture.getLikeById(likeId);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
+                    LikeDataSource.deleteLike(PictureDetail.this, like);
+                    mPicture.getLikes().remove(like);
+                    MemoriesUtil.unlikeMemory(PictureDetail.this, like);
+                }
+                noLikesTxt.setText(String.valueOf(mPicture.getLikes().size()));
+/*                List<String> likedBy = mPicture.getLikedBy();
                 if (likedBy == null) {
                     likedBy = new ArrayList<>();
                 }
@@ -174,6 +197,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 }
                 mPicture.setLikedBy(likedBy);
                 mPicture.updateLikedBy(PictureDetail.this, mPicture.getId(), likedBy);
+            }*/
             }
         });
     }

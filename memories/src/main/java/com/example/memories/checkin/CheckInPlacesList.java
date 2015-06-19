@@ -164,7 +164,7 @@ public class CheckInPlacesList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // selected item
                 String placeName = placeList.get(position).get("name");
-                Intent i = new Intent(CheckInPlacesList.this, CheckInDetails.class);
+                Intent i = new Intent(CheckInPlacesList.this, CheckInPreview.class);
                 i.putExtra("placeName", placeName);
                 i.putExtra("latitude", lat);
                 i.putExtra("longitude", longi);

@@ -125,6 +125,15 @@ public class SideMenuDrawer extends Fragment {
             }
         });
 
+        mProfileImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

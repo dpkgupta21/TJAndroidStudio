@@ -25,7 +25,7 @@ public class Note extends Memories {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.likedBy = likedBy;
+        this.likes = likes;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -57,7 +57,7 @@ public class Note extends Memories {
                 "memory type -> " + this.getMemType() +
                 "created by -> " + this.getCreatedBy() +
                 "created at -> " + this.getCreatedAt() +
-                "liked by -> " + this.getLikedBy() +
+                "liked by -> " + this.getLikes() +
                 "content -> " + this.getContent() +
                 "caption -> " + this.getCaption();
     }

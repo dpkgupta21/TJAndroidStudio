@@ -32,11 +32,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CheckInDetails extends AppCompatActivity {
+public class CheckInPreview extends AppCompatActivity {
 
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private static final String TAG = "<CheckInDetails>";
+    private static final String TAG = "<CheckInPreview>";
     private static final int REQUEST_CODE_SELECT_FRIENDS = 2;
     private Uri fileUri;
     private String placeName;
@@ -50,7 +50,7 @@ public class CheckInDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.checkin_details);
+        setContentView(R.layout.checkin_preview);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Checkin");

@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +29,6 @@ import com.example.memories.utility.TJPreferences;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ankit on 15/6/15.
@@ -39,7 +36,6 @@ import java.util.List;
 public class PicturePreview extends AppCompatActivity {
 
     private static final String TAG = "<PhotoDetail>";
-    List<String> likedBy;
     private ImageView photo;
     private TextView dateBig;
     private TextView date;
@@ -47,11 +43,9 @@ public class PicturePreview extends AppCompatActivity {
     private EditText caption;
     private ImageView mProfileImg;
     private TextView profileName;
-    private ImageButton mFavBtn;
     private long currenTime;
     private String imagePath;
     private Picture mPicture;
-    private TextView noLikesTxt;
 
     private ProgressDialog pDialog;
 
@@ -74,10 +68,8 @@ public class PicturePreview extends AppCompatActivity {
         date = (TextView) findViewById(R.id.photo_detail_date);
         time = (TextView) findViewById(R.id.photo_detail_time);
         caption = (EditText) findViewById(R.id.photo_detail_caption);
-        mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.photo_detail_profile_image);
         profileName = (TextView) findViewById(R.id.photo_detail_profile_name);
-        noLikesTxt = (TextView) findViewById(R.id.no_likes);
 
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
@@ -132,8 +124,6 @@ public class PicturePreview extends AppCompatActivity {
             }
         }
 
-        setFavouriteBtnClickListener();
-
         dateBig.setText(HelpMe.getDate(mPicture.getCreatedAt(), HelpMe.DATE_ONLY));
         date.setText(HelpMe.getDate(mPicture.getCreatedAt(), HelpMe.DATE_FULL));
         time.setText(HelpMe.getDate(mPicture.getCreatedAt(), HelpMe.TIME_ONLY));
@@ -149,40 +139,7 @@ public class PicturePreview extends AppCompatActivity {
 
     }
 
-    private void setFavouriteBtnClickListener() {
-        mFavBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<String> likedBy = mPicture.getLikedBy();
-                if (likedBy == null) {
-                    likedBy = new ArrayList<>();
-                }
-                Log.d(TAG,
-                        "fav button clicked position " + likedBy + TJPreferences.getUserId(PicturePreview.this));
-                if (likedBy.contains(TJPreferences.getUserId(PicturePreview.this))) {
-                    likedBy.remove(TJPreferences.getUserId(PicturePreview.this));
-                    Log.d(TAG, "heart empty");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                } else {
-                    likedBy.add(TJPreferences.getUserId(PicturePreview.this));
-                    Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                }
-
-                // update the value in the list and database
-                noLikesTxt.setText(String.valueOf(likedBy.size()));
-                if (likedBy.size() == 0) {
-                    likedBy = null;
-                }
-                mPicture.setLikedBy(likedBy);
-            }
-        });
-    }
-
     private void saveAndUploadPic() {
-        if (likedBy != null) {
-            mPicture.setLikedBy(likedBy);
-        }
         mPicture.setCaption(caption.getText().toString());
         long id = PictureDataSource.createPicture(mPicture, this);
         mPicture.setId(String.valueOf(id));

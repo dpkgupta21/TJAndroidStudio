@@ -1,9 +1,5 @@
 package com.example.memories.models;
 
-import android.content.Context;
-
-import com.example.memories.SQLitedatabase.MoodDataSource;
-
 import java.util.List;
 
 
@@ -27,7 +23,7 @@ public class Mood extends Memories {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.likedBy = likedBy;
+        this.likes = likes;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -57,9 +53,11 @@ public class Mood extends Memories {
     }
 
 
+/*
     public void updateLikedBy(Context context, String memId, List<String> likedBy) {
         MoodDataSource.updateFavourites(context, memId, likedBy);
     }
+*/
 
     @Override
     public String toString() {
@@ -68,7 +66,7 @@ public class Mood extends Memories {
                 "memory type -> " + this.getMemType() +
                 "created by -> " + this.getCreatedBy() +
                 "created at -> " + this.getCreatedAt() +
-                "liked by -> " + this.getLikedBy() +
+                "liked by -> " + this.getLikes() +
                 "mood -> " + this.getMood() +
                 "reason -> " + this.getReason() +
                 "buddies -> " + this.getBuddyIds();

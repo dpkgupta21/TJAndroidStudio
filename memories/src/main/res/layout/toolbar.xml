@@ -3,8 +3,9 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/primaryColor"
+    android:background="@drawable/action_bar_background"
     android:minHeight="?attr/actionBarSize"
+    android:elevation="3sp"
     android:theme="@style/Theme.AppCompat.NoActionBar">
 
 </android.support.v7.widget.Toolbar>

@@ -1,14 +1,17 @@
 package com.example.memories.video;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,21 +20,21 @@ import android.widget.TextView;
 
 import com.example.memories.R;
 import com.example.memories.SQLitedatabase.ContactDataSource;
+import com.example.memories.SQLitedatabase.LikeDataSource;
 import com.example.memories.SQLitedatabase.VideoDataSource;
 import com.example.memories.models.Contact;
+import com.example.memories.models.Like;
 import com.example.memories.models.Video;
 import com.example.memories.utility.HelpMe;
+import com.example.memories.utility.MemoriesUtil;
 import com.example.memories.utility.TJPreferences;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener {
 
     private static final String TAG = "<VideoDetail>";
-    List<String> likedBy;
     private ImageView video;
     private TextView dateBig;
     private TextView date;
@@ -44,6 +47,8 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     private ProgressDialog pDialog;
     private TextView createdByName;
     private TextView mVideoCaption;
+
+    private static final int ACTION_ITEM_DELETE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +81,11 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         mVideo = VideoDataSource.getVideoById(extras.getString("VIDEO_ID"), this);
         videoPath = mVideo.getDataLocalURL(); //path to image
         thumbnailPath = mVideo.getLocalThumbPath();
+
         //setup the state of favourite button
-        if (mVideo.getLikedBy() == null) {
+        noLikesTxt.setText(mVideo.getLikes().size());
+        mFavBtn.setImageResource(mVideo.isMemoryLikedByCurrentUser(this) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
+/*        if (mVideo.getLikedBy() == null) {
             noLikesTxt.setText("0");
             mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
         } else {
@@ -87,11 +95,11 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
             } else {
                 mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
             }
-        }
+        }*/
 
         //Setting fields common in both the cases
         video.setImageBitmap(BitmapFactory.decodeFile(thumbnailPath));
-        mVideoCaption.setText(mVideo.getCaption());
+        mVideoCaption.setText(String.valueOf(mVideo.getCaption()));
 
 
         //Profile picture and name
@@ -151,7 +159,29 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> likedBy = mVideo.getLikedBy();
+
+                String likeId = mVideo.isMemoryLikedByCurrentUser(VideoDetail.this);// Check if memory liked by current user
+                Like like;
+                if(likeId == null){
+                    //If not liked, create a new like object, save it to local, update on server
+                    Log.d(TAG, "video is not already liked so liking it");
+                    like = new Like(null, null, mVideo.getjId(), mVideo.getIdOnServer(), TJPreferences.getUserId(VideoDetail.this), mVideo.getMemType());
+                    like.setId(String.valueOf(LikeDataSource.createLike(like, VideoDetail.this)));
+                    mVideo.getLikes().add(like);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
+                    MemoriesUtil.likeMemory(VideoDetail.this, like);
+                }else {
+                    // If already liked, delete from local database, delete from server
+                    Log.d(TAG, "memory is not already liked so removing the like");
+                    like = mVideo.getLikeById(likeId);
+                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
+                    LikeDataSource.deleteLike(VideoDetail.this, like);
+                    mVideo.getLikes().remove(like);
+                    MemoriesUtil.unlikeMemory(VideoDetail.this, like);
+                }
+                noLikesTxt.setText(String.valueOf(mVideo.getLikes().size()));
+
+/*                List<String> likedBy = mVideo.getLikedBy();
                 if (likedBy == null) {
                     likedBy = new ArrayList<>();
                 }
@@ -173,17 +203,37 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                     likedBy = null;
                 }
                 mVideo.setLikedBy(likedBy);
-                mVideo.updateLikedBy(VideoDetail.this, mVideo.getId(), likedBy);
+                mVideo.updateLikedBy(VideoDetail.this, mVideo.getId(), likedBy);*/
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        if(HelpMe.isAdmin(this)){
+            menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case R.id.action_done:
-                finish();
+            case ACTION_ITEM_DELETE:
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete")
+                        .setMessage("Are you sure you want to remove this item from your memories")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 return true;
             case android.R.id.home:
                 this.finish();

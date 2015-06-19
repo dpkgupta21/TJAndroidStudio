@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,24 +30,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class VideoPreview extends AppCompatActivity {
 
     private static final String TAG = "<VideoDetail>";
-    List<String> likedBy;
+//    List<String> likedBy;
     private ImageView video;
     private TextView dateBig;
     private TextView date;
     private TextView time;
     private EditText caption;
     private ImageView mProfileImg;
-    private ImageButton mFavBtn;
     private long currenTime;
     private String videoPath;
     private Video mVideo;
-    private TextView noLikesTxt;
     private ProgressDialog pDialog;
     private TextView createdByName;
 
@@ -73,9 +68,9 @@ public class VideoPreview extends AppCompatActivity {
         date = (TextView) findViewById(R.id.photo_detail_date);
         time = (TextView) findViewById(R.id.photo_detail_time);
         caption = (EditText) findViewById(R.id.video_detail_caption);
-        mFavBtn = (ImageButton) findViewById(R.id.favBtn);
+//        mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.profilePic);
-        noLikesTxt = (TextView) findViewById(R.id.no_likes);
+//        noLikesTxt = (TextView) findViewById(R.id.no_likes);
         createdByName = (TextView) findViewById(R.id.photo_detail_profile_name);
 
         //Extract thumbnail and save it
@@ -126,7 +121,6 @@ public class VideoPreview extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        setFavouriteBtnClickListener();
         setThumbnailClickListener();
 
         dateBig.setText(HelpMe.getDate(mVideo.getCreatedAt(), HelpMe.DATE_ONLY));
@@ -154,42 +148,8 @@ public class VideoPreview extends AppCompatActivity {
         finish();
     }
 
-    private void setFavouriteBtnClickListener() {
-        mFavBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<String> likedBy = mVideo.getLikedBy();
-                if (likedBy == null) {
-                    likedBy = new ArrayList<>();
-                }
-                Log.d(TAG,
-                        "fav button clicked position " + likedBy + TJPreferences.getUserId(VideoPreview.this));
-                if (likedBy.contains(TJPreferences.getUserId(VideoPreview.this))) {
-                    likedBy.remove(TJPreferences.getUserId(VideoPreview.this));
-                    Log.d(TAG, "heart empty");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                } else {
-                    likedBy.add(TJPreferences.getUserId(VideoPreview.this));
-                    Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                }
-
-                // update the value in the list and database
-                noLikesTxt.setText(String.valueOf(likedBy.size()));
-                if (likedBy.size() == 0) {
-                    likedBy = null;
-                }
-                mVideo.setLikedBy(likedBy);
-                mVideo.updateLikedBy(VideoPreview.this, mVideo.getId(), likedBy);
-            }
-        });
-    }
-
     private void saveAndUploadVideo() {
         Log.d(TAG, "creating a new video in local DB");
-        if (likedBy != null) {
-            mVideo.setLikedBy(likedBy);
-        }
         mVideo.setCaption(caption.getText().toString());
         long id = VideoDataSource.createVideo(mVideo, this);
         mVideo.setId(String.valueOf(id));
