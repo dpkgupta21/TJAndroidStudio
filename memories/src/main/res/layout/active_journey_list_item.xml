@@ -73,7 +73,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
             android:layout_toLeftOf="@id/active_journey_list_buddy_count"
-            android:src="@drawable/add70" />
+            android:src="@drawable/active_journey_buddy" />
 
 
         <ImageView
@@ -82,7 +82,7 @@
             android:layout_height="24dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
-            android:src="@drawable/facebook30" />
+            android:src="@drawable/active_journey_location" />
 
         <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/active_journey_list_buddy_place"
