@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.traveljar.memories.BaseActivity;
@@ -39,7 +38,6 @@ public class ActivejourneyList extends BaseActivity {
     private ActiveJourneyListAdapter mAdapter;
     private boolean backPressedToExitOnce = false;
     private Toast toast = null;
-    private TextView noActivejourneysMsgTxt;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LinearLayout mLayout;
 

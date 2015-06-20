@@ -1,7 +1,9 @@
 package com.traveljar.memories.note;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -28,8 +31,9 @@ import java.io.FileNotFoundException;
 /**
  * Created by abhi on 19/06/15.
  */
-public class NoteDetail extends AppCompatActivity {
+public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemoryDeleteListener{
     private static final String TAG = "<NoteDetail>";
+    private static final int ACTION_ITEM_DELETE = 0;
     private TextView noteContent;
     private TextView dateBig;
     private TextView date;
@@ -70,17 +74,6 @@ public class NoteDetail extends AppCompatActivity {
         //setup the state of favourite button
         noLikesTxt.setText(String.valueOf(mNote.getLikes().size()));
         mFavBtn.setImageResource(mNote.isMemoryLikedByCurrentUser(this) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
-/*        if (mNote.getLikedBy() == null) {
-            noLikesTxt.setText("0");
-            mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-        } else {
-            noLikesTxt.setText(String.valueOf(mNote.getLikedBy().size()));
-            if (mNote.getLikedBy().contains(TJPreferences.getUserId(NoteDetail.this))) {
-                mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-            } else {
-                mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-            }
-        }*/
 
         noteContent.setText(mNote.getContent());
 
@@ -98,7 +91,6 @@ public class NoteDetail extends AppCompatActivity {
             createdBy = TJPreferences.getUserName(this);
         }
         profileName.setText(createdBy);
-
         if (profileImgPath != null) {
             try {
                 Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
@@ -140,30 +132,6 @@ public class NoteDetail extends AppCompatActivity {
                     MemoriesUtil.unlikeMemory(NoteDetail.this, like);
                 }
                 noLikesTxt.setText(String.valueOf(mNote.getLikes().size()));
-/*                List<String> likedBy = mNote.getLikedBy();
-                if (likedBy == null) {
-                    likedBy = new ArrayList<>();
-                }
-                Log.d(TAG,
-                        "fav button clicked position " + likedBy + TJPreferences.getUserId(NoteDetail.this));
-                if (likedBy.contains(TJPreferences.getUserId(NoteDetail.this))) {
-                    likedBy.remove(TJPreferences.getUserId(NoteDetail.this));
-                    Log.d(TAG, "heart empty");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                } else {
-                    likedBy.add(TJPreferences.getUserId(NoteDetail.this));
-                    Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                }
-
-                // update the value in the list and database
-                noLikesTxt.setText(String.valueOf(likedBy.size()));
-                if (likedBy.size() == 0) {
-                    likedBy = null;
-                }
-                mNote.setLikedBy(likedBy);
-                mNote.updateLikedBy(NoteDetail.this, mNote.getId(), likedBy);*/
-
             }
         });
     }
@@ -171,7 +139,7 @@ public class NoteDetail extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(mNote.getCreatedBy().equals(TJPreferences.getUserId(this))) {
-            menu.add(0, 0, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -180,14 +148,35 @@ public class NoteDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case 0:
-                finish();
+            case ACTION_ITEM_DELETE:
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete")
+                        .setMessage("Are you sure you want to remove this item from your memories")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 return true;
             case android.R.id.home:
                 this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onDeleteMemory(int resultCode) {
+        if(resultCode == 0){
+            finish();
+        }else {
+            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
         }
     }
 

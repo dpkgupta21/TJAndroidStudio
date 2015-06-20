@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -33,7 +34,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 
-public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener {
+public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener, MemoriesUtil.OnMemoryDeleteListener {
 
     private static final String TAG = "<VideoDetail>";
     private ImageView video;
@@ -42,7 +43,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     private TextView time;
     private ImageView mProfileImg;
     private ImageButton mFavBtn;
-    private String videoPath;
     private Video mVideo;
     private TextView noLikesTxt;
     private ProgressDialog pDialog;
@@ -66,7 +66,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
 
-        //currenTime = HelpMe.getCurrentTime();
         video = (ImageView) findViewById(R.id.thumbnail);
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
@@ -77,31 +76,15 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         createdByName = (TextView) findViewById(R.id.photo_detail_profile_name);
         mVideoCaption = (TextView) findViewById(R.id.video_detail_caption);
 
-        String thumbnailPath;
         Bundle extras = getIntent().getExtras();
         mVideo = VideoDataSource.getVideoById(extras.getString("VIDEO_ID"), this);
-        videoPath = mVideo.getDataLocalURL(); //path to image
-        thumbnailPath = mVideo.getLocalThumbPath();
 
         //setup the state of favourite button
-        noLikesTxt.setText(mVideo.getLikes().size());
+        noLikesTxt.setText(String.valueOf(mVideo.getLikes().size()));
         mFavBtn.setImageResource(mVideo.isMemoryLikedByCurrentUser(this) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
-/*        if (mVideo.getLikedBy() == null) {
-            noLikesTxt.setText("0");
-            mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-        } else {
-            noLikesTxt.setText(String.valueOf(mVideo.getLikedBy().size()));
-            if (mVideo.getLikedBy().contains(TJPreferences.getUserId(VideoDetail.this))) {
-                mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-            } else {
-                mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-            }
-        }*/
 
-        //Setting fields common in both the cases
-        video.setImageBitmap(BitmapFactory.decodeFile(thumbnailPath));
+        video.setImageBitmap(BitmapFactory.decodeFile(mVideo.getLocalThumbPath()));
         mVideoCaption.setText(String.valueOf(mVideo.getCaption()));
-
 
         //Profile picture and name
         String profileImgPath;
@@ -114,7 +97,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
             profileImgPath = TJPreferences.getProfileImgPath(this);
             createdBy = TJPreferences.getUserName(VideoDetail.this);
         }
-        createdByName.setText(createdBy);
         try {
             if (profileImgPath != null) {
                 Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
@@ -123,6 +105,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        createdByName.setText(createdBy);
 
         setFavouriteBtnClickListener();
         setThumbnailClickListener();
@@ -181,37 +164,13 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                     MemoriesUtil.unlikeMemory(VideoDetail.this, like);
                 }
                 noLikesTxt.setText(String.valueOf(mVideo.getLikes().size()));
-
-/*                List<String> likedBy = mVideo.getLikedBy();
-                if (likedBy == null) {
-                    likedBy = new ArrayList<>();
-                }
-                Log.d(TAG,
-                        "fav button clicked position " + likedBy + TJPreferences.getUserId(VideoDetail.this));
-                if (likedBy.contains(TJPreferences.getUserId(VideoDetail.this))) {
-                    likedBy.remove(TJPreferences.getUserId(VideoDetail.this));
-                    Log.d(TAG, "heart empty");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                } else {
-                    likedBy.add(TJPreferences.getUserId(VideoDetail.this));
-                    Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                }
-
-                // update the value in the list and database
-                noLikesTxt.setText(String.valueOf(likedBy.size()));
-                if (likedBy.size() == 0) {
-                    likedBy = null;
-                }
-                mVideo.setLikedBy(likedBy);
-                mVideo.updateLikedBy(VideoDetail.this, mVideo.getId(), likedBy);*/
             }
         });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        if(HelpMe.isAdmin(this)){
+        if(mVideo.getCreatedBy().equals(TJPreferences.getUserId(this))){
             menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return super.onCreateOptionsMenu(menu);
@@ -253,6 +212,15 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(mVideo.getDataLocalURL())));
         mediaIntent.setDataAndType(Uri.fromFile(new File(mVideo.getDataLocalURL())), "video/*");
         startActivity(mediaIntent);
+    }
+
+    @Override
+    public void onDeleteMemory(int resultCode) {
+        if(resultCode == 0){
+            finish();
+        }else {
+            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
+        }
     }
 }
 

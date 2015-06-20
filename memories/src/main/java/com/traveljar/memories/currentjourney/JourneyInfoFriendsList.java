@@ -79,12 +79,13 @@ public class JourneyInfoFriendsList extends AppCompatActivity implements CustomR
             TextView noContactsMsg = (TextView) findViewById(R.id.journey_info_friends_list_no_buddies_msg);
             noContactsMsg.setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //add(int groupId, int itemId, int order, String titleRes)
-        menu.add(0, 0, 0, "Refresh").setIcon(R.drawable.ic_refresh);
+        menu.add(0, 0, 0, "Refresh").setIcon(R.drawable.ic_refresh).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return true;
     }
 

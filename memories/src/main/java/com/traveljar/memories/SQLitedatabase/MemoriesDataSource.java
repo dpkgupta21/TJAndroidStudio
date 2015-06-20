@@ -26,5 +26,4 @@ public class MemoriesDataSource {
         Log.d(TAG, "total memories =" + memoriesList.size());
         return memoriesList;
     }
-
 }

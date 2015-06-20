@@ -37,4 +37,4 @@
         android:textColor="@color/white"
         android:textSize="@dimen/tj_medium_font" />
 
-</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/past_journey_list_item.xml -->
+</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/past_journey_list_item.xml -->

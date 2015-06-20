@@ -1,6 +1,8 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -11,8 +13,6 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
 MERGED from TJAndroidStudio:flotingMenuLibrary:unspecified:7:5
@@ -401,10 +401,10 @@ ADDED from AndroidManifest.xml:187:9
 		ADDED from AndroidManifest.xml:188:13
 receiver#com.traveljar.memories.utility.SMSReceiver
 ADDED from AndroidManifest.xml:192:9
-	android:enabled
-		ADDED from AndroidManifest.xml:194:13
 	android:exported
 		ADDED from AndroidManifest.xml:195:13
+	android:enabled
+		ADDED from AndroidManifest.xml:194:13
 	android:name
 		ADDED from AndroidManifest.xml:193:13
 intent-filter#android.provider.Telephony.SMS_RECEIVED
@@ -417,10 +417,10 @@ ADDED from AndroidManifest.xml:197:17
 		ADDED from AndroidManifest.xml:197:25
 meta-data#com.google.android.gms.version
 ADDED from AndroidManifest.xml:201:9
-	android:value
-		ADDED from AndroidManifest.xml:203:13
 	android:name
 		ADDED from AndroidManifest.xml:202:13
+	android:value
+		ADDED from AndroidManifest.xml:203:13
 receiver#com.traveljar.memories.gcm.GcmBroadcastReceiver
 ADDED from AndroidManifest.xml:212:9
 	android:permission

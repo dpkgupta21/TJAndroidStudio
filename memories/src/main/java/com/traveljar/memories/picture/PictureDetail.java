@@ -1,18 +1,22 @@
 package com.traveljar.memories.picture;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -26,14 +30,13 @@ import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 
 
 
-public class PictureDetail extends AppCompatActivity implements DownloadPicture.OnPictureDownloadListener {
+public class PictureDetail extends AppCompatActivity implements DownloadPicture.OnPictureDownloadListener, MemoriesUtil.OnMemoryDeleteListener {
 
     private static final String TAG = "<PhotoDetail>";
-    List<String> likedBy;
+    private static final int ACTION_ITEM_DELETE = 0;
     private ImageView photo;
     private TextView dateBig;
     private TextView date;
@@ -41,15 +44,11 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
     private ImageView mProfileImg;
     private TextView profileName;
     private ImageButton mFavBtn;
-    private long currenTime;
-    private String imagePath;
     private Picture mPicture;
     private TextView noLikesTxt;
     private TextView mPictureCaption;
 
     private ProgressDialog pDialog;
-
-    private String localThumbnailPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,6 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        currenTime = HelpMe.getCurrentTime();
         photo = (ImageView) findViewById(R.id.photo_detail_photo);
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
@@ -82,25 +80,12 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         Log.d(TAG, "running for an already created picture");
         mPicture = PictureDataSource.getPictureById(this, extras.getString("PICTURE_ID"));
         Log.d(TAG, "picture fetched is" + mPicture);
-        imagePath = mPicture.getDataLocalURL(); //path to image
-        localThumbnailPath = mPicture.getPicThumbnailPath();
 
         //setup the state of favourite button
         noLikesTxt.setText(String.valueOf(mPicture.getLikes().size()));
         mFavBtn.setImageResource(mPicture.isMemoryLikedByCurrentUser(this) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
- /*       if (mPicture.getLikedBy() == null) {
-            noLikesTxt.setText("0");
-            mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-        } else {
-            noLikesTxt.setText(String.valueOf(mPicture.getLikedBy().size()));
-            if (mPicture.getLikedBy().contains(TJPreferences.getUserId(PictureDetail.this))) {
-                mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-            } else {
-                mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-            }
-        }*/
 
-        photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
+        photo.setImageBitmap(BitmapFactory.decodeFile(mPicture.getPicThumbnailPath()));
         mPictureCaption.setText(mPicture.getCaption());
 
         //Profile picture
@@ -116,8 +101,6 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
             profileImgPath = TJPreferences.getProfileImgPath(this);
             createdBy = TJPreferences.getUserName(this);
         }
-        profileName.setText(createdBy);
-
         if (profileImgPath != null) {
             try {
                 Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
@@ -126,6 +109,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 e.printStackTrace();
             }
         }
+        profileName.setText(createdBy);
         Log.d(TAG, "profile picture set successfully");
 
         setFavouriteBtnClickListener();
@@ -176,40 +160,36 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                     MemoriesUtil.unlikeMemory(PictureDetail.this, like);
                 }
                 noLikesTxt.setText(String.valueOf(mPicture.getLikes().size()));
-/*                List<String> likedBy = mPicture.getLikedBy();
-                if (likedBy == null) {
-                    likedBy = new ArrayList<>();
-                }
-                Log.d(TAG,
-                        "fav button clicked position " + likedBy + TJPreferences.getUserId(PictureDetail.this));
-                if (likedBy.contains(TJPreferences.getUserId(PictureDetail.this))) {
-                    likedBy.remove(TJPreferences.getUserId(PictureDetail.this));
-                    Log.d(TAG, "heart empty");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                } else {
-                    likedBy.add(TJPreferences.getUserId(PictureDetail.this));
-                    Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                }
-
-                // update the value in the list and database
-                noLikesTxt.setText(String.valueOf(likedBy.size()));
-                if (likedBy.size() == 0) {
-                    likedBy = null;
-                }
-                mPicture.setLikedBy(likedBy);
-                mPicture.updateLikedBy(PictureDetail.this, mPicture.getId(), likedBy);
-            }*/
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        if(mPicture.getCreatedBy().equals(TJPreferences.getUserId(this))){
+            menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
+            case ACTION_ITEM_DELETE:
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete")
+                        .setMessage("Are you sure you want to remove this item from your memories")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -224,5 +204,14 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         Intent intent = new Intent(this, DisplayPicture.class);
         intent.putExtra("PICTURE_PATH", picture.getDataLocalURL());
         startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteMemory(int resultCode) {
+        if(resultCode == 0){
+            finish();
+        }else {
+            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
+        }
     }
 }

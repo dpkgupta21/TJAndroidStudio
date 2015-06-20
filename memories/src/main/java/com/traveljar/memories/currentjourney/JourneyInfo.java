@@ -1,5 +1,6 @@
 package com.traveljar.memories.currentjourney;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,42 +12,36 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
+import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.currentjourney.adapters.JourneyInfoBuddiesListAdapter;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.pastjourney.PastJourneyList;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
+import com.traveljar.memories.utility.JourneyUtil;
 import com.traveljar.memories.utility.TJPreferences;
-import com.traveljar.memories.volley.AppController;
-import com.traveljar.memories.volley.CustomJsonRequest;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
  * Created by abhi on 29/05/15.
  */
-public class JourneyInfo extends AppCompatActivity {
+public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExitJourneyListener{
 
     private static final String TAG = "<JourneyInfo>";
+    private static final int MENU_ADD_BUDDY_ID = 0;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private JourneyInfoBuddiesListAdapter mAdapter;
@@ -59,6 +54,11 @@ public class JourneyInfo extends AppCompatActivity {
     private Button mExitGroup;
     private Button mEndJourney;
     private ImageView mCoverImage;
+
+    private ProgressDialog mProgressDialog;
+
+
+    List<Contact> allBuddiesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,8 @@ public class JourneyInfo extends AppCompatActivity {
         mEndJourney = (Button)findViewById(R.id.journey_info_end_journey);
         mCoverImage = (ImageView)findViewById(R.id.journey_info_cover_image);
 
+        mProgressDialog = new ProgressDialog(this);
+
         setCoverImage();
 
         if(HelpMe.isAdmin(this)){
@@ -96,10 +98,12 @@ public class JourneyInfo extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(JourneyInfo.this)
                         .setTitle("Exit Group")
-                        .setMessage("Under Construction")
+                        .setMessage("Are you sure you want to exit this journey")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
+                                mProgressDialog.show();
+                                JourneyUtil.getInstance().setExitJourneyListener(JourneyInfo.this);
+                                JourneyUtil.getInstance().exitJourney(JourneyInfo.this, TJPreferences.getUserId(JourneyInfo.this));
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -120,7 +124,8 @@ public class JourneyInfo extends AppCompatActivity {
                         .setMessage("Are you sure you finish this journey? You will not be able to resume the journey again. It will stop for all your friends in this journey as well. ")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                endJourneyOnServer();
+                                mProgressDialog.setMessage("Please wait while we are processing your request");
+                                JourneyUtil.endJourneyOnServer(JourneyInfo.this);
                                 JourneyDataSource.updateJourneyStatus(JourneyInfo.this, TJPreferences.getActiveJourneyId(JourneyInfo.this), Constants.JOURNEY_STATUS_FINISHED);
                                 Intent intent = new Intent(JourneyInfo.this, PastJourneyList.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -149,31 +154,21 @@ public class JourneyInfo extends AppCompatActivity {
             }
         }
 
-        List<Contact> allBuddiesList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
-        Log.d(TAG, "total buddies are = " + allBuddiesList.size());
-
-
-        journeyBuddyCount.setText(String.valueOf(allBuddiesList.size()));
         mRecyclerView = (RecyclerView) findViewById(R.id.journey_info_buddies_recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new JourneyInfoBuddiesListAdapter(allBuddiesList);
-        mRecyclerView.getLayoutParams().height = convertDpToPixels(allBuddiesList.size() * 90);
-        mRecyclerView.setAdapter(mAdapter);
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.journey_info_action_bar, menu);
+        if(HelpMe.isAdmin(this)){
+            menu.add(0, MENU_ADD_BUDDY_ID, 0, "Add Friend").setIcon(R.drawable.add70).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -181,7 +176,7 @@ public class JourneyInfo extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case R.id.action_add_buddy:
+            case MENU_ADD_BUDDY_ID:
                 Log.d(TAG, "action_add_buddy clicked!");
                 Intent i = new Intent(this, JourneyInfoFriendsList.class);
                 startActivity(i);
@@ -204,27 +199,32 @@ public class JourneyInfo extends AppCompatActivity {
         mCoverImage.setImageResource(drawables[randomNum]);
     }
 
-    private void endJourneyOnServer(){
-        String url = Constants.URL_CREATE_JOURNEY + "/" +TJPreferences.getActiveJourneyId(this);
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("api_key", TJPreferences.getApiKey(this));
-        params.put("journey[completed_at]", "2015-06-09T06:09:06.258Z");
-
-        CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d(TAG, "journey with id " + TJPreferences.getActiveJourneyId(JourneyInfo.this) + "completed successfully on server" + response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "journey could not be completed at server" + error);
-                error.printStackTrace();
-            }
-        });
-        AppController.getInstance().addToRequestQueue(uploadRequest);
+    @Override
+    public void onResume(){
+        allBuddiesList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        mRecyclerView.getLayoutParams().height = convertDpToPixels(allBuddiesList.size() * 90);
+        journeyBuddyCount.setText(String.valueOf(allBuddiesList.size()));
+        if(mAdapter == null){
+            mAdapter = new JourneyInfoBuddiesListAdapter(allBuddiesList, this);
+            mRecyclerView.setAdapter(mAdapter);
+        }else {
+            mAdapter.updateList(allBuddiesList);
+            mAdapter.notifyDataSetChanged();
+        }
+        super.onResume();
     }
 
+    @Override
+    public void onExitJourney(int resultCode, String contactId) {
+        if(resultCode == 0) {
+            mProgressDialog.dismiss();
+            JourneyDataSource.deleteJourney(this, TJPreferences.getActiveJourneyId(this));
+            Intent intent = new Intent(this, ActivejourneyList.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }else {
+            mProgressDialog.dismiss();
+            Toast.makeText(this, "some error occured please try again later", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

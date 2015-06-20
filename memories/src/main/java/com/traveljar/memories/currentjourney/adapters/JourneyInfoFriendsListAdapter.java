@@ -1,5 +1,6 @@
 package com.traveljar.memories.currentjourney.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,24 +9,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
+import com.traveljar.memories.utility.JourneyUtil;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyInfoFriendsListAdapter.ViewHolder> {
+public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyInfoFriendsListAdapter.ViewHolder> implements JourneyUtil.OnAddBuddyListener {
     private static final String TAG = "<JInfoFriendsAdapter>";
     private List<Contact> mDataset;
     private Context mContext;
+    ProgressDialog mDialog;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public JourneyInfoFriendsListAdapter(List<Contact> myDataset, Context context) {
         mDataset = myDataset;
         mContext = context;
+        mDialog = new ProgressDialog(context);
     }
 
     public void add(int position, Contact item) {
@@ -88,7 +95,6 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
         mDataset = updatedList;
     }
 
-
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -108,10 +114,22 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
         @Override
         public void onClick(View v) {
             Log.d(TAG, getAdapterPosition() + "===" + getLayoutPosition());
-            Contact journey = mDataset.get(getLayoutPosition());
-
-
+            Contact contact = mDataset.get(getLayoutPosition());
+            JourneyUtil.getInstance().setAddBuddyListener(JourneyInfoFriendsListAdapter.this);
+            JourneyUtil.getInstance().addUserToJourney(mContext, contact.getIdOnServer());
         }
     }
 
+    @Override
+    public void onAddBuddy(String contactId, int resultCode) {
+        if(resultCode == 0) {
+            mDialog.dismiss();
+            mDataset.remove(ContactDataSource.getContactById(mContext, contactId));
+            this.notifyDataSetChanged();
+            JourneyDataSource.addContactToJourney(mContext, contactId);
+        }else {
+            Toast.makeText(mContext, "Unable to add contact to the journey please try again", Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
+        }
+    }
 }

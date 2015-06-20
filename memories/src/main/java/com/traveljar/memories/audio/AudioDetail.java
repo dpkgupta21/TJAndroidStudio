@@ -1,15 +1,19 @@
 package com.traveljar.memories.audio;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
@@ -27,23 +31,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class AudioDetail extends AppCompatActivity {
+public class AudioDetail extends AppCompatActivity implements MemoriesUtil.OnMemoryDeleteListener{
 
     private static final String TAG = "<AudioDetail>";
+    private static final int ACTION_ITEM_DELETE = 0;
     List<String> likedBy;
     private TextView dateBig;
     private TextView date;
     private TextView time;
-    private TextView place;
-    private TextView weather;
-    private ImageView audioThumbnail;
     private ImageView mProfileImg;
     private ImageButton mFavBtn;
     private long currenTime;
-    private String audioPath;
     private Audio mAudio;
     private TextView noLikesTxt;
-    private long mAudioDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class AudioDetail extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         currenTime = HelpMe.getCurrentTime();
-        audioThumbnail = (ImageView) findViewById(R.id.playAudio);
+
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
         time = (TextView) findViewById(R.id.photo_detail_time);
@@ -68,25 +68,11 @@ public class AudioDetail extends AppCompatActivity {
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
 
         Bundle extras = getIntent().getExtras();
-        //If the activity is started for an already clicked picture
-        Log.d(TAG, "running for an already created audio");
         mAudio = AudioDataSource.getAudioById(this, extras.getString("AUDIO_ID"));
-        audioPath = mAudio.getDataLocalURL(); //path to image
 
         //setup the state of favourite button
         noLikesTxt.setText(String.valueOf(mAudio.getLikes().size()));
         mFavBtn.setImageResource(mAudio.isMemoryLikedByCurrentUser(this) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
-/*        if (mAudio.getLikedBy() == null) {
-            noLikesTxt.setText("0");
-            mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-        } else {
-            noLikesTxt.setText(String.valueOf(mAudio.getLikedBy().size()));
-            if (mAudio.getLikedBy().contains(TJPreferences.getUserId(AudioDetail.this))) {
-                mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-            } else {
-                mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-            }
-        }*/
 
         //Profile picture
         String profileImgPath;
@@ -141,40 +127,37 @@ public class AudioDetail extends AppCompatActivity {
                     MemoriesUtil.unlikeMemory(AudioDetail.this, like);
                 }
                 noLikesTxt.setText(String.valueOf(mAudio.getLikes().size()));
-                /*List<String> likedBy = mAudio.getLikedBy();
-                if (likedBy == null) {
-                    likedBy = new ArrayList<>();
-                }
-                Log.d(TAG,
-                        "fav button clicked position " + likedBy + TJPreferences.getUserId(AudioDetail.this));
-                if (likedBy.contains(TJPreferences.getUserId(AudioDetail.this))) {
-                    likedBy.remove(TJPreferences.getUserId(AudioDetail.this));
-                    Log.d(TAG, "heart empty");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                } else {
-                    likedBy.add(TJPreferences.getUserId(AudioDetail.this));
-                    Log.d(TAG, "heart full");
-                    mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                }
-
-                // update the value in the list and database
-                noLikesTxt.setText(String.valueOf(likedBy.size()));
-                if (likedBy.size() == 0) {
-                    likedBy = null;
-                }
-                mAudio.setLikedBy(likedBy);
-                mAudio.updateLikedBy(AudioDetail.this, mAudio.getId(), likedBy);*/
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        if(mAudio.getCreatedBy().equals(TJPreferences.getUserId(this))){
+            menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case R.id.action_done:
-                Log.d(TAG, "done clicked!");
-                finish();
+            case ACTION_ITEM_DELETE:
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete")
+                        .setMessage("Are you sure you want to remove this item from your memories")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 return true;
             case android.R.id.home:
                 this.finish();
@@ -184,4 +167,12 @@ public class AudioDetail extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onDeleteMemory(int resultCode) {
+        if(resultCode == 0){
+            finish();
+        }else {
+            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
+        }
+    }
 }

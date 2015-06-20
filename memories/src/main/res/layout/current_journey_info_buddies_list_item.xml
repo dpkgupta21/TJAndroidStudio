@@ -34,4 +34,14 @@
         android:text="And miles to go before I sleep..."
         android:textColor="@color/black" />
 
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/journey_info_buddies_remove"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/delete85"
+ />
+
 </RelativeLayout>

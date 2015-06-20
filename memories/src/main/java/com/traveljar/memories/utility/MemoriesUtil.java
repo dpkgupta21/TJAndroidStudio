@@ -20,6 +20,17 @@ import java.util.Map;
 
 public class MemoriesUtil {
 
+    private static MemoriesUtil instance;
+    private OnMemoryDeleteListener mDeleteListener;
+
+    public static MemoriesUtil getInstance(){
+        instance = instance == null ? new MemoriesUtil() : instance;
+        return instance;
+    }
+    public void setMemoryDeleteListener(OnMemoryDeleteListener mDeleteListener){
+        this.mDeleteListener = mDeleteListener;
+    }
+
     private static final String TAG = "MemoriesUtil";
 
     public static void likeMemory(final Context context, final Like like){
@@ -81,6 +92,41 @@ public class MemoriesUtil {
             }
         };
         AppController.getInstance().addToRequestQueue(uploadRequest, requestTag);
+    }
+
+    public void deleteMemory(final Context context, final Like like){
+        String url = Constants.URL_MEMORY_UPDATE + like.getJourneyId() + "/memories/" + like.getMemorableId() + "/unlike";
+        String requestTag = "LIKE_MEMORY";
+
+        Map<String, String> params = new HashMap<>();
+        params.put("api_key", TJPreferences.getApiKey(context));
+
+        CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, "memory successfully unliked on server " + response);
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "unable to unlike memory" + error);
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("api_key", TJPreferences.getApiKey(context));
+                return headers;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(uploadRequest, requestTag);
+    }
+
+    public interface OnMemoryDeleteListener{
+        void onDeleteMemory(int resultCode);
     }
 
 }

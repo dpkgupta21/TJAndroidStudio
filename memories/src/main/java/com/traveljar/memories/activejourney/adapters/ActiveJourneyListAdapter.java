@@ -1,5 +1,6 @@
 package com.traveljar.memories.activejourney.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -29,11 +30,13 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
     private static final String TAG = "<ActiveJListAdapter>";
     private List<Journey> mDataset;
     private Context mContext;
+    private ProgressDialog mDialog;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ActiveJourneyListAdapter(List<Journey> myDataset, Context context) {
         mDataset = myDataset;
         mContext = context;
+        mDialog = new ProgressDialog(mContext);
     }
 
     public void add(int position, Journey item) {
@@ -103,13 +106,6 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         mDataset = updatedList;
     }
 
-    @Override
-    public void onFinishTask() {
-        Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.getApplicationContext().startActivity(intent);
-    }
-
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -134,6 +130,8 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         // In Recycler views OnItemCLick is handled here
         @Override
         public void onClick(View v) {
+            mDialog.setMessage("Please wait while we are fetching your journey from server");
+            mDialog.show();
             Log.d(TAG, getAdapterPosition() + "===" + getLayoutPosition());
             Journey journey = mDataset.get(getLayoutPosition());
             TJPreferences.setActiveJourneyId(mContext, journey.getIdOnServer());
@@ -166,5 +164,12 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         }
     }
 
+    @Override
+    public void onFinishTask() {
+        mDialog.dismiss();
+        Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.getApplicationContext().startActivity(intent);
+    }
 
 }
