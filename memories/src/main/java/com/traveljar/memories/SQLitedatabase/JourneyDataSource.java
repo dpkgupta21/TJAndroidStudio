@@ -36,7 +36,7 @@ public class JourneyDataSource {
         values.put(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY, newJourney.getCreatedBy());
         String buddyIds = newJourney.getBuddies() == null ? "" : Joiner.on(",").join(newJourney.getBuddies());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, (buddyIds));
-        Log.d(TAG, "journey data source saving buddy ids in db " + buddyIds + newJourney.getBuddies());
+        Log.d(TAG, "JOurney = " + newJourney.getIdOnServer() + "saving buddyIds = " + buddyIds + newJourney.getBuddies());
         // values.put(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS,
         // newJourney.getLaps().toString());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_STATUS, newJourney.getJourneyStatus());
@@ -48,7 +48,7 @@ public class JourneyDataSource {
         long journey_id = db.insert(MySQLiteHelper.TABLE_JOURNEY, null, values);
         db.close();
 
-        Log.d(TAG, "New Journey Inserted! with journey_id = " + journey_id + newJourney.getJourneyStatus());
+        Log.d(TAG, "New Journey Inserted! with idOnServer = " + newJourney.getIdOnServer() + newJourney.getJourneyStatus());
         return journey_id;
     }
 
@@ -132,16 +132,18 @@ public class JourneyDataSource {
             Journey journey;
             while (!cursor.isAfterLast()) {
                 journey = new Journey();
-                journey.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER)));
+                journey.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_ID)));
+                journey.setIdOnServer(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER)));
                 journey.setName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_NAME)));
                 journey.setTagLine(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_TAGLINE)));
                 journey.setGroupType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_GROUPTYPE)));
                 journey.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY)));
                 String buddyIds = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
                 journey.setBuddies(buddyIds.isEmpty() ? new ArrayList<String>() : Arrays.asList(buddyIds.split(",")));
-                Log.d(TAG, "buddy ids fetched from database are " + buddyIds);
+                Log.d(TAG, "Journey = " + journey.getIdOnServer() + " buddy ids fetched from database are " + buddyIds);
                 /*String laps = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS));
                 journey.setLaps(Arrays.asList(laps.split(",")));*/
+                Log.d(TAG, " " + Joiner.on(",").join(new ArrayList<String>()));
                 journey.setJourneyStatus(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_STATUS)));
                 journey.setCreatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATED_AT)));
                 journey.setUpdatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT)));

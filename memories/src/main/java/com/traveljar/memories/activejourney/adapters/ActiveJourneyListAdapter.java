@@ -152,15 +152,15 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
                 } else {
                     Log.d(TAG, "no buddy to be fetched from server hence starting current activity");
                     Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.getApplicationContext().startActivity(intent);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
                     Log.d(TAG, "context " + mContext + " -- " + intent);
                 }
             } else {
                 Log.d(TAG, "all required contacts are already present in the database");
                 Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.getApplicationContext().startActivity(intent);
+                mContext.startActivity(intent);
             }
 
         }
