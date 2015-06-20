@@ -87,7 +87,7 @@ public class PullMemoriesService {
                             String laps;
                             List<String> lapsList;
                             String buddies;
-                            List<String> buddiesList;
+                            List<String> buddyList;
                             JSONArray memoriesList;
                             String journeyStatus;
 
@@ -98,16 +98,26 @@ public class PullMemoriesService {
                                 name = jsonObject.getString("name");
                                 tagLine = jsonObject.getString("tag_line");
                                 createdBy = jsonObject.getString("created_by_id");
-                                buddies = jsonObject.getJSONArray("buddy_ids").toString();
+
+
+                                JSONArray jsonArray = jsonObject.getJSONArray("buddy_ids");
+                                buddyList = new ArrayList<>();
+                                for(int j = 0; j < jsonArray.length(); j++ ){
+                                    buddyList.add(jsonArray.getString(j));
+                                }
+
+
+/*                                buddies = jsonObject.getJSONArray("buddy_ids");
                                 Log.d(TAG, "buddies list saved in database are " + buddies);
                                 buddies = buddies.replace("[", "");
                                 buddies = buddies.replace("]", "");
-                                buddiesList = new ArrayList<>(Arrays.asList(buddies.split(",")));
+                                buddiesList =  new ArrayList<>(Arrays.asList(buddies.split(",")));*/
 
-                                buddiesList.add(createdBy);
-                                buddiesList.remove(TJPreferences.getUserId(mContext));
+                                buddyList.add(createdBy);
+                                buddyList.remove(TJPreferences.getUserId(mContext));
 
-                                Log.d(TAG, "buddies list saved in database are " + buddiesList + " blah blah " + buddies);
+                                journey.setBuddies(buddyList);
+
                                 laps = jsonObject.getJSONArray("journey_lap_ids").toString();
                                 lapsList = Arrays.asList(laps.split(","));
 
@@ -115,7 +125,7 @@ public class PullMemoriesService {
 //                                Log.d(TAG, "journey status " + journeyStatus + jsonObject.getString("created_at") + jsonObject.getString("created_at").equals("null"));
 
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
-                                        createdBy, lapsList, buddiesList, journeyStatus, System.currentTimeMillis(), System.currentTimeMillis(), System.currentTimeMillis());
+                                        createdBy, lapsList, buddyList, journeyStatus, System.currentTimeMillis(), System.currentTimeMillis(), System.currentTimeMillis());
                                 JourneyDataSource.createJourney(journey, mContext);
                                 Log.d(TAG, "journey parsed and saved successfully in the database");
 

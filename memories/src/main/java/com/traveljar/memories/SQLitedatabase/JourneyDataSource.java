@@ -34,7 +34,9 @@ public class JourneyDataSource {
         values.put(MySQLiteHelper.JOURNEY_COLUMN_TAGLINE, newJourney.getTagLine());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_GROUPTYPE, newJourney.getGroupType());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY, newJourney.getCreatedBy());
-        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, (newJourney.getBuddies() == null) ? "" : Joiner.on(",").join(newJourney.getBuddies()));
+        String buddyIds = newJourney.getBuddies() == null ? "" : Joiner.on(",").join(newJourney.getBuddies());
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, (buddyIds));
+        Log.d(TAG, "journey data source saving buddy ids in db " + buddyIds + newJourney.getBuddies());
         // values.put(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS,
         // newJourney.getLaps().toString());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_STATUS, newJourney.getJourneyStatus());

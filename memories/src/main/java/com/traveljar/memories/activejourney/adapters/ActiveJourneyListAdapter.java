@@ -139,6 +139,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             TJPreferences.setActiveJourneyId(mContext, journey.getIdOnServer());
 
             // Fetch all those contacts which are not in the contacts list of current user but are on the journey
+            Log.d(TAG, "buddies from journey " + journey.getBuddies());
             if (journey.getBuddies() != null && !journey.getBuddies().isEmpty()) {
                 Log.d(TAG, "buddies are = " + journey.getBuddies());
                 ArrayList<String> buddyList = (ArrayList) ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
@@ -153,6 +154,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
                     Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.getApplicationContext().startActivity(intent);
+                    Log.d(TAG, "context " + mContext + " -- " + intent);
                 }
             } else {
                 Log.d(TAG, "all required contacts are already present in the database");
