@@ -1,66 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/custom_border_gray"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="1dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/timelineItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/i_was_here_1" />
 
         <com.traveljar.memories.customviews.MyCircularImageView
             android:id="@+id/timelineItemUserImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="15dp"
+            android:layout_width="@dimen/circularProfDimen"
+            android:layout_height="@dimen/circularProfDimen"
+            android:layout_below="@id/timelineItemImage"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="-45dp"
             android:src="@drawable/gumnaam_profile_image" />
 
         <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/timelineItemUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@id/timelineItemUserImage"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
             android:layout_toRightOf="@id/timelineItemUserImage"
-            android:text="Abhinav Mittal"
-            android:textColor="@color/black" />
+            android:text="Some Name"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-        <com.traveljar.memories.customviews.MyTextView
-            android:id="@+id/timelineItemTime"
+        <com.traveljar.memories.customviews.MyTextViewBold
+            android:id="@+id/timelineItemCheckinPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/timelineItemUserName"
-            android:layout_below="@id/timelineItemUserName"
-            android:text="20 hours ago"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Some awesome place"
             android:textColor="@color/black"
-            android:textSize="@dimen/tj_small_font"
-            android:textStyle="italic" />
+            android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/timelineItemFavIcon"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_below="@id/timelineItemUserImage"
             android:background="@color/white"
-            android:contentDescription="@string/default_string"
-            android:src="@drawable/ic_favourite_empty" />
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-        <com.traveljar.memories.customviews.MyTextView
-            android:id="@+id/noLikesTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/timelineItemFavIcon"
-            android:layout_toLeftOf="@+id/timelineItemFavIcon"
-            android:text="" />
+            <com.traveljar.memories.customviews.MyTextViewBold
+                android:id="@+id/timelineItemCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Checin default caption"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/timelineItemTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/timelineItemCaption"
+                android:layout_marginTop="1dp"
+                android:text="20 hours ago"
+                android:textColor="@color/tj_red_light_text"
+                android:textSize="@dimen/tj_small_font"
+                android:textStyle="italic" />
+
+            <ImageButton
+                android:id="@+id/timelineItemFavIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@color/white"
+                android:contentDescription="@string/default_string"
+                android:src="@drawable/ic_favourite_empty" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/noLikesTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/timelineItemFavIcon"
+                android:text="0"
+                android:textSize="30sp" />
+
+        </RelativeLayout>
     </RelativeLayout>
 
-    <com.traveljar.memories.customviews.MyTextView
-        android:id="@+id/timelineItemCaption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Happiness is outing with friends"
-        android:textColor="@color/black" />
+</RelativeLayout>
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_checkin_item.xml -->
+    <!--<?xml version="1.0" encoding="utf-8"?>--><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:background="@drawable/custom_border_gray"--><!--android:orientation="vertical"--><!--android:padding="10dp">-->
+
+    <!--<RelativeLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:padding="10dp">-->
+
+    <!--<com.traveljar.memories.customviews.MyCircularImageView--><!--android:id="@+id/timelineItemUserImage"--><!--android:layout_width="60dp"--><!--android:layout_height="60dp"--><!--android:layout_marginRight="15dp"--><!--android:src="@drawable/gumnaam_profile_image" />-->
+
+    <!--<com.traveljar.memories.customviews.MyTextView--><!--android:id="@+id/timelineItemUserName"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_toRightOf="@id/timelineItemUserImage"--><!--android:text="Abhinav Mittal"--><!--android:textColor="@color/black" />-->
+
+    <!--<com.traveljar.memories.customviews.MyTextView--><!--android:id="@+id/timelineItemTime"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignLeft="@id/timelineItemUserName"--><!--android:layout_below="@id/timelineItemUserName"--><!--android:text="20 hours ago"--><!--android:textColor="@color/black"--><!--android:textSize="@dimen/tj_small_font"--><!--android:textStyle="italic" />-->
+
+    <!--<ImageButton--><!--android:id="@+id/timelineItemFavIcon"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentRight="true"--><!--android:background="@color/white"--><!--android:contentDescription="@string/default_string"--><!--android:src="@drawable/ic_favourite_empty" />-->
+
+    <!--<com.traveljar.memories.customviews.MyTextView--><!--android:id="@+id/noLikesTxt"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignTop="@+id/timelineItemFavIcon"--><!--android:layout_toLeftOf="@+id/timelineItemFavIcon"--><!--android:text="" />-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<com.traveljar.memories.customviews.MyTextView--><!--android:id="@+id/timelineItemCaption"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="Happiness is outing with friends"--><!--android:textColor="@color/black" />-->
+
+    <!--</LinearLayout>--><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_checkin_item.xml -->

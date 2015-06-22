@@ -11,12 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="250dp">
 
-        <com.traveljar.memories.customviews.MyButtonView
+        <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/note_detail_note"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/tj_large_font"
-            android:text="Feeling sleepy"
+            android:text="Cannot load the note. Please refresh."
             android:gravity="center_horizontal|center_vertical"/>
 
         <com.traveljar.memories.customviews.MyCircularImageView

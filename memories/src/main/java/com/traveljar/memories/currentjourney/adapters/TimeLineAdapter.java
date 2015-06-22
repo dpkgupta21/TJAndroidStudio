@@ -142,6 +142,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     convertView = mInflater.inflate(R.layout.timeline_list_checkin_item, null);
                     holder.timelineItemCaption = (TextView) convertView
                             .findViewById(R.id.timelineItemCaption);
+                    holder.timelineItemCheckinPlace = (TextView) convertView.findViewById(R.id.timelineItemCheckinPlace);
                     break;
 
                 case HelpMe.TYPE_MOOD:
@@ -177,7 +178,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                 Memories mem = memoriesList.get(position);
                 String likeId = mem.isMemoryLikedByCurrentUser(context);// Check if memory liked by current user
                 Like like;
-                if(likeId == null){
+                if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "memory is not already liked so liking it");
                     like = new Like(null, null, mem.getjId(), mem.getIdOnServer(), TJPreferences.getUserId(context), mem.getMemType());
@@ -185,7 +186,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     mem.getLikes().add(like);
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                     MemoriesUtil.likeMemory(context, like);
-                }else {
+                } else {
                     // If already liked, delete from local database, delete from server
                     Log.d(TAG, "memory is not already liked so removing the like");
                     like = mem.getLikeById(likeId);
@@ -195,36 +196,6 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     MemoriesUtil.unlikeMemory(context, like);
                 }
                 holder.timelineNoLikesTxt.setText(String.valueOf(mem.getLikes().size()));
-
-
-/*                List<String> list = null;
-                Log.d(TAG, "list is " + list);
-                Log.d(TAG, "Memory liked by" + mem.getLikedBy());
-                // check whether the memory has been liked by the user
-
-                List<String> likedBy = mem.getLikedBy();
-                if (likedBy == null) {
-                    likedBy = new ArrayList();
-                }
-                if (likedBy.contains(TJPreferences.getUserId(context))) {
-                    likedBy.remove(TJPreferences.getUserId(context));
-                    Log.d(TAG, "heart empty");
-                    holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    Like like = new Like(null, null, mem.getjId(), mem.getIdOnServer(), TJPreferences.getUserId(context), mem.getMemType());
-                    MemoriesUtil.unlikeMemory(context, like);
-                } else {
-                    likedBy.add(TJPreferences.getUserId(context));
-                    Log.d(TAG, "heart full");
-                    holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                }
-
-                // update the value in the list and database
-                holder.timelineNoLikesTxt.setText(String.valueOf(likedBy.size()));
-                if (likedBy.size() == 0) {
-                    likedBy = null;
-                }
-                mem.setLikedBy(likedBy);
-                mem.updateLikedBy(context, mem.getId(), likedBy);*/
             }
         });
 
@@ -254,17 +225,6 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         //set the favourites count
         holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikes().size()));
         holder.timelineItemFavBtn.setImageResource(memory.isMemoryLikedByCurrentUser(context) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
-/*        if (memory.getLikes() == null) {
-            holder.timelineNoLikesTxt.setText("0");
-            holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-        } else {
-            holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikedBy().size()));
-            if (memory.getLikedBy().contains(TJPreferences.getUserId(context))) {
-                holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-            } else {
-                holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-            }
-        }*/
 
         Log.d(TAG, "3.2");
 
@@ -326,18 +286,8 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
             case 4:
                 Log.d(TAG, "in checkin");
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
-                String checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName();
-                if (checkin.getCheckInWith() != null && checkin.getCheckInWith().size() > 0) {
-                    Contact firstContact = ContactDataSource.getContactById(context, checkin.getCheckInWith().get(0));
-                    if (firstContact != null) {
-                        if (checkin.getCheckInWith().size() == 1) {
-                            checkInStatus += " with " + firstContact.getName();
-                        } else if (checkin.getCheckInWith().size() > 1) {
-                            checkInStatus += " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
-                        }
-                    }
-                }
-                holder.timelineItemCaption.setText(checkInStatus);
+                holder.timelineItemCaption.setText(checkin.getCaption());
+                holder.timelineItemCheckinPlace.setText(checkin.getCheckInPlaceName());
                 break;
 
             case 5:
@@ -353,7 +303,8 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     }
                 }
                 friendMood += " feeling " + mood.getMood() + " because " + mood.getReason();
-                holder.timelineItemCaption.setText(friendMood);
+                holder.timelineItemCaption.setText(mood.getReason());
+
 
             default:
                 break;
@@ -421,5 +372,8 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         public ImageView timeLineProfileImg;
         public TextView timelineNoLikesTxt;
         public TextView timelineItemUserName;
+        public TextView timelineItemCheckinPlace;
+        public ImageView timelineItemMoodBuddyImage;
+        public ImageView timelineItemMoodicon;
     }
 }
