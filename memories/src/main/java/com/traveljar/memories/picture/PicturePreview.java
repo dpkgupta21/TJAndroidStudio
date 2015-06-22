@@ -20,8 +20,11 @@ import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.models.Picture;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.services.GPSTracker;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
@@ -140,14 +143,20 @@ public class PicturePreview extends AppCompatActivity {
     }
 
     private void saveAndUploadPic() {
-        mPicture.setCaption(caption.getText().toString());
+/*        mPicture.setCaption(caption.getText().toString());
         long id = PictureDataSource.createPicture(mPicture, this);
         mPicture.setId(String.valueOf(id));
         Log.d(TAG, "id of picture is " + String.valueOf(id) + mPicture.getId());
         Intent intent = new Intent(this, UploadPictureService.class);
         intent.putExtra("PICTURE", mPicture);
+        startService(intent);*/
+        mPicture.setCaption(caption.getText().toString());
+        long id = PictureDataSource.createPicture(mPicture, this);
+        Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
+                Request.OPERATION_TYPE_UPLOAD, Request.CATEGORY_TYPE_PICTURE, Request.REQUEST_STATUS_NOT_STARTED);
+        RequestQueueDataSource.createRequest(request, this);
+        Intent intent = new Intent(this, MakeServerRequestsService.class);
         startService(intent);
-        //PictureUtilities.uploadPicture(this, mPicture);
     }
 
     @Override

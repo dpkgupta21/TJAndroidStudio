@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Note;
+import com.traveljar.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 
@@ -50,11 +51,16 @@ public class NoteGalleryAdapter extends RecyclerView.Adapter<NoteGalleryAdapter.
         // - replace the contents of the view with that element
         final Note NotesItem = (Note) mDataset.get(position);
         final String name = NotesItem.getContent();
+        final String bigDate = HelpMe.getDate(NotesItem.getCreatedAt(), HelpMe.DATE_ONLY);
+        final String day = HelpMe.getDate(NotesItem.getCreatedAt(), HelpMe.ONLY_DAY);
+
         holder.txtNote.setText(name);
+        holder.txtNoteDate.setText(bigDate);
+        holder.txtNoteDay.setText(day);
         holder.txtNote.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(NotesItem);
+
             }
         });
 
@@ -72,10 +78,14 @@ public class NoteGalleryAdapter extends RecyclerView.Adapter<NoteGalleryAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView txtNote;
+        public TextView txtNoteDate;
+        public TextView txtNoteDay;
 
         public ViewHolder(View v) {
             super(v);
             txtNote = (TextView) v.findViewById(R.id.galleryNoteItemtext);
+            txtNoteDate = (TextView) v.findViewById(R.id.galleryNoteItemBigDate);
+            txtNoteDay = (TextView) v.findViewById(R.id.galleryNoteItemDay);
         }
     }
 

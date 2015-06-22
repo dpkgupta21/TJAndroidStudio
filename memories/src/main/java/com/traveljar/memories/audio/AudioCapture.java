@@ -201,8 +201,8 @@ public class AudioCapture extends AppCompatActivity {
         }
         Audio audio = new Audio(null, TJPreferences.getActiveJourneyId(this), HelpMe.AUDIO_TYPE,
                 "3gp", (new File(mFileName)).length(), null, mFileName,
-                TJPreferences.getUserId(this), System.currentTimeMillis(),
-                System.currentTimeMillis(), null, audioDuration, lat, longi);
+                TJPreferences.getUserId(this), HelpMe.getCurrentTime(),
+                HelpMe.getCurrentTime(), null, audioDuration, lat, longi);
         AudioDataSource.createAudio(audio, this);
         Log.d(TAG, "new video added in local DB successfully");
         AudioUtil.uploadAudio(this, audio);

@@ -91,9 +91,9 @@ public class SplashScreen extends Activity {
         mPictures = new HashMap<>();
 
         List<String> mPictureTextList = new ArrayList<>();
-        mPictureTextList.add("Hey there! Iam using traveljar");
-        mPictureTextList.add("Capture Save and Share memorable moments at your Trip!");
-        mPictureTextList.add("We capture audios, videos, notes, moods, pictures and much more");
+        mPictureTextList.add("Capture all type of memories. Not just photos. Travel Jar can take anything");
+        mPictureTextList.add("Share those wonderful moments in the form of a small video created AUTOMATICALLY!.");
+        mPictureTextList.add("No need to chase people for pictures anymore. Travel Jar automatically syncs everything");
 
         mPictureIdsList = new ArrayList<>();
         mPictureIdsList.add(R.drawable.img_splash_1);

@@ -56,5 +56,4 @@ public class Constants {
 
     public static final String URL_IMAGE = "http://api.androidhive.info/volley/volley-image.jpg";
 
-
 }

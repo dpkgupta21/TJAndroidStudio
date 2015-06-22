@@ -48,6 +48,7 @@ public class AddLap extends AppCompatActivity {
     private int editLapIndex;
     private List<String> fromLocationList;
     private List<String> toLocationList;
+    private long epochTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,7 @@ public class AddLap extends AppCompatActivity {
 
         // Set up date picker
         Calendar calendar = Calendar.getInstance();
-        final SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE, d MMM yyyy", Locale.US);
+        final SimpleDateFormat dateFormatter = new SimpleDateFormat("d MMM yyyy", Locale.US);
         //Set the current date initially
         dateLocation.setText(dateFormatter.format(new Date()));
 
@@ -94,6 +95,8 @@ public class AddLap extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar dateBirth = Calendar.getInstance();
                 dateBirth.set(year, monthOfYear, dayOfMonth);
+                epochTime = (dateBirth.getTimeInMillis() / 1000);
+                Log.d(TAG, "epochTIme = " + epochTime + "!");
                 dateLocation.setText(dateFormatter.format(dateBirth.getTime()));
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
@@ -110,14 +113,11 @@ public class AddLap extends AppCompatActivity {
 
             // parse string into int codes and set appropraite toggle button to true
             setConveyanceMode(Integer.parseInt(lap.get("conveyance")));
-        }else {
+        } else {
             //Set default conveyence mode to magical carpet
             toggleCarpet.setChecked(true);
             conveyanceMode = HelpMe.CONVEYANCE_CARPET;
         }
-
-
-
     }
 
     public void listFromPlaces(View v) {
@@ -232,7 +232,6 @@ public class AddLap extends AppCompatActivity {
         if (conveyanceMode == -1) {
             Toast.makeText(this, "Please select the conveyence mode", Toast.LENGTH_SHORT).show();
         } else {
-
             Map<String, String> map;
             if (editMode) {
                 map = AppController.lapsList.get(editLapIndex);
@@ -241,7 +240,7 @@ public class AddLap extends AppCompatActivity {
                 AppController.lapsList.add(map);
             }
 
-            // Received locatino has city, state and country
+            // Received location has city, state and country
             if (fromLocationList.size() == 3) {
                 map.put("fromCity", fromLocationList.get(0));
                 map.put("fromState", fromLocationList.get(1));
@@ -264,7 +263,7 @@ public class AddLap extends AppCompatActivity {
                 map.put("toCountry", toLocationList.get(1));
             }
 
-            map.put("date", String.valueOf(System.currentTimeMillis() / 1000));
+            map.put("date", String.valueOf(epochTime));
             map.put("conveyance", (String.valueOf(conveyanceMode) == "") ? HelpMe.getConveyanceMode(8) : String.valueOf(conveyanceMode));
 
 

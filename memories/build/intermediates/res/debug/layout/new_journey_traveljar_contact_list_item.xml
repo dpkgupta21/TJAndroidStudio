@@ -18,13 +18,12 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/all_contacts_contact_image">
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewBold
             android:id="@+id/all_contacts_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Content not available"
-            android:textSize="@dimen/tj_medium_font"
-            android:textStyle="bold" />
+            android:textSize="@dimen/tj_medium_font" />
 
         <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/all_contacts_contact_phone"

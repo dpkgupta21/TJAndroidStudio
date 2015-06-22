@@ -54,6 +54,7 @@ public class UploadPictureService extends IntentService {
     private void uploadPicture(){
         MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
         entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        Log.d(TAG, "picture " + picture);
         entityBuilder.addPart("picture[picture_file]", new FileBody(new File(picture.getDataLocalURL())));
         entityBuilder.addTextBody("picture[user_id]", picture.getCreatedBy());
         entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(this));

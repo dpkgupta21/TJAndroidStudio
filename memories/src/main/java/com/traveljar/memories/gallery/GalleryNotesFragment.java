@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
+import com.traveljar.memories.customviews.DividerItemDecoration;
 import com.traveljar.memories.gallery.adapters.NoteGalleryAdapter;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.utility.TJPreferences;
@@ -40,7 +41,10 @@ public class GalleryNotesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         Log.d(TAG, "enetred gallery photos fragment!!");
+
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.galleryNoteRecyclerView);
+        // Add a divider between all list items ( not possible through XML like LIstVIew )
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

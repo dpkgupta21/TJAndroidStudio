@@ -123,19 +123,6 @@ public class GcmIntentService extends IntentService {
 
         Log.d(TAG, "1.3" + userIdList.toString());
 
-/*
-        // buddy_ids are recieved in format [5,6,7]
-        String userIds = bundle.get("buddies").toString();
-        Log.d(TAG, "1.3" + userIds);
-        userIds = userIds.replace("[", "");
-        userIds = userIds.replace("]", "");
-
-        Log.d(TAG, "buddy ids from gcm are" + userIds);
-        List<String> userIdList = new ArrayList<>(Arrays.asList(userIds.split(",")));
-        Log.d(TAG, "1.3" + userIdList.toString());
-*/
-
-
         String journeyId;
         String jName;
         String tagline;

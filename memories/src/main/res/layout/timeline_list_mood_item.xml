@@ -24,8 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/timelineItemUserImage"
             android:text="Abhinav Mittal"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textColor="@color/black" />
 
         <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/timelineItemTime"
@@ -62,7 +61,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Happiness is outing with friends"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:textColor="@color/black" />
 
 </LinearLayout>

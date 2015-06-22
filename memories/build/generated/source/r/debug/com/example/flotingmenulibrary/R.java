@@ -291,15 +291,15 @@ public final class R {
 		public static final int abc_shareactionprovider_share_with = 0x7f05000b;
 		public static final int abc_shareactionprovider_share_with_application = 0x7f05000c;
 		public static final int define_FloatingActionButton = 0x7f050036;
-		public static final int library_FloatingActionButton_author = 0x7f050040;
-		public static final int library_FloatingActionButton_authorWebsite = 0x7f050041;
-		public static final int library_FloatingActionButton_isOpenSource = 0x7f050042;
-		public static final int library_FloatingActionButton_libraryDescription = 0x7f050043;
-		public static final int library_FloatingActionButton_libraryName = 0x7f050044;
-		public static final int library_FloatingActionButton_libraryVersion = 0x7f050045;
-		public static final int library_FloatingActionButton_libraryWebsite = 0x7f050046;
-		public static final int library_FloatingActionButton_licenseId = 0x7f050047;
-		public static final int library_FloatingActionButton_repositoryLink = 0x7f050048;
+		public static final int library_FloatingActionButton_author = 0x7f050041;
+		public static final int library_FloatingActionButton_authorWebsite = 0x7f050042;
+		public static final int library_FloatingActionButton_isOpenSource = 0x7f050043;
+		public static final int library_FloatingActionButton_libraryDescription = 0x7f050044;
+		public static final int library_FloatingActionButton_libraryName = 0x7f050045;
+		public static final int library_FloatingActionButton_libraryVersion = 0x7f050046;
+		public static final int library_FloatingActionButton_libraryWebsite = 0x7f050047;
+		public static final int library_FloatingActionButton_licenseId = 0x7f050048;
+		public static final int library_FloatingActionButton_repositoryLink = 0x7f050049;
 	}
 	public static final class style {
 		public static final int TextAppearance_AppCompat_Light_SearchResult_Subtitle = 0x7f0700b1;

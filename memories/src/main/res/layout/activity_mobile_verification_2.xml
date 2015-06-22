@@ -34,7 +34,6 @@
         android:onClick="goToActiveJourneys"
         android:padding="5dp"
         android:text="CONTINUE"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textColor="@color/white"/>
 
 </LinearLayout>

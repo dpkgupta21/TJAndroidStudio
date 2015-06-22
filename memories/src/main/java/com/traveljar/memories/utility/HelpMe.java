@@ -76,6 +76,7 @@ public class HelpMe {
     public static final int DATE_FULL = 1;
     public static final int DATE_ONLY = 2;
     public static final int TIME_ONLY = 3;
+    public static final int ONLY_DAY = 4;
     private static final String TAG = "<HelpMe>";
     public static Context mContext;
 
@@ -150,21 +151,18 @@ public class HelpMe {
         SimpleDateFormat onlyDate = new SimpleDateFormat("dd");
         SimpleDateFormat fullDate = new SimpleDateFormat("dd MMM yyyy");
         SimpleDateFormat fullTime = new SimpleDateFormat("hh:mm aaa, EEE");
+        SimpleDateFormat onlyDay = new SimpleDateFormat("EEE");
         Date resultdate = new Date(timestamp);
 
         switch (type) {
             case DATE_FULL:
-                Log.d(TAG, fullDate.format(resultdate).toString());
-                Log.d(TAG, "timestamp = " + timestamp + ", formatted date = " + resultdate + " ===" + fullDate.format(resultdate).toString());
                 return fullDate.format(resultdate).toString();
             case DATE_ONLY:
-                Log.d(TAG, fullDate.format(resultdate).toString());
-                Log.d(TAG, "timestamp = " + timestamp + ", formatted date = " + resultdate + " ===" + fullDate.format(resultdate).toString());
                 return onlyDate.format(resultdate).toString();
             case TIME_ONLY:
-                Log.d(TAG, fullDate.format(resultdate).toString());
-                Log.d(TAG, "timestamp = " + timestamp + ", formatted date = " + resultdate + " ===" + fullDate.format(resultdate).toString());
                 return fullTime.format(resultdate).toString();
+            case ONLY_DAY:
+                return onlyDay.format(resultdate).toString();
             default:
                 break;
         }

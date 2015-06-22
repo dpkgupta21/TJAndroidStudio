@@ -40,6 +40,18 @@ public class AudioDataSource {
         return voice_id;
     }
 
+    // To get total number of pictures of a journey
+    public static int getAudioCountOfJourney(Context context, String jId) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO + " WHERE "
+                + MySQLiteHelper.VOICE_COLUMN_JID + " = '" + jId + "'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
+    }
+
     public static List<Audio> getAllAudios(Context context) {
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO;
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();

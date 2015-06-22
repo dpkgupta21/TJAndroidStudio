@@ -18,7 +18,9 @@ public class NetworkStateBroadCastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent intent) {
         if(checkInternet(context))        {
-            Toast.makeText(context, "Network Available Do operations", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Network Available", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(context, MakeServerRequestsService.class);
+            context.startService(i);
         }else {
             Toast.makeText(context, "Network gone", Toast.LENGTH_LONG).show();
         }

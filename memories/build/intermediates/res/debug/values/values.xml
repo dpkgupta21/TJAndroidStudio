@@ -177,6 +177,7 @@
     <color name="tj_orange">#FFA31A</color>
     <color name="tj_picture_capture_green">#60ee82</color>
     <color name="tj_picture_capture_red">#ee5e5e</color>
+    <color name="tj_purple">#912CEE</color>
     <color name="tj_red_dark_icons">#ff0032</color>
     <color name="tj_red_dark_toolbar">#e84c3d</color>
     <color name="tj_red_light_status_bar">#c83426</color>
@@ -442,6 +443,7 @@
     <string name="email"><i>Email</i></string>
     <string name="facebook_app_id">712488175507699</string>
     <string name="gallery_audio">Travel Jar Audio</string>
+    <string name="gallery_note_default_text">Every great magic trick consists of three parts or acts. The first part is called "The Pledge". The magician shows you something ordinary: a deck of cards, a bird or a man. He shows you this object. Perhaps he asks you to inspect it to see if it is indeed real, unaltered, normal. But of course... it probably isnt. The second act is called "The Turn". The magician takes the ordinary something and makes it do something extraordinary. Now youre looking for the secret... but you wont find it, because of course youre not really looking. You dont really want to know. You want to be fooled. But you wouldnt clap yet. Because making something disappear isnt enough; you have to bring it back. Thats why every magic trick has a third act, the hardest part, the part we call "The Prestige"."</string>
     <string name="gallery_notes">Travel Jar Notes</string>
     <string name="gallery_photo">Travel Jar Photos</string>
     <string name="gallery_video">Travel Jar Videos</string>
@@ -1782,8 +1784,8 @@
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="myAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryColorDark</item>
+        <item name="colorPrimary">@color/tj_orange</item>
+        <item name="colorPrimaryDark">@color/tj_orange</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>

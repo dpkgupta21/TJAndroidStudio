@@ -17,8 +17,7 @@
             android:layout_height="wrap_content"
             android:text="Note"
             android:textColor="@color/black"
-            android:textSize="@dimen/tj_large_font"
-            android:textStyle="bold" />
+            android:textSize="@dimen/tj_large_font" />
 
         <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/timelineItemTime"
@@ -37,8 +36,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="@string/default_note"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:textColor="@color/black" />
 
     <RelativeLayout
         android:layout_width="match_parent"

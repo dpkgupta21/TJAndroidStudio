@@ -22,7 +22,7 @@
             android:text="New here?"
             android:textColor="@color/white" />
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewBold
             android:id="@+id/create_account_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,8 +30,7 @@
             android:clickable="true"
             android:onClick="goToSignUp"
             android:text="CREATE ACCOUNT"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,8 +88,7 @@
         android:layout_marginTop="20dp"
         android:text="SIGN IN"
         android:textColor="@color/white"
-        android:textSize="@dimen/tj_large_font"
-        android:textStyle="bold" />
+        android:textSize="@dimen/tj_large_font" />
 
     <ImageView
         android:layout_width="250dp"

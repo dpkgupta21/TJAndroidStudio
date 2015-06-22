@@ -7,16 +7,16 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/splash_screen_footer"/>
+        android:layout_above="@+id/splash_screen_footer" />
 
     <LinearLayout
         android:id="@+id/splash_screen_footer"
         style="@android:style/ButtonBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_weight="0"
         android:background="@color/white"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <com.traveljar.memories.customviews.MyButtonView
@@ -28,8 +28,8 @@
             android:background="@color/white"
             android:onClick="goToSignUp"
             android:text="I&apos;m New"
-            android:textSize="20sp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <com.traveljar.memories.customviews.MyButtonView
             android:id="@+id/splash_signin_btn"
@@ -39,49 +39,44 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:onClick="goToSignIn"
-            android:textSize="20sp"
             android:text="Sign In"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
     </LinearLayout>
 
-<!--    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/splash_screen_footer"
-        android:layout_centerHorizontal="true"></RadioGroup>-->
 
     <RadioGroup
+        android:id="@+id/swipe_indicator_radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/swipe_indicator_radio_group"
-        android:gravity="center_horizontal"
         android:layout_above="@+id/splash_screen_footer"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <RadioButton
+            android:id="@+id/pic1_indicator"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:button="@null"
             android:layout_margin="5dp"
             android:background="@drawable/splash_screen_custom_radio_buttons"
-            android:id="@+id/pic1_indicator"/>
+            android:button="@null" />
 
         <RadioButton
+            android:id="@+id/pic2_indicator"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:button="@null"
             android:layout_margin="5dp"
             android:background="@drawable/splash_screen_custom_radio_buttons"
-            android:id="@+id/pic2_indicator" />
+            android:button="@null" />
 
         <RadioButton
+            android:id="@+id/pic3_indicator"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:button="@null"
             android:layout_margin="5dp"
             android:background="@drawable/splash_screen_custom_radio_buttons"
-            android:id="@+id/pic3_indicator"/>
+            android:button="@null" />
 
     </RadioGroup>
 

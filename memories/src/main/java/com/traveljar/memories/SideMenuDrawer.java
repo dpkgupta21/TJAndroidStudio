@@ -92,6 +92,7 @@ public class SideMenuDrawer extends Fragment {
                     case 0:
                         mDrawerLayout.closeDrawer(Gravity.LEFT);
                         i = new Intent(getActivity(), ActivejourneyList.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                         break;
                     case 1:

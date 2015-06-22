@@ -1,11 +1,16 @@
 package com.traveljar.memories.SQLitedatabase;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.google.common.base.Joiner;
 import com.traveljar.memories.models.Memories;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,4 +31,52 @@ public class MemoriesDataSource {
         Log.d(TAG, "total memories =" + memoriesList.size());
         return memoriesList;
     }
+
+    public static void deleteAllMemoriesCreatedByUser(Context context, String userId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_AUDIO, MySQLiteHelper.VIDEO_COLUMN_CREATED_BY + "=?", new String[]{userId});
+        db.delete(MySQLiteHelper.TABLE_CHECKIN, MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY + "=?", new String[]{userId});
+        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_CLOUMN_LONGITUDE + "=?", new String[]{userId});
+        db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_CREATED_BY + "=?", new String[]{userId});
+        db.delete(MySQLiteHelper.TABLE_PICTURE, MySQLiteHelper.PICTURE_COLUMN_CREATEDBY + "=?", new String[]{userId});
+        db.delete(MySQLiteHelper.TABLE_VIDEO, MySQLiteHelper.VIDEO_COLUMN_CREATED_BY + "=?", new String[]{userId});
+        db.close();
+    }
+
+    public static void removeUserFromMemories(Context context, String userId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        String [] tableNames = new String[]{MySQLiteHelper.TABLE_CHECKIN, MySQLiteHelper.TABLE_MOOD};
+        String [] buddyColumnNames = new String[]{MySQLiteHelper.CHECKIN_COLUMN_WITH, MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID};
+        String [] columnIdNames = new String[]{MySQLiteHelper.CHECKIN_COLUMN_ID, MySQLiteHelper.MOOD_COLUMN_ID};
+        int i = 0;
+        for(String tableName : tableNames) {
+            String selectQuery = "SELECT * " + " FROM " + tableName +
+                    " WHERE " + buddyColumnNames[i] + " LIKE " + "%" + userId + "%";
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            String buddyIds = "";
+            String id;
+            if (cursor.moveToFirst()) {
+                do{
+                    id = cursor.getString(cursor.getColumnIndex(columnIdNames[i]));
+                    buddyIds = cursor.getString(cursor.getColumnIndex(buddyColumnNames[i]));
+                    List<String> buddiesList = new ArrayList<>(Arrays.asList(buddyIds.split(",")));
+                    buddiesList.remove(userId);
+                    buddyIds = Joiner.on(",").join(buddiesList);
+
+                    Log.d(TAG, "contact after removing contact is " + buddyIds);
+                    cursor.close();
+                    //Update this buddyIds on the database
+                    ContentValues values = new ContentValues();
+                    values.put(buddyColumnNames[i], buddyIds);
+                    db.update(tableName, values, columnIdNames[i] + " = " + id, null);
+                }while (cursor.moveToNext());
+
+            }
+            Log.d(TAG, "existing contact for journey " + buddyIds);
+            i++;
+        }
+        db.close();
+        Log.d(TAG, "user successfully added to the current journey");
+    }
+
 }

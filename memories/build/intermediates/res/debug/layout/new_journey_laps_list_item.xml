@@ -44,8 +44,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/from"
             android:text="Bangalore"
-            android:textSize="@dimen/tj_medium_font"
-            android:textStyle="bold" />
+            android:textSize="@dimen/tj_medium_font" />
 
 
         <com.traveljar.memories.customviews.MyTextView
@@ -67,8 +66,7 @@
             android:layout_below="@id/from"
             android:layout_marginRight="15dp"
             android:text="Goa"
-            android:textSize="@dimen/tj_medium_font"
-            android:textStyle="bold" />
+            android:textSize="@dimen/tj_medium_font"/>
 
         <!-- Top half -->
 
@@ -99,8 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/date"
             android:text="25th Dec&apos;14"
-            android:textSize="@dimen/tj_medium_font"
-            android:textStyle="bold" />
+            android:textSize="@dimen/tj_medium_font"/>
 
         <ImageView
             android:layout_width="80dp"
@@ -130,8 +127,7 @@
             android:layout_below="@+id/conveyance_txt"
             android:layout_marginRight="15dp"
             android:text="Car"
-            android:textSize="@dimen/tj_medium_font"
-            android:textStyle="bold" />
+            android:textSize="@dimen/tj_medium_font" />
 
     </RelativeLayout>
 

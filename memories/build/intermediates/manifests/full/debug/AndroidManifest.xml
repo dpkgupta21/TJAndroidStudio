@@ -176,6 +176,9 @@
         <service
             android:name="com.traveljar.memories.video.UploadVideoService"
             android:exported="false" />
+        <service
+            android:name="com.traveljar.memories.services.MakeServerRequestsService"
+            android:exported="false" />
 
         <!-- To recive and read text messages -->
         <receiver

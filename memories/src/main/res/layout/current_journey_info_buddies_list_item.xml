@@ -13,7 +13,7 @@
         android:layout_marginRight="15dp"
         android:src="@drawable/gumnaam_profile_image" />
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBold
         android:id="@+id/cur_journey_buddies_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,8 +21,7 @@
         android:layout_marginTop="20dp"
         android:layout_toRightOf="@id/cur_journey_buddies_image"
         android:text="Abhinav Mittal"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:textColor="@color/black"/>
 
     <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/cur_journey_buddies_status"

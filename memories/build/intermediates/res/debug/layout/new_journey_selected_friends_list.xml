@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
-            android:hint="Enter email or contact" />
+            android:hint="Start typing your friend's name" />
 
         <ImageButton
             android:id="@+id/addFriendsContactSearchAdd"

@@ -113,7 +113,7 @@
                 android:textSize="@dimen/tj_extra_giant_font" />
 
 
-            <com.traveljar.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextViewBold
                 android:id="@+id/mood_detail_date_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,8 +121,7 @@
                 android:layout_marginRight="10dp"
                 android:text="07"
                 android:textColor="@color/tj_red_light_text"
-                android:textSize="50sp"
-                android:textStyle="bold" />
+                android:textSize="50sp" />
 
             <com.traveljar.memories.customviews.MyTextView
                 android:id="@+id/mood_detail_date"

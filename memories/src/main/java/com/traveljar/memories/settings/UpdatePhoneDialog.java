@@ -54,7 +54,6 @@ public class UpdatePhoneDialog extends DialogFragment {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(getActivity(), "phone number updated successfully", Toast.LENGTH_SHORT).show();
                 if (phoneNumber.getText().toString().isEmpty()) {
                     Toast.makeText(getActivity(), "phone number cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
@@ -73,11 +72,13 @@ public class UpdatePhoneDialog extends DialogFragment {
                                         Log.d(TAG, "response on updating phone" + response);
                                         mListener.onPhoneUpdate();
                                         UpdatePhoneDialog.this.dismiss();
+                                        Toast.makeText(getActivity(), "phone number updated successfully", Toast.LENGTH_SHORT).show();
                                     }
                                 }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Log.d(TAG, "error in updating user phone number" + error);
+                                Toast.makeText(getActivity(), "Could not update phone number please try after some time", Toast.LENGTH_SHORT).show();
                                 error.printStackTrace();
                             }
                         });

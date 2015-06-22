@@ -34,16 +34,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
-            android:shadowColor="@color/tj_medium_gray"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="1.5"
             android:text="Journey Name"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewItalic
             android:id="@+id/active_journey_list_tagline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,8 +46,7 @@
             android:text="Journey tagline"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="italic" />
+            android:textSize="16sp" />
 
 
         <com.traveljar.memories.customviews.MyTextView
