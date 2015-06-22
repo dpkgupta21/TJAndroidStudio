@@ -441,7 +441,19 @@ category#com.example.memories
 ADDED from AndroidManifest.xml:222:17
 	android:name
 		ADDED from AndroidManifest.xml:222:27
-service#com.traveljar.memories.gcm.GcmIntentService
-ADDED from AndroidManifest.xml:232:9
+receiver#com.traveljar.memories.services.NetworkStateBroadCastReceiver
+ADDED from AndroidManifest.xml:226:9
+	android:label
+		ADDED from AndroidManifest.xml:227:13
 	android:name
-		ADDED from AndroidManifest.xml:232:18
+		ADDED from AndroidManifest.xml:226:19
+intent-filter#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from AndroidManifest.xml:228:13
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from AndroidManifest.xml:229:17
+	android:name
+		ADDED from AndroidManifest.xml:229:25
+service#com.traveljar.memories.gcm.GcmIntentService
+ADDED from AndroidManifest.xml:239:9
+	android:name
+		ADDED from AndroidManifest.xml:239:18

@@ -1,6 +1,7 @@
 package com.traveljar.memories.SQLitedatabase;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -161,6 +162,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String LIKE_COLUMN_MEMORABLE_ID = "memorableId";
     public static final String LIKE_COLUMN_USER_ID = "userId";
     public static final String LIKE_COLUMN_MEM_TYPE = "memType";
+
+    //Table requests
+    public static final String TABLE_REQUEST = "REQUEST";
+    public static final String REQUEST_COLUMN_ID = "_id";
+    public static final String REQUEST_COLUMN_REQUEST_TYPE = "idOnServer";
+    public static final String REQUEST_COLUMN_JOURNEY_ID = "journeyId";
+
 
     private static final String CREATE_TABLE_LIKE = "create table " + TABLE_LIKE + "("
             + LIKE_COLUMN_ID + " integer primary key autoincrement, "
@@ -371,7 +379,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(MySQLiteHelper.class.getName(), "Upgrading database from version " + oldVersion
                 + " to " + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACT);
+        /*db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_JOURNEY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIMELINE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PICTURE);
@@ -381,7 +389,29 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOOD);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACE);
-        onCreate(db);
+        onCreate(db);*/
+        if(!tableExists("", null));
+    }
+
+    private boolean columnExists(String columnName, String tableName, SQLiteDatabase db){
+        Cursor cursor = db.query(tableName, null, null, null, null, null, null, "0");
+        boolean exists = cursor.getColumnIndex(columnName) == -1 ? false : true;
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
+    private boolean tableExists(String tableName, SQLiteDatabase db){
+        Cursor cursor = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName + "'", null);
+        boolean exists = false;
+        if(cursor != null){
+            if(cursor.getCount() > 0){
+                exists = true;
+            }
+        }
+        cursor.close();
+        db.close();
+        return exists;
     }
 
 }

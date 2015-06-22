@@ -210,6 +210,13 @@
                 <category android:name="com.example.memories" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name="com.traveljar.memories.services.NetworkStateBroadCastReceiver"
+            android:label="NetworkConnection" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
         <!--
           Application-specific subclass of GCMBaseIntentService that will
