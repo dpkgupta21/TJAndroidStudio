@@ -54,7 +54,7 @@ public class CheckInPreview extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Checkin");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.black_semi_transparent));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
-            android:hint="Enter email or contact" />
+            android:hint="Start typing your friend's name" />
 
         <ImageButton
             android:id="@+id/addFriendsContactSearchAdd"
@@ -42,4 +42,4 @@
         android:layout_weight="1"
         android:dividerHeight="1dp" />
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/new_journey_selected_friends_list.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/new_journey_selected_friends_list.xml -->

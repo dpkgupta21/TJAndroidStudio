@@ -40,6 +40,17 @@ public class NoteDataSource {
         return note_id;
     }
 
+    // To get total number of notes of a journey
+    public static int getNoteCountOfJourney(Context context, String jId) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_NOTES + " WHERE "
+                + MySQLiteHelper.NOTES_COLUMN_JID + " = '" + jId + "'";
+        Log.d(TAG, selectQuery);
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.d(TAG, cursor.getCount() + "!");
+        return cursor.getCount();
+    }
+
     public static Note getNote(String id, Context context) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(MySQLiteHelper.TABLE_NOTES, null, MySQLiteHelper.NOTES_COLUMN_ID

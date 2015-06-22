@@ -10,14 +10,13 @@
         android:layout_height="match_parent"
         android:background="@color/tj_gray_bg"
         android:orientation="vertical"
-        android:paddingTop="25dp"
+        android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:paddingLeft="15dp">
+        android:paddingTop="25dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -35,20 +34,19 @@
                     android:textColor="@color/tj_orange"
                     android:textSize="@dimen/tj_medium_font" />
 
-                <com.traveljar.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextViewBold
                     android:id="@+id/new_journey_location_new_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bangalore"
-                    android:textSize="@dimen/tj_giant_font"
-                    android:textStyle="bold" />
+                    android:textSize="26sp" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="20dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/next" />
 
             <LinearLayout
@@ -68,14 +66,13 @@
                     android:textColor="@color/tj_orange"
                     android:textSize="@dimen/tj_medium_font" />
 
-                <com.traveljar.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextViewBold
                     android:id="@+id/new_journey_location_new_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:text="Delhi"
-                    android:textSize="@dimen/tj_giant_font"
-                    android:textStyle="bold" />
+                    android:textSize="26sp" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -101,19 +98,18 @@
                 android:textColor="@color/tj_orange"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <com.traveljar.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextViewBold
                 android:id="@+id/new_journey_location_new_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/tj_giant_font"
-                android:textStyle="bold" />
+                android:textSize="26sp" />
         </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dp"
-            android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
             android:background="#c0c0c0" />
 
 
@@ -135,8 +131,8 @@
                 android:id="@+id/new_journey_location_new_conveyance_bar"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
                 android:layout_margin="10dp"
+                android:layout_weight="0"
                 android:orientation="horizontal">
 
                 <ToggleButton
@@ -144,8 +140,8 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginRight="5dp"
+                    android:layout_weight="1"
                     android:background="@drawable/toggle_flight"
                     android:onClick="conveyanceToggle"
                     android:textOff=""
@@ -156,10 +152,10 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_car"
                     android:onClick="conveyanceToggle"
-                    android:layout_marginRight="5dp"
                     android:textOff=""
                     android:textOn="" />
 
@@ -168,10 +164,10 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_train"
                     android:onClick="conveyanceToggle"
-                    android:layout_marginRight="5dp"
                     android:textOff=""
                     android:textOn="" />
 
@@ -190,8 +186,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
                 android:layout_margin="5dp"
+                android:layout_weight="0"
                 android:orientation="horizontal">
 
                 <ToggleButton
@@ -255,4 +251,4 @@
 
     </LinearLayout>
 </LinearLayout>
-<!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/new_journey_lap_new.xml -->
+<!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/new_journey_lap_new.xml -->

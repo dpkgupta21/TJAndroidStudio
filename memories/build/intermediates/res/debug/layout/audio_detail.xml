@@ -65,7 +65,7 @@
             android:textSize="@dimen/tj_extra_giant_font" />
 
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewBold
             android:id="@+id/photo_detail_date_big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,8 +73,7 @@
             android:layout_marginRight="10dp"
             android:text="07"
             android:textColor="@color/tj_red_light_text"
-            android:textSize="50sp"
-            android:textStyle="bold" />
+            android:textSize="50sp" />
 
         <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/photo_detail_date"
@@ -98,70 +97,4 @@
 
     </RelativeLayout>
 
-</LinearLayout>
-
-    <!--
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp">
-
-            <MyTextView
-                android:id="@+id/no_likes"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:text="5"
-                android:textSize="16sp" />
-
-            <ImageButton
-                android:id="@+id/favBtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="@string/default_string"
-                android:src="@drawable/ic_favourite_empty" />
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/photo_detail_rl2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white">
-
-            <MyTextView
-                android:id="@+id/photo_detail_date_big"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:text="07"
-                android:textColor="@color/red"
-                android:textSize="@dimen/tj_giant_font"
-                android:textStyle="bold" />
-
-            <MyTextView
-                android:id="@+id/photo_detail_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/photo_detail_date_big"
-                android:text="7 December 2014"
-                android:textSize="@dimen/tj_medium_font" />
-
-            <MyTextView
-                android:id="@+id/photo_detail_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/photo_detail_date"
-                android:layout_below="@id/photo_detail_date"
-                android:text="Sunday 1:19 pm"
-                android:textSize="@dimen/tj_medium_font" />
-
-        </RelativeLayout>
-    -->
-<!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/audio_detail.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/audio_detail.xml -->

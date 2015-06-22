@@ -62,8 +62,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:text="Picture/Video default text"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/black" />
 
             <com.traveljar.memories.customviews.MyTextView
                 android:id="@+id/timelineItemTime"

@@ -52,6 +52,15 @@ public class PictureDataSource {
         return picture_id;
     }
 
+    // To get total number of pictures of a journey
+    public static int getPicCountOfJourney(Context context, String jId) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE "
+                + MySQLiteHelper.PICTURE_COLUMN_JID + " = '" + jId + "'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor.getCount();
+    }
+
     // To get list of all pictures as Picture list
     public static List<Picture> getAllPictures(Context context) {
         List<Picture> memoriesList;
@@ -142,7 +151,7 @@ public class PictureDataSource {
         db.close();
     }
 
-    public static void deletePicture(Context context, String pictureId){
+    public static void deletePicture(Context context, String pictureId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         db.delete(MySQLiteHelper.TABLE_PICTURE, MySQLiteHelper.PICTURE_COLUMN_ID + "=?", new String[]{pictureId});
         db.close();

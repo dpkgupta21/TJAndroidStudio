@@ -44,6 +44,15 @@ public class VideoDataSource {
         return video_id;
     }
 
+    // To get total number of videos of a journey
+    public static int getVideoCountOfJourney(Context context, String jId) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE "
+                + MySQLiteHelper.VIDEO_COLUMN_JID + " = '" + jId + "'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor.getCount();
+    }
+
     /**
      * getting all videos
      */

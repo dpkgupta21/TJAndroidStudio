@@ -42,6 +42,15 @@ public class MoodDataSource {
         return mood_id;
     }
 
+    // To get total number of moods of a journey
+    public static int getMoodCountOfJourney(Context context, String jId) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_MOOD + " WHERE "
+                + MySQLiteHelper.MOOD_COLUMN_JID + " = '" + jId + "'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor.getCount();
+    }
+
     public static Mood getMoodById(String id, Context context) {
         Log.d(TAG, "fetching one mood item from DB with id =" + id);
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();

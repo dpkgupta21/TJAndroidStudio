@@ -13,8 +13,7 @@
         android:layout_centerInParent="true"
         android:text="New Year&apos;s Party"
         android:textColor="@color/white"
-        android:textSize="@dimen/tj_large_font"
-        android:textStyle="bold" />
+        android:textSize="@dimen/tj_large_font" />
 
     <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/past_journey_place"
@@ -24,8 +23,7 @@
         android:layout_alignParentLeft="true"
         android:text="Goa"
         android:textColor="@color/white"
-        android:textSize="@dimen/tj_large_font"
-        android:textStyle="bold" />
+        android:textSize="@dimen/tj_large_font" />
 
     <com.traveljar.memories.customviews.MyTextView
         android:id="@+id/past_journey_date"
@@ -37,4 +35,4 @@
         android:textColor="@color/white"
         android:textSize="@dimen/tj_medium_font" />
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/past_journey_list_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/past_journey_list_item.xml -->

@@ -1,13 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.traveljar.memories.customviews.MyButtonView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="View time capsule"
-        android:id="@+id/viewTimeCapsule"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/current_journey_stats_buddies_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tj_picture_capture_green"
+            android:padding="20dp">
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_buddies_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="85"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/current_journey_stats_buddies_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/current_journey_stats_buddies_number"
+                android:src="@drawable/active_journey_buddy" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_buddies_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/current_journey_stats_buddies_number"
+                android:text="Buddies"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/current_journey_stats_distance_card"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tj_fb_blue"
+            android:padding="20dp">
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_distance_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="255"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/current_journey_stats_distance_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/current_journey_stats_distance_number"
+                android:src="@drawable/ic_journey_info" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_distance_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/current_journey_stats_distance_number"
+                android:text="Km travelled"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/current_journey_stats_places_card"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tj_red_dark_icons"
+            android:padding="20dp">
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_places_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/current_journey_stats_places_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/current_journey_stats_places_number"
+                android:src="@drawable/active_journey_location" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_places_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/current_journey_stats_places_number"
+                android:text="Cities explored"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/current_journey_stats_photos_card"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tj_orange"
+            android:padding="20dp">
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_photos_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/current_journey_stats_photos_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/current_journey_stats_photos_number"
+                android:src="@drawable/ic_fab_picture" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_photos_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/current_journey_stats_photos_number"
+                android:text="Photos Clicked"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/current_journey_stats_videos_card"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tj_green"
+            android:padding="20dp">
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_videos_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/current_journey_stats_videos_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/current_journey_stats_videos_number"
+                android:src="@drawable/ic_fab_video" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_videos_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/current_journey_stats_videos_number"
+                android:text="Videos Captured"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/current_journey_stats_notes_card"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tj_red_dark_icons"
+            android:padding="20dp">
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_notes_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/current_journey_stats_notes_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/current_journey_stats_notes_number"
+                android:src="@drawable/ic_fab_note" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_notes_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/current_journey_stats_notes_number"
+                android:text="Notes Written"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/current_journey_stats_moods_card"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tj_purple"
+            android:padding="20dp">
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_moods_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/current_journey_stats_moods_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/current_journey_stats_moods_number"
+                android:src="@drawable/ic_fab_mood" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_moods_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/current_journey_stats_moods_number"
+                android:text="Mood Swings"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/current_journey_stats_audios_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/profile_background"
+            android:padding="20dp">
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_audios_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/current_journey_stats_audios_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/current_journey_stats_audios_number"
+                android:src="@drawable/ic_fab_audio" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/current_journey_stats_audios_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/current_journey_stats_audios_number"
+                android:text="Audio recorded"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+
+        <com.traveljar.memories.customviews.MyButtonView
+            android:id="@+id/viewTimeCapsule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="View time capsrue" />
+
+    </LinearLayout>
+</ScrollView>

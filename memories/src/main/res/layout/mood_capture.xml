@@ -29,14 +29,13 @@
         android:text="Select Friend"
         android:textSize="@dimen/tj_medium_font" />
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBold
         android:id="@+id/mood_text_is"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="is"
         android:textColor="@color/tj_medium_gray"
-        android:textSize="@dimen/tj_extra_giant_font"
-        android:textStyle="bold" />
+        android:textSize="@dimen/tj_extra_giant_font" />
 
     <ImageButton
         android:id="@+id/mood_select_mood_imgbtn"
@@ -58,8 +57,7 @@
         android:layout_height="wrap_content"
         android:text="because of"
         android:textColor="@color/tj_medium_gray"
-        android:textSize="@dimen/tj_extra_giant_font"
-        android:textStyle="bold" />
+        android:textSize="@dimen/tj_extra_giant_font" />
 
     <com.traveljar.memories.customviews.MyEditTextView
         android:id="@+id/mood_because_of_txt"

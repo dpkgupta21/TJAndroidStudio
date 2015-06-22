@@ -43,7 +43,7 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
         setContentView(R.layout.new_journey_laps_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Travel Plan");
+        toolbar.setTitle("Travel Itinerary");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(100);

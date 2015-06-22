@@ -34,6 +34,7 @@ public class MemoriesUtil {
     private static final String TAG = "MemoriesUtil";
 
     public static void likeMemory(final Context context, final Like like){
+        Log.d(TAG, "memory_id = " + like.getMemorableId());
         String url = Constants.URL_MEMORY_UPDATE + like.getJourneyId() + "/memories/" + like.getMemorableId() + "/like";
         String requestTag = "LIKE_MEMORY";
 

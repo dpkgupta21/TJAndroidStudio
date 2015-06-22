@@ -27,9 +27,8 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:text="Tap on the images to toggle them"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="24sp" />
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/checkin_buddy_list.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/checkin_buddy_list.xml -->

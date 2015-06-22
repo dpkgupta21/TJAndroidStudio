@@ -36,7 +36,7 @@
             android:id="@+id/checkin_details_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint=" Write here something about your check-in"
+            android:hint="What are you upto?"
             android:inputType="textMultiLine"
             android:lines="1" />
 

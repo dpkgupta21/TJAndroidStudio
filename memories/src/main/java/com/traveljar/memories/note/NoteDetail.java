@@ -116,15 +116,16 @@ public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemo
                 Like like;
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
-                    Log.d(TAG, "video is not already liked so liking it");
+                    Log.d(TAG, "note is not already liked so liking it");
                     like = new Like(null, null, mNote.getjId(), mNote.getIdOnServer(), TJPreferences.getUserId(NoteDetail.this), mNote.getMemType());
                     like.setId(String.valueOf(LikeDataSource.createLike(like, NoteDetail.this)));
                     mNote.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
+                    Log.d(TAG, "memory_id = " + like.getMemorableId());
                     MemoriesUtil.likeMemory(NoteDetail.this, like);
                 } else {
                     // If already liked, delete from local database, delete from server
-                    Log.d(TAG, "memory is not already liked so removing the like");
+                    Log.d(TAG, "Note is already liked so removing the like");
                     like = mNote.getLikeById(likeId);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
                     LikeDataSource.deleteLike(NoteDetail.this, like);

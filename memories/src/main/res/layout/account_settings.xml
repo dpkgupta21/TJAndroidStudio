@@ -13,7 +13,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:textSize="@dimen/tj_medium_font"
-        android:textStyle="bold"
         android:text="Email"
         android:textColor="#78C257"/>
 
@@ -32,7 +31,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:textSize="@dimen/tj_large_font"
-        android:textStyle="bold"
         android:text="Phone"
         android:textColor="#78C257"/>
 

@@ -27,8 +27,7 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:text="Tap on the images to toggle them"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="24sp" />
 
     </RelativeLayout>
 
