@@ -187,7 +187,10 @@
         <service
             android:name=".video.UploadVideoService"
             android:exported="false" />
-        
+        <service
+            android:name=".services.MakeServerRequestsService"
+            android:exported="false" />
+
         <!--To recive and read text messages -->
         <receiver
             android:name=".utility.SMSReceiver"
@@ -220,6 +223,13 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <category android:name="com.example.memories" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.traveljar.memories.services.NetworkStateBroadCastReceiver"
+            android:label="NetworkConnection">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
 

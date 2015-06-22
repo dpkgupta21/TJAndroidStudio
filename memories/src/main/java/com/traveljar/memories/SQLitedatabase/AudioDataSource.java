@@ -46,7 +46,10 @@ public class AudioDataSource {
                 + MySQLiteHelper.VOICE_COLUMN_JID + " = '" + jId + "'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        return cursor.getCount();
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
     }
 
     public static List<Audio> getAllAudios(Context context) {

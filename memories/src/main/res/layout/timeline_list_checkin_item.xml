@@ -65,7 +65,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <com.traveljar.memories.customviews.MyTextViewBold
+            <com.traveljar.memories.customviews.MyTextViewBoldMed
                 android:id="@+id/timelineItemCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

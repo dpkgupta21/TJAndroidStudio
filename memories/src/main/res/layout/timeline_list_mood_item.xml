@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/custom_border_gray"
+    android:orientation="vertical"
     android:padding="1dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/tj_green"
+        android:padding="15dp">
 
-        <ImageView
-            android:id="@+id/timelineItemImage"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/i_was_here_1" />
-
+        <!-- Extra elements for code consistensy. They are used in timeline-->
+        <!-- So DO NOT deleete these two-->
         <com.traveljar.memories.customviews.MyCircularImageView
             android:id="@+id/timelineItemUserImage"
             android:layout_width="@dimen/circularProfDimen"
@@ -25,8 +21,11 @@
             android:layout_below="@id/timelineItemImage"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="-45dp"
+            android:visibility="invisible"
             android:src="@drawable/gumnaam_profile_image" />
 
+        <!-- Extra elements for code consistensy. They are used in timeline-->
+        <!-- So DO NOT deleete these two-->
         <com.traveljar.memories.customviews.MyTextView
             android:id="@+id/timelineItemUserName"
             android:layout_width="wrap_content"
@@ -34,78 +33,140 @@
             android:layout_alignTop="@id/timelineItemUserImage"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
+            android:visibility="invisible"
             android:layout_toRightOf="@id/timelineItemUserImage"
             android:text="Some Name"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-        <com.traveljar.memories.customviews.MyTextViewBold
-            android:id="@+id/timelineItemCheckinPlace"
+        <RelativeLayout
+            android:id="@+id/timelineItemMoodBuddyPicLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
-            android:text="Some awesome place"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:gravity="center">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:layout_toLeftOf="@id/timelineItemCheckinPlace"
-            android:src="@drawable/active_journey_location" />
+            <com.traveljar.memories.customviews.MyCircularImageView
+                android:id="@+id/timelineItemMoodBuddyPic1"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@drawable/gumnaam_profile_image" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/timelineItemUserImage"
-            android:background="@color/white"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            <com.traveljar.memories.customviews.MyCircularImageView
+                android:id="@+id/timelineItemMoodBuddyPic2"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                android:layout_toRightOf="@id/timelineItemMoodBuddyPic1"
+                android:src="@drawable/gumnaam_profile_image" />
 
-            <com.traveljar.memories.customviews.MyTextViewBold
-                android:id="@+id/timelineItemCaption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="Mood default reason"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+            <com.traveljar.memories.customviews.MyCircularImageView
+                android:id="@+id/timelineItemMoodBuddyPic3"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:layout_below="@id/timelineItemMoodBuddyPic2"
+                android:src="@drawable/gumnaam_profile_image" />
 
+            <com.traveljar.memories.customviews.MyCircularImageView
+                android:id="@+id/timelineItemMoodBuddyPic4"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:visibility="gone"
+                android:layout_below="@id/timelineItemMoodBuddyPic2"
+                android:layout_toRightOf="@id/timelineItemMoodBuddyPic3"
+                android:src="@drawable/gumnaam_profile_image" />
 
-            <com.traveljar.memories.customviews.MyTextView
-                android:id="@+id/timelineItemTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/timelineItemCaption"
-                android:layout_marginTop="1dp"
-                android:text="20 hours ago"
-                android:textColor="@color/tj_red_light_text"
-                android:textSize="@dimen/tj_small_font"
-                android:textStyle="italic" />
-
-            <ImageButton
-                android:id="@+id/timelineItemFavIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@color/white"
-                android:contentDescription="@string/default_string"
-                android:src="@drawable/ic_favourite_empty" />
-
-            <com.traveljar.memories.customviews.MyTextView
-                android:id="@+id/noLikesTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/timelineItemFavIcon"
-                android:text="0"
-                android:textSize="30sp" />
 
         </RelativeLayout>
+
+        <com.traveljar.memories.customviews.MyTextView
+            android:id="@+id/timelineItemMoodExtraBuddyTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:visibility="invisible"
+            android:layout_below="@id/timelineItemMoodBuddyPicLayout"
+            android:text="and 5 others" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/timelineItemMoodIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/sad" />
+
+            <com.traveljar.memories.customviews.MyTextView
+                android:id="@+id/timelineItemMoodIconTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/timelineItemMoodIcon"
+                android:layout_centerHorizontal="true"
+                android:text="Sad"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+
     </RelativeLayout>
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timelineItemUserImage"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
+
+        <com.traveljar.memories.customviews.MyTextViewBoldMed
+            android:id="@+id/timelineItemCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Mood default reason"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+
+        <com.traveljar.memories.customviews.MyTextView
+            android:id="@+id/timelineItemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timelineItemCaption"
+            android:layout_marginTop="1dp"
+            android:text="20 hours ago"
+            android:textColor="@color/tj_red_light_text"
+            android:textSize="@dimen/tj_small_font"
+            android:textStyle="italic" />
+
+        <ImageButton
+            android:id="@+id/timelineItemFavIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/white"
+            android:contentDescription="@string/default_string"
+            android:src="@drawable/ic_favourite_empty" />
+
+        <com.traveljar.memories.customviews.MyTextView
+            android:id="@+id/noLikesTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/timelineItemFavIcon"
+            android:text="0"
+            android:textSize="30sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+

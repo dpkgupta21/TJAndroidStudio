@@ -1,6 +1,7 @@
 package com.traveljar.memories.SQLitedatabase;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -161,6 +162,23 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String LIKE_COLUMN_MEMORABLE_ID = "memorableId";
     public static final String LIKE_COLUMN_USER_ID = "userId";
     public static final String LIKE_COLUMN_MEM_TYPE = "memType";
+
+    //Table requests
+    public static final String TABLE_REQUEST_QUEUE = "requestQueue";
+    public static final String RQ_COLUMN_ID = "_id";
+    public static final String RQ_COLUMN_LOCAL_ID = "localId";
+    public static final String RQ_COLUMN_JOURNEY_ID = "journeyId";
+    public static final String RQ_COLUMN_OPERATION_TYPE = "operationType";
+    public static final String RQ_COLUMN_CATEGORY_TYPE = "categorytype";
+    public static final String RQ_COLUMN_REQUEST_STATUS = "requestStatus";
+
+    private static final String CREATE_TABLE_REQUEST_QUEUE = "CREATE TABLE IF NOT EXISTS " + TABLE_REQUEST_QUEUE + "("
+            + RQ_COLUMN_ID + " integer primary key autoincrement, "
+            + RQ_COLUMN_LOCAL_ID + " text , "
+            + RQ_COLUMN_JOURNEY_ID + " text ,"
+            + RQ_COLUMN_OPERATION_TYPE + " integer,"
+            + RQ_COLUMN_CATEGORY_TYPE + " integer ,"
+            + RQ_COLUMN_REQUEST_STATUS + " integer " + ");";
 
     private static final String CREATE_TABLE_LIKE = "create table " + TABLE_LIKE + "("
             + LIKE_COLUMN_ID + " integer primary key autoincrement, "
@@ -365,23 +383,38 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.d(TAG, "PLACE table created!");
         database.execSQL(CREATE_TABLE_LIKE);
         Log.d(TAG, "LIKE table created!");
+        database.execSQL(CREATE_TABLE_REQUEST_QUEUE);
+        Log.d(TAG, "REQUEST_QUEUE table created!");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(MySQLiteHelper.class.getName(), "Upgrading database from version " + oldVersion
                 + " to " + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACT);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_JOURNEY);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIMELINE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PICTURE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_AUDIO);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VIDEO);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHECKIN);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOOD);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACE);
-        onCreate(db);
+        if(!tableExists(TABLE_REQUEST_QUEUE, this.getReadableDatabase())){
+            this.getWritableDatabase().execSQL(CREATE_TABLE_REQUEST_QUEUE);
+        }
+    }
+
+    private boolean columnExists(String columnName, String tableName, SQLiteDatabase db){
+        Cursor cursor = db.query(tableName, null, null, null, null, null, null, "0");
+        boolean exists = cursor.getColumnIndex(columnName) == -1 ? false : true;
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
+    private boolean tableExists(String tableName, SQLiteDatabase db){
+        Cursor cursor = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName + "'", null);
+        boolean exists = false;
+        if(cursor != null){
+            if(cursor.getCount() > 0){
+                exists = true;
+            }
+        }
+        cursor.close();
+        db.close();
+        return exists;
     }
 
 }

@@ -72,12 +72,12 @@ public class CreateNotes extends AppCompatActivity {
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.action_done:
-                Log.d(TAG, "done clicked!");
-                uploadAndSaveNote();
-                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);*/
-                finish();
+                if(!mNoteContent.getText().toString().equals("")){
+                    uploadAndSaveNote();
+                    finish();
+                }else {
+                    Toast.makeText(this, "note cannot be empty", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case android.R.id.home:
                 this.finish();

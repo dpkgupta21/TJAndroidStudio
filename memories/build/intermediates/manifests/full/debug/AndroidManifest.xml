@@ -176,6 +176,9 @@
         <service
             android:name="com.traveljar.memories.video.UploadVideoService"
             android:exported="false" />
+        <service
+            android:name="com.traveljar.memories.services.MakeServerRequestsService"
+            android:exported="false" />
 
         <!-- To recive and read text messages -->
         <receiver
@@ -208,6 +211,13 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <category android:name="com.example.memories" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.traveljar.memories.services.NetworkStateBroadCastReceiver"
+            android:label="NetworkConnection" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 

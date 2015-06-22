@@ -1,5 +1,6 @@
 package com.traveljar.memories.pastjourney;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
+import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.pastjourney.adapters.PastJourneyListAdapter;
 
 public class PastJourneyList extends BaseActivity {
@@ -32,4 +34,12 @@ public class PastJourneyList extends BaseActivity {
         pastJourneyListViewAdapter = new PastJourneyListAdapter(getBaseContext(), c);
         pastJourneyListView.setAdapter(pastJourneyListViewAdapter);
     }
+
+    @Override
+    public void onBackPressed(){
+        Intent i = new Intent(this, ActivejourneyList.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
 }

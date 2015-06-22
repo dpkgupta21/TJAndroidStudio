@@ -58,7 +58,10 @@ public class PictureDataSource {
                 + MySQLiteHelper.PICTURE_COLUMN_JID + " = '" + jId + "'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        return cursor.getCount();
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
     }
 
     // To get list of all pictures as Picture list

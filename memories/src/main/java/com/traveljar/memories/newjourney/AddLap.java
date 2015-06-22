@@ -240,7 +240,7 @@ public class AddLap extends AppCompatActivity {
                 AppController.lapsList.add(map);
             }
 
-            // Received locatino has city, state and country
+            // Received location has city, state and country
             if (fromLocationList.size() == 3) {
                 map.put("fromCity", fromLocationList.get(0));
                 map.put("fromState", fromLocationList.get(1));

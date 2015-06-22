@@ -52,25 +52,6 @@ public class Picture extends Memories implements Parcelable {
         this.longitude = longitude;
     }
 
-    public Picture(Parcel parcel){
-        id = parcel.readString();
-        idOnServer = parcel.readString();
-        jId = parcel.readString();
-        memType = parcel.readString();
-        createdBy = parcel.readString();
-        createdAt = parcel.readLong();
-        updatedAt = parcel.readLong();
-        latitude = parcel.readDouble();
-        longitude = parcel.readDouble();
-        parcel.readTypedList(likes, Like.CREATOR);
-        caption = parcel.readString();
-        extension = parcel.readString();
-        size = parcel.readLong();
-        dataServerURL = parcel.readString();
-        dataLocalURL = parcel.readString();
-        picLocalThumbnailPath = parcel.readString();
-    }
-
     public String getCaption() {
         return caption;
     }
@@ -151,6 +132,25 @@ public class Picture extends Memories implements Parcelable {
         return 0;
     }
 
+    public Picture(Parcel parcel){
+        id = parcel.readString();
+        idOnServer = parcel.readString();
+        jId = parcel.readString();
+        memType = parcel.readString();
+        createdBy = parcel.readString();
+        createdAt = parcel.readLong();
+        updatedAt = parcel.readLong();
+        latitude = parcel.readDouble();
+        longitude = parcel.readDouble();
+        likes = parcel.readArrayList(Like.class.getClassLoader());
+        caption = parcel.readString();
+        extension = parcel.readString();
+        size = parcel.readLong();
+        dataServerURL = parcel.readString();
+        dataLocalURL = parcel.readString();
+        picLocalThumbnailPath = parcel.readString();
+    }
+
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(id);
@@ -162,7 +162,7 @@ public class Picture extends Memories implements Parcelable {
         parcel.writeLong(updatedAt);
         parcel.writeDouble(latitude);
         parcel.writeDouble(longitude);
-        parcel.writeTypedList(likes);
+        parcel.writeList(likes);
         parcel.writeString(caption);
         parcel.writeString(extension);
         parcel.writeLong(size);

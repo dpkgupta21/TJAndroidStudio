@@ -44,10 +44,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
             android:text="Some awesome place"
             android:textColor="@color/black"
             android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/active_journey_location"
+            android:layout_toLeftOf="@id/timelineItemCheckinPlace"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -58,7 +65,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <com.traveljar.memories.customviews.MyTextViewBold
+            <com.traveljar.memories.customviews.MyTextViewBoldMed
                 android:id="@+id/timelineItemCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,24 +108,4 @@
         </RelativeLayout>
     </RelativeLayout>
 
-</RelativeLayout>
-
-    <!--<?xml version="1.0" encoding="utf-8"?>--><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:background="@drawable/custom_border_gray"--><!--android:orientation="vertical"--><!--android:padding="10dp">-->
-
-    <!--<RelativeLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:padding="10dp">-->
-
-    <!--<com.traveljar.memories.customviews.MyCircularImageView--><!--android:id="@+id/timelineItemUserImage"--><!--android:layout_width="60dp"--><!--android:layout_height="60dp"--><!--android:layout_marginRight="15dp"--><!--android:src="@drawable/gumnaam_profile_image" />-->
-
-    <!--<com.traveljar.memories.customviews.MyTextView--><!--android:id="@+id/timelineItemUserName"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_toRightOf="@id/timelineItemUserImage"--><!--android:text="Abhinav Mittal"--><!--android:textColor="@color/black" />-->
-
-    <!--<com.traveljar.memories.customviews.MyTextView--><!--android:id="@+id/timelineItemTime"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignLeft="@id/timelineItemUserName"--><!--android:layout_below="@id/timelineItemUserName"--><!--android:text="20 hours ago"--><!--android:textColor="@color/black"--><!--android:textSize="@dimen/tj_small_font"--><!--android:textStyle="italic" />-->
-
-    <!--<ImageButton--><!--android:id="@+id/timelineItemFavIcon"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentRight="true"--><!--android:background="@color/white"--><!--android:contentDescription="@string/default_string"--><!--android:src="@drawable/ic_favourite_empty" />-->
-
-    <!--<com.traveljar.memories.customviews.MyTextView--><!--android:id="@+id/noLikesTxt"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignTop="@+id/timelineItemFavIcon"--><!--android:layout_toLeftOf="@+id/timelineItemFavIcon"--><!--android:text="" />-->
-
-    <!--</RelativeLayout>-->
-
-    <!--<com.traveljar.memories.customviews.MyTextView--><!--android:id="@+id/timelineItemCaption"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="Happiness is outing with friends"--><!--android:textColor="@color/black" />-->
-
-    <!--</LinearLayout>--><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_checkin_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_checkin_item.xml -->

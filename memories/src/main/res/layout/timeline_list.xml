@@ -42,6 +42,17 @@
         fab:fab_labelStyle="@style/menu_labels_style">
 
         <com.example.flotingmenulibrary.FloatingActionButton
+            android:id="@+id/button_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="fabClick"
+            android:src="@drawable/ic_fab_audio"
+            fab:fab_colorNormal="@color/tj_orange"
+            fab:fab_colorPressed="@color/white"
+            fab:fab_size="mini"
+            fab:fab_title="Audio" />
+
+        <com.example.flotingmenulibrary.FloatingActionButton
             android:id="@+id/button_mood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,7 +83,7 @@
             fab:fab_colorNormal="@color/tj_orange"
             fab:fab_colorPressed="@color/white"
             fab:fab_size="mini"
-            fab:fab_title="Photo" />
+            fab:fab_title="Picture" />
 
         <com.example.flotingmenulibrary.FloatingActionButton
             android:id="@+id/button_note"
@@ -83,7 +94,7 @@
             fab:fab_colorNormal="@color/tj_orange"
             fab:fab_colorPressed="@color/white"
             fab:fab_size="mini"
-            fab:fab_title="Notes" />
+            fab:fab_title="Note" />
 
         <com.example.flotingmenulibrary.FloatingActionButton
             android:id="@+id/button_video"
@@ -96,16 +107,7 @@
             fab:fab_size="mini"
             fab:fab_title="Video" />
 
-        <com.example.flotingmenulibrary.FloatingActionButton
-            android:id="@+id/button_audio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="fabClick"
-            android:src="@drawable/ic_fab_audio"
-            fab:fab_colorNormal="@color/tj_orange"
-            fab:fab_colorPressed="@color/white"
-            fab:fab_size="mini"
-            fab:fab_title="Audio" />
+
     </com.example.flotingmenulibrary.FloatingActionsMenu>
 
 </RelativeLayout>

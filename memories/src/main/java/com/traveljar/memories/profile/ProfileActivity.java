@@ -22,6 +22,7 @@ import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.MySQLiteHelper;
+import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.customviews.MyCircularImageView;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
@@ -251,6 +252,13 @@ public class ProfileActivity extends BaseActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent i = new Intent(this, ActivejourneyList.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 
 }

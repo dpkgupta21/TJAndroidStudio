@@ -47,8 +47,10 @@ public class NoteDataSource {
         Log.d(TAG, selectQuery);
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        Log.d(TAG, cursor.getCount() + "!");
-        return cursor.getCount();
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
     }
 
     public static Note getNote(String id, Context context) {

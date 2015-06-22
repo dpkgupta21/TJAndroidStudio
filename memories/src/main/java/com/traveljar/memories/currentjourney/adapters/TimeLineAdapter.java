@@ -149,6 +149,13 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     convertView = mInflater.inflate(R.layout.timeline_list_mood_item, null);
                     holder.timelineItemCaption = (TextView) convertView
                             .findViewById(R.id.timelineItemCaption);
+                    holder.timelineItemMoodBuddyImage1 = (ImageView) convertView.findViewById(R.id.timelineItemMoodBuddyPic1);
+                    holder.timelineItemMoodBuddyImage2 = (ImageView) convertView.findViewById(R.id.timelineItemMoodBuddyPic2);
+                    holder.timelineItemMoodBuddyImage3 = (ImageView) convertView.findViewById(R.id.timelineItemMoodBuddyPic3);
+                    holder.timelineItemMoodBuddyImage4 = (ImageView) convertView.findViewById(R.id.timelineItemMoodBuddyPic4);
+                    holder.timelineItemMoodiconTxt = (TextView) convertView.findViewById(R.id.timelineItemMoodIconTxt);
+                    holder.timelineItemMoodicon = (ImageView) convertView.findViewById(R.id.timelineItemMoodIcon);
+                    holder.timelineItemMoodExtraBuddyTxt = (TextView) convertView.findViewById(R.id.timelineItemMoodExtraBuddyTxt);
                     break;
 
             }
@@ -293,18 +300,49 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
             case 5:
                 Log.d(TAG, "in mood");
                 Mood mood = (Mood) memoriesList.get(position);
-                String friendMood = "";
-                Contact fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(0));
-                if (fContact != null) {
-                    if (mood.getBuddyIds().size() == 1) {
-                        friendMood += fContact.getName();
-                    } else if (mood.getBuddyIds().size() > 1) {
-                        friendMood += fContact.getName() + " and " + (mood.getBuddyIds().size() - 1) + " others";
-                    }
-                }
-                friendMood += " feeling " + mood.getMood() + " because " + mood.getReason();
-                holder.timelineItemCaption.setText(mood.getReason());
 
+                int buddyCount = mood.getBuddyIds().size();
+                Contact fContact;
+                for (int i = 0; i<buddyCount; i++){
+
+                    switch (i){
+                        case 0: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
+                            holder.timelineItemMoodBuddyImage1.setVisibility(View.VISIBLE);
+                            holder.timelineItemMoodBuddyImage1.setImageBitmap(BitmapFactory.decodeFile(fContact
+                                    .getPicLocalUrl()));
+                            break;
+
+                        case 1: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
+                            holder.timelineItemMoodBuddyImage2.setVisibility(View.VISIBLE);
+                            holder.timelineItemMoodBuddyImage2.setImageBitmap(BitmapFactory.decodeFile(fContact
+                                    .getPicLocalUrl()));
+                            break;
+
+                        case 2: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
+                            holder.timelineItemMoodBuddyImage3.setVisibility(View.VISIBLE);
+                            holder.timelineItemMoodBuddyImage3.setImageBitmap(BitmapFactory.decodeFile(fContact
+                                    .getPicLocalUrl()));
+                            break;
+
+                        case 3: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
+                            holder.timelineItemMoodBuddyImage4.setVisibility(View.VISIBLE);
+                            holder.timelineItemMoodBuddyImage4.setImageBitmap(BitmapFactory.decodeFile(fContact
+                                    .getPicLocalUrl()));
+                            break;
+
+                        default: Log.d(TAG, "more than 3 poepl ein mood");
+                            holder.timelineItemMoodExtraBuddyTxt.setVisibility(View.VISIBLE);
+                            break;
+                    }
+
+                }
+
+                holder.timelineItemMoodiconTxt.setText(mood.getMood());
+                holder.timelineItemCaption.setText(mood.getReason());
+                int resourceId = context.getResources().getIdentifier(mood.getMood(), "drawable",
+                        context.getPackageName());
+                holder.timelineItemMoodicon.setImageResource(resourceId);
+                holder.timelineItemMoodExtraBuddyTxt.setText("and " + (buddyCount - 4) + " others");
 
             default:
                 break;
@@ -373,7 +411,14 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         public TextView timelineNoLikesTxt;
         public TextView timelineItemUserName;
         public TextView timelineItemCheckinPlace;
-        public ImageView timelineItemMoodBuddyImage;
+
+        // Mood
+        public ImageView timelineItemMoodBuddyImage1;
+        public ImageView timelineItemMoodBuddyImage2;
+        public ImageView timelineItemMoodBuddyImage3;
+        public ImageView timelineItemMoodBuddyImage4;
         public ImageView timelineItemMoodicon;
+        public TextView timelineItemMoodiconTxt;
+        public TextView timelineItemMoodExtraBuddyTxt;
     }
 }

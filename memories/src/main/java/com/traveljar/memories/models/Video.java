@@ -51,27 +51,6 @@ public class Video extends Memories implements Parcelable {
         this.longitude = longitude;
     }
 
-    public Video(Parcel parcel){
-        id = parcel.readString();
-        idOnServer = parcel.readString();
-        jId = parcel.readString();
-        memType = parcel.readString();
-        createdBy = parcel.readString();
-        createdAt = parcel.readLong();
-        updatedAt = parcel.readLong();
-        latitude = parcel.readDouble();
-        longitude = parcel.readDouble();
-/*        List<Like> likesList = null;
-        parcel.readList(likesList, List.class.getClassLoader());
-        likes = likesList;*/
-        parcel.readTypedList(likes, Like.CREATOR);
-        extension = parcel.readString();
-        size = parcel.readLong();
-        dataServerURL = parcel.readString();
-        dataLocalURL = parcel.readString();
-        localThumbPath = parcel.readString();
-    }
-
     public boolean isChecked() {
         return checked;
     }
@@ -161,14 +140,32 @@ public class Video extends Memories implements Parcelable {
         parcel.writeLong(updatedAt);
         parcel.writeDouble(latitude);
         parcel.writeDouble(longitude);
-        parcel.writeTypedList(likes);
-//        parcel.writeStringList(likedBy);
+        parcel.writeList(likes);
         parcel.writeString(caption);
         parcel.writeString(extension);
         parcel.writeLong(size);
         parcel.writeString(dataServerURL);
         parcel.writeString(dataLocalURL);
         parcel.writeString(localThumbPath);
+    }
+
+    public Video(Parcel parcel){
+        id = parcel.readString();
+        idOnServer = parcel.readString();
+        jId = parcel.readString();
+        memType = parcel.readString();
+        createdBy = parcel.readString();
+        createdAt = parcel.readLong();
+        updatedAt = parcel.readLong();
+        latitude = parcel.readDouble();
+        longitude = parcel.readDouble();
+        likes = parcel.readArrayList(Like.class.getClassLoader());
+        caption = parcel.readString();
+        extension = parcel.readString();
+        size = parcel.readLong();
+        dataServerURL = parcel.readString();
+        dataLocalURL = parcel.readString();
+        localThumbPath = parcel.readString();
     }
 
 }

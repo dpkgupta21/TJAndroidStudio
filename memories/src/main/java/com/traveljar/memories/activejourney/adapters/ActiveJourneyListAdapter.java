@@ -156,6 +156,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
                 }
             } else {
                 Log.d(TAG, "all required contacts are already present in the database");
+                mDialog.dismiss();
                 Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);

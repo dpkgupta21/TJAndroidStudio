@@ -38,6 +38,7 @@ public class PictureUtilities {
 
     private static final String TAG = "PICTURE_UTILITY";
 
+    // Not user right now
     public static String downloadPicFromURL(final Context context, final Picture pic, final ImageView imageView) {
         Log.d(TAG, "download pic called");
         String picServerUrl = pic.getDataServerURL();
@@ -167,6 +168,35 @@ public class PictureUtilities {
             }
             PictureDataSource.updateServerIdAndUrl(context, picture.getId(), picture.getIdOnServer(), picture.getDataServerURL());
         }
+    }
+
+    public static int uploadPicOnServer(Context context, final Picture picture){
+        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+        entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        Log.d(TAG, "picture " + picture);
+        entityBuilder.addPart("picture[picture_file]", new FileBody(new File(picture.getDataLocalURL())));
+        entityBuilder.addTextBody("picture[user_id]", picture.getCreatedBy());
+        entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
+        entityBuilder.addTextBody("picture[latitude]", String.valueOf(picture.getLatitude()));
+        entityBuilder.addTextBody("picture[longitude]", String.valueOf(picture.getLongitude()));
+        entityBuilder.addTextBody("picture[description]", picture.getCaption());
+        String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/pictures";
+        HttpPost updateProfileRequest = new HttpPost(url);
+        updateProfileRequest.setEntity(entityBuilder.build());
+        HttpResponse response;
+        try {
+            response = new DefaultHttpClient().execute(updateProfileRequest);
+            JSONObject object = new JSONObject(EntityUtils.toString(response.getEntity()));
+            Log.d(TAG, "response on uploading picture" + object);
+            String serverId = object.getJSONObject("picture").getString("id");
+            String serverUrl = object.getJSONObject("picture").getJSONObject("picture_file").getJSONObject("original").getString("url");
+            PictureDataSource.updateServerIdAndUrl(context, picture.getId(), serverId, serverUrl);
+            return 0;
+        } catch (Exception e) {
+            Log.d(TAG, "error in uploading picture" + e.getMessage());
+            return -1;
+        }
+        //parsing response received from server
     }
 
     public static void updateCaption(final Picture picture, final String caption, final Context context){
