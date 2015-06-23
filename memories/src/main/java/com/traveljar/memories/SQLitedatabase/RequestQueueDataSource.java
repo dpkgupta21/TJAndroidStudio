@@ -69,7 +69,7 @@ public class RequestQueueDataSource {
         List<Request> requestList = parseRequestsFromCursor(cursor);
         cursor.close();
         db.close();
-        return requestList != null ? requestList.get(0) : null;
+        return requestList.size() != 0 ? requestList.get(0) : null;
     }
 
     public static void updateRequestStatus(Context context, String requestId, int requestStatus) {
@@ -78,6 +78,27 @@ public class RequestQueueDataSource {
         values.put(MySQLiteHelper.RQ_COLUMN_REQUEST_STATUS, requestStatus);
         db.update(MySQLiteHelper.TABLE_REQUEST_QUEUE, values, MySQLiteHelper.RQ_COLUMN_ID + " = " + requestId, null);
         Log.d(TAG, "request status completed successfully ");
+        db.close();
+    }
+
+    //returns the number of failed requests
+    public static int getFailedRequestsCount(Context context){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        String query = "SELECT * FROM " + MySQLiteHelper.TABLE_REQUEST_QUEUE + " WHERE " + MySQLiteHelper.RQ_COLUMN_REQUEST_STATUS + " ='" +
+                Request.REQUEST_STATUS_FAILED + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    // Makes all the failed requests as not completed
+    public static void updateStatusOfAllFailedRequests(Context context){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.RQ_COLUMN_REQUEST_STATUS, Request.REQUEST_STATUS_NOT_STARTED);
+        db.update(MySQLiteHelper.TABLE_REQUEST_QUEUE, values, MySQLiteHelper.RQ_COLUMN_REQUEST_STATUS + " = " + Request.REQUEST_STATUS_FAILED, null);
         db.close();
     }
 

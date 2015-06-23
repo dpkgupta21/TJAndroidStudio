@@ -32,6 +32,9 @@ public class AudioDataSource {
         values.put(MySQLiteHelper.VOICE_COLUMN_DATALOCALURL, newVoice.getDataLocalURL());
         values.put(MySQLiteHelper.VOICE_COLUMN_CREATEDBY, newVoice.getCreatedBy());
         values.put(MySQLiteHelper.VOICE_COLUMN_CREATEDAT, newVoice.getCreatedAt());
+        values.put(MySQLiteHelper.VOICE_COLUMN_LATITUDE, newVoice.getLatitude());
+        values.put(MySQLiteHelper.VOICE_COLUMN_LONGITUDE, newVoice.getLongitude());
+        values.put(MySQLiteHelper.VOICE_COLUMN_DURATION, newVoice.getAudioDuration());
 /*        values.put(MySQLiteHelper.VOICE_COLUMN_LIKEDBY, newVoice.getLikedBy() == null ? null : Joiner.on(",").join(newVoice.getLikedBy()));*/
         long voice_id = db.insert(MySQLiteHelper.TABLE_AUDIO, null, values);
         Log.d(TAG, "New audio Inserted!");
@@ -126,27 +129,20 @@ public class AudioDataSource {
         while (!cursor.isAfterLast()) {
             audio = new Audio();
             audio.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_ID)));
-            audio.setIdOnServer(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_ID_ONSERVER)));
+            audio.setIdOnServer(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_ID_ONSERVER)));
             audio.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_JID)));
-            audio.setExtension(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_EXT)));
-            audio.setMemType(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_MEM_TYPE)));
+            audio.setExtension(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_EXT)));
+            audio.setMemType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_MEM_TYPE)));
             audio.setSize(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_SIZE)));
-            audio.setDataServerURL(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DATASERVERURL)));
-            audio.setDataLocalURL(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DATALOCALURL)));
-            audio.setCreatedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDBY)));
-            audio.setCreatedAt(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
-            audio.setUpdatedAt(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
-/*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-            audio.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
+            audio.setDataServerURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DATASERVERURL)));
+            audio.setDataLocalURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DATALOCALURL)));
+            audio.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDBY)));
+            audio.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
+            audio.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
             audio.setLikes(LikeDataSource.getLikeIdsForMemory(context, audio.getIdOnServer()));
+            audio.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LATITUDE)));
+            audio.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LONGITUDE)));
+            audio.setAudioDuration(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DURATION)));
             audioList.add(audio);
             cursor.moveToNext();
         }
@@ -160,27 +156,20 @@ public class AudioDataSource {
         while (!cursor.isAfterLast()) {
             audio = new Audio();
             audio.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_ID)));
-            audio.setIdOnServer(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_ID_ONSERVER)));
+            audio.setIdOnServer(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_ID_ONSERVER)));
             audio.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_JID)));
-            audio.setExtension(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_EXT)));
-            audio.setMemType(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_MEM_TYPE)));
+            audio.setExtension(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_EXT)));
+            audio.setMemType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_MEM_TYPE)));
             audio.setSize(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_SIZE)));
-            audio.setDataServerURL(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DATASERVERURL)));
-            audio.setDataLocalURL(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DATALOCALURL)));
-            audio.setCreatedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDBY)));
-            audio.setCreatedAt(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
-            audio.setUpdatedAt(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
-/*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-            audio.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
+            audio.setDataServerURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DATASERVERURL)));
+            audio.setDataLocalURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DATALOCALURL)));
+            audio.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDBY)));
+            audio.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
+            audio.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
             audio.setLikes(LikeDataSource.getLikeIdsForMemory(context, audio.getIdOnServer()));
+            audio.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LATITUDE)));
+            audio.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LONGITUDE)));
+            audio.setAudioDuration(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DURATION)));
             audioList.add(audio);
             cursor.moveToNext();
         }

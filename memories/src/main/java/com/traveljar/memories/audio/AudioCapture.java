@@ -1,5 +1,6 @@
 package com.traveljar.memories.audio;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -20,9 +21,11 @@ import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.models.Audio;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.services.GPSTracker;
-import com.traveljar.memories.utility.AudioUtil;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 
@@ -200,12 +203,18 @@ public class AudioCapture extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
         Audio audio = new Audio(null, TJPreferences.getActiveJourneyId(this), HelpMe.AUDIO_TYPE,
-                "3gp", (new File(mFileName)).length(), null, mFileName,
-                TJPreferences.getUserId(this), HelpMe.getCurrentTime(),
+                "3gp", (new File(mFileName)).length(), null, mFileName, TJPreferences.getUserId(this), HelpMe.getCurrentTime(),
                 HelpMe.getCurrentTime(), null, audioDuration, lat, longi);
-        AudioDataSource.createAudio(audio, this);
-        Log.d(TAG, "new video added in local DB successfully");
-        AudioUtil.uploadAudio(this, audio);
+        Long id = AudioDataSource.createAudio(audio, this);
+        audio.setId(String.valueOf(id));
+        Log.d(TAG, "new audio added in local DB successfully");
+
+        Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_AUDIO, Request.REQUEST_STATUS_NOT_STARTED);
+        RequestQueueDataSource.createRequest(request, this);
+        Intent intent = new Intent(this, MakeServerRequestsService.class);
+        startService(intent);
+//        AudioUtil.uploadAudio(this, audio);
     }
 
     private void startPlaying() {

@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -34,7 +33,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 
-public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener, MemoriesUtil.OnMemoryDeleteListener {
+public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener {
 
     private static final String TAG = "<VideoDetail>";
     private ImageView video;
@@ -186,6 +185,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                MemoriesUtil.deleteMemory(VideoDetail.this, mVideo.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -214,14 +214,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         startActivity(mediaIntent);
     }
 
-    @Override
-    public void onDeleteMemory(int resultCode) {
-        if(resultCode == 0){
-            finish();
-        }else {
-            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
-        }
-    }
 }
 
 

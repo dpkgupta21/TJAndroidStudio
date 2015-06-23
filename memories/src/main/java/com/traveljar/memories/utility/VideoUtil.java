@@ -213,6 +213,7 @@ public class VideoUtil {
     }
 
     public static boolean uploadVideoOnServer(Context context, Video video){
+        Log.d(TAG, "uploading video on server");
         MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
         entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         entityBuilder.addPart("video[video_file]", new FileBody(new File(video.getDataLocalURL())));
@@ -220,8 +221,11 @@ public class VideoUtil {
         entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
         entityBuilder.addTextBody("video[latitude]", String.valueOf(video.getLatitude()));
         entityBuilder.addTextBody("video[longitude]", String.valueOf(video.getLongitude()));
+        entityBuilder.addTextBody("video[created_at]", String.valueOf(video.getCreatedAt()));
+        entityBuilder.addTextBody("video[updated_at]", String.valueOf(video.getUpdatedAt()));
 
         String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/videos";
+        Log.d(TAG, "upload Url");
         HttpPost updateProfileRequest = new HttpPost(url);
         updateProfileRequest.setEntity(entityBuilder.build());
         HttpResponse response;

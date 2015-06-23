@@ -17,12 +17,14 @@ import android.widget.Toast;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Mood;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.moods.adapters.SelectMoodsDialog;
 import com.traveljar.memories.services.GPSTracker;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
-import com.traveljar.memories.utility.MoodUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.util.ArrayList;
@@ -116,8 +118,15 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
                 .getText().toString(), moodReasonEditTxt.getText().toString(), user_id,
                 HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null, lat, longi);
 
-        MoodDataSource.createMood(newMood, this);
-        MoodUtil.uploadMood(newMood, this);
+        Long id = MoodDataSource.createMood(newMood, this);
+        newMood.setId(String.valueOf(id));
+
+        Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_MOOD, Request.REQUEST_STATUS_NOT_STARTED);
+        RequestQueueDataSource.createRequest(request, this);
+        Intent intent = new Intent(this, MakeServerRequestsService.class);
+        startService(intent);
+//        MoodUtil.uploadMood(newMood, this);
 
     }
 

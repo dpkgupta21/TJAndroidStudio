@@ -134,7 +134,8 @@ public class PictureUtilities {
             entityBuilder.addTextBody("picture[latitude]", String.valueOf(picture.getLatitude()));
             entityBuilder.addTextBody("picture[longitude]", String.valueOf(picture.getLongitude()));
             entityBuilder.addTextBody("picture[description]", picture.getCaption());
-
+            entityBuilder.addTextBody("picture[created_at]", String.valueOf(picture.getCreatedAt()));
+            entityBuilder.addTextBody("picture[updated_at]", String.valueOf(picture.getUpdatedAt()));
             String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/pictures";
             HttpPost updateProfileRequest = new HttpPost(url);
             updateProfileRequest.setEntity(entityBuilder.build());
@@ -170,7 +171,7 @@ public class PictureUtilities {
         }
     }
 
-    public static int uploadPicOnServer(Context context, final Picture picture){
+    public static boolean uploadPicOnServer(Context context, final Picture picture){
         MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
         entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         Log.d(TAG, "picture " + picture);
@@ -180,6 +181,8 @@ public class PictureUtilities {
         entityBuilder.addTextBody("picture[latitude]", String.valueOf(picture.getLatitude()));
         entityBuilder.addTextBody("picture[longitude]", String.valueOf(picture.getLongitude()));
         entityBuilder.addTextBody("picture[description]", picture.getCaption());
+        entityBuilder.addTextBody("picture[created_at]", String.valueOf(picture.getCreatedAt()));
+        entityBuilder.addTextBody("picture[updated_at]", String.valueOf(picture.getUpdatedAt()));
         String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/pictures";
         HttpPost updateProfileRequest = new HttpPost(url);
         updateProfileRequest.setEntity(entityBuilder.build());
@@ -191,10 +194,10 @@ public class PictureUtilities {
             String serverId = object.getJSONObject("picture").getString("id");
             String serverUrl = object.getJSONObject("picture").getJSONObject("picture_file").getJSONObject("original").getString("url");
             PictureDataSource.updateServerIdAndUrl(context, picture.getId(), serverId, serverUrl);
-            return 0;
+            return true;
         } catch (Exception e) {
             Log.d(TAG, "error in uploading picture" + e.getMessage());
-            return -1;
+            return false;
         }
         //parsing response received from server
     }

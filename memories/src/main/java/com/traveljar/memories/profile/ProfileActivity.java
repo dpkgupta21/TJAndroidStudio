@@ -210,10 +210,10 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
-    private class UpdateProfileAsyncTask extends AsyncTask<Map<String, String>, Void, String> {
+    private class UpdateProfileAsyncTask extends AsyncTask<Map<String, String>, Void, HttpResponse> {
 
         @Override
-        protected String doInBackground(Map<String, String>... maps) {
+        protected HttpResponse doInBackground(Map<String, String>... maps) {
             MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
             entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
             if (isProfilePicUpdated) {
@@ -240,17 +240,26 @@ public class ProfileActivity extends BaseActivity {
             try {
                 response = new DefaultHttpClient().execute(updateProfileRequest);
                 Log.d("User", "response on profile Update" + response.getStatusLine());
+                return response;
+            } catch (IOException e) {
+                Log.d("User", "error in updating profile" + e.getMessage());
+                mDialog.dismiss();
+//                Toast.makeText(ProfileActivity.this, "Unable to update Profile please try after some time", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(HttpResponse result) {
+            if (result == null) {
+                Toast.makeText(ProfileActivity.this, "Unable to update Profile please try after some time", Toast.LENGTH_SHORT).show();
+            }else {
                 mDialog.dismiss();
                 Intent intent = getIntent();
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 finish();
                 startActivity(intent);
-            } catch (IOException e) {
-                Log.d("User", "error in updating profile" + e.getMessage());
-                mDialog.dismiss();
-                Toast.makeText(ProfileActivity.this, "Unable to update Profile please try after some time", Toast.LENGTH_SHORT).show();
             }
-            return null;
         }
     }
 

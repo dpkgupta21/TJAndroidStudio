@@ -66,8 +66,8 @@ public class SideMenuDrawer extends Fragment {
         // Sliding Side Menu Drawer code
         ListView featuresListView = (ListView) rootView.findViewById(R.id.sidemenu_features_list);
         ArrayList<Map<String, String>> featuresList = new ArrayList<>();
-        Integer[] categoryIconArray = {R.drawable.timeline, R.drawable.ic_past_journeys, R.drawable.ic_gallery,
-                R.drawable.add70};
+        Integer[] categoryIconArray = {R.drawable.a16, R.drawable.a24, R.drawable.a32,
+                R.drawable.a64};
         String[] hashMapKeys = {"icon", "title"};
 
         Integer len = getResources().getStringArray(R.array.sidemenu_features_list).length;

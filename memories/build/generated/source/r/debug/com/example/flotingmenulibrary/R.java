@@ -172,22 +172,22 @@ public final class R {
 		public static final int fab_stroke_width = 0x7f06004e;
 	}
 	public static final class drawable {
-		public static final int abc_item_background_holo_dark = 0x7f02001f;
-		public static final int abc_item_background_holo_light = 0x7f020020;
-		public static final int abc_list_focused_holo = 0x7f020022;
-		public static final int abc_list_longpressed_holo = 0x7f020023;
-		public static final int abc_list_pressed_holo_dark = 0x7f020024;
-		public static final int abc_list_pressed_holo_light = 0x7f020025;
-		public static final int abc_list_selector_background_transition_holo_dark = 0x7f020026;
-		public static final int abc_list_selector_background_transition_holo_light = 0x7f020027;
-		public static final int abc_list_selector_disabled_holo_dark = 0x7f020028;
-		public static final int abc_list_selector_disabled_holo_light = 0x7f020029;
-		public static final int abc_list_selector_holo_dark = 0x7f02002a;
-		public static final int abc_list_selector_holo_light = 0x7f02002b;
-		public static final int fab_bg_mini = 0x7f020078;
-		public static final int fab_bg_normal = 0x7f020079;
-		public static final int shadow = 0x7f0200e7;
-		public static final int shadow_mini = 0x7f0200e8;
+		public static final int abc_item_background_holo_dark = 0x7f020023;
+		public static final int abc_item_background_holo_light = 0x7f020024;
+		public static final int abc_list_focused_holo = 0x7f020026;
+		public static final int abc_list_longpressed_holo = 0x7f020027;
+		public static final int abc_list_pressed_holo_dark = 0x7f020028;
+		public static final int abc_list_pressed_holo_light = 0x7f020029;
+		public static final int abc_list_selector_background_transition_holo_dark = 0x7f02002a;
+		public static final int abc_list_selector_background_transition_holo_light = 0x7f02002b;
+		public static final int abc_list_selector_disabled_holo_dark = 0x7f02002c;
+		public static final int abc_list_selector_disabled_holo_light = 0x7f02002d;
+		public static final int abc_list_selector_holo_dark = 0x7f02002e;
+		public static final int abc_list_selector_holo_light = 0x7f02002f;
+		public static final int fab_bg_mini = 0x7f02007c;
+		public static final int fab_bg_normal = 0x7f02007d;
+		public static final int shadow = 0x7f0200eb;
+		public static final int shadow_mini = 0x7f0200ec;
 	}
 	public static final class id {
 		public static final int action_bar = 0x7f0c0057;

@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
@@ -32,7 +31,7 @@ import java.util.List;
 /**
  * Created by abhi on 19/06/15.
  */
-public class CheckinDetail extends AppCompatActivity implements MemoriesUtil.OnMemoryDeleteListener{
+public class CheckinDetail extends AppCompatActivity {
     private static final String TAG = "<CheckInDetail>";
     private static final int ACTION_ITEM_DELETE = 0;
     private TextView dateBig;
@@ -172,6 +171,7 @@ public class CheckinDetail extends AppCompatActivity implements MemoriesUtil.OnM
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                MemoriesUtil.deleteMemory(CheckinDetail.this, mCheckIn.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -183,15 +183,6 @@ public class CheckinDetail extends AppCompatActivity implements MemoriesUtil.OnM
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onDeleteMemory(int resultCode) {
-        if(resultCode == 0){
-            finish();
-        }else {
-            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
         }
     }
 

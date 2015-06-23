@@ -30,6 +30,7 @@ public class Request {
     public static final int REQUEST_STATUS_NOT_STARTED = -1;
     public static final int REQUEST_STATUS_RUNNING = 0;
     public static final int REQUEST_STATUS_COMPLETED = 1;
+    public static final int REQUEST_STATUS_FAILED = 0;
 
 
     public Request(){

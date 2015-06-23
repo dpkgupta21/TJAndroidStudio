@@ -11,7 +11,6 @@ import com.traveljar.memories.models.Memories;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class MemoriesDataSource {
@@ -26,7 +25,7 @@ public class MemoriesDataSource {
         memoriesList.addAll(NoteDataSource.getAllNotesList(context, journeyId));
         memoriesList.addAll(VideoDataSource.getAllVideoMemories(context, journeyId));
         memoriesList.addAll(MoodDataSource.getMoodsFromJourney(context, journeyId));
-        Collections.sort(memoriesList);
+        //Collections.sort(memoriesList);
 
         Log.d(TAG, "total memories =" + memoriesList.size());
         return memoriesList;
@@ -37,7 +36,7 @@ public class MemoriesDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         db.delete(MySQLiteHelper.TABLE_AUDIO, MySQLiteHelper.VIDEO_COLUMN_CREATED_BY + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_CHECKIN, MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY + "=?", new String[]{userId});
-        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_CLOUMN_LONGITUDE + "=?", new String[]{userId});
+        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_COLUMN_LONGITUDE + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_CREATED_BY + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_PICTURE, MySQLiteHelper.PICTURE_COLUMN_CREATEDBY + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_VIDEO, MySQLiteHelper.VIDEO_COLUMN_CREATED_BY + "=?", new String[]{userId});
@@ -54,7 +53,6 @@ public class MemoriesDataSource {
         for(String tableName : tableNames) {
             String selectQuery = "SELECT * " + " FROM " + tableName +
                     " WHERE " + buddyColumnNames[i] + " LIKE " + "'%" + userId + "%'";
-            Log.d(TAG, "i is " + i);
             cursor = db.rawQuery(selectQuery, null);
             String buddyIds = "";
             String id;

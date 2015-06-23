@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
-import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.JourneyUtil;

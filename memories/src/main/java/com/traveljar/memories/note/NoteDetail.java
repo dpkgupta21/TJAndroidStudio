@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -28,10 +27,7 @@ import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
 
-/**
- * Created by abhi on 19/06/15.
- */
-public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemoryDeleteListener{
+public class NoteDetail extends AppCompatActivity {
     private static final String TAG = "<NoteDetail>";
     private static final int ACTION_ITEM_DELETE = 0;
     private TextView noteContent;
@@ -66,8 +62,6 @@ public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemo
 
         Bundle extras = getIntent().getExtras();
 
-        //If the activity is started for an already note
-        Log.d(TAG, "running for an already created note");
         mNote = NoteDataSource.getNote(extras.getString("NOTE_ID"), this);
         Log.d(TAG, "note fetched is" + mNote);
 
@@ -155,6 +149,7 @@ public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemo
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                MemoriesUtil.deleteMemory(NoteDetail.this, mNote.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -169,15 +164,6 @@ public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemo
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onDeleteMemory(int resultCode) {
-        if(resultCode == 0){
-            finish();
-        }else {
-            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
         }
     }
 

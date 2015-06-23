@@ -20,9 +20,11 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
-import com.traveljar.memories.utility.CheckinUtil;
+import com.traveljar.memories.models.Request;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 
@@ -122,8 +124,15 @@ public class CheckInPreview extends AppCompatActivity {
                 HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null);
 
         Log.d(TAG, "latitude -> " + newCheckIn.getLatitude() + " longitude -> " + longi + newCheckIn.getLongitude());
-        CheckinDataSource.createCheckIn(newCheckIn, this);
-        CheckinUtil.uploadCheckin(newCheckIn, this);
+        Long id = CheckinDataSource.createCheckIn(newCheckIn, this);
+        newCheckIn.setId(String.valueOf(id));
+
+        Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_CHECKIN, Request.REQUEST_STATUS_NOT_STARTED);
+        RequestQueueDataSource.createRequest(request, this);
+        Intent intent = new Intent(this, MakeServerRequestsService.class);
+        startService(intent);
+//        CheckinUtil.uploadCheckin(newCheckIn, this);
     }
 
     /**
