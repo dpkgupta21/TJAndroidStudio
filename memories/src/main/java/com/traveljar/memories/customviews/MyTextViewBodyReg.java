@@ -5,26 +5,27 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class MyTextView extends TextView {
+public class MyTextViewBodyReg extends TextView {
 
-    public MyTextView(Context context, AttributeSet attrs, int defStyle) {
+    public MyTextViewBodyReg(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
-    public MyTextView(Context context, AttributeSet attrs) {
+    public MyTextViewBodyReg(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public MyTextView(Context context) {
+    public MyTextViewBodyReg(Context context) {
         super(context);
         init();
     }
 
     private void init() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Light.ttf");
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf");
         setTypeface(tf);
+        setTextSize(14);
     }
 
 }

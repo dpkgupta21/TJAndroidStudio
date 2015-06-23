@@ -23,7 +23,7 @@
         android:text="Abhinav Mittal"
         android:textColor="@color/black"/>
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/cur_journey_buddies_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

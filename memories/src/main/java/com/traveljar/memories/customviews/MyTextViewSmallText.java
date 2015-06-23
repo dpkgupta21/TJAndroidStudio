@@ -8,19 +8,19 @@ import android.widget.TextView;
 /**
  * Created by abhi on 21/06/15.
  */
-public class MyTextViewBoldMed extends TextView {
+public class MyTextViewSmallText extends TextView {
 
-    public MyTextViewBoldMed(Context context, AttributeSet attrs, int defStyle) {
+    public MyTextViewSmallText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
-    public MyTextViewBoldMed(Context context, AttributeSet attrs) {
+    public MyTextViewSmallText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public MyTextViewBoldMed(Context context) {
+    public MyTextViewSmallText(Context context) {
         super(context);
         init();
     }
@@ -28,6 +28,7 @@ public class MyTextViewBoldMed extends TextView {
     private void init() {
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf");
         setTypeface(tf);
+        setTextSize(12);
     }
 
 }

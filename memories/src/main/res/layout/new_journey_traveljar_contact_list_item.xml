@@ -25,7 +25,7 @@
             android:text="Content not available"
             android:textSize="@dimen/tj_medium_font" />
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/all_contacts_contact_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

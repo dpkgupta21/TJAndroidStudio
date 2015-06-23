@@ -35,13 +35,13 @@
         android:background="@color/tj_red_light_text"
         android:padding="1dp">
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/gallery_audio_list_item_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date : 5 May 2014" />
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/gallery_audio_list_item_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

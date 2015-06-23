@@ -26,7 +26,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/abhi" />
 
-                <com.traveljar.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextViewBodyReg
                     android:id="@+id/journey_info_created_by"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white" />
 
-                <com.traveljar.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextViewBodyReg
                     android:id="@+id/journey_info_journey_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:id="@+id/buddies_layout"
                 >
 
-                <com.traveljar.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextViewBodyReg
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PARTICIPANTS"
@@ -68,7 +68,7 @@
                     android:textSize="16sp"
                     android:textColor="@color/tj_red_light_text"/>
 
-                <com.traveljar.memories.customviews.MyTextView
+                <com.traveljar.memories.customviews.MyTextViewBodyReg
                     android:id="@+id/journey_info_buddies_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

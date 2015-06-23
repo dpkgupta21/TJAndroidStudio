@@ -17,7 +17,7 @@
             android:layout_height="100dp"
             android:src="@drawable/audio_wave" />
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/timerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

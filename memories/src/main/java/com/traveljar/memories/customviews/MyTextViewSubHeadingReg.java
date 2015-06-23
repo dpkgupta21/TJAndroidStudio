@@ -8,26 +8,27 @@ import android.widget.TextView;
 /**
  * Created by abhi on 21/06/15.
  */
-public class MyTextViewItalic extends TextView {
+public class MyTextViewSubHeadingReg extends TextView {
 
-    public MyTextViewItalic(Context context, AttributeSet attrs, int defStyle) {
+    public MyTextViewSubHeadingReg(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
-    public MyTextViewItalic(Context context, AttributeSet attrs) {
+    public MyTextViewSubHeadingReg(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public MyTextViewItalic(Context context) {
+    public MyTextViewSubHeadingReg(Context context) {
         super(context);
         init();
     }
 
     private void init() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-LightItalic.ttf");
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf");
         setTypeface(tf);
+        setTextSize(16);
     }
 
 }

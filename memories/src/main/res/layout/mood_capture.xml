@@ -7,7 +7,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/noFriendsSelected"
         android:gravity="center"
         android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
         android:onClick="selectFriends"
         android:src="@drawable/gumnaam_profile_image" />
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/mood_text_select_friend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,14 +44,14 @@
         android:onClick="selectMood"
         android:src="@drawable/boss" />
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/mood_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Excited"
         android:textSize="@dimen/tj_medium_font" />
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/mood_text_because_of"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

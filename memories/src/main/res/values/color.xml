@@ -27,6 +27,9 @@
     <!-- old ones-->
     <color name="tj_purple">#912CEE</color>
     <color name="tj_orange">#FFA31A</color>
+    <color name="tj_orange_dark">#ff9900</color>
+    <color name="tj_orange_dark2">#f1960f</color>
+
     <color name="tj_green">#16A085</color>
 
     <color name="tj_yellow">#FF9900</color>
