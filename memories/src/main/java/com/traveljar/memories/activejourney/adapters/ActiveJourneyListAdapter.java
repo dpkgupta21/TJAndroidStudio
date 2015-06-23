@@ -130,7 +130,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         // In Recycler views OnItemCLick is handled here
         @Override
         public void onClick(View v) {
-            mDialog.setMessage("Please wait while we are fetching your journey from server");
+            mDialog.setMessage("Please wait, fetching memories!");
             mDialog.show();
             Log.d(TAG, getAdapterPosition() + "===" + getLayoutPosition());
             Journey journey = mDataset.get(getLayoutPosition());

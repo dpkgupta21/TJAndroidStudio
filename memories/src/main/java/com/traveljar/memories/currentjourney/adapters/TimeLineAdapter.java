@@ -142,12 +142,20 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     convertView = mInflater.inflate(R.layout.timeline_list_checkin_item, null);
                     holder.timelineItemCaption = (TextView) convertView
                             .findViewById(R.id.timelineItemCaption);
+                    holder.timelineItemCheckinPlace = (TextView) convertView.findViewById(R.id.timelineItemCheckinPlace);
                     break;
 
                 case HelpMe.TYPE_MOOD:
                     convertView = mInflater.inflate(R.layout.timeline_list_mood_item, null);
                     holder.timelineItemCaption = (TextView) convertView
                             .findViewById(R.id.timelineItemCaption);
+                    holder.timelineItemMoodBuddyImage1 = (ImageView) convertView.findViewById(R.id.timelineItemMoodBuddyPic1);
+                    holder.timelineItemMoodBuddyImage2 = (ImageView) convertView.findViewById(R.id.timelineItemMoodBuddyPic2);
+                    holder.timelineItemMoodBuddyImage3 = (ImageView) convertView.findViewById(R.id.timelineItemMoodBuddyPic3);
+                    holder.timelineItemMoodBuddyImage4 = (ImageView) convertView.findViewById(R.id.timelineItemMoodBuddyPic4);
+                    holder.timelineItemMoodiconTxt = (TextView) convertView.findViewById(R.id.timelineItemMoodIconTxt);
+                    holder.timelineItemMoodicon = (ImageView) convertView.findViewById(R.id.timelineItemMoodIcon);
+                    holder.timelineItemMoodExtraBuddyTxt = (TextView) convertView.findViewById(R.id.timelineItemMoodExtraBuddyTxt);
                     break;
 
             }
@@ -177,7 +185,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                 Memories mem = memoriesList.get(position);
                 String likeId = mem.isMemoryLikedByCurrentUser(context);// Check if memory liked by current user
                 Like like;
-                if(likeId == null){
+                if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "memory is not already liked so liking it");
                     like = new Like(null, null, mem.getjId(), mem.getIdOnServer(), TJPreferences.getUserId(context), mem.getMemType());
@@ -185,7 +193,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     mem.getLikes().add(like);
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                     MemoriesUtil.likeMemory(context, like);
-                }else {
+                } else {
                     // If already liked, delete from local database, delete from server
                     Log.d(TAG, "memory is not already liked so removing the like");
                     like = mem.getLikeById(likeId);
@@ -195,36 +203,6 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     MemoriesUtil.unlikeMemory(context, like);
                 }
                 holder.timelineNoLikesTxt.setText(String.valueOf(mem.getLikes().size()));
-
-
-/*                List<String> list = null;
-                Log.d(TAG, "list is " + list);
-                Log.d(TAG, "Memory liked by" + mem.getLikedBy());
-                // check whether the memory has been liked by the user
-
-                List<String> likedBy = mem.getLikedBy();
-                if (likedBy == null) {
-                    likedBy = new ArrayList();
-                }
-                if (likedBy.contains(TJPreferences.getUserId(context))) {
-                    likedBy.remove(TJPreferences.getUserId(context));
-                    Log.d(TAG, "heart empty");
-                    holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    Like like = new Like(null, null, mem.getjId(), mem.getIdOnServer(), TJPreferences.getUserId(context), mem.getMemType());
-                    MemoriesUtil.unlikeMemory(context, like);
-                } else {
-                    likedBy.add(TJPreferences.getUserId(context));
-                    Log.d(TAG, "heart full");
-                    holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                }
-
-                // update the value in the list and database
-                holder.timelineNoLikesTxt.setText(String.valueOf(likedBy.size()));
-                if (likedBy.size() == 0) {
-                    likedBy = null;
-                }
-                mem.setLikedBy(likedBy);
-                mem.updateLikedBy(context, mem.getId(), likedBy);*/
             }
         });
 
@@ -254,17 +232,6 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         //set the favourites count
         holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikes().size()));
         holder.timelineItemFavBtn.setImageResource(memory.isMemoryLikedByCurrentUser(context) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
-/*        if (memory.getLikes() == null) {
-            holder.timelineNoLikesTxt.setText("0");
-            holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-        } else {
-            holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikedBy().size()));
-            if (memory.getLikedBy().contains(TJPreferences.getUserId(context))) {
-                holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-            } else {
-                holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-            }
-        }*/
 
         Log.d(TAG, "3.2");
 
@@ -326,34 +293,56 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
             case 4:
                 Log.d(TAG, "in checkin");
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
-                String checkInStatus = checkin.getCaption() + " @ " + checkin.getCheckInPlaceName();
-                if (checkin.getCheckInWith() != null && checkin.getCheckInWith().size() > 0) {
-                    Contact firstContact = ContactDataSource.getContactById(context, checkin.getCheckInWith().get(0));
-                    if (firstContact != null) {
-                        if (checkin.getCheckInWith().size() == 1) {
-                            checkInStatus += " with " + firstContact.getName();
-                        } else if (checkin.getCheckInWith().size() > 1) {
-                            checkInStatus += " with " + firstContact.getName() + " and " + (checkin.getCheckInWith().size() - 1) + " others";
-                        }
-                    }
-                }
-                holder.timelineItemCaption.setText(checkInStatus);
+                holder.timelineItemCaption.setText(checkin.getCaption());
+                holder.timelineItemCheckinPlace.setText(checkin.getCheckInPlaceName());
                 break;
 
             case 5:
                 Log.d(TAG, "in mood");
                 Mood mood = (Mood) memoriesList.get(position);
-                String friendMood = "";
-                Contact fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(0));
-                if (fContact != null) {
-                    if (mood.getBuddyIds().size() == 1) {
-                        friendMood += fContact.getName();
-                    } else if (mood.getBuddyIds().size() > 1) {
-                        friendMood += fContact.getName() + " and " + (mood.getBuddyIds().size() - 1) + " others";
+
+                int buddyCount = mood.getBuddyIds().size();
+                Contact fContact;
+                for (int i = 0; i<buddyCount; i++){
+
+                    switch (i){
+                        case 0: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
+                            holder.timelineItemMoodBuddyImage1.setVisibility(View.VISIBLE);
+                            holder.timelineItemMoodBuddyImage1.setImageBitmap(BitmapFactory.decodeFile(fContact
+                                    .getPicLocalUrl()));
+                            break;
+
+                        case 1: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
+                            holder.timelineItemMoodBuddyImage2.setVisibility(View.VISIBLE);
+                            holder.timelineItemMoodBuddyImage2.setImageBitmap(BitmapFactory.decodeFile(fContact
+                                    .getPicLocalUrl()));
+                            break;
+
+                        case 2: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
+                            holder.timelineItemMoodBuddyImage3.setVisibility(View.VISIBLE);
+                            holder.timelineItemMoodBuddyImage3.setImageBitmap(BitmapFactory.decodeFile(fContact
+                                    .getPicLocalUrl()));
+                            break;
+
+                        case 3: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
+                            holder.timelineItemMoodBuddyImage4.setVisibility(View.VISIBLE);
+                            holder.timelineItemMoodBuddyImage4.setImageBitmap(BitmapFactory.decodeFile(fContact
+                                    .getPicLocalUrl()));
+                            break;
+
+                        default: Log.d(TAG, "more than 3 poepl ein mood");
+                            holder.timelineItemMoodExtraBuddyTxt.setVisibility(View.VISIBLE);
+                            break;
                     }
+
                 }
-                friendMood += " feeling " + mood.getMood() + " because " + mood.getReason();
-                holder.timelineItemCaption.setText(friendMood);
+
+                holder.timelineItemMoodiconTxt.setText(mood.getMood());
+                holder.timelineItemCaption.setText(mood.getReason());
+                int resourceId = context.getResources().getIdentifier(mood.getMood(), "drawable",
+                        context.getPackageName());
+                holder.timelineItemMoodicon.setImageResource(resourceId);
+                holder.timelineItemMoodExtraBuddyTxt.setText("and " + (buddyCount - 4) + " others");
 
             default:
                 break;
@@ -421,5 +410,15 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         public ImageView timeLineProfileImg;
         public TextView timelineNoLikesTxt;
         public TextView timelineItemUserName;
+        public TextView timelineItemCheckinPlace;
+
+        // Mood
+        public ImageView timelineItemMoodBuddyImage1;
+        public ImageView timelineItemMoodBuddyImage2;
+        public ImageView timelineItemMoodBuddyImage3;
+        public ImageView timelineItemMoodBuddyImage4;
+        public ImageView timelineItemMoodicon;
+        public TextView timelineItemMoodiconTxt;
+        public TextView timelineItemMoodExtraBuddyTxt;
     }
 }

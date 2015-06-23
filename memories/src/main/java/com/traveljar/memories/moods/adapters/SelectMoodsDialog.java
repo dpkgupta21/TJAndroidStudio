@@ -50,7 +50,7 @@ public class SelectMoodsDialog extends DialogFragment {
             "shame",
             "smile",
             "spiderman",
-            "waaahht!",
+            "waaaht",
 
     };
     private int[] emoticonIds = new int[]{R.drawable.angry, R.drawable.after_boom,

@@ -89,7 +89,6 @@ public class TimelineFragment extends Fragment {
                 Log.d(TAG, "FAB expanded");
                 baseActivityContentOverlay.setBackgroundColor(getResources().getColor(
                         R.color.black_semi_transparent));
-
             }
 
             @Override
@@ -111,9 +110,6 @@ public class TimelineFragment extends Fragment {
                 return false;
             }
         });
-
-        // Weather api testing
-
     }
 
     // Method overridden so that if a new activity is called and Fab menu is opened, it will be closed

@@ -4,7 +4,10 @@
     android:layout_height="wrap_content"
     android:background="@drawable/list_selector"
     android:orientation="horizontal"
-    android:padding="15dp">
+    android:paddingTop="7dp"
+    android:paddingLeft="10dp"
+    android:paddingBottom="7dp"
+    android:paddingRight="10dp">
 
     <ImageView
         android:id="@+id/side_menu_cloud_icon"
@@ -24,4 +27,4 @@
         android:textColor="@color/black"
         android:textSize="16sp" />
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/side_menu_drawer_item.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/side_menu_drawer_item.xml -->
