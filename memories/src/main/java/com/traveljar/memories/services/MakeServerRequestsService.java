@@ -40,9 +40,20 @@ public class MakeServerRequestsService extends IntentService  {
                 case Request.CATEGORY_TYPE_NOTE :
                 case Request.CATEGORY_TYPE_PICTURE :
                     Picture picture = PictureDataSource.getPictureById(this, request.getLocalId());
-                    int result = PictureUtilities.uploadPicOnServer(this, picture);
-                    if(result == 0)
-                        RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_COMPLETED);
+                    switch (request.getOperationType()) {
+                        case Request.OPERATION_TYPE_CREATE:
+                            int result = PictureUtilities.uploadPicOnServer(this, picture);
+                            if (result == 0)
+                                RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_COMPLETED);
+                            break;
+
+                        case Request.OPERATION_TYPE_LIKE:
+                            break;
+
+                        case Request.OPERATION_TYPE_UNLIKE:
+                            break;
+
+                    }
                 case Request.CATEGORY_TYPE_VIDEO :
             }
         }

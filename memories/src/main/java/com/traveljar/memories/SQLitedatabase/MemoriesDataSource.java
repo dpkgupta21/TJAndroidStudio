@@ -32,6 +32,7 @@ public class MemoriesDataSource {
         return memoriesList;
     }
 
+
     public static void deleteAllMemoriesCreatedByUser(Context context, String userId){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         db.delete(MySQLiteHelper.TABLE_AUDIO, MySQLiteHelper.VIDEO_COLUMN_CREATED_BY + "=?", new String[]{userId});
@@ -49,10 +50,12 @@ public class MemoriesDataSource {
         String [] buddyColumnNames = new String[]{MySQLiteHelper.CHECKIN_COLUMN_WITH, MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID};
         String [] columnIdNames = new String[]{MySQLiteHelper.CHECKIN_COLUMN_ID, MySQLiteHelper.MOOD_COLUMN_ID};
         int i = 0;
+        Cursor cursor;
         for(String tableName : tableNames) {
             String selectQuery = "SELECT * " + " FROM " + tableName +
-                    " WHERE " + buddyColumnNames[i] + " LIKE " + "%" + userId + "%";
-            Cursor cursor = db.rawQuery(selectQuery, null);
+                    " WHERE " + buddyColumnNames[i] + " LIKE " + "'%" + userId + "%'";
+            Log.d(TAG, "i is " + i);
+            cursor = db.rawQuery(selectQuery, null);
             String buddyIds = "";
             String id;
             if (cursor.moveToFirst()) {
@@ -70,6 +73,7 @@ public class MemoriesDataSource {
                     values.put(buddyColumnNames[i], buddyIds);
                     db.update(tableName, values, columnIdNames[i] + " = " + id, null);
                 }while (cursor.moveToNext());
+                cursor.close();
 
             }
             Log.d(TAG, "existing contact for journey " + buddyIds);
