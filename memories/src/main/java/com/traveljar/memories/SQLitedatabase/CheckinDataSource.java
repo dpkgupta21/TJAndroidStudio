@@ -150,7 +150,7 @@ public class CheckinDataSource {
                         .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT)));
                 /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
                 checkin.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-                checkin.setLikes(LikeDataSource.getLikeIdsForMemory(context, checkin.getIdOnServer()));
+                checkin.setLikes(LikeDataSource.getLikesForMemory(context, checkin.getIdOnServer()));
 
                 checkin.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE)));
                 checkin.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE)));

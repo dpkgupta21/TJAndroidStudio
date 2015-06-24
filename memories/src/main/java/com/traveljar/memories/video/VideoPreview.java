@@ -162,10 +162,15 @@ public class VideoPreview extends AppCompatActivity {
         long id = VideoDataSource.createVideo(mVideo, this);
         mVideo.setId(String.valueOf(id));
         Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
-                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_VIDEO, Request.REQUEST_STATUS_NOT_STARTED);
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_VIDEO, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, this);
-        Intent intent = new Intent(this, MakeServerRequestsService.class);
-        startService(intent);
+        if(HelpMe.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, MakeServerRequestsService.class);
+            startService(intent);
+        }
+        else{
+            Log.d(TAG, "since no network not starting service RQ");
+        }
     }
 
     @Override

@@ -122,11 +122,15 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         newMood.setId(String.valueOf(id));
 
         Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
-                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_MOOD, Request.REQUEST_STATUS_NOT_STARTED);
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_MOOD, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, this);
-        Intent intent = new Intent(this, MakeServerRequestsService.class);
-        startService(intent);
-//        MoodUtil.uploadMood(newMood, this);
+        if(HelpMe.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, MakeServerRequestsService.class);
+            startService(intent);
+        }
+        else{
+            Log.d(TAG, "since no network not starting service RQ");
+        }
 
     }
 

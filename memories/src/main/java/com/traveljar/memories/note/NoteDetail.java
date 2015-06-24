@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Note;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
@@ -111,20 +111,16 @@ public class NoteDetail extends AppCompatActivity {
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "note is not already liked so liking it");
-                    like = new Like(null, null, mNote.getjId(), mNote.getIdOnServer(), TJPreferences.getUserId(NoteDetail.this), mNote.getMemType());
-                    like.setId(String.valueOf(LikeDataSource.createLike(like, NoteDetail.this)));
+                    like = MemoriesUtil.createLikeRequest(mNote.getId(), Request.CATEGORY_TYPE_NOTE, NoteDetail.this);
                     mNote.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                    Log.d(TAG, "memory_id = " + like.getMemorableId());
-                    MemoriesUtil.likeMemory(NoteDetail.this, like);
                 } else {
                     // If already liked, delete from local database, delete from server
-                    Log.d(TAG, "Note is already liked so removing the like");
+                    Log.d(TAG, "note is not already liked so removing the like");
                     like = mNote.getLikeById(likeId);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    LikeDataSource.deleteLike(NoteDetail.this, like);
                     mNote.getLikes().remove(like);
-                    MemoriesUtil.unlikeMemory(NoteDetail.this, like);
+                    MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_NOTE, NoteDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mNote.getLikes().size()));
             }

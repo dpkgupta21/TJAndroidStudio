@@ -6,11 +6,12 @@ package com.traveljar.memories.models;
 public class Request {
 
     private String id;
-    private String localId;
+    private String objectLocalId;
     private String journeyId;
     private int operationType;
     private int categoryType;
     private int requestStatus;
+    private int noOfAttempts;
 
 
     public static final int OPERATION_TYPE_CREATE = 0;
@@ -33,17 +34,27 @@ public class Request {
     public static final int REQUEST_STATUS_FAILED = 0;
 
 
-    public Request(){
+    public Request() {
 
     }
 
-    public Request(String id, String localId, String journeyId, int operationType, int categoryType, int requestStatus) {
+    public int getNoOfAttempts() {
+        return noOfAttempts;
+    }
+
+    public void setNoOfAttempts(int noOfAttempts) {
+        this.noOfAttempts = noOfAttempts;
+    }
+
+    public Request(String id, String objectLocalId, String journeyId, int operationType, int categoryType, int requestStatus, int noOfAttempts) {
         this.id = id;
-        this.localId = localId;
+        this.objectLocalId = objectLocalId;
         this.journeyId = journeyId;
         this.operationType = operationType;
         this.categoryType = categoryType;
         this.requestStatus = requestStatus;
+        this.noOfAttempts = noOfAttempts;
+
     }
 
     public String getId() {
@@ -54,12 +65,12 @@ public class Request {
         this.id = id;
     }
 
-    public String getLocalId() {
-        return localId;
+    public String getObjectLocalId() {
+        return objectLocalId;
     }
 
-    public void setLocalId(String localId) {
-        this.localId = localId;
+    public void setObjectLocalId(String objectLocalId) {
+        this.objectLocalId = objectLocalId;
     }
 
     public String getJourneyId() {
@@ -92,6 +103,23 @@ public class Request {
 
     public void setRequestStatus(int requestStatus) {
         this.requestStatus = requestStatus;
+    }
+
+    // Returns the category code for a particular memory
+    public static int getCategoryTypeFromMemory(Memories memory){
+        if(memory instanceof Audio)
+            return CATEGORY_TYPE_AUDIO;
+        if(memory instanceof CheckIn)
+            return CATEGORY_TYPE_CHECKIN;
+        if(memory instanceof Mood)
+            return CATEGORY_TYPE_MOOD;
+        if(memory instanceof Note)
+            return CATEGORY_TYPE_NOTE;
+        if(memory instanceof Picture)
+            return CATEGORY_TYPE_PICTURE;
+        if(memory instanceof Video)
+            return CATEGORY_TYPE_VIDEO;
+        return 0;
     }
 
 }

@@ -6,11 +6,11 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/new_journey_location_list_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bangalore"
         android:textSize="@dimen/tj_medium_font" />
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/new_journey_location_list_item.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/new_journey_location_list_item.xml -->

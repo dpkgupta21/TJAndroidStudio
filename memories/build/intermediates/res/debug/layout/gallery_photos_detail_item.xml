@@ -6,7 +6,7 @@
     android:background="@color/black"
     android:paddingTop="20dp">
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/imageTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,4 +34,4 @@
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"/>
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/gallery_photos_detail_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/gallery_photos_detail_item.xml -->

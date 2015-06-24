@@ -188,7 +188,7 @@ public class VideoDataSource {
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LONGITUDE)));
 /*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
             video.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-            video.setLikes(LikeDataSource.getLikeIdsForMemory(context, video.getIdOnServer()));
+            video.setLikes(LikeDataSource.getLikesForMemory(context, video.getIdOnServer()));
             video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();
@@ -230,7 +230,7 @@ public class VideoDataSource {
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LONGITUDE)));
 /*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
             video.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-            video.setLikes(LikeDataSource.getLikeIdsForMemory(context, video.getIdOnServer()));
+            video.setLikes(LikeDataSource.getLikesForMemory(context, video.getIdOnServer()));
             video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();

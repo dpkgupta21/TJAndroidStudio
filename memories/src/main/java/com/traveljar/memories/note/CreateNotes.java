@@ -63,11 +63,15 @@ public class CreateNotes extends AppCompatActivity {
         note.setId(String.valueOf(id));
 
         Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
-                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_NOTE, Request.REQUEST_STATUS_NOT_STARTED);
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_NOTE, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, this);
-        Intent intent = new Intent(this, MakeServerRequestsService.class);
-        startService(intent);
-//        NotesUtil.uploadNotes(note, this);
+        if(HelpMe.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, MakeServerRequestsService.class);
+            startService(intent);
+        }
+        else{
+            Log.d(TAG, "since no network not starting service RQ");
+        }
 
     }
 

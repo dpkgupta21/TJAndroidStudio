@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
+import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
@@ -13,6 +14,7 @@ import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
+import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
@@ -20,6 +22,8 @@ import com.traveljar.memories.models.Request;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.utility.AudioUtil;
 import com.traveljar.memories.utility.CheckinUtil;
+import com.traveljar.memories.utility.HelpMe;
+import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.MoodUtil;
 import com.traveljar.memories.utility.NotesUtil;
 import com.traveljar.memories.utility.PictureUtilities;
@@ -28,9 +32,10 @@ import com.traveljar.memories.utility.VideoUtil;
 /**
  * Created by ankit on 22/6/15.
  */
-public class MakeServerRequestsService extends IntentService  {
+public class MakeServerRequestsService extends IntentService {
 
     private Request request;
+    private int reqTotalCount;
     private int noRequestTry = 0;
 
     private static final String TAG = "<ServerRequestService>";
@@ -46,190 +51,237 @@ public class MakeServerRequestsService extends IntentService  {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "service started");
-        request = RequestQueueDataSource.getFirstNonCompletedRequest(this);
+
+
         noRequestTry = 0;
         int i = 0;
-        boolean result;
+        boolean result = false;
 
-        do{
-            if(request == null){
-                if(RequestQueueDataSource.getFailedRequestsCount(this) != 0){
-                    // make all the finished requests as not completed
-                    RequestQueueDataSource.updateStatusOfAllFailedRequests(this);
-                }//else no action
+        while (HelpMe.isNetworkAvailable(this)) {
 
-            }else {
-                switch (request.getCategoryType()){
-                    case Request.CATEGORY_TYPE_AUDIO :
-                        for(i = 1; i <= 3; i++){
-                            result = audioRequests(request);
-                            if(result){
-                                break;
-                            }
-                        }
-                        break;
-
-                    case Request.CATEGORY_TYPE_CHECKIN :
-                        for(i = 1; i <= 3; i++) {
-                            result = checkInRequests(request);
-                            if(result){
-                                break;
-                            }
-                        }
-                        break;
-
-                    case Request.CATEGORY_TYPE_MOOD :
-                        for(i = 1; i <= 3; i++) {
-                            result = moodRequests(request);
-                            if(result){
-                                break;
-                            }
-                        }
-                        break;
-
-                    case Request.CATEGORY_TYPE_NOTE :
-                        for(i = 1; i <= 3; i++) {
-                            result = noteRequests(request);
-                            if(result){
-                                break;
-                            }
-                        }
-                        break;
-
-                    case Request.CATEGORY_TYPE_PICTURE :
-                        for(i = 1; i <= 3; i++) {
-                            result = pictureRequests(request);
-                            if(result){
-                                break;
-                            }
-                        }
-                        break;
-
-                    case Request.CATEGORY_TYPE_VIDEO :
-                        for(i = 1; i <= 3; i++) {
-                            result = videoRequests(request);
-                            if(result){
-                                break;
-                            }
-                        }
-                        break;
-                }
-                RequestQueueDataSource.updateRequestStatus(this, request.getId(), i == 3 ? Request.REQUEST_STATUS_FAILED :
-                        Request.REQUEST_STATUS_COMPLETED);
-                request = RequestQueueDataSource.getFirstNonCompletedRequest(this);
+            // Check if any requests are there in RQ, otherwise break
+            reqTotalCount = RequestQueueDataSource.getTotalRequestsCount(this);
+            if (reqTotalCount < 1) {
+                break;
             }
-        }while (request != null && RequestQueueDataSource.getFailedRequestsCount(this) != 0);
-    }
+            Log.d(TAG, "totalReqCount = " + reqTotalCount);
+            request = RequestQueueDataSource.getFirstNonCompletedRequest(this);
 
-    public boolean audioRequests(Request request){
-        switch (request.getOperationType()) {
-            case Request.OPERATION_TYPE_CREATE:
-                Audio audio = AudioDataSource.getAudioById(this, request.getLocalId());
-                boolean result = AudioUtil.uploadAudioOnServer(this, audio);
-                if (result)
-                    RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_COMPLETED);
-                break;
-
-            case Request.OPERATION_TYPE_LIKE:
-
-                break;
-
-            case Request.OPERATION_TYPE_UNLIKE:
-                break;
-
+            if (request != null) {
+                Log.d(TAG, "request = " + request.getCategoryType() + " retotacount " + reqTotalCount);
+                // Increment all requests no of attempts to keep track for failure
+                RequestQueueDataSource.incrementRequestNoOfAttempts(request, this);
+                result = parseRequest(request);
+            } else {
+                if (RequestQueueDataSource.getFailedRequestsCount(this) != 0) {
+                    request = RequestQueueDataSource.getFirstFailedRequest(this);
+                    result = parseRequest(request);
+                }//else no action
+                else {
+                    Log.d(TAG, "No more requests to serve!!");
+                    break;
+                }
+            }
         }
-        return false;
+
     }
 
-    public boolean checkInRequests(Request request){
-        switch (request.getOperationType()) {
-            case Request.OPERATION_TYPE_CREATE:
-                CheckIn checkIn = CheckinDataSource.getCheckInById(request.getLocalId(), this);
-                boolean result = CheckinUtil.uploadCheckInOnServer(this, checkIn);
-                if (result)
-                    RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_COMPLETED);
+    public boolean parseRequest(Request request) {
+        Boolean result = false;
+        switch (request.getCategoryType()) {
+            case Request.CATEGORY_TYPE_AUDIO:
+                Log.d(TAG, "serving audio request");
+                result = audioRequests(request);
                 break;
 
-            case Request.OPERATION_TYPE_LIKE:
+            case Request.CATEGORY_TYPE_CHECKIN:
+                Log.d(TAG, "serving checkin request");
+                result = checkInRequests(request);
                 break;
 
-            case Request.OPERATION_TYPE_UNLIKE:
+            case Request.CATEGORY_TYPE_MOOD:
+                Log.d(TAG, "serving mood request");
+                result = moodRequests(request);
                 break;
 
-        }
-        return false;
-    }
+            case Request.CATEGORY_TYPE_NOTE:
 
-    public boolean moodRequests(Request request){
-        switch (request.getOperationType()) {
-            case Request.OPERATION_TYPE_CREATE:
-                Mood mood = MoodDataSource.getMoodById(request.getLocalId(), this);
-                boolean result = MoodUtil.uploadMoodOnServer(this, mood);
-                if (result)
-                    RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_COMPLETED);
+                Log.d(TAG, "serving note request");
+                result = noteRequests(request);
                 break;
 
-            case Request.OPERATION_TYPE_LIKE:
+            case Request.CATEGORY_TYPE_PICTURE:
+                Log.d(TAG, "serving picture request");
+                result = pictureRequests(request);
                 break;
 
-            case Request.OPERATION_TYPE_UNLIKE:
-                break;
-
-        }
-        return false;
-    }
-
-    public boolean noteRequests(Request request){
-        switch (request.getOperationType()) {
-            case Request.OPERATION_TYPE_CREATE:
-                Note note = NoteDataSource.getNote(request.getLocalId(), this);
-                boolean result = NotesUtil.uploadNoteOnServer(this, note);
-                if (result)
-                    RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_COMPLETED);
-                break;
-
-            case Request.OPERATION_TYPE_LIKE:
-                break;
-
-            case Request.OPERATION_TYPE_UNLIKE:
-                break;
-
-        }
-        return false;
-    }
-
-    public boolean pictureRequests(Request request){
-        switch (request.getOperationType()) {
-            case Request.OPERATION_TYPE_CREATE:
-                Picture picture = PictureDataSource.getPictureById(this, request.getLocalId());
-                boolean result = PictureUtilities.uploadPicOnServer(this, picture);
-                if (result)
-                    RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_COMPLETED);
-                return result;
-            case Request.OPERATION_TYPE_LIKE:
-                break;
-
-            case Request.OPERATION_TYPE_UNLIKE:
+            case Request.CATEGORY_TYPE_VIDEO:
+                Log.d(TAG, "serving video request");
+                result = videoRequests(request);
                 break;
         }
-        return false;
+
+        if (result) {
+            RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_COMPLETED);
+        }
+
+        if (request.getNoOfAttempts() == 3) {
+            RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_FAILED);
+            //RequestQueueDataSource.updateSubsequentRequestsToHold();
+        }
+
+        return result;
     }
 
-    public boolean videoRequests(Request request){
+    public boolean audioRequests(Request request) {
+        Audio audio;
+        boolean result;
+        Like like;
         switch (request.getOperationType()) {
             case Request.OPERATION_TYPE_CREATE:
-                Video video = VideoDataSource.getVideoById(request.getLocalId(), this);
-                boolean result = VideoUtil.uploadVideoOnServer(this, video);
-                if (result)
-                    RequestQueueDataSource.updateRequestStatus(this, request.getId(), Request.REQUEST_STATUS_COMPLETED);
+                audio = AudioDataSource.getAudioById(this, request.getObjectLocalId());
+                result = AudioUtil.uploadAudioOnServer(this, audio);
                 return result;
 
             case Request.OPERATION_TYPE_LIKE:
-                break;
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                audio = AudioDataSource.getAudioById(this, like.getMemorableId());
+                like.setMemorableId(audio.getIdOnServer());
+                return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:
-                break;
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                audio = AudioDataSource.getAudioById(this, like.getMemorableId());
+                like.setMemorableId(audio.getIdOnServer());
+                return MemoriesUtil.unlikeMemoryOnServer(this, like);
 
+        }
+        return false;
+    }
+
+    public boolean checkInRequests(Request request) {
+        CheckIn checkIn;
+        boolean result;
+        Like like;
+        switch (request.getOperationType()) {
+            case Request.OPERATION_TYPE_CREATE:
+                checkIn = CheckinDataSource.getCheckInById(request.getObjectLocalId(), this);
+                result = CheckinUtil.uploadCheckInOnServer(this, checkIn);
+                return result;
+
+            case Request.OPERATION_TYPE_LIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                checkIn = CheckinDataSource.getCheckInById(like.getMemorableId(), this);
+                like.setMemorableId(checkIn.getIdOnServer());
+                return MemoriesUtil.likeMemoryOnServer(this, like);
+
+            case Request.OPERATION_TYPE_UNLIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                checkIn = CheckinDataSource.getCheckInById(like.getMemorableId(), this);
+                like.setMemorableId(checkIn.getIdOnServer());
+                return MemoriesUtil.unlikeMemoryOnServer(this, like);
+
+        }
+        return false;
+    }
+
+    public boolean moodRequests(Request request) {
+        Mood mood;
+        boolean result;
+        Like like;
+        switch (request.getOperationType()) {
+            case Request.OPERATION_TYPE_CREATE:
+                mood = MoodDataSource.getMoodById(request.getObjectLocalId(), this);
+                result = MoodUtil.uploadMoodOnServer(this, mood);
+                return result;
+
+            case Request.OPERATION_TYPE_LIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                mood = MoodDataSource.getMoodById(like.getMemorableId(), this);
+                like.setMemorableId(mood.getIdOnServer());
+                return MemoriesUtil.likeMemoryOnServer(this, like);
+
+            case Request.OPERATION_TYPE_UNLIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                mood = MoodDataSource.getMoodById(like.getMemorableId(), this);
+                like.setMemorableId(mood.getIdOnServer());
+                return MemoriesUtil.unlikeMemoryOnServer(this, like);
+
+        }
+        return false;
+    }
+
+    public boolean noteRequests(Request request) {
+        Note note;
+        boolean result;
+        Like like;
+        switch (request.getOperationType()) {
+            case Request.OPERATION_TYPE_CREATE:
+                note = NoteDataSource.getNote(request.getObjectLocalId(), this);
+                result = NotesUtil.uploadNoteOnServer(this, note);
+                return result;
+
+            case Request.OPERATION_TYPE_LIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                note = NoteDataSource.getNote(like.getMemorableId(), this);
+                like.setMemorableId(note.getIdOnServer());
+                return MemoriesUtil.likeMemoryOnServer(this, like);
+
+            case Request.OPERATION_TYPE_UNLIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                note = NoteDataSource.getNote(like.getMemorableId(), this);
+                like.setMemorableId(note.getIdOnServer());
+                return MemoriesUtil.unlikeMemoryOnServer(this, like);
+
+        }
+        return false;
+    }
+
+    public boolean pictureRequests(Request request) {
+        Picture picture;
+        boolean result;
+        Like like;
+        switch (request.getOperationType()) {
+            case Request.OPERATION_TYPE_CREATE:
+                picture = PictureDataSource.getPictureById(this, request.getObjectLocalId());
+                result = PictureUtilities.uploadPicOnServer(this, picture);
+                return result;
+            case Request.OPERATION_TYPE_LIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                picture = PictureDataSource.getPictureById(this, like.getMemorableId());
+                like.setMemorableId(picture.getIdOnServer());
+                return MemoriesUtil.likeMemoryOnServer(this, like);
+
+            case Request.OPERATION_TYPE_UNLIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                picture = PictureDataSource.getPictureById(this, like.getMemorableId());
+                like.setMemorableId(picture.getIdOnServer());
+                return MemoriesUtil.unlikeMemoryOnServer(this, like);
+        }
+        return false;
+    }
+
+    public boolean videoRequests(Request request) {
+        Video video;
+        boolean result;
+        Like like;
+        switch (request.getOperationType()) {
+            case Request.OPERATION_TYPE_CREATE:
+                video = VideoDataSource.getVideoById(request.getObjectLocalId(), this);
+                result = VideoUtil.uploadVideoOnServer(this, video);
+                return result;
+
+            case Request.OPERATION_TYPE_LIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                video = VideoDataSource.getVideoById(like.getMemorableId(), this);
+                like.setMemorableId(video.getIdOnServer());
+                return MemoriesUtil.likeMemoryOnServer(this, like);
+
+            case Request.OPERATION_TYPE_UNLIKE:
+                like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
+                video = VideoDataSource.getVideoById(like.getMemorableId(), this);
+                like.setMemorableId(video.getIdOnServer());
+                return MemoriesUtil.unlikeMemoryOnServer(this, like);
         }
         return false;
     }

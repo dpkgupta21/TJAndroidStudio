@@ -7,7 +7,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -16,7 +16,7 @@
         android:text="Email"
         android:textColor="#78C257"/>
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/user_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:textSize="@dimen/tj_large_font"
         android:text="Email" />
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -34,7 +34,7 @@
         android:text="Phone"
         android:textColor="#78C257"/>
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/user_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

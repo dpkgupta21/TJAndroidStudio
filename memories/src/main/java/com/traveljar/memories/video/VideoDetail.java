@@ -20,10 +20,10 @@ import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
@@ -148,19 +148,16 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "video is not already liked so liking it");
-                    like = new Like(null, null, mVideo.getjId(), mVideo.getIdOnServer(), TJPreferences.getUserId(VideoDetail.this), mVideo.getMemType());
-                    like.setId(String.valueOf(LikeDataSource.createLike(like, VideoDetail.this)));
+                    like = MemoriesUtil.createLikeRequest(mVideo.getId(), Request.CATEGORY_TYPE_VIDEO, VideoDetail.this);
                     mVideo.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                    MemoriesUtil.likeMemory(VideoDetail.this, like);
                 } else {
                     // If already liked, delete from local database, delete from server
                     Log.d(TAG, "memory is not already liked so removing the like");
                     like = mVideo.getLikeById(likeId);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    LikeDataSource.deleteLike(VideoDetail.this, like);
                     mVideo.getLikes().remove(like);
-                    MemoriesUtil.unlikeMemory(VideoDetail.this, like);
+                    MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_VIDEO, VideoDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mVideo.getLikes().size()));
             }

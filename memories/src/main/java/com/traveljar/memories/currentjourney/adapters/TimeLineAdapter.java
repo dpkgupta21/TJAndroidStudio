@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.audio.AudioDetail;
 import com.traveljar.memories.audio.DownloadAudioAsyncTask;
 import com.traveljar.memories.checkin.CheckinDetail;
@@ -28,6 +27,7 @@ import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.moods.MoodDetail;
 import com.traveljar.memories.note.NoteDetail;
@@ -185,23 +185,22 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                 Memories mem = memoriesList.get(position);
                 String likeId = mem.isMemoryLikedByCurrentUser(context);// Check if memory liked by current user
                 Like like;
+
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
-                    Log.d(TAG, "memory is not already liked so liking it");
-                    like = new Like(null, null, mem.getjId(), mem.getIdOnServer(), TJPreferences.getUserId(context), mem.getMemType());
-                    like.setId(String.valueOf(LikeDataSource.createLike(like, context)));
+                    Log.d(TAG, "video is not already liked so liking it");
+                    like = MemoriesUtil.createLikeRequest(mem.getId(), Request.getCategoryTypeFromMemory(mem), context);
                     mem.getLikes().add(like);
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                    MemoriesUtil.likeMemory(context, like);
                 } else {
                     // If already liked, delete from local database, delete from server
                     Log.d(TAG, "memory is not already liked so removing the like");
                     like = mem.getLikeById(likeId);
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    LikeDataSource.deleteLike(context, like);
                     mem.getLikes().remove(like);
-                    MemoriesUtil.unlikeMemory(context, like);
+                    MemoriesUtil.createUnlikeRequest(like, Request.getCategoryTypeFromMemory(mem), context);
                 }
+
                 holder.timelineNoLikesTxt.setText(String.valueOf(mem.getLikes().size()));
             }
         });

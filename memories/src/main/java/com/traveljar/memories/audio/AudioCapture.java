@@ -210,11 +210,15 @@ public class AudioCapture extends AppCompatActivity {
         Log.d(TAG, "new audio added in local DB successfully");
 
         Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
-                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_AUDIO, Request.REQUEST_STATUS_NOT_STARTED);
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_AUDIO, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, this);
-        Intent intent = new Intent(this, MakeServerRequestsService.class);
-        startService(intent);
-//        AudioUtil.uploadAudio(this, audio);
+        if(HelpMe.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, MakeServerRequestsService.class);
+            startService(intent);
+        }
+        else{
+            Log.d(TAG, "since no network not starting service RQ");
+        }
     }
 
     private void startPlaying() {

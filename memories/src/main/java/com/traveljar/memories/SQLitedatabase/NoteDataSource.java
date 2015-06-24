@@ -66,7 +66,7 @@ public class NoteDataSource {
         note.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_BY)));
         note.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
         note.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
-        note.setLikes(LikeDataSource.getLikeIdsForMemory(context, note.getIdOnServer()));
+        note.setLikes(LikeDataSource.getLikesForMemory(context, note.getIdOnServer()));
         note.setContent(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CONTENT)));
         note.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_JID)));
         note.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LATITUDE)));
@@ -114,7 +114,7 @@ public class NoteDataSource {
             note.setCreatedBy(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_BY)));
             note.setCreatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
             note.setUpdatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
-            note.setLikes(LikeDataSource.getLikeIdsForMemory(context, note.getIdOnServer()));
+            note.setLikes(LikeDataSource.getLikesForMemory(context, note.getIdOnServer()));
 
             note.setLatitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LATITUDE)));
             note.setLongitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LONGITUDE)));

@@ -19,17 +19,16 @@ import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Picture;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
-
 
 
 public class PictureDetail extends AppCompatActivity implements DownloadPicture.OnPictureDownloadListener {
@@ -143,20 +142,18 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 Like like;
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
-                    Log.d(TAG, "video is not already liked so liking it");
-                    like = new Like(null, null, mPicture.getjId(), mPicture.getIdOnServer(), TJPreferences.getUserId(PictureDetail.this), mPicture.getMemType());
-                    like.setId(String.valueOf(LikeDataSource.createLike(like, PictureDetail.this)));
+                    Log.d(TAG, "picture is not already liked so liking it");
+                    like = MemoriesUtil.createLikeRequest(mPicture.getId(), Request.CATEGORY_TYPE_PICTURE, PictureDetail.this);
                     mPicture.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                    MemoriesUtil.likeMemory(PictureDetail.this, like);
+
                 } else {
                     // If already liked, delete from local database, delete from server
-                    Log.d(TAG, "memory is not already liked so removing the like");
+                    Log.d(TAG, "memory is not already liked so removing the like for likeId = " + likeId);
                     like = mPicture.getLikeById(likeId);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    LikeDataSource.deleteLike(PictureDetail.this, like);
                     mPicture.getLikes().remove(like);
-                    MemoriesUtil.unlikeMemory(PictureDetail.this, like);
+                    MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_PICTURE, PictureDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mPicture.getLikes().size()));
             }
@@ -164,8 +161,8 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        if(mPicture.getCreatedBy().equals(TJPreferences.getUserId(this))){
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (mPicture.getCreatedBy().equals(TJPreferences.getUserId(this))) {
             menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return super.onCreateOptionsMenu(menu);

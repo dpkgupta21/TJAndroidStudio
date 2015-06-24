@@ -30,6 +30,7 @@ public class LikeDataSource {
         values.put(MySQLiteHelper.LIKE_COLUMN_MEM_TYPE, like.getMemType());
         values.put(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID, like.getMemorableId());
         values.put(MySQLiteHelper.LIKE_COLUMN_USER_ID, like.getUserId());
+        values.put(MySQLiteHelper.LIKE_COLUMN_IS_VALID, (like.isValid()) ? 1 : 0);
 
         long likeId = db.insert(MySQLiteHelper.TABLE_LIKE, null, values);
         Log.d(TAG, "New mood Inserted with id" + likeId);
@@ -49,12 +50,26 @@ public class LikeDataSource {
         List<Like> likesList = getLikesFromCursor(cursor);
         cursor.close();
         db.close();
-        return (Like)likesList.get(0);
+        return (Like) likesList.get(0);
+
+    }
+
+    public static Like getLikeByIdOnServer(String id, Context context) {
+        Log.d(TAG, "fetching like item from DB with id =" + id);
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.query(MySQLiteHelper.TABLE_LIKE, null,
+                MySQLiteHelper.LIKE_COLUMN_ID_ONSERVER + "=?", new String[]{String.valueOf(id)}, null,
+                null, null, null);
+
+        List<Like> likesList = getLikesFromCursor(cursor);
+        cursor.close();
+        db.close();
+        return likesList.get(0);
 
     }
 
     // returns null if memory has not been liked and Like object if memory has already been liked by a particular user
-    public static Like isMemoryLikedByUser(Context context, String memoryId, String userId){
+    public static Like isMemoryLikedByUser(Context context, String memoryId, String userId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String selectQuery = "SELECT * FROM " + MySQLiteHelper.TABLE_LIKE + " WHERE " + MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID + " = '"
                 + memoryId + "' AND " + MySQLiteHelper.LIKE_COLUMN_USER_ID + " = '" + userId + "'";
@@ -67,16 +82,16 @@ public class LikeDataSource {
         return likes.size() == 0 ? null : likes.get(0);
     }
 
-    public static void deleteLike(Context context, Like like){
+    public static void deleteLike(Context context, Like like) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         db.delete(MySQLiteHelper.TABLE_LIKE, MySQLiteHelper.LIKE_COLUMN_ID + "=?", new String[]{like.getId()});
         db.close();
     }
 
-    public static List<Like> getLikeIdsForMemory(Context context, String memoryId){
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+    public static List<Like> getLikesForMemory(Context context, String memoryId) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String selectQuery = "SELECT * FROM " + MySQLiteHelper.TABLE_LIKE + " WHERE " + MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID + " = '"
-                + memoryId + "'";
+                + memoryId + "' AND " + MySQLiteHelper.LIKE_COLUMN_IS_VALID + " = 1";
         Cursor cursor = db.rawQuery(selectQuery, null);
         List<Like> likesList = getLikesFromCursor(cursor);
         cursor.close();
@@ -92,16 +107,17 @@ public class LikeDataSource {
         values.put(MySQLiteHelper.LIKE_COLUMN_MEM_TYPE, like.getMemType());
         values.put(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID, like.getMemorableId());
         values.put(MySQLiteHelper.LIKE_COLUMN_USER_ID, like.getUserId());
+        values.put(MySQLiteHelper.LIKE_COLUMN_IS_VALID, like.isValid() ? 1 : 0);
 
         db.update(MySQLiteHelper.TABLE_LIKE, values, MySQLiteHelper.LIKE_COLUMN_ID + " = '" + like.getId() + "'", null);
         db.close();
 
     }
 
-    private static List<Like> getLikesFromCursor(Cursor cursor){
+    private static List<Like> getLikesFromCursor(Cursor cursor) {
         List<Like> likesList = new ArrayList<>();
         Like like;
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 like = new Like();
                 like.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_ID)));
@@ -110,8 +126,10 @@ public class LikeDataSource {
                 like.setMemType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_MEM_TYPE)));
                 like.setMemorableId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID)));
                 like.setUserId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_USER_ID)));
+                int isV = (cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_IS_VALID)));
+                like.setIsValid((isV == 1) ? true : false);
                 likesList.add(like);
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         return likesList;
     }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/active_journey_no_buddies_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -16,14 +16,15 @@ import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Mood;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
+import com.traveljar.memories.video.VideoDetail;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -135,20 +136,17 @@ public class MoodDetail extends AppCompatActivity {
                 Like like;
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
-                    Log.d(TAG, "video is not already liked so liking it");
-                    like = new Like(null, null, mMood.getjId(), mMood.getIdOnServer(), TJPreferences.getUserId(MoodDetail.this), mMood.getMemType());
-                    like.setId(String.valueOf(LikeDataSource.createLike(like, MoodDetail.this)));
+                    Log.d(TAG, "mood is not already liked so liking it");
+                    like = MemoriesUtil.createLikeRequest(mMood.getId(), Request.CATEGORY_TYPE_VIDEO, MoodDetail.this);
                     mMood.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                    MemoriesUtil.likeMemory(MoodDetail.this, like);
                 } else {
                     // If already liked, delete from local database, delete from server
-                    Log.d(TAG, "memory is not already liked so removing the like");
+                    Log.d(TAG, "mood is not already liked so removing the like");
                     like = mMood.getLikeById(likeId);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    LikeDataSource.deleteLike(MoodDetail.this, like);
                     mMood.getLikes().remove(like);
-                    MemoriesUtil.unlikeMemory(MoodDetail.this, like);
+                    MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_MOOD, MoodDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mMood.getLikes().size()));
             }

@@ -17,13 +17,14 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
+import com.traveljar.memories.video.VideoDetail;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -131,20 +132,17 @@ public class CheckinDetail extends AppCompatActivity {
                 Like like;
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
-                    Log.d(TAG, "video is not already liked so liking it");
-                    like = new Like(null, null, mCheckIn.getjId(), mCheckIn.getIdOnServer(), TJPreferences.getUserId(CheckinDetail.this), mCheckIn.getMemType());
-                    like.setId(String.valueOf(LikeDataSource.createLike(like, CheckinDetail.this)));
+                    Log.d(TAG, "checkIn is not already liked so liking it");
+                    like = MemoriesUtil.createLikeRequest(mCheckIn.getId(), Request.CATEGORY_TYPE_CHECKIN, CheckinDetail.this);
                     mCheckIn.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                    MemoriesUtil.likeMemory(CheckinDetail.this, like);
                 } else {
                     // If already liked, delete from local database, delete from server
-                    Log.d(TAG, "memory is not already liked so removing the like");
+                    Log.d(TAG, "checkin is not already liked so removing the like");
                     like = mCheckIn.getLikeById(likeId);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    LikeDataSource.deleteLike(CheckinDetail.this, like);
                     mCheckIn.getLikes().remove(like);
-                    MemoriesUtil.unlikeMemory(CheckinDetail.this, like);
+                    MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_CHECKIN, CheckinDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mCheckIn.getLikes().size()));
             }

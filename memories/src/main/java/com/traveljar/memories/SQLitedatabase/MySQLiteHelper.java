@@ -163,6 +163,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String LIKE_COLUMN_MEMORABLE_ID = "memorableId";
     public static final String LIKE_COLUMN_USER_ID = "userId";
     public static final String LIKE_COLUMN_MEM_TYPE = "memType";
+    public static final String LIKE_COLUMN_IS_VALID= "isValid";
 
     //Table requests
     public static final String TABLE_REQUEST_QUEUE = "requestQueue";
@@ -172,6 +173,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String RQ_COLUMN_OPERATION_TYPE = "operationType";
     public static final String RQ_COLUMN_CATEGORY_TYPE = "categorytype";
     public static final String RQ_COLUMN_REQUEST_STATUS = "requestStatus";
+    public static final String RQ_COLUMN_NO_OF_ATTEMPTS = "noOfAttempts";
 
     private static final String CREATE_TABLE_REQUEST_QUEUE = "CREATE TABLE IF NOT EXISTS " + TABLE_REQUEST_QUEUE + "("
             + RQ_COLUMN_ID + " integer primary key autoincrement, "
@@ -179,6 +181,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + RQ_COLUMN_JOURNEY_ID + " text ,"
             + RQ_COLUMN_OPERATION_TYPE + " integer,"
             + RQ_COLUMN_CATEGORY_TYPE + " integer ,"
+            + RQ_COLUMN_NO_OF_ATTEMPTS + " integer default 0,"
             + RQ_COLUMN_REQUEST_STATUS + " integer " + ");";
 
     private static final String CREATE_TABLE_LIKE = "create table " + TABLE_LIKE + "("
@@ -187,6 +190,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + LIKE_COLUMN_JOURNEY_ID + " text ,"
             + LIKE_COLUMN_MEMORABLE_ID + " text,"
             + LIKE_COLUMN_USER_ID + " text ,"
+            + LIKE_COLUMN_IS_VALID + " integer ,"
             + LIKE_COLUMN_MEM_TYPE + " text " + ");";
 
     private static final String CREATE_TABLE_CONTACT = "create table " + TABLE_CONTACT + "("

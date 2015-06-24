@@ -30,7 +30,7 @@
             android:layout_marginLeft="15dp"
             android:src="@drawable/gumnaam_profile_image" />
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/photo_detail_profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white">
 
-            <com.traveljar.memories.customviews.MyTextViewBold
+            <com.traveljar.memories.customviews.MyTextViewHeadline
                 android:id="@+id/photo_detail_date_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="50sp" />
 
-            <com.traveljar.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextViewBodyReg
                 android:id="@+id/photo_detail_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <com.traveljar.memories.customviews.MyTextView
+            <com.traveljar.memories.customviews.MyTextViewBodyReg
                 android:id="@+id/photo_detail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

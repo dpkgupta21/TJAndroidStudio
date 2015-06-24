@@ -85,7 +85,7 @@ public class MoodDataSource {
                 mood.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT)));
                 /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
                 mood.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-                mood.setLikes(LikeDataSource.getLikeIdsForMemory(context, mood.getIdOnServer()));
+                mood.setLikes(LikeDataSource.getLikesForMemory(context, mood.getIdOnServer()));
                 mood.setBuddyIds(Arrays.asList((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID))).split(",")));
                 mood.setMood(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MOOD)));
                 mood.setReason(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_REASON)));

@@ -178,7 +178,7 @@ public class PictureDataSource {
             picture.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDBY)));
             picture.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT)));
             picture.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
-            picture.setLikes(LikeDataSource.getLikeIdsForMemory(context, picture.getIdOnServer()));
+            picture.setLikes(LikeDataSource.getLikesForMemory(context, picture.getIdOnServer()));
             picture.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
             picture.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LATITUDE)));
             picture.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LONGITUDE)));
@@ -209,7 +209,7 @@ public class PictureDataSource {
             picture.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
             picture.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LATITUDE)));
             picture.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LONGITUDE)));
-            picture.setLikes(LikeDataSource.getLikeIdsForMemory(context, picture.getIdOnServer()));
+            picture.setLikes(LikeDataSource.getLikesForMemory(context, picture.getIdOnServer()));
             picture.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
             picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LOCALTHUMBNAILPATH)));
             picturesList.add(picture);

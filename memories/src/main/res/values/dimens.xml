@@ -17,6 +17,7 @@
     <dimen name="tj_extra_giant_font">40sp</dimen>
 
     <dimen name="circularProfDimen">75dp</dimen>
+    <dimen name="new_lap_transport_icon_size">64dp</dimen>
 
 
 </resources>

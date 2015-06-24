@@ -139,7 +139,7 @@ public class AudioDataSource {
             audio.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDBY)));
             audio.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
             audio.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
-            audio.setLikes(LikeDataSource.getLikeIdsForMemory(context, audio.getIdOnServer()));
+            audio.setLikes(LikeDataSource.getLikesForMemory(context, audio.getIdOnServer()));
             audio.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LATITUDE)));
             audio.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LONGITUDE)));
             audio.setAudioDuration(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DURATION)));
@@ -166,7 +166,7 @@ public class AudioDataSource {
             audio.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDBY)));
             audio.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
             audio.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
-            audio.setLikes(LikeDataSource.getLikeIdsForMemory(context, audio.getIdOnServer()));
+            audio.setLikes(LikeDataSource.getLikesForMemory(context, audio.getIdOnServer()));
             audio.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LATITUDE)));
             audio.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LONGITUDE)));
             audio.setAudioDuration(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DURATION)));

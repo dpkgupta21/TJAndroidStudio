@@ -11,26 +11,23 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewSubHeadingReg
             android:id="@+id/timelineItemCaption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Note"
-            android:textColor="@color/black"
-            android:textSize="@dimen/tj_large_font" />
+            android:textColor="@color/black" />
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewSmallText
             android:id="@+id/timelineItemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="20 hours ago"
-            android:textColor="@color/tj_red_light_text"
-            android:textSize="@dimen/tj_small_font"
-            android:textStyle="italic" />
+            android:textColor="@color/tj_red_light_text" />
     </RelativeLayout>
 
-    <com.traveljar.memories.customviews.MyTextView
+    <com.traveljar.memories.customviews.MyTextViewBodyReg
         android:id="@+id/timelineItemContent"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -64,25 +61,24 @@
             android:contentDescription="@string/default_string"
             android:src="@drawable/ic_favourite_empty" />
 
-        <com.traveljar.memories.customviews.MyTextView
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/timelineItemFavIcon"
-            android:text="0"
-            android:textSize="@dimen/tj_extra_giant_font" />
+            android:text="0" />
 
-        <TextView
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/timelineItemUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text="Some Name"
             android:layout_alignBottom="@+id/noLikesTxt"
             android:layout_toRightOf="@+id/timelineItemUserImage"
             android:layout_toEndOf="@+id/timelineItemUserImage" />
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_note_item.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_note_item.xml -->

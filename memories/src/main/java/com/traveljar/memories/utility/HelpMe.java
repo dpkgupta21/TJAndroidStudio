@@ -38,6 +38,9 @@ public class HelpMe {
     public static final int TYPE_UPDATE_MEMORY = 2;
     public static final int TYPE_DELETE_MEMORY = 3;
     public static final int TYPE_CREATE_JOURNEY = 4;
+    public static final int TYPE_PROFILE_UPDATE = 5;
+    public static final int TYPE_LIKE_MEMORY = 6;
+    public static final int TYPE_UNLIKE_MEMORY = 7;
 
     // Type = picture/audio/video/note
     // don't change them -- are synced with server
