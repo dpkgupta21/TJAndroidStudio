@@ -82,9 +82,16 @@ public class LikeDataSource {
         return likes.size() == 0 ? null : likes.get(0);
     }
 
-    public static void deleteLike(Context context, Like like) {
+    public static void deleteLike(Context context, String likeId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_LIKE, MySQLiteHelper.LIKE_COLUMN_ID + "=?", new String[]{like.getId()});
+        db.delete(MySQLiteHelper.TABLE_LIKE, MySQLiteHelper.LIKE_COLUMN_ID + "=?", new String[]{likeId});
+        db.close();
+    }
+
+    public static void deleteLikeWithMemIdAndUser(Context context, String memoryId, String userId) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_LIKE, MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID + "=? AND " + MySQLiteHelper.LIKE_COLUMN_USER_ID + "=?",
+                new String[]{memoryId, userId});
         db.close();
     }
 
@@ -92,7 +99,8 @@ public class LikeDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String selectQuery = "SELECT * FROM " + MySQLiteHelper.TABLE_LIKE + " WHERE " + MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID + " = '"
                 + memoryId + "' AND " + MySQLiteHelper.LIKE_COLUMN_IS_VALID + " = 1 AND " + MySQLiteHelper.LIKE_COLUMN_MEM_TYPE + " = '"
-                + memType + " '";
+                + memType + "'";
+        Log.d(TAG, "query is " + selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
         List<Like> likesList = getLikesFromCursor(cursor);
         cursor.close();

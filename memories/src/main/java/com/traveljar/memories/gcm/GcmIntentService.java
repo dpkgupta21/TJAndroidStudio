@@ -131,10 +131,14 @@ public class GcmIntentService extends IntentService {
         String jName;
         String tagline;
         String createdBy;
+        String memId;
         long createdAt;
         long updatedAt;
         long completedAt;
+        String memoryType;
+        Memories memories;
 
+        String userId;
 
         Log.d(TAG, "1.1");
         // COde to verify correct receipient
@@ -191,17 +195,26 @@ public class GcmIntentService extends IntentService {
                 break;
 
             case HelpMe.TYPE_LIKE_MEMORY:
-                String userId = bundle.get("user_id").toString();
+                userId = bundle.get("user_id").toString();
                 journeyId = bundle.get("j_id").toString();
-                String memId = bundle.get("id").toString();
-                String memoryType = bundle.get("memory_type").toString();
+                memId = bundle.get("id").toString();
+                memoryType = bundle.get("memory_type").toString();
 
-                Memories memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
+                memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
                 Log.d(TAG, "memories value is " + memories);
                 Like like = new Like(null, null, journeyId, memories.getId(), userId, memoryType, true);
                 LikeDataSource.createLike(like, this);
 
                 break;
+
+            case HelpMe.TYPE_UNLIKE_MEMORY:
+                userId = bundle.get("user_id").toString();
+                journeyId = bundle.get("j_id").toString();
+                memId = bundle.get("id").toString();
+                memoryType = bundle.get("memory_type").toString();
+
+                memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
+                LikeDataSource.deleteLikeWithMemIdAndUser(this, memories.getId(), memories.getCreatedBy());
 
             default:
                 break;
@@ -211,7 +224,7 @@ public class GcmIntentService extends IntentService {
     private void createMemory(String jId, int memType, JSONObject data)
             throws NumberFormatException, JSONException {
         Log.d(TAG, "createMemory called");
-        String idOnServer = data.getString("id");
+        String idOnServer = data.getString("memory_id");
         String createdBy = data.getString("created_by");
         long createdAt = Long.parseLong(data.getString("created_at"));
         long updatedAt = Long.parseLong(data.getString("updated_at"));

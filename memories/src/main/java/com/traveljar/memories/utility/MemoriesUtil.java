@@ -103,7 +103,7 @@ public class MemoriesUtil {
         AppController.getInstance().getRequestQueue().add(jsonRequest);
         try {
             JSONObject response = futureRequest.get(30, TimeUnit.SECONDS);
-            LikeDataSource.deleteLike(context, like);
+            LikeDataSource.deleteLike(context, like.getId());
             Log.d(TAG, "memory unliked successfully on server with response " + response);
             return true;
         } catch (InterruptedException e) {
