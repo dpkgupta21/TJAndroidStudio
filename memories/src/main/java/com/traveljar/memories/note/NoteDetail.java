@@ -145,7 +145,7 @@ public class NoteDetail extends AppCompatActivity {
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.deleteMemory(NoteDetail.this, mNote.getIdOnServer());
+                                MemoriesUtil.getInstance().deleteMemory(NoteDetail.this, mNote.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

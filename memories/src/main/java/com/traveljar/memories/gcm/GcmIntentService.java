@@ -208,14 +208,24 @@ public class GcmIntentService extends IntentService {
                 break;
 
             case HelpMe.TYPE_UNLIKE_MEMORY:
-                userId = bundle.get("user_id").toString();
-                journeyId = bundle.get("j_id").toString();
                 memId = bundle.get("id").toString();
                 memoryType = bundle.get("memory_type").toString();
 
                 memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
                 LikeDataSource.deleteLikeWithMemIdAndUser(this, memories.getId(), memories.getCreatedBy());
+                break;
 
+            /*case HelpMe.TYPE_ADD_BUDDY:
+                String buddyId = bundle.getString("buddy_id");
+                journeyId = bundle.getString("journey_ids");
+                ContactsUtil.fetchContact(this, buddyId);
+                JourneyDataSource.addContactToJourney(this, buddyId, journeyId);
+                break;
+
+            case HelpMe.TYPE_REMOVE_BUDDY:
+                *//*String buddyId = bundle.getString("buddy_id");
+                journeyId = bundle.getString("journey_ids");*//*
+                break;*/
             default:
                 break;
         }

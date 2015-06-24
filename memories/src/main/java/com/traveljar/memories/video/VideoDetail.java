@@ -182,7 +182,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.deleteMemory(VideoDetail.this, mVideo.getIdOnServer());
+                                MemoriesUtil.getInstance().deleteMemory(VideoDetail.this, mVideo.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

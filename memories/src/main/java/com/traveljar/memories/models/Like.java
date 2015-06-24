@@ -126,7 +126,7 @@ public class Like implements Parcelable {
 
     @Override
     public String toString(){
-        return "like_id->" + id + ", user_id->" + userId;
+        return "like_id->" + id + ", user_id->" + userId + " isValid->" + isValid + " memtype->" + memType;
     }
 
 }
