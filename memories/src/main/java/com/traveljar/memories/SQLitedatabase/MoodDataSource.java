@@ -32,7 +32,7 @@ public class MoodDataSource {
         values.put(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT, newMood.getUpdatedAt());
 /*        values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, newMood.getLikedBy() == null ? null : Joiner.on(",").join(newMood.getLikedBy()));*/
         values.put(MySQLiteHelper.MOOD_COLUMN_LATITUDE, newMood.getLatitude());
-        values.put(MySQLiteHelper.MOOD_COLUMN_LATITUDE, newMood.getLongitude());
+        values.put(MySQLiteHelper.MOOD_COLUMN_LONGITUDE, newMood.getLongitude());
 
         long mood_id = db.insert(MySQLiteHelper.TABLE_MOOD, null, values);
         Log.d(TAG, "New mood Inserted!");
@@ -48,7 +48,10 @@ public class MoodDataSource {
                 + MySQLiteHelper.MOOD_COLUMN_JID + " = '" + jId + "'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        return cursor.getCount();
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
     }
 
     public static Mood getMoodById(String id, Context context) {
@@ -82,12 +85,12 @@ public class MoodDataSource {
                 mood.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT)));
                 /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
                 mood.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-                mood.setLikes(LikeDataSource.getLikeIdsForMemory(context, mood.getIdOnServer()));
+                mood.setLikes(LikeDataSource.getLikesForMemory(context, mood.getIdOnServer()));
                 mood.setBuddyIds(Arrays.asList((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID))).split(",")));
                 mood.setMood(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MOOD)));
                 mood.setReason(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_REASON)));
                 mood.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_LATITUDE)));
-                mood.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.MOOD_CLOUMN_LONGITUDE)));
+                mood.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_LONGITUDE)));
                 moodsList.add(mood);
             }while (cursor.moveToNext());
         }

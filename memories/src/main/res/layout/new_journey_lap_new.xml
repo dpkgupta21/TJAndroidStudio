@@ -34,7 +34,7 @@
                     android:textColor="@color/tj_orange"
                     android:textSize="@dimen/tj_medium_font" />
 
-                <com.traveljar.memories.customviews.MyTextViewBold
+                <com.traveljar.memories.customviews.MyTextViewHeadline
                     android:id="@+id/new_journey_location_new_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                     android:textColor="@color/tj_orange"
                     android:textSize="@dimen/tj_medium_font" />
 
-                <com.traveljar.memories.customviews.MyTextViewBold
+                <com.traveljar.memories.customviews.MyTextViewHeadline
                     android:id="@+id/new_journey_location_new_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                 android:textColor="@color/tj_orange"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <com.traveljar.memories.customviews.MyTextViewBold
+            <com.traveljar.memories.customviews.MyTextViewHeadline
                 android:id="@+id/new_journey_location_new_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,10 +137,9 @@
 
                 <ToggleButton
                     android:id="@+id/flightToggle"
+                    android:layout_width="@dimen/new_lap_transport_icon_size"
+                    android:layout_height="@dimen/new_lap_transport_icon_size"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_flight"
                     android:onClick="conveyanceToggle"
@@ -149,10 +148,9 @@
 
                 <ToggleButton
                     android:id="@+id/carToggle"
+                    android:layout_width="@dimen/new_lap_transport_icon_size"
+                    android:layout_height="@dimen/new_lap_transport_icon_size"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_car"
                     android:onClick="conveyanceToggle"
@@ -161,10 +159,9 @@
 
                 <ToggleButton
                     android:id="@+id/trainToggle"
+                    android:layout_width="@dimen/new_lap_transport_icon_size"
+                    android:layout_height="@dimen/new_lap_transport_icon_size"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_train"
                     android:onClick="conveyanceToggle"
@@ -173,9 +170,9 @@
 
                 <ToggleButton
                     android:id="@+id/shipToggle"
+                    android:layout_width="@dimen/new_lap_transport_icon_size"
+                    android:layout_height="@dimen/new_lap_transport_icon_size"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_ship"
                     android:onClick="conveyanceToggle"
@@ -192,9 +189,9 @@
 
                 <ToggleButton
                     android:id="@+id/walkToggle"
+                    android:layout_width="@dimen/new_lap_transport_icon_size"
+                    android:layout_height="@dimen/new_lap_transport_icon_size"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_walk"
                     android:onClick="conveyanceToggle"
@@ -203,9 +200,9 @@
 
                 <ToggleButton
                     android:id="@+id/busToggle"
+                    android:layout_width="@dimen/new_lap_transport_icon_size"
+                    android:layout_height="@dimen/new_lap_transport_icon_size"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_bus"
                     android:onClick="conveyanceToggle"
@@ -214,9 +211,9 @@
 
                 <ToggleButton
                     android:id="@+id/bikeToggle"
+                    android:layout_width="@dimen/new_lap_transport_icon_size"
+                    android:layout_height="@dimen/new_lap_transport_icon_size"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_bike"
                     android:onClick="conveyanceToggle"
@@ -225,9 +222,9 @@
 
                 <ToggleButton
                     android:id="@+id/carpetToggle"
+                    android:layout_width="@dimen/new_lap_transport_icon_size"
+                    android:layout_height="@dimen/new_lap_transport_icon_size"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_carpet"
                     android:onClick="conveyanceToggle"

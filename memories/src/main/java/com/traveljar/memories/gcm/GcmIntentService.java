@@ -244,7 +244,7 @@ public class GcmIntentService extends IntentService {
                 dataUrl = data.getString("data_url");
                 String localThumbUrl = data.getString("thumbnail");
                 size = Long.parseLong(data.getString("size"));
-                extension = data.getString("extention");
+                extension = data.getString("extension");
                 caption = data.getString("caption");
 
                 Video newVideo = new Video(idOnServer, jId, HelpMe.VIDEO_TYPE, caption, extension,

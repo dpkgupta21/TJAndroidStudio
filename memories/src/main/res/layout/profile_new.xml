@@ -35,7 +35,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/gumnaam_profile_image" />
 
-        <com.traveljar.memories.customviews.MyTextViewBold
+        <com.traveljar.memories.customviews.MyTextViewHeadline
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

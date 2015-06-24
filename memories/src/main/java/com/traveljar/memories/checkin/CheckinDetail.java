@@ -13,18 +13,18 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
+import com.traveljar.memories.video.VideoDetail;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Created by abhi on 19/06/15.
  */
-public class CheckinDetail extends AppCompatActivity implements MemoriesUtil.OnMemoryDeleteListener{
+public class CheckinDetail extends AppCompatActivity {
     private static final String TAG = "<CheckInDetail>";
     private static final int ACTION_ITEM_DELETE = 0;
     private TextView dateBig;
@@ -132,20 +132,17 @@ public class CheckinDetail extends AppCompatActivity implements MemoriesUtil.OnM
                 Like like;
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
-                    Log.d(TAG, "video is not already liked so liking it");
-                    like = new Like(null, null, mCheckIn.getjId(), mCheckIn.getIdOnServer(), TJPreferences.getUserId(CheckinDetail.this), mCheckIn.getMemType());
-                    like.setId(String.valueOf(LikeDataSource.createLike(like, CheckinDetail.this)));
+                    Log.d(TAG, "checkIn is not already liked so liking it");
+                    like = MemoriesUtil.createLikeRequest(mCheckIn.getId(), Request.CATEGORY_TYPE_CHECKIN, CheckinDetail.this);
                     mCheckIn.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                    MemoriesUtil.likeMemory(CheckinDetail.this, like);
                 } else {
                     // If already liked, delete from local database, delete from server
-                    Log.d(TAG, "memory is not already liked so removing the like");
+                    Log.d(TAG, "checkin is not already liked so removing the like");
                     like = mCheckIn.getLikeById(likeId);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    LikeDataSource.deleteLike(CheckinDetail.this, like);
                     mCheckIn.getLikes().remove(like);
-                    MemoriesUtil.unlikeMemory(CheckinDetail.this, like);
+                    MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_CHECKIN, CheckinDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mCheckIn.getLikes().size()));
             }
@@ -172,6 +169,7 @@ public class CheckinDetail extends AppCompatActivity implements MemoriesUtil.OnM
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                MemoriesUtil.deleteMemory(CheckinDetail.this, mCheckIn.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -183,15 +181,6 @@ public class CheckinDetail extends AppCompatActivity implements MemoriesUtil.OnM
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onDeleteMemory(int resultCode) {
-        if(resultCode == 0){
-            finish();
-        }else {
-            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
         }
     }
 

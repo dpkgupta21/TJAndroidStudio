@@ -39,9 +39,9 @@ public class PictureDataSource {
         values.put(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT, newPic.getCreatedAt());
 /*        String likedBy = (newPic.getLikedBy() == null) ? null : Joiner.on(",").join(newPic.getLikedBy());
         values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy);*/
-        values.put(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH, newPic.getPicThumbnailPath());
+        values.put(MySQLiteHelper.PICTURE_COLUMN_LOCALTHUMBNAILPATH, newPic.getPicThumbnailPath());
         values.put(MySQLiteHelper.PICTURE_COLUMN_LATITUDE, newPic.getLatitude());
-        values.put(MySQLiteHelper.PICTURE_COLUMN_LATITUDE, newPic.getLongitude());
+        values.put(MySQLiteHelper.PICTURE_COLUMN_LONGITUDE, newPic.getLongitude());
 
         // insert row
         Long picture_id = db.insert(MySQLiteHelper.TABLE_PICTURE, null, values);
@@ -167,37 +167,22 @@ public class PictureDataSource {
         Picture picture;
         while (!cursor.isAfterLast()) {
             picture = new Picture();
-            picture.setCaption(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CAPTION)));
+            picture.setCaption(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CAPTION)));
             picture.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_ID)));
-            picture.setIdOnServer(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_ID_ONSERVER)));
-            picture.setMemType(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_MEM_TYPE)));
-            picture.setExtension(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_EXT)));
-            picture.setSize(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_SIZE)));
-            picture.setDataServerURL(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_DATASERVERURL)));
-            picture.setDataLocalURL(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_DATALOCALURL)));
-            picture.setCreatedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDBY)));
-            picture.setCreatedAt(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT)));
-            picture.setUpdatedAt(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
-/*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-            picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-            picture.setLikes(LikeDataSource.getLikeIdsForMemory(context, picture.getIdOnServer()));
-            picture.setjId(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
-            picture.setLatitude(cursor.getDouble(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LATITUDE)));
-            picture.setLongitude(cursor.getDouble(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LONGITUDE)));
-            picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH)));
+            picture.setIdOnServer(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_ID_ONSERVER)));
+            picture.setMemType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_MEM_TYPE)));
+            picture.setExtension(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_EXT)));
+            picture.setSize(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_SIZE)));
+            picture.setDataServerURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_DATASERVERURL)));
+            picture.setDataLocalURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_DATALOCALURL)));
+            picture.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDBY)));
+            picture.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT)));
+            picture.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
+            picture.setLikes(LikeDataSource.getLikesForMemory(context, picture.getIdOnServer()));
+            picture.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
+            picture.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LATITUDE)));
+            picture.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LONGITUDE)));
+            picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LOCALTHUMBNAILPATH)));
             picturesList.add(picture);
             cursor.moveToNext();
         }
@@ -211,37 +196,22 @@ public class PictureDataSource {
         Picture picture;
         while (!cursor.isAfterLast()) {
             picture = new Picture();
-            picture.setCaption(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CAPTION)));
+            picture.setCaption(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CAPTION)));
             picture.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_ID)));
-            picture.setIdOnServer(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_ID_ONSERVER)));
-            picture.setMemType(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_MEM_TYPE)));
-            picture.setExtension(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_EXT)));
-            picture.setSize(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_SIZE)));
-            picture.setDataServerURL(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_DATASERVERURL)));
-            picture.setDataLocalURL(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_DATALOCALURL)));
-            picture.setCreatedBy(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDBY)));
-            picture.setCreatedAt(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT)));
-            picture.setUpdatedAt(cursor.getLong(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
-            picture.setLatitude(cursor.getDouble(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LATITUDE)));
-            picture.setLongitude(cursor.getDouble(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LONGITUDE)));
-            /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-            picture.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-            picture.setLikes(LikeDataSource.getLikeIdsForMemory(context, picture.getIdOnServer()));
-            picture.setjId(cursor.getString(cursor
-                    .getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
-            picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_CLOUMN_LOCALTHUMBNAILPATH)));
+            picture.setIdOnServer(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_ID_ONSERVER)));
+            picture.setMemType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_MEM_TYPE)));
+            picture.setExtension(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_EXT)));
+            picture.setSize(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_SIZE)));
+            picture.setDataServerURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_DATASERVERURL)));
+            picture.setDataLocalURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_DATALOCALURL)));
+            picture.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDBY)));
+            picture.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT)));
+            picture.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT)));
+            picture.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LATITUDE)));
+            picture.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LONGITUDE)));
+            picture.setLikes(LikeDataSource.getLikesForMemory(context, picture.getIdOnServer()));
+            picture.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_JID)));
+            picture.setPicThumbnailPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.PICTURE_COLUMN_LOCALTHUMBNAILPATH)));
             picturesList.add(picture);
             cursor.moveToNext();
         }

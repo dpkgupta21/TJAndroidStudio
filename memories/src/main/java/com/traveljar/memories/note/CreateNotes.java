@@ -1,5 +1,6 @@
 package com.traveljar.memories.note;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,10 +13,12 @@ import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.models.Note;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.services.GPSTracker;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
-import com.traveljar.memories.utility.NotesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 public class CreateNotes extends AppCompatActivity {
@@ -56,8 +59,20 @@ public class CreateNotes extends AppCompatActivity {
         Note note = new Note("", TJPreferences.getActiveJourneyId(this), HelpMe.NOTE_TYPE, "Note",
                 mNoteContent.getText().toString().trim(), TJPreferences.getUserId(this),
                 HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null, lat, longi);
-        NoteDataSource.createNote(note, this);
-        NotesUtil.uploadNotes(note, this);
+        Long id = NoteDataSource.createNote(note, this);
+        note.setId(String.valueOf(id));
+
+        Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_NOTE, Request.REQUEST_STATUS_NOT_STARTED, 0);
+        RequestQueueDataSource.createRequest(request, this);
+        if(HelpMe.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, MakeServerRequestsService.class);
+            startService(intent);
+        }
+        else{
+            Log.d(TAG, "since no network not starting service RQ");
+        }
+
     }
 
     @Override

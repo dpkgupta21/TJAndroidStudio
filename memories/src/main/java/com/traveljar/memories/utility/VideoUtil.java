@@ -212,6 +212,38 @@ public class VideoUtil {
         }
     }
 
+    public static boolean uploadVideoOnServer(Context context, Video video){
+        Log.d(TAG, "uploading video on server");
+        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+        entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        entityBuilder.addPart("video[video_file]", new FileBody(new File(video.getDataLocalURL())));
+        entityBuilder.addTextBody("video[user_id]", video.getCreatedBy());
+        entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
+        entityBuilder.addTextBody("video[latitude]", String.valueOf(video.getLatitude()));
+        entityBuilder.addTextBody("video[longitude]", String.valueOf(video.getLongitude()));
+        entityBuilder.addTextBody("video[created_at]", String.valueOf(video.getCreatedAt()));
+        entityBuilder.addTextBody("video[updated_at]", String.valueOf(video.getUpdatedAt()));
+
+        String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(context) + "/videos";
+        Log.d(TAG, "upload Url");
+        HttpPost updateProfileRequest = new HttpPost(url);
+        updateProfileRequest.setEntity(entityBuilder.build());
+        HttpResponse response;
+        try {
+            response = new DefaultHttpClient().execute(updateProfileRequest);
+            JSONObject object = new JSONObject(EntityUtils.toString(response.getEntity()));
+            Log.d(TAG, "response on uploading video" + object);
+            String serverId = object.getJSONObject("video").getString("id");
+            String serverUrl = object.getJSONObject("video")
+                    .getJSONObject("video_file").getString("url");
+            VideoDataSource.updateServerIdAndUrl(context, video.getId(), serverId, serverUrl);
+            return true;
+        } catch (Exception e) {
+            Log.d(TAG, "error in uploading video" + e.getMessage());
+            return false;
+        }
+    }
+
     public static void updateCaption(final Video video, final String caption, final Context context){
         if(!HelpMe.isNetworkAvailable(context)){
             Toast.makeText(context, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();

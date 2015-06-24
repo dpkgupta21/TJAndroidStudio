@@ -60,9 +60,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String PICTURE_COLUMN_CREATEDAT = "createdAt";
     public static final String PICTURE_COLUMN_UPDATEDAT = "updatedAt";
     public static final String PICTURE_COLUMN_LIKEDBY = "likedBy";
-    public static final String PICTURE_CLOUMN_LOCALTHUMBNAILPATH = "thumbnailPath";
+    public static final String PICTURE_COLUMN_LOCALTHUMBNAILPATH = "thumbnailPath";
     public static final String PICTURE_COLUMN_LATITUDE = "latitude";
-    public static final String PICTURE_CLOUMN_LONGITUDE = "longitude";
+    public static final String PICTURE_COLUMN_LONGITUDE = "longitude";
     //	Table Audio fields
     public static final String TABLE_AUDIO = "AUDIO";
     public static final String VOICE_COLUMN_ID = "_id";
@@ -78,7 +78,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String VOICE_COLUMN_UPDATEDAT = "updatedAt";
     public static final String VOICE_COLUMN_LIKEDBY = "likedBy";
     public static final String VOICE_COLUMN_LATITUDE = "latitude";
-    public static final String VOICE_CLOUMN_LONGITUDE = "longitude";
+    public static final String VOICE_COLUMN_LONGITUDE = "longitude";
+    public static final String VOICE_COLUMN_DURATION = "duration";
     //	Table Videos fields
     public static final String TABLE_VIDEO = "VIDEO";
     public static final String VIDEO_COLUMN_ID = "_id";
@@ -94,9 +95,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String VIDEO_COLUMN_CREATED_AT = "createdAt";
     public static final String VIDEO_COLUMN_UPDATED_AT = "updatedAt";
     public static final String VIDEO_COLUMN_LIKED_BY = "likedBy";
-    public static final String VIDEO_CLOUMN_LOCALTHUMBNAILPATH = "thumbnailPath";
+    public static final String VIDEO_COLUMN_LOCALTHUMBNAILPATH = "thumbnailPath";
     public static final String VIDEO_COLUMN_LATITUDE = "latitude";
-    public static final String VIDEO_CLOUMN_LONGITUDE = "longitude";
+    public static final String VIDEO_COLUMN_LONGITUDE = "longitude";
     //	Table Moods fields
     public static final String TABLE_MOOD = "MOOD";
     public static final String MOOD_COLUMN_ID = "_id";
@@ -111,7 +112,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String MOOD_COLUMN_MOOD = "mood";
     public static final String MOOD_COLUMN_REASON = "reason";
     public static final String MOOD_COLUMN_LATITUDE = "latitude";
-    public static final String MOOD_CLOUMN_LONGITUDE = "longitude";
+    public static final String MOOD_COLUMN_LONGITUDE = "longitude";
     // Checkin Table fields
     public static final String TABLE_CHECKIN = "CHECKIN";
     public static final String CHECKIN_COLUMN_ID = "_id";
@@ -141,7 +142,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String NOTES_COLUMN_UPDATED_AT = "updatedAt";
     public static final String NOTES_COLUMN_LIKED_BY = "likedBy";
     public static final String NOTES_COLUMN_LATITUDE = "latitude";
-    public static final String NOTES_CLOUMN_LONGITUDE = "longitude";
+    public static final String NOTES_COLUMN_LONGITUDE = "longitude";
 
     //table place
     public static final String TABLE_PLACE = "PLACE";
@@ -162,6 +163,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String LIKE_COLUMN_MEMORABLE_ID = "memorableId";
     public static final String LIKE_COLUMN_USER_ID = "userId";
     public static final String LIKE_COLUMN_MEM_TYPE = "memType";
+    public static final String LIKE_COLUMN_IS_VALID= "isValid";
 
     //Table requests
     public static final String TABLE_REQUEST_QUEUE = "requestQueue";
@@ -171,6 +173,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String RQ_COLUMN_OPERATION_TYPE = "operationType";
     public static final String RQ_COLUMN_CATEGORY_TYPE = "categorytype";
     public static final String RQ_COLUMN_REQUEST_STATUS = "requestStatus";
+    public static final String RQ_COLUMN_NO_OF_ATTEMPTS = "noOfAttempts";
 
     private static final String CREATE_TABLE_REQUEST_QUEUE = "CREATE TABLE IF NOT EXISTS " + TABLE_REQUEST_QUEUE + "("
             + RQ_COLUMN_ID + " integer primary key autoincrement, "
@@ -178,6 +181,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + RQ_COLUMN_JOURNEY_ID + " text ,"
             + RQ_COLUMN_OPERATION_TYPE + " integer,"
             + RQ_COLUMN_CATEGORY_TYPE + " integer ,"
+            + RQ_COLUMN_NO_OF_ATTEMPTS + " integer default 0,"
             + RQ_COLUMN_REQUEST_STATUS + " integer " + ");";
 
     private static final String CREATE_TABLE_LIKE = "create table " + TABLE_LIKE + "("
@@ -186,6 +190,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + LIKE_COLUMN_JOURNEY_ID + " text ,"
             + LIKE_COLUMN_MEMORABLE_ID + " text,"
             + LIKE_COLUMN_USER_ID + " text ,"
+            + LIKE_COLUMN_IS_VALID + " integer ,"
             + LIKE_COLUMN_MEM_TYPE + " text " + ");";
 
     private static final String CREATE_TABLE_CONTACT = "create table " + TABLE_CONTACT + "("
@@ -234,9 +239,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + PICTURE_COLUMN_CREATEDBY + " text ,"
             + PICTURE_COLUMN_CREATEDAT + " text ,"
             + PICTURE_COLUMN_UPDATEDAT + " text ,"
-            + PICTURE_CLOUMN_LOCALTHUMBNAILPATH + " text ,"
+            + PICTURE_COLUMN_LOCALTHUMBNAILPATH + " text ,"
             + PICTURE_COLUMN_LATITUDE + " text ,"
-            + PICTURE_CLOUMN_LONGITUDE + " real ,"
+            + PICTURE_COLUMN_LONGITUDE + " real ,"
             + PICTURE_COLUMN_LIKEDBY + " real " + ");";
 
     private static final String CREATE_TABLE_AUDIO = "create table if not exists " + TABLE_AUDIO + "("
@@ -252,7 +257,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + VOICE_COLUMN_CREATEDAT + " integer ,"
             + VOICE_COLUMN_UPDATEDAT + " integer ,"
             + VOICE_COLUMN_LATITUDE + " real ,"
-            + VOICE_CLOUMN_LONGITUDE + " real ,"
+            + VOICE_COLUMN_LONGITUDE + " real ,"
+            + VOICE_COLUMN_DURATION + " integer ,"
             + VOICE_COLUMN_LIKEDBY + " text " + ");";
 
     private static final String CREATE_TABLE_VIDEO = "create table if not exists " + TABLE_VIDEO + "("
@@ -268,9 +274,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + VIDEO_COLUMN_CREATED_BY + " text ,"
             + VIDEO_COLUMN_CREATED_AT + " integer ,"
             + VIDEO_COLUMN_UPDATED_AT + " integer ,"
-            + VIDEO_CLOUMN_LOCALTHUMBNAILPATH + " text ,"
+            + VIDEO_COLUMN_LOCALTHUMBNAILPATH + " text ,"
             + VIDEO_COLUMN_LATITUDE + " real ,"
-            + VIDEO_CLOUMN_LONGITUDE + " real ,"
+            + VIDEO_COLUMN_LONGITUDE + " real ,"
             + VIDEO_COLUMN_LIKED_BY + " text " + ");";
 
     private static final String CREATE_TABLE_MOOD = "create table if not exists " + TABLE_MOOD + "("
@@ -285,7 +291,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + MOOD_COLUMN_MOOD + " text ,"
             + MOOD_COLUMN_REASON + " text ,"
             + MOOD_COLUMN_LATITUDE + " real ,"
-            + MOOD_CLOUMN_LONGITUDE + " real ,"
+            + MOOD_COLUMN_LONGITUDE + " real ,"
             + MOOD_COLUMN_LIKED_BY + " text " + ");";
 
     private static final String CREATE_TABLE_CHECKIN = "create table " + TABLE_CHECKIN + "("
@@ -315,7 +321,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + NOTES_COLUMN_CREATED_AT + " integer ,"
             + NOTES_COLUMN_UPDATED_AT + " integer ,"
             + NOTES_COLUMN_LATITUDE + " real ,"
-            + NOTES_CLOUMN_LONGITUDE + " real ,"
+            + NOTES_COLUMN_LONGITUDE + " real ,"
             + NOTES_COLUMN_LIKED_BY + " text " + ");";
 
     private static final String CREATE_TABLE_PLACE = "create table if not exists " + TABLE_PLACE + "("

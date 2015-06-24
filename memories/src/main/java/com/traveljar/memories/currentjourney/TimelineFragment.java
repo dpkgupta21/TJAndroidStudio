@@ -1,5 +1,6 @@
 package com.traveljar.memories.currentjourney;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +18,7 @@ import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
 import com.traveljar.memories.currentjourney.adapters.TimeLineAdapter;
 import com.traveljar.memories.models.Memories;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.SessionManager;
 import com.traveljar.memories.utility.TJPreferences;
 
@@ -45,6 +47,9 @@ public class TimelineFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Intent intent = new Intent(getActivity(), MakeServerRequestsService.class);
+        getActivity().startService(intent);
 
         Log.d(TAG, "onactivitycreated() method called from timeline");
         /**
@@ -126,6 +131,7 @@ public class TimelineFragment extends Fragment {
         Log.d(TAG, "no of memories = " + memoriesList.size());
         if(memoriesList.size() > 0) {
             mListView.setVisibility(View.VISIBLE);
+            mLayout.setBackgroundColor(getResources().getColor(R.color.white));
             if (mAdapter == null) {
                 Log.d(TAG, "mAdapter is null");
                 mAdapter = new TimeLineAdapter(getActivity(), memoriesList);

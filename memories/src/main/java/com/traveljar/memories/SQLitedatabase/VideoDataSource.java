@@ -32,9 +32,9 @@ public class VideoDataSource {
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_BY, newVideo.getCreatedBy());
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_AT, newVideo.getCreatedAt());
 /*        values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, newVideo.getLikedBy() == null ? null : Joiner.on(",").join(newVideo.getLikedBy()));*/
-        values.put(MySQLiteHelper.VIDEO_CLOUMN_LOCALTHUMBNAILPATH, newVideo.getLocalThumbPath());
+        values.put(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH, newVideo.getLocalThumbPath());
         values.put(MySQLiteHelper.VIDEO_COLUMN_LATITUDE, newVideo.getLatitude());
-        values.put(MySQLiteHelper.VIDEO_COLUMN_LATITUDE, newVideo.getLongitude());
+        values.put(MySQLiteHelper.VIDEO_COLUMN_LONGITUDE, newVideo.getLongitude());
 
         long video_id = db.insert(MySQLiteHelper.TABLE_VIDEO, null, values);
         Log.d(TAG, "New video Inserted!");
@@ -58,6 +58,8 @@ public class VideoDataSource {
 
     /**
      * getting all videos
+     * @param id
+     * @param context
      */
 
     // Getting single contact
@@ -183,11 +185,11 @@ public class VideoDataSource {
             video.setLatitude(cursor.getDouble(cursor
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LATITUDE)));
             video.setLongitude(cursor.getDouble(cursor
-                    .getColumnIndex(MySQLiteHelper.VIDEO_CLOUMN_LONGITUDE)));
+                    .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LONGITUDE)));
 /*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
             video.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-            video.setLikes(LikeDataSource.getLikeIdsForMemory(context, video.getIdOnServer()));
-            video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_CLOUMN_LOCALTHUMBNAILPATH)));
+            video.setLikes(LikeDataSource.getLikesForMemory(context, video.getIdOnServer()));
+            video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();
         }
@@ -225,11 +227,11 @@ public class VideoDataSource {
             video.setLatitude(cursor.getDouble(cursor
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LATITUDE)));
             video.setLongitude(cursor.getDouble(cursor
-                    .getColumnIndex(MySQLiteHelper.VIDEO_CLOUMN_LONGITUDE)));
+                    .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LONGITUDE)));
 /*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
             video.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-            video.setLikes(LikeDataSource.getLikeIdsForMemory(context, video.getIdOnServer()));
-            video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_CLOUMN_LOCALTHUMBNAILPATH)));
+            video.setLikes(LikeDataSource.getLikesForMemory(context, video.getIdOnServer()));
+            video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();
         }

@@ -41,7 +41,7 @@ public class CheckinDataSource {
         values.put(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT, newCheckIn.getUpdatedAt());
        /* values.put(MySQLiteHelper.CHECKIN_COLUMN_LIKED_BY, newCheckIn.getLikedBy() == null ? null : Joiner.on(",").join(newCheckIn.getLikedBy()));*/
         values.put(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE, newCheckIn.getLatitude());
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE, newCheckIn.getLongitude());
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE, newCheckIn.getLongitude());
 
         // insert row
         Long checkin_id = db.insert(MySQLiteHelper.TABLE_CHECKIN, null, values);
@@ -150,7 +150,7 @@ public class CheckinDataSource {
                         .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT)));
                 /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
                 checkin.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-                checkin.setLikes(LikeDataSource.getLikeIdsForMemory(context, checkin.getIdOnServer()));
+                checkin.setLikes(LikeDataSource.getLikesForMemory(context, checkin.getIdOnServer()));
 
                 checkin.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE)));
                 checkin.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE)));

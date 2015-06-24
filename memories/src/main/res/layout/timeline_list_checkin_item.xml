@@ -39,7 +39,7 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-        <com.traveljar.memories.customviews.MyTextViewBold
+        <com.traveljar.memories.customviews.MyTextViewHeadline
             android:id="@+id/timelineItemCheckinPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

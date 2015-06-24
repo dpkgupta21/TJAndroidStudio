@@ -13,25 +13,21 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Note;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
 
-/**
- * Created by abhi on 19/06/15.
- */
-public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemoryDeleteListener{
+public class NoteDetail extends AppCompatActivity {
     private static final String TAG = "<NoteDetail>";
     private static final int ACTION_ITEM_DELETE = 0;
     private TextView noteContent;
@@ -66,8 +62,6 @@ public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemo
 
         Bundle extras = getIntent().getExtras();
 
-        //If the activity is started for an already note
-        Log.d(TAG, "running for an already created note");
         mNote = NoteDataSource.getNote(extras.getString("NOTE_ID"), this);
         Log.d(TAG, "note fetched is" + mNote);
 
@@ -117,20 +111,16 @@ public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemo
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "note is not already liked so liking it");
-                    like = new Like(null, null, mNote.getjId(), mNote.getIdOnServer(), TJPreferences.getUserId(NoteDetail.this), mNote.getMemType());
-                    like.setId(String.valueOf(LikeDataSource.createLike(like, NoteDetail.this)));
+                    like = MemoriesUtil.createLikeRequest(mNote.getId(), Request.CATEGORY_TYPE_NOTE, NoteDetail.this);
                     mNote.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                    Log.d(TAG, "memory_id = " + like.getMemorableId());
-                    MemoriesUtil.likeMemory(NoteDetail.this, like);
                 } else {
                     // If already liked, delete from local database, delete from server
-                    Log.d(TAG, "Note is already liked so removing the like");
+                    Log.d(TAG, "note is not already liked so removing the like");
                     like = mNote.getLikeById(likeId);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    LikeDataSource.deleteLike(NoteDetail.this, like);
                     mNote.getLikes().remove(like);
-                    MemoriesUtil.unlikeMemory(NoteDetail.this, like);
+                    MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_NOTE, NoteDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mNote.getLikes().size()));
             }
@@ -155,6 +145,7 @@ public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemo
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                MemoriesUtil.deleteMemory(NoteDetail.this, mNote.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -169,15 +160,6 @@ public class NoteDetail extends AppCompatActivity implements MemoriesUtil.OnMemo
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onDeleteMemory(int resultCode) {
-        if(resultCode == 0){
-            finish();
-        }else {
-            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
         }
     }
 

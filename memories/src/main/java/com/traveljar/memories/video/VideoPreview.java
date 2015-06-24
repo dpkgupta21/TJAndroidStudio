@@ -19,9 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.services.GPSTracker;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
@@ -34,7 +37,6 @@ import java.io.IOException;
 public class VideoPreview extends AppCompatActivity {
 
     private static final String TAG = "<VideoDetail>";
-//    List<String> likedBy;
     private ImageView video;
     private TextView dateBig;
     private TextView date;
@@ -149,14 +151,26 @@ public class VideoPreview extends AppCompatActivity {
     }
 
     private void saveAndUploadVideo() {
-        Log.d(TAG, "creating a new video in local DB");
+/*        Log.d(TAG, "creating a new video in local DB");
         mVideo.setCaption(caption.getText().toString());
         long id = VideoDataSource.createVideo(mVideo, this);
         mVideo.setId(String.valueOf(id));
         Intent intent = new Intent(this, UploadVideoService.class);
         intent.putExtra("VIDEO", mVideo);
-        startService(intent);
-//        VideoUtil.uploadVideo(this, mVideo);
+        startService(intent);*/
+        mVideo.setCaption(caption.getText().toString());
+        long id = VideoDataSource.createVideo(mVideo, this);
+        mVideo.setId(String.valueOf(id));
+        Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_VIDEO, Request.REQUEST_STATUS_NOT_STARTED, 0);
+        RequestQueueDataSource.createRequest(request, this);
+        if(HelpMe.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, MakeServerRequestsService.class);
+            startService(intent);
+        }
+        else{
+            Log.d(TAG, "since no network not starting service RQ");
+        }
     }
 
     @Override

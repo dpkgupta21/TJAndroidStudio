@@ -6,12 +6,13 @@ import android.os.Parcelable;
 /**
  * Created by ankit on 19/6/15.
  */
-public class Like implements Parcelable{
+public class Like implements Parcelable {
 
     public static final Parcelable.Creator<Like> CREATOR = new Parcelable.Creator<Like>() {
         public Like createFromParcel(Parcel in) {
             return new Like(in);
         }
+
         public Like[] newArray(int size) {
             return new Like[size];
         }
@@ -20,22 +21,32 @@ public class Like implements Parcelable{
     private String id;
     private String idOnServer;
     private String journeyId;
-    private String memoryId;
+    private String memoryLocalId;
     private String userId;
     private String memType;
+    private boolean isValid;
 
-    public Like(){
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setIsValid(boolean isValid) {
+        this.isValid = isValid;
+    }
+
+    public Like() {
 
     }
 
-    // Memorable id -> id of child element, memoryId -> id of parent class
-    public Like(String id, String idOnServer, String journeyId, String memoryId, String userId, String memType) {
+    // Memorable id -> id of child element, memoryLocalId -> id of parent class
+    public Like(String id, String idOnServer, String journeyId, String memoryLocalId, String userId, String memType, boolean isValid) {
         this.id = id;
         this.idOnServer = idOnServer;
         this.journeyId = journeyId;
-        this.memoryId = memoryId;
+        this.memoryLocalId = memoryLocalId;
         this.userId = userId;
         this.memType = memType;
+        this.isValid = isValid;
     }
 
     public String getId() {
@@ -63,11 +74,11 @@ public class Like implements Parcelable{
     }
 
     public String getMemorableId() {
-        return memoryId;
+        return memoryLocalId;
     }
 
     public void setMemorableId(String memorableId) {
-        this.memoryId = memorableId;
+        this.memoryLocalId = memorableId;
     }
 
     public String getUserId() {
@@ -96,18 +107,22 @@ public class Like implements Parcelable{
         parcel.writeString(id);
         parcel.writeString(idOnServer);
         parcel.writeString(journeyId);
-        parcel.writeString(memoryId);
+        parcel.writeString(memoryLocalId);
         parcel.writeString(userId);
         parcel.writeString(memType);
+        parcel.writeInt(isValid ? 1 : 0);
     }
 
-    public Like(Parcel parcel){
+    public Like(Parcel parcel) {
         id = parcel.readString();
         idOnServer = parcel.readString();
         journeyId = parcel.readString();
-        memoryId = parcel.readString();
+        memoryLocalId = parcel.readString();
         userId = parcel.readString();
         memType = parcel.readString();
+
+        isValid = (parcel.readInt() == 1) ? true : false;
+
     }
 
 }

@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white">
 
-            <com.traveljar.memories.customviews.MyTextViewBold
+            <com.traveljar.memories.customviews.MyTextViewHeadline
                 android:id="@+id/photo_detail_date_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

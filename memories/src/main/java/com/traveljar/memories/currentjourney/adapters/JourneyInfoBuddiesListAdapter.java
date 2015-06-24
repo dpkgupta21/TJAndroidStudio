@@ -146,6 +146,8 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
         if(resultCode == 0) {
             mDialog.dismiss();
             JourneyDataSource.removeContactFromJourney(context, userId);
+            /*MemoriesDataSource.deleteAllMemoriesCreatedByUser(context, userId);
+            MemoriesDataSource.removeUserFromMemories(context, userId);*/
             mDataset = ContactDataSource.getContactsFromJourney(context, TJPreferences.getActiveJourneyId(context));
             this.notifyDataSetChanged();
         }else {

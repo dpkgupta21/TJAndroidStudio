@@ -11,7 +11,6 @@ import com.traveljar.memories.models.Memories;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class MemoriesDataSource {
@@ -26,17 +25,18 @@ public class MemoriesDataSource {
         memoriesList.addAll(NoteDataSource.getAllNotesList(context, journeyId));
         memoriesList.addAll(VideoDataSource.getAllVideoMemories(context, journeyId));
         memoriesList.addAll(MoodDataSource.getMoodsFromJourney(context, journeyId));
-        Collections.sort(memoriesList);
+        //Collections.sort(memoriesList);
 
         Log.d(TAG, "total memories =" + memoriesList.size());
         return memoriesList;
     }
 
+
     public static void deleteAllMemoriesCreatedByUser(Context context, String userId){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         db.delete(MySQLiteHelper.TABLE_AUDIO, MySQLiteHelper.VIDEO_COLUMN_CREATED_BY + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_CHECKIN, MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY + "=?", new String[]{userId});
-        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_CLOUMN_LONGITUDE + "=?", new String[]{userId});
+        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_COLUMN_LONGITUDE + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_CREATED_BY + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_PICTURE, MySQLiteHelper.PICTURE_COLUMN_CREATEDBY + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_VIDEO, MySQLiteHelper.VIDEO_COLUMN_CREATED_BY + "=?", new String[]{userId});
@@ -49,10 +49,11 @@ public class MemoriesDataSource {
         String [] buddyColumnNames = new String[]{MySQLiteHelper.CHECKIN_COLUMN_WITH, MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID};
         String [] columnIdNames = new String[]{MySQLiteHelper.CHECKIN_COLUMN_ID, MySQLiteHelper.MOOD_COLUMN_ID};
         int i = 0;
+        Cursor cursor;
         for(String tableName : tableNames) {
             String selectQuery = "SELECT * " + " FROM " + tableName +
-                    " WHERE " + buddyColumnNames[i] + " LIKE " + "%" + userId + "%";
-            Cursor cursor = db.rawQuery(selectQuery, null);
+                    " WHERE " + buddyColumnNames[i] + " LIKE " + "'%" + userId + "%'";
+            cursor = db.rawQuery(selectQuery, null);
             String buddyIds = "";
             String id;
             if (cursor.moveToFirst()) {
@@ -70,6 +71,7 @@ public class MemoriesDataSource {
                     values.put(buddyColumnNames[i], buddyIds);
                     db.update(tableName, values, columnIdNames[i] + " = " + id, null);
                 }while (cursor.moveToNext());
+                cursor.close();
 
             }
             Log.d(TAG, "existing contact for journey " + buddyIds);

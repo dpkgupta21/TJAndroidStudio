@@ -33,9 +33,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * Created by ankit on 15/6/15.
- */
 public class PicturePreview extends AppCompatActivity {
 
     private static final String TAG = "<PhotoDetail>";
@@ -46,7 +43,6 @@ public class PicturePreview extends AppCompatActivity {
     private EditText caption;
     private ImageView mProfileImg;
     private TextView profileName;
-    private long currenTime;
     private String imagePath;
     private Picture mPicture;
 
@@ -65,7 +61,6 @@ public class PicturePreview extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        currenTime = HelpMe.getCurrentTime();
         photo = (ImageView) findViewById(R.id.photo_detail_photo);
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
@@ -112,7 +107,8 @@ public class PicturePreview extends AppCompatActivity {
             }
 
             mPicture = new Picture(null, TJPreferences.getActiveJourneyId(this), HelpMe.PICTURE_TYPE, caption.getText().toString()
-                    .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), currenTime, currenTime, null, localThumbnailPath, lat, longi);
+                    .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), HelpMe.getCurrentTime(), HelpMe.getCurrentTime(),
+                    null, localThumbnailPath, lat, longi);
 
         photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
 
@@ -152,11 +148,17 @@ public class PicturePreview extends AppCompatActivity {
         startService(intent);*/
         mPicture.setCaption(caption.getText().toString());
         long id = PictureDataSource.createPicture(mPicture, this);
+        mPicture.setId(String.valueOf(id));
         Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
-                Request.OPERATION_TYPE_UPLOAD, Request.CATEGORY_TYPE_PICTURE, Request.REQUEST_STATUS_NOT_STARTED);
+                Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_PICTURE, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, this);
-        Intent intent = new Intent(this, MakeServerRequestsService.class);
-        startService(intent);
+        if(HelpMe.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, MakeServerRequestsService.class);
+            startService(intent);
+        }
+        else{
+            Log.d(TAG, "since no network not starting service RQ");
+        }
     }
 
     @Override

@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/ic_flight_selected" android:state_checked="true" />
-    <item android:drawable="@drawable/ic_flight_not_seleted" android:state_checked="false" />
+    <item android:drawable="@drawable/ic_flight_not_selected" android:state_checked="false" />
 
 </selector><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/drawable/toggle_flight.xml -->

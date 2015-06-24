@@ -34,7 +34,6 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="5dp"
             android:textColor="@color/white"
-            android:textSize="16sp"
             android:layout_alignTop="@id/timelineItemUserImage"
             android:layout_toRightOf="@id/timelineItemUserImage"/>
 
@@ -53,20 +52,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:textSize="16sp"
                 android:text="Picture/Video default text"
                 android:textColor="@color/black" />
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg
+            <com.traveljar.memories.customviews.MyTextViewSmallText
                 android:id="@+id/timelineItemTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/timelineItemCaption"
                 android:text="20 hours ago"
                 android:layout_marginTop="1dp"
-                android:textColor="@color/tj_red_light_text"
-                android:textSize="@dimen/tj_small_font"
-                android:textStyle="italic" />
+                android:textColor="@color/tj_red_light_text" />
 
             <ImageButton
                 android:id="@+id/timelineItemFavIcon"
@@ -85,8 +81,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/timelineItemFavIcon"
-                android:text="0"
-                android:textSize="24sp" />
+                android:text="0" />
 
         </RelativeLayout>
     </RelativeLayout>

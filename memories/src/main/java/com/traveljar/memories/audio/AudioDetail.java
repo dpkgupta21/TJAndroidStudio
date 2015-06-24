@@ -13,25 +13,25 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
+import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
+import com.traveljar.memories.video.VideoDetail;
 
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class AudioDetail extends AppCompatActivity implements MemoriesUtil.OnMemoryDeleteListener{
+public class AudioDetail extends AppCompatActivity {
 
     private static final String TAG = "<AudioDetail>";
     private static final int ACTION_ITEM_DELETE = 0;
@@ -111,20 +111,17 @@ public class AudioDetail extends AppCompatActivity implements MemoriesUtil.OnMem
                 Like like;
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
-                    Log.d(TAG, "video is not already liked so liking it");
-                    like = new Like(null, null, mAudio.getjId(), mAudio.getIdOnServer(), TJPreferences.getUserId(AudioDetail.this), mAudio.getMemType());
-                    like.setId(String.valueOf(LikeDataSource.createLike(like, AudioDetail.this)));
+                    Log.d(TAG, "audio is not already liked so liking it");
+                    like = MemoriesUtil.createLikeRequest(mAudio.getId(), Request.CATEGORY_TYPE_AUDIO, AudioDetail.this);
                     mAudio.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
-                    MemoriesUtil.likeMemory(AudioDetail.this, like);
                 } else {
                     // If already liked, delete from local database, delete from server
-                    Log.d(TAG, "memory is not already liked so removing the like");
+                    Log.d(TAG, "audio is not already liked so removing the like");
                     like = mAudio.getLikeById(likeId);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    LikeDataSource.deleteLike(AudioDetail.this, like);
                     mAudio.getLikes().remove(like);
-                    MemoriesUtil.unlikeMemory(AudioDetail.this, like);
+                    MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_AUDIO, AudioDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mAudio.getLikes().size()));
             }
@@ -149,7 +146,7 @@ public class AudioDetail extends AppCompatActivity implements MemoriesUtil.OnMem
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
+                                MemoriesUtil.deleteMemory(AudioDetail.this, mAudio.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -167,12 +164,4 @@ public class AudioDetail extends AppCompatActivity implements MemoriesUtil.OnMem
         }
     }
 
-    @Override
-    public void onDeleteMemory(int resultCode) {
-        if(resultCode == 0){
-            finish();
-        }else {
-            Toast.makeText(this, "Unable to delete delete your memory please try after some time", Toast.LENGTH_LONG).show();
-        }
-    }
 }
