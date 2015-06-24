@@ -110,7 +110,7 @@ public class GcmIntentService extends IntentService {
     }
 
     private void parseGcmMessage(Bundle bundle) {
-        Log.d(TAG, " parseGcmMessage called");
+        Log.d(TAG, " parseGcmMessage called " + bundle);
         String type = bundle.get("type").toString();
 
         // buddy_ids are recieved in format [5,6,7]
