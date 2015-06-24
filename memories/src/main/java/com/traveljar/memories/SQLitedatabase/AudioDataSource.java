@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.Memories;
+import com.traveljar.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,20 @@ public class AudioDataSource {
         return audio;
     }
 
+    public static Audio getAudioByServerId(Context context, String audioId) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO + " WHERE " + MySQLiteHelper.VOICE_COLUMN_ID_ONSERVER
+                + " = " + audioId;
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Audio audio = null;
+        if (cursor.moveToFirst()) {
+            audio = getAudiosList(context, cursor).get(0);
+        }
+        cursor.close();
+        db.close();
+        return audio;
+    }
+
     public static List<Memories> getAudioMemoriesForJourney(Context context, String journeyId) {
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO + " WHERE "
                 + MySQLiteHelper.VOICE_COLUMN_JID + " = " + journeyId;
@@ -139,7 +154,7 @@ public class AudioDataSource {
             audio.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDBY)));
             audio.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
             audio.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
-            audio.setLikes(LikeDataSource.getLikesForMemory(context, audio.getIdOnServer()));
+            audio.setLikes(LikeDataSource.getLikesForMemory(context, audio.getId(), HelpMe.AUDIO_TYPE));
             audio.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LATITUDE)));
             audio.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LONGITUDE)));
             audio.setAudioDuration(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DURATION)));
@@ -166,7 +181,7 @@ public class AudioDataSource {
             audio.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDBY)));
             audio.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_CREATEDAT)));
             audio.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT)));
-            audio.setLikes(LikeDataSource.getLikesForMemory(context, audio.getIdOnServer()));
+            audio.setLikes(LikeDataSource.getLikesForMemory(context, audio.getId(), HelpMe.AUDIO_TYPE));
             audio.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LATITUDE)));
             audio.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LONGITUDE)));
             audio.setAudioDuration(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_DURATION)));

@@ -24,7 +24,6 @@ import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
-import com.traveljar.memories.video.VideoDetail;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -137,7 +136,7 @@ public class MoodDetail extends AppCompatActivity {
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "mood is not already liked so liking it");
-                    like = MemoriesUtil.createLikeRequest(mMood.getId(), Request.CATEGORY_TYPE_VIDEO, MoodDetail.this);
+                    like = MemoriesUtil.createLikeRequest(mMood.getId(), Request.CATEGORY_TYPE_VIDEO, MoodDetail.this, HelpMe.MOOD_TYPE);
                     mMood.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 } else {

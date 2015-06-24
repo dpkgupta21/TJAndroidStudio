@@ -88,10 +88,11 @@ public class LikeDataSource {
         db.close();
     }
 
-    public static List<Like> getLikesForMemory(Context context, String memoryId) {
+    public static List<Like> getLikesForMemory(Context context, String memoryId, String memType) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String selectQuery = "SELECT * FROM " + MySQLiteHelper.TABLE_LIKE + " WHERE " + MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID + " = '"
-                + memoryId + "' AND " + MySQLiteHelper.LIKE_COLUMN_IS_VALID + " = 1";
+                + memoryId + "' AND " + MySQLiteHelper.LIKE_COLUMN_IS_VALID + " = 1 AND " + MySQLiteHelper.LIKE_COLUMN_MEM_TYPE + " = '"
+                + memType + " '";
         Cursor cursor = db.rawQuery(selectQuery, null);
         List<Like> likesList = getLikesFromCursor(cursor);
         cursor.close();

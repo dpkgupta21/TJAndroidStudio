@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.common.base.Joiner;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Memories;
+import com.traveljar.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,6 +85,20 @@ public class CheckinDataSource {
 
     }
 
+    public static CheckIn getCheckInByIdOnServer(String id, Context context) {
+        Log.d(TAG, "fetching one checkin item from DB with id =" + id);
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.query(MySQLiteHelper.TABLE_CHECKIN, null,
+                MySQLiteHelper.CHECKIN_COLUMN_ID_ONSERVER + "=?", new String[]{String.valueOf(id)}, null,
+                null, null, null);
+
+        List<Memories> checkInsList = getCheckInsFromCursor(cursor, context);
+        cursor.close();
+        db.close();
+        return (CheckIn)checkInsList.get(0);
+
+    }
+
 /*    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
@@ -150,7 +165,7 @@ public class CheckinDataSource {
                         .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT)));
                 /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
                 checkin.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-                checkin.setLikes(LikeDataSource.getLikesForMemory(context, checkin.getIdOnServer()));
+                checkin.setLikes(LikeDataSource.getLikesForMemory(context, checkin.getId(), HelpMe.CHECKIN_TYPE));
 
                 checkin.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE)));
                 checkin.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE)));

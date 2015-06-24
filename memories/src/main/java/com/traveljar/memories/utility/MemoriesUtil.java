@@ -119,9 +119,9 @@ public class MemoriesUtil {
         return false;
     }
 
-    public static Like createLikeRequest(String memoryId, int categoryType, Context context) {
+    public static Like createLikeRequest(String memoryId, int categoryType, Context context, String memoryType) {
         Log.d(TAG, "liking a memory with memoryid = " + memoryId + categoryType);
-        Like like = new Like(null, null, TJPreferences.getActiveJourneyId(context), memoryId, TJPreferences.getUserId(context), "Memory", true);
+        Like like = new Like(null, null, TJPreferences.getActiveJourneyId(context), memoryId, TJPreferences.getUserId(context), memoryType, true);
         like.setId(String.valueOf(LikeDataSource.createLike(like, context)));
 
         com.traveljar.memories.models.Request request = new com.traveljar.memories.models.Request(null, like.getId(), TJPreferences.getActiveJourneyId(context),

@@ -143,7 +143,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "picture is not already liked so liking it");
-                    like = MemoriesUtil.createLikeRequest(mPicture.getId(), Request.CATEGORY_TYPE_PICTURE, PictureDetail.this);
+                    like = MemoriesUtil.createLikeRequest(mPicture.getId(), Request.CATEGORY_TYPE_PICTURE, PictureDetail.this, HelpMe.PICTURE_TYPE);
                     mPicture.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
 

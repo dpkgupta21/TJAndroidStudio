@@ -217,19 +217,19 @@ public class MakeServerRequestsService extends IntentService {
         Like like;
         switch (request.getOperationType()) {
             case Request.OPERATION_TYPE_CREATE:
-                note = NoteDataSource.getNote(request.getObjectLocalId(), this);
+                note = NoteDataSource.getNoteById(request.getObjectLocalId(), this);
                 result = NotesUtil.uploadNoteOnServer(this, note);
                 return result;
 
             case Request.OPERATION_TYPE_LIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                note = NoteDataSource.getNote(like.getMemorableId(), this);
+                note = NoteDataSource.getNoteById(like.getMemorableId(), this);
                 like.setMemorableId(note.getIdOnServer());
                 return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                note = NoteDataSource.getNote(like.getMemorableId(), this);
+                note = NoteDataSource.getNoteById(like.getMemorableId(), this);
                 like.setMemorableId(note.getIdOnServer());
                 return MemoriesUtil.unlikeMemoryOnServer(this, like);
 

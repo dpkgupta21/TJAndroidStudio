@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.common.base.Joiner;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Mood;
+import com.traveljar.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +69,20 @@ public class MoodDataSource {
 
     }
 
+    public static Mood getMoodByIdOnServer(String id, Context context) {
+        Log.d(TAG, "fetching one mood item from DB with id =" + id);
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.query(MySQLiteHelper.TABLE_MOOD, null,
+                MySQLiteHelper.MOOD_COLUMN_ID_ONSERVER + "=?", new String[]{String.valueOf(id)}, null,
+                null, null, null);
+
+        List<Memories> moodsList = getMoodsFromCursor(cursor, context);
+        cursor.close();
+        db.close();
+        return (Mood)moodsList.get(0);
+
+    }
+
     private static List<Memories> getMoodsFromCursor(Cursor cursor, Context context){
         List<Memories> moodsList = new ArrayList<>();
         Mood mood;
@@ -85,7 +100,7 @@ public class MoodDataSource {
                 mood.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT)));
                 /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
                 mood.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-                mood.setLikes(LikeDataSource.getLikesForMemory(context, mood.getIdOnServer()));
+                mood.setLikes(LikeDataSource.getLikesForMemory(context, mood.getId(), HelpMe.MOOD_TYPE));
                 mood.setBuddyIds(Arrays.asList((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID))).split(",")));
                 mood.setMood(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MOOD)));
                 mood.setReason(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_REASON)));

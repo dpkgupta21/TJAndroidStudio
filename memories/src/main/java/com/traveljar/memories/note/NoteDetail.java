@@ -62,7 +62,7 @@ public class NoteDetail extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        mNote = NoteDataSource.getNote(extras.getString("NOTE_ID"), this);
+        mNote = NoteDataSource.getNoteById(extras.getString("NOTE_ID"), this);
         Log.d(TAG, "note fetched is" + mNote);
 
         //setup the state of favourite button
@@ -111,7 +111,7 @@ public class NoteDetail extends AppCompatActivity {
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "note is not already liked so liking it");
-                    like = MemoriesUtil.createLikeRequest(mNote.getId(), Request.CATEGORY_TYPE_NOTE, NoteDetail.this);
+                    like = MemoriesUtil.createLikeRequest(mNote.getId(), Request.CATEGORY_TYPE_NOTE, NoteDetail.this, HelpMe.NOTE_TYPE);
                     mNote.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 } else {

@@ -75,7 +75,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
 
     @Override
     public int getViewTypeCount() {
-        return 6;
+        return 7;
     }
 
     @Override
@@ -189,7 +189,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "video is not already liked so liking it");
-                    like = MemoriesUtil.createLikeRequest(mem.getId(), Request.getCategoryTypeFromMemory(mem), context);
+                    like = MemoriesUtil.createLikeRequest(mem.getId(), Request.getCategoryTypeFromMemory(mem), context, mem.getMemType());
                     mem.getLikes().add(like);
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 } else {
@@ -235,7 +235,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         Log.d(TAG, "3.2");
 
         switch (type) {
-            case 0:
+            case 5:
                 Log.d(TAG, "in picture");
 
                 Picture pic = (Picture) memoriesList.get(position);
@@ -273,7 +273,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                 Log.d(TAG, "iN AUDIO ENDED HERE");
                 break;
 
-            case 2:
+            case 6:
                 Log.d(TAG, "in video");
                 Video vid = (Video) memoriesList.get(position);
 
@@ -283,20 +283,20 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                 //holder.timelineItemImage.setImageBitmap(HelpMe.getVideoThumbnail(vid.getDataURL()));
                 break;
 
-            case 3:
+            case 4:
                 Log.d(TAG, "in notes_capture");
                 Note note = (Note) memoriesList.get(position);
                 holder.timelineItemContent.setText(note.getContent());
                 break;
 
-            case 4:
+            case 2:
                 Log.d(TAG, "in checkin");
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
                 holder.timelineItemCaption.setText(checkin.getCaption());
                 holder.timelineItemCheckinPlace.setText(checkin.getCheckInPlaceName());
                 break;
 
-            case 5:
+            case 3:
                 Log.d(TAG, "in mood");
                 Mood mood = (Mood) memoriesList.get(position);
 
