@@ -38,8 +38,7 @@
                     android:id="@+id/new_journey_location_new_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bangalore"
-                    android:textSize="26sp" />
+                    android:text="Bangalore" />
             </LinearLayout>
 
             <ImageView
@@ -71,8 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:text="Delhi"
-                    android:textSize="26sp" />
+                    android:text="Delhi" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -101,8 +99,7 @@
             <com.traveljar.memories.customviews.MyTextViewHeadline
                 android:id="@+id/new_journey_location_new_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="26sp" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <View

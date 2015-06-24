@@ -328,6 +328,7 @@
     <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="layer_width">300dp</dimen>
+    <dimen name="new_lap_transport_icon_size">64dp</dimen>
     <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="notification_large_icon_height">64dp</dimen>

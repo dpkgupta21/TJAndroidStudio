@@ -21,35 +21,32 @@
 
         <!-- checkin_place name -->
 
-        <com.traveljar.memories.customviews.MyTextViewHeadline
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/checkin_place_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="Pearl Harbour Hotel"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/black" />
 
         <!-- checkin_place address -->
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewSmallText
             android:id="@+id/checkin_place_address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/checkin_place_name"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Phuket, Thailand"
-            android:textSize="12sp" />
+            android:text="Phuket, Thailand" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewSmallText
             android:id="@+id/checkin_place_count"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/checkin_place_address"
-            android:text="3,123 were here"
-            android:textSize="12sp" />
+            android:text="3,123 were here" />
     </RelativeLayout>
 
 </LinearLayout>
