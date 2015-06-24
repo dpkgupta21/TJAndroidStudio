@@ -20,8 +20,7 @@
         android:layout_toRightOf="@id/add_friends_contact_image"
         android:layout_alignParentTop="@id/add_friends_contact_image"
         android:layout_marginTop="10dp"
-        android:text="Content not available"
-        android:textSize="18sp" />
+        android:text="Content not available" />
 
     <ImageButton
         android:id="@+id/add_friends_contact_remove_btn"
@@ -33,13 +32,12 @@
         android:contentDescription="@string/default_string"
         android:text="Content not available" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg
+    <com.traveljar.memories.customviews.MyTextViewSmallText
         android:id="@+id/add_friends_contact_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contact Info"
         android:layout_marginTop="5dp"
-        android:textSize="18sp"
         android:layout_below="@+id/add_friends_contact_name"
         android:layout_toRightOf="@+id/add_friends_contact_image"
         android:layout_toEndOf="@+id/add_friends_contact_image" />

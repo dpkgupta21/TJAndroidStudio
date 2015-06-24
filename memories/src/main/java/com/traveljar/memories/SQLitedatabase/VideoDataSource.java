@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Video;
+import com.traveljar.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,18 @@ public class VideoDataSource {
 
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(MySQLiteHelper.TABLE_VIDEO, null, MySQLiteHelper.VIDEO_COLUMN_ID
+                + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+        Video video = getVideosList(cursor, context).get(0);
+        cursor.close();
+        db.close();
+        return video;
+
+    }
+
+    public static Video getVideoByIdOnServer(String id, Context context) {
+
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.query(MySQLiteHelper.TABLE_VIDEO, null, MySQLiteHelper.VIDEO_COLUMN_ID_ONSERVER
                 + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
         Video video = getVideosList(cursor, context).get(0);
         cursor.close();
@@ -188,7 +201,7 @@ public class VideoDataSource {
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LONGITUDE)));
 /*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
             video.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-            video.setLikes(LikeDataSource.getLikesForMemory(context, video.getIdOnServer()));
+            video.setLikes(LikeDataSource.getLikesForMemory(context, video.getId(), HelpMe.VIDEO_TYPE));
             video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();
@@ -230,7 +243,7 @@ public class VideoDataSource {
                     .getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LONGITUDE)));
 /*            String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
             video.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
-            video.setLikes(LikeDataSource.getLikesForMemory(context, video.getIdOnServer()));
+            video.setLikes(LikeDataSource.getLikesForMemory(context, video.getId(), HelpMe.VIDEO_TYPE));
             video.setLocalThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH)));
             videosList.add(video);
             cursor.moveToNext();

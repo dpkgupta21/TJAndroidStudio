@@ -18,21 +18,19 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/all_contacts_contact_image">
 
-        <com.traveljar.memories.customviews.MyTextViewHeadline
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/all_contacts_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Content not available"
-            android:textSize="@dimen/tj_medium_font" />
+            android:text="Content not available" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewSmallText
             android:id="@+id/all_contacts_contact_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/all_contacts_contact_name"
             android:layout_below="@id/all_contacts_contact_name"
-            android:text="Content not available"
-            android:textSize="@dimen/tj_medium_font" />
+            android:text="Content not available" />
     </RelativeLayout>
 
     <CheckBox

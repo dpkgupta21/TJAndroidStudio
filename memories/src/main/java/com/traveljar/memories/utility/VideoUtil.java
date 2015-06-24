@@ -81,6 +81,8 @@ public class VideoUtil {
                 }
             }, 0, 0, null, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
+                    Log.d(TAG, "error occured" + error.getMessage());
+                    PullMemoriesService.isFinished();
                 }
             });
             request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

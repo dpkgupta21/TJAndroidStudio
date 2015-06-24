@@ -24,7 +24,6 @@ import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
-import com.traveljar.memories.video.VideoDetail;
 
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
@@ -112,7 +111,7 @@ public class AudioDetail extends AppCompatActivity {
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "audio is not already liked so liking it");
-                    like = MemoriesUtil.createLikeRequest(mAudio.getId(), Request.CATEGORY_TYPE_AUDIO, AudioDetail.this);
+                    like = MemoriesUtil.createLikeRequest(mAudio.getId(), Request.CATEGORY_TYPE_AUDIO, AudioDetail.this, HelpMe.AUDIO_TYPE);
                     mAudio.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 } else {

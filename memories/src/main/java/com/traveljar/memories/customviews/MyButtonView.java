@@ -25,7 +25,7 @@ public class MyButtonView extends Button {
     private void init() {
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Medium.ttf");
         setTypeface(tf);
-        setTextSize(14);
+        setTextSize(16);
     }
 
 }

@@ -4,15 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
-    <ImageView
-        android:id="@+id/new_journey_detail_bg_image"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:contentDescription="@string/default_string"
-        android:scaleType="fitXY"
-        android:src="@drawable/banner2" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/new_journey_detail_bg_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:contentDescription="@string/default_string"
+            android:scaleType="fitXY"
+            android:src="@drawable/banner2" />
+
+        <include layout="@layout/toolbar" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:layout_marginTop="25dp"
             android:hint="Journey Name"
             android:inputType="text" />
 

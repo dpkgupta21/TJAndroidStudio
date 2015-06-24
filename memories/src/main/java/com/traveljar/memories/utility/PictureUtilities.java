@@ -103,6 +103,8 @@ public class PictureUtilities {
                 }
             }, 0, 0, null, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
+                    Log.d(TAG, "error oaccuered" + error.getMessage());
+                    PullMemoriesService.isFinished();
                 }
             });
             AppController.getInstance().addToRequestQueue(request);

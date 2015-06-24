@@ -11,7 +11,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.traveljar.memories.customviews.MyTextViewHeadline
+        <com.traveljar.memories.customviews.MyTextViewCustom
             android:id="@+id/galleryNoteItemBigDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:layout_marginTop="5dp"
             android:background="@color/tj_medium_gray" />
 
-        <com.traveljar.memories.customviews.MyTextViewHeadline
+        <com.traveljar.memories.customviews.MyTextViewCustom
             android:id="@+id/galleryNoteItemDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

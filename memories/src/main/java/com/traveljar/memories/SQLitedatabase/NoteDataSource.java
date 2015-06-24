@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.common.base.Joiner;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Note;
+import com.traveljar.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,28 +54,25 @@ public class NoteDataSource {
         return count;
     }
 
-    public static Note getNote(String id, Context context) {
+    public static Note getNoteByServerId(String id, Context context) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        Cursor cursor = db.query(MySQLiteHelper.TABLE_NOTES, null, MySQLiteHelper.NOTES_COLUMN_ID
+        Cursor cursor = db.query(MySQLiteHelper.TABLE_NOTES, null, MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER
                 + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        Note note = new Note();
-        note.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_ID)));
-        note.setIdOnServer(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER)));
-        note.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_BY)));
-        note.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
-        note.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
-        note.setLikes(LikeDataSource.getLikesForMemory(context, note.getIdOnServer()));
-        note.setContent(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CONTENT)));
-        note.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_JID)));
-        note.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LATITUDE)));
-        note.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LONGITUDE)));
+        Log.d(TAG, "get note by server id " + cursor.getCount());
+        Note note = (Note)parseNotesFromCursor(context, cursor).get(0);
         cursor.close();
         db.close();
         return note;
+    }
 
+    public static Note getNoteById(String id, Context context) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.query(MySQLiteHelper.TABLE_NOTES, null, MySQLiteHelper.NOTES_COLUMN_ID
+                + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+        Note note = (Note)parseNotesFromCursor(context, cursor).get(0);
+        cursor.close();
+        db.close();
+        return note;
     }
 
     public static void updateServerId(Context context, String noteId, String serverId) {
@@ -92,36 +90,14 @@ public class NoteDataSource {
     }
 
     public static List<Memories> getAllNotesList(Context context, String journeyId) {
-        List<Memories> notesList = new ArrayList<Memories>();
+
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_NOTES + " WHERE "
                 + MySQLiteHelper.NOTES_COLUMN_JID + " = " + journeyId;
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-        Log.d(TAG, "cursor length" + c.getCount() + journeyId);
-        c.moveToFirst();
-        Note note;
-        while (!c.isAfterLast()) {
-            note = new Note();
-
-            note.setId(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_ID)));
-            note.setIdOnServer(c.getString(c
-                    .getColumnIndex(MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER)));
-            note.setjId(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_JID)));
-            note.setMemType(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_MEM_TYPE)));
-            note.setCaption(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CAPTION)));
-            note.setContent(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CONTENT)));
-            note.setCreatedBy(c.getString(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_BY)));
-            note.setCreatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
-            note.setUpdatedAt(c.getLong(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
-            note.setLikes(LikeDataSource.getLikesForMemory(context, note.getIdOnServer()));
-
-            note.setLatitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LATITUDE)));
-            note.setLongitude(c.getDouble(c.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LONGITUDE)));
-            notesList.add(note);
-            c.moveToNext();
-        }
-        c.close();
+        List<Memories> notesList = parseNotesFromCursor(context, cursor);
+        cursor.close();
         db.close();
 
         return notesList;
@@ -133,6 +109,33 @@ public class NoteDataSource {
         values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_NOTES, values, MySQLiteHelper.NOTES_COLUMN_ID + " = " + memId, null);
         db.close();
+    }
+
+    public static List<Memories> parseNotesFromCursor(Context context, Cursor cursor){
+        Note note;
+        List<Memories> notesList = new ArrayList<Memories>();
+        if(cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                note = new Note();
+                note.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_ID)));
+                note.setIdOnServer(cursor.getString(cursor
+                        .getColumnIndex(MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER)));
+                note.setjId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_JID)));
+                note.setMemType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_MEM_TYPE)));
+                note.setCaption(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CAPTION)));
+                note.setContent(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CONTENT)));
+                note.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_BY)));
+                note.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_CREATED_AT)));
+                note.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT)));
+                note.setLikes(LikeDataSource.getLikesForMemory(context, note.getId(), HelpMe.NOTE_TYPE));
+
+                note.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LATITUDE)));
+                note.setLongitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.NOTES_COLUMN_LONGITUDE)));
+                notesList.add(note);
+                cursor.moveToNext();
+            }
+        }
+        return notesList;
     }
 
 }

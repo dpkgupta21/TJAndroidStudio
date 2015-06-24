@@ -24,7 +24,6 @@ import com.traveljar.memories.models.Request;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
-import com.traveljar.memories.video.VideoDetail;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -133,7 +132,7 @@ public class CheckinDetail extends AppCompatActivity {
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "checkIn is not already liked so liking it");
-                    like = MemoriesUtil.createLikeRequest(mCheckIn.getId(), Request.CATEGORY_TYPE_CHECKIN, CheckinDetail.this);
+                    like = MemoriesUtil.createLikeRequest(mCheckIn.getId(), Request.CATEGORY_TYPE_CHECKIN, CheckinDetail.this, HelpMe.CHECKIN_TYPE);
                     mCheckIn.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 } else {

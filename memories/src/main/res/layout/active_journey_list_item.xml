@@ -28,7 +28,7 @@
 
         </FrameLayout>
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewSubHeadingReg
             android:id="@+id/active_journey_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <com.traveljar.memories.customviews.MyTextViewSmallText
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/active_journey_list_tagline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

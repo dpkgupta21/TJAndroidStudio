@@ -81,4 +81,22 @@ public class MemoriesDataSource {
         Log.d(TAG, "user successfully added to the current journey");
     }
 
+    public static Memories getMemoryFromTypeAndId(Context context, String idOnServer, String memType){
+        switch (Integer.parseInt(memType)){
+            case 1:
+                return AudioDataSource.getAudioByServerId(context, idOnServer);
+            case 2:
+                return CheckinDataSource.getCheckInByIdOnServer(idOnServer, context);
+            case 3:
+                return MoodDataSource.getMoodByIdOnServer(idOnServer, context);
+            case 4:
+                return NoteDataSource.getNoteByServerId(idOnServer, context);
+            case 5:
+                return PictureDataSource.getPictureByIdOnServer(context, idOnServer);
+            case 6:
+                return VideoDataSource.getVideoByIdOnServer(idOnServer, context);
+        }
+        return null;
+    }
+
 }

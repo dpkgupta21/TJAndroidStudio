@@ -15,6 +15,8 @@ import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
+import com.traveljar.memories.SQLitedatabase.LikeDataSource;
+import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
@@ -22,6 +24,8 @@ import com.traveljar.memories.currentjourney.TimelineFragment;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Journey;
+import com.traveljar.memories.models.Like;
+import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
@@ -110,7 +114,7 @@ public class GcmIntentService extends IntentService {
     }
 
     private void parseGcmMessage(Bundle bundle) {
-        Log.d(TAG, " parseGcmMessage called");
+        Log.d(TAG, " parseGcmMessage called " + bundle);
         String type = bundle.get("type").toString();
 
         // buddy_ids are recieved in format [5,6,7]
@@ -184,6 +188,20 @@ public class GcmIntentService extends IntentService {
                 if(ActivejourneyList.isActivityVisible()){
                     ActivejourneyList.getInstance().refreshJourneysList();
                 }
+                break;
+
+            case HelpMe.TYPE_LIKE_MEMORY:
+                String userId = bundle.get("user_id").toString();
+                journeyId = bundle.get("j_id").toString();
+                String memoryId = bundle.get("id").toString();
+                String memoryType = bundle.get("memory_type").toString();
+
+                Memories memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memoryId, memoryType);
+                Log.d(TAG, "memories value is " + memories);
+                Like like = new Like(null, null, journeyId, memories.getId(), userId, memoryType, true);
+                LikeDataSource.createLike(like, this);
+
+                break;
 
             default:
                 break;

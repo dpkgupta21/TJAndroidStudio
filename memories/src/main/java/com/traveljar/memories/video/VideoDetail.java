@@ -148,7 +148,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "video is not already liked so liking it");
-                    like = MemoriesUtil.createLikeRequest(mVideo.getId(), Request.CATEGORY_TYPE_VIDEO, VideoDetail.this);
+                    like = MemoriesUtil.createLikeRequest(mVideo.getId(), Request.CATEGORY_TYPE_VIDEO, VideoDetail.this, HelpMe.VIDEO_TYPE);
                     mVideo.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 } else {

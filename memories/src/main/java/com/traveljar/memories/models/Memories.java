@@ -7,6 +7,7 @@ import com.traveljar.memories.utility.TJPreferences;
 import java.util.List;
 
 public class Memories implements Comparable<Memories> {
+    protected String id;
     protected String idOnServer;
     protected String jId;
     protected String memType;
@@ -16,8 +17,6 @@ public class Memories implements Comparable<Memories> {
     protected Double latitude;
     protected Double longitude;
     protected List<Like> likes;
-
-    protected String id;
 
     public String getId() {
         return id;
