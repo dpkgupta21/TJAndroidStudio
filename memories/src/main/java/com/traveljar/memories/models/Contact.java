@@ -36,6 +36,7 @@ public class Contact implements Comparable<Contact>, Parcelable {
                    String interests) {
         this.idOnServer = idOnServer;
         this.name = name;
+        this.status = status;
         this.primaryEmail = primaryEmail;
         this.picServerUrl = picServerUrl;
         this.picLocalUrl = picLocalUrl;

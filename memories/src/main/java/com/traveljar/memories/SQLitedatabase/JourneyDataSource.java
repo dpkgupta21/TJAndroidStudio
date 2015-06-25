@@ -133,10 +133,10 @@ public class JourneyDataSource {
         db.close();
     }
 
-    public static void addContactToJourney(Context context, String contactId){
+    public static void addContactToJourney(Context context, String contactId, String journeyId){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         String selectQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + " FROM " + MySQLiteHelper.TABLE_JOURNEY +
-                " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = '" + TJPreferences.getActiveJourneyId(context) + "'";
+                " WHERE " + journeyId + " = '" + TJPreferences.getActiveJourneyId(context) + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
         String buddyIds = "";
         if(cursor.moveToFirst()){

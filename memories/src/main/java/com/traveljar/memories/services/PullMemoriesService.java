@@ -9,11 +9,13 @@ import com.android.volley.VolleyError;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
+import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Journey;
+import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
@@ -164,12 +166,13 @@ public class PullMemoriesService {
         String fileSize;
         Picture pic;
         long audioDuration;
+        long id;
 
         Double latitude;
         Double longitude;
 
-        Long createdAt = HelpMe.getCurrentTime();
-        Long updatedAt = HelpMe.getCurrentTime();
+        Long createdAt;
+        Long updatedAt;
 
         try {
 
@@ -187,6 +190,8 @@ public class PullMemoriesService {
                     String key = (String) keys.next();
                     Log.d(TAG, "key is " + key);
                     memory = (JSONObject) object.get(key);
+                    createdAt = Long.parseLong(object.getString("created_at"));
+                    updatedAt = Long.parseLong(object.getString("updated_at"));
 
                     if (key.equals("picture") && object.get(key) instanceof JSONObject) {
 
@@ -219,7 +224,8 @@ public class PullMemoriesService {
                         Note newNote = new Note(memoryId, journeyId, HelpMe.NOTE_TYPE, caption, content, createdBy,
                                 createdAt, updatedAt, null, latitude, longitude);
 
-                        NoteDataSource.createNote(newNote, mContext);
+                        id = NoteDataSource.createNote(newNote, mContext);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.NOTE_TYPE, journeyId);
 
                         Log.d(TAG, "note parsed and saved successfully");
 
@@ -255,7 +261,8 @@ public class PullMemoriesService {
                         List<String> buddyIds = buddys == null ? null : Arrays.asList(buddys.split(","));
                         CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName, null, buddyIds, createdBy,
                                 createdAt, updatedAt, null);
-                        CheckinDataSource.createCheckIn(newCheckIn, mContext);
+                        id = CheckinDataSource.createCheckIn(newCheckIn, mContext);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId);
 
                         Log.d(TAG, "checkin parsed and saved successfully");
 
@@ -274,7 +281,8 @@ public class PullMemoriesService {
 
                         Mood newMood = new Mood(memoryId, journeyId, HelpMe.MOOD_TYPE, buddyId, mood, reason,
                                 createdBy, createdAt, updatedAt, null, latitude, longitude);
-                        MoodDataSource.createMood(newMood, mContext);
+                        id = MoodDataSource.createMood(newMood, mContext);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.MOOD_TYPE, journeyId);
 
                         Log.d(TAG, "mood parsed and saved successfully");
 
@@ -291,7 +299,8 @@ public class PullMemoriesService {
                         longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
                         Audio newAudio = new Audio(memoryId, journeyId, HelpMe.AUDIO_TYPE, "3gp", 1122,
                                 fileUrl, null, createdBy, createdAt, updatedAt, null, 0, latitude, longitude);
-                        AudioDataSource.createAudio(newAudio, mContext);
+                        id = AudioDataSource.createAudio(newAudio, mContext);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.AUDIO_TYPE, journeyId);
 
                         Log.d(TAG, "audio parsed and saved successfully");
 
@@ -300,6 +309,25 @@ public class PullMemoriesService {
             }
         } catch (Exception ex) {
             Log.d(TAG, "exception in parsing memories " + ex);
+        }
+    }
+
+    public void parseAndSaveLikes(JSONArray jsonArray, String memoryId, String memType, String journeyId){
+        String idOnServer;
+        String userId;
+        JSONObject jsonObject;
+        int size = jsonArray.length();
+        for(int i = 0; i < size; i++){
+            try {
+                jsonObject = jsonArray.getJSONObject(i);
+                idOnServer = jsonObject.getString("id");
+                userId = jsonObject.getString("user_id");
+                Like like = new Like(null, idOnServer, journeyId, memoryId, userId, memType, true);
+                LikeDataSource.createLike(like, mContext);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

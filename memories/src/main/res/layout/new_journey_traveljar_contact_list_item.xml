@@ -18,13 +18,14 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/all_contacts_contact_image">
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyMed
             android:id="@+id/all_contacts_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="Content not available" />
 
-        <com.traveljar.memories.customviews.MyTextViewSmallText
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/all_contacts_contact_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

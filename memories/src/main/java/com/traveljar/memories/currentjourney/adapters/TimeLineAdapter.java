@@ -197,10 +197,9 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                     Log.d(TAG, "memory is not already liked so removing the like");
                     like = mem.getLikeById(likeId);
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
-                    mem.getLikes().remove(like);
                     MemoriesUtil.createUnlikeRequest(like, Request.getCategoryTypeFromMemory(mem), context);
+                    mem.getLikes().remove(like);
                 }
-
                 holder.timelineNoLikesTxt.setText(String.valueOf(mem.getLikes().size()));
             }
         });

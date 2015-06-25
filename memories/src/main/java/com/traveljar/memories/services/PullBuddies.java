@@ -19,7 +19,6 @@ import com.traveljar.memories.volley.CustomJsonRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -75,10 +74,6 @@ public class PullBuddies {
                                                 public void onResponse(Bitmap bitmap) {
                                                     FileOutputStream out = null;
                                                     try {
-                                                        File tjDir = new File(Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES);
-                                                        if (!tjDir.exists()) {
-                                                            tjDir.mkdirs();
-                                                        }
                                                         String fileName = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES
                                                                 + idOnServer + ".jpeg";
                                                         out = new FileOutputStream(fileName);

@@ -56,6 +56,7 @@ public class CheckinDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Checkin Detail");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dateBig = (TextView) findViewById(R.id.checkin_detail_date_big);
@@ -168,7 +169,7 @@ public class CheckinDetail extends AppCompatActivity {
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.deleteMemory(CheckinDetail.this, mCheckIn.getIdOnServer());
+                                MemoriesUtil.getInstance().deleteMemory(CheckinDetail.this, mCheckIn.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

@@ -21,7 +21,7 @@
 
         <!-- checkin_place name -->
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyMed
             android:id="@+id/checkin_place_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
 
         <!-- checkin_place address -->
 
-        <com.traveljar.memories.customviews.MyTextViewSmallText
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/checkin_place_address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

@@ -2,6 +2,7 @@ package com.traveljar.memories.utility;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -38,19 +39,8 @@ public class MemoriesUtil {
 
     private static final String TAG = "MemoriesUtil";
 
-    public static void deleteMemory(Context context, String memoryIdOnServer) {
-        String url = Constants.URL_MEMORY_UPDATE + TJPreferences.getActiveJourneyId(context) + "/memories/" + memoryIdOnServer;
-        Log.d(TAG, "url is " + url + " api key " + TJPreferences.getApiKey(context));
-        HttpDelete deleteRequest = new HttpDelete(url);
-        deleteRequest.setHeader("api_key", TJPreferences.getApiKey(context));
-        HttpResponse response;
-        try {
-            response = new DefaultHttpClient().execute(deleteRequest);
-            JSONObject object = new JSONObject(EntityUtils.toString(response.getEntity()));
-            Log.d(TAG, "response on deleting memory" + object);
-        } catch (Exception e) {
-            Log.d(TAG, "error in deleting memory" + e.getMessage());
-        }
+    public void deleteMemory(Context context, String memoryIdOnServer) {
+        new DeleteMemoryAsyncTask(context).execute(memoryIdOnServer);
     }
 
     public static boolean likeMemoryOnServer(Context context, Like like) {
@@ -70,7 +60,7 @@ public class MemoriesUtil {
             JSONObject response = futureRequest.get(30, TimeUnit.SECONDS);
             Log.d(TAG, "memory liked successfully on server with response " + response);
             like.setIdOnServer(response.getJSONArray("likes").getJSONObject(0).getString("id"));
-            LikeDataSource.updateLike(like, context);
+            /*LikeDataSource.updateLike(like, context);*/
             return true;
         } catch (InterruptedException e) {
             Log.d(TAG, "like couldnot be uploaded InterruptedException");
@@ -103,7 +93,7 @@ public class MemoriesUtil {
         AppController.getInstance().getRequestQueue().add(jsonRequest);
         try {
             JSONObject response = futureRequest.get(30, TimeUnit.SECONDS);
-            LikeDataSource.deleteLike(context, like);
+            LikeDataSource.deleteLike(context, like.getId());
             Log.d(TAG, "memory unliked successfully on server with response " + response);
             return true;
         } catch (InterruptedException e) {
@@ -120,10 +110,9 @@ public class MemoriesUtil {
     }
 
     public static Like createLikeRequest(String memoryId, int categoryType, Context context, String memoryType) {
-        Log.d(TAG, "liking a memory with memoryid = " + memoryId + categoryType);
         Like like = new Like(null, null, TJPreferences.getActiveJourneyId(context), memoryId, TJPreferences.getUserId(context), memoryType, true);
         like.setId(String.valueOf(LikeDataSource.createLike(like, context)));
-
+        Log.d(TAG, "like created in database = " + like + memoryType);
         com.traveljar.memories.models.Request request = new com.traveljar.memories.models.Request(null, like.getId(), TJPreferences.getActiveJourneyId(context),
                 com.traveljar.memories.models.Request.OPERATION_TYPE_LIKE, categoryType, com.traveljar.memories.models.Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, context);
@@ -151,6 +140,30 @@ public class MemoriesUtil {
             context.startService(intent);
         } else {
             Log.d(TAG, "since no network not starting service RQ");
+        }
+    }
+
+    private class DeleteMemoryAsyncTask extends AsyncTask<String, Void, String> {
+        Context context;
+        public DeleteMemoryAsyncTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected String doInBackground(String... maps) {
+            String url = Constants.URL_MEMORY_UPDATE + TJPreferences.getActiveJourneyId(context) + "/memories/" + maps[0]
+                    + "?api_key=" + TJPreferences.getApiKey(context);
+            Log.d(TAG, "url is " + url + " api key " + TJPreferences.getApiKey(context));
+            HttpDelete deleteRequest = new HttpDelete(url);
+            HttpResponse response;
+            try {
+                response = new DefaultHttpClient().execute(deleteRequest);
+                JSONObject object = new JSONObject(EntityUtils.toString(response.getEntity()));
+                Log.d(TAG, "response on deleting memory" + object);
+            } catch (Exception e) {
+                Log.d(TAG, "error in deleting memory" + e.getMessage());
+            }
+            return null;
         }
     }
 

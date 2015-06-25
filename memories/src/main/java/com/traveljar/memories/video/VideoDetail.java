@@ -57,7 +57,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         Log.d(TAG, "entrerd video details");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Video");
+        toolbar.setTitle("Video Detail");
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -182,7 +182,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.deleteMemory(VideoDetail.this, mVideo.getIdOnServer());
+                                MemoriesUtil.getInstance().deleteMemory(VideoDetail.this, mVideo.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

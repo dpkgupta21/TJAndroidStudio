@@ -57,6 +57,7 @@ public class MoodDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Mood Detail");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dateBig = (TextView) findViewById(R.id.mood_detail_date_big);
@@ -136,7 +137,7 @@ public class MoodDetail extends AppCompatActivity {
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
                     Log.d(TAG, "mood is not already liked so liking it");
-                    like = MemoriesUtil.createLikeRequest(mMood.getId(), Request.CATEGORY_TYPE_VIDEO, MoodDetail.this, HelpMe.MOOD_TYPE);
+                    like = MemoriesUtil.createLikeRequest(mMood.getId(), Request.CATEGORY_TYPE_MOOD, MoodDetail.this, HelpMe.MOOD_TYPE);
                     mMood.getLikes().add(like);
                     mFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 } else {
@@ -170,7 +171,7 @@ public class MoodDetail extends AppCompatActivity {
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.deleteMemory(MoodDetail.this, mMood.getIdOnServer());
+                                MemoriesUtil.getInstance().deleteMemory(MoodDetail.this, mMood.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

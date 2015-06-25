@@ -83,8 +83,13 @@ public class GcmIntentService extends IntentService {
 
                 Log.d(TAG, "something recieved =" + extras.toString());
 
-                parseGcmMessage(extras);
-
+                // Check if it is a valid GCM message
+                if ((extras).containsKey("type")) {
+                    parseGcmMessage(extras);
+                } else {
+                    Log.d(TAG, "dodged a number verification exception");
+                }
+                
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
                 sendNotification("Received: " + extras.toString());
@@ -131,16 +136,20 @@ public class GcmIntentService extends IntentService {
         String jName;
         String tagline;
         String createdBy;
+        String memId;
         long createdAt;
         long updatedAt;
         long completedAt;
+        String memoryType;
+        Memories memories;
 
+        String userId;
 
         Log.d(TAG, "1.1");
         // COde to verify correct receipient
         // Check for user id
         // If userId is not present in the list, ignore this message
-        Log.d(TAG, "====" +  (!userIdList.contains(TJPreferences.getUserId(getBaseContext()))));
+        Log.d(TAG, "====" + (!userIdList.contains(TJPreferences.getUserId(getBaseContext()))));
         if (!userIdList.contains(TJPreferences.getUserId(getBaseContext()))) {
             Log.d(TAG, "gcm notification ignored ");
             return;
@@ -158,7 +167,6 @@ public class GcmIntentService extends IntentService {
                     Log.d(TAG, "type = create , so createMemory called");
                     createMemory(journeyId, Integer.parseInt(memType), new JSONObject(data));
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 break;
@@ -185,24 +193,44 @@ public class GcmIntentService extends IntentService {
 
                 Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt);
                 JourneyDataSource.createJourney(jItem, this);
-                if(ActivejourneyList.isActivityVisible()){
+                if (ActivejourneyList.isActivityVisible()) {
                     ActivejourneyList.getInstance().refreshJourneysList();
                 }
                 break;
 
             case HelpMe.TYPE_LIKE_MEMORY:
-                String userId = bundle.get("user_id").toString();
+                userId = bundle.get("user_id").toString();
                 journeyId = bundle.get("j_id").toString();
-                String memoryId = bundle.get("id").toString();
-                String memoryType = bundle.get("memory_type").toString();
+                memId = bundle.get("id").toString();
+                memoryType = bundle.get("memory_type").toString();
 
-                Memories memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memoryId, memoryType);
+                memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
+
                 Log.d(TAG, "memories value is " + memories);
                 Like like = new Like(null, null, journeyId, memories.getId(), userId, memoryType, true);
                 LikeDataSource.createLike(like, this);
 
                 break;
 
+            case HelpMe.TYPE_UNLIKE_MEMORY:
+                memId = bundle.get("id").toString();
+                memoryType = bundle.get("memory_type").toString();
+
+                memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
+                LikeDataSource.deleteLikeWithMemIdAndUser(this, memories.getId(), memories.getCreatedBy());
+                break;
+
+            /*case HelpMe.TYPE_ADD_BUDDY:
+                String buddyId = bundle.getString("buddy_id");
+                journeyId = bundle.getString("journey_ids");
+                ContactsUtil.fetchContact(this, buddyId);
+                JourneyDataSource.addContactToJourney(this, buddyId, journeyId);
+                break;
+
+            case HelpMe.TYPE_REMOVE_BUDDY:
+                *//*String buddyId = bundle.getString("buddy_id");
+                journeyId = bundle.getString("journey_ids");*//*
+                break;*/
             default:
                 break;
         }
@@ -211,7 +239,7 @@ public class GcmIntentService extends IntentService {
     private void createMemory(String jId, int memType, JSONObject data)
             throws NumberFormatException, JSONException {
         Log.d(TAG, "createMemory called");
-        String idOnServer = data.getString("id");
+        String idOnServer = data.getString("memory_id");
         String createdBy = data.getString("created_by");
         long createdAt = Long.parseLong(data.getString("created_at"));
         long updatedAt = Long.parseLong(data.getString("updated_at"));

@@ -122,7 +122,11 @@ public class Like implements Parcelable {
         memType = parcel.readString();
 
         isValid = (parcel.readInt() == 1) ? true : false;
+    }
 
+    @Override
+    public String toString(){
+        return "like_id->" + id + ", user_id->" + userId + " isValid->" + isValid + " memtype->" + memType;
     }
 
 }

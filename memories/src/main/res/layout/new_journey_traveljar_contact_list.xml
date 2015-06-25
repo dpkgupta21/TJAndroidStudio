@@ -9,7 +9,6 @@
         android:id="@+id/all_contacts_searchview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
         android:hint="Enter contact name"
         android:padding="10dp" />

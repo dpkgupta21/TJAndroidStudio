@@ -76,6 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:background="@color/white"
                 android:contentDescription="@string/default_string"
                 android:src="@drawable/ic_favourite_empty" />
@@ -84,6 +85,7 @@
                 android:id="@+id/noLikesTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="-8dp"
                 android:layout_toLeftOf="@+id/timelineItemFavIcon"

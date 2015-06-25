@@ -18,6 +18,7 @@ import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.JourneyUtil;
+import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -126,7 +127,7 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
             mDialog.dismiss();
             mDataset.remove(ContactDataSource.getContactById(mContext, contactId));
             this.notifyDataSetChanged();
-            JourneyDataSource.addContactToJourney(mContext, contactId);
+            JourneyDataSource.addContactToJourney(mContext, contactId, TJPreferences.getActiveJourneyId(mContext));
         }else {
             Toast.makeText(mContext, "Unable to add contact to the journey please try again", Toast.LENGTH_SHORT).show();
             mDialog.dismiss();

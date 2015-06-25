@@ -56,6 +56,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+        toolbar.setTitle("Picture Detail");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -178,7 +179,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.deleteMemory(PictureDetail.this, mPicture.getIdOnServer());
+                                MemoriesUtil.getInstance().deleteMemory(PictureDetail.this, mPicture.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
