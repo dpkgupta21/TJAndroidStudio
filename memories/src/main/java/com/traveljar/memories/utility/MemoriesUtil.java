@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.android.volley.toolbox.RequestFuture;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
@@ -13,6 +12,7 @@ import com.traveljar.memories.models.Like;
 import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.volley.AppController;
 import com.traveljar.memories.volley.CustomJsonRequest;
+import com.traveljar.memories.models.Request;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
@@ -44,7 +44,7 @@ public class MemoriesUtil {
     }
 
     public static boolean likeMemoryOnServer(Context context, Like like) {
-        String url = Constants.URL_MEMORY_UPDATE + like.getJourneyId() + "/memories/" + like.getMemorableId() + "/like";
+        String url = Constants.URL_MEMORY_UPDATE + like.getJourneyId() + "/memories/" + like.getMemoryLocalId() + "/like";
 
         Map<String, String> params = new HashMap<>();
         params.put("api_key", TJPreferences.getApiKey(context));
@@ -53,7 +53,7 @@ public class MemoriesUtil {
         Log.d(TAG, "uploading like with url " + url);
 
         final RequestFuture<JSONObject> futureRequest = RequestFuture.newFuture();
-        CustomJsonRequest jsonRequest = new CustomJsonRequest(Request.Method.POST, url, params, futureRequest, futureRequest);
+        CustomJsonRequest jsonRequest = new CustomJsonRequest(com.android.volley.Request.Method.POST, url, params, futureRequest, futureRequest);
 
         AppController.getInstance().getRequestQueue().add(jsonRequest);
         try {
@@ -79,7 +79,7 @@ public class MemoriesUtil {
     }
 
     public static boolean unlikeMemoryOnServer(Context context, Like like) {
-        String url = Constants.URL_MEMORY_UPDATE + like.getJourneyId() + "/memories/" + like.getMemorableId() + "/unlike";
+        String url = Constants.URL_MEMORY_UPDATE + like.getJourneyId() + "/memories/" + like.getMemoryLocalId() + "/unlike";
 
         Map<String, String> params = new HashMap<>();
         params.put("api_key", TJPreferences.getApiKey(context));
@@ -88,7 +88,7 @@ public class MemoriesUtil {
         Log.d(TAG, "unliking memory with url " + url);
 
         final RequestFuture<JSONObject> futureRequest = RequestFuture.newFuture();
-        CustomJsonRequest jsonRequest = new CustomJsonRequest(Request.Method.PUT, url, params, futureRequest, futureRequest);
+        CustomJsonRequest jsonRequest = new CustomJsonRequest(com.android.volley.Request.Method.PUT, url, params, futureRequest, futureRequest);
 
         AppController.getInstance().getRequestQueue().add(jsonRequest);
         try {
@@ -110,11 +110,11 @@ public class MemoriesUtil {
     }
 
     public static Like createLikeRequest(String memoryId, int categoryType, Context context, String memoryType) {
-        Like like = new Like(null, null, TJPreferences.getActiveJourneyId(context), memoryId, TJPreferences.getUserId(context), memoryType, true);
+        Like like = new Like(null, null, TJPreferences.getActiveJourneyId(context), memoryId, TJPreferences.getUserId(context), memoryType, true, null, HelpMe.getCurrentTime(), HelpMe.getCurrentTime());
         like.setId(String.valueOf(LikeDataSource.createLike(like, context)));
         Log.d(TAG, "like created in database = " + like + memoryType);
-        com.traveljar.memories.models.Request request = new com.traveljar.memories.models.Request(null, like.getId(), TJPreferences.getActiveJourneyId(context),
-                com.traveljar.memories.models.Request.OPERATION_TYPE_LIKE, categoryType, com.traveljar.memories.models.Request.REQUEST_STATUS_NOT_STARTED, 0);
+        Request request = new Request(null, like.getId(), TJPreferences.getActiveJourneyId(context),
+                Request.OPERATION_TYPE_LIKE, categoryType, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, context);
         if (HelpMe.isNetworkAvailable(context)) {
             Intent intent = new Intent(context, MakeServerRequestsService.class);
@@ -132,8 +132,8 @@ public class MemoriesUtil {
         like.setIsValid(false);
         LikeDataSource.updateLike(like, context);
 
-        com.traveljar.memories.models.Request request = new com.traveljar.memories.models.Request(null, like.getId(), TJPreferences.getActiveJourneyId(context),
-                com.traveljar.memories.models.Request.OPERATION_TYPE_UNLIKE, categoryType, com.traveljar.memories.models.Request.REQUEST_STATUS_NOT_STARTED, 0);
+        Request request = new Request(null, like.getId(), TJPreferences.getActiveJourneyId(context),
+                Request.OPERATION_TYPE_UNLIKE, categoryType, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, context);
         if (HelpMe.isNetworkAvailable(context)) {
             Intent intent = new Intent(context, MakeServerRequestsService.class);

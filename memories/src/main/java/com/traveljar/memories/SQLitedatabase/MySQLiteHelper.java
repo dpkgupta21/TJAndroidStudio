@@ -159,6 +159,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_LIKE = "LIKE";
     public static final String LIKE_COLUMN_ID = "_id";
     public static final String LIKE_COLUMN_ID_ONSERVER = "idOnServer";
+    public static final String LIKE_COLUMN_MEMORY_SERVERID = "memServerId";
+    public static final String LIKE_COLUMN_CREATED_AT = "createdAt";
+    public static final String LIKE_COLUMN_UPDATED_AT = "updatedAt";
     public static final String LIKE_COLUMN_JOURNEY_ID = "journeyId";
     public static final String LIKE_COLUMN_MEMORABLE_ID = "memorableId";
     public static final String LIKE_COLUMN_USER_ID = "userId";
@@ -188,6 +191,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + LIKE_COLUMN_ID + " integer primary key autoincrement, "
             + LIKE_COLUMN_ID_ONSERVER + " text , "
             + LIKE_COLUMN_JOURNEY_ID + " text ,"
+            + LIKE_COLUMN_MEMORY_SERVERID + " text,"
+            + LIKE_COLUMN_CREATED_AT + " integer ,"
+            + LIKE_COLUMN_UPDATED_AT + " integer ,"
             + LIKE_COLUMN_MEMORABLE_ID + " text,"
             + LIKE_COLUMN_USER_ID + " text ,"
             + LIKE_COLUMN_IS_VALID + " integer ,"

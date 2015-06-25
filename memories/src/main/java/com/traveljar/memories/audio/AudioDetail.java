@@ -1,6 +1,7 @@
 package com.traveljar.memories.audio;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -17,10 +18,12 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Request;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
@@ -145,7 +148,15 @@ public class AudioDetail extends AppCompatActivity {
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.getInstance().deleteMemory(AudioDetail.this, mAudio.getIdOnServer());
+                                Request request = new Request(null, mAudio.getId(), mAudio.getjId(), Request.OPERATION_TYPE_DELETE,
+                                        Request.CATEGORY_TYPE_AUDIO, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                RequestQueueDataSource.createRequest(request, AudioDetail.this);
+                                if(HelpMe.isNetworkAvailable(AudioDetail.this)) {
+                                    Intent intent = new Intent(AudioDetail.this, MakeServerRequestsService.class);
+                                    startService(intent);
+                                }
+                                finish();
+//                                MemoriesUtil.getInstance().deleteMemory(AudioDetail.this, mAudio.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

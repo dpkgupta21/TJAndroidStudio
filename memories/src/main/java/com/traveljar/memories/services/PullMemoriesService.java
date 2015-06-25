@@ -37,10 +37,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by ankit on 22/5/15.
- */
-public class PullMemoriesService {
+public class PullMemoriesService implements VideoUtil.OnFinishDownloadListener, PictureUtilities.OnFinishDownloadListener{
     private static final String TAG = "PullMemoriesService";
     private static int REQUEST_CODE;
     private static int count = 0;
@@ -161,18 +158,14 @@ public class PullMemoriesService {
         String fileUrl;
         String thumbnailUrl;
         String description;
-        String memType;
-        String likedBy;
-        String fileSize;
-        Picture pic;
         long audioDuration;
         long id;
 
         Double latitude;
         Double longitude;
 
-        Long createdAt = HelpMe.getCurrentTime();
-        Long updatedAt = HelpMe.getCurrentTime();
+        Long createdAt;
+        Long updatedAt;
 
         try {
 
@@ -190,6 +183,8 @@ public class PullMemoriesService {
                     String key = (String) keys.next();
                     Log.d(TAG, "key is " + key);
                     memory = (JSONObject) object.get(key);
+                    createdAt = Long.parseLong(memory.getString("created_at"));
+                    updatedAt = Long.parseLong(memory.getString("updated_at"));
 
                     if (key.equals("picture") && object.get(key) instanceof JSONObject) {
 
@@ -200,12 +195,14 @@ public class PullMemoriesService {
                         fileUrl = memory.getJSONObject("picture_file").getJSONObject("original").getString("url");
                         thumbnailUrl = memory.getJSONObject("picture_file").getJSONObject("medium").getString("url");
 
-                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
-                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+                        latitude = memory.getString("latitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("longitude"));
 
                         Picture newPic = new Picture(memoryId, journeyId, HelpMe.PICTURE_TYPE, description, "jpg",
                                 100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
-                        PictureUtilities.createNewPicFromServer(mContext, newPic, thumbnailUrl);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.PICTURE_TYPE, journeyId, memoryId);
+                        PictureUtilities.getInstance().setOnFinishDownloadListener(this);
+                        PictureUtilities.getInstance().createNewPicFromServer(mContext, newPic, thumbnailUrl);
                         count++;
                         Log.d(TAG, "picture parsed and saved successfully");
 
@@ -216,14 +213,14 @@ public class PullMemoriesService {
                         String content = memory.getString("note");
                         String caption = null;//memory.getJSONObject("memory").getString("caption");
 
-                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
-                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+                        latitude = memory.getString("latitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("longitude"));
 
                         Note newNote = new Note(memoryId, journeyId, HelpMe.NOTE_TYPE, caption, content, createdBy,
                                 createdAt, updatedAt, null, latitude, longitude);
 
                         id = NoteDataSource.createNote(newNote, mContext);
-                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.NOTE_TYPE, journeyId);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.NOTE_TYPE, journeyId, memoryId);
 
                         Log.d(TAG, "note parsed and saved successfully");
 
@@ -235,12 +232,16 @@ public class PullMemoriesService {
                         thumbnailUrl = memory.getJSONObject("video_file").getString("thumb");
                         description = memory.getString("description").equals("null") ? "" : memory.getString("description");
 
-                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
-                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+                        latitude = memory.getString("latitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("longitude"));
 
                         Video newVideo = new Video(memoryId, journeyId, HelpMe.VIDEO_TYPE, description,
                                 "png", 1223, null, fileUrl, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
-                        VideoUtil.createNewVideoFromServer(mContext, newVideo, thumbnailUrl);
+
+                        parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.VIDEO_TYPE, journeyId, memoryId);
+                        VideoUtil.getInstance().setOnFinishDownloadListener(this);
+                        VideoUtil.getInstance().createNewVideoFromServer(mContext, newVideo, thumbnailUrl);
+                        //parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId);
                         count++;
                         Log.d(TAG, "video parsed and saved successfully" + thumbnailUrl);
 
@@ -248,10 +249,9 @@ public class PullMemoriesService {
 
                         createdBy = memory.getString("user_id");
                         memoryId = memory.getString("id");
-                        Log.d(TAG, "parsing checkin");
 
-                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
-                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+                        latitude = memory.getString("latitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("longitude"));
 
                         String placeName = memory.getString("place_name");
                         String note = memory.getString("note");
@@ -260,7 +260,7 @@ public class PullMemoriesService {
                         CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName, null, buddyIds, createdBy,
                                 createdAt, updatedAt, null);
                         id = CheckinDataSource.createCheckIn(newCheckIn, mContext);
-                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId, memoryId);
 
                         Log.d(TAG, "checkin parsed and saved successfully");
 
@@ -268,19 +268,18 @@ public class PullMemoriesService {
 
                         createdBy = memory.getString("user_id");
                         memoryId = memory.getString("id");
-                        Log.d(TAG, "parsing mood");
                         String mood = memory.getString("mood");
                         String reason = memory.getString("reason");
                         String buddy = memory.getString("buddies");
                         List<String> buddyId = buddy == null ? null : Arrays.asList(buddy.split(","));
 
-                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
-                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+                        latitude = memory.getString("latitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("longitude"));
 
                         Mood newMood = new Mood(memoryId, journeyId, HelpMe.MOOD_TYPE, buddyId, mood, reason,
                                 createdBy, createdAt, updatedAt, null, latitude, longitude);
                         id = MoodDataSource.createMood(newMood, mContext);
-                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.MOOD_TYPE, journeyId);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.MOOD_TYPE, journeyId, memoryId);
 
                         Log.d(TAG, "mood parsed and saved successfully");
 
@@ -290,15 +289,14 @@ public class PullMemoriesService {
                         memoryId = memory.getString("id");
                         fileUrl = memory.getJSONObject("audio_file").getString("url");
                         //audioDuration = memory.getString("duration") == "null" ? 0 : Long.parseLong(memory.getString("duration"));
-
                         //Long size = Long.parseLong(memory.getJSONObject("memory").getJSONObject("audio_file").getString("size"));
 
-                        latitude = memory.getString("latitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("latitude"));
-                        longitude = memory.getString("longitude") == "null" ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+                        latitude = memory.getString("latitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("longitude"));
                         Audio newAudio = new Audio(memoryId, journeyId, HelpMe.AUDIO_TYPE, "3gp", 1122,
                                 fileUrl, null, createdBy, createdAt, updatedAt, null, 0, latitude, longitude);
                         id = AudioDataSource.createAudio(newAudio, mContext);
-                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.AUDIO_TYPE, journeyId);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.AUDIO_TYPE, journeyId, memoryId);
 
                         Log.d(TAG, "audio parsed and saved successfully");
 
@@ -310,23 +308,33 @@ public class PullMemoriesService {
         }
     }
 
-    public void parseAndSaveLikes(JSONArray jsonArray, String memoryId, String memType, String journeyId){
+    public void parseAndSaveLikes(JSONArray jsonArray, String memoryId, String memType, String journeyId, String memServerId){
         String idOnServer;
         String userId;
         JSONObject jsonObject;
+        long createdAt;
+        long updatedAt;
         int size = jsonArray.length();
         for(int i = 0; i < size; i++){
             try {
                 jsonObject = jsonArray.getJSONObject(i);
                 idOnServer = jsonObject.getString("id");
                 userId = jsonObject.getString("user_id");
-                Like like = new Like(null, idOnServer, journeyId, memoryId, userId, memType, true);
+                createdAt = Long.parseLong(jsonObject.getString("created_at"));
+                updatedAt = Long.parseLong(jsonObject.getString("updated_at"));
+                Like like = new Like(null, idOnServer, journeyId, memoryId, userId, memType, true, memServerId, createdAt, updatedAt);
                 LikeDataSource.createLike(like, mContext);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
+    }
+
+    @Override
+    public void onFinishDownload(String serverId, String memType, String localId) {
+        Log.d(TAG, "updating memory local id for mem type " + memType);
+        LikeDataSource.updateMemoryLocalId(serverId, memType, localId, mContext);
     }
 
     public interface OnTaskFinishListener {

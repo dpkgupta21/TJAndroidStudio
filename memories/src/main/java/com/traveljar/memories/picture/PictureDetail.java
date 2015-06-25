@@ -20,10 +20,12 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.models.Request;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
@@ -56,6 +58,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+        toolbar.setTitle("Picture Detail");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -178,7 +181,15 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.getInstance().deleteMemory(PictureDetail.this, mPicture.getIdOnServer());
+                                Request request = new Request(null, mPicture.getId(), mPicture.getjId(), Request.OPERATION_TYPE_DELETE,
+                                        Request.CATEGORY_TYPE_PICTURE, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                RequestQueueDataSource.createRequest(request, PictureDetail.this);
+                                if(HelpMe.isNetworkAvailable(PictureDetail.this)) {
+                                    Intent intent = new Intent(PictureDetail.this, MakeServerRequestsService.class);
+                                    startService(intent);
+                                }
+                                finish();
+                                //MemoriesUtil.getInstance().deleteMemory(PictureDetail.this, mPicture.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

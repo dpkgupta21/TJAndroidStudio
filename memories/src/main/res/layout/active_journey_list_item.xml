@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="125dp"
+    android:layout_height="200dp"
     android:background="@color/tj_gray_bg"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingTop="5dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/custom_border_gray"
-        android:padding="2dp">
+
 
         <FrameLayout
             android:layout_width="fill_parent"
@@ -28,7 +24,7 @@
 
         </FrameLayout>
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewHeadline
             android:id="@+id/active_journey_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +34,7 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <com.traveljar.memories.customviews.MyTextViewSmallText
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
             android:id="@+id/active_journey_list_tagline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,6 +85,6 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-    </RelativeLayout>
+
 
 </RelativeLayout>

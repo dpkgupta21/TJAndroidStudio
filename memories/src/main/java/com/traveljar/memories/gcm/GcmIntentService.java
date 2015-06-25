@@ -83,8 +83,13 @@ public class GcmIntentService extends IntentService {
 
                 Log.d(TAG, "something recieved =" + extras.toString());
 
-                parseGcmMessage(extras);
-
+                // Check if it is a valid GCM message
+                if ((extras).containsKey("type")) {
+                    parseGcmMessage(extras);
+                } else {
+                    Log.d(TAG, "dodged a number verification exception");
+                }
+                
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
                 sendNotification("Received: " + extras.toString());
@@ -144,7 +149,7 @@ public class GcmIntentService extends IntentService {
         // COde to verify correct receipient
         // Check for user id
         // If userId is not present in the list, ignore this message
-        Log.d(TAG, "====" +  (!userIdList.contains(TJPreferences.getUserId(getBaseContext()))));
+        Log.d(TAG, "====" + (!userIdList.contains(TJPreferences.getUserId(getBaseContext()))));
         if (!userIdList.contains(TJPreferences.getUserId(getBaseContext()))) {
             Log.d(TAG, "gcm notification ignored ");
             return;
@@ -162,7 +167,6 @@ public class GcmIntentService extends IntentService {
                     Log.d(TAG, "type = create , so createMemory called");
                     createMemory(journeyId, Integer.parseInt(memType), new JSONObject(data));
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 break;
@@ -189,7 +193,7 @@ public class GcmIntentService extends IntentService {
 
                 Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt);
                 JourneyDataSource.createJourney(jItem, this);
-                if(ActivejourneyList.isActivityVisible()){
+                if (ActivejourneyList.isActivityVisible()) {
                     ActivejourneyList.getInstance().refreshJourneysList();
                 }
                 break;
@@ -199,10 +203,13 @@ public class GcmIntentService extends IntentService {
                 journeyId = bundle.get("j_id").toString();
                 memId = bundle.get("id").toString();
                 memoryType = bundle.get("memory_type").toString();
+                createdAt = Long.parseLong(bundle.get("created_at").toString());
+                updatedAt = Long.parseLong(bundle.get("updated_at").toString());
 
                 memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
+
                 Log.d(TAG, "memories value is " + memories);
-                Like like = new Like(null, null, journeyId, memories.getId(), userId, memoryType, true);
+                Like like = new Like(null, null, journeyId, memories.getId(), userId, memoryType, true, memId, createdAt, updatedAt);
                 LikeDataSource.createLike(like, this);
 
                 break;
@@ -210,9 +217,10 @@ public class GcmIntentService extends IntentService {
             case HelpMe.TYPE_UNLIKE_MEMORY:
                 memId = bundle.get("id").toString();
                 memoryType = bundle.get("memory_type").toString();
+                String user_id = bundle.get("user_id").toString();
 
                 memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
-                LikeDataSource.deleteLikeWithMemIdAndUser(this, memories.getId(), memories.getCreatedBy());
+                LikeDataSource.deleteLike(this, memories.getId(), user_id, memories.getMemType());
                 break;
 
             /*case HelpMe.TYPE_ADD_BUDDY:
@@ -264,7 +272,7 @@ public class GcmIntentService extends IntentService {
                 Picture newPic = new Picture(idOnServer, jId, HelpMe.PICTURE_TYPE, caption, extension,
                         size, dataUrl, null, createdBy,
                         createdAt, updatedAt, null, null, latitude, longitude);
-                PictureUtilities.createNewPicFromServer(this, newPic, thumb);
+                PictureUtilities.getInstance().createNewPicFromServer(this, newPic, thumb);
                 break;
 
             case HelpMe.SERVER_AUDIO_TYPE:
@@ -291,7 +299,7 @@ public class GcmIntentService extends IntentService {
                 Video newVideo = new Video(idOnServer, jId, HelpMe.VIDEO_TYPE, caption, extension,
                         size, dataUrl, null, createdBy, createdAt, updatedAt, null, null, latitude, longitude);
                 //Downloading video and save to database
-                VideoUtil.createNewVideoFromServer(this, newVideo, localThumbUrl);
+                VideoUtil.getInstance().createNewVideoFromServer(this, newVideo, localThumbUrl);
                 break;
 
             case HelpMe.SERVER_NOTE_TYPE:

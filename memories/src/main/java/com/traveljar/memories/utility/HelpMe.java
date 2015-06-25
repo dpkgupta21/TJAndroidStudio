@@ -41,7 +41,7 @@ public class HelpMe {
     public static final int TYPE_PROFILE_UPDATE = 5;
     public static final int TYPE_LIKE_MEMORY = 6;
     public static final int TYPE_UNLIKE_MEMORY = 7;
-    public static final int TYPE_ADD_BUDDY = 8;
+    public static final int TYPE_ADD_BUDDY = 10;
     public static final int TYPE_REMOVE_BUDDY = 9;
 
     // Type = picture/audio/video/note

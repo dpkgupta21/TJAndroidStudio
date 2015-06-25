@@ -29,14 +29,10 @@ import com.traveljar.memories.utility.NotesUtil;
 import com.traveljar.memories.utility.PictureUtilities;
 import com.traveljar.memories.utility.VideoUtil;
 
-/**
- * Created by ankit on 22/6/15.
- */
 public class MakeServerRequestsService extends IntentService {
 
     private Request request;
     private int reqTotalCount;
-    private int noRequestTry = 0;
 
     private static final String TAG = "<ServerRequestService>";
 
@@ -52,11 +48,6 @@ public class MakeServerRequestsService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "service started");
 
-
-        noRequestTry = 0;
-        int i = 0;
-        boolean result = false;
-
         while (HelpMe.isNetworkAvailable(this)) {
 
             // Check if any requests are there in RQ, otherwise break
@@ -71,11 +62,9 @@ public class MakeServerRequestsService extends IntentService {
                 Log.d(TAG, "request = " + request.getCategoryType() + " retotacount " + reqTotalCount);
                 // Increment all requests no of attempts to keep track for failure
                 RequestQueueDataSource.incrementRequestNoOfAttempts(request, this);
-                result = parseRequest(request);
             } else {
                 if (RequestQueueDataSource.getFailedRequestsCount(this) != 0) {
                     request = RequestQueueDataSource.getFirstFailedRequest(this);
-                    result = parseRequest(request);
                 }//else no action
                 else {
                     Log.d(TAG, "No more requests to serve!!");
@@ -134,154 +123,151 @@ public class MakeServerRequestsService extends IntentService {
     }
 
     public boolean audioRequests(Request request) {
-        Audio audio;
+        Audio audio = AudioDataSource.getAudioById(this, request.getObjectLocalId());
         boolean result;
         Like like;
         switch (request.getOperationType()) {
             case Request.OPERATION_TYPE_CREATE:
-                audio = AudioDataSource.getAudioById(this, request.getObjectLocalId());
                 result = AudioUtil.uploadAudioOnServer(this, audio);
                 return result;
 
             case Request.OPERATION_TYPE_LIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                audio = AudioDataSource.getAudioById(this, like.getMemorableId());
-                like.setMemorableId(audio.getIdOnServer());
+                like.setMemoryLocalId(audio.getIdOnServer());
                 return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                audio = AudioDataSource.getAudioById(this, like.getMemorableId());
-                like.setMemorableId(audio.getIdOnServer());
+                like.setMemoryLocalId(audio.getIdOnServer());
                 return MemoriesUtil.unlikeMemoryOnServer(this, like);
 
+            case Request.OPERATION_TYPE_DELETE:
+                MemoriesUtil.getInstance().deleteMemory(this, audio.getIdOnServer());
         }
         return false;
     }
 
     public boolean checkInRequests(Request request) {
-        CheckIn checkIn;
+        CheckIn checkIn = CheckinDataSource.getCheckInById(request.getObjectLocalId(), this);
         boolean result;
         Like like;
         switch (request.getOperationType()) {
             case Request.OPERATION_TYPE_CREATE:
-                checkIn = CheckinDataSource.getCheckInById(request.getObjectLocalId(), this);
                 result = CheckinUtil.uploadCheckInOnServer(this, checkIn);
                 return result;
 
             case Request.OPERATION_TYPE_LIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                checkIn = CheckinDataSource.getCheckInById(like.getMemorableId(), this);
-                like.setMemorableId(checkIn.getIdOnServer());
+                like.setMemoryLocalId(checkIn.getIdOnServer());
                 return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                checkIn = CheckinDataSource.getCheckInById(like.getMemorableId(), this);
-                like.setMemorableId(checkIn.getIdOnServer());
+                like.setMemoryLocalId(checkIn.getIdOnServer());
                 return MemoriesUtil.unlikeMemoryOnServer(this, like);
 
+            case Request.OPERATION_TYPE_DELETE:
+                MemoriesUtil.getInstance().deleteMemory(this, checkIn.getIdOnServer());
         }
         return false;
     }
 
     public boolean moodRequests(Request request) {
-        Mood mood;
+        Mood mood = MoodDataSource.getMoodById(request.getObjectLocalId(), this);
         boolean result;
         Like like;
         switch (request.getOperationType()) {
             case Request.OPERATION_TYPE_CREATE:
-                mood = MoodDataSource.getMoodById(request.getObjectLocalId(), this);
                 result = MoodUtil.uploadMoodOnServer(this, mood);
                 return result;
 
             case Request.OPERATION_TYPE_LIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                mood = MoodDataSource.getMoodById(like.getMemorableId(), this);
-                like.setMemorableId(mood.getIdOnServer());
+                like.setMemoryLocalId(mood.getIdOnServer());
                 return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                mood = MoodDataSource.getMoodById(like.getMemorableId(), this);
-                like.setMemorableId(mood.getIdOnServer());
+                like.setMemoryLocalId(mood.getIdOnServer());
                 return MemoriesUtil.unlikeMemoryOnServer(this, like);
 
+            case Request.OPERATION_TYPE_DELETE:
+                MemoriesUtil.getInstance().deleteMemory(this, mood.getIdOnServer());
         }
         return false;
     }
 
     public boolean noteRequests(Request request) {
-        Note note;
+        Note note = NoteDataSource.getNoteById(request.getObjectLocalId(), this);
         boolean result;
         Like like;
+
         switch (request.getOperationType()) {
             case Request.OPERATION_TYPE_CREATE:
-                note = NoteDataSource.getNoteById(request.getObjectLocalId(), this);
                 result = NotesUtil.uploadNoteOnServer(this, note);
                 return result;
 
             case Request.OPERATION_TYPE_LIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                note = NoteDataSource.getNoteById(like.getMemorableId(), this);
-                like.setMemorableId(note.getIdOnServer());
+                like.setMemoryLocalId(note.getIdOnServer());
                 return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                note = NoteDataSource.getNoteById(like.getMemorableId(), this);
-                like.setMemorableId(note.getIdOnServer());
+                like.setMemoryLocalId(note.getIdOnServer());
                 return MemoriesUtil.unlikeMemoryOnServer(this, like);
 
+            case Request.OPERATION_TYPE_DELETE:
+                MemoriesUtil.getInstance().deleteMemory(this, note.getIdOnServer());
         }
         return false;
     }
 
     public boolean pictureRequests(Request request) {
-        Picture picture;
+        Picture picture = PictureDataSource.getPictureById(this, request.getObjectLocalId());
         boolean result;
         Like like;
         switch (request.getOperationType()) {
             case Request.OPERATION_TYPE_CREATE:
-                picture = PictureDataSource.getPictureById(this, request.getObjectLocalId());
                 result = PictureUtilities.uploadPicOnServer(this, picture);
                 return result;
             case Request.OPERATION_TYPE_LIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                picture = PictureDataSource.getPictureById(this, like.getMemorableId());
-                like.setMemorableId(picture.getIdOnServer());
+                like.setMemoryLocalId(picture.getIdOnServer());
                 return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                picture = PictureDataSource.getPictureById(this, like.getMemorableId());
-                like.setMemorableId(picture.getIdOnServer());
+                like.setMemoryLocalId(picture.getIdOnServer());
                 return MemoriesUtil.unlikeMemoryOnServer(this, like);
+
+            case Request.OPERATION_TYPE_DELETE:
+                MemoriesUtil.getInstance().deleteMemory(this, picture.getIdOnServer());
         }
         return false;
     }
 
     public boolean videoRequests(Request request) {
-        Video video;
+        Video video = VideoDataSource.getVideoById(request.getObjectLocalId(), this);
         boolean result;
         Like like;
         switch (request.getOperationType()) {
             case Request.OPERATION_TYPE_CREATE:
-                video = VideoDataSource.getVideoById(request.getObjectLocalId(), this);
                 result = VideoUtil.uploadVideoOnServer(this, video);
                 return result;
 
             case Request.OPERATION_TYPE_LIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                video = VideoDataSource.getVideoById(like.getMemorableId(), this);
-                like.setMemorableId(video.getIdOnServer());
+                like.setMemoryLocalId(video.getIdOnServer());
                 return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
-                video = VideoDataSource.getVideoById(like.getMemorableId(), this);
-                like.setMemorableId(video.getIdOnServer());
+                like.setMemoryLocalId(video.getIdOnServer());
                 return MemoriesUtil.unlikeMemoryOnServer(this, like);
+
+            case Request.OPERATION_TYPE_DELETE:
+                MemoriesUtil.getInstance().deleteMemory(this, video.getIdOnServer());
         }
         return false;
     }

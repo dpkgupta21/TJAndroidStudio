@@ -13,15 +13,15 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/abhi" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg
+    <com.traveljar.memories.customviews.MyTextViewBodyMed
         android:id="@+id/add_friends_contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/add_friends_contact_image"
         android:layout_alignParentTop="@id/add_friends_contact_image"
         android:layout_marginTop="10dp"
-        android:text="Content not available"
-        android:textSize="18sp" />
+        android:textColor="@color/black"
+        android:text="Content not available" />
 
     <ImageButton
         android:id="@+id/add_friends_contact_remove_btn"
@@ -39,7 +39,6 @@
         android:layout_height="wrap_content"
         android:text="Contact Info"
         android:layout_marginTop="5dp"
-        android:textSize="18sp"
         android:layout_below="@+id/add_friends_contact_name"
         android:layout_toRightOf="@+id/add_friends_contact_image"
         android:layout_toEndOf="@+id/add_friends_contact_image" />

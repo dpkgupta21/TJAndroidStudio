@@ -130,4 +130,11 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
         invalidateOptionsMenu();
         super.onResume();
     }
+
+    @Override
+    public void onBackPressed(){
+        AppController.lapsList.clear();
+        super.onBackPressed();
+    }
+
 }

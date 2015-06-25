@@ -41,6 +41,19 @@ import java.util.Map;
 
 public class VideoUtil {
 
+    private static VideoUtil instance;
+
+    private static OnFinishDownloadListener finishListener;
+
+    public static VideoUtil getInstance(){
+        if(instance == null)
+            instance = new VideoUtil();
+        return instance;
+    }
+    public void setOnFinishDownloadListener(OnFinishDownloadListener listener){
+        finishListener = listener;
+    }
+
     public static final String TAG = "VIDEO_UTIL";
 
     public static void downloadAndPlayVideo(Context context, Video video) {
@@ -53,7 +66,7 @@ public class VideoUtil {
         task.execute();
     }
 
-    public static void createNewVideoFromServer(final Context context, final Video video, String thumbUrl) {
+    public void createNewVideoFromServer(final Context context, final Video video, String thumbUrl) {
         final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "/vid_" + System.currentTimeMillis() + ".jpg";
         if (thumbUrl != null) {
             ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
@@ -64,7 +77,10 @@ public class VideoUtil {
                         out = new FileOutputStream(imagePath);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                         video.setLocalThumbPath(imagePath);
-                        VideoDataSource.createVideo(video, context);
+                        long id = VideoDataSource.createVideo(video, context);
+                        if(finishListener != null) {
+                            finishListener.onFinishDownload(video.getIdOnServer(), video.getMemType(), String.valueOf(id));
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
@@ -81,6 +97,8 @@ public class VideoUtil {
                 }
             }, 0, 0, null, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
+                    Log.d(TAG, "error occured" + error.getMessage());
+                    PullMemoriesService.isFinished();
                 }
             });
             request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -269,6 +287,10 @@ public class VideoUtil {
             });
             AppController.getInstance().addToRequestQueue(uploadRequest);
         }
+    }
+
+    public interface OnFinishDownloadListener{
+        void onFinishDownload(String videoServerId, String memoryType, String videoLocalId);
     }
 
 }

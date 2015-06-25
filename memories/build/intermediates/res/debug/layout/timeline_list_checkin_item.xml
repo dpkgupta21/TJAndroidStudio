@@ -36,18 +36,16 @@
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@id/timelineItemUserImage"
             android:text="Some Name"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/white" />
 
-        <com.traveljar.memories.customviews.MyTextViewHeadline
+        <com.traveljar.memories.customviews.MyTextViewBodyMed
             android:id="@+id/timelineItemCheckinPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:text="Some awesome place"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textColor="@color/black" />
 
         <ImageView
             android:layout_width="50dp"
@@ -72,8 +70,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:text="Checin default caption"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/black" />
 
 
             <com.traveljar.memories.customviews.MyTextViewSmallText

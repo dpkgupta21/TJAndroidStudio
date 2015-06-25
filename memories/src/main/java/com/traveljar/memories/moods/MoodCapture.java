@@ -1,5 +1,6 @@
 package com.traveljar.memories.moods;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ import java.util.List;
 public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.OnEmoticonSelectListener {
 
     private static final String TAG = "<MoodCapture>";
+    private LinearLayout moodDetailLayout;
     private static int PICK_CONTACTS = 1;
     TextView noFriendsSelectedTxt;
     private ImageButton selectMoodImgBtn;
@@ -55,6 +59,16 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         selectMoodImgBtn = (ImageButton) findViewById(R.id.mood_select_mood_imgbtn);
         moodText = (TextView) findViewById(R.id.mood_text);
         moodReasonEditTxt = (EditText) findViewById(R.id.mood_because_of_txt);
+        moodDetailLayout = (LinearLayout) findViewById(R.id.mood_detail_layout);
+
+        // To remove focus from reason editText when clicked outside this box
+        moodDetailLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        });
 
         mContactsList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         Log.d(TAG, "buddies in journey are " + mContactsList.size());

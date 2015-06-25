@@ -25,6 +25,9 @@ public class Like implements Parcelable {
     private String userId;
     private String memType;
     private boolean isValid;
+    private String memoryServerId;
+    private Long createdAt;
+    private Long updatedAt;
 
     public boolean isValid() {
         return isValid;
@@ -38,8 +41,8 @@ public class Like implements Parcelable {
 
     }
 
-    // Memorable id -> id of child element, memoryLocalId -> id of parent class
-    public Like(String id, String idOnServer, String journeyId, String memoryLocalId, String userId, String memType, boolean isValid) {
+    public Like(String id, String idOnServer, String journeyId, String memoryLocalId, String userId, String memType,
+                boolean isValid, String memoryServerId, Long createdAt, Long updatedAt) {
         this.id = id;
         this.idOnServer = idOnServer;
         this.journeyId = journeyId;
@@ -47,6 +50,33 @@ public class Like implements Parcelable {
         this.userId = userId;
         this.memType = memType;
         this.isValid = isValid;
+        this.memoryServerId = memoryServerId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public String getMemoryServerId() {
+        return memoryServerId;
+    }
+
+    public void setMemoryServerId(String memoryServerId) {
+        this.memoryServerId = memoryServerId;
+    }
+
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Long updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getId() {
@@ -73,11 +103,11 @@ public class Like implements Parcelable {
         this.journeyId = journeyId;
     }
 
-    public String getMemorableId() {
+    public String getMemoryLocalId() {
         return memoryLocalId;
     }
 
-    public void setMemorableId(String memorableId) {
+    public void setMemoryLocalId(String memorableId) {
         this.memoryLocalId = memorableId;
     }
 

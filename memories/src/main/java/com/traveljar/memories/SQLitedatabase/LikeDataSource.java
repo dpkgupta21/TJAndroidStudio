@@ -28,7 +28,10 @@ public class LikeDataSource {
         values.put(MySQLiteHelper.LIKE_COLUMN_ID_ONSERVER, like.getIdOnServer());
         values.put(MySQLiteHelper.LIKE_COLUMN_JOURNEY_ID, like.getJourneyId());
         values.put(MySQLiteHelper.LIKE_COLUMN_MEM_TYPE, like.getMemType());
-        values.put(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID, like.getMemorableId());
+        values.put(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID, like.getMemoryLocalId());
+        values.put(MySQLiteHelper.LIKE_COLUMN_MEMORY_SERVERID, like.getMemoryServerId());
+        values.put(MySQLiteHelper.LIKE_COLUMN_CREATED_AT, like.getCreatedAt());
+        values.put(MySQLiteHelper.LIKE_COLUMN_CREATED_AT, like.getUpdatedAt());
         values.put(MySQLiteHelper.LIKE_COLUMN_USER_ID, like.getUserId());
         values.put(MySQLiteHelper.LIKE_COLUMN_IS_VALID, (like.isValid()) ? 1 : 0);
 
@@ -88,10 +91,20 @@ public class LikeDataSource {
         db.close();
     }
 
-    public static void deleteLikeWithMemIdAndUser(Context context, String memoryId, String userId) {
+    public static void deleteLike(Context context, String memoryId, String userId, String memType) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_LIKE, MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID + "=? AND " + MySQLiteHelper.LIKE_COLUMN_USER_ID + "=?",
-                new String[]{memoryId, userId});
+        db.delete(MySQLiteHelper.TABLE_LIKE, MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID + "=? AND " + MySQLiteHelper.LIKE_COLUMN_USER_ID +
+                        "=? AND " + MySQLiteHelper.LIKE_COLUMN_MEM_TYPE + "=?",
+                new String[]{memoryId, userId, memType});
+        db.close();
+    }
+
+    public static void updateMemoryLocalId(String memoryServerId, String memType, String memoryLocalId, Context context){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID, memoryLocalId);
+        db.update(MySQLiteHelper.TABLE_LIKE, values, MySQLiteHelper.LIKE_COLUMN_MEMORY_SERVERID + "='" + memoryServerId + "' AND "
+                + MySQLiteHelper.LIKE_COLUMN_MEM_TYPE + "='" + memType + "'", null);
         db.close();
     }
 
@@ -115,7 +128,10 @@ public class LikeDataSource {
         values.put(MySQLiteHelper.LIKE_COLUMN_ID_ONSERVER, like.getIdOnServer());
         values.put(MySQLiteHelper.LIKE_COLUMN_JOURNEY_ID, like.getJourneyId());
         values.put(MySQLiteHelper.LIKE_COLUMN_MEM_TYPE, like.getMemType());
-        values.put(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID, like.getMemorableId());
+        values.put(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID, like.getMemoryLocalId());
+        values.put(MySQLiteHelper.LIKE_COLUMN_MEMORY_SERVERID, like.getMemoryServerId());
+        values.put(MySQLiteHelper.LIKE_COLUMN_UPDATED_AT, like.getUpdatedAt());
+        values.put(MySQLiteHelper.LIKE_COLUMN_CREATED_AT, like.getCreatedAt());
         values.put(MySQLiteHelper.LIKE_COLUMN_USER_ID, like.getUserId());
         values.put(MySQLiteHelper.LIKE_COLUMN_IS_VALID, like.isValid() ? 1 : 0);
 
@@ -134,7 +150,10 @@ public class LikeDataSource {
                 like.setIdOnServer(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_ID_ONSERVER)));
                 like.setJourneyId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_JOURNEY_ID)));
                 like.setMemType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_MEM_TYPE)));
-                like.setMemorableId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID)));
+                like.setMemoryLocalId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_MEMORABLE_ID)));
+                like.setMemoryServerId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_MEMORY_SERVERID)));
+                like.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_CREATED_AT)));
+                like.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_UPDATED_AT)));
                 like.setUserId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_USER_ID)));
                 int isV = (cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.LIKE_COLUMN_IS_VALID)));
                 like.setIsValid((isV == 1) ? true : false);

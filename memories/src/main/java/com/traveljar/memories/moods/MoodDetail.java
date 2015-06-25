@@ -1,6 +1,7 @@
 package com.traveljar.memories.moods;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
+import com.traveljar.memories.checkin.CheckinDetail;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Request;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
@@ -28,13 +32,11 @@ import com.traveljar.memories.utility.TJPreferences;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-/**
- * Created by ankit on 19/6/15.
- */
 public class MoodDetail extends AppCompatActivity {
 
     private static final String TAG = "<MoodDetail>";
     private static final int ACTION_ITEM_DELETE = 0;
+
     private TextView dateBig;
     private TextView date;
     private TextView time;
@@ -57,6 +59,7 @@ public class MoodDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Mood Detail");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dateBig = (TextView) findViewById(R.id.mood_detail_date_big);
@@ -170,7 +173,14 @@ public class MoodDetail extends AppCompatActivity {
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.getInstance().deleteMemory(MoodDetail.this, mMood.getIdOnServer());
+                                Request request = new Request(null, mMood.getId(), mMood.getjId(), Request.OPERATION_TYPE_DELETE,
+                                        Request.CATEGORY_TYPE_MOOD, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                RequestQueueDataSource.createRequest(request, MoodDetail.this);
+                                if(HelpMe.isNetworkAvailable(MoodDetail.this)) {
+                                    Intent intent = new Intent(MoodDetail.this, MakeServerRequestsService.class);
+                                    startService(intent);
+                                }
+                                //MemoriesUtil.getInstance().deleteMemory(MoodDetail.this, mMood.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

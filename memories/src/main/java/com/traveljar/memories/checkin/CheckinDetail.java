@@ -1,6 +1,7 @@
 package com.traveljar.memories.checkin;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
+import com.traveljar.memories.audio.AudioDetail;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Request;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
@@ -28,9 +32,6 @@ import com.traveljar.memories.utility.TJPreferences;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-/**
- * Created by abhi on 19/06/15.
- */
 public class CheckinDetail extends AppCompatActivity {
     private static final String TAG = "<CheckInDetail>";
     private static final int ACTION_ITEM_DELETE = 0;
@@ -56,6 +57,7 @@ public class CheckinDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Checkin Detail");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dateBig = (TextView) findViewById(R.id.checkin_detail_date_big);
@@ -168,7 +170,14 @@ public class CheckinDetail extends AppCompatActivity {
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.getInstance().deleteMemory(CheckinDetail.this, mCheckIn.getIdOnServer());
+                                Request request = new Request(null, mCheckIn.getId(), mCheckIn.getjId(), Request.OPERATION_TYPE_DELETE,
+                                        Request.CATEGORY_TYPE_CHECKIN, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                RequestQueueDataSource.createRequest(request, CheckinDetail.this);
+                                if(HelpMe.isNetworkAvailable(CheckinDetail.this)) {
+                                    Intent intent = new Intent(CheckinDetail.this, MakeServerRequestsService.class);
+                                    startService(intent);
+                                }
+                                //MemoriesUtil.getInstance().deleteMemory(CheckinDetail.this, mCheckIn.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

@@ -103,7 +103,7 @@
                 android:textSize="@dimen/tj_extra_giant_font" />
 
 
-            <com.traveljar.memories.customviews.MyTextViewHeadline
+            <com.traveljar.memories.customviews.MyTextViewCustom
                 android:id="@+id/checkin_detail_date_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

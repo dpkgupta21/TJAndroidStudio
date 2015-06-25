@@ -20,11 +20,13 @@ import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Request;
 import com.traveljar.memories.models.Video;
+import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
@@ -57,7 +59,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         Log.d(TAG, "entrerd video details");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Video");
+        toolbar.setTitle("Video Detail");
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -182,7 +184,15 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                         .setMessage("Are you sure you want to remove this item from your memories")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                MemoriesUtil.getInstance().deleteMemory(VideoDetail.this, mVideo.getIdOnServer());
+                                Request request = new Request(null, mVideo.getId(), mVideo.getjId(), Request.OPERATION_TYPE_DELETE,
+                                        Request.CATEGORY_TYPE_VIDEO, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                RequestQueueDataSource.createRequest(request, VideoDetail.this);
+                                if(HelpMe.isNetworkAvailable(VideoDetail.this)) {
+                                    Intent intent = new Intent(VideoDetail.this, MakeServerRequestsService.class);
+                                    startService(intent);
+                                }
+                                finish();
+//                                MemoriesUtil.getInstance().deleteMemory(VideoDetail.this, mVideo.getIdOnServer());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
