@@ -127,44 +127,32 @@ public class JourneyDataSource {
         db.close();
     }
 
-    public static void deleteJourney(Context context, String journeyId){
+    public static void deleteJourney(Context context, String journeyId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         db.delete(MySQLiteHelper.TABLE_JOURNEY, MySQLiteHelper.JOURNEY_COLUMN_ID + "=?", new String[]{journeyId});
         db.close();
     }
 
-    public static void addContactToJourney(Context context, String contactId, String journeyId){
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        String selectQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + " FROM " + MySQLiteHelper.TABLE_JOURNEY +
-                " WHERE " + journeyId + " = '" + TJPreferences.getActiveJourneyId(context) + "'";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        String buddyIds = "";
-        if(cursor.moveToFirst()){
-            buddyIds = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
-        }
-        Log.d(TAG, "existing contact for journey " + buddyIds);
-        if(buddyIds.equals("")){
-            buddyIds = contactId;
-        }else {
-            buddyIds += "," + contactId;
-        }
-        Log.d(TAG, "contact after adding new one is " + buddyIds);
-        cursor.close();
+    public static void addContactToJourney(Context context, String contactId, String journeyId) {
+        List<String> buddyIds = JourneyDataSource.getJourneyById(context, journeyId).getBuddies();
+        buddyIds.add(contactId);
+
         //Update this buddyIds on the database
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, buddyIds);
-        db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + TJPreferences.getActiveJourneyId(context), null);
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, Joiner.on(",").join(buddyIds));
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId, null);
         db.close();
-        Log.d(TAG, "user successfully added to the current journey");
+        Log.d(TAG, "New buddy with id = " + contactId + " successfully added to the current journey with id = " + journeyId);
     }
 
-    public static void removeContactFromJourney(Context context, String contactId){
+    public static void removeContactFromJourney(Context context, String contactId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         String selectQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + " FROM " + MySQLiteHelper.TABLE_JOURNEY +
                 " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = '" + TJPreferences.getActiveJourneyId(context) + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
         String buddyIds = "";
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             buddyIds = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
         }
         Log.d(TAG, "existing contact for journey " + buddyIds);

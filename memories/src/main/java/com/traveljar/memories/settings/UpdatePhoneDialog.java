@@ -72,13 +72,13 @@ public class UpdatePhoneDialog extends DialogFragment {
                                         Log.d(TAG, "response on updating phone" + response);
                                         mListener.onPhoneUpdate();
                                         UpdatePhoneDialog.this.dismiss();
-                                        Toast.makeText(getActivity(), "phone number updated successfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "phone number updated successfully", Toast.LENGTH_SHORT).show();
                                     }
                                 }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Log.d(TAG, "error in updating user phone number" + error);
-                                Toast.makeText(getActivity(), "Could not update phone number please try after some time", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Could not update phone number please try after some time", Toast.LENGTH_SHORT).show();
                                 error.printStackTrace();
                             }
                         });

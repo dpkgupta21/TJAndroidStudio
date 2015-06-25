@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -83,7 +84,7 @@ public class NotesUtil {
 
         AppController.getInstance().getRequestQueue().add(jsonRequest);
         try {
-            JSONObject response = futureRequest.get(30, TimeUnit.SECONDS);
+            JSONObject response = futureRequest.get(60, TimeUnit.SECONDS);
             Log.d(TAG, "note uploaded with response " + response);
             String serverId = response.getJSONObject("note").getString("id");
             NoteDataSource.updateServerId(context, note.getId(), serverId);
@@ -91,15 +92,24 @@ public class NotesUtil {
         } catch (InterruptedException e) {
             Log.d(TAG, "note couldnot be uploaded InterruptedException");
             e.printStackTrace();
+            e.getCause();
         } catch (ExecutionException e) {
             Log.d(TAG, "note couldnot be uploaded ExecutionException");
             e.printStackTrace();
+            e.getCause();
+            return true;
         } catch (TimeoutException e) {
             Log.d(TAG, "note couldnot be uploaded TimeoutException");
             e.printStackTrace();
+            e.getCause();
+        }catch (CancellationException e){
+            Log.d(TAG, "note couldnot be uploaded CancellationException");
+            e.printStackTrace();
+            e.getCause();
         } catch (JSONException e) {
             Log.d(TAG, "note couldnot be parsed although uploaded successfully");
             e.printStackTrace();
+            e.getCause();
         }
         return false;
     }

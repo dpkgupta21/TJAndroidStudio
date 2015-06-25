@@ -59,12 +59,16 @@ public class MakeServerRequestsService extends IntentService {
             request = RequestQueueDataSource.getFirstNonCompletedRequest(this);
 
             if (request != null) {
-                Log.d(TAG, "request = " + request.getCategoryType() + " retotacount " + reqTotalCount);
+                Log.d(TAG, "NC request category type = " + request.getCategoryType() + " retotacount " + reqTotalCount);
+                parseRequest(request);
                 // Increment all requests no of attempts to keep track for failure
                 RequestQueueDataSource.incrementRequestNoOfAttempts(request, this);
             } else {
                 if (RequestQueueDataSource.getFailedRequestsCount(this) != 0) {
+                    Log.d(TAG, "NC request category type = " + request.getCategoryType() + " retotacount " + reqTotalCount);
                     request = RequestQueueDataSource.getFirstFailedRequest(this);
+                    parseRequest(request);
+                    RequestQueueDataSource.incrementRequestNoOfAttempts(request, this);
                 }//else no action
                 else {
                     Log.d(TAG, "No more requests to serve!!");
@@ -210,6 +214,11 @@ public class MakeServerRequestsService extends IntentService {
             case Request.OPERATION_TYPE_LIKE:
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
                 like.setMemoryLocalId(note.getIdOnServer());
+
+                Log.d(TAG, "1.1.1" + note);
+                Log.d(TAG, "1.1.1" + like.getId() + "==" + like.getIdOnServer() + "===" + like.getMemoryLocalId() + "===" + like.getMemoryServerId());
+
+
                 return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:

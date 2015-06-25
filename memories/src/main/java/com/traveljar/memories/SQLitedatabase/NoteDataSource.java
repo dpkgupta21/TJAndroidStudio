@@ -58,7 +58,7 @@ public class NoteDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(MySQLiteHelper.TABLE_NOTES, null, MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER
                 + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
-        Log.d(TAG, "get note by server id " + cursor.getCount() + id);
+        Log.d(TAG, "get note  with server id = " + id);
         Note note = (Note)parseNotesFromCursor(context, cursor).get(0);
         cursor.close();
         db.close();
@@ -66,6 +66,7 @@ public class NoteDataSource {
     }
 
     public static Note getNoteById(String id, Context context) {
+        Log.d(TAG, "1.1 " + "note local id = " + id);
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(MySQLiteHelper.TABLE_NOTES, null, MySQLiteHelper.NOTES_COLUMN_ID
                 + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
@@ -80,6 +81,8 @@ public class NoteDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER, serverId);
         db.update(MySQLiteHelper.TABLE_NOTES, values, MySQLiteHelper.NOTES_COLUMN_ID + " = " + noteId, null);
+        Log.d(TAG, "note updated for note id on server = " + serverId + "local id = " + noteId);
+
         db.close();
     }
 

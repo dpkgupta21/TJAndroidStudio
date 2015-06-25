@@ -66,6 +66,7 @@ public class CreateNotes extends AppCompatActivity {
                 Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_NOTE, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, this);
         if(HelpMe.isNetworkAvailable(this)) {
+            Log.d(TAG, "netowrk availabkle...so making a create note request with note id = " + note.getId());
             Intent intent = new Intent(this, MakeServerRequestsService.class);
             startService(intent);
         }
