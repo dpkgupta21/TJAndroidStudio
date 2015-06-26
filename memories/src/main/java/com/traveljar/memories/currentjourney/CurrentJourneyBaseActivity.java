@@ -2,6 +2,7 @@ package com.traveljar.memories.currentjourney;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,6 +30,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
     private static final String TAG = "<CurJourneyActivity>";
     private SlidingTabLayout mSlidingTabLayout;
     private ViewPager mViewPager;
+    CurrentJourneyTabsAdapter mTabsAdapter;
 
     private static boolean activityVisible;
     public static boolean isActivityVisible() {
@@ -61,7 +63,8 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
         toolbar.setSubtitle(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getTagLine());
 
         mViewPager = (ViewPager) findViewById(R.id.timeline_viewpager);
-        mViewPager.setAdapter(new CurrentJourneyTabsAdapter(getSupportFragmentManager()));
+        mTabsAdapter = new CurrentJourneyTabsAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mTabsAdapter);
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.timeline_sliding_tabs);
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
@@ -148,7 +151,10 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
 
     // Call this method from from anywhere to refresh timeline adapter when this activity is visible
     public void refreshTimelineList(){
-
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.timeline_viewpager + ":" + mViewPager.getCurrentItem());
+        if(fragment instanceof TimelineFragment){
+            TimelineFragment.getInstance().loadMemoriesList();
+        }
     }
 
 }

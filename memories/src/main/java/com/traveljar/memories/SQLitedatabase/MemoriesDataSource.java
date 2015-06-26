@@ -33,9 +33,10 @@ public class MemoriesDataSource {
     }
 
 
-    public static void deleteAllMemoriesCreatedByUser(Context context, String userId){
+    public static void deleteAllMemoriesCreatedByUser(Context context, String userId, String journeyId){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_AUDIO, MySQLiteHelper.VIDEO_COLUMN_CREATED_BY + "=?", new String[]{userId});
+        db.delete(MySQLiteHelper.TABLE_AUDIO, MySQLiteHelper.VIDEO_COLUMN_CREATED_BY + "=? AND " + MySQLiteHelper.VOICE_COLUMN_JID
+                + " = '" + journeyId + "'", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_CHECKIN, MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_COLUMN_LONGITUDE + "=?", new String[]{userId});
         db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_CREATED_BY + "=?", new String[]{userId});

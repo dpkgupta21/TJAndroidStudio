@@ -32,6 +32,7 @@ public class VideoDataSource {
         values.put(MySQLiteHelper.VIDEO_COLUMN_DATALOCALURL, newVideo.getDataLocalURL());
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_BY, newVideo.getCreatedBy());
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_AT, newVideo.getCreatedAt());
+        values.put(MySQLiteHelper.VIDEO_COLUMN_UPDATED_AT, newVideo.getUpdatedAt());
 /*        values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, newVideo.getLikedBy() == null ? null : Joiner.on(",").join(newVideo.getLikedBy()));*/
         values.put(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH, newVideo.getLocalThumbPath());
         values.put(MySQLiteHelper.VIDEO_COLUMN_LATITUDE, newVideo.getLatitude());

@@ -13,24 +13,23 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.LapDataSource;
+import com.traveljar.memories.models.Lap;
 import com.traveljar.memories.newjourney.AddLap;
-import com.traveljar.memories.newjourney.LapsList;
 import com.traveljar.memories.utility.HelpMe;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
+public class LapsListAdapter extends ArrayAdapter<Lap> {
     private static final String TAG = "[LapsListAdapter]";
     private final Activity context;
-    private List<Map<String, String>> lapsList;
+    private List<Lap> lapList;
 
-    public LapsListAdapter(Activity context, ArrayList<Map<String, String>> lapsList) {
-        super(context, R.layout.new_journey_laps_list, lapsList);
-        Log.d(TAG, "construcor");
+    public LapsListAdapter(Activity context, List<Lap> lapList) {
+        super(context, R.layout.new_journey_laps_list, lapList);
+        Log.d(TAG, "constructor");
         this.context = context;
-        this.lapsList = lapsList;
+        this.lapList = lapList;
     }
 
     @Override
@@ -63,13 +62,14 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
                                 case R.id.edit_lap:
                                     Intent i = new Intent(context, AddLap.class);
                                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    i.putExtra("EDIT_JOURNEY_POSITION", position);
+                                    i.putExtra("EDIT_LAP_ID", lapList.get(position).getId());
                                     context.startActivity(i);
                                     break;
                                 case R.id.remove_lap:
-                                    lapsList.remove(position);
+                                    LapDataSource.deleteLap(context, lapList.get(position).getId());
+                                    lapList.remove(position);
                                     LapsListAdapter.this.notifyDataSetChanged();
-                                    ((LapsList)context).invalidateOptionsMenu();
+                                    (context).invalidateOptionsMenu();
                                     break;
                             }
                             return false;
@@ -82,14 +82,14 @@ public class LapsListAdapter extends ArrayAdapter<Map<String, String>> {
 
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
-        String f = lapsList.get(position).get("fromCity");
-        String t = lapsList.get(position).get("toCity");
-        String d = lapsList.get(position).get("date");
-        String c = HelpMe.getConveyanceMode(Integer.parseInt(lapsList.get(position).get("conveyance")));
-        holder.from.setText(f);
-        holder.to.setText(t);
-        holder.date.setText(HelpMe.getDate(Long.parseLong(d), 1));
-        Log.d(TAG, d + "===" + HelpMe.getDate(Long.parseLong(d), 1));
+        String from = lapList.get(position).getSourceCityName();
+        String to = lapList.get(position).getDestinationCityName();
+        long date = lapList.get(position).getStartDate();
+
+        String c = HelpMe.getConveyanceMode(lapList.get(position).getConveyanceMode());
+        holder.from.setText(from);
+        holder.to.setText(to);
+        holder.date.setText(HelpMe.getDate(date, 1));
         holder.conveyance.setText(c);
         return rowView;
     }

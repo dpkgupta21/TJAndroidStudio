@@ -26,21 +26,21 @@ public class MyCircularImageView extends ImageView {
     public MyCircularImageView(Context context) {
         super(context);
         this.context = context;
-        setBorderWidth(5);
+        setBorderWidth(3);
         setup();
     }
 
     public MyCircularImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        setBorderWidth(5);
+        setBorderWidth(3);
         setup();
     }
 
     public MyCircularImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context = context;
-        setBorderWidth(5);
+        setBorderWidth(3);
         setup();
     }
 

@@ -84,6 +84,9 @@ public class PictureCapture extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_CANCELED){
+            onBackPressed();
+        }
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView img = (ImageView) findViewById(R.id.capture_photos_image_preview);
             Bitmap bitmap = null;

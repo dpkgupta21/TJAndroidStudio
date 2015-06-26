@@ -34,18 +34,17 @@ public class VideoCapture extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_CANCELED){
+            onBackPressed();
+        }
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = data.getData();
             Log.d(TAG, "video saved at" + videoUri);
             Log.d(TAG, "Real path URI" + getRealPathFromURI(videoUri));
-//            moveFileToTravelJarDir(getRealPathFromURI(videoUri));
-//			saveAndUploadVideo();
 
             Intent i = new Intent(this, VideoPreview.class);
             i.putExtra("VIDEO_PATH", getRealPathFromURI(videoUri));
             startActivity(i);
-            finish();
-        }else if(resultCode == RESULT_CANCELED){
             finish();
         }
     }

@@ -36,6 +36,14 @@ public class TimelineFragment extends Fragment {
     private List<Memories> memoriesList;
     private RelativeLayout mLayout;
 
+    private static TimelineFragment instance;
+    public TimelineFragment(){
+        instance = this;
+    }
+    public static TimelineFragment getInstance(){
+        return instance == null ? new TimelineFragment() : instance;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.timeline_list, container, false);
@@ -126,7 +134,7 @@ public class TimelineFragment extends Fragment {
         super.onPause();
     }
 
-    private void loadMemoriesList(){
+    public void loadMemoriesList(){
         memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));        Log.d(TAG, "no of memories = " + memoriesList.size());
         Log.d(TAG, "no of memories = " + memoriesList.size());
         if(memoriesList.size() > 0) {

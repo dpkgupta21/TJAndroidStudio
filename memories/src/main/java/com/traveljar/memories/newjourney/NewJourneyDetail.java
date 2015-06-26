@@ -17,8 +17,10 @@ import com.android.volley.VolleyLog;
 import com.google.common.base.Joiner;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
+import com.traveljar.memories.SQLitedatabase.LapDataSource;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.models.Journey;
+import com.traveljar.memories.models.Lap;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
@@ -78,28 +80,26 @@ public class NewJourneyDetail extends AppCompatActivity {
             // it can be properly passed to backend when creating new journey
 
             int currentPosition = 0;
-            for (Map<String, String> lap : AppController.lapsList) {
+            for (Lap lap : AppController.lapList) {
                 // Get source info
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_city_name]",
-                        lap.get("fromCity"));
+                        lap.getSourceCityName());
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_state_name]",
-                        lap.get("fromState"));
+                        lap.getSourceStateName());
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_country_name]",
-                        lap.get("fromCountry"));
+                        lap.getSourceCountryName());
 
                 // Get destination info
-                params.put("journey[journey_laps_attributes[" + currentPosition
-                        + "]][destination_city_name]", lap.get("toCity"));
-                params.put("journey[journey_laps_attributes[" + currentPosition
-                        + "]][destination_state_name]", lap.get("toState"));
-                params.put("journey[journey_laps_attributes[" + currentPosition
-                        + "]][destination_country_name]", lap.get("toCountry"));
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][destination_city_name]",
+                        lap.getDestinationCityName());
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][destination_state_name]",
+                        lap.getDestinationStateName());
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][destination_country_name]",
+                        lap.getDestinationCountryName());
 
-                params.put(
-                        "journey[journey_laps_attributes[" + currentPosition + "]][travel_mode]",
-                        lap.get("conveyance"));
-                params.put("journey[journey_laps_attributes[" + currentPosition + "]][start_date]",
-                        lap.get("date"));
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][travel_mode]",
+                        HelpMe.getConveyanceMode(lap.getConveyanceMode()));
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][start_date]", String.valueOf(lap.getStartDate()));
 
                 currentPosition++;
             }
@@ -138,7 +138,8 @@ public class NewJourneyDetail extends AppCompatActivity {
                         }
                         try {
                             createNewJourneyInDB(response);
-                            AppController.lapsList.clear();
+                            LapDataSource.deleteLapsList(NewJourneyDetail.this, AppController.lapList);
+                            AppController.lapList.clear();
                             AppController.buddyList.clear();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -201,6 +202,10 @@ public class NewJourneyDetail extends AppCompatActivity {
         Journey newJ = new Journey(idOnServer, name, tag_line, group_relationship, created_by_id,
                 null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE, HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), 0);
         JourneyDataSource.createJourney(newJ, getBaseContext());
+        for(Lap lap : AppController.lapList){
+            lap.setJourneyId(idOnServer);
+        }
+        LapDataSource.updateLapsList(AppController.lapList, this);
         TJPreferences.setActiveJourneyId(this, idOnServer);
     }
 

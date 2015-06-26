@@ -134,7 +134,7 @@ public class JourneyDataSource {
     }
 
     public static void addContactToJourney(Context context, String contactId, String journeyId) {
-        ArrayList<String> buddyIds = (ArrayList)JourneyDataSource.getJourneyById(context, journeyId).getBuddies();
+        List<String> buddyIds = new ArrayList<>(JourneyDataSource.getJourneyById(context, journeyId).getBuddies());
         buddyIds.add(contactId);
 
         //Update this buddyIds on the database
@@ -184,14 +184,11 @@ public class JourneyDataSource {
                 journey.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY)));
                 String buddyIds = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
                 journey.setBuddies(buddyIds.isEmpty() ? new ArrayList<String>() : Arrays.asList(buddyIds.split(",")));
-                Log.d(TAG, "Journey = " + journey.getIdOnServer() + " buddy ids fetched from database are " + buddyIds);
-                /*String laps = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS));
-                journey.setLaps(Arrays.asList(laps.split(",")));*/
-                Log.d(TAG, " " + Joiner.on(",").join(new ArrayList<String>()));
                 journey.setJourneyStatus(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_STATUS)));
                 journey.setCreatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATED_AT)));
                 journey.setUpdatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT)));
                 journey.setCompletedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_COMPELTED_AT)));
+                journey.setLapsList(LapDataSource.getLapFromJourney(context, journey.getIdOnServer()));
                 journeyList.add(journey);
                 cursor.moveToNext();
             }

@@ -14,6 +14,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.LapDataSource;
+import com.traveljar.memories.models.Lap;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.volley.AppController;
 
@@ -22,10 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class AddLap extends AppCompatActivity {
 
@@ -33,7 +33,6 @@ public class AddLap extends AppCompatActivity {
     private TextView fromLocation;
     private TextView toLocation;
     private TextView dateLocation;
-    private int conveyanceMode;
     private DatePickerDialog datePickerDialog;
     private ToggleButton toggleCar;
     private ToggleButton toggleFlight;
@@ -45,10 +44,14 @@ public class AddLap extends AppCompatActivity {
     private ToggleButton toggleCarpet;
 
     private boolean editMode;
-    private int editLapIndex;
+    private boolean isSourceEdited;
+    private boolean isDestinationEdited;
+    private boolean isDateEdited;
     private List<String> fromLocationList;
     private List<String> toLocationList;
     private long epochTime;
+
+    private Lap lap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +93,11 @@ public class AddLap extends AppCompatActivity {
         //Set the current date initially
         dateLocation.setText(dateFormatter.format(new Date()));
 
+        epochTime = HelpMe.getCurrentTime();
         datePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                isDateEdited = true;
                 Calendar dateBirth = Calendar.getInstance();
                 dateBirth.set(year, monthOfYear, dayOfMonth);
                 epochTime = (dateBirth.getTimeInMillis() / 1000);
@@ -102,21 +107,20 @@ public class AddLap extends AppCompatActivity {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
 
-        //If lap is opened in edit mode
-        if (getIntent().hasExtra("EDIT_JOURNEY_POSITION")) {
+        if (getIntent().hasExtra("EDIT_LAP_ID")) {
             editMode = true;
-            editLapIndex = getIntent().getIntExtra("EDIT_JOURNEY_POSITION", -1);
-            Map<String, String> lap = AppController.lapsList.get(editLapIndex);
-            dateLocation.setText(HelpMe.getDate(Long.parseLong(lap.get("date")), 1));
-            fromLocation.setText(lap.get("fromCity"));
-            toLocation.setText(lap.get("toCity"));
-
-            // parse string into int codes and set appropraite toggle button to true
-            setConveyanceMode(Integer.parseInt(lap.get("conveyance")));
+//            lap = LapDataSource.getLapById(getIntent().getStringExtra("EDIT_LAP_ID"), this);
+            lap = Lap.getLapFromLapsList(AppController.lapList, getIntent().getStringExtra("EDIT_LAP_ID"));
+            dateLocation.setText(HelpMe.getDate(lap.getStartDate(), 1));
+            fromLocation.setText(lap.getSourceCityName());
+            toLocation.setText(lap.getDestinationCityName());
+            Log.d(TAG, "editing lap with source " + lap.getSourceCityName() + lap.getDestinationCityName());
+            setConveyanceMode(lap.getConveyanceMode());
         } else {
             //Set default conveyence mode to magical carpet
+            lap = new Lap();
+            lap.setConveyanceMode(HelpMe.CONVEYANCE_CARPET);
             toggleCarpet.setChecked(true);
-            conveyanceMode = HelpMe.CONVEYANCE_CARPET;
         }
     }
 
@@ -134,74 +138,74 @@ public class AddLap extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.flightToggle:
                 if (toggleFlight.isChecked()) {
-                    conveyanceMode = HelpMe.CONVEYANCE_FLIGHT;
+                    lap.setConveyanceMode(HelpMe.CONVEYANCE_FLIGHT);
                     conveyanceOff();
                     toggleFlight.setChecked(true);
                 } else {
-                    conveyanceMode = -1;
+                    lap.setConveyanceMode(-1);
                 }
                 break;
             case R.id.carToggle:
                 if (toggleCar.isChecked()) {
-                    conveyanceMode = HelpMe.CONVEYANCE_CAR;
+                    lap.setConveyanceMode(HelpMe.CONVEYANCE_CAR);
                     conveyanceOff();
                     toggleCar.setChecked(true);
                 } else {
-                    conveyanceMode = -1;
+                    lap.setConveyanceMode(-1);
                 }
                 break;
             case R.id.trainToggle:
                 if (toggleTrain.isChecked()) {
-                    conveyanceMode = HelpMe.CONVEYANCE_TRAIN;
+                    lap.setConveyanceMode(HelpMe.CONVEYANCE_TRAIN);
                     conveyanceOff();
                     toggleTrain.setChecked(true);
                 } else {
-                    conveyanceMode = -1;
+                    lap.setConveyanceMode(-1);
                 }
                 break;
             case R.id.shipToggle:
                 if (toggleShip.isChecked()) {
-                    conveyanceMode = HelpMe.CONVEYANCE_SHIP;
+                    lap.setConveyanceMode(HelpMe.CONVEYANCE_SHIP);
                     conveyanceOff();
                     toggleShip.setChecked(true);
                 } else {
-                    conveyanceMode = -1;
+                    lap.setConveyanceMode(-1);
                 }
                 break;
             case R.id.walkToggle:
                 if (toggleWalk.isChecked()) {
-                    conveyanceMode = HelpMe.CONVEYANCE_WALK;
+                    lap.setConveyanceMode(HelpMe.CONVEYANCE_SHIP);
                     conveyanceOff();
                     toggleWalk.setChecked(true);
                 } else {
-                    conveyanceMode = -1;
+                    lap.setConveyanceMode(-1);
                 }
                 break;
             case R.id.busToggle:
                 if (toggleBus.isChecked()) {
-                    conveyanceMode = HelpMe.CONVEYANCE_BUS;
+                    lap.setConveyanceMode(HelpMe.CONVEYANCE_BUS);
                     conveyanceOff();
                     toggleBus.setChecked(true);
                 } else {
-                    conveyanceMode = -1;
+                    lap.setConveyanceMode(-1);
                 }
                 break;
             case R.id.bikeToggle:
                 if (toggleBike.isChecked()) {
-                    conveyanceMode = HelpMe.CONVEYANCE_BIKE;
+                    lap.setConveyanceMode(HelpMe.CONVEYANCE_BIKE);
                     conveyanceOff();
                     toggleBike.setChecked(true);
                 } else {
-                    conveyanceMode = -1;
+                    lap.setConveyanceMode(-1);
                 }
                 break;
             case R.id.carpetToggle:
                 if (toggleCarpet.isChecked()) {
-                    conveyanceMode = HelpMe.CONVEYANCE_CARPET;
+                    lap.setConveyanceMode(HelpMe.CONVEYANCE_CARPET);
                     conveyanceOff();
                     toggleCarpet.setChecked(true);
                 } else {
-                    conveyanceMode = -1;
+                    lap.setConveyanceMode(-1);
                 }
                 break;
             default:
@@ -229,48 +233,59 @@ public class AddLap extends AppCompatActivity {
     // save the details
     // And send back them to LapsList list screen
     public void updateDone(View v) {
-        if (conveyanceMode == -1) {
-            Toast.makeText(this, "Please select the conveyence mode", Toast.LENGTH_SHORT).show();
+        if (lap.getConveyanceMode() == -1) {
+            Toast.makeText(this, "Please select the conveyance mode", Toast.LENGTH_SHORT).show();
         } else {
-            Map<String, String> map;
-            if (editMode) {
-                map = AppController.lapsList.get(editLapIndex);
+            if(editMode){
+                if(isSourceEdited){
+                    setLapSourceInfo();
+                }
+                if(isDestinationEdited){
+                    setLapDestinationInfo();
+                }
+                if(isDateEdited){
+                    lap.setStartDate(epochTime);
+                }
+                LapDataSource.updateLap(lap, this);
             } else {
-                map = new HashMap<>();
-                AppController.lapsList.add(map);
+                setLapSourceInfo();
+                setLapDestinationInfo();
+                lap.setStartDate(epochTime);
+                long id = LapDataSource.createLap(lap, this);
+                lap.setId(String.valueOf(id));
+                AppController.lapList.add(lap);
             }
-
-            // Received location has city, state and country
-            if (fromLocationList.size() == 3) {
-                map.put("fromCity", fromLocationList.get(0));
-                map.put("fromState", fromLocationList.get(1));
-                map.put("fromCountry", fromLocationList.get(2));
-
-            }// Received locatino has ONLY state and country
-            else {
-                map.put("fromCity", fromLocationList.get(0));
-                map.put("fromState", fromLocationList.get(0));
-                map.put("fromCountry", fromLocationList.get(1));
-            }
-
-            if (toLocationList.size() == 3) {
-                map.put("toCity", toLocationList.get(0));
-                map.put("toState", toLocationList.get(1));
-                map.put("toCountry", toLocationList.get(2));
-            } else {
-                map.put("toCity", toLocationList.get(0));
-                map.put("toState", toLocationList.get(0));
-                map.put("toCountry", toLocationList.get(1));
-            }
-
-            map.put("date", String.valueOf(epochTime));
-            map.put("conveyance", (String.valueOf(conveyanceMode) == "") ? HelpMe.getConveyanceMode(8) : String.valueOf(conveyanceMode));
-
 
             Intent i = new Intent(getBaseContext(), LapsList.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
             finish();
+        }
+    }
+
+    private void setLapSourceInfo(){
+        // Received location has city, state and country
+        if (fromLocationList.size() == 3) {
+            lap.setSourceCityName(fromLocationList.get(0));
+            lap.setSourceStateName(fromLocationList.get(1));
+            lap.setSourceCountryName(fromLocationList.get(2));
+        }// Received locatino has ONLY state and country
+        else {
+            lap.setSourceCityName(fromLocationList.get(0));
+            lap.setSourceStateName(fromLocationList.get(0));
+            lap.setSourceCountryName(fromLocationList.get(1));
+        }
+    }
+
+    private void setLapDestinationInfo(){
+        if (toLocationList.size() == 3) {
+            lap.setDestinationCityName(toLocationList.get(0));
+            lap.setDestinationStateName(toLocationList.get(1));
+            lap.setDestinationCountryName(toLocationList.get(2));
+        } else {
+            lap.setDestinationCityName(toLocationList.get(0));
+            lap.setDestinationStateName(toLocationList.get(0));
+            lap.setDestinationCountryName(toLocationList.get(1));
         }
     }
 
@@ -313,12 +328,15 @@ public class AddLap extends AppCompatActivity {
 
                 fromLocationList = Arrays.asList(result.split(","));
                 fromLocation.setText(fromLocationList.get(0));
+                isSourceEdited = true;
             } else if (requestCode == 2) {
                 Log.d(TAG, "returned from 'to' location");
                 String result = data.getStringExtra("result");
 
                 toLocationList = Arrays.asList(result.split(","));
                 toLocation.setText(toLocationList.get(0));
+                isSourceEdited = true;
+                isDestinationEdited = true;
             }
         }
         if (resultCode == RESULT_CANCELED) {

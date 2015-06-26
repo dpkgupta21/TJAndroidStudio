@@ -14,14 +14,14 @@ public class Journey implements Comparable<Journey> {
     private long createdAt;
     private long updatedAt;
     private long completedAt;
+    private List<Lap> lapsList;
 
     public Journey() {
 
     }
 
-    public Journey(String idOnServer, String name, String tagLine, String groupType,
-                   String createdBy, List<String> jLaps, List<String> buddies, String journeyStatus
-            , long createdAt, long updatedAt, long completedAt) {
+    public Journey(String idOnServer, String name, String tagLine, String groupType, String createdBy, List<String> jLaps,
+                   List<String> buddies, String journeyStatus, long createdAt, long updatedAt, long completedAt) {
         this.idOnServer = idOnServer;
         this.name = name;
         this.tagLine = tagLine;
@@ -129,6 +129,14 @@ public class Journey implements Comparable<Journey> {
 
     public boolean isAdmin(String userId) {
         return userId.equals(this.getIdOnServer());
+    }
+
+    public List<Lap> getLapsList() {
+        return lapsList;
+    }
+
+    public void setLapsList(List<Lap> lapsList) {
+        this.lapsList = lapsList;
     }
 
     @Override

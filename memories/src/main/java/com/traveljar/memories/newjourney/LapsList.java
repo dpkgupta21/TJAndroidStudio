@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.LapDataSource;
 import com.traveljar.memories.customviews.MyFABView;
 import com.traveljar.memories.newjourney.adapters.LapsListAdapter;
 import com.traveljar.memories.services.CustomResultReceiver;
@@ -71,19 +72,19 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
         noLapsPlaceholderImg = (ImageView) findViewById(R.id.no_laps_placeholder);
         getStartedImg = (ImageView) findViewById(R.id.no_laps_get_started);
 
-        if (AppController.lapsList.size() == 0) {
+        if(AppController.lapList.size() == 0){
             noLapsPlaceholderImg.setVisibility(View.VISIBLE);
             getStartedImg.setVisibility(View.VISIBLE);
             lapsListView.setVisibility(View.GONE);
         } else {
-            lapsListViewAdapter = new LapsListAdapter(this, AppController.lapsList);
+            lapsListViewAdapter = new LapsListAdapter(this, AppController.lapList);
             lapsListView.setAdapter(lapsListViewAdapter);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(AppController.lapsList.size() > 0) {
+        if(AppController.lapList.size() > 0) {
             menu.add(0, ID_ACTION_ITEM_NEXT, 0, "Next").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return super.onCreateOptionsMenu(menu);
@@ -133,7 +134,8 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
 
     @Override
     public void onBackPressed(){
-        AppController.lapsList.clear();
+        LapDataSource.deleteLapsList(this, AppController.lapList);
+        AppController.lapList.clear();
         super.onBackPressed();
     }
 

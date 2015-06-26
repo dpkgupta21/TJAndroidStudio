@@ -17,6 +17,7 @@ import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.models.Journey;
+import com.traveljar.memories.models.Lap;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.services.PullBuddies;
 import com.traveljar.memories.utility.HelpMe;
@@ -69,7 +70,12 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         final String name = journeyItem.getName();
         final String tagline = journeyItem.getTagLine();
         final String buddyCount = (journeyItem.getBuddies().size() + 1) + " people";
-        final String place = "Bangalore";
+        List<Lap> lapList = journeyItem.getLapsList();
+        String place = "Bangalore"; //Default if no lap is there
+        if(lapList.size() > 0){
+            place = lapList.get(0).getDestinationCityName();
+        }
+        Log.d(TAG, "place name is " + place);
 
         Log.d(TAG, "info are : " + name + journeyItem.getIdOnServer());
 

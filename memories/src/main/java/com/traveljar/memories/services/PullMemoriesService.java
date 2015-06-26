@@ -68,7 +68,7 @@ public class PullMemoriesService implements VideoUtil.OnFinishDownloadListener, 
     public void fetchJourneys() {
         isService = true;
         Log.d(TAG, "fetch journeys");
-        String fetchJourneysUrl = Constants.URL_JOURNIES_FETCH_ALL + "?api_key=" + TJPreferences.getApiKey(mContext) + "&user_id=" + TJPreferences.getUserId(mContext);
+        String fetchJourneysUrl = Constants.URL_JOURNEYS_FETCH + "?api_key=" + TJPreferences.getApiKey(mContext) + "&user_id=" + TJPreferences.getUserId(mContext);
         Log.d(TAG, "url to fetch journeys" + fetchJourneysUrl);
         CustomJsonRequest fetchJourneysRequest = new CustomJsonRequest(Request.Method.GET, fetchJourneysUrl, null,
                 new Response.Listener<JSONObject>() {

@@ -7,9 +7,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.traveljar.memories.models.Lap;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 // This class id included in android manifest in <application>
 // So that it is android launches it every time app starts
@@ -19,9 +20,10 @@ public class AppController extends Application {
     public static final String TAG = AppController.class.getSimpleName();
     private static AppController mInstance;
     public static ArrayList<String> buddyList;
-    public static ArrayList<Map<String, String>> lapsList;
+    public static List<Lap> lapList;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
+
 
     public static synchronized AppController getInstance() {
         return mInstance;
@@ -31,7 +33,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        lapsList = new ArrayList<Map<String, String>>();
+        lapList = new ArrayList<>();
     }
 
     public RequestQueue getRequestQueue() {

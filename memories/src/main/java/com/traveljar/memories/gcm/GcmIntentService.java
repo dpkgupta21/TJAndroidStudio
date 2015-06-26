@@ -20,6 +20,7 @@ import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
+import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.currentjourney.TimelineFragment;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
@@ -30,6 +31,7 @@ import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.models.Video;
+import com.traveljar.memories.services.PullJourney;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.ContactsUtil;
 import com.traveljar.memories.utility.HelpMe;
@@ -44,14 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * This {@code IntentService} does the actual handling of the GCM message.
- * {@code GcmBroadcastReceiver} (a {@code WakefulBroadcastReceiver}) holds a
- * partial wake lock for this service while the service does its work. When the
- * service is finished, it calls {@code completeWakefulIntent()} to release the
- * wake lock.
- */
-public class GcmIntentService extends IntentService {
+public class GcmIntentService extends IntentService implements PullJourney.OnTaskFinishListener{
     public static final int NOTIFICATION_ID = 1;
     public static final String TAG = "<GcmIntentService>";
     private NotificationManager mNotificationManager;
@@ -193,17 +188,17 @@ public class GcmIntentService extends IntentService {
                 buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
                 Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt);
-                JourneyDataSource.createJourney(jItem, this);
-                if (ActivejourneyList.isActivityVisible()) {
-                    ActivejourneyList.getInstance().refreshJourneysList();
-                }
+                new PullJourney(jItem, this, this).fetchJourneys();
+
                 break;
 
             case HelpMe.TYPE_DELETE_MEMORY:
                 memId = bundle.getString("memory_id");
                 memType = bundle.getString("memory_type");
-
                 MemoriesDataSource.deleteMemoryWithServerId(this, memType, memId);
+                if(CurrentJourneyBaseActivity.isActivityVisible()){
+                    CurrentJourneyBaseActivity.getInstance().refreshTimelineList();
+                }
                 break;
 
             case HelpMe.TYPE_LIKE_MEMORY:
@@ -355,6 +350,14 @@ public class GcmIntentService extends IntentService {
 
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onFinishTask(Journey journey) {
+        JourneyDataSource.createJourney(journey, this);
+        if (ActivejourneyList.isActivityVisible()) {
+            ActivejourneyList.getInstance().refreshJourneysList();
         }
     }
 }
