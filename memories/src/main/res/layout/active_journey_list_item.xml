@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:background="@color/tj_gray_bg"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="5dp">
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp"
+    android:paddingTop="7dp">
 
 
 
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:padding="5dp"
+            android:padding="7dp"
             android:text="Some buddies"
             android:textColor="@color/white"
             android:textSize="16sp" />
@@ -61,7 +61,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="7dp"
             android:layout_toLeftOf="@id/active_journey_list_buddy_count"
             android:src="@drawable/active_journey_buddy" />
 
@@ -71,7 +71,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="7dp"
             android:src="@drawable/active_journey_location" />
 
         <com.traveljar.memories.customviews.MyTextViewBodyReg
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="7dp"
             android:layout_toRightOf="@id/active_journey_list_place_icon"
             android:text="Some place"
             android:textColor="@color/white"
