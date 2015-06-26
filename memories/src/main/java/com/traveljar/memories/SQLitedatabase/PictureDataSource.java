@@ -55,8 +55,8 @@ public class PictureDataSource {
 
     // To get total number of pictures of a journey
     public static int getPicCountOfJourney(Context context, String jId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE "
-                + MySQLiteHelper.PICTURE_COLUMN_JID + " = '" + jId + "'";
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_JID + " = '" +
+                jId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         int count = cursor.getCount();
@@ -68,25 +68,12 @@ public class PictureDataSource {
     // To get list of all pictures as Picture list
     public static List<Picture> getAllPictures(Context context) {
         List<Picture> memoriesList;
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + "='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         memoriesList = getPictures(cursor, context);
         cursor.close();
         db.close();
-        return memoriesList;
-    }
-
-    // To get list of all pictures as Memories list
-    public static List<Memories> getAllPictureMemories(Context context) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE;
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        List<Memories> memoriesList = getPictureMemories(cursor, context);
-        cursor.close();
-        db.close();
-        Log.d(TAG, "pictures fetched successfully " + memoriesList.size());
         return memoriesList;
     }
 
@@ -115,8 +102,8 @@ public class PictureDataSource {
 
     public static List<Memories> getPictureMemoriesFromJourney(Context context, String journeyId) {
         List<Memories> memoriesList;
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE "
-                + MySQLiteHelper.PICTURE_COLUMN_JID + " = " + journeyId;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_JID
+                + " = '" + journeyId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         memoriesList = getPictureMemories(cursor, context);
@@ -145,15 +132,13 @@ public class PictureDataSource {
         db.close();
     }
 
-/*    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
+    public static void updateDeleteStatus(Context context, String memLocalId, boolean isDeleted){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        Log.d(TAG, "liked by value is " + likedBy);
-        values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy == null ? null : Joiner.on(",").join(likedBy));
-        db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = "
-                + memId, null);
+        values.put(MySQLiteHelper.PICTURE_COLUMN_IS_DELETED, isDeleted ? 1 : 0);
+        db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = " + memLocalId, null);
         db.close();
-    }*/
+    }
 
     public static void updateCaption(Context context, String caption, String picId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
@@ -163,9 +148,9 @@ public class PictureDataSource {
         db.close();
     }
 
-    public static void deletePicture(Context context, String pictureId) {
+    public static void deletePictureByIdOnServer(Context context, String idOnServer) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_PICTURE, MySQLiteHelper.PICTURE_COLUMN_ID + "=?", new String[]{pictureId});
+        db.delete(MySQLiteHelper.TABLE_PICTURE, MySQLiteHelper.PICTURE_COLUMN_ID_ONSERVER + "=?", new String[]{idOnServer});
         db.close();
     }
 
@@ -232,7 +217,8 @@ public class PictureDataSource {
     public static Picture getRandomPicOfJourney(String jId, Context context) {
         Log.d(TAG, "in getRandomPicOfJourney");
 
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_JID + " = '" + jId + "'";
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_JID +
+                " = '" + jId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Log.e(TAG, selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);

@@ -23,7 +23,6 @@ import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Request;
-import com.traveljar.memories.moods.MoodDetail;
 import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
@@ -152,11 +151,13 @@ public class NoteDetail extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 Request request = new Request(null, mNote.getId(), mNote.getjId(), Request.OPERATION_TYPE_DELETE,
                                         Request.CATEGORY_TYPE_NOTE, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                NoteDataSource.updateDeleteStatus(NoteDetail.this, mNote.getId(), true);
                                 RequestQueueDataSource.createRequest(request, NoteDetail.this);
                                 if(HelpMe.isNetworkAvailable(NoteDetail.this)) {
                                     Intent intent = new Intent(NoteDetail.this, MakeServerRequestsService.class);
                                     startService(intent);
                                 }
+                                finish();
                                 //MemoriesUtil.getInstance().deleteMemory(NoteDetail.this, mNote.getIdOnServer());
                             }
                         })

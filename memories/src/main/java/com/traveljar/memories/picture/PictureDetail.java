@@ -183,6 +183,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                             public void onClick(DialogInterface dialog, int which) {
                                 Request request = new Request(null, mPicture.getId(), mPicture.getjId(), Request.OPERATION_TYPE_DELETE,
                                         Request.CATEGORY_TYPE_PICTURE, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                PictureDataSource.updateDeleteStatus(PictureDetail.this, mPicture.getId(), true);
                                 RequestQueueDataSource.createRequest(request, PictureDetail.this);
                                 if(HelpMe.isNetworkAvailable(PictureDetail.this)) {
                                     Intent intent = new Intent(PictureDetail.this, MakeServerRequestsService.class);

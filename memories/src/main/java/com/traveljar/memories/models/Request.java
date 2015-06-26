@@ -21,12 +21,12 @@ public class Request {
     public static final int OPERATION_TYPE_LIKE = 4;
     public static final int OPERATION_TYPE_UNLIKE = 5;
 
-    public static final int CATEGORY_TYPE_AUDIO = 0;
-    public static final int CATEGORY_TYPE_CHECKIN = 1;
-    public static final int CATEGORY_TYPE_MOOD = 2;
-    public static final int CATEGORY_TYPE_NOTE = 3;
-    public static final int CATEGORY_TYPE_PICTURE = 4;
-    public static final int CATEGORY_TYPE_VIDEO = 5;
+    public static final int CATEGORY_TYPE_AUDIO = 1;
+    public static final int CATEGORY_TYPE_CHECKIN = 2;
+    public static final int CATEGORY_TYPE_MOOD = 3;
+    public static final int CATEGORY_TYPE_NOTE = 4;
+    public static final int CATEGORY_TYPE_PICTURE = 5;
+    public static final int CATEGORY_TYPE_VIDEO = 6;
 
     public static final int REQUEST_STATUS_NOT_STARTED = -1;
     public static final int REQUEST_STATUS_RUNNING = 0;

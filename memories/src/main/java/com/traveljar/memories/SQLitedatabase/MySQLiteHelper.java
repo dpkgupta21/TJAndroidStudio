@@ -63,6 +63,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String PICTURE_COLUMN_LOCALTHUMBNAILPATH = "thumbnailPath";
     public static final String PICTURE_COLUMN_LATITUDE = "latitude";
     public static final String PICTURE_COLUMN_LONGITUDE = "longitude";
+    public static final String PICTURE_COLUMN_IS_DELETED = "isDeleted";
     //	Table Audio fields
     public static final String TABLE_AUDIO = "AUDIO";
     public static final String VOICE_COLUMN_ID = "_id";
@@ -80,6 +81,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String VOICE_COLUMN_LATITUDE = "latitude";
     public static final String VOICE_COLUMN_LONGITUDE = "longitude";
     public static final String VOICE_COLUMN_DURATION = "duration";
+    public static final String VOICE_COLUMN_IS_DELETED = "isDeleted";
+
     //	Table Videos fields
     public static final String TABLE_VIDEO = "VIDEO";
     public static final String VIDEO_COLUMN_ID = "_id";
@@ -98,6 +101,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String VIDEO_COLUMN_LOCALTHUMBNAILPATH = "thumbnailPath";
     public static final String VIDEO_COLUMN_LATITUDE = "latitude";
     public static final String VIDEO_COLUMN_LONGITUDE = "longitude";
+    public static final String VIDEO_COLUMN_IS_DELETED = "isDeleted";
+
     //	Table Moods fields
     public static final String TABLE_MOOD = "MOOD";
     public static final String MOOD_COLUMN_ID = "_id";
@@ -113,6 +118,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String MOOD_COLUMN_REASON = "reason";
     public static final String MOOD_COLUMN_LATITUDE = "latitude";
     public static final String MOOD_COLUMN_LONGITUDE = "longitude";
+    public static final String MOOD_COLUMN_IS_DELETED = "isDeleted";
+
     // Checkin Table fields
     public static final String TABLE_CHECKIN = "CHECKIN";
     public static final String CHECKIN_COLUMN_ID = "_id";
@@ -129,6 +136,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String CHECKIN_COLUMN_CREATED_AT = "createdAt";
     public static final String CHECKIN_COLUMN_UPDATED_AT = "updatedAt";
     public static final String CHECKIN_COLUMN_LIKED_BY = "likedBy";
+    public static final String CHECKIN_COLUMN_IS_DELETED = "isDeleted";
     //NOTE TABLE
     public static final String TABLE_NOTES = "NOTE";
     public static final String NOTES_COLUMN_ID = "_id";
@@ -143,6 +151,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String NOTES_COLUMN_LIKED_BY = "likedBy";
     public static final String NOTES_COLUMN_LATITUDE = "latitude";
     public static final String NOTES_COLUMN_LONGITUDE = "longitude";
+    public static final String NOTES_COLUMN_IS_DELETED = "isDeleted";
 
     //table place
     public static final String TABLE_PLACE = "PLACE";
@@ -232,6 +241,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + TIMELINE_COLUMN_MEM_TYPE + " text ,"
             + TIMELINE_COLUMN_CREATED_AT + " text ,"
             + TIMELINE_COLUMN_UPDATED_AT + " text" + " );";
+
     private static final String CREATE_TABLE_PICTURE = "create table " + TABLE_PICTURE + "("
             + PICTURE_COLUMN_ID + " integer primary key autoincrement, "
             + PICTURE_COLUMN_ID_ONSERVER + " text, "
@@ -248,6 +258,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + PICTURE_COLUMN_LOCALTHUMBNAILPATH + " text ,"
             + PICTURE_COLUMN_LATITUDE + " text ,"
             + PICTURE_COLUMN_LONGITUDE + " real ,"
+            + PICTURE_COLUMN_IS_DELETED + " integer DEFAULT 0,"
             + PICTURE_COLUMN_LIKEDBY + " real " + ");";
 
     private static final String CREATE_TABLE_AUDIO = "create table if not exists " + TABLE_AUDIO + "("
@@ -265,6 +276,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + VOICE_COLUMN_LATITUDE + " real ,"
             + VOICE_COLUMN_LONGITUDE + " real ,"
             + VOICE_COLUMN_DURATION + " integer ,"
+            + VOICE_COLUMN_IS_DELETED + " integer DEFAULT 0,"
             + VOICE_COLUMN_LIKEDBY + " text " + ");";
 
     private static final String CREATE_TABLE_VIDEO = "create table if not exists " + TABLE_VIDEO + "("
@@ -283,6 +295,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + VIDEO_COLUMN_LOCALTHUMBNAILPATH + " text ,"
             + VIDEO_COLUMN_LATITUDE + " real ,"
             + VIDEO_COLUMN_LONGITUDE + " real ,"
+            + VIDEO_COLUMN_IS_DELETED + " integer DEFAULT 0,"
             + VIDEO_COLUMN_LIKED_BY + " text " + ");";
 
     private static final String CREATE_TABLE_MOOD = "create table if not exists " + TABLE_MOOD + "("
@@ -298,6 +311,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + MOOD_COLUMN_REASON + " text ,"
             + MOOD_COLUMN_LATITUDE + " real ,"
             + MOOD_COLUMN_LONGITUDE + " real ,"
+            + MOOD_COLUMN_IS_DELETED + " integer DEFAULT 0,"
             + MOOD_COLUMN_LIKED_BY + " text " + ");";
 
     private static final String CREATE_TABLE_CHECKIN = "create table " + TABLE_CHECKIN + "("
@@ -314,6 +328,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + CHECKIN_COLUMN_CREATED_BY + " text ,"
             + CHECKIN_COLUMN_CREATED_AT + " text ,"
             + CHECKIN_COLUMN_UPDATED_AT + " text ,"
+            + CHECKIN_COLUMN_IS_DELETED + " integer DEFAULT 0,"
             + CHECKIN_COLUMN_LIKED_BY + " text " + ");";
 
     private static final String CREATE_TABLE_NOTES = "create table if not exists " + TABLE_NOTES + "("
@@ -328,6 +343,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + NOTES_COLUMN_UPDATED_AT + " integer ,"
             + NOTES_COLUMN_LATITUDE + " real ,"
             + NOTES_COLUMN_LONGITUDE + " real ,"
+            + NOTES_COLUMN_IS_DELETED + " integer DEFAULT 0,"
             + NOTES_COLUMN_LIKED_BY + " text " + ");";
 
     private static final String CREATE_TABLE_PLACE = "create table if not exists " + TABLE_PLACE + "("

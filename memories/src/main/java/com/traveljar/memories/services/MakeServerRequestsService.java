@@ -59,12 +59,16 @@ public class MakeServerRequestsService extends IntentService {
             request = RequestQueueDataSource.getFirstNonCompletedRequest(this);
 
             if (request != null) {
-                Log.d(TAG, "request = " + request.getCategoryType() + " retotacount " + reqTotalCount);
+                Log.d(TAG, "NC request category type = " + request.getCategoryType() + " retotacount " + reqTotalCount);
+                parseRequest(request);
                 // Increment all requests no of attempts to keep track for failure
                 RequestQueueDataSource.incrementRequestNoOfAttempts(request, this);
             } else {
                 if (RequestQueueDataSource.getFailedRequestsCount(this) != 0) {
+                    Log.d(TAG, "NC request category type = " + request.getCategoryType() + " retotacount " + reqTotalCount);
                     request = RequestQueueDataSource.getFirstFailedRequest(this);
+                    parseRequest(request);
+                    RequestQueueDataSource.incrementRequestNoOfAttempts(request, this);
                 }//else no action
                 else {
                     Log.d(TAG, "No more requests to serve!!");
@@ -146,7 +150,7 @@ public class MakeServerRequestsService extends IntentService {
 
             case Request.OPERATION_TYPE_DELETE:
                 audio = AudioDataSource.getAudioById(this, request.getObjectLocalId());
-                MemoriesUtil.getInstance().deleteMemory(this, audio.getIdOnServer());
+                return MemoriesUtil.deleteMemoryOnServer(this, audio.getIdOnServer(), audio.getjId(), audio.getMemType());
         }
         return false;
     }
@@ -175,7 +179,7 @@ public class MakeServerRequestsService extends IntentService {
 
             case Request.OPERATION_TYPE_DELETE:
                 checkIn = CheckinDataSource.getCheckInById(request.getObjectLocalId(), this);
-                MemoriesUtil.getInstance().deleteMemory(this, checkIn.getIdOnServer());
+                return MemoriesUtil.deleteMemoryOnServer(this, checkIn.getIdOnServer(), checkIn.getjId(), checkIn.getMemType());
         }
         return false;
     }
@@ -204,7 +208,7 @@ public class MakeServerRequestsService extends IntentService {
 
             case Request.OPERATION_TYPE_DELETE:
                 mood = MoodDataSource.getMoodById(request.getObjectLocalId(), this);
-                MemoriesUtil.getInstance().deleteMemory(this, mood.getIdOnServer());
+                return MemoriesUtil.deleteMemoryOnServer(this, mood.getIdOnServer(), mood.getjId(), mood.getMemType());
         }
         return false;
     }
@@ -224,6 +228,7 @@ public class MakeServerRequestsService extends IntentService {
                 like = LikeDataSource.getLikeById(request.getObjectLocalId(), this);
                 note = NoteDataSource.getNoteById(like.getMemoryLocalId(), this);
                 like.setMemoryLocalId(note.getIdOnServer());
+
                 return MemoriesUtil.likeMemoryOnServer(this, like);
 
             case Request.OPERATION_TYPE_UNLIKE:
@@ -234,7 +239,7 @@ public class MakeServerRequestsService extends IntentService {
 
             case Request.OPERATION_TYPE_DELETE:
                 note = NoteDataSource.getNoteById(request.getObjectLocalId(), this);
-                MemoriesUtil.getInstance().deleteMemory(this, note.getIdOnServer());
+                return MemoriesUtil.deleteMemoryOnServer(this, note.getIdOnServer(), note.getjId(), note.getMemType());
         }
         return false;
     }
@@ -262,7 +267,7 @@ public class MakeServerRequestsService extends IntentService {
 
             case Request.OPERATION_TYPE_DELETE:
                 picture = PictureDataSource.getPictureById(this, request.getObjectLocalId());
-                MemoriesUtil.getInstance().deleteMemory(this, picture.getIdOnServer());
+                return MemoriesUtil.deleteMemoryOnServer(this, picture.getIdOnServer(), picture.getjId(), picture.getMemType());
         }
         return false;
     }
@@ -291,7 +296,7 @@ public class MakeServerRequestsService extends IntentService {
 
             case Request.OPERATION_TYPE_DELETE:
                 video = VideoDataSource.getVideoById(request.getObjectLocalId(), this);
-                MemoriesUtil.getInstance().deleteMemory(this, video.getIdOnServer());
+                return MemoriesUtil.deleteMemoryOnServer(this, video.getIdOnServer(), video.getjId(), video.getMemType());
         }
         return false;
     }

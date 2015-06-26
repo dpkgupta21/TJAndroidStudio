@@ -40,7 +40,6 @@ public class CheckinDataSource {
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY, newCheckIn.getCreatedBy());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CREATED_AT, newCheckIn.getCreatedAt());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT, newCheckIn.getUpdatedAt());
-       /* values.put(MySQLiteHelper.CHECKIN_COLUMN_LIKED_BY, newCheckIn.getLikedBy() == null ? null : Joiner.on(",").join(newCheckIn.getLikedBy()));*/
         values.put(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE, newCheckIn.getLatitude());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE, newCheckIn.getLongitude());
 
@@ -53,8 +52,8 @@ public class CheckinDataSource {
     }
 
     public static Cursor getCheckInsOfCurrentJourney(String j_id, Context context) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_CHECKIN + " WHERE "
-                + MySQLiteHelper.CHECKIN_COLUMN_JID + " = " + j_id;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_CHECKIN + " WHERE " + MySQLiteHelper.CHECKIN_COLUMN_JID +
+                " = '" + j_id + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
 
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Log.e(TAG, selectQuery);
@@ -99,14 +98,13 @@ public class CheckinDataSource {
 
     }
 
-/*    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
+    public static void updateDeleteStatus(Context context, String memLocalId, boolean isDeleted){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
-        db.update(MySQLiteHelper.TABLE_CHECKIN, values, MySQLiteHelper.CHECKIN_COLUMN_ID + " = "
-                + memId, null);
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_IS_DELETED, isDeleted ? 1 : 0);
+        db.update(MySQLiteHelper.TABLE_CHECKIN, values, MySQLiteHelper.CHECKIN_COLUMN_ID + " = " + memLocalId, null);
         db.close();
-    }*/
+    }
 
     public static void updateServerId(Context context, String checkinId, String serverId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
@@ -117,8 +115,8 @@ public class CheckinDataSource {
     }
 
     public static List<Memories> getAllCheckinsList(Context context, String journeyId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_CHECKIN + " WHERE "
-                + MySQLiteHelper.CHECKIN_COLUMN_JID + " = " + journeyId;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_CHECKIN + " WHERE " + MySQLiteHelper.CHECKIN_COLUMN_JID +
+                " = '" + journeyId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -129,9 +127,9 @@ public class CheckinDataSource {
         return checkInsList;
     }
 
-    public static void deleteCheckIn(Context context, String checkInId){
+    public static void deleteCheckInByServerId(Context context, String idOnServer){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_CHECKIN, MySQLiteHelper.CHECKIN_COLUMN_ID + "=?", new String[]{checkInId});
+        db.delete(MySQLiteHelper.TABLE_CHECKIN, MySQLiteHelper.CHECKIN_COLUMN_ID_ONSERVER + "=?", new String[]{idOnServer});
         db.close();
     }
 
@@ -163,8 +161,6 @@ public class CheckinDataSource {
                         .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_CREATED_AT)));
                 checkin.setUpdatedAt(cursor.getLong(cursor
                         .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT)));
-                /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-                checkin.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
                 checkin.setLikes(LikeDataSource.getLikesForMemory(context, checkin.getId(), HelpMe.CHECKIN_TYPE));
 
                 checkin.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE)));

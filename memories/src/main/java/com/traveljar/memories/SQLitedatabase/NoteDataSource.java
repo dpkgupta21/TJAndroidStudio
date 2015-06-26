@@ -29,12 +29,11 @@ public class NoteDataSource {
         values.put(MySQLiteHelper.NOTES_COLUMN_CREATED_BY, newNote.getCreatedBy());
         values.put(MySQLiteHelper.NOTES_COLUMN_CREATED_AT, newNote.getCreatedAt());
         values.put(MySQLiteHelper.NOTES_COLUMN_UPDATED_AT, newNote.getUpdatedAt());
-/*        values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, newNote.getLikedBy() == null ? null : Joiner.on(",").join(newNote.getLikedBy()));*/
         values.put(MySQLiteHelper.NOTES_COLUMN_LATITUDE, newNote.getLatitude());
         values.put(MySQLiteHelper.NOTES_COLUMN_LONGITUDE, newNote.getLongitude());
 
         long note_id = db.insert(MySQLiteHelper.TABLE_NOTES, null, values);
-        Log.d(TAG, "New note Inserted!");
+        Log.d(TAG, "New note Inserted! with id " + note_id);
 
         db.close();
 
@@ -43,8 +42,8 @@ public class NoteDataSource {
 
     // To get total number of notes of a journey
     public static int getNoteCountOfJourney(Context context, String jId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_NOTES + " WHERE "
-                + MySQLiteHelper.NOTES_COLUMN_JID + " = '" + jId + "'";
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_NOTES + " WHERE " + MySQLiteHelper.NOTES_COLUMN_JID +
+                " = '" + jId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         Log.d(TAG, selectQuery);
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -58,7 +57,7 @@ public class NoteDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(MySQLiteHelper.TABLE_NOTES, null, MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER
                 + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
-        Log.d(TAG, "get note by server id " + cursor.getCount() + id);
+        Log.d(TAG, "get note  with server id = " + id);
         Note note = (Note)parseNotesFromCursor(context, cursor).get(0);
         cursor.close();
         db.close();
@@ -66,6 +65,7 @@ public class NoteDataSource {
     }
 
     public static Note getNoteById(String id, Context context) {
+        Log.d(TAG, "1.1 " + "note local id = " + id);
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(MySQLiteHelper.TABLE_NOTES, null, MySQLiteHelper.NOTES_COLUMN_ID
                 + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
@@ -80,19 +80,21 @@ public class NoteDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER, serverId);
         db.update(MySQLiteHelper.TABLE_NOTES, values, MySQLiteHelper.NOTES_COLUMN_ID + " = " + noteId, null);
+        Log.d(TAG, "note updated for note id on server = " + serverId + "local id = " + noteId);
+
         db.close();
     }
 
-    public static void deleteNote(Context context, String noteId){
+    public static void deleteNoteOnServer(Context context, String idOnServer){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_ID + "=?", new String[]{noteId});
+        db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_ID_ONSERVER + "=?", new String[]{idOnServer});
         db.close();
     }
 
     public static List<Memories> getAllNotesList(Context context, String journeyId) {
 
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_NOTES + " WHERE "
-                + MySQLiteHelper.NOTES_COLUMN_JID + " = " + journeyId;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_NOTES + " WHERE " + MySQLiteHelper.NOTES_COLUMN_JID + " = '"
+                + journeyId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -108,6 +110,14 @@ public class NoteDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.NOTES_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
         db.update(MySQLiteHelper.TABLE_NOTES, values, MySQLiteHelper.NOTES_COLUMN_ID + " = " + memId, null);
+        db.close();
+    }
+
+    public static void updateDeleteStatus(Context context, String memLocalId, boolean isDeleted){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.NOTES_COLUMN_IS_DELETED, isDeleted ? 1 : 0);
+        db.update(MySQLiteHelper.TABLE_NOTES, values, MySQLiteHelper.NOTES_COLUMN_ID + " = " + memLocalId, null);
         db.close();
     }
 

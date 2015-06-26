@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.android.volley.toolbox.RequestFuture;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
+import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
 import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.services.MakeServerRequestsService;
@@ -164,6 +165,24 @@ public class MemoriesUtil {
                 Log.d(TAG, "error in deleting memory" + e.getMessage());
             }
             return null;
+        }
+    }
+
+    public static boolean deleteMemoryOnServer(Context context, String memoryId, String journeyId, String memType){
+        String url = Constants.URL_MEMORY_UPDATE + journeyId + "/memories/" + memoryId + "?api_key=" +
+                TJPreferences.getApiKey(context);
+        Log.d(TAG, "url is " + url + " api key " + TJPreferences.getApiKey(context));
+        HttpDelete deleteRequest = new HttpDelete(url);
+        HttpResponse response;
+        try {
+            response = new DefaultHttpClient().execute(deleteRequest);
+            JSONObject object = new JSONObject(EntityUtils.toString(response.getEntity()));
+            MemoriesDataSource.deleteMemoryWithServerId(context, memType, memoryId);
+            Log.d(TAG, "response on deleting memory" + object);
+            return true;
+        } catch (Exception e) {
+            Log.d(TAG, "error in deleting memory" + e.getMessage());
+            return false;
         }
     }
 

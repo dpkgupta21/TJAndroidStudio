@@ -30,6 +30,27 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
     private SlidingTabLayout mSlidingTabLayout;
     private ViewPager mViewPager;
 
+    private static boolean activityVisible;
+    public static boolean isActivityVisible() {
+        return activityVisible;
+    }
+    public static void activityResumed() {
+        activityVisible = true;
+    }
+    public static void activityPaused() {
+        activityVisible = false;
+    }
+
+    private static CurrentJourneyBaseActivity instance;
+
+    public CurrentJourneyBaseActivity(){
+        instance = this;
+    }
+
+    public static CurrentJourneyBaseActivity getInstance(){
+        return instance == null ? new CurrentJourneyBaseActivity() : instance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +133,22 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        activityPaused();
+        super.onPause();
+    }
+
+    public void onResume() {
+        activityResumed();
+        super.onResume();
+    }
+
+    // Call this method from from anywhere to refresh timeline adapter when this activity is visible
+    public void refreshTimelineList(){
+
     }
 
 }

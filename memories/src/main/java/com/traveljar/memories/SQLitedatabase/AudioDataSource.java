@@ -36,7 +36,6 @@ public class AudioDataSource {
         values.put(MySQLiteHelper.VOICE_COLUMN_LATITUDE, newVoice.getLatitude());
         values.put(MySQLiteHelper.VOICE_COLUMN_LONGITUDE, newVoice.getLongitude());
         values.put(MySQLiteHelper.VOICE_COLUMN_DURATION, newVoice.getAudioDuration());
-/*        values.put(MySQLiteHelper.VOICE_COLUMN_LIKEDBY, newVoice.getLikedBy() == null ? null : Joiner.on(",").join(newVoice.getLikedBy()));*/
         long voice_id = db.insert(MySQLiteHelper.TABLE_AUDIO, null, values);
         Log.d(TAG, "New audio Inserted!");
 
@@ -46,8 +45,8 @@ public class AudioDataSource {
 
     // To get total number of pictures of a journey
     public static int getAudioCountOfJourney(Context context, String jId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO + " WHERE "
-                + MySQLiteHelper.VOICE_COLUMN_JID + " = '" + jId + "'";
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO + " WHERE " + MySQLiteHelper.VOICE_COLUMN_JID + " = '"
+                + jId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         int count = cursor.getCount();
@@ -57,7 +56,7 @@ public class AudioDataSource {
     }
 
     public static List<Audio> getAllAudios(Context context) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -95,8 +94,8 @@ public class AudioDataSource {
     }
 
     public static List<Memories> getAudioMemoriesForJourney(Context context, String journeyId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO + " WHERE "
-                + MySQLiteHelper.VOICE_COLUMN_JID + " = " + journeyId;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO + " WHERE " + MySQLiteHelper.VOICE_COLUMN_JID + " = '"
+                + journeyId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         List<Memories> audioList = getAudioMemoriesList(context, cursor);
@@ -123,17 +122,17 @@ public class AudioDataSource {
         db.close();
     }
 
-/*    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
+    public static void deleteAudioByServerId(Context context, String idOnServer){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_AUDIO, MySQLiteHelper.VOICE_COLUMN_ID_ONSERVER + "=?", new String[]{idOnServer});
+        db.close();
+    }
+
+    public static void updateDeleteStatus(Context context, String memLocalId, boolean isDeleted){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.VOICE_COLUMN_LIKEDBY, likedBy == null ? null : Joiner.on(",").join(likedBy));
-        db.update(MySQLiteHelper.TABLE_AUDIO, values, MySQLiteHelper.VOICE_COLUMN_ID + " = " + memId, null);
-        db.close();
-    }*/
-
-    public static void deleteAudio(Context context, String audioId){
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_AUDIO, MySQLiteHelper.VOICE_COLUMN_ID + "=?", new String[]{audioId});
+        values.put(MySQLiteHelper.VOICE_COLUMN_IS_DELETED, isDeleted ? 1 : 0);
+        db.update(MySQLiteHelper.TABLE_AUDIO, values, MySQLiteHelper.VOICE_COLUMN_ID + " = " + memLocalId, null);
         db.close();
     }
 

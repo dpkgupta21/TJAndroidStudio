@@ -22,10 +22,10 @@ public class Like implements Parcelable {
     private String idOnServer;
     private String journeyId;
     private String memoryLocalId;
+    private String memoryServerId;
     private String userId;
     private String memType;
     private boolean isValid;
-    private String memoryServerId;
     private Long createdAt;
     private Long updatedAt;
 

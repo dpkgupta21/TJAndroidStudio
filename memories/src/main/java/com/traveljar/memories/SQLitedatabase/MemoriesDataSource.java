@@ -100,4 +100,21 @@ public class MemoriesDataSource {
         return null;
     }
 
+    public static void deleteMemoryWithServerId(Context context, String memType, String idOnServer){
+        switch (Integer.parseInt(memType)){
+            case 1:
+                AudioDataSource.deleteAudioByServerId(context, idOnServer);
+            case 2:
+                CheckinDataSource.deleteCheckInByServerId(context, idOnServer);
+            case 3:
+                MoodDataSource.deleteMoodByServerId(context, idOnServer);
+            case 4:
+                NoteDataSource.deleteNoteOnServer(context, idOnServer);
+            case 5:
+                PictureDataSource.deletePictureByIdOnServer(context, idOnServer);
+            case 6:
+                VideoDataSource.deleteVideoByIdOnServer(context, idOnServer);
+        }
+    }
+
 }

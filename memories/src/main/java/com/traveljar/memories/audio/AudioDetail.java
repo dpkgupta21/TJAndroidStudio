@@ -151,6 +151,7 @@ public class AudioDetail extends AppCompatActivity {
                                 Request request = new Request(null, mAudio.getId(), mAudio.getjId(), Request.OPERATION_TYPE_DELETE,
                                         Request.CATEGORY_TYPE_AUDIO, Request.REQUEST_STATUS_NOT_STARTED, 0);
                                 RequestQueueDataSource.createRequest(request, AudioDetail.this);
+                                AudioDataSource.updateDeleteStatus(AudioDetail.this, mAudio.getId(), true);
                                 if(HelpMe.isNetworkAvailable(AudioDetail.this)) {
                                     Intent intent = new Intent(AudioDetail.this, MakeServerRequestsService.class);
                                     startService(intent);

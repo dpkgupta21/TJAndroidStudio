@@ -31,7 +31,6 @@ public class MoodDataSource {
         values.put(MySQLiteHelper.MOOD_COLUMN_CREATED_BY, newMood.getCreatedBy());
         values.put(MySQLiteHelper.MOOD_COLUMN_CREATED_AT, newMood.getCreatedAt());
         values.put(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT, newMood.getUpdatedAt());
-/*        values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, newMood.getLikedBy() == null ? null : Joiner.on(",").join(newMood.getLikedBy()));*/
         values.put(MySQLiteHelper.MOOD_COLUMN_LATITUDE, newMood.getLatitude());
         values.put(MySQLiteHelper.MOOD_COLUMN_LONGITUDE, newMood.getLongitude());
 
@@ -45,8 +44,8 @@ public class MoodDataSource {
 
     // To get total number of moods of a journey
     public static int getMoodCountOfJourney(Context context, String jId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_MOOD + " WHERE "
-                + MySQLiteHelper.MOOD_COLUMN_JID + " = '" + jId + "'";
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_MOOD + " WHERE " + MySQLiteHelper.MOOD_COLUMN_JID + " = '"
+                + jId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         int count = cursor.getCount();
@@ -98,8 +97,6 @@ public class MoodDataSource {
                 mood.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_CREATED_BY)));
                 mood.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_CREATED_AT)));
                 mood.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_UPDATED_AT)));
-                /*String liked = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.VOICE_COLUMN_LIKEDBY));
-                mood.setLikedBy(liked == null ? null : new ArrayList<String>(Arrays.asList(liked)));*/
                 mood.setLikes(LikeDataSource.getLikesForMemory(context, mood.getId(), HelpMe.MOOD_TYPE));
                 mood.setBuddyIds(Arrays.asList((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_FRIENDS_ID))).split(",")));
                 mood.setMood(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.MOOD_COLUMN_MOOD)));
@@ -113,8 +110,8 @@ public class MoodDataSource {
     }
 
     public static List<Memories> getMoodsFromJourney(Context context, String journeyId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_MOOD + " WHERE "
-                + MySQLiteHelper.MOOD_COLUMN_JID + " = " + journeyId;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_MOOD + " WHERE " + MySQLiteHelper.MOOD_COLUMN_JID + " = '"
+                + journeyId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         List<Memories> memoriesList = getMoodsFromCursor(c, context);
@@ -131,18 +128,18 @@ public class MoodDataSource {
         db.close();
     }
 
-    public static void deleteMood(Context context, String moodId){
+    public static void deleteMoodByServerId(Context context, String idOnServer){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_COLUMN_ID + "=?", new String[]{moodId});
+        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_COLUMN_ID_ONSERVER + "=?", new String[]{idOnServer});
         db.close();
     }
 
-/*    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
+    public static void updateDeleteStatus(Context context, String memLocalId, boolean isDeleted){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.MOOD_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
-        db.update(MySQLiteHelper.TABLE_MOOD, values, MySQLiteHelper.MOOD_COLUMN_ID + " = " + memId, null);
+        values.put(MySQLiteHelper.MOOD_COLUMN_IS_DELETED, isDeleted ? 1 : 0);
+        db.update(MySQLiteHelper.TABLE_MOOD, values, MySQLiteHelper.MOOD_COLUMN_ID + " = " + memLocalId, null);
         db.close();
-    }*/
+    }
 
 }

@@ -19,7 +19,6 @@ import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
-import com.traveljar.memories.checkin.CheckinDetail;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Mood;
@@ -175,6 +174,7 @@ public class MoodDetail extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 Request request = new Request(null, mMood.getId(), mMood.getjId(), Request.OPERATION_TYPE_DELETE,
                                         Request.CATEGORY_TYPE_MOOD, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                MoodDataSource.updateDeleteStatus(MoodDetail.this, mMood.getId(), true);
                                 RequestQueueDataSource.createRequest(request, MoodDetail.this);
                                 if(HelpMe.isNetworkAvailable(MoodDetail.this)) {
                                     Intent intent = new Intent(MoodDetail.this, MakeServerRequestsService.class);

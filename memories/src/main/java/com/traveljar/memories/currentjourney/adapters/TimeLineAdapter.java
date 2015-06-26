@@ -188,7 +188,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
 
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
-                    Log.d(TAG, "video is not already liked so liking it");
+                    Log.d(TAG, "memory is not already liked so liking it");
                     like = MemoriesUtil.createLikeRequest(mem.getId(), Request.getCategoryTypeFromMemory(mem), context, mem.getMemType());
                     mem.getLikes().add(like);
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
@@ -228,6 +228,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         }
 
         //set the favourites count
+        Log.d(TAG, "memory = " + memory.getMemType() + memory.getId() + "likes count = " + memory.getLikes().size());
         holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikes().size()));
         holder.timelineItemFavBtn.setImageResource(memory.isMemoryLikedByCurrentUser(context) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
 

@@ -36,7 +36,6 @@ public class VideoDataSource {
         values.put(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH, newVideo.getLocalThumbPath());
         values.put(MySQLiteHelper.VIDEO_COLUMN_LATITUDE, newVideo.getLatitude());
         values.put(MySQLiteHelper.VIDEO_COLUMN_LONGITUDE, newVideo.getLongitude());
-
         long video_id = db.insert(MySQLiteHelper.TABLE_VIDEO, null, values);
         Log.d(TAG, "New video Inserted!");
 
@@ -47,8 +46,8 @@ public class VideoDataSource {
 
     // To get total number of videos of a journey
     public static int getVideoCountOfJourney(Context context, String jId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE "
-                + MySQLiteHelper.VIDEO_COLUMN_JID + " = '" + jId + "'";
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE " + MySQLiteHelper.VIDEO_COLUMN_JID + " = '" + jId
+                + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         int count = cursor.getCount();
@@ -56,12 +55,6 @@ public class VideoDataSource {
         db.close();
         return count;
     }
-
-    /**
-     * getting all videos
-     * @param id
-     * @param context
-     */
 
     // Getting single contact
     public static Video getVideoById(String id, Context context) {
@@ -89,8 +82,8 @@ public class VideoDataSource {
     }
 
     public static List<Memories> getAllVideoMemories(Context context, String journeyId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE "
-                + MySQLiteHelper.VIDEO_COLUMN_JID + " = " + journeyId;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE " + MySQLiteHelper.VIDEO_COLUMN_JID + " = '"
+                + journeyId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -101,21 +94,9 @@ public class VideoDataSource {
         return memoriesList;
     }
 
-    public static List<Video> getAllVideosFromJourney(Context context, String journeyId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE "
-                + MySQLiteHelper.VIDEO_COLUMN_JID + " = " + journeyId;
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        Log.d(TAG, "cursor length = " + c.getCount() + " with j_id = " + journeyId);
-        List<Video> videosList = getVideosList(c, context);
-        c.close();
-        db.close();
-        return videosList;
-    }
-
     public static List<Video> getAllVideos(Context context) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO;
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED
+                + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         List<Video> videosList = getVideosList(c, context);
@@ -133,15 +114,13 @@ public class VideoDataSource {
         db.close();
     }
 
-/*    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
+    public static void updateDeleteStatus(Context context, String memLocalId, boolean isDeleted){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
-        db.update(MySQLiteHelper.TABLE_VIDEO, values, MySQLiteHelper.VIDEO_COLUMN_ID + " = "
-                + memId, null);
-
+        values.put(MySQLiteHelper.VIDEO_COLUMN_IS_DELETED, isDeleted ? 1 : 0);
+        db.update(MySQLiteHelper.TABLE_VIDEO, values, MySQLiteHelper.VIDEO_COLUMN_ID + " = " + memLocalId, null);
         db.close();
-    }*/
+    }
 
     public static void updateVideoLocalUrl(Context context, String memId, String localUrl) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
@@ -161,9 +140,9 @@ public class VideoDataSource {
         db.close();
     }
 
-    public static void deleteVideo(Context context, String videoId){
+    public static void deleteVideoByIdOnServer(Context context, String idOnServer){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_VIDEO, MySQLiteHelper.VIDEO_COLUMN_ID + "=?", new String[]{videoId});
+        db.delete(MySQLiteHelper.TABLE_VIDEO, MySQLiteHelper.VIDEO_COLUMN_ID_ONSERVER + "=?", new String[]{idOnServer});
         db.close();
     }
 

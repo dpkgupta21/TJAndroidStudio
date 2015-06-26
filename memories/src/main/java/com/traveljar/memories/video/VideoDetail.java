@@ -187,6 +187,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                                 Request request = new Request(null, mVideo.getId(), mVideo.getjId(), Request.OPERATION_TYPE_DELETE,
                                         Request.CATEGORY_TYPE_VIDEO, Request.REQUEST_STATUS_NOT_STARTED, 0);
                                 RequestQueueDataSource.createRequest(request, VideoDetail.this);
+                                VideoDataSource.updateDeleteStatus(VideoDetail.this, mVideo.getId(), true);
                                 if(HelpMe.isNetworkAvailable(VideoDetail.this)) {
                                     Intent intent = new Intent(VideoDetail.this, MakeServerRequestsService.class);
                                     startService(intent);

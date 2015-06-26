@@ -199,6 +199,13 @@ public class GcmIntentService extends IntentService {
                 }
                 break;
 
+            case HelpMe.TYPE_DELETE_MEMORY:
+                memId = bundle.getString("memory_id");
+                memType = bundle.getString("memory_type");
+
+                MemoriesDataSource.deleteMemoryWithServerId(this, memType, memId);
+                break;
+
             case HelpMe.TYPE_LIKE_MEMORY:
                 userId = bundle.get("user_id").toString();
                 journeyId = bundle.get("j_id").toString();
@@ -225,8 +232,8 @@ public class GcmIntentService extends IntentService {
                 break;
 
             case HelpMe.TYPE_ADD_BUDDY:
-                String buddyId = bundle.getString("buddy_id");
-                journeyId = bundle.getString("journey_ids");
+                String buddyId = bundle.getString("added_buddy_id");
+                journeyId = bundle.getString("journey_id");
                 ContactsUtil.fetchContact(this, buddyId);
                 JourneyDataSource.addContactToJourney(this, buddyId, journeyId);
                 break;

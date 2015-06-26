@@ -19,7 +19,6 @@ import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
-import com.traveljar.memories.audio.AudioDetail;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Like;
@@ -172,6 +171,7 @@ public class CheckinDetail extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 Request request = new Request(null, mCheckIn.getId(), mCheckIn.getjId(), Request.OPERATION_TYPE_DELETE,
                                         Request.CATEGORY_TYPE_CHECKIN, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                CheckinDataSource.updateDeleteStatus(CheckinDetail.this, mCheckIn.getId(), true);
                                 RequestQueueDataSource.createRequest(request, CheckinDetail.this);
                                 if(HelpMe.isNetworkAvailable(CheckinDetail.this)) {
                                     Intent intent = new Intent(CheckinDetail.this, MakeServerRequestsService.class);
