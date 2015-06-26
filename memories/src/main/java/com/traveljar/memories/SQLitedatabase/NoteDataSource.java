@@ -121,6 +121,19 @@ public class NoteDataSource {
         db.close();
     }
 
+    public static void deleteAllNotesFromJourney(Context context, String journeyId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_JID + "=?", new String[]{journeyId});
+        db.close();
+    }
+
+    public static void deleteAllNoteFromJourneyByUser(Context context, String journeyId, String userId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_JID + "=? AND " + MySQLiteHelper.NOTES_COLUMN_CREATED_BY
+                + "=?", new String[]{journeyId, userId});
+        db.close();
+    }
+
     public static List<Memories> parseNotesFromCursor(Context context, Cursor cursor){
         Note note;
         List<Memories> notesList = new ArrayList<Memories>();

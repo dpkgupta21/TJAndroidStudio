@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -28,7 +29,7 @@ public class ContactsUtil {
 
     private static final String TAG = "ContactsUtil";
 
-    public static boolean fetchContact(Context context, String contactId){
+    public static boolean fetchContact(Context context, String contactId) {
         String url = Constants.URL_USER_SHOW_DETAILS + "/" + contactId + "?api_key=" + TJPreferences.getApiKey(context);
 
         RequestFuture<JSONObject> futureRequest = RequestFuture.newFuture();
@@ -58,9 +59,9 @@ public class ContactsUtil {
                 fileName = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + idOnServer + ".jpeg";
                 out = new FileOutputStream(fileName);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            }catch (Exception e){
+            } catch (Exception e) {
                 fileName = Constants.GUMNAAM_IMAGE_URL;
-            }finally {
+            } finally {
                 try {
                     if (out != null) {
                         out.close();
@@ -89,4 +90,41 @@ public class ContactsUtil {
         return false;
     }
 
-}
+        public static boolean fetchProfilePicture(Context context, String url, String fileName){
+
+            final RequestFuture<Bitmap> futureRequest = RequestFuture.newFuture();
+            ImageRequest imageRequest = new ImageRequest(url, futureRequest, 0, 0, null,futureRequest);
+            AppController.getInstance().getRequestQueue().add(imageRequest);
+            try {
+                Bitmap bitmap = futureRequest.get(60, TimeUnit.SECONDS);
+                Log.d(TAG, "successfully downloaded profile image");
+                FileOutputStream out = null;
+                try {
+                    out = new FileOutputStream(fileName);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                }catch (Exception e){
+                }finally {
+                    try {
+                        if (out != null) {
+                            out.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                return true;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+                return true;
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }catch (CancellationException e){
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+    }

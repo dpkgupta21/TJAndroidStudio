@@ -3,7 +3,6 @@ package com.traveljar.memories.profile;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -96,9 +95,16 @@ public class ProfileActivity extends BaseActivity {
         String profileImgPath = TJPreferences.getProfileImgPath(this);
         File imgFile = new File(profileImgPath);
         if (imgFile.exists()) {
-            Bitmap bmp = BitmapFactory.decodeFile(profileImgPath);
-            mProfileImg.setImageBitmap(bmp);
-            mCoverImg.setImageBitmap(bmp);
+            try {
+                mProfileImg.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 200, 200));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                mCoverImg.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 300, 300));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

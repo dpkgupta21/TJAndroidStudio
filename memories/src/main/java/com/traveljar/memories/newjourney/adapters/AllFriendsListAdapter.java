@@ -45,55 +45,53 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Log.d(TAG, originalList.get(position).getName());
-        View view = null;
+        final ViewHolder viewHolder;
         if (convertView == null) {
-            LayoutInflater inflator = context.getLayoutInflater();
-            view = inflator.inflate(R.layout.new_journey_traveljar_contact_list_item, null);
-            final ViewHolder viewHolder = new ViewHolder();
-            viewHolder.name = (TextView) view.findViewById(R.id.all_contacts_contact_name);
-            viewHolder.phone_no = (TextView) view.findViewById(R.id.all_contacts_contact_phone);
-            viewHolder.img = (ImageView) view.findViewById(R.id.all_contacts_contact_image);
-            viewHolder.checkbox = (CheckBox) view.findViewById(R.id.all_contacts_checkbox);
-
-            viewHolder.checkbox
-                    .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            Contact element = (Contact) viewHolder.checkbox.getTag();
-                            element.setSelected(buttonView.isChecked());
-
-                        }
-                    });
-            view.setTag(viewHolder);
-            viewHolder.checkbox.setTag(list.get(position));
+            LayoutInflater inflater = context.getLayoutInflater();
+            convertView = inflater.inflate(R.layout.new_journey_traveljar_contact_list_item, null);
+            viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) convertView.findViewById(R.id.all_contacts_contact_name);
+            viewHolder.phone_no = (TextView) convertView.findViewById(R.id.all_contacts_contact_phone);
+            viewHolder.img = (ImageView) convertView.findViewById(R.id.all_contacts_contact_image);
+            viewHolder.checkbox = (CheckBox) convertView.findViewById(R.id.all_contacts_checkbox);
+            convertView.setTag(viewHolder);
         } else {
+            viewHolder = (ViewHolder)convertView.getTag();
             Log.d(TAG, "convert view is NOT null" + list.size() + "position = " + position);
-            view = convertView;
-            ((ViewHolder) view.getTag()).checkbox.setTag(list.get(position));
         }
 
-        Log.d(TAG, "convert view away" + list.size() + "position = " + position);
-        ViewHolder holder = (ViewHolder) view.getTag();
-        holder.name.setText(list.get(position).getName());
+        viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Contact element = list.get(position);
+                element.setSelected(isChecked);
+            }
+        });
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.checkbox.setChecked(!viewHolder.checkbox.isChecked());
+                Contact element = list.get(position);
+                element.setSelected(viewHolder.checkbox.isChecked());
+            }
+        });
+
+        viewHolder.name.setText(list.get(position).getName());
 
         if (list.get(position).getPhone_no() == null || list.get(position).getPhone_no() == "") {
-            holder.phone_no.setText(list.get(position).getPrimaryEmail());
+            viewHolder.phone_no.setText(list.get(position).getPrimaryEmail());
         } else {
-            holder.phone_no.setText(list.get(position).getPhone_no());
+            viewHolder.phone_no.setText(list.get(position).getPhone_no());
         }
 
         if (list.get(position).getPicLocalUrl() != null) {
-            holder.img.setImageBitmap(BitmapFactory.decodeFile(list.get(position).getPicLocalUrl()));
+            viewHolder.img.setImageBitmap(BitmapFactory.decodeFile(list.get(position).getPicLocalUrl()));
         }
 
-        // Uri imgUri = Uri.parse(list.get(position).getProfilePic());
-        // holder.img.setImageURI(imgUri);
-
-        holder.checkbox.setChecked(list.get(position).isSelected());
-        return view;
+        viewHolder.checkbox.setChecked(list.get(position).isSelected());
+        return convertView;
     }
 
     @Override

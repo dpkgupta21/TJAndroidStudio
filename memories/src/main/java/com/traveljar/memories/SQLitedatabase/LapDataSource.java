@@ -30,7 +30,7 @@ public class LapDataSource {
         values.put(MySQLiteHelper.LAP_COLUMN_START_DATE, lap.getStartDate());
 
         long lapId = db.insert(MySQLiteHelper.TABLE_LAP, null, values);
-        Log.d(TAG, "New lap Inserted with id" + lapId);
+        Log.d(TAG, "New lap Inserted with id" + lapId + lap);
 
         db.close();
 
@@ -53,14 +53,17 @@ public class LapDataSource {
     /*get all the laps associated to a particular journey*/
     public static List<Lap> getLapFromJourney(Context context, String journeyId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        Cursor cursor = db.query(MySQLiteHelper.TABLE_LAP, null, MySQLiteHelper.LAP_COLUMN_JOURNEY_ID + "=?",
-                new String[]{String.valueOf(journeyId)}, null, null, null, null);
+        String query = "SELECT * FROM " + MySQLiteHelper.TABLE_LAP + " WHERE " + MySQLiteHelper.LAP_COLUMN_JOURNEY_ID + " ='" +
+                journeyId + "'";
+/*        Cursor cursor = db.query(MySQLiteHelper.TABLE_LAP, null, MySQLiteHelper.LAP_COLUMN_JOURNEY_ID + "=?",
+                new String[]{String.valueOf(journeyId)}, null, null, null, null);*/
+        Cursor cursor = db.rawQuery(query, null);
 
         List<Lap> lapsList = getLapsFromCursor(cursor);
+        Log.d(TAG, "total laps for journey are " + lapsList.size());
         cursor.close();
         db.close();
         return lapsList;
-
     }
 
     /*Updates a list of laps*/
@@ -79,6 +82,7 @@ public class LapDataSource {
             values.put(MySQLiteHelper.LAP_COLUMN_CONVEYANCE_MODE, lap.getConveyanceMode());
             values.put(MySQLiteHelper.LAP_COLUMN_START_DATE, lap.getStartDate());
             db.update(MySQLiteHelper.TABLE_LAP, values, MySQLiteHelper.LAP_COLUMN_ID + " = '" + lap.getId() + "'", null);
+            Log.d(TAG, "lap updated" + values);
         }
         db.close();
     }

@@ -9,7 +9,6 @@ import android.util.Log;
 import com.google.common.base.Joiner;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.utility.Constants;
-import com.traveljar.memories.utility.TJPreferences;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -146,28 +145,32 @@ public class JourneyDataSource {
         Log.d(TAG, "New buddy with id = " + contactId + " successfully added to the current journey with id = " + journeyId);
     }
 
-    public static void removeContactFromJourney(Context context, String contactId) {
+    public static void removeContactFromJourney(Context context, String contactId, String journeyId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        String selectQuery = "SELECT " + MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS + " FROM " + MySQLiteHelper.TABLE_JOURNEY +
-                " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = '" + TJPreferences.getActiveJourneyId(context) + "'";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        String buddyIds = "";
-        if (cursor.moveToFirst()) {
-            buddyIds = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
-        }
-        Log.d(TAG, "existing contact for journey " + buddyIds);
-        List<String> buddiesList = new ArrayList<>(Arrays.asList(buddyIds.split(",")));
-        buddiesList.remove(contactId);
-        buddyIds = Joiner.on(",").join(buddiesList);
+        Journey journey = getJourneyById(context, journeyId);
+        journey.getBuddies().remove(contactId);
 
-        Log.d(TAG, "contact after removing contact is " + buddyIds);
-        cursor.close();
-        //Update this buddyIds on the database
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, buddyIds);
-        db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + TJPreferences.getActiveJourneyId(context), null);
-        db.close();
-        Log.d(TAG, "user successfully added to the current journey");
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, Joiner.on(",").join(journey.getBuddies()));
+        db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId, null);
+    }
+
+    public static void removeAllMemoriesFromJourney(Context context, String journeyId){
+        AudioDataSource.deleteAllAudioFromJourney(context, journeyId);
+        CheckinDataSource.deleteAllCheckInsFromJourney(context, journeyId);
+        MoodDataSource.deleteAllMoodsFromJourney(context, journeyId);
+        NoteDataSource.deleteAllNotesFromJourney(context, journeyId);
+        PictureDataSource.deleteAllPicturesFromJourney(context, journeyId);
+        VideoDataSource.deleteAllVideosFromJourney(context, journeyId);
+    }
+
+    public static void removeAllMemoriesByUserFromJourney(Context context, String journeyId, String contactId){
+        AudioDataSource.deleteAllAudioFromJourneyByUser(context, journeyId, contactId);
+        CheckinDataSource.deleteAllCheckInsFromJourneyByUser(context, journeyId, contactId);
+        MoodDataSource.deleteAllMoodsFromJourneyByUser(context, journeyId, contactId);
+        NoteDataSource.deleteAllNoteFromJourneyByUser(context, journeyId, contactId);
+        PictureDataSource.deleteAllPicturesFromJourneyByUser(context, journeyId, contactId);
+        VideoDataSource.deleteAllVideosFromJourneyByUser(context, journeyId, contactId);
     }
 
     private static List<Journey> parseJourneysAsList(Context context, Cursor cursor) {
@@ -183,7 +186,7 @@ public class JourneyDataSource {
                 journey.setGroupType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_GROUPTYPE)));
                 journey.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY)));
                 String buddyIds = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
-                journey.setBuddies(buddyIds.isEmpty() ? new ArrayList<String>() : Arrays.asList(buddyIds.split(",")));
+                journey.setBuddies(buddyIds.isEmpty() ? new ArrayList<String>() : new ArrayList<>(Arrays.asList(buddyIds.split(","))));
                 journey.setJourneyStatus(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_STATUS)));
                 journey.setCreatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATED_AT)));
                 journey.setUpdatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT)));

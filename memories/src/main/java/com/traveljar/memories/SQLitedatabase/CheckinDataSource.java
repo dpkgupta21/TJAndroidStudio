@@ -133,6 +133,19 @@ public class CheckinDataSource {
         db.close();
     }
 
+    public static void deleteAllCheckInsFromJourney(Context context, String journeyId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_CHECKIN, MySQLiteHelper.CHECKIN_COLUMN_JID + "=?", new String[]{journeyId});
+        db.close();
+    }
+
+    public static void deleteAllCheckInsFromJourneyByUser(Context context, String journeyId, String userId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_CHECKIN, MySQLiteHelper.CHECKIN_COLUMN_JID + "=? AND " + MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY
+                + "=?", new String[]{journeyId, userId});
+        db.close();
+    }
+
     private static List<Memories> getCheckInsFromCursor(Cursor cursor, Context context){
         List<Memories> checkInsList = new ArrayList<Memories>();
         CheckIn checkin;
