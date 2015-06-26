@@ -32,6 +32,7 @@ public class VideoDataSource {
         values.put(MySQLiteHelper.VIDEO_COLUMN_DATALOCALURL, newVideo.getDataLocalURL());
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_BY, newVideo.getCreatedBy());
         values.put(MySQLiteHelper.VIDEO_COLUMN_CREATED_AT, newVideo.getCreatedAt());
+        values.put(MySQLiteHelper.VIDEO_COLUMN_UPDATED_AT, newVideo.getUpdatedAt());
 /*        values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, newVideo.getLikedBy() == null ? null : Joiner.on(",").join(newVideo.getLikedBy()));*/
         values.put(MySQLiteHelper.VIDEO_COLUMN_LOCALTHUMBNAILPATH, newVideo.getLocalThumbPath());
         values.put(MySQLiteHelper.VIDEO_COLUMN_LATITUDE, newVideo.getLatitude());
@@ -101,18 +102,6 @@ public class VideoDataSource {
         return memoriesList;
     }
 
-    public static List<Video> getAllVideosFromJourney(Context context, String journeyId) {
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE "
-                + MySQLiteHelper.VIDEO_COLUMN_JID + " = " + journeyId;
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        Log.d(TAG, "cursor length = " + c.getCount() + " with j_id = " + journeyId);
-        List<Video> videosList = getVideosList(c, context);
-        c.close();
-        db.close();
-        return videosList;
-    }
 
     public static List<Video> getAllVideos(Context context) {
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO;
@@ -133,15 +122,6 @@ public class VideoDataSource {
         db.close();
     }
 
-/*    public static void updateFavourites(Context context, String memId, List<String> likedBy) {
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.VIDEO_COLUMN_LIKED_BY, likedBy == null ? null : Joiner.on(",").join(likedBy));
-        db.update(MySQLiteHelper.TABLE_VIDEO, values, MySQLiteHelper.VIDEO_COLUMN_ID + " = "
-                + memId, null);
-
-        db.close();
-    }*/
 
     public static void updateVideoLocalUrl(Context context, String memId, String localUrl) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();

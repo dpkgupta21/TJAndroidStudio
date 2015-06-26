@@ -166,7 +166,22 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String LIKE_COLUMN_MEMORABLE_ID = "memorableId";
     public static final String LIKE_COLUMN_USER_ID = "userId";
     public static final String LIKE_COLUMN_MEM_TYPE = "memType";
-    public static final String LIKE_COLUMN_IS_VALID= "isValid";
+    public static final String LIKE_COLUMN_IS_VALID = "isValid";
+
+    //	Table Timecapsule fields
+    public static final String TABLE_TIMECAPSULE = "TIMECAPSULE";
+    public static final String TIMECAPSULE_COLUMN_ID = "_id";
+    public static final String TIMECAPSULE_COLUMN_ID_ONSERVER = "idOnServer";
+    public static final String TIMECAPSULE_COLUMN_JID = "journeyId";
+    public static final String TIMECAPSULE_COLUMN_CAPTION = "caption";
+    public static final String TIMECAPSULE_COLUMN_EXT = "extension";
+    public static final String TIMECAPSULE_COLUMN_SIZE = "size";
+    public static final String TIMECAPSULE_COLUMN_VIDEOSERVERURL = "dataServerURL";
+    public static final String TIMECAPSULE_COLUMN_VIDEOLOCALURL = "dataLocalURL";
+    public static final String TIMECAPSULE_COLUMN_CREATED_BY = "createdBy";
+    public static final String TIMECAPSULE_COLUMN_CREATED_AT = "createdAt";
+    public static final String TIMECAPSULE_COLUMN_UPDATED_AT = "updatedAt";
+    public static final String TIMECAPSULE_COLUMN_LOCALTHUMBNAILPATH = "thumbnailPath";
 
     //Table requests
     public static final String TABLE_REQUEST_QUEUE = "requestQueue";
@@ -178,14 +193,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String RQ_COLUMN_REQUEST_STATUS = "requestStatus";
     public static final String RQ_COLUMN_NO_OF_ATTEMPTS = "noOfAttempts";
 
-    private static final String CREATE_TABLE_REQUEST_QUEUE = "CREATE TABLE IF NOT EXISTS " + TABLE_REQUEST_QUEUE + "("
-            + RQ_COLUMN_ID + " integer primary key autoincrement, "
-            + RQ_COLUMN_LOCAL_ID + " text , "
-            + RQ_COLUMN_JOURNEY_ID + " text ,"
-            + RQ_COLUMN_OPERATION_TYPE + " integer,"
-            + RQ_COLUMN_CATEGORY_TYPE + " integer ,"
-            + RQ_COLUMN_NO_OF_ATTEMPTS + " integer default 0,"
-            + RQ_COLUMN_REQUEST_STATUS + " integer " + ");";
 
     private static final String CREATE_TABLE_LIKE = "create table " + TABLE_LIKE + "("
             + LIKE_COLUMN_ID + " integer primary key autoincrement, "
@@ -210,6 +217,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + CONTACT_COLUMN_INTERESTS + " text ,"
             + CONTACT_COLUMN_STATUS + " text ,"
             + CONTACT_COLUMN_ISONBOARD + " integer " + ");";
+
     private static final String CREATE_TABLE_JOURNEY = "create table " + TABLE_JOURNEY + "("
             + JOURNEY_COLUMN_ID + " integer primary key autoincrement, "
             + JOURNEY_COLUMN_ID_ONSERVER + " text, "
@@ -232,6 +240,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + TIMELINE_COLUMN_MEM_TYPE + " text ,"
             + TIMELINE_COLUMN_CREATED_AT + " text ,"
             + TIMELINE_COLUMN_UPDATED_AT + " text" + " );";
+
     private static final String CREATE_TABLE_PICTURE = "create table " + TABLE_PICTURE + "("
             + PICTURE_COLUMN_ID + " integer primary key autoincrement, "
             + PICTURE_COLUMN_ID_ONSERVER + " text, "
@@ -340,6 +349,29 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + PLACE_COLUMN_CREATED_BY + " text ,"
             + PLACE_COLUMN_CREATED_AT + " integer " + ");";
 
+    private static final String CREATE_TABLE_TIMECAPSULE = "create table if not exists " + TABLE_TIMECAPSULE + "("
+            + TIMECAPSULE_COLUMN_ID + " integer primary key autoincrement, "
+            + TIMECAPSULE_COLUMN_ID_ONSERVER + " text, "
+            + TIMECAPSULE_COLUMN_JID + " text,"
+            + TIMECAPSULE_COLUMN_CAPTION + " text,"
+            + TIMECAPSULE_COLUMN_EXT + " text,"
+            + TIMECAPSULE_COLUMN_SIZE + " integer,"
+            + TIMECAPSULE_COLUMN_VIDEOSERVERURL + " text ,"
+            + TIMECAPSULE_COLUMN_VIDEOLOCALURL + " text ,"
+            + TIMECAPSULE_COLUMN_CREATED_BY + " text ,"
+            + TIMECAPSULE_COLUMN_CREATED_AT + " integer ,"
+            + TIMECAPSULE_COLUMN_UPDATED_AT + " integer ,"
+            + TIMECAPSULE_COLUMN_LOCALTHUMBNAILPATH + " text " + ");";
+
+    private static final String CREATE_TABLE_REQUEST_QUEUE = "CREATE TABLE IF NOT EXISTS " + TABLE_REQUEST_QUEUE + "("
+            + RQ_COLUMN_ID + " integer primary key autoincrement, "
+            + RQ_COLUMN_LOCAL_ID + " text , "
+            + RQ_COLUMN_JOURNEY_ID + " text ,"
+            + RQ_COLUMN_OPERATION_TYPE + " integer,"
+            + RQ_COLUMN_CATEGORY_TYPE + " integer ,"
+            + RQ_COLUMN_NO_OF_ATTEMPTS + " integer default 0,"
+            + RQ_COLUMN_REQUEST_STATUS + " integer " + ");";
+
     private static final String TAG = "<<MySQLiteHelper>>";
     private static final String DATABASE_NAME = "memories.db";
     private static final int DATABASE_VERSION = 2;
@@ -369,6 +401,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.delete(TABLE_VIDEO, null, null);
         db.delete(TABLE_PLACE, null, null);
         db.delete(TABLE_LIKE, null, null);
+        db.delete(TABLE_TIMECAPSULE, null, null);
+        db.delete(TABLE_REQUEST_QUEUE, null, null);
     }
 
     @Override
@@ -395,6 +429,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.d(TAG, "PLACE table created!");
         database.execSQL(CREATE_TABLE_LIKE);
         Log.d(TAG, "LIKE table created!");
+        database.execSQL(CREATE_TABLE_TIMECAPSULE);
+        Log.d(TAG, "TIMECAPSULE table created!");
         database.execSQL(CREATE_TABLE_REQUEST_QUEUE);
         Log.d(TAG, "REQUEST_QUEUE table created!");
     }
@@ -403,12 +439,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(MySQLiteHelper.class.getName(), "Upgrading database from version " + oldVersion
                 + " to " + newVersion + ", which will destroy all old data");
-        if(!tableExists(TABLE_REQUEST_QUEUE, this.getReadableDatabase())){
+        if (!tableExists(TABLE_REQUEST_QUEUE, this.getReadableDatabase())) {
             this.getWritableDatabase().execSQL(CREATE_TABLE_REQUEST_QUEUE);
         }
     }
 
-    private boolean columnExists(String columnName, String tableName, SQLiteDatabase db){
+    private boolean columnExists(String columnName, String tableName, SQLiteDatabase db) {
         Cursor cursor = db.query(tableName, null, null, null, null, null, null, "0");
         boolean exists = cursor.getColumnIndex(columnName) == -1 ? false : true;
         cursor.close();
@@ -416,11 +452,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return exists;
     }
 
-    private boolean tableExists(String tableName, SQLiteDatabase db){
+    private boolean tableExists(String tableName, SQLiteDatabase db) {
         Cursor cursor = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName + "'", null);
         boolean exists = false;
-        if(cursor != null){
-            if(cursor.getCount() > 0){
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
                 exists = true;
             }
         }

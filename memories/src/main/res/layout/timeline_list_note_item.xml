@@ -40,7 +40,6 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -49,7 +48,17 @@
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:src="@drawable/gumnaam_profile_image" />
+
+        <com.traveljar.memories.customviews.MyTextViewBodyReg
+            android:id="@+id/timelineItemUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Some Name"
+            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/noLikesTxt"
+            android:layout_toRightOf="@+id/timelineItemUserImage" />
 
         <ImageButton
             android:id="@+id/timelineItemFavIcon"
@@ -70,14 +79,6 @@
             android:layout_toLeftOf="@+id/timelineItemFavIcon"
             android:text="0" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
-            android:id="@+id/timelineItemUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Some Name"
-            android:layout_alignBottom="@+id/noLikesTxt"
-            android:layout_toRightOf="@+id/timelineItemUserImage"
-            android:layout_toEndOf="@+id/timelineItemUserImage" />
 
     </RelativeLayout>
 

@@ -5,12 +5,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.traveljar.memories.currentjourney.StatisticsFragment;
+import com.traveljar.memories.currentjourney.TimecapsuleFragment;
 import com.traveljar.memories.currentjourney.TimelineFragment;
 
 
 public class CurrentJourneyTabsAdapter extends FragmentPagerAdapter {
 
-    private String[] titles = new String[]{"Timeline", "Statistics"};
+    private String[] titles = new String[]{"Timeline", "Stats", "Timecapsule"};
 
     public CurrentJourneyTabsAdapter(FragmentManager fm) {
         super(fm);
@@ -21,11 +22,11 @@ public class CurrentJourneyTabsAdapter extends FragmentPagerAdapter {
 
         switch (index) {
             case 0:
-                // Top Rated fragment activity
                 return new TimelineFragment();
             case 1:
-                // Games fragment activity
                 return new StatisticsFragment();
+            case 2:
+                return new TimecapsuleFragment();
 
         }
 
@@ -35,7 +36,7 @@ public class CurrentJourneyTabsAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 2;
+        return 3;
     }
 
     // BEGIN_INCLUDE (pageradapter_getpagetitle)

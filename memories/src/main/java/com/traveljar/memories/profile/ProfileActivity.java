@@ -69,6 +69,7 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.profile_new);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Profile");
         toolbar.setVisibility(View.GONE);
 
         Toolbar toolbarProfile = (Toolbar) findViewById(R.id.toolbar_profile);
