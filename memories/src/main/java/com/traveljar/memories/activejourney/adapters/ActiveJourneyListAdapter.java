@@ -71,7 +71,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         final String tagline = journeyItem.getTagLine();
         final String buddyCount = (journeyItem.getBuddies().size() + 1) + " people";
         List<Lap> lapList = journeyItem.getLapsList();
-        String place = "Bangalore"; //Default if no lap is there
+        String place = "";
         if(lapList.size() > 0){
             place = lapList.get(0).getDestinationCityName();
         }

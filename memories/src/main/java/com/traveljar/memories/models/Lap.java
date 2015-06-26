@@ -19,15 +19,6 @@ public class Lap {
     private int conveyanceMode;
     private long startDate;
 
-    public static final String CONVEYANCE_MODE_FLIGHT = "FLIGHT";
-    public static final String CONVEYANCE_MODE_CAR = "CAR";
-    public static final String CONVEYANCE_MODE_TRAIN = "TRAIN";
-    public static final String CONVEYANCE_MODE_SHIP = "SHIP";
-    public static final String CONVEYANCE_MODE_WALK = "WALK";
-    public static final String CONVEYANCE_MODE_BUS = "BUS";
-    public static final String CONVEYANCE_MODE_BIKE = "BIKE";
-    public static final String CONVEYANCE_MODE_MAGICAL_CARPET = "MAGICAL_CARPET";
-
     public Lap(){
 
     }

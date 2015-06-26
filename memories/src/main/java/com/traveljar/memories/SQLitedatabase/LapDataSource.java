@@ -55,8 +55,10 @@ public class LapDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(MySQLiteHelper.TABLE_LAP, null, MySQLiteHelper.LAP_COLUMN_JOURNEY_ID + "=?",
                 new String[]{String.valueOf(journeyId)}, null, null, null, null);
+        Log.d(TAG, "total laps are for jid = "  + journeyId + " == " +  cursor.getCount());
 
         List<Lap> lapsList = getLapsFromCursor(cursor);
+        Log.d(TAG, "!" + lapsList.size() + lapsList + journeyId + "!");
         cursor.close();
         db.close();
         return lapsList;
@@ -68,6 +70,7 @@ public class LapDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         ContentValues values = new ContentValues();
         for(Lap lap : lapsList){
+            Log.d(TAG, lap.getId() + lap.getJourneyId() + lap.getSourceCityName());
             values.put(MySQLiteHelper.LAP_COLUMN_ID_ON_SERVER, lap.getIdOnServer());
             values.put(MySQLiteHelper.LAP_COLUMN_JOURNEY_ID, lap.getJourneyId());
             values.put(MySQLiteHelper.LAP_COLUMN_SOURCE_CITY, lap.getSourceCityName());

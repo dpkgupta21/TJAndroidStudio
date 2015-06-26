@@ -189,6 +189,7 @@ public class JourneyDataSource {
                 journey.setUpdatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT)));
                 journey.setCompletedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_COMPELTED_AT)));
                 journey.setLapsList(LapDataSource.getLapFromJourney(context, journey.getIdOnServer()));
+                Log.d(TAG, LapDataSource.getLapFromJourney(context, journey.getIdOnServer()) + "!");
                 journeyList.add(journey);
                 cursor.moveToNext();
             }
