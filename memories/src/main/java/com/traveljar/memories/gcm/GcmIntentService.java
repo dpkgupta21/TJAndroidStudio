@@ -31,6 +31,7 @@ import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.utility.Constants;
+import com.traveljar.memories.utility.ContactsUtil;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.PictureUtilities;
 import com.traveljar.memories.utility.TJPreferences;
@@ -223,7 +224,7 @@ public class GcmIntentService extends IntentService {
                 LikeDataSource.deleteLike(this, memories.getId(), user_id, memories.getMemType());
                 break;
 
-            /*case HelpMe.TYPE_ADD_BUDDY:
+            case HelpMe.TYPE_ADD_BUDDY:
                 String buddyId = bundle.getString("buddy_id");
                 journeyId = bundle.getString("journey_ids");
                 ContactsUtil.fetchContact(this, buddyId);
@@ -231,7 +232,7 @@ public class GcmIntentService extends IntentService {
                 break;
 
             case HelpMe.TYPE_REMOVE_BUDDY:
-                *//*String buddyId = bundle.getString("buddy_id");
+                /*String buddyId = bundle.getString("buddy_id");
                 journeyId = bundle.getString("journey_ids");*//*
                 break;*/
             default:
