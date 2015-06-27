@@ -134,6 +134,19 @@ public class MoodDataSource {
         db.close();
     }
 
+    public static void deleteAllMoodsFromJourney(Context context, String journeyId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_COLUMN_JID + "=?", new String[]{journeyId});
+        db.close();
+    }
+
+    public static void deleteAllMoodsFromJourneyByUser(Context context, String journeyId, String userId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_MOOD, MySQLiteHelper.MOOD_COLUMN_JID + "=? AND " + MySQLiteHelper.MOOD_COLUMN_CREATED_BY
+                + "=?", new String[]{journeyId, userId});
+        db.close();
+    }
+
     public static void updateDeleteStatus(Context context, String memLocalId, boolean isDeleted){
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();

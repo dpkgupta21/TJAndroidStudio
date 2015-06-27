@@ -51,6 +51,27 @@ public class ContactDataSource {
         return contact_id;
     }
 
+    public static void updateContact(Context context, Contact contact){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER, contact.getIdOnServer());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_NAME, contact.getName());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_EMAIL, contact.getPrimaryEmail());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhone_no());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL, contact.getPicServerUrl());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL, contact.getPicLocalUrl());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS, contact.getAllJourneyIds());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_INTERESTS, contact.getInterests());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD, contact.isOnBoard() ? 1 : 0);
+        values.put(MySQLiteHelper.CONTACT_COLUMN_STATUS, contact.getStatus());
+
+        db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = '" + contact.getIdOnServer()
+                + "'", null);
+        db.close();
+
+    }
+
     public static List<Contact> getAllContacts(Context context) {
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_CONTACT;
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();

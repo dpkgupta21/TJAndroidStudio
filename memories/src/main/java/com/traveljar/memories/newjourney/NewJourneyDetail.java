@@ -138,8 +138,6 @@ public class NewJourneyDetail extends AppCompatActivity {
                         }
                         try {
                             createNewJourneyInDB(response);
-                            LapDataSource.deleteLapsList(NewJourneyDetail.this, AppController.lapList);
-                            AppController.lapList.clear();
                             AppController.buddyList.clear();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -203,9 +201,11 @@ public class NewJourneyDetail extends AppCompatActivity {
                 null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE, HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), 0);
         JourneyDataSource.createJourney(newJ, getBaseContext());
         for(Lap lap : AppController.lapList){
+            Log.d(TAG, "setting jouney id " + idOnServer);
             lap.setJourneyId(idOnServer);
         }
         LapDataSource.updateLapsList(AppController.lapList, this);
+        //AppController.lapList.clear();
         TJPreferences.setActiveJourneyId(this, idOnServer);
     }
 

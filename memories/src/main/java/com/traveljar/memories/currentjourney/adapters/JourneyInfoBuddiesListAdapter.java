@@ -50,7 +50,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
         notifyItemRemoved(position);
     }
 
-    public void updateList(List<Contact> dataSet){
+    public void updateList(List<Contact> dataSet) {
         mDataset = dataSet;
     }
 
@@ -88,7 +88,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
 
         holder.buddyName.setText(name);
         holder.buddyStatus.setText(status);
-        if(HelpMe.isAdmin(context)) {
+        if (HelpMe.isAdmin(context)) {
             holder.removeBuddyIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -111,7 +111,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
                             .show();
                 }
             });
-        }else {
+        } else {
             holder.removeBuddyIcon.setVisibility(View.GONE);
         }
     }
@@ -143,22 +143,22 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
 
     @Override
     public void onExitJourney(int resultCode, String userId) {
-        if(resultCode == 0) {
+        if (resultCode == 0) {
             mDialog.dismiss();
-            JourneyDataSource.removeContactFromJourney(context, userId);
+            JourneyDataSource.removeContactFromJourney(context, userId, TJPreferences.getActiveJourneyId(context));
             /*MemoriesDataSource.deleteAllMemoriesCreatedByUser(context, userId);
             MemoriesDataSource.removeUserFromMemories(context, userId);*/
             mDataset = ContactDataSource.getContactsFromJourney(context, TJPreferences.getActiveJourneyId(context));
             this.notifyDataSetChanged();
-        }else {
+        } else {
             mDialog.dismiss();
             Toast.makeText(context, "some error occured please try again later", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private int convertDpToPixels(int dp){
+    private int convertDpToPixels(int dp) {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
-        return (int)px;
+        return (int) px;
     }
 
 }

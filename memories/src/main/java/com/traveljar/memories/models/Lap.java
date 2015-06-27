@@ -136,4 +136,13 @@ public class Lap {
         return null;
     }
 
+    @Override
+    public String toString(){
+        return "id->" + id +
+                "journey_id->" + journeyId +
+                "sourceCityName->" + sourceCityName +
+                "journey_id->" + journeyId;
+
+    }
+
 }

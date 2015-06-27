@@ -14,6 +14,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
+import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
@@ -24,6 +25,7 @@ import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.currentjourney.TimelineFragment;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
+import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Memories;
@@ -234,9 +236,44 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 break;
 
             case HelpMe.TYPE_REMOVE_BUDDY:
-                /*String buddyId = bundle.getString("buddy_id");
-                journeyId = bundle.getString("journey_ids");*//*
-                break;*/
+                buddyId = bundle.getString("removed_buddy_id");
+                journeyId = bundle.getString("journey_id");
+                if(buddyId.equals(TJPreferences.getUserId(this))){
+                    //delete all the memories from the journey
+                    JourneyDataSource.removeAllMemoriesFromJourney(this, journeyId);
+                    LikeDataSource.deleteAllLikesFromJourney(this, journeyId);
+                    JourneyDataSource.deleteJourney(this, journeyId);
+                }else {
+                    JourneyDataSource.removeContactFromJourney(this, buddyId, journeyId);
+                    JourneyDataSource.removeAllMemoriesByUserFromJourney(this, buddyId, journeyId);
+                }
+                break;
+
+            case HelpMe.TYPE_PROFILE_UPDATE:
+                JSONObject obj = null;
+                try {
+                    obj = new JSONObject(bundle.getString("user"));
+                    Log.d(TAG, "contact fetched with server id " + obj);
+                    userId = obj.getString("id");
+                    Contact contact = ContactDataSource.getContactById(this, userId);
+                    contact.setName(obj.getString("name"));
+                    contact.setStatus(obj.getString("status"));
+                    contact.setPhone_no(obj.getString("phone"));
+                    boolean profilePicUpdated = Boolean.parseBoolean(obj.getString("is_profile_pic_change"));
+                    if(profilePicUpdated){
+                        String picUrl = obj.getString("profile_picture");
+                        String profilePicPath = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + contact.getIdOnServer() + ".jpeg";
+                        if(ContactsUtil.fetchProfilePicture(this, picUrl, profilePicPath)){
+                            contact.setPicLocalUrl(profilePicPath);
+                            contact.setPicServerUrl(picUrl);
+                        }
+                    }
+                    Log.d(TAG, "contact fetched ->" + contact);
+                    ContactDataSource.updateContact(this, contact);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                break;
             default:
                 break;
         }

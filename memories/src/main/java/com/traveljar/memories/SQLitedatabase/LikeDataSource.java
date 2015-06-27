@@ -36,6 +36,12 @@ public class LikeDataSource {
         return likeId;
     }
 
+    public static void deleteAllLikesFromJourney(Context context, String journeyId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_LIKE, MySQLiteHelper.LIKE_COLUMN_JOURNEY_ID + "=?", new String[]{journeyId});
+        db.close();
+    }
+
     public static Like getLikeById(String id, Context context) {
         Log.d(TAG, "fetching like item from DB with id =" + id);
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();

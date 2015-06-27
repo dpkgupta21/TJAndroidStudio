@@ -154,6 +154,19 @@ public class PictureDataSource {
         db.close();
     }
 
+    public static void deleteAllPicturesFromJourney(Context context, String journeyId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_PICTURE, MySQLiteHelper.PICTURE_COLUMN_JID + "=?", new String[]{journeyId});
+        db.close();
+    }
+
+    public static void deleteAllPicturesFromJourneyByUser(Context context, String journeyId, String userId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        db.delete(MySQLiteHelper.TABLE_PICTURE, MySQLiteHelper.PICTURE_COLUMN_JID + "=? AND " + MySQLiteHelper.PICTURE_COLUMN_CREATEDBY
+                + "=?", new String[]{journeyId, userId});
+        db.close();
+    }
+
     // This method returns list of picture objects from the cursor
     private static List<Picture> getPictures(Cursor cursor, Context context) {
         List<Picture> picturesList = new ArrayList<Picture>();
