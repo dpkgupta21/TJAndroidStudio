@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.traveljar.memories.R;
-import com.traveljar.memories.SQLitedatabase.LapDataSource;
 import com.traveljar.memories.customviews.MyFABView;
 import com.traveljar.memories.newjourney.adapters.LapsListAdapter;
 import com.traveljar.memories.services.CustomResultReceiver;
@@ -134,7 +133,7 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
 
     @Override
     public void onBackPressed(){
-        LapDataSource.deleteLapsList(this, AppController.lapList);
+//        LapDataSource.deleteLapsList(this, AppController.lapList);
         AppController.lapList.clear();
         super.onBackPressed();
     }

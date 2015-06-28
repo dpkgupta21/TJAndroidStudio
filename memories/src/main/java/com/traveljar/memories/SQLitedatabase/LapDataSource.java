@@ -37,6 +37,17 @@ public class LapDataSource {
         return lapId;
     }
 
+    public static List<Lap> getAllLaps(Context context){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        String query = "SELECT * FROM " + MySQLiteHelper.TABLE_LAP;
+        Cursor cursor = db.rawQuery(query, null);
+        Log.d(TAG, "length of cursor is " + cursor.getCount());
+        List<Lap> lapsList = getLapsFromCursor(cursor);
+        cursor.close();
+        db.close();
+        return lapsList;
+    }
+
     public static Lap getLapById(String id, Context context) {
         Log.d(TAG, "fetching lap item from DB with id =" + id);
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
@@ -70,6 +81,7 @@ public class LapDataSource {
         ContentValues values = new ContentValues();
         for(Lap lap : lapsList){
             Log.d(TAG, lap.getId() + lap.getJourneyId() + lap.getSourceCityName());
+            values.put(MySQLiteHelper.LAP_COLUMN_ID, lap.getId());
             values.put(MySQLiteHelper.LAP_COLUMN_ID_ON_SERVER, lap.getIdOnServer());
             values.put(MySQLiteHelper.LAP_COLUMN_JOURNEY_ID, lap.getJourneyId());
             values.put(MySQLiteHelper.LAP_COLUMN_SOURCE_CITY, lap.getSourceCityName());
@@ -81,7 +93,7 @@ public class LapDataSource {
             values.put(MySQLiteHelper.LAP_COLUMN_CONVEYANCE_MODE, lap.getConveyanceMode());
             values.put(MySQLiteHelper.LAP_COLUMN_START_DATE, lap.getStartDate());
             db.update(MySQLiteHelper.TABLE_LAP, values, MySQLiteHelper.LAP_COLUMN_ID + " = '" + lap.getId() + "'", null);
-            Log.d(TAG, "lap updated" + values);
+            Log.d(TAG, "lap updated" + values + " lap id = " + lap.getId());
         }
         db.close();
     }
@@ -138,6 +150,7 @@ public class LapDataSource {
                 lap.setDestinationCountryName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_DESTINATION_COUNTRY)));
                 lap.setConveyanceMode(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_CONVEYANCE_MODE)));
                 lap.setStartDate(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_START_DATE)));
+                lapsList.add(lap);
             } while (cursor.moveToNext());
         }
         return lapsList;

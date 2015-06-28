@@ -175,6 +175,9 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar actions click
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
             case ACTION_ITEM_DELETE:
                 new AlertDialog.Builder(this)
                         .setTitle("Delete")

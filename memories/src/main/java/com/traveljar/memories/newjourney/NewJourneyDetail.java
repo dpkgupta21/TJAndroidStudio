@@ -204,8 +204,10 @@ public class NewJourneyDetail extends AppCompatActivity {
             Log.d(TAG, "setting jouney id " + idOnServer);
             lap.setJourneyId(idOnServer);
         }
+        Log.d(TAG, "total laps in the database are " + LapDataSource.getAllLaps(this));
         LapDataSource.updateLapsList(AppController.lapList, this);
-        //AppController.lapList.clear();
+        LapDataSource.updateLapsList(AppController.lapList, this);
+        AppController.lapList.clear();
         TJPreferences.setActiveJourneyId(this, idOnServer);
     }
 

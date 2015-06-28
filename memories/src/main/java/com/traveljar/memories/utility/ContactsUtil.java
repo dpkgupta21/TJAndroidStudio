@@ -52,6 +52,7 @@ public class ContactsUtil {
             //Fetching the profile image
             RequestFuture<Bitmap> requestFuture = RequestFuture.newFuture();
             ImageRequest imageRequest = new ImageRequest(picServerUrl, requestFuture, 0, 0, null, null, requestFuture);
+            AppController.getInstance().getRequestQueue().add(imageRequest);
             FileOutputStream out = null;
             String fileName;
             try {
@@ -91,9 +92,10 @@ public class ContactsUtil {
     }
 
         public static boolean fetchProfilePicture(Context context, String url, String fileName){
+            Log.d(TAG, "fetching image from url" + url);
 
             final RequestFuture<Bitmap> futureRequest = RequestFuture.newFuture();
-            ImageRequest imageRequest = new ImageRequest(url, futureRequest, 0, 0, null,futureRequest);
+            ImageRequest imageRequest = new ImageRequest(url, futureRequest, 0, 0, null, null,futureRequest);
             AppController.getInstance().getRequestQueue().add(imageRequest);
             try {
                 Bitmap bitmap = futureRequest.get(60, TimeUnit.SECONDS);

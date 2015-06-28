@@ -7,6 +7,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,6 +16,8 @@ import android.os.Build;
 import android.provider.MediaStore.MediaColumns;
 import android.provider.MediaStore.Video.Thumbnails;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
@@ -256,7 +259,7 @@ public class HelpMe {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
-        int inSampleSize = 4;
+        int inSampleSize = 1;
 
         if (height > reqHeight || width > reqWidth) {
 
@@ -346,6 +349,22 @@ public class HelpMe {
             e.printStackTrace();
         }
         return date.getTime();
+    }
+
+    public static int getWindowHeight(Context context){
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.y;
+    }
+
+    public static int getWindowWidth(Context context){
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
     }
 
 }

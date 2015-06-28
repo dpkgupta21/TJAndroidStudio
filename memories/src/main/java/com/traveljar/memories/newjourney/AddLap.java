@@ -253,6 +253,7 @@ public class AddLap extends AppCompatActivity {
                 lap.setStartDate(epochTime);
                 long id = LapDataSource.createLap(lap, this);
                 lap.setId(String.valueOf(id));
+                Log.d(TAG, "total laps in the database are " + LapDataSource.getAllLaps(this));
                 AppController.lapList.add(lap);
             }
 

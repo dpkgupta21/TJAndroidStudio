@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +25,7 @@ import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.Request;
 import com.traveljar.memories.services.GPSTracker;
 import com.traveljar.memories.services.MakeServerRequestsService;
+import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 
@@ -71,8 +71,7 @@ public class AudioCapture extends AppCompatActivity {
 
     public AudioCapture() {
 
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/TravelJar/Audio";
+        String dirPath = Constants.TRAVELJAR_FOLDER_AUDIO;
         File directory = new File(dirPath);
         if (!directory.exists()) {
             directory.mkdirs();

@@ -4,4 +4,4 @@
     <item android:drawable="@drawable/ic_flight_selected" android:state_checked="true" />
     <item android:drawable="@drawable/ic_flight_not_selected" android:state_checked="false" />
 
-</selector><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/drawable/toggle_flight.xml -->
+</selector><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/drawable/toggle_flight.xml -->

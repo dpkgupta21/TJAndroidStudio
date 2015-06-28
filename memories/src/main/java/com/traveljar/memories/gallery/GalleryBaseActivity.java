@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
@@ -34,9 +35,13 @@ public class GalleryBaseActivity extends BaseActivity {
 
     @Override
     public void onBackPressed(){
-        Intent i = new Intent(this, ActivejourneyList.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
+        if(drawerLayout.isDrawerOpen(Gravity.LEFT)){
+            drawerLayout.closeDrawer(Gravity.LEFT);
+        }else {
+            Intent i = new Intent(this, ActivejourneyList.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        }
     }
 
 

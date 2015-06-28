@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,17 +19,15 @@ import android.widget.Toast;
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
+import com.traveljar.memories.SQLitedatabase.LapDataSource;
 import com.traveljar.memories.activejourney.adapters.ActiveJourneyListAdapter;
 import com.traveljar.memories.models.Journey;
+import com.traveljar.memories.models.Lap;
 import com.traveljar.memories.newjourney.LapsList;
 
 import java.util.Collections;
 import java.util.List;
 
-
-/**
- * Created by ankit on 27/5/15.
- */
 public class ActivejourneyList extends BaseActivity {
 
     private static final String TAG = "<ActivejourneyList>";
@@ -71,6 +70,15 @@ public class ActivejourneyList extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_journey_list);
 
+
+        /*Just for testing purpose*/
+        List<Lap> lapsList = LapDataSource.getAllLaps(this);
+        Log.d(TAG, "total laps fetched for journey are " + lapsList.size());
+        for(Lap lap : lapsList){
+            Log.d(TAG, "lap is " + lap);
+        }
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Active Journeys");
 
@@ -88,13 +96,6 @@ public class ActivejourneyList extends BaseActivity {
 
         refreshJourneys();
 
-        /*if(allActiveJourney.size() > 0){
-            mAdapter = new ActiveJourneyListAdapter(allActiveJourney, this);
-            mRecyclerView.setAdapter(mAdapter);
-        }else {
-            mLayout.setBackgroundResource(R.drawable.img_no_active_journey);
-        }*/
-
         // Add pull to refresh functionality
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.active_journey_swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -109,18 +110,23 @@ public class ActivejourneyList extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (backPressedToExitOnce) {
-            super.onBackPressed();
-        } else {
-            this.backPressedToExitOnce = true;
-            showToast("Press again to exit");
-            new Handler().postDelayed(new Runnable() {
+        if(drawerLayout.isDrawerOpen(Gravity.LEFT)){
+            Log.d(TAG, "closing the drawer");
+            drawerLayout.closeDrawer(Gravity.LEFT);
+        }else {
+            if (backPressedToExitOnce) {
+                super.onBackPressed();
+            } else {
+                this.backPressedToExitOnce = true;
+                showToast("Press again to exit");
+                new Handler().postDelayed(new Runnable() {
 
-                @Override
-                public void run() {
-                    backPressedToExitOnce = false;
-                }
-            }, 2000);
+                    @Override
+                    public void run() {
+                        backPressedToExitOnce = false;
+                    }
+                }, 2000);
+            }
         }
     }
 

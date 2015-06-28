@@ -230,7 +230,8 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         //set the favourites count
         Log.d(TAG, "memory = " + memory.getMemType() + memory.getId() + "likes count = " + memory.getLikes().size());
         holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikes().size()));
-        holder.timelineItemFavBtn.setImageResource(memory.isMemoryLikedByCurrentUser(context) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
+        holder.timelineItemFavBtn.setImageResource(memory.isMemoryLikedByCurrentUser(context) != null ?
+                R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
 
         Log.d(TAG, "3.2");
 
@@ -240,7 +241,8 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
 
                 Picture pic = (Picture) memoriesList.get(position);
                 if (pic.getPicThumbnailPath() != null) {
-                    LoadThumbFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, 256, 192, context);
+                    LoadThumbFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, HelpMe.getWindowWidth(context),
+                            HelpMe.getWindowHeight(context)/3, context);
                     holder.timelineItemCaption.setText(pic.getCaption());
 
                 } else {
@@ -279,7 +281,8 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
 
 //                LoadThumbnailFromPath.loadBitmap(vid.getDataLocalURL(), holder.timelineItemImage, context);
                 holder.timelineItemCaption.setText(vid.getCaption());
-                LoadThumbFromPath.loadBitmap(vid.getLocalThumbPath(), holder.timelineItemImage, 256, 192, context);
+                LoadThumbFromPath.loadBitmap(vid.getLocalThumbPath(), holder.timelineItemImage, HelpMe.getWindowWidth(context),
+                        HelpMe.getWindowHeight(context)/3, context);
                 //holder.timelineItemImage.setImageBitmap(HelpMe.getVideoThumbnail(vid.getDataURL()));
                 break;
 

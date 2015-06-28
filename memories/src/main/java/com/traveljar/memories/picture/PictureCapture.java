@@ -45,6 +45,7 @@ public class PictureCapture extends AppCompatActivity {
         Intent i = new Intent(getBaseContext(), PicturePreview.class);
         i.putExtra("imagePath", imagePath);
         startActivity(i);
+        Log.d(TAG, "ok pic");
         finish();
     }
 
@@ -74,25 +75,27 @@ public class PictureCapture extends AppCompatActivity {
     //  Create a file Uri for saving an image or video
     // returns a new file on the image will be storeds
     private File getOutputMediaFile() throws IOException {
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-
-        File imageFile = File.createTempFile("pic_" + System.currentTimeMillis(), ".jpg", storageDir);
+        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                + "/TravelJar/Pictures");
+        if (!storageDir.exists()) {
+            storageDir.mkdirs();
+        }
+        File imageFile = null;
+        imageFile = File.createTempFile("pic_" + System.currentTimeMillis(), ".jpg", storageDir);
         imagePath = imageFile.getAbsolutePath();
         return imageFile;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_CANCELED){
-            onBackPressed();
-        }
+        Log.d(TAG, "on activity result " + resultCode + RESULT_OK);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView img = (ImageView) findViewById(R.id.capture_photos_image_preview);
             Bitmap bitmap = null;
             try {
                 bitmap = BitmapFactory.decodeFile(imagePath);
             } catch (Exception ex) {
+                ex.printStackTrace();
             }
 
             int rotation = getImageRotationInDegrees();
