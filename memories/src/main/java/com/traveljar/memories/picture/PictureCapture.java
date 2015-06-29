@@ -12,9 +12,12 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.utility.HelpMe;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,17 +27,45 @@ import java.io.IOException;
 public class PictureCapture extends AppCompatActivity {
 
     public static final int MEDIA_TYPE_IMAGE = 1;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
+    private static final int PICK_GALLERY_IMAGE_REQUEST_CODE = 2;
     private static final String TAG = "CAPTURE_PHOTOS";
-    // private static final String TAG = "<CapturePhotos>";
     private String imagePath;
+    private ImageView mImageView;
+    private LinearLayout mPageFooter;
+    private LinearLayout mCaptureOptions;
+    private Button mSelectGalleryImage;
+    private Button mClickNewPicture;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photo_capture);
 
-        capture();
+        mImageView = (ImageView) findViewById(R.id.capture_photos_image_preview);
+        mPageFooter = (LinearLayout)findViewById(R.id.capture_photos_preview_footer);
+        mCaptureOptions = (LinearLayout)findViewById(R.id.capture_picture_options);
+        mSelectGalleryImage = (Button) findViewById(R.id.choose_gallery_picture);
+        mClickNewPicture = (Button) findViewById(R.id.click_new_picture);
+
+        mClickNewPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                capture();
+            }
+        });
+
+        mSelectGalleryImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePictureFromGallery();
+            }
+        });
+    }
+
+    private void takePictureFromGallery(){
+                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, PICK_GALLERY_IMAGE_REQUEST_CODE);
     }
 
     public void retakePic(View v) {
@@ -89,24 +120,46 @@ public class PictureCapture extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "on activity result " + resultCode + RESULT_OK);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            ImageView img = (ImageView) findViewById(R.id.capture_photos_image_preview);
+        if(resultCode == RESULT_OK) {
+            //Make the preview view visible and hide both the buttons
+            mCaptureOptions.setVisibility(View.GONE);
+            mPageFooter.setVisibility(View.VISIBLE);
+            mImageView.setVisibility(View.VISIBLE);
             Bitmap bitmap = null;
-            try {
-                bitmap = BitmapFactory.decodeFile(imagePath);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+
+            // If new image is clicked
+            if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+                try {
+                    bitmap = BitmapFactory.decodeFile(imagePath);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                int rotation = getImageRotationInDegrees();
+                if (rotation != 0) {
+                    bitmap = getAdjustedBitmap(bitmap, rotation);
+                    Log.d(TAG, "calling replace image");
+                    replaceImg(bitmap);
+                    Log.d("TAG", "bitmap compressed successfully");
+                }
+                mImageView.setImageBitmap(bitmap);
             }
 
-            int rotation = getImageRotationInDegrees();
-            if(rotation != 0){
-                bitmap = getAdjustedBitmap(bitmap, rotation);
-                Log.d(TAG, "calling replace image");
-                replaceImg(bitmap);
-                Log.d("TAG", "bitmap compressed successfully");
+            // If image is picked from gallery
+            if(requestCode == PICK_GALLERY_IMAGE_REQUEST_CODE){
+                Uri selectedImageUri = data.getData();
+                imagePath = HelpMe.getRealPathFromURI(selectedImageUri, this);
+                try {
+                    bitmap = BitmapFactory.decodeFile(imagePath);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                mImageView.setImageBitmap(bitmap);
             }
-            img.setImageBitmap(bitmap);
-//            new replacePictureTask().execute(new Object[]{new File(imagePath), bitmap});
+
+        }
+        if(resultCode == RESULT_CANCELED){
+            finish();
         }
     }
 

@@ -553,7 +553,7 @@ processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
 model		: 69
-model name	: Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz
+model profileName	: Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz
 stepping	: 1
 microcode	: 0x17
 cpu MHz		: 1303.156
@@ -579,7 +579,7 @@ processor	: 1
 vendor_id	: GenuineIntel
 cpu family	: 6
 model		: 69
-model name	: Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz
+model profileName	: Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz
 stepping	: 1
 microcode	: 0x17
 cpu MHz		: 1667.328
@@ -605,7 +605,7 @@ processor	: 2
 vendor_id	: GenuineIntel
 cpu family	: 6
 model		: 69
-model name	: Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz
+model profileName	: Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz
 stepping	: 1
 microcode	: 0x17
 cpu MHz		: 802.585
@@ -631,7 +631,7 @@ processor	: 3
 vendor_id	: GenuineIntel
 cpu family	: 6
 model		: 69
-model name	: Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz
+model profileName	: Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz
 stepping	: 1
 microcode	: 0x17
 cpu MHz		: 1700.000

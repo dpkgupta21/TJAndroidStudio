@@ -60,17 +60,17 @@ public class SelectedFriendsListAdapter extends ArrayAdapter<Contact> {
 
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
-        String n = names.get(position).getName();
+        String n = names.get(position).getPhoneBookName() == null ? names.get(position).getProfileName() : names.get(position).getPhoneBookName();
         holder.name.setText(n);
         Log.d(TAG, "pic local url for contact = " + names.get(position).getPicLocalUrl());
         if (names.get(position).getPicLocalUrl() != null) {
             holder.image.setImageBitmap(BitmapFactory.decodeFile(names.get(position).getPicLocalUrl()));
         }
 
-        if (names.get(position).getPhone_no() == null || names.get(position).getPhone_no() == "") {
+        if (names.get(position).getPhoneNo() == null || names.get(position).getPhoneNo() == "") {
             holder.contactInfo.setText(names.get(position).getPrimaryEmail());
         } else {
-            holder.contactInfo.setText(names.get(position).getPhone_no());
+            holder.contactInfo.setText(names.get(position).getPhoneNo());
         }
         // holder.image.setImageResource(resId);
         return rowView;

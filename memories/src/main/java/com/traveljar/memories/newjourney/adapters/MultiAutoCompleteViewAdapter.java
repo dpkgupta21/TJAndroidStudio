@@ -66,11 +66,11 @@ public class MultiAutoCompleteViewAdapter extends ArrayAdapter<Contact> implemen
         }
 
         ViewHolder holder = (ViewHolder) view.getTag();
-        holder.name.setText(list.get(position).getName());
-        if (list.get(position).getPhone_no() == null || list.get(position).getPhone_no().equals("")) {
+        holder.name.setText(list.get(position).getProfileName());
+        if (list.get(position).getPhoneNo() == null || list.get(position).getPhoneNo().equals("")) {
             holder.contact_info.setText(list.get(position).getPrimaryEmail());
         } else {
-            holder.contact_info.setText(list.get(position).getPhone_no());
+            holder.contact_info.setText(list.get(position).getPhoneNo());
         }
         if (list.get(position).getPicLocalUrl() != null) {
             holder.img.setImageBitmap(BitmapFactory.decodeFile(list.get(position).getPicLocalUrl()));
@@ -92,7 +92,7 @@ public class MultiAutoCompleteViewAdapter extends ArrayAdapter<Contact> implemen
                 } else {
                     ArrayList<Contact> resultList = new ArrayList<>();
                     for (Contact contact : originalList) {
-                        if (contact.getName().toLowerCase().startsWith(charSequence.toString()))
+                        if (contact.getProfileName().toLowerCase().startsWith(charSequence.toString()))
                             resultList.add(contact);
                     }
                     filterResults.values = resultList;

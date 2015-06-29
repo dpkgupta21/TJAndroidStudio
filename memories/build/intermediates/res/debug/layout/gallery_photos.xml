@@ -6,6 +6,8 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar"/>
+
     <GridView
         android:id="@+id/images_grid_view"
         android:layout_width="match_parent"

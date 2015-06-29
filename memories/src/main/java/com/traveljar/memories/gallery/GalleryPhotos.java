@@ -1,19 +1,17 @@
 package com.traveljar.memories.gallery;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ActionMode;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
@@ -22,41 +20,44 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 import com.traveljar.memories.gallery.adapters.ImageGalleryAdapter;
+import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Picture;
 
 import java.util.List;
 
-public class GalleryPhotosFragment extends Fragment {
+public class GalleryPhotos extends AppCompatActivity {
 
-    private static final String TAG = "<GalleryPhotosFragment>";
+    private static final String TAG = "<GalleryPhotos>";
     private static GridView mGridView;
-    private View rootView;
-    private ActionBar actionBar;
-    private List<Picture> mImageList;
+    private List<Memories> mImageList;
     private ImageGalleryAdapter mAdapter;
     private LinearLayout mLayout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.gallery_photos, container, false);
-        setHasOptionsMenu(true);
-        return rootView;
-    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        setContentView(R.layout.gallery_photos);
 
-        Log.d(TAG, "enetred gallery photos fragment!!");
+        String journeyId = getIntent().getStringExtra("JOURNEY_ID");
 
-        mGridView = (GridView) rootView.findViewById(R.id.images_grid_view);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(JourneyDataSource.getJourneyById(this, journeyId).getName());
+        setSupportActionBar(toolbar);
 
-        mImageList = PictureDataSource.getAllPictures(getActivity());
-        mAdapter = new ImageGalleryAdapter(getActivity(), mImageList);
+        Log.d(TAG, "entered gallery photos fragment!!");
 
-        mLayout = (LinearLayout)rootView.findViewById(R.id.gallery_photos_layout);
+        mGridView = (GridView) findViewById(R.id.images_grid_view);
+
+        Log.d(TAG, "entered gallery photos fragment!!");
+
+        mImageList = PictureDataSource.getPictureMemoriesFromJourney(this, journeyId);
+        mAdapter = new ImageGalleryAdapter(this, mImageList);
+
+        mLayout = (LinearLayout)findViewById(R.id.gallery_photos_layout);
 
         if (mImageList.size() > 0) {
             // long press selection of the pictures
@@ -70,8 +71,9 @@ public class GalleryPhotosFragment extends Fragment {
                 public void onItemCheckedStateChanged(ActionMode mode, int position, long id,
                                                       boolean checked) {
                     Log.d(TAG, "Inside OnItemCheckedStateChanged+at position" + position);
+                    Picture picture = (Picture)mImageList.get(position);
                     if (checked) {
-                        mImageList.get(position).setChecked(true);
+                        picture.setChecked(true);
                         View checkedView = mGridView.getChildAt(position
                                 - mGridView.getFirstVisiblePosition());
                         ImageGalleryAdapter.ViewHolder holder = (ImageGalleryAdapter.ViewHolder) checkedView
@@ -79,7 +81,7 @@ public class GalleryPhotosFragment extends Fragment {
                         holder.overlayImgView.setVisibility(View.VISIBLE);
                         noOfItemsSelected++;
                     } else {
-                        mImageList.get(position).setChecked(false);
+                        picture.setChecked(false);
                         View checkedView = mGridView.getChildAt(position
                                 - mGridView.getFirstVisiblePosition());
                         ImageGalleryAdapter.ViewHolder holder = (ImageGalleryAdapter.ViewHolder) checkedView
@@ -108,7 +110,7 @@ public class GalleryPhotosFragment extends Fragment {
                 @Override
                 public void onDestroyActionMode(ActionMode mode) {
                     for (int i = 0; i < mImageList.size(); i++) {
-                        mImageList.get(i).setChecked(false);
+                        ((Picture)mImageList.get(i)).setChecked(false);
                     }
                     noOfItemsSelected = 0;
                 }
@@ -128,7 +130,7 @@ public class GalleryPhotosFragment extends Fragment {
 //					Intent intent = new Intent(getActivity(), PhotoDetail.class);
 //					intent.putExtra("PICTURE_ID", mImageList.get(position).getId());
 //					startActivity(intent);
-                    Intent intent = new Intent(getActivity(), GalleryPhotoDetail.class);
+                    Intent intent = new Intent(GalleryPhotos.this, GalleryPhotoDetail.class);
                     intent.putExtra("CLICKED_POSITION", position);
                     startActivity(intent);
                 }

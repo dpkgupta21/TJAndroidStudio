@@ -1,5 +1,6 @@
 package com.traveljar.memories.utility;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.pm.PackageInfo;
@@ -13,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.provider.MediaStore.MediaColumns;
 import android.provider.MediaStore.Video.Thumbnails;
 import android.util.Log;
@@ -160,17 +162,17 @@ public class HelpMe {
         SimpleDateFormat fullDate = new SimpleDateFormat("dd MMM yyyy");
         SimpleDateFormat fullTime = new SimpleDateFormat("hh:mm aaa, EEE");
         SimpleDateFormat onlyDay = new SimpleDateFormat("EEE");
-        Date resultdate = new Date(timestamp);
+        Date resultDate = new Date(timestamp);
 
         switch (type) {
             case DATE_FULL:
-                return fullDate.format(resultdate).toString();
+                return fullDate.format(resultDate).toString();
             case DATE_ONLY:
-                return onlyDate.format(resultdate).toString();
+                return onlyDate.format(resultDate).toString();
             case TIME_ONLY:
-                return fullTime.format(resultdate).toString();
+                return fullTime.format(resultDate).toString();
             case ONLY_DAY:
-                return onlyDay.format(resultdate).toString();
+                return onlyDay.format(resultDate).toString();
             default:
                 break;
         }
@@ -365,6 +367,25 @@ public class HelpMe {
         Point size = new Point();
         display.getSize(size);
         return size.x;
+    }
+
+    public static String getContactNameFromNumber(Context context, String phoneNumber) {
+        ContentResolver cr = context.getContentResolver();
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+        Cursor cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        String contactName = null;
+        if(cursor.moveToFirst()) {
+            contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+        }
+
+        if(cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+
+        return contactName;
     }
 
 }

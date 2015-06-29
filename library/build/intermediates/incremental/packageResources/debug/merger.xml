@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/main/res"><file name="slidingmenumain" path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/main/res/layout/slidingmenumain.xml" qualifiers="" type="layout"/><file path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/main/res/values/attrs.xml" qualifiers=""><declare-styleable name="SlidingMenu">
-        <attr name="mode">
-            <enum name="left" value="0"/>
-            <enum name="right" value="1"/>
+<merger version="3"><dataSet config="main"><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/main/res"><file profileName="slidingmenumain" path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/main/res/layout/slidingmenumain.xml" qualifiers="" type="layout"/><file path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/main/res/values/attrs.xml" qualifiers=""><declare-styleable profileName="SlidingMenu">
+        <attr profileName="mode">
+            <enum profileName="left" value="0"/>
+            <enum profileName="right" value="1"/>
         </attr>
-        <attr format="reference" name="viewAbove"/>
-        <attr format="reference" name="viewBehind"/>
-        <attr format="dimension" name="behindOffset"/>
-        <attr format="dimension" name="behindWidth"/>
-        <attr format="float" name="behindScrollScale"/>
-        <attr name="touchModeAbove">
-            <enum name="margin" value="0"/>
-            <enum name="fullscreen" value="1"/>
-            <enum name="none" value="2"/>
+        <attr format="reference" profileName="viewAbove"/>
+        <attr format="reference" profileName="viewBehind"/>
+        <attr format="dimension" profileName="behindOffset"/>
+        <attr format="dimension" profileName="behindWidth"/>
+        <attr format="float" profileName="behindScrollScale"/>
+        <attr profileName="touchModeAbove">
+            <enum profileName="margin" value="0"/>
+            <enum profileName="fullscreen" value="1"/>
+            <enum profileName="none" value="2"/>
         </attr>
-        <attr name="touchModeBehind">
-            <enum name="margin" value="0"/>
-            <enum name="fullscreen" value="1"/>
-            <enum name="none" value="2"/>
+        <attr profileName="touchModeBehind">
+            <enum profileName="margin" value="0"/>
+            <enum profileName="fullscreen" value="1"/>
+            <enum profileName="none" value="2"/>
         </attr>
-        <attr format="reference" name="shadowDrawable"/>
-        <attr format="dimension" name="shadowWidth"/>
-        <attr format="boolean" name="fadeEnabled"/>
-        <attr format="float" name="fadeDegree"/>
-        <attr format="boolean" name="selectorEnabled"/>
-        <attr format="reference" name="selectorDrawable"/>
-    </declare-styleable></file><file path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/main/res/values/ids.xml" qualifiers=""><item name="selected_view" type="id"/></file></source><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/build/generated/res/rs/debug"/><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/build/generated/res/generated/debug"/></dataSet><dataSet config="debug"><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/debug/res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="SlidingMenu"><attr name="mode"><enum name="left" value="0"/><enum name="right" value="1"/></attr><attr format="reference" name="viewAbove"/><attr format="reference" name="viewBehind"/><attr format="dimension" name="behindOffset"/><attr format="dimension" name="behindWidth"/><attr format="float" name="behindScrollScale"/><attr name="touchModeAbove"><enum name="margin" value="0"/><enum name="fullscreen" value="1"/><enum name="none" value="2"/></attr><attr name="touchModeBehind"><enum name="margin" value="0"/><enum name="fullscreen" value="1"/><enum name="none" value="2"/></attr><attr format="reference" name="shadowDrawable"/><attr format="dimension" name="shadowWidth"/><attr format="boolean" name="fadeEnabled"/><attr format="float" name="fadeDegree"/><attr format="boolean" name="selectorEnabled"/><attr format="reference" name="selectorDrawable"/></declare-styleable></configuration></mergedItems></merger>
+        <attr format="reference" profileName="shadowDrawable"/>
+        <attr format="dimension" profileName="shadowWidth"/>
+        <attr format="boolean" profileName="fadeEnabled"/>
+        <attr format="float" profileName="fadeDegree"/>
+        <attr format="boolean" profileName="selectorEnabled"/>
+        <attr format="reference" profileName="selectorDrawable"/>
+    </declare-styleable></file><file path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/main/res/values/ids.xml" qualifiers=""><item profileName="selected_view" type="id"/></file></source><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/build/generated/res/rs/debug"/><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/build/generated/res/generated/debug"/></dataSet><dataSet config="debug"><source path="/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/library/src/debug/res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable profileName="SlidingMenu"><attr profileName="mode"><enum profileName="left" value="0"/><enum profileName="right" value="1"/></attr><attr format="reference" profileName="viewAbove"/><attr format="reference" profileName="viewBehind"/><attr format="dimension" profileName="behindOffset"/><attr format="dimension" profileName="behindWidth"/><attr format="float" profileName="behindScrollScale"/><attr profileName="touchModeAbove"><enum profileName="margin" value="0"/><enum profileName="fullscreen" value="1"/><enum profileName="none" value="2"/></attr><attr profileName="touchModeBehind"><enum profileName="margin" value="0"/><enum profileName="fullscreen" value="1"/><enum profileName="none" value="2"/></attr><attr format="reference" profileName="shadowDrawable"/><attr format="dimension" profileName="shadowWidth"/><attr format="boolean" profileName="fadeEnabled"/><attr format="float" profileName="fadeDegree"/><attr format="boolean" profileName="selectorEnabled"/><attr format="reference" profileName="selectorDrawable"/></declare-styleable></configuration></mergedItems></merger>

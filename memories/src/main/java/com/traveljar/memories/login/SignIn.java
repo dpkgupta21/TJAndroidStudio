@@ -245,7 +245,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
             HelpMe.createImageIfNotExist(this);
             onFinishTask(REQUEST_DOWNLOAD_PROFILE);
         }
-        Contact contact = new Contact(id, name, email, status, picServerUrl, null, phone, allJourneyIds, false, interest);
+        Contact contact = new Contact(id, name, name, email, status, picServerUrl, null, phone, allJourneyIds, false, interest);
         ContactDataSource.createContact(contact, this);
 
         //saving the preferences

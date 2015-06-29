@@ -96,9 +96,9 @@ public class CheckInPreview extends AppCompatActivity {
         if (selectedFriends.size() > 0) {
             Contact contact = ContactDataSource.getContactById(this, selectedFriends.get(0).getIdOnServer());
             if (selectedFriends.size() == 1) {
-                checkinWithText += "- with " + ((contact == null) ? "" : contact.getName());
+                checkinWithText += "- with " + ((contact == null) ? "" : contact.getProfileName());
             } else {
-                checkinWithText += "- with " + ((contact == null) ? "" : contact.getName()) + " and " + (selectedFriends.size() - 1) + " others";
+                checkinWithText += "- with " + ((contact == null) ? "" : contact.getProfileName()) + " and " + (selectedFriends.size() - 1) + " others";
             }
         }
         checkinDetailsBuddies.setText(checkinWithText);

@@ -4,14 +4,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.traveljar.memories.gallery.GalleryAlbumsFragment;
 import com.traveljar.memories.gallery.GalleryAudiosFragment;
 import com.traveljar.memories.gallery.GalleryNotesFragment;
-import com.traveljar.memories.gallery.GalleryPhotosFragment;
 import com.traveljar.memories.gallery.GalleryVideosFragment;
 
 public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] titles = new String[]{"Pictures", "Audios", "Videos", "Notes"};
+    private String[] titles = new String[]{"Album", "Audios", "Videos", "Notes"};
 
     public GalleryTabsPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -23,7 +23,7 @@ public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
         switch (index) {
             case 0:
                 // Top Rated fragment activity
-                return new GalleryPhotosFragment();
+                return new GalleryAlbumsFragment();
             case 1:
                 // Games fragment activity
                 return new GalleryAudiosFragment();

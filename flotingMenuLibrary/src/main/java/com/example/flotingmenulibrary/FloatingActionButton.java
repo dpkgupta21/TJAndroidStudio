@@ -162,8 +162,8 @@ public class FloatingActionButton extends ImageButton {
   }
 
   /**
-  * @return the current color for disabled state.
-  */
+   * @return the current color for disabled state.
+   */
   public int getColorDisabled() {
     return mColorDisabled;
   }
@@ -174,8 +174,8 @@ public class FloatingActionButton extends ImageButton {
 
   public void setColorDisabled(int color) {
     if (mColorDisabled != color) {
-        mColorDisabled = color;
-        updateBackground();
+      mColorDisabled = color;
+      updateBackground();
     }
   }
 
@@ -225,12 +225,12 @@ public class FloatingActionButton extends ImageButton {
     final float halfStrokeWidth = strokeWidth / 2f;
 
     LayerDrawable layerDrawable = new LayerDrawable(
-        new Drawable[] {
-            getResources().getDrawable(mSize == SIZE_NORMAL ? R.drawable.fab_bg_normal : R.drawable.fab_bg_mini),
-            createFillDrawable(strokeWidth),
-            createOuterStrokeDrawable(strokeWidth),
-            getIconDrawable()
-        });
+            new Drawable[] {
+                    getResources().getDrawable(mSize == SIZE_NORMAL ? R.drawable.fab_bg_normal : R.drawable.fab_bg_mini),
+                    createFillDrawable(strokeWidth),
+                    createOuterStrokeDrawable(strokeWidth),
+                    getIconDrawable()
+            });
 
     int iconOffset = (int) (mCircleSize - getDimension(R.dimen.fab_icon_size)) / 2;
 
@@ -239,22 +239,22 @@ public class FloatingActionButton extends ImageButton {
     int circleInsetBottom = (int) (mShadowRadius + mShadowOffset);
 
     layerDrawable.setLayerInset(1,
-        circleInsetHorizontal,
-        circleInsetTop,
-        circleInsetHorizontal,
-        circleInsetBottom);
+            circleInsetHorizontal,
+            circleInsetTop,
+            circleInsetHorizontal,
+            circleInsetBottom);
 
     layerDrawable.setLayerInset(2,
-        (int) (circleInsetHorizontal - halfStrokeWidth),
-        (int) (circleInsetTop - halfStrokeWidth),
-        (int) (circleInsetHorizontal - halfStrokeWidth),
-        (int) (circleInsetBottom - halfStrokeWidth));
+            (int) (circleInsetHorizontal - halfStrokeWidth),
+            (int) (circleInsetTop - halfStrokeWidth),
+            (int) (circleInsetHorizontal - halfStrokeWidth),
+            (int) (circleInsetBottom - halfStrokeWidth));
 
     layerDrawable.setLayerInset(3,
-        circleInsetHorizontal + iconOffset,
-        circleInsetTop + iconOffset,
-        circleInsetHorizontal + iconOffset,
-        circleInsetBottom + iconOffset);
+            circleInsetHorizontal + iconOffset,
+            circleInsetTop + iconOffset,
+            circleInsetHorizontal + iconOffset,
+            circleInsetBottom + iconOffset);
 
     setBackgroundCompat(layerDrawable);
   }
@@ -288,13 +288,13 @@ public class FloatingActionButton extends ImageButton {
     paint.setColor(opaqueColor);
 
     Drawable[] layers = {
-        fillDrawable,
-        createInnerStrokesDrawable(opaqueColor, strokeWidth)
+            fillDrawable,
+            createInnerStrokesDrawable(opaqueColor, strokeWidth)
     };
 
     LayerDrawable drawable = alpha == 255 || !mStrokeVisible
-        ? new LayerDrawable(layers)
-        : new TranslucentLayerDrawable(alpha, layers);
+            ? new LayerDrawable(layers)
+            : new TranslucentLayerDrawable(alpha, layers);
 
     int halfStrokeWidth = (int) (strokeWidth / 2f);
     drawable.setLayerInset(1, halfStrokeWidth, halfStrokeWidth, halfStrokeWidth, halfStrokeWidth);
@@ -355,18 +355,18 @@ public class FloatingActionButton extends ImageButton {
 
   private int halfTransparent(int argb) {
     return Color.argb(
-        Color.alpha(argb) / 2,
-        Color.red(argb),
-        Color.green(argb),
-        Color.blue(argb)
+            Color.alpha(argb) / 2,
+            Color.red(argb),
+            Color.green(argb),
+            Color.blue(argb)
     );
   }
 
   private int opaque(int argb) {
     return Color.rgb(
-        Color.red(argb),
-        Color.green(argb),
-        Color.blue(argb)
+            Color.red(argb),
+            Color.green(argb),
+            Color.blue(argb)
     );
   }
 
@@ -390,9 +390,9 @@ public class FloatingActionButton extends ImageButton {
       @Override
       public Shader resize(int width, int height) {
         return new LinearGradient(width / 2, 0, width / 2, height,
-            new int[] { topStrokeColor, topStrokeColorHalfTransparent, color, bottomStrokeColorHalfTransparent, bottomStrokeColor },
-            new float[] { 0f, 0.2f, 0.5f, 0.8f, 1f },
-            TileMode.CLAMP
+                new int[] { topStrokeColor, topStrokeColorHalfTransparent, color, bottomStrokeColorHalfTransparent, bottomStrokeColor },
+                new float[] { 0f, 0.2f, 0.5f, 0.8f, 1f },
+                TileMode.CLAMP
         );
       }
     });

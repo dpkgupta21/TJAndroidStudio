@@ -22,9 +22,10 @@ public class ContactDataSource {
 
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER, contact.getIdOnServer());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_NAME, contact.getName());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME, contact.getProfileName());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PHONEBOOK_NAME, contact.getPhoneBookName());
         values.put(MySQLiteHelper.CONTACT_COLUMN_EMAIL, contact.getPrimaryEmail());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhone_no());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhoneNo());
         values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL, contact.getPicServerUrl());
         values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL, contact.getPicLocalUrl());
         values.put(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS, contact.getAllJourneyIds());
@@ -56,9 +57,10 @@ public class ContactDataSource {
 
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER, contact.getIdOnServer());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_NAME, contact.getName());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME, contact.getProfileName());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PHONEBOOK_NAME, contact.getPhoneBookName());
         values.put(MySQLiteHelper.CONTACT_COLUMN_EMAIL, contact.getPrimaryEmail());
-        values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhone_no());
+        values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhoneNo());
         values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL, contact.getPicServerUrl());
         values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL, contact.getPicLocalUrl());
         values.put(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS, contact.getAllJourneyIds());
@@ -230,9 +232,9 @@ CCCC
         }else {
             //Update the whole contact
             ContentValues values = new ContentValues();
-            values.put(MySQLiteHelper.CONTACT_COLUMN_NAME, contact.getName());
+            values.put(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME, contact.getProfileName());
             values.put(MySQLiteHelper.CONTACT_COLUMN_EMAIL, contact.getPrimaryEmail());
-            values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhone_no());
+            values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhoneNo());
             values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL, contact.getPicServerUrl());
             values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL, contact.getPicLocalUrl());
             values.put(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS, contact.getAllJourneyIds());
@@ -254,27 +256,17 @@ CCCC
         if (cursor.moveToFirst()) {
             do {
                 contact = new Contact();
-                contact.setIdOnServer(cursor.getString((cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER))));
-                contact.setName((cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_NAME))));
-                contact.setPrimaryEmail((cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_EMAIL))));
-                contact.setStatus((cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_EMAIL))));
-                contact.setPicLocalUrl((cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL))));
-                contact.setPicServerUrl((cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL))));
-                contact.setPhone_no((cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PHONE))));
-                contact.setAllJourneyIds((cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS))));
-                contact.setOnBoard(cursor.getInt(cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD)) == 1 ? true
-                        : false);
-                contact.setStatus((cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_STATUS))));
+                contact.setIdOnServer(cursor.getString((cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER))));
+                contact.setProfileName((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME))));
+                contact.setPhoneBookName((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PHONEBOOK_NAME))));
+                contact.setPrimaryEmail((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_EMAIL))));
+                contact.setStatus((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_EMAIL))));
+                contact.setPicLocalUrl((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL))));
+                contact.setPicServerUrl((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL))));
+                contact.setPhoneNo((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PHONE))));
+                contact.setAllJourneyIds((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS))));
+                contact.setOnBoard(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD)) == 1 ? true: false);
+                contact.setStatus((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_STATUS))));
 
                 contactsList.add(contact);
             } while (cursor.moveToNext());

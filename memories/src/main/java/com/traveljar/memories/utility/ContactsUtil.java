@@ -46,6 +46,7 @@ public class ContactsUtil {
             String status = response.getJSONObject("user").getString("status");
             String interests = response.getJSONObject("user").getString("interests");
             String phone_no = response.getJSONObject("user").getString("phone");
+            String phoneBookName = HelpMe.getContactNameFromNumber(context, phone_no);
             String picServerUrl = response.getJSONObject("user").getJSONObject("profile_picture").getJSONObject("thumb").getString("url");
             String allJourneyIds = response.getJSONObject("user").getString("journey_ids");
 
@@ -71,7 +72,7 @@ public class ContactsUtil {
                     e.printStackTrace();
                 }
             }
-            Contact tempContact = new Contact(idOnServer, userName, email, status, picServerUrl, fileName,
+            Contact tempContact = new Contact(idOnServer, userName, phoneBookName, email, status, picServerUrl, fileName,
                     phone_no, allJourneyIds, true, interests);
             ContactDataSource.createContact(tempContact, context);
             return true;

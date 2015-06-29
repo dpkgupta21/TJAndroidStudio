@@ -83,7 +83,7 @@ public class MoodDetail extends AppCompatActivity {
         List<Contact> moodFriends = ContactDataSource.getContactsListFromIds(this, mMood.getBuddyIds());
         String moodFriendsTxt = "";
         for(Contact contact : moodFriends){
-            moodFriendsTxt += contact.getName() + ", ";
+            moodFriendsTxt += contact.getProfileName() + ", ";
         }
         mMoodFriendsTxt.setText(moodFriendsTxt);
 
@@ -99,7 +99,7 @@ public class MoodDetail extends AppCompatActivity {
             Contact contact = ContactDataSource.getContactById(this, mMood.getCreatedBy());
             Log.d(TAG, "contact is " + contact);
             profileImgPath = contact.getPicLocalUrl();
-            createdBy = contact.getName();
+            createdBy = contact.getProfileName();
         } else {
             profileImgPath = TJPreferences.getProfileImgPath(this);
             createdBy = TJPreferences.getUserName(this);

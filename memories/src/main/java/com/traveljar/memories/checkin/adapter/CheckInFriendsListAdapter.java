@@ -62,7 +62,7 @@ public class CheckInFriendsListAdapter extends BaseAdapter {
             profileImg.setImageResource(R.drawable.gumnaam_profile_image);
         }
 
-        friendName.setText(mContactsList.get(position).getName());
+        friendName.setText(mContactsList.get(position).getProfileName());
         if (mContactsList.get(position).isSelected()) {
             overlayImg.setVisibility(View.VISIBLE);
         }

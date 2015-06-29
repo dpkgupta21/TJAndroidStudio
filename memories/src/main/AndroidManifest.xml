@@ -96,6 +96,10 @@
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
+            android:name=".gallery.GalleryPhotos"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
             android:name=".gallery.GalleryBaseActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name"/>

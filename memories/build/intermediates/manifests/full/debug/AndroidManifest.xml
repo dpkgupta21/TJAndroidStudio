@@ -95,6 +95,10 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.traveljar.memories.gallery.GalleryPhotos"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.traveljar.memories.gallery.GalleryBaseActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />

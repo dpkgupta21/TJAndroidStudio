@@ -147,14 +147,14 @@ public final class R {
 	}
 	public static final class dimen {
 		public static final int abc_action_bar_progress_bar_size = 0x7f060003;
-		public static final int abc_action_bar_stacked_max_height = 0x7f060013;
-		public static final int abc_action_bar_stacked_tab_max_width = 0x7f060014;
+		public static final int abc_action_bar_stacked_max_height = 0x7f060012;
+		public static final int abc_action_bar_stacked_tab_max_width = 0x7f060013;
 		public static final int abc_config_prefDialogWidth = 0x7f060006;
-		public static final int abc_dropdownitem_icon_width = 0x7f060028;
-		public static final int abc_dropdownitem_text_padding_left = 0x7f060029;
-		public static final int abc_dropdownitem_text_padding_right = 0x7f06002a;
-		public static final int abc_panel_menu_list_width = 0x7f060030;
-		public static final int abc_search_view_preferred_width = 0x7f060031;
+		public static final int abc_dropdownitem_icon_width = 0x7f060027;
+		public static final int abc_dropdownitem_text_padding_left = 0x7f060028;
+		public static final int abc_dropdownitem_text_padding_right = 0x7f060029;
+		public static final int abc_panel_menu_list_width = 0x7f06002f;
+		public static final int abc_search_view_preferred_width = 0x7f060030;
 		public static final int abc_search_view_text_min_width = 0x7f060007;
 		public static final int dialog_fixed_height_major = 0x7f060008;
 		public static final int dialog_fixed_height_minor = 0x7f060009;

@@ -12,7 +12,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     // Table Contact fields
     public static final String TABLE_CONTACT = "Contact";
     public static final String CONTACT_COLUMN_ID_ONSERVER = "idOnServer";
-    public static final String CONTACT_COLUMN_NAME = "name";
+    public static final String CONTACT_COLUMN_PROFILE_NAME = "name";
+    public static final String CONTACT_COLUMN_PHONEBOOK_NAME = "phoneBookName";
     public static final String CONTACT_COLUMN_EMAIL = "emailAddress";
     public static final String CONTACT_COLUMN_PIC_SERVER_URL = "picServerURL";
     public static final String CONTACT_COLUMN_PIC_LOCAL_URL = "picLocalURL";
@@ -244,7 +245,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_CONTACT = "create table " + TABLE_CONTACT + "("
             + CONTACT_COLUMN_ID_ONSERVER + " text primary key, "
-            + CONTACT_COLUMN_NAME + " text ,"
+            + CONTACT_COLUMN_PROFILE_NAME + " text ,"
+            + CONTACT_COLUMN_PHONEBOOK_NAME + " text ,"
             + CONTACT_COLUMN_EMAIL + " text,"
             + CONTACT_COLUMN_PIC_SERVER_URL + " text ,"
             + CONTACT_COLUMN_PIC_LOCAL_URL + " text ,"

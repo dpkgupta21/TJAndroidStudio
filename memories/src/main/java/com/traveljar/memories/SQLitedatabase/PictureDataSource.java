@@ -228,15 +228,11 @@ public class PictureDataSource {
     // Fetch a random picture of a journey
     // Used for Active/Past journeys thumbnails
     public static Picture getRandomPicOfJourney(String jId, Context context) {
-        Log.d(TAG, "in getRandomPicOfJourney");
-
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_JID +
                 " = '" + jId + "' AND " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Log.e(TAG, selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);
-//        long count = DatabaseUtils.queryNumEntries(db, MySQLiteHelper.TABLE_PICTURE,
-//                MySQLiteHelper.PICTURE_COLUMN_JID + " = ?", new String[]{jId});
 
         int randomNum = 0;
         Picture randomPic = null;

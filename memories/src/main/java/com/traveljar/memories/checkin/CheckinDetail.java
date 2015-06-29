@@ -82,7 +82,7 @@ public class CheckinDetail extends AppCompatActivity {
         List<Contact> checkInWith = ContactDataSource.getContactsListFromIds(this, mCheckIn.getCheckInWith());
         String checkInWithText = "";
         for(Contact contact : checkInWith){
-            checkInWithText += contact.getName() + ", ";
+            checkInWithText += contact.getProfileName() + ", ";
         }
         mCheckInWithTxt.setText(checkInWithText);
 
@@ -95,7 +95,7 @@ public class CheckinDetail extends AppCompatActivity {
             Contact contact = ContactDataSource.getContactById(this, mCheckIn.getCreatedBy());
             Log.d(TAG, "contact is " + contact);
             profileImgPath = contact.getPicLocalUrl();
-            createdBy = contact.getName();
+            createdBy = contact.getProfileName();
         } else {
             profileImgPath = TJPreferences.getProfileImgPath(this);
             createdBy = TJPreferences.getUserName(this);

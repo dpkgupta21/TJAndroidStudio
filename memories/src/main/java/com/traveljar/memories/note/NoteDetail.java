@@ -83,7 +83,7 @@ public class NoteDetail extends AppCompatActivity {
             Contact contact = ContactDataSource.getContactById(this, mNote.getCreatedBy());
             Log.d(TAG, "contact is " + contact);
             profileImgPath = contact.getPicLocalUrl();
-            createdBy = contact.getName();
+            createdBy = contact.getProfileName();
         } else {
             profileImgPath = TJPreferences.getProfileImgPath(this);
             createdBy = TJPreferences.getUserName(this);

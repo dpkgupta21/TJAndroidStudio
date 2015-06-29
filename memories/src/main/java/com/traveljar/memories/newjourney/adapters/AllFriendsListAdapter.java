@@ -46,7 +46,7 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        Log.d(TAG, originalList.get(position).getName());
+        Log.d(TAG, originalList.get(position).getProfileName());
         final ViewHolder viewHolder;
         if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
@@ -78,12 +78,13 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
             }
         });
 
-        viewHolder.name.setText(list.get(position).getName());
+        String name = list.get(position).getPhoneBookName() == null ? list.get(position).getProfileName() : list.get(position).getPhoneBookName();
+        viewHolder.name.setText(name);
 
-        if (list.get(position).getPhone_no() == null || list.get(position).getPhone_no() == "") {
+        if (list.get(position).getPhoneNo() == null || list.get(position).getPhoneNo() == "") {
             viewHolder.phone_no.setText(list.get(position).getPrimaryEmail());
         } else {
-            viewHolder.phone_no.setText(list.get(position).getPhone_no());
+            viewHolder.phone_no.setText(list.get(position).getPhoneNo());
         }
 
         if (list.get(position).getPicLocalUrl() != null) {
@@ -117,10 +118,11 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
                 constraint = constraint.toString().toLowerCase();
                 Log.d(TAG, originalList.size() + "!");
                 for (int i = 0; i < originalList.size(); i++) {
-                    Contact contactName = originalList.get(i);
+                    Contact contact = originalList.get(i);
                     Log.d(TAG, "1.3");
-                    if (contactName.getName().toLowerCase().startsWith(constraint.toString())) {
-                        FilteredArrayNames.add(contactName);
+                    String name = list.get(i).getPhoneBookName() == null ? list.get(i).getProfileName() : list.get(i).getPhoneBookName();
+                    if (name.toLowerCase().startsWith(constraint.toString())) {
+                        FilteredArrayNames.add(contact);
                     }
                 }
 

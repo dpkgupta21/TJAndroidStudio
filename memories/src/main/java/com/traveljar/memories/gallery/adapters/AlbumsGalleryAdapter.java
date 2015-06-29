@@ -1,6 +1,7 @@
 package com.traveljar.memories.gallery.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,22 +9,28 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Picture;
-import com.traveljar.memories.utility.LoadScaledBitmapFromPath;
+import com.traveljar.memories.utility.HelpMe;
 
+import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Map;
 
 public class AlbumsGalleryAdapter extends BaseAdapter{
     private static final String TAG = "GalleryImageAdapter";
 
     static Context mContext;
-    private List<Picture> mAlbumsList;
+    private Map<Journey, Picture> mAlbumsList;
+    private List<Journey> mJourneyList;
 
-    public AlbumsGalleryAdapter(Context context, List<Picture> albumsList) {
+    public AlbumsGalleryAdapter(Context context, Map<Journey, Picture> mAlbumsList, List<Journey> mJourneyList) {
         mContext = context;
-        mAlbumsList = albumsList;
+        this.mAlbumsList = mAlbumsList;
+        this.mJourneyList = mJourneyList;
     }
 
     static int imageWidthPixel() {
@@ -49,38 +56,36 @@ public class AlbumsGalleryAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = convertView;
-        if (rowView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.gallery_album_grid_item, null);
-            ViewHolder holder = new ViewHolder(rowView);
-            rowView.setTag(holder);
+            convertView = inflater.inflate(R.layout.gallery_album_grid_item, null);
         }
-        ViewHolder holder = (ViewHolder) rowView.getTag();
-        if (!mAlbumsList.get(position).isChecked()) {
-            holder.overlayImgView.setVisibility(View.GONE);
-        } else {
-            holder.overlayImgView.setVisibility(View.VISIBLE);
+        ImageView img = (ImageView)convertView.findViewById(R.id.album_img);
+        TextView journeyName = (TextView)convertView.findViewById(R.id.album_name);
+        Bitmap bitmap;
+        Picture picture = mAlbumsList.get(mJourneyList.get(position));
+
+        img.setLayoutParams(new RelativeLayout.LayoutParams(getImageWidth(), getImageWidth()));
+        img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        if(picture != null){
+            try {
+                bitmap = HelpMe.decodeSampledBitmapFromPath(mContext, picture.getDataLocalURL(), 150, 150);
+                img.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else {
+            img.setImageResource(R.drawable.gumnaam_profile_image);
         }
+        journeyName.setText(mJourneyList.get(position).getName());
 
-        LoadScaledBitmapFromPath.loadBitmap(mAlbumsList.get(position).getPicThumbnailPath(), holder.imgView, 150, 150, mContext);
-
-        holder.overlayImgView.setImageResource(R.drawable.img_selected);
-        return rowView;
+        return convertView;
     }
 
-    public static class ViewHolder {
-        public ImageView imgView;
-        public ImageView overlayImgView;
-
-        public ViewHolder(View rowView) {
-            imgView = (ImageView) rowView.findViewById(R.id.album_img);
-            overlayImgView = (ImageView) rowView.findViewById(R.id.overlayImg);
-
-            imgView.setLayoutParams(new RelativeLayout.LayoutParams(imageWidthPixel(),
-                    imageWidthPixel()));
-            overlayImgView.setLayoutParams(new RelativeLayout.LayoutParams(imageWidthPixel(),
-                    imageWidthPixel()));
-        }
+    private int getImageWidth() {
+        DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+        int width = (int) (displayMetrics.widthPixels - 15 / displayMetrics.density) / 2;
+        return width;
     }
+
 }

@@ -147,8 +147,8 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
 
             Contact journeyCreatedByContact = ContactDataSource.getContactById(this, mJourney.getCreatedBy());
             if (journeyCreatedByContact != null) {
-                Log.d(TAG, "journey is created by " + journeyCreatedByContact.getName());
-                journeyCreatedBy.setText("CREATED BY " + journeyCreatedByContact.getName());
+                Log.d(TAG, "journey is created by " + journeyCreatedByContact.getProfileName());
+                journeyCreatedBy.setText("CREATED BY " + journeyCreatedByContact.getProfileName());
             } else {
                 Log.d(TAG, "unable to find contact with journey id " + mJourney.getIdOnServer());
             }

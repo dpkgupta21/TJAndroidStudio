@@ -35,7 +35,7 @@ import java.util.List;
 
 public class GalleryVideosFragment extends Fragment implements DownloadVideoAsyncTask.OnVideoDownloadListener {
 
-    private static final String TAG = "<GalleryPhotosFragment>";
+    private static final String TAG = "<GalleryPhotos>";
     private static GridView mGridView;
     private View rootView;
     private ActionBar actionBar;

@@ -62,6 +62,7 @@ public class PullBuddies {
                                 String status = response.getJSONObject("user").getString("status");
                                 String interests = response.getJSONObject("user").getString("interests");
                                 String phone_no = response.getJSONObject("user").getString("phone");
+                                String phoneBookName = HelpMe.getContactNameFromNumber(mContext, phone_no);
 
                                 String picServerUrl = response.getJSONObject("user").getJSONObject("profile_picture").getJSONObject("thumb").getString("url");
                                 String picLocalUrl;
@@ -107,7 +108,7 @@ public class PullBuddies {
                                     checkPendingRequests();
                                 }
                                 Log.d(TAG, "id = " + idOnServer + "name = " + userName + email + " " + picServerUrl);
-                                Contact tempContact = new Contact(idOnServer, userName, email, status, picServerUrl, picLocalUrl,
+                                Contact tempContact = new Contact(idOnServer, userName, phoneBookName, email, status, picServerUrl, picLocalUrl,
                                         phone_no, allJourneyIds, true, interests);
                                 ContactDataSource.createContact(tempContact, mContext);
                             } catch (JSONException ex) {

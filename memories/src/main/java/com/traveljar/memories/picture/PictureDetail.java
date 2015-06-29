@@ -97,7 +97,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
             Contact contact = ContactDataSource.getContactById(this, mPicture.getCreatedBy());
             Log.d(TAG, "contact is " + contact);
             profileImgPath = contact.getPicLocalUrl();
-            createdBy = contact.getName();
+            createdBy = contact.getProfileName();
         } else {
             profileImgPath = TJPreferences.getProfileImgPath(this);
             createdBy = TJPreferences.getUserName(this);

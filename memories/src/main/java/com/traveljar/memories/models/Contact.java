@@ -16,12 +16,13 @@ public class Contact implements Comparable<Contact>, Parcelable {
         }
     };
     private String idOnServer;
-    private String name;
+    private String profileName;
+    private String phoneBookName;
     private String primaryEmail;
     private String status;
     private String picServerUrl;
     private String picLocalUrl;
-    private String phone_no;
+    private String phoneNo;
     private String allJourneyIds;
     private boolean isOnBoard;
     private String interests;
@@ -31,32 +32,42 @@ public class Contact implements Comparable<Contact>, Parcelable {
 
     }
 
-    public Contact(String idOnServer, String name, String primaryEmail, String status,
-                   String picServerUrl, String picLocalUrl, String phone_no, String allJourneyIds, boolean isOnBoard,
+    public Contact(String idOnServer, String profileName, String phoneBookName, String primaryEmail, String status,
+                   String picServerUrl, String picLocalUrl, String phoneNo, String allJourneyIds, boolean isOnBoard,
                    String interests) {
         this.idOnServer = idOnServer;
-        this.name = name;
+        this.profileName = profileName;
+        this.phoneBookName = phoneBookName;
         this.status = status;
         this.primaryEmail = primaryEmail;
         this.picServerUrl = picServerUrl;
         this.picLocalUrl = picLocalUrl;
-        this.phone_no = phone_no;
+        this.phoneNo = phoneNo;
         this.isOnBoard = isOnBoard;
     }
 
     //To make contact object from parcel
     public Contact(Parcel parcel) {
         this.idOnServer = parcel.readString();
-        this.name = parcel.readString();
+        this.profileName = parcel.readString();
+        this.phoneBookName = parcel.readString();
         this.primaryEmail = parcel.readString();
         this.status = parcel.readString();
         this.picServerUrl = parcel.readString();
         this.picLocalUrl = parcel.readString();
-        this.phone_no = parcel.readString();
+        this.phoneNo = parcel.readString();
         this.allJourneyIds = parcel.readString();
         this.isOnBoard = parcel.readByte() == 1 ? true : false;
         this.interests = parcel.readString();
         this.isSelected = parcel.readByte() == 1 ? true : false;
+    }
+
+    public String getPhoneBookName() {
+        return phoneBookName;
+    }
+
+    public void setPhoneBookName(String phoneBookName) {
+        this.phoneBookName = phoneBookName;
     }
 
     public String getIdOnServer() {
@@ -67,12 +78,12 @@ public class Contact implements Comparable<Contact>, Parcelable {
         this.idOnServer = idOnServer;
     }
 
-    public String getName() {
-        return name;
+    public String getProfileName() {
+        return profileName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProfileName(String profileName) {
+        this.profileName = profileName;
     }
 
     public String getPrimaryEmail() {
@@ -107,12 +118,12 @@ public class Contact implements Comparable<Contact>, Parcelable {
         this.picLocalUrl = picLocalUrl;
     }
 
-    public String getPhone_no() {
-        return phone_no;
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
-    public void setPhone_no(String phone_no) {
-        this.phone_no = phone_no;
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
     public String getAllJourneyIds() {
@@ -150,12 +161,12 @@ public class Contact implements Comparable<Contact>, Parcelable {
     @Override
     public String toString() {
         return "id on server -> " + this.getIdOnServer() +
-                "name -> " + this.getName() +
+                "profileName -> " + this.getProfileName() +
                 "primary email -> " + this.getPrimaryEmail() +
                 "status -> " + this.getStatus() +
                 "pic server url -> " + this.getPicServerUrl() +
                 "pic local url -> " + this.getPicLocalUrl() +
-                "phone number -> " + this.getPhone_no() +
+                "phone number -> " + this.getPhoneNo() +
                 "is on board -> " + this.isOnBoard() +
                 "all journey ids -> " + this.getAllJourneyIds();
     }
@@ -169,12 +180,13 @@ public class Contact implements Comparable<Contact>, Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(idOnServer);
-        parcel.writeString(name);
+        parcel.writeString(profileName);
+        parcel.writeString(phoneBookName);
         parcel.writeString(primaryEmail);
         parcel.writeString(status);
         parcel.writeString(picServerUrl);
         parcel.writeString(picLocalUrl);
-        parcel.writeString(phone_no);
+        parcel.writeString(phoneNo);
         parcel.writeString(allJourneyIds);
         parcel.writeByte((byte) (isOnBoard ? 1 : 0));
         parcel.writeString(interests);
@@ -183,7 +195,7 @@ public class Contact implements Comparable<Contact>, Parcelable {
 
     @Override
     public int compareTo(Contact child) {
-        return name.compareTo(child.name);
+        return profileName.compareTo(child.profileName);
     }
 
     @Override

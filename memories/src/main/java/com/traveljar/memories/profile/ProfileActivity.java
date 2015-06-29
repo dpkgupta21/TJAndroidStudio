@@ -167,7 +167,7 @@ public class ProfileActivity extends BaseActivity {
                         TJPreferences.setUserName(this, mEditName.getText().toString());
                         isNameUpdated = true;
                         columns.add(mEditName.getText().toString());
-                        columnNames.add(MySQLiteHelper.CONTACT_COLUMN_NAME);
+                        columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME);
                     }
                     if (!mEditStatus.getText().toString().equals(TJPreferences.getUserStatus(this))) {
                         TJPreferences.setUserStatus(this, mEditStatus.getText().toString());

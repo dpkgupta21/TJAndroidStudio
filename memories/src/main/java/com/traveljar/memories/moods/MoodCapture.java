@@ -85,9 +85,9 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
                 Log.d(TAG, "no selected friends");
                 noFriendsSelectedTxt.setText("No friend Selected");
             } else if (selectedFriends.size() == 1) {
-                noFriendsSelectedTxt.setText(selectedFriends.get(0).getName());
+                noFriendsSelectedTxt.setText(selectedFriends.get(0).getProfileName());
             } else if (selectedFriends.size() > 1) {
-                noFriendsSelectedTxt.setText(selectedFriends.get(0).getName() + " and " + (selectedFriends.size() - 1) + " others");
+                noFriendsSelectedTxt.setText(selectedFriends.get(0).getProfileName() + " and " + (selectedFriends.size() - 1) + " others");
             }
         }
     }

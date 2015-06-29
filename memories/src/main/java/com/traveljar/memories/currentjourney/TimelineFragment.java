@@ -36,6 +36,8 @@ public class TimelineFragment extends Fragment {
     private List<Memories> memoriesList;
     private RelativeLayout mLayout;
 
+    private int visibleItemPosition;
+
     private static TimelineFragment instance;
     public TimelineFragment(){
         instance = this;
@@ -128,6 +130,7 @@ public class TimelineFragment extends Fragment {
     // Method overridden so that if a new activity is called and Fab menu is opened, it will be closed
     @Override
     public void onPause() {
+        visibleItemPosition = mListView.getFirstVisiblePosition();
         if (mFab.isExpanded()) {
             mFab.collapse();
         }
@@ -149,6 +152,7 @@ public class TimelineFragment extends Fragment {
                 mAdapter.setMemoriesList(memoriesList);
                 mAdapter.notifyDataSetChanged();
                 mListView.setAdapter(mAdapter);
+                mListView.setSelection(visibleItemPosition);
             }
         }else {
             Log.d(TAG, "no of memories < 0");

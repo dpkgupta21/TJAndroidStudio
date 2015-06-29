@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.utility.LoadScaledBitmapFromPath;
 
@@ -19,9 +20,9 @@ public class ImageGalleryAdapter extends BaseAdapter {
     private static final String TAG = "GalleryImageAdapter";
 
     static Context mContext;
-    private List<Picture> mImgList;
+    private List<Memories> mImgList;
 
-    public ImageGalleryAdapter(Context context, List<Picture> imgList) {
+    public ImageGalleryAdapter(Context context, List<Memories> imgList) {
         mContext = context;
         mImgList = imgList;
     }
@@ -57,14 +58,15 @@ public class ImageGalleryAdapter extends BaseAdapter {
             ViewHolder holder = new ViewHolder(rowView, mContext);
             rowView.setTag(holder);
         }
+        Picture picture = (Picture)mImgList.get(position);
         ViewHolder holder = (ViewHolder) rowView.getTag();
-        if (!mImgList.get(position).isChecked()) {
+        if (!picture.isChecked()) {
             holder.overlayImgView.setVisibility(View.GONE);
         } else {
             holder.overlayImgView.setVisibility(View.VISIBLE);
         }
 
-        LoadScaledBitmapFromPath.loadBitmap(mImgList.get(position).getPicThumbnailPath(), holder.imgView, 150, 150, mContext);
+        LoadScaledBitmapFromPath.loadBitmap(picture.getPicThumbnailPath(), holder.imgView, 150, 150, mContext);
 
         holder.overlayImgView.setImageResource(R.drawable.img_selected);
         return rowView;

@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
+import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.volley.AppController;
 
 import org.json.JSONArray;
@@ -225,6 +226,7 @@ public class PullContactsService extends IntentService {
             String name = userItem.getString("name");
             String email = userItem.getString("email");
             String phone_no = (userItem.getString("phone") == "null") ? null : userItem.getString("phone");
+            String phoneBookName = HelpMe.getContactNameFromNumber(this, phone_no);
             String status = userItem.getString("status");
             String picServerUrl = userItem.getJSONObject("profile_picture").getJSONObject("thumb")
                     .getString("url");
@@ -277,7 +279,7 @@ public class PullContactsService extends IntentService {
                 picLocalUrl = Constants.GUMNAAM_IMAGE_URL;
             }
             Log.d(TAG, "id = " + idOnServer + "name = " + name + email + " " + picServerUrl);
-            tempContact = new Contact(idOnServer, name, email, status, picServerUrl, picLocalUrl,
+            tempContact = new Contact(idOnServer, name, phoneBookName, email, status, picServerUrl, picLocalUrl,
                     phone_no, allJourneyIds, true, interests);
             ContactDataSource.createContact(tempContact, this);
             contactsList.add(tempContact);

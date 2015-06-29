@@ -256,9 +256,9 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                     Log.d(TAG, "contact fetched with server id " + obj);
                     userId = obj.getString("id");
                     Contact contact = ContactDataSource.getContactById(this, userId);
-                    contact.setName(obj.getString("name"));
+                    contact.setProfileName(obj.getString("name"));
                     contact.setStatus(obj.getString("status"));
-                    contact.setPhone_no(obj.getString("phone"));
+                    contact.setPhoneNo(obj.getString("phone"));
                     boolean profilePicUpdated = Boolean.parseBoolean(obj.getString("is_profile_pic_change"));
                     if(profilePicUpdated){
                         String picUrl = obj.getString("profile_picture");

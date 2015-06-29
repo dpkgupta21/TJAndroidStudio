@@ -93,7 +93,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         if (!mVideo.getCreatedBy().equals(TJPreferences.getUserId(this))) {
             Contact contact = ContactDataSource.getContactById(this, mVideo.getCreatedBy());
             profileImgPath = contact.getPicLocalUrl();
-            createdBy = contact.getName();
+            createdBy = contact.getProfileName();
         } else {
             profileImgPath = TJPreferences.getProfileImgPath(this);
             createdBy = TJPreferences.getUserName(VideoDetail.this);
