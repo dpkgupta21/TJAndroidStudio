@@ -33,6 +33,7 @@ public class AudioDataSource {
         values.put(MySQLiteHelper.VOICE_COLUMN_DATALOCALURL, newVoice.getDataLocalURL());
         values.put(MySQLiteHelper.VOICE_COLUMN_CREATEDBY, newVoice.getCreatedBy());
         values.put(MySQLiteHelper.VOICE_COLUMN_CREATEDAT, newVoice.getCreatedAt());
+        values.put(MySQLiteHelper.VOICE_COLUMN_UPDATEDAT, newVoice.getUpdatedAt());
         values.put(MySQLiteHelper.VOICE_COLUMN_LATITUDE, newVoice.getLatitude());
         values.put(MySQLiteHelper.VOICE_COLUMN_LONGITUDE, newVoice.getLongitude());
         values.put(MySQLiteHelper.VOICE_COLUMN_DURATION, newVoice.getAudioDuration());

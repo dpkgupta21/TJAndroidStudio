@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
+import com.traveljar.memories.customevents.VideoDownloadEvent;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.services.PullMemoriesService;
 import com.traveljar.memories.volley.AppController;
@@ -39,19 +40,16 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
+
 public class VideoUtil {
 
     private static VideoUtil instance;
-
-    private static OnFinishDownloadListener finishListener;
 
     public static VideoUtil getInstance(){
         if(instance == null)
             instance = new VideoUtil();
         return instance;
-    }
-    public void setOnFinishDownloadListener(OnFinishDownloadListener listener){
-        finishListener = listener;
     }
 
     public static final String TAG = "VIDEO_UTIL";
@@ -66,7 +64,7 @@ public class VideoUtil {
         task.execute();
     }
 
-    public void createNewVideoFromServer(final Context context, final Video video, String thumbUrl) {
+    public void createNewVideoFromServer(final Context context, final Video video, String thumbUrl, final int downloadRequesterCode) {
         final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "/vid_" + System.currentTimeMillis() + ".jpg";
         if (thumbUrl != null) {
             ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
@@ -78,9 +76,8 @@ public class VideoUtil {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                         video.setLocalThumbPath(imagePath);
                         long id = VideoDataSource.createVideo(video, context);
-                        if(finishListener != null) {
-                            finishListener.onFinishDownload(video.getIdOnServer(), video.getMemType(), String.valueOf(id));
-                        }
+                        video.setId(String.valueOf(id));
+                        EventBus.getDefault().post(new VideoDownloadEvent(video, true, downloadRequesterCode));
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
@@ -288,9 +285,4 @@ public class VideoUtil {
             AppController.getInstance().addToRequestQueue(uploadRequest);
         }
     }
-
-    public interface OnFinishDownloadListener{
-        void onFinishDownload(String videoServerId, String memoryType, String videoLocalId);
-    }
-
 }

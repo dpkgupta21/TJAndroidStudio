@@ -8,8 +8,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.ResultReceiver;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.util.LongSparseArray;
@@ -22,6 +20,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.customevents.ContactsFetchEvent;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
@@ -40,6 +39,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
+
 public class PullContactsService extends IntentService {
 
     private static final String TAG = "<PullContactsService>";
@@ -47,7 +48,8 @@ public class PullContactsService extends IntentService {
     private ArrayList<Contact> contactsList;
     private ArrayList<String> allPhoneList;
     private ArrayList<String> allEmailList;
-    private ResultReceiver mReceiver;
+    //private ResultReceiver mReceiver;
+    private static int CALLING_ACTIVITY_CODE;
 
     public PullContactsService() {
         super("PullContactsService");
@@ -57,16 +59,17 @@ public class PullContactsService extends IntentService {
         super(name);
     }
 
-    public static boolean isServiceFinished() {
+/*    public static boolean isServiceFinished() {
         Log.d(TAG, "no of requests = " + noRequests);
         return noRequests == 0;
-    }
+    }*/
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, startId, startId);
-        if (intent.hasExtra("RECEIVER")) {
+        CALLING_ACTIVITY_CODE = intent.getIntExtra("ACTIVITY_CODE", 0);
+        /*if (intent.hasExtra("RECEIVER")) {
             mReceiver = intent.getParcelableExtra("RECEIVER");
-        }
+        }*/
         Log.d(TAG, "on start command");
         return START_STICKY;
     }
@@ -79,8 +82,8 @@ public class PullContactsService extends IntentService {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private List<Contact> getPhoneContactsList() {
-        List<AddressBookContact> list = new LinkedList<AddressBookContact>();
-        LongSparseArray<AddressBookContact> array = new LongSparseArray<AddressBookContact>();
+        List<AddressBookContact> list = new LinkedList<>();
+        LongSparseArray<AddressBookContact> array = new LongSparseArray<>();
         long start = System.currentTimeMillis();
 
         String[] projection = {
@@ -161,17 +164,17 @@ public class PullContactsService extends IntentService {
 
         Integer phoneLen = allPhoneList.size();
         Integer emailLen = allEmailList.size();
-        Map<String, String> jsonParams = new HashMap<String, String>();
+        Map<String, String> jsonParams = new HashMap<>();
 
         jsonParams.put("phone_count", phoneLen.toString());
         jsonParams.put("email_count", emailLen.toString());
 
         for (int i = 0; i < phoneLen; i++) {
-            jsonParams.put("phone_array[" + i + "]", allPhoneList.get(i).toString());
+            jsonParams.put("phone_array[" + i + "]", allPhoneList.get(i));
         }
 
         for (int i = 0; i < emailLen; i++) {
-            jsonParams.put("email_array[" + i + "]", allEmailList.get(i).toString());
+            jsonParams.put("email_array[" + i + "]", allEmailList.get(i));
         }
 
         // Tag used to cancel the request
@@ -201,7 +204,7 @@ public class PullContactsService extends IntentService {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json; charset=utf-8");
                 headers.put("User-agent", "My useragent");
                 return headers;
@@ -225,7 +228,7 @@ public class PullContactsService extends IntentService {
             final String idOnServer = userItem.getString("id");
             String name = userItem.getString("name");
             String email = userItem.getString("email");
-            String phone_no = (userItem.getString("phone") == "null") ? null : userItem.getString("phone");
+            String phone_no = (userItem.getString("phone").equals("null") ? null : userItem.getString("phone"));
             String phoneBookName = HelpMe.getContactNameFromNumber(this, phone_no);
             String status = userItem.getString("status");
             String picServerUrl = userItem.getJSONObject("profile_picture").getJSONObject("thumb")
@@ -233,7 +236,7 @@ public class PullContactsService extends IntentService {
             String picLocalUrl;
             String allJourneyIds = userItem.getString("journey_ids");
             String interests = userItem.getString("interests");
-            if (picServerUrl != "null") {
+            if (!picServerUrl.equals("null")) {
                 picLocalUrl = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + idOnServer + ".jpeg";
                 ImageRequest request = new ImageRequest(picServerUrl,
                         new Response.Listener<Bitmap>() {
@@ -288,9 +291,10 @@ public class PullContactsService extends IntentService {
     }
 
     public void onFinish() {
-        if (noRequests == 0 && mReceiver != null) {
-            Bundle bundle = new Bundle();
-            mReceiver.send(0, bundle);
+        if (noRequests == 0) {
+/*            Bundle bundle = new Bundle();
+            mReceiver.send(0, bundle);*/
+            EventBus.getDefault().post(new ContactsFetchEvent("Contacts Fetched Successfully", CALLING_ACTIVITY_CODE, true));
         }
     }
 

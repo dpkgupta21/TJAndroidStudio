@@ -12,6 +12,8 @@ import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
+import com.traveljar.memories.customevents.PictureDownloadEvent;
+import com.traveljar.memories.customevents.VideoDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Journey;
@@ -37,7 +39,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class PullMemoriesService implements VideoUtil.OnFinishDownloadListener, PictureUtilities.OnFinishDownloadListener{
+import de.greenrobot.event.EventBus;
+
+public class PullMemoriesService {
     private static final String TAG = "PullMemoriesService";
     private static int REQUEST_CODE;
     private static int count = 0;
@@ -46,26 +50,20 @@ public class PullMemoriesService implements VideoUtil.OnFinishDownloadListener, 
     private Journey journey;
     private Context mContext;
 
+//    private static final int DOWNLOAD_PICTURE_EVENT_CODE = 0;
+//    private static final int DOWNLOAD_VIDEO_EVENT_CODE = 1;
+    private static final int VIDEO_DOWNLOAD_REQUESTER_CODE = 0;
+    private static final int PICTURE_DOWNLOAD_REQUESTER_CODE = 0;
+
+
     public PullMemoriesService(Context context, OnTaskFinishListener listener, int REQUEST_CODE) {
         mContext = context;
         mListener = listener;
         this.REQUEST_CODE = REQUEST_CODE;
     }
 
-    public static void isFinished() {
-        if (isService) {
-            count--;
-            Log.d(TAG, "not finished" + count);
-            if (count < 0) {
-                Log.d(TAG, "isfinished called" + count);
-                count = 0;
-                isService = false;
-                mListener.onFinishTask(REQUEST_CODE);
-            }
-        }
-    }
-
     public void fetchJourneys() {
+        registerEvent();
         isService = true;
         Log.d(TAG, "fetch journeys");
         String fetchJourneysUrl = Constants.URL_JOURNEYS_FETCH + "?api_key=" + TJPreferences.getApiKey(mContext) + "&user_id=" + TJPreferences.getUserId(mContext);
@@ -171,11 +169,6 @@ public class PullMemoriesService implements VideoUtil.OnFinishDownloadListener, 
 
             for (i = 0; i < memoriesArray.length(); i++) {
 
-                /*memory = memoriesArray.getJSONObject(i);
-
-                memoryType = Integer.parseInt(memory.getString("type"));
-                createdBy = memory.getJSONObject("user").getString("user_id");
-                memoryId = memory.getJSONObject("memory").getString("id");*/
                 JSONObject object = memoriesArray.getJSONObject(i);
                 Iterator<?> keys = object.keys();
 
@@ -201,8 +194,8 @@ public class PullMemoriesService implements VideoUtil.OnFinishDownloadListener, 
                         Picture newPic = new Picture(memoryId, journeyId, HelpMe.PICTURE_TYPE, description, "jpg",
                                 100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
                         parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.PICTURE_TYPE, journeyId, memoryId);
-                        PictureUtilities.getInstance().setOnFinishDownloadListener(this);
-                        PictureUtilities.getInstance().createNewPicFromServer(mContext, newPic, thumbnailUrl);
+                        //PictureUtilities.getInstance().setOnFinishDownloadListener(this);
+                        PictureUtilities.getInstance().createNewPicFromServer(mContext, newPic, thumbnailUrl, PICTURE_DOWNLOAD_REQUESTER_CODE);
                         count++;
                         Log.d(TAG, "picture parsed and saved successfully");
 
@@ -239,8 +232,7 @@ public class PullMemoriesService implements VideoUtil.OnFinishDownloadListener, 
                                 "png", 1223, null, fileUrl, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
 
                         parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.VIDEO_TYPE, journeyId, memoryId);
-                        VideoUtil.getInstance().setOnFinishDownloadListener(this);
-                        VideoUtil.getInstance().createNewVideoFromServer(mContext, newVideo, thumbnailUrl);
+                        VideoUtil.getInstance().createNewVideoFromServer(mContext, newVideo, thumbnailUrl, VIDEO_DOWNLOAD_REQUESTER_CODE);
                         //parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId);
                         count++;
                         Log.d(TAG, "video parsed and saved successfully" + thumbnailUrl);
@@ -331,14 +323,49 @@ public class PullMemoriesService implements VideoUtil.OnFinishDownloadListener, 
         }
     }
 
-    @Override
+    public static void isFinished() {
+        if (isService) {
+            count--;
+            Log.d(TAG, "not finished" + count);
+            if (count < 0) {
+                Log.d(TAG, "isfinished called" + count);
+                count = 0;
+                isService = false;
+                mListener.onFinishTask(REQUEST_CODE);
+            }
+        }
+    }
+
+/*    @Override
     public void onFinishDownload(String serverId, String memType, String localId) {
         Log.d(TAG, "updating memory local id for mem type " + memType);
         LikeDataSource.updateMemoryLocalId(serverId, memType, localId, mContext);
-    }
+    }*/
 
     public interface OnTaskFinishListener {
         void onFinishTask(int REQUEST_CODES);
+    }
+
+    private void registerEvent(){
+        EventBus.getDefault().register(this);
+    }
+
+    private void unRegisterEvent(){
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(PictureDownloadEvent event){
+        if(event.getCallerCode() == PICTURE_DOWNLOAD_REQUESTER_CODE) {
+            LikeDataSource.updateMemoryLocalId(event.getPicture().getIdOnServer(), event.getPicture().getMemType(),
+                    event.getPicture().getId(), mContext);
+        }
+    }
+
+    public void onEvent(VideoDownloadEvent event){
+        if(event.getCallerCode() == VIDEO_DOWNLOAD_REQUESTER_CODE) {
+            LikeDataSource.updateMemoryLocalId(event.getVideo().getIdOnServer(), event.getVideo().getMemType(), event.getVideo().getId(),
+                    mContext);
+        }
     }
 
 }

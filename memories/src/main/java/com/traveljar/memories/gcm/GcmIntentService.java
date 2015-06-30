@@ -312,7 +312,8 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 Picture newPic = new Picture(idOnServer, jId, HelpMe.PICTURE_TYPE, caption, extension,
                         size, dataUrl, null, createdBy,
                         createdAt, updatedAt, null, null, latitude, longitude);
-                PictureUtilities.getInstance().createNewPicFromServer(this, newPic, thumb);
+                // No need to catch the event hence send -1
+                PictureUtilities.getInstance().createNewPicFromServer(this, newPic, thumb, -1);
                 break;
 
             case HelpMe.SERVER_AUDIO_TYPE:
@@ -339,7 +340,8 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 Video newVideo = new Video(idOnServer, jId, HelpMe.VIDEO_TYPE, caption, extension,
                         size, dataUrl, null, createdBy, createdAt, updatedAt, null, null, latitude, longitude);
                 //Downloading video and save to database
-                VideoUtil.getInstance().createNewVideoFromServer(this, newVideo, localThumbUrl);
+                // No need to catch the event hence send -1
+                VideoUtil.getInstance().createNewVideoFromServer(this, newVideo, localThumbUrl, -1);
                 break;
 
             case HelpMe.SERVER_NOTE_TYPE:

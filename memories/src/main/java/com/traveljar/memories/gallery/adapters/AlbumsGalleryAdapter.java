@@ -69,7 +69,7 @@ public class AlbumsGalleryAdapter extends BaseAdapter{
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if(picture != null){
             try {
-                bitmap = HelpMe.decodeSampledBitmapFromPath(mContext, picture.getDataLocalURL(), 150, 150);
+                bitmap = HelpMe.decodeSampledBitmapFromPath(mContext, picture.getPicThumbnailPath(), 150, 150);
                 img.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

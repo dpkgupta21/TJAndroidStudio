@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
+import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.picture.DownloadPicture;
 import com.traveljar.memories.utility.HelpMe;
@@ -25,12 +26,12 @@ import java.util.List;
 public class ImageCarouselAdapter extends PagerAdapter implements DownloadPicture.OnPictureDownloadListener{
     private static final String TAG = "ImageCarouselAdapter";
     private Activity _activity;
-    private List<Picture> mPictureList;
+    private List<Memories> mPictureList;
     private LayoutInflater inflater;
     private ProgressDialog pDialog;
 
     // constructor
-    public ImageCarouselAdapter(Activity activity, List<Picture> pictureList) {
+    public ImageCarouselAdapter(Activity activity, List<Memories> pictureList) {
         _activity = activity;
         mPictureList = pictureList;
         pDialog = new ProgressDialog(_activity);
@@ -59,15 +60,14 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
         imgDisplay = (ImageView) viewLayout.findViewById(R.id.detailImage);
         btnClose = (ImageView) viewLayout.findViewById(R.id.closeIcon);
         imgTitle = (TextView) viewLayout.findViewById(R.id.imageTitleTxt);
-
-        imgTitle.setText(mPictureList.get(position).getCaption());
+        Picture pic = (Picture)mPictureList.get(position);
+        imgTitle.setText(pic.getCaption());
 
         DisplayMetrics displayMetrics = _activity.getResources().getDisplayMetrics();
 
-        if (mPictureList.get(position).getDataLocalURL() != null) {
+        if (pic.getDataLocalURL() != null) {
             try {
-                imgDisplay.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, mPictureList
-                                .get(position).getDataLocalURL(), displayMetrics.widthPixels,
+                imgDisplay.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, pic.getDataLocalURL(), displayMetrics.widthPixels,
                         displayMetrics.heightPixels));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -75,7 +75,7 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
         } else {
             pDialog.show();
             Log.d(TAG, "downloading picture for position" + position);
-            new DownloadPicture(mPictureList.get(position), this, imgDisplay).startDownloadingPic();
+            new DownloadPicture(pic, this, imgDisplay).startDownloadingPic();
         }
 
         // close button click event

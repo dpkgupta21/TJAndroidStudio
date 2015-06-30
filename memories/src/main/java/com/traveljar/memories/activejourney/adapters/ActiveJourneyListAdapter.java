@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
+import com.traveljar.memories.customevents.ContactsFetchEvent;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Lap;
 import com.traveljar.memories.models.Picture;
@@ -27,11 +29,16 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourneyListAdapter.ViewHolder> implements PullBuddies.OnTaskFinishListener {
+import de.greenrobot.event.EventBus;
+
+public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourneyListAdapter.ViewHolder>  {
     private static final String TAG = "<ActiveJListAdapter>";
     private List<Journey> mDataset;
     private Context mContext;
     private ProgressDialog mDialog;
+
+    // For the request bus receive event to discard the received event which is not meant for this activity
+    private static int LISTENER_CODE = 0;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ActiveJourneyListAdapter(List<Journey> myDataset, Context context) {
@@ -146,13 +153,14 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             Log.d(TAG, "buddies from journey " + journey.getBuddies());
             if (journey.getBuddies() != null && !journey.getBuddies().isEmpty()) {
                 Log.d(TAG, "buddies are = " + journey.getBuddies());
-                ArrayList<String> buddyList = (ArrayList) ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
+                ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
 
                 Log.d(TAG, "non existing contacts list is" + buddyList);
 
                 if (buddyList != null && !buddyList.isEmpty()) {
                     Log.d(TAG, "some buddies need to be fetched from server hence fetching from server" + buddyList.size());
-                    new PullBuddies(mContext, buddyList, ActiveJourneyListAdapter.this).fetchBuddies();
+                    registerEvent();
+                    new PullBuddies(mContext, buddyList, LISTENER_CODE).fetchBuddies();
                 } else {
                     Log.d(TAG, "no buddy to be fetched from server hence starting current activity");
                     Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
@@ -171,12 +179,26 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         }
     }
 
-    @Override
-    public void onFinishTask() {
-        mDialog.dismiss();
-        Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.getApplicationContext().startActivity(intent);
+    private void registerEvent(){
+        EventBus.getDefault().register(this);
     }
 
+    private void unRegisterEvent(){
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(ContactsFetchEvent event) {
+        //Discard the event if the event's activity code is not similar to its own activity code
+        if (event.getActivityCode() == LISTENER_CODE) {
+            mDialog.dismiss();
+            if(event.isSuccess()) {
+                Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.getApplicationContext().startActivity(intent);
+            }else {
+                Toast.makeText(mContext, "We are unable to fetch your journey write now please try after some time", Toast.LENGTH_SHORT).show();
+            }
+            unRegisterEvent();
+        }
+    }
 }

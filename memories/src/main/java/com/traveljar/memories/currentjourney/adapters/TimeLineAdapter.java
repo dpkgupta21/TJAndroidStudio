@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
@@ -19,6 +20,7 @@ import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.audio.AudioDetail;
 import com.traveljar.memories.audio.DownloadAudioAsyncTask;
 import com.traveljar.memories.checkin.CheckinDetail;
+import com.traveljar.memories.customevents.AudioDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
@@ -42,7 +44,9 @@ import com.traveljar.memories.video.VideoDetail;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTask.OnAudioDownloadListener {
+import de.greenrobot.event.EventBus;
+
+public class TimeLineAdapter extends BaseAdapter {
 
     private static final String TAG = "TimeLineAdapter";
     Context context;
@@ -54,6 +58,7 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
     private AudioPlayer mPlayer;
 
     private ProgressDialog pDialog;
+    private static final int DOWNLOAD_AUDIO_EVENT_CODE = 1;
 
     public TimeLineAdapter(Context context, List<Memories> memoriesList) {
         Log.d(TAG, "constructor called");
@@ -260,7 +265,8 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
                             if (audio.getDataLocalURL() == null) {
                                 pDialog.setMessage("Loading...");
                                 pDialog.show();
-                                DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(TimeLineAdapter.this, audio);
+                                registerEvent();
+                                DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(DOWNLOAD_AUDIO_EVENT_CODE, audio);
                                 asyncTask.execute();
                             } else {
                                 mPlayer = new AudioPlayer(audio.getDataLocalURL());
@@ -394,14 +400,6 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         return convertView;
     }
 
-    @Override
-    public void onAudioDownload(String audioLocalUrl, Audio audio) {
-        pDialog.dismiss();
-        mPlayer = new AudioPlayer(audioLocalUrl);
-        mPlayer.startPlaying();
-        AudioDataSource.updateDataLocalUrl(context, audio.getId(), audioLocalUrl);
-    }
-
     public static class ViewHolder {
         public TextView timelineItemCaption;
         public TextView timelineItemTime;
@@ -423,4 +421,28 @@ public class TimeLineAdapter extends BaseAdapter implements DownloadAudioAsyncTa
         public TextView timelineItemMoodiconTxt;
         public TextView timelineItemMoodExtraBuddyTxt;
     }
+
+    private void registerEvent(){
+        EventBus.getDefault().register(this);
+    }
+
+    private void unRegisterEvent(){
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(AudioDownloadEvent event){
+        Log.d(TAG, "onEvent called from timeline adapter " + DOWNLOAD_AUDIO_EVENT_CODE + event.getCallerCode());
+        if(event.getCallerCode() == DOWNLOAD_AUDIO_EVENT_CODE) {
+            unRegisterEvent();
+            pDialog.dismiss();
+            if (event.isSuccess()) {
+                mPlayer = new AudioPlayer(event.getAudio().getDataLocalURL());
+                mPlayer.startPlaying();
+                AudioDataSource.updateDataLocalUrl(context, event.getAudio().getId(), event.getAudio().getDataLocalURL());
+            } else {
+                Toast.makeText(context, "Sorry, unable to download your audio, please try again later", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }

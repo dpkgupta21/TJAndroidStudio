@@ -3,6 +3,7 @@ package com.traveljar.memories.audio;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.traveljar.memories.customevents.AudioDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.utility.Constants;
 
@@ -13,17 +14,16 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by ankit on 2/6/15.
- */
+import de.greenrobot.event.EventBus;
+
 public class DownloadAudioAsyncTask extends AsyncTask<String, Integer, String> {
 
     private static final String TAG = "DOWNLOAD_ASYNC_TASK";
-    private OnAudioDownloadListener mListener;
     private Audio mAudio;
+    private final int CALLING_ACTIVITY_CODE;
 
-    public DownloadAudioAsyncTask(OnAudioDownloadListener listener, Audio audio) {
-        mListener = listener;
+    public DownloadAudioAsyncTask(int activityCode, Audio audio) {
+        CALLING_ACTIVITY_CODE = activityCode;
         mAudio = audio;
     }
 
@@ -81,12 +81,9 @@ public class DownloadAudioAsyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         if (result != null) {
-            mListener.onAudioDownload(result, mAudio);
+            EventBus.getDefault().post(new AudioDownloadEvent(mAudio, true, CALLING_ACTIVITY_CODE));
+        }else {
+            EventBus.getDefault().post(new AudioDownloadEvent(mAudio, false, CALLING_ACTIVITY_CODE));
         }
     }
-
-    public interface OnAudioDownloadListener {
-        void onAudioDownload(String audioLocalUrl, Audio audio);
-    }
-
 }

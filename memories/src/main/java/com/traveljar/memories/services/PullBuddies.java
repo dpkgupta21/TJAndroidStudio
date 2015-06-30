@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.customevents.ContactsFetchEvent;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
@@ -23,23 +24,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by ankit on 20/5/15.
- */
+import de.greenrobot.event.EventBus;
+
 public class PullBuddies {
 
     private static final String TAG = "PULL_BUDDIES_SERVICE";
     List<String> mBuddyIds;
     private int noRequests;
 
-    private OnTaskFinishListener mListner;
     private Context mContext;
 
-    public PullBuddies(Context context, List<String> buddyIds, OnTaskFinishListener listener) {
-        mListner = listener;
+    //code of activity which is calling for the event
+    private final int EVENT_LISTENER_CODE;
+
+    public PullBuddies(Context context, List<String> buddyIds, int listenerCode) {
         mBuddyIds = buddyIds;
         mContext = context;
         noRequests = buddyIds.size();
+        EVENT_LISTENER_CODE = listenerCode;
     }
 
     public void fetchBuddies() {
@@ -67,7 +69,7 @@ public class PullBuddies {
                                 String picServerUrl = response.getJSONObject("user").getJSONObject("profile_picture").getJSONObject("thumb").getString("url");
                                 String picLocalUrl;
                                 String allJourneyIds = response.getJSONObject("user").getString("journey_ids");
-                                if (picServerUrl != "null") {
+                                if (!picServerUrl.equals("null")) {
                                     picLocalUrl = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + idOnServer + ".jpeg";
                                     ImageRequest request = new ImageRequest(picServerUrl,
                                             new Response.Listener<Bitmap>() {
@@ -95,6 +97,8 @@ public class PullBuddies {
                                                 }
                                             }, 0, 0, null, new Response.ErrorListener() {
                                         public void onErrorResponse(VolleyError error) {
+                                            // In case of server error send back the event with success false
+                                            EventBus.getDefault().post(new ContactsFetchEvent("Contacts Fetched Successfully", EVENT_LISTENER_CODE, true));
                                         }
                                     });
                                     AppController.getInstance().addToRequestQueue(request);
@@ -130,12 +134,7 @@ public class PullBuddies {
         Log.d(TAG, "no of pending requests -> " + noRequests);
         if (noRequests <= 0) {
             Log.d(TAG, "all requests completed now exiting");
-            mListner.onFinishTask();
+            EventBus.getDefault().post(new ContactsFetchEvent("Contacts Fetched Successfully", EVENT_LISTENER_CODE, true));
         }
     }
-
-    public interface OnTaskFinishListener {
-        void onFinishTask();
-    }
-
 }

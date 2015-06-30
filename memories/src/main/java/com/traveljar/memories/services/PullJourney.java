@@ -11,6 +11,8 @@ import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
+import com.traveljar.memories.customevents.PictureDownloadEvent;
+import com.traveljar.memories.customevents.VideoDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Journey;
@@ -35,7 +37,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class PullJourney implements VideoUtil.OnFinishDownloadListener, PictureUtilities.OnFinishDownloadListener{
+import de.greenrobot.event.EventBus;
+
+public class PullJourney {
 
     private static final String TAG = "PullMemoriesService";
     private static int count = 0;
@@ -44,6 +48,9 @@ public class PullJourney implements VideoUtil.OnFinishDownloadListener, PictureU
     private Context context;
     private OnTaskFinishListener mListener;
     private static PullJourney instance;
+
+    private static final int VIDEO_DOWNLOAD_REQUESTER_CODE = 0;
+    private static final int PICTURE_DOWNLOAD_REQUESTER_CODE = 0;
 
     public static PullJourney getInstance(){
         return instance == null ? new PullJourney() : instance;
@@ -61,6 +68,7 @@ public class PullJourney implements VideoUtil.OnFinishDownloadListener, PictureU
     }
 
     public void fetchJourneys() {
+        registerEvent();
         isService = true;
         Log.d(TAG, "fetch journeys");
         String fetchJourneysUrl = Constants.URL_JOURNEYS_FETCH + journey.getIdOnServer() + "?api_key=" + TJPreferences.getApiKey(context);
@@ -140,8 +148,7 @@ public class PullJourney implements VideoUtil.OnFinishDownloadListener, PictureU
                         Picture newPic = new Picture(memoryId, journeyId, HelpMe.PICTURE_TYPE, description, "jpg",
                                 100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
                         parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.PICTURE_TYPE, journeyId, memoryId);
-                        PictureUtilities.getInstance().setOnFinishDownloadListener(this);
-                        PictureUtilities.getInstance().createNewPicFromServer(context, newPic, thumbnailUrl);
+                        PictureUtilities.getInstance().createNewPicFromServer(context, newPic, thumbnailUrl, PICTURE_DOWNLOAD_REQUESTER_CODE);
                         count++;
                         Log.d(TAG, "picture parsed and saved successfully");
 
@@ -178,8 +185,8 @@ public class PullJourney implements VideoUtil.OnFinishDownloadListener, PictureU
                                 "png", 1223, null, fileUrl, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
 
                         parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.VIDEO_TYPE, journeyId, memoryId);
-                        VideoUtil.getInstance().setOnFinishDownloadListener(this);
-                        VideoUtil.getInstance().createNewVideoFromServer(context, newVideo, thumbnailUrl);
+                        //VideoUtil.getInstance().setOnFinishDownloadListener(this);
+                        VideoUtil.getInstance().createNewVideoFromServer(context, newVideo, thumbnailUrl, VIDEO_DOWNLOAD_REQUESTER_CODE);
                         count++;
                         Log.d(TAG, "video parsed and saved successfully" + thumbnailUrl);
 
@@ -269,13 +276,6 @@ public class PullJourney implements VideoUtil.OnFinishDownloadListener, PictureU
         }
     }
 
-    @Override
-    public void onFinishDownload(String serverId, String memType, String localId) {
-        Log.d(TAG, "updating memory local id for mem type " + memType);
-        LikeDataSource.updateMemoryLocalId(serverId, memType, localId, context);
-        isFinished();
-    }
-
     public interface OnTaskFinishListener {
         void onFinishTask(Journey journey);
     }
@@ -292,4 +292,27 @@ public class PullJourney implements VideoUtil.OnFinishDownloadListener, PictureU
             }
         }
     }
+
+    private void registerEvent(){
+        EventBus.getDefault().register(this);
+    }
+
+    private void unRegisterEvent(){
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(PictureDownloadEvent event){
+        if(event.getCallerCode() == PICTURE_DOWNLOAD_REQUESTER_CODE) {
+            LikeDataSource.updateMemoryLocalId(event.getPicture().getIdOnServer(), event.getPicture().getMemType(),
+                    event.getPicture().getId(), context);
+        }
+    }
+
+    public void onEvent(VideoDownloadEvent event){
+        if(event.getCallerCode() == VIDEO_DOWNLOAD_REQUESTER_CODE) {
+            LikeDataSource.updateMemoryLocalId(event.getVideo().getIdOnServer(), event.getVideo().getMemType(), event.getVideo().getId(),
+                    context);
+        }
+    }
+
 }

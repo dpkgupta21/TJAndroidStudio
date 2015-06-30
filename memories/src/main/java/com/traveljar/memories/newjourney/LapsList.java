@@ -3,7 +3,6 @@ package com.traveljar.memories.newjourney;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,27 +11,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.customevents.ContactsFetchEvent;
 import com.traveljar.memories.customviews.MyFABView;
 import com.traveljar.memories.newjourney.adapters.LapsListAdapter;
-import com.traveljar.memories.services.CustomResultReceiver;
 import com.traveljar.memories.services.PullContactsService;
 import com.traveljar.memories.volley.AppController;
 
-public class LapsList extends AppCompatActivity implements CustomResultReceiver.Receiver{
+import de.greenrobot.event.EventBus;
+
+public class LapsList extends AppCompatActivity {
 
     protected static final String TAG = "<LapsList>";
     private LapsListAdapter lapsListViewAdapter;
     private ImageView noLapsPlaceholderImg;
     private ImageView getStartedImg;
     ListView lapsListView;
-    private ImageButton mEditJourney;
     ProgressDialog mDialog;
-    CustomResultReceiver mReceiver;
+    //CustomResultReceiver mReceiver;
+
+    // For the request bus receive event to discard the received event which is not meant for this activity
+    private static int ACTIVITY_CODE = 2;
 
     //Id for the menu item 'next'
     private static final int ID_ACTION_ITEM_NEXT = 0;
@@ -47,8 +49,6 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(100);
-
-        mEditJourney = (ImageButton) findViewById(R.id.edit_journey_lap);
 
         // Add lap FAB Button
         final MyFABView fabButton = new MyFABView.Builder(this)
@@ -107,22 +107,23 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
     private void goToNext() {
         mDialog = new ProgressDialog(this);
         mDialog.setMessage("Please wait while we are fetching your contacts");
-        mReceiver = new CustomResultReceiver(new Handler());
-        mReceiver.setReceiver(this);
+//        mReceiver = new CustomResultReceiver(new Handler());
+//        mReceiver.setReceiver(this);
         Intent intent = new Intent(getBaseContext(), PullContactsService.class);
-        intent.putExtra("RECEIVER", mReceiver);
+//        intent.putExtra("RECEIVER", mReceiver);
+        intent.putExtra("ACTIVITY_CODE", ACTIVITY_CODE);
         startService(intent);
         mDialog.show();
 
     }
 
-    @Override
+/*    @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         mDialog.dismiss();
         Intent i = new Intent(getBaseContext(), SelectedFriendsList.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
-    }
+    }*/
 
     @Override
     public void onResume(){
@@ -136,6 +137,28 @@ public class LapsList extends AppCompatActivity implements CustomResultReceiver.
 //        LapDataSource.deleteLapsList(this, AppController.lapList);
         AppController.lapList.clear();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    public void onEvent(ContactsFetchEvent event){
+        //Discard the event if the event's activity code is not similar to its own activity code
+        if(event.getActivityCode() == ACTIVITY_CODE) {
+            mDialog.dismiss();
+            Intent i = new Intent(getBaseContext(), SelectedFriendsList.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+        }
     }
 
 }

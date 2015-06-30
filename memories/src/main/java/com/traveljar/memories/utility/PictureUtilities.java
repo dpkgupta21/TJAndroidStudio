@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
+import com.traveljar.memories.customevents.PictureDownloadEvent;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.services.PullMemoriesService;
 import com.traveljar.memories.volley.AppController;
@@ -30,25 +31,27 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
+
 public class PictureUtilities {
 
     private static final String TAG = "PICTURE_UTILITY";
 
     private static PictureUtilities instance;
 
-    private static OnFinishDownloadListener finishListener;
+//    private static OnFinishDownloadListener finishListener;
 
     public static PictureUtilities getInstance(){
         if(instance == null)
             instance = new PictureUtilities();
         return instance;
     }
-    public void setOnFinishDownloadListener(OnFinishDownloadListener listener){
+/*    public void setOnFinishDownloadListener(OnFinishDownloadListener listener){
         finishListener = listener;
-    }
+    }*/
 
-    public void createNewPicFromServer(final Context context, final Picture pic, String thumbUrl) {
-        final String imagePath = Constants.TRAVELJAR_FOLDER_PICTURE + "/thumb_" + System.currentTimeMillis() + ".jpg";
+    public void createNewPicFromServer(final Context context, final Picture pic, String thumbUrl, final int downloadRequesterCode) {
+        final String imagePath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" + System.currentTimeMillis() + ".jpg";
         if (thumbUrl != null) {
             ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
                 @Override
@@ -59,9 +62,12 @@ public class PictureUtilities {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                         pic.setPicThumbnailPath(imagePath);
                         long id = PictureDataSource.createPicture(pic, context);
-                        if(finishListener != null) {
+                        pic.setId(String.valueOf(id));
+                        Log.d(TAG, "saving picture " + pic);
+/*                        if(finishListener != null) {
                             finishListener.onFinishDownload(pic.getIdOnServer(), pic.getMemType(), String.valueOf(id));
-                        }
+                        }*/
+                        EventBus.getDefault().post(new PictureDownloadEvent(pic, true, downloadRequesterCode));
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
@@ -144,9 +150,9 @@ public class PictureUtilities {
         }
     }
 
-    public interface OnFinishDownloadListener{
+/*    public interface OnFinishDownloadListener{
         void onFinishDownload(String videoServerId, String memoryType, String videoLocalId);
-    }
+    }*/
 
 
 }

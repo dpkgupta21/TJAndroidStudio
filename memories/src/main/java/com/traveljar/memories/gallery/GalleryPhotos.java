@@ -42,7 +42,7 @@ public class GalleryPhotos extends AppCompatActivity {
 
         setContentView(R.layout.gallery_photos);
 
-        String journeyId = getIntent().getStringExtra("JOURNEY_ID");
+        final String journeyId = getIntent().getStringExtra("JOURNEY_ID");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(JourneyDataSource.getJourneyById(this, journeyId).getName());
@@ -132,6 +132,7 @@ public class GalleryPhotos extends AppCompatActivity {
 //					startActivity(intent);
                     Intent intent = new Intent(GalleryPhotos.this, GalleryPhotoDetail.class);
                     intent.putExtra("CLICKED_POSITION", position);
+                    intent.putExtra("JOURNEY_ID", journeyId);
                     startActivity(intent);
                 }
             });

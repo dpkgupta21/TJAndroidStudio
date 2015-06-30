@@ -111,8 +111,7 @@ public class PictureCapture extends AppCompatActivity {
         if (!storageDir.exists()) {
             storageDir.mkdirs();
         }
-        File imageFile = null;
-        imageFile = File.createTempFile("pic_" + System.currentTimeMillis(), ".jpg", storageDir);
+        File imageFile = File.createTempFile("pic_" + System.currentTimeMillis(), ".jpg", storageDir);
         imagePath = imageFile.getAbsolutePath();
         return imageFile;
     }
@@ -149,12 +148,11 @@ public class PictureCapture extends AppCompatActivity {
             if(requestCode == PICK_GALLERY_IMAGE_REQUEST_CODE){
                 Uri selectedImageUri = data.getData();
                 imagePath = HelpMe.getRealPathFromURI(selectedImageUri, this);
-                try {
-                    bitmap = BitmapFactory.decodeFile(imagePath);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                mImageView.setImageBitmap(bitmap);
+                Intent i = new Intent(getBaseContext(), PicturePreview.class);
+                i.putExtra("imagePath", imagePath);
+                startActivity(i);
+                Log.d(TAG, "ok pic");
+                finish();
             }
 
         }

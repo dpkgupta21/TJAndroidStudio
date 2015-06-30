@@ -23,18 +23,11 @@ public class AudioUtil {
 
     private static final String TAG = "AUDIO_UTIL";
 
-/*    public static void downloadAudio(Context context, Audio audio) {
-        DownloadTask task = (new AudioUtil()).new DownloadTask(context, audio);
-        task.execute(audio.getDataServerURL());
-    }*/
-
     public static void uploadAudio(final Context context, final Audio audio) {
 
         UploadAsyncTask task = (new AudioUtil()).new UploadAsyncTask(context, audio);
         task.execute();
-
     }
-
 
     private class UploadAsyncTask extends AsyncTask<String, Void, JSONObject> {
 

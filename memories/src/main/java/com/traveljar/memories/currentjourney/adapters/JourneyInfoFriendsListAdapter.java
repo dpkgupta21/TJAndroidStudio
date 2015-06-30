@@ -67,7 +67,7 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Contact contactItem = mDataset.get(position);
-        final String name = contactItem.getProfileName();
+        String name = contactItem.getPhoneBookName() == null ? contactItem.getProfileName() : contactItem.getPhoneBookName();
         final String profileLocalURL = contactItem.getPicLocalUrl();
 
         Log.d(TAG, "info are : " + name);

@@ -3,7 +3,6 @@ package com.traveljar.memories.newjourney;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -17,23 +16,28 @@ import android.widget.ListView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.customevents.ContactsFetchEvent;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.newjourney.adapters.AllFriendsListAdapter;
-import com.traveljar.memories.services.CustomResultReceiver;
 import com.traveljar.memories.services.PullContactsService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AllFriendsList extends AppCompatActivity implements CustomResultReceiver.Receiver {
+import de.greenrobot.event.EventBus;
+
+public class AllFriendsList extends AppCompatActivity {
     private static final String TAG = "AllFriendsList";
-    CustomResultReceiver mReceiver;
+    //CustomResultReceiver mReceiver;
     private AllFriendsListAdapter mAdapter;
     private List<Contact> list;
     private List<Contact> selectedList;
     private ListView listView;
     private ProgressDialog mDialog;
+
+    // For the request bus receive event to discard the received event which is not meant for this activity
+    private static int ACTIVITY_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,8 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
         mDialog = new ProgressDialog(this);
         mDialog.setMessage("please wait while we fetch your contacts from server");
 
-        mReceiver = new CustomResultReceiver(new Handler());
-        mReceiver.setReceiver(this);
+/*        mReceiver = new CustomResultReceiver(new Handler());
+        mReceiver.setReceiver(this);*/
 
         Log.d(TAG, "1");
         // fetch all names from phone address book stored in local DB-- COntact
@@ -104,7 +108,8 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
             case R.id.action_refresh:
                 Intent intent = new Intent(getBaseContext(), PullContactsService.class);
                 Log.d(TAG, "starting intent for pull contacts service");
-                intent.putExtra("RECEIVER", mReceiver);
+                //intent.putExtra("RECEIVER", mReceiver);
+                intent.putExtra("ACTIVITY_CODE", ACTIVITY_CODE);
                 startService(intent);
                 mDialog.show();
                 return true;
@@ -136,6 +141,37 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    public void onEvent(ContactsFetchEvent event){
+        //Discard the event if the event's activity code is not similar to its own activity code
+        if(event.getActivityCode() == ACTIVITY_CODE) {
+            mDialog.dismiss();
+            list = ContactDataSource.getAllContacts(this);
+            Collections.sort(list);
+            if (mAdapter == null) {
+                Log.d(TAG, "on receive result called with null");
+                mAdapter = new AllFriendsListAdapter(this, list);
+                listView.setAdapter(mAdapter);
+            } else {
+                Log.d(TAG, "on receive result called with not null");
+                mAdapter.updateList(list);
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+
+/*    @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         mDialog.dismiss();
         list = ContactDataSource.getAllContacts(this);
@@ -149,5 +185,5 @@ public class AllFriendsList extends AppCompatActivity implements CustomResultRec
             mAdapter.updateList(list);
             mAdapter.notifyDataSetChanged();
         }
-    }
+    }*/
 }

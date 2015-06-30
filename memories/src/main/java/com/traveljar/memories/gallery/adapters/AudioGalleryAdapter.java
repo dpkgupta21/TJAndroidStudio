@@ -8,16 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.audio.DownloadAudioAsyncTask;
+import com.traveljar.memories.customevents.AudioDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.utility.AudioPlayer;
 
 import java.util.List;
 
-public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsyncTask.OnAudioDownloadListener {
+import de.greenrobot.event.EventBus;
+
+public class AudioGalleryAdapter extends BaseAdapter {
 
     private static final String TAG = "AUDIO_GALLERY_ADAPTER";
     private Context mContext;
@@ -30,6 +34,8 @@ public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsy
     private int lastPlayingAudioPosition = -1;
 
     private ProgressDialog mProgressDialog;
+
+    private static final int DOWNLOAD_EVENT_CODE = 0;
 
     public AudioGalleryAdapter(Context context, List<Audio> audioList) {
         mContext = context;
@@ -80,7 +86,9 @@ public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsy
                     Log.d(TAG, "No audio is being played so play the current audio");
                     if (audio.getDataLocalURL() == null) {
                         mProgressDialog.show();
-                        DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(AudioGalleryAdapter.this, audio);
+                        // register download  audio event to the request bus
+                        registerEvent();
+                        DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(DOWNLOAD_EVENT_CODE, audio);
                         asyncTask.execute();
                     } else {
                         mPlayer = new AudioPlayer(audio.getDataLocalURL());
@@ -118,12 +126,27 @@ public class AudioGalleryAdapter extends BaseAdapter implements DownloadAudioAsy
         return convertView;
     }
 
-    @Override
-    public void onAudioDownload(String audioLocalUrl, Audio audio) {
-        currentPlayingAudioId = audio.getId();
-        mProgressDialog.dismiss();
-        mPlayer = new AudioPlayer(audioLocalUrl);
-        mPlayer.startPlaying();
-        AudioDataSource.updateDataLocalUrl(mContext, audio.getId(), audioLocalUrl);
+    private void registerEvent(){
+        EventBus.getDefault().register(this);
     }
+
+    private void unRegisterEvent(){
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(AudioDownloadEvent event){
+        if(event.getCallerCode() == DOWNLOAD_EVENT_CODE) {
+            unRegisterEvent();
+            mProgressDialog.dismiss();
+            if (event.isSuccess()) {
+                currentPlayingAudioId = event.getAudio().getId();
+                mPlayer = new AudioPlayer(event.getAudio().getDataLocalURL());
+                mPlayer.startPlaying();
+                AudioDataSource.updateDataLocalUrl(mContext, event.getAudio().getId(), event.getAudio().getDataLocalURL());
+            } else {
+                Toast.makeText(mContext, "Sorry, unable to download your audio, please try again later", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }

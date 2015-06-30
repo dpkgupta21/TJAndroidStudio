@@ -38,8 +38,6 @@ public class PictureDataSource {
         values.put(MySQLiteHelper.PICTURE_COLUMN_CREATEDBY, newPic.getCreatedBy());
         values.put(MySQLiteHelper.PICTURE_COLUMN_CREATEDAT, newPic.getCreatedAt());
         values.put(MySQLiteHelper.PICTURE_COLUMN_UPDATEDAT, newPic.getCreatedAt());
-/*        String likedBy = (newPic.getLikedBy() == null) ? null : Joiner.on(",").join(newPic.getLikedBy());
-        values.put(MySQLiteHelper.PICTURE_COLUMN_LIKEDBY, likedBy);*/
         values.put(MySQLiteHelper.PICTURE_COLUMN_LOCALTHUMBNAILPATH, newPic.getPicThumbnailPath());
         values.put(MySQLiteHelper.PICTURE_COLUMN_LATITUDE, newPic.getLatitude());
         values.put(MySQLiteHelper.PICTURE_COLUMN_LONGITUDE, newPic.getLongitude());
@@ -169,7 +167,7 @@ public class PictureDataSource {
 
     // This method returns list of picture objects from the cursor
     private static List<Picture> getPictures(Cursor cursor, Context context) {
-        List<Picture> picturesList = new ArrayList<Picture>();
+        List<Picture> picturesList = new ArrayList<>();
         cursor.moveToFirst();
         Picture picture;
         while (!cursor.isAfterLast()) {
@@ -198,7 +196,7 @@ public class PictureDataSource {
 
     // This method creates a list of picture memories objects from the cursor
     private static List<Memories> getPictureMemories(Cursor cursor, Context context) {
-        List<Memories> picturesList = new ArrayList<Memories>();
+        List<Memories> picturesList = new ArrayList<>();
         cursor.moveToFirst();
         Picture picture;
         while (!cursor.isAfterLast()) {
@@ -240,7 +238,7 @@ public class PictureDataSource {
 
         if (count > 0) {
             Random r = new Random();
-            randomNum = r.nextInt((int) count);
+            randomNum = r.nextInt(count);
         }
 
         if (c.moveToFirst() && c.moveToPosition(randomNum)) {
