@@ -6,6 +6,8 @@
     android:orientation="vertical"
     >
 
+    <include layout="@layout/toolbar"/>
+
     <GridView
         android:id="@+id/videos_grid_view"
         android:layout_width="match_parent"
@@ -15,6 +17,6 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
-        android:verticalSpacing="5dp"></GridView>
+        android:verticalSpacing="5dp"/>
 
 </LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/gallery_videos.xml -->

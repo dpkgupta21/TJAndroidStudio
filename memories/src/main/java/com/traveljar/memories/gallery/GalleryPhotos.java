@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
@@ -41,6 +42,8 @@ public class GalleryPhotos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.gallery_photos);
+
+        setUpToolBar();
 
         final String journeyId = getIntent().getStringExtra("JOURNEY_ID");
 
@@ -140,4 +143,12 @@ public class GalleryPhotos extends AppCompatActivity {
             mLayout.setBackgroundResource(R.drawable.img_no_pic);
         }
     }
+
+    private void setUpToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Pictures Detail");
+    }
+
 }

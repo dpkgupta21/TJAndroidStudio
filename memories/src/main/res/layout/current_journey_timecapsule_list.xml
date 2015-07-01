@@ -12,6 +12,16 @@
         android:gravity="center"
         android:text="We will update a timecapsule video everyday for you." />
 
+    <Button
+        android:id="@+id/generate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="test me"
+        android:textSize="22dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/current_journey_timecapsule_swipe_refresh_layout"
         android:layout_width="match_parent"
@@ -23,5 +33,6 @@
             android:layout_height="wrap_content"
             android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

@@ -13,6 +13,7 @@ import com.traveljar.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class NoteDataSource {
 
@@ -132,6 +133,31 @@ public class NoteDataSource {
         db.delete(MySQLiteHelper.TABLE_NOTES, MySQLiteHelper.NOTES_COLUMN_JID + "=? AND " + MySQLiteHelper.NOTES_COLUMN_CREATED_BY
                 + "=?", new String[]{journeyId, userId});
         db.close();
+    }
+
+    public static Note getRandomNoteFromJourney(String jId, Context context) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_NOTES + " WHERE " + MySQLiteHelper.NOTES_COLUMN_JID +
+                " = '" + jId + "' AND " + MySQLiteHelper.NOTES_COLUMN_IS_DELETED + " ='0'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Log.e(TAG, selectQuery);
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        int randomNum = 0;
+        Note randomNote = null;
+        int count = c.getCount();
+
+        if (count > 0) {
+            Random r = new Random();
+            randomNum = r.nextInt(count);
+        }
+
+        if (c.moveToFirst() && c.moveToPosition(randomNum)) {
+            randomNote = (Note)parseNotesFromCursor(context, c).get(0);
+        }
+        c.close();
+        db.close();
+
+        return randomNote;
     }
 
     public static List<Memories> parseNotesFromCursor(Context context, Cursor cursor){

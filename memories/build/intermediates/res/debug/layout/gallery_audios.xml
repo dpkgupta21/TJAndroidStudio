@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <include layout="@layout/toolbar"/>
+
     <ListView
         android:id="@+id/gallery_audio_listview"
         android:layout_width="match_parent"

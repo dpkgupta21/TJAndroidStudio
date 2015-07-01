@@ -15,6 +15,7 @@ import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.audio.DownloadAudioAsyncTask;
 import com.traveljar.memories.customevents.AudioDownloadEvent;
 import com.traveljar.memories.models.Audio;
+import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.utility.AudioPlayer;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class AudioGalleryAdapter extends BaseAdapter {
 
     private static final String TAG = "AUDIO_GALLERY_ADAPTER";
     private Context mContext;
-    private List<Audio> mAudioList;
+    private List<Memories> mAudioList;
 
     //fields required to play audio
     private AudioPlayer mPlayer = null;
@@ -37,7 +38,7 @@ public class AudioGalleryAdapter extends BaseAdapter {
 
     private static final int DOWNLOAD_EVENT_CODE = 0;
 
-    public AudioGalleryAdapter(Context context, List<Audio> audioList) {
+    public AudioGalleryAdapter(Context context, List<Memories> audioList) {
         mContext = context;
         mAudioList = audioList;
         mProgressDialog = new ProgressDialog(mContext);
@@ -63,7 +64,7 @@ public class AudioGalleryAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final Audio audio = mAudioList.get(position);
+        final Audio audio = (Audio)mAudioList.get(position);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.gallery_audio_list_item, null);

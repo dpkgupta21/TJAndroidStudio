@@ -12,6 +12,7 @@ import com.traveljar.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class VideoDataSource {
@@ -159,6 +160,32 @@ public class VideoDataSource {
                 + "=?", new String[]{journeyId, userId});
         db.close();
     }
+
+    public static Video getRandomVideoOfJourney(String jId, Context context) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE " + MySQLiteHelper.VIDEO_COLUMN_JID +
+                " = '" + jId + "' AND " + MySQLiteHelper.VIDEO_COLUMN_IS_DELETED + " ='0'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Log.e(TAG, selectQuery);
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        int randomNum = 0;
+        Video randomVideo = null;
+        int count = c.getCount();
+
+        if (count > 0) {
+            Random r = new Random();
+            randomNum = r.nextInt(count);
+        }
+
+        if (c.moveToFirst() && c.moveToPosition(randomNum)) {
+            randomVideo = getVideosList(c, context).get(0);
+        }
+        c.close();
+        db.close();
+
+        return randomVideo;
+    }
+
 
     private static List<Memories> getVideosMemoryList(Cursor cursor, Context context) {
         List<Memories> videosList = new ArrayList<Memories>();

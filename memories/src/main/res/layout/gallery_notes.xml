@@ -8,6 +8,8 @@
 
     <!-- A RecyclerView with some commonly used attributes -->
 
+    <include layout="@layout/toolbar"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/galleryNoteRecyclerView"
         android:layout_width="match_parent"

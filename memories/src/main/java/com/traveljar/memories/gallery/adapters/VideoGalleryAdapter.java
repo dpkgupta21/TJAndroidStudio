@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.utility.LoadScaledBitmapFromPath;
 
@@ -19,9 +20,9 @@ public class VideoGalleryAdapter extends BaseAdapter {
     private static final String TAG = "GalleryImageAdapter";
 
     static Context mContext;
-    private List<Video> mVideoList;
+    private List<Memories> mVideoList;
 
-    public VideoGalleryAdapter(Context context, List<Video> videoList) {
+    public VideoGalleryAdapter(Context context, List<Memories> videoList) {
         mContext = context;
         mVideoList = videoList;
     }
@@ -57,14 +58,15 @@ public class VideoGalleryAdapter extends BaseAdapter {
             ViewHolder holder = new ViewHolder(rowView, mContext);
             rowView.setTag(holder);
         }
+        Video video = (Video) mVideoList.get(position);
         ViewHolder holder = (ViewHolder) rowView.getTag();
-        if (!mVideoList.get(position).isChecked()) {
+        if (!video.isChecked()) {
             holder.overlayImgView.setVisibility(View.GONE);
         } else {
             holder.overlayImgView.setVisibility(View.VISIBLE);
         }
 
-        LoadScaledBitmapFromPath.loadBitmap(mVideoList.get(position).getLocalThumbPath(), holder.imgView, 150, 150, mContext);
+        LoadScaledBitmapFromPath.loadBitmap(video.getLocalThumbPath(), holder.imgView, 150, 150, mContext);
         holder.overlayImgView.setImageResource(R.drawable.img_selected);
         return rowView;
     }

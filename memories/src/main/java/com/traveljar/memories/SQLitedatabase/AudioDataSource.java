@@ -12,7 +12,7 @@ import com.traveljar.memories.utility.HelpMe;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Random;
 
 
 public class AudioDataSource {
@@ -148,6 +148,31 @@ public class AudioDataSource {
         values.put(MySQLiteHelper.VOICE_COLUMN_IS_DELETED, isDeleted ? 1 : 0);
         db.update(MySQLiteHelper.TABLE_AUDIO, values, MySQLiteHelper.VOICE_COLUMN_ID + " = " + memLocalId, null);
         db.close();
+    }
+
+    public static Audio getRandomAudioFromJourney(String jId, Context context) {
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_AUDIO + " WHERE " + MySQLiteHelper.VOICE_COLUMN_JID +
+                " = '" + jId + "' AND " + MySQLiteHelper.VOICE_COLUMN_IS_DELETED + " ='0'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Log.e(TAG, selectQuery);
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        int randomNum = 0;
+        Audio randomAudio = null;
+        int count = c.getCount();
+
+        if (count > 0) {
+            Random r = new Random();
+            randomNum = r.nextInt(count);
+        }
+
+        if (c.moveToFirst() && c.moveToPosition(randomNum)) {
+            randomAudio = getAudiosList(context, c).get(0);
+        }
+        c.close();
+        db.close();
+
+        return randomAudio;
     }
 
     private static List<Memories> getAudioMemoriesList(Context context, Cursor cursor) {
