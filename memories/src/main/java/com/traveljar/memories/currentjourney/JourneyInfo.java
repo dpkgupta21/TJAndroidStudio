@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -65,11 +64,7 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_journey_info);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Journey Info");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        setSupportActionBar(toolbar);
-
+        setUpToolBar();
         journeyName = (TextView) findViewById(R.id.journey_info_journey_name);
         journeyCreatedBy = (TextView) findViewById(R.id.journey_info_created_by);
         journeyBuddyCount = (TextView) findViewById(R.id.journey_info_buddies_count);
@@ -164,7 +159,32 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
 
     }
 
-    @Override
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Journey Info");
+
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+
+        if(HelpMe.isAdmin(this)){
+            toolbar.inflateMenu(R.menu.journey_info_with_add_buddy);
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_add_buddy:
+                        Log.d(TAG, "action_add_buddy clicked!");
+                        Intent i = new Intent(JourneyInfo.this, JourneyInfoFriendsList.class);
+                        startActivity(i);
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(HelpMe.isAdmin(this)){
             menu.add(0, MENU_ADD_BUDDY_ID, 0, "Add Friend").setIcon(R.drawable.add70).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -184,7 +204,7 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     private int convertDpToPixels(int dp){
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());

@@ -58,11 +58,11 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         setContentView(R.layout.video_detail);
         Log.d(TAG, "entrerd video details");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Video Detail");
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
@@ -79,6 +79,8 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
 
         Bundle extras = getIntent().getExtras();
         mVideo = VideoDataSource.getVideoById(extras.getString("VIDEO_ID"), this);
+
+        setUpToolBar();
 
         //setup the state of favourite button
         noLikesTxt.setText(String.valueOf(mVideo.getLikes().size()));
@@ -162,6 +164,58 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
                     MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_VIDEO, VideoDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mVideo.getLikes().size()));
+            }
+        });
+    }
+
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Memories");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VideoDetail.this.finish();
+            }
+        });
+        if(mVideo.getCreatedBy().equals(TJPreferences.getUserId(this))) {
+            toolbar.inflateMenu(R.menu.action_bar_with_delete);
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case ACTION_ITEM_DELETE:
+                        new AlertDialog.Builder(VideoDetail.this)
+                                .setTitle("Delete")
+                                .setMessage("Are you sure you want to remove this item from your memories")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Request request = new Request(null, mVideo.getId(), mVideo.getjId(), Request.OPERATION_TYPE_DELETE,
+                                                Request.CATEGORY_TYPE_VIDEO, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                        RequestQueueDataSource.createRequest(request, VideoDetail.this);
+                                        VideoDataSource.updateDeleteStatus(VideoDetail.this, mVideo.getId(), true);
+                                        if (HelpMe.isNetworkAvailable(VideoDetail.this)) {
+                                            Intent intent = new Intent(VideoDetail.this, MakeServerRequestsService.class);
+                                            startService(intent);
+                                        }
+                                        finish();
+//                                MemoriesUtil.getInstance().deleteMemory(VideoDetail.this, mVideo.getIdOnServer());
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                        return true;
+                }
+                return false;
             }
         });
     }

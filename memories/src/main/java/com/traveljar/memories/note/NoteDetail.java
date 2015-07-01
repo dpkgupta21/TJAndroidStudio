@@ -49,11 +49,11 @@ public class NoteDetail extends AppCompatActivity {
         setContentView(R.layout.notes_detail);
         Log.d(TAG, "entrerd notes details");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
         toolbar.setTitle("Note Detail");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         noteContent = (TextView) findViewById(R.id.note_detail_note);
         dateBig = (TextView) findViewById(R.id.note_detail_date_big);
@@ -67,6 +67,7 @@ public class NoteDetail extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         mNote = NoteDataSource.getNoteById(extras.getString("NOTE_ID"), this);
+        setUpToolBar();
         Log.d(TAG, "note fetched is" + mNote);
 
         //setup the state of favourite button
@@ -127,6 +128,57 @@ public class NoteDetail extends AppCompatActivity {
                     MemoriesUtil.createUnlikeRequest(like, Request.CATEGORY_TYPE_NOTE, NoteDetail.this);
                 }
                 noLikesTxt.setText(String.valueOf(mNote.getLikes().size()));
+            }
+        });
+    }
+
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Note");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NoteDetail.this.finish();
+            }
+        });
+        if(mNote.getCreatedBy().equals(TJPreferences.getUserId(this))) {
+            toolbar.inflateMenu(R.menu.action_bar_with_delete);
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_delete:
+                        new AlertDialog.Builder(NoteDetail.this)
+                                .setTitle("Delete")
+                                .setMessage("Are you sure you want to remove this item from your memories")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Request request = new Request(null, mNote.getId(), mNote.getjId(), Request.OPERATION_TYPE_DELETE,
+                                                Request.CATEGORY_TYPE_NOTE, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                        NoteDataSource.updateDeleteStatus(NoteDetail.this, mNote.getId(), true);
+                                        RequestQueueDataSource.createRequest(request, NoteDetail.this);
+                                        if (HelpMe.isNetworkAvailable(NoteDetail.this)) {
+                                            Intent intent = new Intent(NoteDetail.this, MakeServerRequestsService.class);
+                                            startService(intent);
+                                        }
+                                        finish();
+                                        //MemoriesUtil.getInstance().deleteMemory(NoteDetail.this, mNote.getIdOnServer());
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                        return true;
+                }
+                return false;
             }
         });
     }

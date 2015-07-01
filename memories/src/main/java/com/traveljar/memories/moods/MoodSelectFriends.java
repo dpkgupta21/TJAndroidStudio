@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.audio.AudioCapture;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.moods.adapters.FriendsGridAdapter;
 
@@ -33,10 +32,12 @@ public class MoodSelectFriends extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mood_select_friends_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setUpToolBar();
+
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Select Mood");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         mContactsList = getIntent().getExtras().getParcelableArrayList("FRIENDS");
         // To avoid Nullpoiner exception in adapter
@@ -72,10 +73,41 @@ public class MoodSelectFriends extends AppCompatActivity {
         }
     }
 
-    @Override
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Select Friends");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MoodSelectFriends.this.finish();
+            }
+        });
+
+        toolbar.inflateMenu(R.menu.action_bar_with_done_icon);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_done:
+                        Log.d(TAG, "done clicked!");
+                        Intent returnIntent = new Intent();
+                        returnIntent.putParcelableArrayListExtra("FRIENDS", (ArrayList) mContactsList);
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_with_done_only, menu);
+        inflater.inflate(R.menu.toolbar_with_done_text, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -96,7 +128,7 @@ public class MoodSelectFriends extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     /*@Override
     public void onBackPressed() {

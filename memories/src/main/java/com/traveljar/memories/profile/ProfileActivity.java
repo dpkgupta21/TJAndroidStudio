@@ -67,12 +67,13 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_new);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Profile");
         toolbar.setVisibility(View.GONE);
 
         Toolbar toolbarProfile = (Toolbar) findViewById(R.id.toolbar_profile);
-        setSupportActionBar(toolbarProfile);
+        setSupportActionBar(toolbarProfile);*/
+        setUpToolbar();
 
         mProfileImg = (MyCircularImageView) findViewById(R.id.profile_img);
         mCoverImg = (ImageView) findViewById(R.id.cover_image);
@@ -106,6 +107,79 @@ public class ProfileActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void setUpToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Profile");
+
+        toolbar.setNavigationIcon(R.drawable.ic_delete);
+
+        toolbar.inflateMenu(R.menu.toolbar_profile);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_done:
+                        if (HelpMe.isNetworkAvailable(ProfileActivity.this)) {
+                            List<String> columns = new ArrayList<>();
+                            List<String> columnNames = new ArrayList<>();
+                            if (!mEditName.getText().toString().equals(TJPreferences.getUserName(ProfileActivity.this))) {
+                                TJPreferences.setUserName(ProfileActivity.this, mEditName.getText().toString());
+                                isNameUpdated = true;
+                                columns.add(mEditName.getText().toString());
+                                columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME);
+                            }
+                            if (!mEditStatus.getText().toString().equals(TJPreferences.getUserStatus(ProfileActivity.this))) {
+                                TJPreferences.setUserStatus(ProfileActivity.this, mEditStatus.getText().toString());
+                                isStatusUpdated = true;
+                                columns.add(mEditStatus.getText().toString());
+                                columnNames.add(MySQLiteHelper.CONTACT_COLUMN_STATUS);
+                            }
+                            if (isProfilePicUpdated) {
+                                Log.d(TAG, "profile image path " + mProfileImgPath);
+                                TJPreferences.setProfileImgPath(ProfileActivity.this, mProfileImgPath);
+                                columns.add(mProfileImgPath);
+                                columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL);
+                            }
+                            if (isNameUpdated || isStatusUpdated || isProfilePicUpdated) {
+                                mDialog.setMessage("Updating your profile");
+                                mDialog.show();
+                                new UpdateProfileAsyncTask().execute();
+                                String columnNamesArray[] = new String[columnNames.size()];
+                                String columnValuesArray[] = new String[columnNames.size()];
+                                ContactDataSource.updateContact(ProfileActivity.this, TJPreferences.getUserId(ProfileActivity.this), columns.toArray(columnValuesArray), columnNames.toArray(columnNamesArray));
+                            }else {
+                                finish();
+                            }
+                        }else{
+                            Toast.makeText(ProfileActivity.this, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
+                        }
+
+                        return true;
+                    case R.id.action_edit:
+                        LinearLayout layout = (LinearLayout) findViewById(R.id.edit_layout);
+                        layout.setVisibility(View.VISIBLE);
+                        mEditName.setText(TJPreferences.getUserName(ProfileActivity.this));
+                        mEditStatus.setText(TJPreferences.getUserStatus(ProfileActivity.this));
+                        mProfileImg.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent intent = new Intent(Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                                startActivityForResult(intent, PICK_IMAGE);
+                            }
+                        });
+                        item.setVisible(false);
+                        mMenu.findItem(R.id.action_done).setVisible(true);
+                        return true;
+                }
+                return false;
+            }
+        });
+
     }
 
 /*    @Override
@@ -144,7 +218,7 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //int groupId, int itemId, int order, int titleRes
         menu.add(0, 0, 0, "Done").setIcon(R.drawable.ic_done).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -215,7 +289,7 @@ public class ProfileActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     private class UpdateProfileAsyncTask extends AsyncTask<Map<String, String>, Void, HttpResponse> {
 

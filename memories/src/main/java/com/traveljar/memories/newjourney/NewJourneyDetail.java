@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -51,11 +52,12 @@ public class NewJourneyDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_detail);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Journey Details");
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        setUpToolBar();
 
         mJourneyName = (EditText) findViewById(R.id.new_journey_detail_name);
         mJourneyTagLine = (EditText) findViewById(R.id.new_journey_detail_tagline);
@@ -211,6 +213,28 @@ public class NewJourneyDetail extends AppCompatActivity {
         TJPreferences.setActiveJourneyId(this, idOnServer);
     }
 
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Journey Detail");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewJourneyDetail.this.finish();
+            }
+        });
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewJourneyDetail.this.finish();
+            }
+        });
+    }
     /*private void createNewJourneyInDBBypass() throws JSONException {
 
         Log.d(TAG, "createNewJourneyInDB");

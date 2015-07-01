@@ -19,7 +19,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/eiffel_tower" />
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar_with_text_action_item" />
 
     </RelativeLayout>
 

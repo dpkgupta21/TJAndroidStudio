@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
@@ -23,8 +24,7 @@ public class PastJourneyList extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.past_journey_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Past Journeys");
+        setUpToolBar();
 
         Cursor c = JourneyDataSource.getAllPastJourneys(this);
 
@@ -33,6 +33,12 @@ public class PastJourneyList extends BaseActivity {
         ListView pastJourneyListView = (ListView) findViewById(R.id.pastJourneyList);
         pastJourneyListViewAdapter = new PastJourneyListAdapter(getBaseContext(), c);
         pastJourneyListView.setAdapter(pastJourneyListViewAdapter);
+    }
+
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Past Journeys");
     }
 
     @Override

@@ -28,11 +28,12 @@ public class AccountSettings extends AppCompatActivity implements UpdatePhoneDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_settings);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Account Settings");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        setUpToolbar();
 
         phoneTxt = (TextView)findViewById(R.id.user_phone);
         emailTxt = (TextView)findViewById(R.id.user_email);
@@ -63,6 +64,22 @@ public class AccountSettings extends AppCompatActivity implements UpdatePhoneDia
                 }
             }
         });
+    }
+
+    private void setUpToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Account Settings");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AccountSettings.this.finish();
+            }
+        });
+
     }
 
     @Override

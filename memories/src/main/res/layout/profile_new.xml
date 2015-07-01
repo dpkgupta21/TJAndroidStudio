@@ -53,7 +53,7 @@
             android:layout_centerHorizontal="true"
             android:textColor="@color/white" />
 
-        <android.support.v7.widget.Toolbar
+<!--        <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +61,15 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        </android.support.v7.widget.Toolbar>
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="Title"/>
+
+        </android.support.v7.widget.Toolbar>-->
 
     </RelativeLayout>
 

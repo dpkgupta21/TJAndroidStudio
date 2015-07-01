@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.utility.SessionManager;
@@ -33,11 +34,12 @@ public class Settings extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Settings");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        setUpToolbar();
 
         createSettings();
     }
@@ -63,6 +65,22 @@ public class Settings extends AppCompatActivity{
         ListView settingsList = (ListView) findViewById(R.id.landingSettingsListView);
         settingsList.setAdapter(adapter);
         setClickListenerOnSettingsList(settingsList);
+    }
+
+    private void setUpToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Account Settings");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.this.finish();
+            }
+        });
+
     }
 
     private void setClickListenerOnSettingsList(ListView settingsList) {

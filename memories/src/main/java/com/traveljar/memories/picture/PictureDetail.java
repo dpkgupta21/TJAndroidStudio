@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -56,11 +55,11 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         setContentView(R.layout.photo_detail);
         Log.d(TAG, "entrerd photo details");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         toolbar.setTitle("Picture Detail");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         photo = (ImageView) findViewById(R.id.photo_detail_photo);
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
@@ -78,9 +77,8 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         Bundle extras = getIntent().getExtras();
 
         //If the activity is started for an already clicked picture
-        Log.d(TAG, "running for an already created picture");
         mPicture = PictureDataSource.getPictureById(this, extras.getString("PICTURE_ID"));
-        Log.d(TAG, "picture fetched is" + mPicture);
+        setUpToolBar();
 
         //setup the state of favourite button
         noLikesTxt.setText(String.valueOf(mPicture.getLikes().size()));
@@ -163,6 +161,58 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         });
     }
 
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Picture");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PictureDetail.this.finish();
+            }
+        });
+        if(mPicture.getCreatedBy().equals(TJPreferences.getUserId(this))) {
+            toolbar.inflateMenu(R.menu.action_bar_with_delete);
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case ACTION_ITEM_DELETE:
+                        new AlertDialog.Builder(PictureDetail.this)
+                                .setTitle("Delete")
+                                .setMessage("Are you sure you want to remove this item from your memories")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Request request = new Request(null, mPicture.getId(), mPicture.getjId(), Request.OPERATION_TYPE_DELETE,
+                                                Request.CATEGORY_TYPE_PICTURE, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                        PictureDataSource.updateDeleteStatus(PictureDetail.this, mPicture.getId(), true);
+                                        RequestQueueDataSource.createRequest(request, PictureDetail.this);
+                                        if (HelpMe.isNetworkAvailable(PictureDetail.this)) {
+                                            Intent intent = new Intent(PictureDetail.this, MakeServerRequestsService.class);
+                                            startService(intent);
+                                        }
+                                        finish();
+                                        //MemoriesUtil.getInstance().deleteMemory(PictureDetail.this, mPicture.getIdOnServer());
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (mPicture.getCreatedBy().equals(TJPreferences.getUserId(this))) {
@@ -207,6 +257,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 return super.onOptionsItemSelected(item);
         }
     }
+*/
 
     @Override
     public void onDownloadPicture(Picture picture, ImageView imgView) {

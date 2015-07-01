@@ -50,10 +50,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mood_capture);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Mood");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setUpToolBar();
 
         noFriendsSelectedTxt = (TextView) findViewById(R.id.noFriendsSelected);
         selectMoodImgBtn = (ImageButton) findViewById(R.id.mood_select_mood_imgbtn);
@@ -148,10 +145,44 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
 
     }
 
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MoodCapture.this.finish();
+            }
+        });
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Mood");
+
+        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.action_done:
+                        if (selectedFriends.size() == 0) {
+                            Toast.makeText(MoodCapture.this, "please select at least one friend", Toast.LENGTH_SHORT)
+                                    .show();
+                        } else if (moodReasonEditTxt.getText().toString() == null) {
+                            Toast.makeText(MoodCapture.this, "please write the reason for the mood", Toast.LENGTH_SHORT)
+                                    .show();
+                        } else {
+                            createNewMoodIntoDB();
+                            finish();
+                        }
+                }
+            }
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_with_done_only, menu);
+        inflater.inflate(R.menu.toolbar_with_done_text, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

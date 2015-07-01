@@ -9,9 +9,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -54,11 +51,12 @@ public class CheckInPreview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkin_preview);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Checkin");
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        setUpToolBar();
 
         // get the name of the place
         Bundle extras = getIntent().getExtras();
@@ -83,6 +81,36 @@ public class CheckInPreview extends AppCompatActivity {
         }
         setSelectedFriends();
 
+    }
+
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Checkin");
+
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+
+        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.action_done:
+                        Log.d(TAG, "done clicked!");
+                        createNewCheckinIntoDB();
+                        finish();
+                }
+            }
+        });
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckInPreview.this.finish();
+            }
+        });
     }
 
     private void setSelectedFriends() {
@@ -188,10 +216,10 @@ public class CheckInPreview extends AppCompatActivity {
         startActivity(i);
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_with_done_only, menu);
+        inflater.inflate(R.menu.toolbar_with_done_text, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -202,9 +230,9 @@ public class CheckInPreview extends AppCompatActivity {
             case R.id.action_done:
                 Log.d(TAG, "done clicked!");
                 createNewCheckinIntoDB();
-                /*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
+                *//*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);*/
+                startActivity(i);*//*
                 finish();
                 return true;
             case android.R.id.home:
@@ -213,7 +241,7 @@ public class CheckInPreview extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     public void goToBuddyList(View v) {
         Intent intent = new Intent(getApplicationContext(), CheckInFriendsList.class);

@@ -9,11 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.traveljar.memories.BaseActivity;
@@ -68,8 +67,10 @@ public class ActivejourneyList extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.active_journey_list);
 
+        setUpToolbar();
 
         /*Just for testing purpose*/
         List<Lap> lapsList = LapDataSource.getAllLaps(this);
@@ -77,10 +78,6 @@ public class ActivejourneyList extends BaseActivity {
         for(Lap lap : lapsList){
             Log.d(TAG, "lap is " + lap);
         }
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Active Journeys");
 
         mLayout  = (LinearLayout)findViewById(R.id.active_journey_layout);
 
@@ -157,24 +154,28 @@ public class ActivejourneyList extends BaseActivity {
         super.onPause();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.active_journey_action_bar, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+    private void setUpToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_add_journey:
-                Log.d(TAG, "new journey clicked!");
-                Intent i = new Intent(getBaseContext(), LapsList.class);
-                startActivity(i);
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Active Journeys");
+
+        toolbar.setNavigationIcon(R.drawable.ic_delete);
+        toolbar.inflateMenu(R.menu.active_journey_action_bar);
+        //toolbar.setTitle("Active Journeys");
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_add_journey :
+                        Log.d(TAG, "new journey clicked!");
+                        Intent i = new Intent(getBaseContext(), LapsList.class);
+                        startActivity(i);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void refreshJourneys(){

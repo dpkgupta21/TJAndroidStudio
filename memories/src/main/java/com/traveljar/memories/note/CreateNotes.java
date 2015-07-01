@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.traveljar.memories.R;
@@ -31,10 +30,7 @@ public class CreateNotes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_capture);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("New Note");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setUpToolBar();
 
         mNoteContent = (EditText) findViewById(R.id.noteContent);
     }
@@ -76,10 +72,37 @@ public class CreateNotes extends AppCompatActivity {
 
     }
 
-    @Override
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("New Note");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateNotes.this.finish();
+            }
+        });
+        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!mNoteContent.getText().toString().equals("")){
+                    uploadAndSaveNote();
+                    finish();
+                }else {
+                    Toast.makeText(CreateNotes.this, "note cannot be empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_with_done_only, menu);
+        inflater.inflate(R.menu.toolbar_with_done_text, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -101,5 +124,5 @@ public class CreateNotes extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 }

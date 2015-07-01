@@ -9,9 +9,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -55,11 +52,12 @@ public class VideoPreview extends AppCompatActivity {
         setContentView(R.layout.video_preview);
         Log.d(TAG, "entrerd video details");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Video");
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        setUpToolBar();
 
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
@@ -144,9 +142,6 @@ public class VideoPreview extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        /*Intent intent = new Intent(this, CurrentJourneyBaseActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);*/
         finish();
     }
 
@@ -173,10 +168,34 @@ public class VideoPreview extends AppCompatActivity {
         }
     }
 
-    @Override
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Video Preview");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VideoPreview.this.finish();
+            }
+        });
+        TextView done = (TextView) toolbar.findViewById(R.id.action_done);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "done clicked!");
+                saveAndUploadVideo();
+                finish();
+            }
+        });
+    }
+
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_with_done_only, menu);
+        inflater.inflate(R.menu.toolbar_with_done_text, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -196,5 +215,5 @@ public class VideoPreview extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 }

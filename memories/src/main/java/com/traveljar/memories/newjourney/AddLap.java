@@ -58,11 +58,12 @@ public class AddLap extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_lap_new);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("New Lap");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setElevation(100);
+        getSupportActionBar().setElevation(100);*/
+        setUpToolBar();
 
         fromLocation = (TextView) findViewById(R.id.new_journey_location_new_from);
         toLocation = (TextView) findViewById(R.id.new_journey_location_new_to);
@@ -122,6 +123,12 @@ public class AddLap extends AppCompatActivity {
             lap.setConveyanceMode(HelpMe.CONVEYANCE_CARPET);
             toggleCarpet.setChecked(true);
         }
+    }
+
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("New Lap");
     }
 
     public void listFromPlaces(View v) {

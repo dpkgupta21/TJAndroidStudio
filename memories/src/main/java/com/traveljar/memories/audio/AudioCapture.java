@@ -8,9 +8,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -84,10 +81,7 @@ public class AudioCapture extends AppCompatActivity {
         super.onCreate(icicle);
         setContentView(R.layout.audio_capture);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Audio");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setUpToolBar();
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mRecordBtn = (ImageButton) findViewById(R.id.audio_capture_record_btn);
@@ -264,26 +258,26 @@ public class AudioCapture extends AppCompatActivity {
         mRetryBtn.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_done:
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Audio");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AudioCapture.this.finish();
+            }
+        });
+        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
+        done.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 saveAndUploadAudio();
                 finish();
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_with_done_only, menu);
-        return super.onCreateOptionsMenu(menu);
+            }
+        });
     }
 }

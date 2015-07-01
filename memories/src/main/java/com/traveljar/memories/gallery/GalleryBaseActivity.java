@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.widget.TextView;
 
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
@@ -22,8 +23,7 @@ public class GalleryBaseActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_base_activity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Gallery");
+        setUpToolBar();
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(new GalleryTabsPagerAdapter(getSupportFragmentManager()));
@@ -31,6 +31,12 @@ public class GalleryBaseActivity extends BaseActivity {
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
 
+    }
+
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Memories");
     }
 
     @Override

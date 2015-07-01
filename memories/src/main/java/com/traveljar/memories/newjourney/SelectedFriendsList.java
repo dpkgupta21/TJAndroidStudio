@@ -8,13 +8,11 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -46,6 +44,8 @@ public class SelectedFriendsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_selected_friends_list);
         Log.d(TAG, "entered Add friends");
+
+        setUpToolBar();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Select Friends");
@@ -97,7 +97,31 @@ public class SelectedFriendsList extends AppCompatActivity {
         startActivity(i);
     }
 
-    @Override
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Select Friends");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectedFriendsList.this.finish();
+            }
+        });
+        TextView next = (TextView)toolbar.findViewById(R.id.action_done);
+        next.setText("Next");
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToNext();
+                finish();
+            }
+        });
+
+    }
+
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_bar_items_laps, menu);
@@ -117,7 +141,7 @@ public class SelectedFriendsList extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     private void goToNext() {
         AppController.buddyList = new ArrayList<>();

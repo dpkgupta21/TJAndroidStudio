@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -56,9 +57,7 @@ public class CheckInPlacesList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkin_places_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Checkin Places");
-        setSupportActionBar(toolbar);
+        setUpToolBar();
 
         filterPlacesEditTxt = (EditText) findViewById(R.id.checkin_places_search);
 
@@ -84,6 +83,12 @@ public class CheckInPlacesList extends AppCompatActivity {
                     .show();
         }
 
+    }
+
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Checkin Places");
     }
 
     private void showProgressDialog() {

@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.checkin.adapter.CheckInFriendsListAdapter;
@@ -33,9 +33,7 @@ public class CheckInFriendsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkin_buddy_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Select Friends");
-        setSupportActionBar(toolbar);
+        setUpToolBar();
 
         mContactsList = getIntent().getExtras().getParcelableArrayList("FRIENDS");
         // To avoid Nullpoiner exception in adapter
@@ -65,12 +63,36 @@ public class CheckInFriendsList extends AppCompatActivity {
 
     }
 
-    @Override
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Select Friends");
+
+        toolbar.inflateMenu(R.menu.action_bar_with_done_icon);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_done:
+                        Intent returnIntent = new Intent();
+                        returnIntent.putParcelableArrayListExtra("FRIENDS", (ArrayList) mContactsList);
+                        Log.d(TAG, "from friends list" + mContactsList);
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 0, 0, "Done").setIcon(R.drawable.ic_done)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return true;
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -80,7 +102,7 @@ public class CheckInFriendsList extends AppCompatActivity {
         finish();
     }
 
-    @Override
+/*    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:
@@ -92,6 +114,6 @@ public class CheckInFriendsList extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 }

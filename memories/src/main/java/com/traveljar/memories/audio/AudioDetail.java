@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -53,13 +52,6 @@ public class AudioDetail extends AppCompatActivity {
         setContentView(R.layout.audio_detail);
         Log.d(TAG, "entrerd audio details");
 
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Log.d(TAG, "found toolbar" + toolbar);
-        toolbar.setTitle("Audio Detail");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         currenTime = HelpMe.getCurrentTime();
 
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
@@ -71,6 +63,8 @@ public class AudioDetail extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         mAudio = AudioDataSource.getAudioById(this, extras.getString("AUDIO_ID"));
+
+        setUpToolBar();
 
         //setup the state of favourite button
         noLikesTxt.setText(String.valueOf(mAudio.getLikes().size()));
@@ -105,6 +99,58 @@ public class AudioDetail extends AppCompatActivity {
         Log.d(TAG, "running for an already created audio 4");
     }
 
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Audio Detail");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AudioDetail.this.finish();
+            }
+        });
+
+        if(mAudio.getCreatedBy().equals(TJPreferences.getUserId(this))) {
+            toolbar.inflateMenu(R.menu.action_bar_with_delete);
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_delete:
+                        new AlertDialog.Builder(AudioDetail.this)
+                                .setTitle("Delete")
+                                .setMessage("Are you sure you want to remove this item from your memories")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Request request = new Request(null, mAudio.getId(), mAudio.getjId(), Request.OPERATION_TYPE_DELETE,
+                                                Request.CATEGORY_TYPE_AUDIO, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                        RequestQueueDataSource.createRequest(request, AudioDetail.this);
+                                        AudioDataSource.updateDeleteStatus(AudioDetail.this, mAudio.getId(), true);
+                                        if(HelpMe.isNetworkAvailable(AudioDetail.this)) {
+                                            Intent intent = new Intent(AudioDetail.this, MakeServerRequestsService.class);
+                                            startService(intent);
+                                        }
+                                        finish();
+//                                MemoriesUtil.getInstance().deleteMemory(AudioDetail.this, mAudio.getIdOnServer());
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
     private void setFavouriteBtnClickListener() {
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,50 +175,4 @@ public class AudioDetail extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        if(mAudio.getCreatedBy().equals(TJPreferences.getUserId(this))){
-            menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case ACTION_ITEM_DELETE:
-                new AlertDialog.Builder(this)
-                        .setTitle("Delete")
-                        .setMessage("Are you sure you want to remove this item from your memories")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Request request = new Request(null, mAudio.getId(), mAudio.getjId(), Request.OPERATION_TYPE_DELETE,
-                                        Request.CATEGORY_TYPE_AUDIO, Request.REQUEST_STATUS_NOT_STARTED, 0);
-                                RequestQueueDataSource.createRequest(request, AudioDetail.this);
-                                AudioDataSource.updateDeleteStatus(AudioDetail.this, mAudio.getId(), true);
-                                if(HelpMe.isNetworkAvailable(AudioDetail.this)) {
-                                    Intent intent = new Intent(AudioDetail.this, MakeServerRequestsService.class);
-                                    startService(intent);
-                                }
-                                finish();
-//                                MemoriesUtil.getInstance().deleteMemory(AudioDetail.this, mAudio.getIdOnServer());
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 }

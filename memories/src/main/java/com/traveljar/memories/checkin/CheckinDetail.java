@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -53,11 +52,11 @@ public class CheckinDetail extends AppCompatActivity {
         setContentView(R.layout.checkin_detail);
         Log.d(TAG, "entrerd checkin details");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         setSupportActionBar(toolbar);
         toolbar.setTitle("Checkin Detail");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         dateBig = (TextView) findViewById(R.id.checkin_detail_date_big);
         date = (TextView) findViewById(R.id.checkin_detail_date);
@@ -75,6 +74,7 @@ public class CheckinDetail extends AppCompatActivity {
 
         mCheckIn = CheckinDataSource.getCheckInById(extras.getString("CHECKIN_ID"), this);
         Log.d(TAG, "checkin fetched is" + mCheckIn);
+        setUpToolBar();
 
         mCheckInCaptionTxt.setText(mCheckIn.getCaption());
         mCheckInInPlaceTxt.setText("@ " + mCheckIn.getCheckInPlaceName());
@@ -124,6 +124,61 @@ public class CheckinDetail extends AppCompatActivity {
 
     }
 
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("TravelJar");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckinDetail.this.finish();
+            }
+        });
+        if(mCheckIn.getCreatedBy().equals(TJPreferences.getUserId(this))){
+            toolbar.inflateMenu(R.menu.action_bar_with_delete);
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Log.d(TAG, "toolbar item clicked");
+                switch (item.getItemId()) {
+                    case R.id.action_delete:
+                        Log.d(TAG, "delete checkin");
+                        new AlertDialog.Builder(CheckinDetail.this)
+                                .setTitle("Delete")
+                                .setMessage("Are you sure you want to remove this item from your memories")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Request request = new Request(null, mCheckIn.getId(), mCheckIn.getjId(), Request.OPERATION_TYPE_DELETE,
+                                                Request.CATEGORY_TYPE_CHECKIN, Request.REQUEST_STATUS_NOT_STARTED, 0);
+                                        CheckinDataSource.updateDeleteStatus(CheckinDetail.this, mCheckIn.getId(), true);
+                                        RequestQueueDataSource.createRequest(request, CheckinDetail.this);
+                                        if(HelpMe.isNetworkAvailable(CheckinDetail.this)) {
+                                            Intent intent = new Intent(CheckinDetail.this, MakeServerRequestsService.class);
+                                            startService(intent);
+                                        }
+                                        //MemoriesUtil.getInstance().deleteMemory(CheckinDetail.this, mCheckIn.getIdOnServer());
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                        return true;
+                }
+                return false;
+            }
+        });
+
+
+
+    }
+
     private void setFavouriteBtnClickListener() {
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +204,7 @@ public class CheckinDetail extends AppCompatActivity {
         });
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         if(mCheckIn.getCreatedBy().equals(TJPreferences.getUserId(this))){
             menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -190,6 +245,6 @@ public class CheckinDetail extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
 }

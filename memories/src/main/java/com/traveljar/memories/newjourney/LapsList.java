@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.customevents.ContactsFetchEvent;
@@ -44,11 +45,12 @@ public class LapsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_laps_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Travel Itinerary");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(100);
+        getSupportActionBar().setElevation(100);*/
+        setUpToolBar();
 
         // Add lap FAB Button
         final MyFABView fabButton = new MyFABView.Builder(this)
@@ -79,6 +81,34 @@ public class LapsList extends AppCompatActivity {
             lapsListViewAdapter = new LapsListAdapter(this, AppController.lapList);
             lapsListView.setAdapter(lapsListViewAdapter);
         }
+    }
+
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Travel Itinerary");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LapsList.this.finish();
+            }
+        });
+
+        TextView next = (TextView)toolbar.findViewById(R.id.action_done);
+        next.setText("NEXT");
+        if(AppController.lapList.size() == 0){
+            next.setVisibility(View.GONE);
+        } else {
+            next.setVisibility(View.VISIBLE);
+        }
+        next.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToNext();
+            }
+        });
     }
 
     @Override

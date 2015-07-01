@@ -47,9 +47,7 @@ public class JourneyInfoFriendsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.journey_info_friends_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Add Friend");
-        setSupportActionBar(toolbar);
+        setUpToolBar();
 
 /*        mReceiver = new CustomResultReceiver(new Handler());
         mReceiver.setReceiver(this);*/
@@ -84,6 +82,27 @@ public class JourneyInfoFriendsList extends AppCompatActivity {
             noContactsMsg.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Add Friend");
+        toolbar.inflateMenu(R.menu.toolbar_with_reload);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_add_buddy:
+                        Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+                        intent.putExtra("ACTIVITY_CODE", ACTIVITY_CODE);
+                        startService(intent);
+                        mDialog.show();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override

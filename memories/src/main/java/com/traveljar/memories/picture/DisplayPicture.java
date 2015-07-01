@@ -31,6 +31,7 @@ public class DisplayPicture extends Activity {
 
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

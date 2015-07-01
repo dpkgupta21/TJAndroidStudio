@@ -8,11 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -44,10 +44,11 @@ public class AllFriendsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_traveljar_contact_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Add Friends");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        setUpToolBar();
 
         mDialog = new ProgressDialog(this);
         mDialog.setMessage("please wait while we fetch your contacts from server");
@@ -91,7 +92,43 @@ public class AllFriendsList extends AppCompatActivity {
         });
     }
 
-    @Override
+    private void setUpToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Add Friends");
+
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AllFriendsList.this.finish();
+            }
+        });
+
+        toolbar.inflateMenu(R.menu.new_journey_selected_friends);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_next:
+                        goToNext();
+                        return true;
+                    case R.id.action_refresh:
+                        Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+                        Log.d(TAG, "starting intent for pull contacts service");
+                        //intent.putExtra("RECEIVER", mReceiver);
+                        intent.putExtra("ACTIVITY_CODE", ACTIVITY_CODE);
+                        startService(intent);
+                        mDialog.show();
+                        return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.new_journey_selected_friends, menu);
@@ -119,7 +156,7 @@ public class AllFriendsList extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     private void goToNext() {
         Log.d(TAG, "done is clicked!!!");

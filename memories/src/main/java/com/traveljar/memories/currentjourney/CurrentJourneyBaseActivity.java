@@ -7,10 +7,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
@@ -59,9 +58,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_journey_base_activity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName());
-        toolbar.setSubtitle(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getTagLine());
+        setUpToolbar();
 
         mViewPager = (ViewPager) findViewById(R.id.timeline_viewpager);
         mTabsAdapter = new CurrentJourneyTabsAdapter(getSupportFragmentManager());
@@ -72,11 +69,30 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.current_journey_action_bar, menu);
-        return super.onCreateOptionsMenu(menu);
+    private void setUpToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.subtitle_toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_delete);
+        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        TextView subtitle = (TextView)toolbar.findViewById(R.id.toolbar_subtitle);
+        title.setText(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName());
+        subtitle.setText(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getTagLine());
+
+        toolbar.inflateMenu(R.menu.current_journey_action_bar);
+        toolbar.setTitle("Current Journeys");
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_info:
+                        Log.d(TAG, "info clicked!");
+                        Intent i = new Intent(getBaseContext(), JourneyInfo.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void fabClick(View view) {
@@ -113,21 +129,6 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
                 i = new Intent(this, AudioCapture.class);
                 startActivity(i);
                 break;
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_info:
-                Log.d(TAG, "info clicked!");
-                Intent i = new Intent(getBaseContext(), JourneyInfo.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 
