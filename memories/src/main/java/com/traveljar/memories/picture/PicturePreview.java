@@ -42,6 +42,7 @@ public class PicturePreview extends AppCompatActivity {
     private TextView profileName;
     private String imagePath;
     private Picture mPicture;
+    private long createdAt;
 
     private ProgressDialog pDialog;
 
@@ -53,11 +54,6 @@ public class PicturePreview extends AppCompatActivity {
         setContentView(R.layout.picture_preview);
         Log.d(TAG, "entrerd photo details");
 
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        toolbar.setTitle("Picture Preview");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         setUpToolBar();
 
         photo = (ImageView) findViewById(R.id.photo_detail_photo);
@@ -73,41 +69,44 @@ public class PicturePreview extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-            Log.d(TAG, "running for a newly clicked picture");
-            profileName.setText(TJPreferences.getUserName(getBaseContext()));
-            imagePath = extras.getString("imagePath");
-            Bitmap thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), 512, 384);
-            localThumbnailPath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" + System.currentTimeMillis() + ".jpg";
-            FileOutputStream out = null;
+        Log.d(TAG, "running for a newly clicked picture");
+        profileName.setText(TJPreferences.getUserName(getBaseContext()));
+        imagePath = extras.getString("imagePath");
+        createdAt = HelpMe.getCurrentTime();
+
+        Bitmap thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), 512, 384);
+        localThumbnailPath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" + TJPreferences.getUserId(this) + "_" +
+                TJPreferences.getActiveJourneyId(this) + "_" + createdAt + ".jpg";
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(localThumbnailPath);
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             try {
-                out = new FileOutputStream(localThumbnailPath);
-                thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (out != null) {
-                        out.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (out != null) {
+                    out.close();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
 
-            Double lat = 0.0d;
-            Double longi = 0.0d;
-            GPSTracker gps = new GPSTracker(this);
-            if (gps.canGetLocation()) {
-                lat = gps.getLatitude(); // returns latitude
-                longi = gps.getLongitude(); // returns longitude
-            } else {
-                Toast.makeText(getApplicationContext(), "Network issues. Try later.",
-                        Toast.LENGTH_LONG).show();
-            }
+        Double lat = 0.0d;
+        Double longi = 0.0d;
+        GPSTracker gps = new GPSTracker(this);
+        if (gps.canGetLocation()) {
+            lat = gps.getLatitude(); // returns latitude
+            longi = gps.getLongitude(); // returns longitude
+        } else {
+            Toast.makeText(getApplicationContext(), "Network issues. Try later.",
+                    Toast.LENGTH_LONG).show();
+        }
 
-            mPicture = new Picture(null, TJPreferences.getActiveJourneyId(this), HelpMe.PICTURE_TYPE, caption.getText().toString()
-                    .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), HelpMe.getCurrentTime(), HelpMe.getCurrentTime(),
-                    null, localThumbnailPath, lat, longi);
+        mPicture = new Picture(null, TJPreferences.getActiveJourneyId(this), HelpMe.PICTURE_TYPE, caption.getText().toString()
+                .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), createdAt, createdAt,
+                null, localThumbnailPath, lat, longi);
 
         photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
 

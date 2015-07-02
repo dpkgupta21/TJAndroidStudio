@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.VideoDataSource;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.utility.HelpMe;
@@ -57,6 +58,8 @@ public class VideoAlbumsGalleryAdapter extends BaseAdapter {
         }
         ImageView img = (ImageView)convertView.findViewById(R.id.album_img);
         TextView journeyName = (TextView)convertView.findViewById(R.id.album_name);
+        TextView noItems = (TextView)convertView.findViewById(R.id.no_items);
+
         Bitmap bitmap;
         Video video = mAlbumsList.get(mJourneyList.get(position));
 
@@ -66,11 +69,13 @@ public class VideoAlbumsGalleryAdapter extends BaseAdapter {
             try {
                 bitmap = HelpMe.decodeSampledBitmapFromPath(mContext, video.getLocalThumbPath(), 150, 150);
                 img.setImageBitmap(bitmap);
+                noItems.setText(String.valueOf(VideoDataSource.getVideoCountOfJourney(mContext, video.getjId())) + " Videos ");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }else {
             img.setImageResource(R.drawable.gumnaam_profile_image);
+            noItems.setText("0 Videos ");
         }
         journeyName.setText(mJourneyList.get(position).getName());
 

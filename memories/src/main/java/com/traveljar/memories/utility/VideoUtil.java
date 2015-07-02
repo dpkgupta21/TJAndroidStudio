@@ -65,41 +65,49 @@ public class VideoUtil {
     }
 
     public void createNewVideoFromServer(final Context context, final Video video, String thumbUrl, final int downloadRequesterCode) {
-        final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "/vid_" + System.currentTimeMillis() + ".jpg";
-        if (thumbUrl != null) {
-            ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
-                @Override
-                public void onResponse(Bitmap bitmap) {
-                    FileOutputStream out = null;
-                    try {
-                        out = new FileOutputStream(imagePath);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                        video.setLocalThumbPath(imagePath);
-                        long id = VideoDataSource.createVideo(video, context);
-                        video.setId(String.valueOf(id));
-                        EventBus.getDefault().post(new VideoDownloadEvent(video, true, downloadRequesterCode));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
+        final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "thumb_" + TJPreferences.getUserId(context) + "_"+ video.getjId()
+                + "_"+ video.getCreatedAt() + ".jpg";
+        if(!(new File(imagePath).exists())){
+            if (thumbUrl != null) {
+                ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap bitmap) {
+                        FileOutputStream out = null;
                         try {
-                            if (out != null) {
-                                out.close();
-                            }
-                        } catch (IOException e) {
+                            out = new FileOutputStream(imagePath);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                            video.setLocalThumbPath(imagePath);
+                            long id = VideoDataSource.createVideo(video, context);
+                            video.setId(String.valueOf(id));
+                            EventBus.getDefault().post(new VideoDownloadEvent(video, true, downloadRequesterCode));
+                        } catch (Exception e) {
                             e.printStackTrace();
+                        } finally {
+                            try {
+                                if (out != null) {
+                                    out.close();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
 
-                    PullMemoriesService.isFinished();
-                }
-            }, 0, 0, null, new Response.ErrorListener() {
-                public void onErrorResponse(VolleyError error) {
-                    Log.d(TAG, "error occured" + error.getMessage());
-                    PullMemoriesService.isFinished();
-                }
-            });
-            request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            AppController.getInstance().addToRequestQueue(request);
+                        PullMemoriesService.isFinished();
+                    }
+                }, 0, 0, null, new Response.ErrorListener() {
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "error occured" + error.getMessage());
+                    }
+                });
+                request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                AppController.getInstance().addToRequestQueue(request);
+            }else {
+                video.setLocalThumbPath(imagePath);
+                long id = VideoDataSource.createVideo(video, context);
+                video.setId(String.valueOf(id));
+                EventBus.getDefault().post(new VideoDownloadEvent(video, true, downloadRequesterCode));
+            }
+            PullMemoriesService.isFinished();
         }
     }
 

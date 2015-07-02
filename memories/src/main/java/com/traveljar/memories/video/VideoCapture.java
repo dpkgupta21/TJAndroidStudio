@@ -1,12 +1,20 @@
 package com.traveljar.memories.video;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
+import com.traveljar.memories.utility.HelpMe;
+import com.traveljar.memories.utility.TJPreferences;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 public class VideoCapture extends AppCompatActivity {
 
@@ -38,12 +46,44 @@ public class VideoCapture extends AppCompatActivity {
             onBackPressed();
         }
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            Uri videoUri = data.getData();
+            long createdAt = HelpMe.getCurrentTime();
+            String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath() +
+                    "/vid_" + TJPreferences.getUserId(this) + "_" + TJPreferences.getActiveJourneyId(this) + "_" + createdAt + ".mp4";
+            try {
+                AssetFileDescriptor videoAsset = getContentResolver().openAssetFileDescriptor(data.getData(), "r");
+                FileInputStream fis = videoAsset.createInputStream();
+
+                File root=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath());
+
+                if (!root.exists()) {
+                    root.mkdirs();
+                }
+
+                File file;
+                file = new File(filePath);
+
+                FileOutputStream fos = new FileOutputStream(file);
+
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = fis.read(buf)) > 0) {
+                    fos.write(buf, 0, len);
+                }
+                fis.close();
+                fos.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+/*            Uri videoUri = data.getData();
             Log.d(TAG, "video saved at" + videoUri);
-            Log.d(TAG, "Real path URI" + getRealPathFromURI(videoUri));
+            Log.d(TAG, "Real path URI" + getRealPathFromURI(videoUri));*/
 
             Intent i = new Intent(this, VideoPreview.class);
-            i.putExtra("VIDEO_PATH", getRealPathFromURI(videoUri));
+            i.putExtra("VIDEO_PATH", filePath);
+            i.putExtra("CREATED_AT", createdAt);
             startActivity(i);
             finish();
         }

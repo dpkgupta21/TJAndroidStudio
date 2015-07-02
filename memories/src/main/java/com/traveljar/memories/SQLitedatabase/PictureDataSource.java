@@ -117,7 +117,7 @@ public class PictureDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.PICTURE_COLUMN_ID_ONSERVER, serverId);
         values.put(MySQLiteHelper.PICTURE_COLUMN_DATASERVERURL, serverUrl);
-        db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = " + picId, null);
+        db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = '" + picId + "'", null);
         db.close();
         Log.d(TAG, "server id and server url saved succesfully");
     }
@@ -126,8 +126,9 @@ public class PictureDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.PICTURE_COLUMN_DATALOCALURL, newPath);
-        db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " = " + picId, null);
+        db.update(MySQLiteHelper.TABLE_PICTURE, values, MySQLiteHelper.PICTURE_COLUMN_ID + " ='" + picId + "'", null);
         db.close();
+        Log.d(TAG, "updating " + values + " id = " + picId);
     }
 
     public static void updateDeleteStatus(Context context, String memLocalId, boolean isDeleted){

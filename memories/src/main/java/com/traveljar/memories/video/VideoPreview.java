@@ -45,6 +45,7 @@ public class VideoPreview extends AppCompatActivity {
     private Video mVideo;
     private ProgressDialog pDialog;
     private TextView createdByName;
+    private long createdAt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class VideoPreview extends AppCompatActivity {
         String thumbnailPath;
         Bundle extras = getIntent().getExtras();
         videoPath = extras.getString("VIDEO_PATH");
+        createdAt = extras.getLong("CREATED_AT");
         Bitmap bitmap = HelpMe.getVideoThumbnail(videoPath);
         FileOutputStream out = null;
         thumbnailPath = Constants.TRAVELJAR_FOLDER_VIDEO + "vid_" + System.currentTimeMillis() + ".mp4";
@@ -104,12 +106,10 @@ public class VideoPreview extends AppCompatActivity {
             lat = gps.getLatitude(); // returns latitude
             longi = gps.getLongitude(); // returns longitude
         } else {
-            Toast.makeText(getApplicationContext(), "Network issues. Try later.",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Network issues. Try later.", Toast.LENGTH_LONG).show();
         }
         mVideo = new Video(null, TJPreferences.getActiveJourneyId(this), HelpMe.VIDEO_TYPE, caption.getText().toString()
-                .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), currenTime, currenTime, null, thumbnailPath, lat, longi);
-
+                .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), createdAt, createdAt, null, thumbnailPath, lat, longi);
 
         video.setImageBitmap(BitmapFactory.decodeFile(thumbnailPath));
         try {

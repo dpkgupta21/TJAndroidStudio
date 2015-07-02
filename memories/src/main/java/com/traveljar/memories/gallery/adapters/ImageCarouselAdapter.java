@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
@@ -29,6 +31,9 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
     private List<Memories> mPictureList;
     private LayoutInflater inflater;
     private ProgressDialog pDialog;
+    //Used to store the view of button for which download is called so that on successful completion it can be set invisible
+    private View downloadBtnView;
+    private View image;
 
     // constructor
     public ImageCarouselAdapter(Activity activity, List<Memories> pictureList) {
@@ -36,6 +41,7 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
         mPictureList = pictureList;
         pDialog = new ProgressDialog(_activity);
         pDialog.setMessage("Downloading image please wait");
+        pDialog.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -49,34 +55,54 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
 
-        ImageView imgDisplay;
+        final ImageView imgDisplay;
         ImageView btnClose;
         TextView imgTitle;
+        final Button downloadBtn;
         inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View viewLayout = inflater.inflate(R.layout.gallery_photos_detail_item, container, false);
+        final View viewLayout = inflater.inflate(R.layout.gallery_photos_detail_item, container, false);
 
         imgDisplay = (ImageView) viewLayout.findViewById(R.id.detailImage);
         btnClose = (ImageView) viewLayout.findViewById(R.id.closeIcon);
         imgTitle = (TextView) viewLayout.findViewById(R.id.imageTitleTxt);
-        Picture pic = (Picture)mPictureList.get(position);
+        downloadBtn = (Button) viewLayout.findViewById(R.id.download_audio_btn);
+
+        final Picture pic = (Picture)mPictureList.get(position);
+        Log.d(TAG, "position " + position + " url " + pic.getDataLocalURL() + pic);
+        if(pic.getDataLocalURL() == null){
+            downloadBtn.setVisibility(View.VISIBLE);
+        }
         imgTitle.setText(pic.getCaption());
 
         DisplayMetrics displayMetrics = _activity.getResources().getDisplayMetrics();
 
-        if (pic.getDataLocalURL() != null) {
-            try {
-                imgDisplay.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, pic.getDataLocalURL(), displayMetrics.widthPixels,
-                        displayMetrics.heightPixels));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            pDialog.show();
-            Log.d(TAG, "downloading picture for position" + position);
-            new DownloadPicture(pic, this, imgDisplay).startDownloadingPic();
+        // If original image is available show it else show the thumbnail
+        String picPath;
+        if(pic.getDataLocalURL() != null){
+            picPath = pic.getDataLocalURL();
+        }else {
+            picPath = pic.getPicThumbnailPath();
         }
+
+        try {
+            imgDisplay.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, picPath, displayMetrics.widthPixels,
+                    displayMetrics.heightPixels));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        downloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadBtnView = downloadBtn;
+                image = imgDisplay;
+                pDialog.show();
+                Log.d(TAG, "downloading picture for position" + position);
+                new DownloadPicture(pic, ImageCarouselAdapter.this).startDownloadingPic();
+            }
+        });
 
         // close button click event
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -95,16 +121,23 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
     }
 
     @Override
-    public void onDownloadPicture(Picture picture, ImageView imgView) {
-        PictureDataSource.updatePicLocalPath(_activity, picture.getDataLocalURL(), picture.getId());
-        Log.d(TAG, "picture downloaded successfully now displaying it");
-        pDialog.dismiss();
-        DisplayMetrics displayMetrics = _activity.getResources().getDisplayMetrics();
-        try {
-            imgView.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, picture.getDataLocalURL(), displayMetrics.widthPixels,
-                    displayMetrics.heightPixels));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public void onDownloadPicture(Picture picture, boolean result) {
+        if(result) {
+            downloadBtnView.setVisibility(View.GONE);
+            DisplayMetrics displayMetrics = _activity.getResources().getDisplayMetrics();
+            try {
+                ((ImageView)image).setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, picture.getDataLocalURL(),
+                        displayMetrics.widthPixels, displayMetrics.heightPixels));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            PictureDataSource.updatePicLocalPath(_activity, picture.getDataLocalURL(), picture.getId());
+            pDialog.dismiss();
+            Log.d(TAG, " " + PictureDataSource.getPictureById(_activity, picture.getId()));
+            Toast.makeText(_activity, "Image Successfully downloaded and saved on your device", Toast.LENGTH_SHORT).show();
+        }else {
+            pDialog.dismiss();
+            Toast.makeText(_activity, "Unable to download image now please try later", Toast.LENGTH_SHORT).show();
         }
     }
 }

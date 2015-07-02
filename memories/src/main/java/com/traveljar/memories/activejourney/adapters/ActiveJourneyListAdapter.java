@@ -45,6 +45,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         mDataset = myDataset;
         mContext = context;
         mDialog = new ProgressDialog(mContext);
+        registerEvent();
     }
 
     public void add(int position, Journey item) {
@@ -159,7 +160,6 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
 
                 if (buddyList != null && !buddyList.isEmpty()) {
                     Log.d(TAG, "some buddies need to be fetched from server hence fetching from server" + buddyList.size());
-                    registerEvent();
                     new PullBuddies(mContext, buddyList, LISTENER_CODE).fetchBuddies();
                 } else {
                     Log.d(TAG, "no buddy to be fetched from server hence starting current activity");

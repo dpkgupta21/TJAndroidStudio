@@ -10,11 +10,14 @@
         android:id="@+id/imageTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:text="ImageName"
         android:textColor="@color/white"
-        android:textSize="@dimen/tj_large_font" />
+        android:textSize="@dimen/tj_large_font"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp" />
 
     <ImageView
         android:id="@+id/closeIcon"
@@ -33,5 +36,15 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Original"
+        android:id="@+id/download_audio_btn"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/closeIcon"
+        android:visibility="gone"
+        android:layout_alignEnd="@+id/closeIcon" />
 
 </RelativeLayout>

@@ -1,7 +1,6 @@
 package com.traveljar.memories.gallery.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.Journey;
 
@@ -55,15 +55,18 @@ public class AudioAlbumsGalleryAdapter extends BaseAdapter {
         }
         ImageView img = (ImageView)convertView.findViewById(R.id.album_img);
         TextView journeyName = (TextView)convertView.findViewById(R.id.album_name);
-        Bitmap bitmap;
+        TextView noItems = (TextView)convertView.findViewById(R.id.no_items);
+
         Audio audio = mAlbumsList.get(mJourneyList.get(position));
 
         img.setLayoutParams(new RelativeLayout.LayoutParams(getImageWidth(), getImageWidth()));
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if(audio != null){
             img.setImageResource(R.drawable.ic_play);
+            noItems.setText(String.valueOf(AudioDataSource.getAudioCountOfJourney(mContext, audio.getjId())) + " Audios");
         }else {
             img.setImageResource(R.drawable.gumnaam_profile_image);
+            noItems.setText("0 Audios");
         }
         journeyName.setText(mJourneyList.get(position).getName());
 

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.utility.HelpMe;
@@ -56,6 +57,8 @@ public class PictureAlbumsGalleryAdapter extends BaseAdapter{
         }
         ImageView img = (ImageView)convertView.findViewById(R.id.album_img);
         TextView journeyName = (TextView)convertView.findViewById(R.id.album_name);
+        TextView noItems = (TextView)convertView.findViewById(R.id.no_items);
+
         Bitmap bitmap;
         Picture picture = mAlbumsList.get(mJourneyList.get(position));
 
@@ -65,11 +68,13 @@ public class PictureAlbumsGalleryAdapter extends BaseAdapter{
             try {
                 bitmap = HelpMe.decodeSampledBitmapFromPath(mContext, picture.getPicThumbnailPath(), 150, 150);
                 img.setImageBitmap(bitmap);
+                noItems.setText(String.valueOf(PictureDataSource.getPicCountOfJourney(mContext, picture.getjId())) + " Pictures ");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }else {
             img.setImageResource(R.drawable.gumnaam_profile_image);
+            noItems.setText(" 0 Pictures ");
         }
         journeyName.setText(mJourneyList.get(position).getName());
 

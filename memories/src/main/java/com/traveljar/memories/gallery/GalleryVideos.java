@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
 import com.traveljar.memories.gallery.adapters.ImageGalleryAdapter;
 import com.traveljar.memories.gallery.adapters.VideoGalleryAdapter;
@@ -42,18 +43,19 @@ public class GalleryVideos extends AppCompatActivity implements DownloadVideoAsy
 
     private LinearLayout mLayout;
     private ProgressDialog mProgressDialog;
+    private String journeyId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_videos);
 
+        journeyId = getIntent().getStringExtra("JOURNEY_ID");
         setUpToolBar();
+
         mGridView = (GridView) findViewById(R.id.videos_grid_view);
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Downloading Video please wait");
-
-        String journeyId = getIntent().getStringExtra("JOURNEY_ID");
 
         mVideoList = VideoDataSource.getAllVideoMemories(this, journeyId);
         mAdapter = new VideoGalleryAdapter(this, mVideoList);
@@ -156,7 +158,14 @@ public class GalleryVideos extends AppCompatActivity implements DownloadVideoAsy
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        title.setText("Videos");
+        title.setText(JourneyDataSource.getJourneyById(this, journeyId).getName());
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 }

@@ -123,7 +123,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                 if (mPicture.getDataLocalURL() == null) {
                     pDialog.setMessage("Please wait while the picture is getting downloaded");
                     pDialog.show();
-                    new DownloadPicture(mPicture, PictureDetail.this, null).startDownloadingPic();
+                    new DownloadPicture(mPicture, PictureDetail.this).startDownloadingPic();
                 } else {
                     Log.d(TAG, "profile pic is already present in the local so displaying it");
                     Intent intent = new Intent(PictureDetail.this, DisplayPicture.class);
@@ -260,7 +260,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
 */
 
     @Override
-    public void onDownloadPicture(Picture picture, ImageView imgView) {
+    public void onDownloadPicture(Picture picture, boolean success) {
         PictureDataSource.updatePicLocalPath(this, picture.getDataLocalURL(), picture.getId());
         Log.d(TAG, "picture downloaded successfully now displaying it");
         pDialog.dismiss();

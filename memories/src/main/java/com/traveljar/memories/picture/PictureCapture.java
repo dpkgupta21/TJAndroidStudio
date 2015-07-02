@@ -18,15 +18,18 @@ import android.widget.LinearLayout;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.utility.HelpMe;
+import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class PictureCapture extends AppCompatActivity {
 
-    public static final int MEDIA_TYPE_IMAGE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     private static final int PICK_GALLERY_IMAGE_REQUEST_CODE = 2;
     private static final String TAG = "CAPTURE_PHOTOS";
@@ -36,6 +39,7 @@ public class PictureCapture extends AppCompatActivity {
     private LinearLayout mCaptureOptions;
     private Button mSelectGalleryImage;
     private Button mClickNewPicture;
+    private long createdAt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,14 +110,16 @@ public class PictureCapture extends AppCompatActivity {
     //  Create a file Uri for saving an image or video
     // returns a new file on the image will be storeds
     private File getOutputMediaFile() throws IOException {
-        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/TravelJar/Pictures");
+        createdAt = System.currentTimeMillis();
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath());
         if (!storageDir.exists()) {
             storageDir.mkdirs();
         }
-        File imageFile = File.createTempFile("pic_" + System.currentTimeMillis(), ".jpg", storageDir);
-        imagePath = imageFile.getAbsolutePath();
-        return imageFile;
+        String fileName = "/pic_" + TJPreferences.getUserId(this) + "_" + TJPreferences.getActiveJourneyId(this) + "_" + createdAt + ".jpg";
+        File file = new File(storageDir, fileName);
+        file.createNewFile();
+        imagePath = file.getAbsolutePath();
+        return file;
     }
 
     @Override
@@ -147,9 +153,10 @@ public class PictureCapture extends AppCompatActivity {
             // If image is picked from gallery
             if(requestCode == PICK_GALLERY_IMAGE_REQUEST_CODE){
                 Uri selectedImageUri = data.getData();
-                imagePath = HelpMe.getRealPathFromURI(selectedImageUri, this);
+                imagePath = copyPictureToTJDir(HelpMe.getRealPathFromURI(selectedImageUri, this));
                 Intent i = new Intent(getBaseContext(), PicturePreview.class);
                 i.putExtra("imagePath", imagePath);
+                i.putExtra("CREATED_AT", createdAt);
                 startActivity(i);
                 Log.d(TAG, "ok pic");
                 finish();
@@ -200,4 +207,31 @@ public class PictureCapture extends AppCompatActivity {
             }
         }
     }
+
+    private String copyPictureToTJDir(String sourceFilePath) {
+        File destinationFile = null;
+        try {
+            destinationFile = getOutputMediaFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        InputStream in = null;
+        try {
+            in = new FileInputStream(sourceFilePath);
+            OutputStream out = new FileOutputStream(destinationFile.getAbsolutePath());
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            in.close();
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return destinationFile.getAbsolutePath();
+    }
+
 }

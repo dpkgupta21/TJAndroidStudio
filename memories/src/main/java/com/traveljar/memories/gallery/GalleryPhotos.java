@@ -36,6 +36,7 @@ public class GalleryPhotos extends AppCompatActivity {
     private List<Memories> mImageList;
     private ImageGalleryAdapter mAdapter;
     private LinearLayout mLayout;
+    private String journeyId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,13 +44,12 @@ public class GalleryPhotos extends AppCompatActivity {
 
         setContentView(R.layout.gallery_photos);
 
+        journeyId = getIntent().getStringExtra("JOURNEY_ID");
         setUpToolBar();
 
-        final String journeyId = getIntent().getStringExtra("JOURNEY_ID");
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(JourneyDataSource.getJourneyById(this, journeyId).getName());
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);*/
 
         Log.d(TAG, "entered gallery photos fragment!!");
 
@@ -148,7 +148,14 @@ public class GalleryPhotos extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        title.setText("Pictures Detail");
+        title.setText(JourneyDataSource.getJourneyById(this, journeyId).getName());
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 }

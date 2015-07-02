@@ -51,45 +51,51 @@ public class PictureUtilities {
     }*/
 
     public void createNewPicFromServer(final Context context, final Picture pic, String thumbUrl, final int downloadRequesterCode) {
-        final String imagePath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" + System.currentTimeMillis() + ".jpg";
-        if (thumbUrl != null) {
-            ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
-                @Override
-                public void onResponse(Bitmap bitmap) {
-                    FileOutputStream out = null;
-                    try {
-                        out = new FileOutputStream(imagePath);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                        pic.setPicThumbnailPath(imagePath);
-                        long id = PictureDataSource.createPicture(pic, context);
-                        pic.setId(String.valueOf(id));
-                        Log.d(TAG, "saving picture " + pic);
+        final String imagePath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" + TJPreferences.getUserId(context) + "_"+ pic.getjId() + "_"+ pic.getCreatedAt() + ".jpg";
+        File file = new File(imagePath);
+        if(!file.exists()) {
+            if (thumbUrl != null) {
+                ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap bitmap) {
+                        FileOutputStream out = null;
+                        try {
+                            out = new FileOutputStream(imagePath);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                            pic.setPicThumbnailPath(imagePath);
+                            long id = PictureDataSource.createPicture(pic, context);
+                            pic.setId(String.valueOf(id));
+                            Log.d(TAG, "saving picture " + pic);
 /*                        if(finishListener != null) {
                             finishListener.onFinishDownload(pic.getIdOnServer(), pic.getMemType(), String.valueOf(id));
                         }*/
-                        EventBus.getDefault().post(new PictureDownloadEvent(pic, true, downloadRequesterCode));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            if (out != null) {
-                                out.close();
-                            }
-                        } catch (IOException e) {
+                            EventBus.getDefault().post(new PictureDownloadEvent(pic, true, downloadRequesterCode));
+                        } catch (Exception e) {
                             e.printStackTrace();
+                        } finally {
+                            try {
+                                if (out != null) {
+                                    out.close();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-
-                    PullMemoriesService.isFinished();
-                }
-            }, 0, 0, null, new Response.ErrorListener() {
-                public void onErrorResponse(VolleyError error) {
-                    Log.d(TAG, "error oaccuered" + error.getMessage());
-                    PullMemoriesService.isFinished();
-                }
-            });
-            AppController.getInstance().addToRequestQueue(request);
+                }, 0, 0, null, new Response.ErrorListener() {
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "error oaccuered" + error.getMessage());
+                    }
+                });
+                AppController.getInstance().addToRequestQueue(request);
+            }
+        }else {
+            pic.setPicThumbnailPath(imagePath);
+            long id = PictureDataSource.createPicture(pic, context);
+            pic.setId(String.valueOf(id));
+            EventBus.getDefault().post(new PictureDownloadEvent(pic, true, downloadRequesterCode));
         }
+        PullMemoriesService.isFinished();
     }
 
     public static boolean uploadPicOnServer(Context context, final Picture picture){

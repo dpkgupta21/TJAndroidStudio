@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
+import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.gallery.adapters.AudioGalleryAdapter;
 import com.traveljar.memories.models.Memories;
 
@@ -21,7 +23,8 @@ public class GalleryAudios extends AppCompatActivity {
     private List<Memories> mAudioList;
     private AudioGalleryAdapter mAdapter;
     private ListView mListView;
-    private RelativeLayout mLayout;
+    private LinearLayout mLayout;
+    private String journeyId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,12 +32,11 @@ public class GalleryAudios extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_audios);
 
+        journeyId = getIntent().getStringExtra("JOURNEY_ID");
         setUpToolBar();
 
         mListView = (ListView) findViewById(R.id.gallery_audio_listview);
-        mLayout = (RelativeLayout)findViewById(R.id.gallery_audio_layout);
-
-        String journeyId = getIntent().getStringExtra("JOURNEY_ID");
+        mLayout = (LinearLayout)findViewById(R.id.gallery_audio_layout);
 
         mAudioList = AudioDataSource.getAudioMemoriesForJourney(this, journeyId);
         if(mAudioList.size() == 0){
@@ -52,6 +54,13 @@ public class GalleryAudios extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        title.setText("Audios");
+        title.setText(JourneyDataSource.getJourneyById(this, journeyId).getName());
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

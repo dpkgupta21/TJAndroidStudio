@@ -35,8 +35,9 @@ public class GalleryBaseActivity extends BaseActivity {
 
     private void setUpToolBar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
-        title.setText("Memories");
+        toolbar.setNavigationIcon(R.drawable.ic_delete);
+        TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        title.setText("Gallery");
     }
 
     @Override

@@ -55,26 +55,12 @@ public class AudioCapture extends AppCompatActivity {
             audioDuration = seconds;
         }
     };
-    /*private LinearLayout startRecording;
-    private LinearLayout playRecording;
-    private ImageView recordImg;
-    private TextView recordTxt;
-    private TextView playTxt;*/
     private boolean recording = false;
     private boolean playing = false;
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
 
-
-    public AudioCapture() {
-
-        String dirPath = Constants.TRAVELJAR_FOLDER_AUDIO;
-        File directory = new File(dirPath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        mFileName = dirPath + "/voice_" + System.currentTimeMillis() + ".3gp";
-    }
+    private long createdAt;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -82,6 +68,14 @@ public class AudioCapture extends AppCompatActivity {
         setContentView(R.layout.audio_capture);
 
         setUpToolBar();
+
+        String dirPath = Constants.TRAVELJAR_FOLDER_AUDIO;
+        File directory = new File(dirPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        createdAt = HelpMe.getCurrentTime();
+        mFileName = dirPath + "/aud_" + TJPreferences.getUserId(this) + "_" + TJPreferences.getActiveJourneyId(this) + "_" + createdAt + ".3gp";
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mRecordBtn = (ImageButton) findViewById(R.id.audio_capture_record_btn);
@@ -196,8 +190,8 @@ public class AudioCapture extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
         Audio audio = new Audio(null, TJPreferences.getActiveJourneyId(this), HelpMe.AUDIO_TYPE,
-                "3gp", (new File(mFileName)).length(), null, mFileName, TJPreferences.getUserId(this), HelpMe.getCurrentTime(),
-                HelpMe.getCurrentTime(), null, audioDuration, lat, longi);
+                "3gp", (new File(mFileName)).length(), null, mFileName, TJPreferences.getUserId(this), createdAt,
+                createdAt, null, audioDuration, lat, longi);
         Long id = AudioDataSource.createAudio(audio, this);
         audio.setId(String.valueOf(id));
         Log.d(TAG, "new audio added in local DB successfully");

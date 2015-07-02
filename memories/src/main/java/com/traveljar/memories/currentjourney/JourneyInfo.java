@@ -164,6 +164,14 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Journey Info");
 
+        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JourneyInfo.this.finish();
+            }
+        });
+
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
 
         if(HelpMe.isAdmin(this)){

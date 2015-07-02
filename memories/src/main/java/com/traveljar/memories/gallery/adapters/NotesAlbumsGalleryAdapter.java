@@ -1,7 +1,6 @@
 package com.traveljar.memories.gallery.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Note;
 
@@ -58,15 +58,18 @@ public class NotesAlbumsGalleryAdapter extends BaseAdapter {
         }
         ImageView img = (ImageView)convertView.findViewById(R.id.album_img);
         TextView journeyName = (TextView)convertView.findViewById(R.id.album_name);
-        Bitmap bitmap;
+        TextView noItems = (TextView)convertView.findViewById(R.id.no_items);
+
         Note note = mAlbumsList.get(mJourneyList.get(position));
 
         img.setLayoutParams(new RelativeLayout.LayoutParams(getImageWidth(), getImageWidth()));
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if(note != null){
             img.setImageResource(R.drawable.ic_play);
+            noItems.setText(String.valueOf(NoteDataSource.getNoteCountOfJourney(mContext, note.getjId())) + " Notes");
         }else {
             img.setImageResource(R.drawable.gumnaam_profile_image);
+            noItems.setText(" 0 Notes");
         }
         journeyName.setText(mJourneyList.get(position).getName());
 
