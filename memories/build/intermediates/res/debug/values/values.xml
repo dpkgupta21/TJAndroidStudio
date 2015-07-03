@@ -185,6 +185,8 @@
     <color name="text_secondary">#D9000000</color>
     <color name="tj_black_text">#f3f3f3</color>
     <color name="tj_dark_gray">#333333</color>
+    <color name="tj_fab_blue">#2790AA</color>
+    <color name="tj_fab_yellow">#FECB45</color>
     <color name="tj_fb_blue">#3C5B97</color>
     <color name="tj_gray_bg">#f3f3f3</color>
     <color name="tj_gray_border">#c8c8c8</color>
@@ -1955,8 +1957,8 @@
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="myAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/tj_orange</item>
-        <item name="colorPrimaryDark">@color/tj_orange</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>

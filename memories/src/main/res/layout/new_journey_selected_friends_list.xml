@@ -18,9 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:hint="Start typing your friend's profileName" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:hint="Start typing a name" />
 
         <ImageButton
             android:id="@+id/addFriendsContactSearchAdd"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             android:background="@color/transparent"
             android:contentDescription="@string/default_string"
             android:onClick="goToAllContactList"

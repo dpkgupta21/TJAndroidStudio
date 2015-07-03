@@ -9,9 +9,6 @@ import com.traveljar.memories.services.PlaceAPI;
 
 import java.util.ArrayList;
 
-/**
- * Created by abhi on 05/06/15.
- */
 public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements Filterable {
 
     ArrayList<String> resultList;

@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -30,9 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by abhi on 28/05/15.
- */
 public class SideMenuDrawer extends Fragment {
 
     private static final String TAG = "<BaseActivity>";
@@ -41,7 +38,7 @@ public class SideMenuDrawer extends Fragment {
     TextView mUserName;
     TextView mUserStatus;
     private View rootView;
-    private ImageButton settingsButton;
+    private RelativeLayout settingsButton;
 
     private DrawerLayout mDrawerLayout;
 
@@ -59,7 +56,7 @@ public class SideMenuDrawer extends Fragment {
         mUserName = (TextView) rootView.findViewById(R.id.sidemenu_username);
         mUserStatus = (TextView) rootView.findViewById(R.id.sidemenu_status);
 
-        settingsButton = (ImageButton)rootView.findViewById(R.id.sidemenu_settings);
+        settingsButton = (RelativeLayout)rootView.findViewById(R.id.sidemenu_settings);
 
         mDrawerLayout = (DrawerLayout)getActivity().findViewById(R.id.drawerLayout);
 

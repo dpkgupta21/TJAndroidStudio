@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/delete85"
+        android:background="@drawable/ic_delete_white_24dp"
         android:contentDescription="@string/default_string"
         android:text="Content not available" />
 

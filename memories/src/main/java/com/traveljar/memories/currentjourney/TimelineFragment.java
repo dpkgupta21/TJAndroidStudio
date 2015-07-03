@@ -39,10 +39,12 @@ public class TimelineFragment extends Fragment {
     private int visibleItemPosition;
 
     private static TimelineFragment instance;
-    public TimelineFragment(){
+
+    public TimelineFragment() {
         instance = this;
     }
-    public static TimelineFragment getInstance(){
+
+    public static TimelineFragment getInstance() {
         return instance == null ? new TimelineFragment() : instance;
     }
 
@@ -137,10 +139,11 @@ public class TimelineFragment extends Fragment {
         super.onPause();
     }
 
-    public void loadMemoriesList(){
-        memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));        Log.d(TAG, "no of memories = " + memoriesList.size());
+    public void loadMemoriesList() {
+        memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
         Log.d(TAG, "no of memories = " + memoriesList.size());
-        if(memoriesList.size() > 0) {
+        Log.d(TAG, "no of memories = " + memoriesList.size());
+        if (memoriesList.size() > 0) {
             mListView.setVisibility(View.VISIBLE);
             mLayout.setBackgroundColor(getResources().getColor(R.color.white));
             if (mAdapter == null) {
@@ -154,7 +157,7 @@ public class TimelineFragment extends Fragment {
                 mListView.setAdapter(mAdapter);
                 mListView.setSelection(visibleItemPosition);
             }
-        }else {
+        } else {
             Log.d(TAG, "no of memories < 0");
             mListView.setVisibility(View.GONE);
             mLayout.setBackgroundResource(R.drawable.img_no_timeline_item);

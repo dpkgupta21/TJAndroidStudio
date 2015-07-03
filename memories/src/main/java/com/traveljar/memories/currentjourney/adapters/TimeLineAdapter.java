@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,12 +42,13 @@ import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.video.VideoDetail;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public class TimeLineAdapter extends BaseAdapter {
+public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioCompleteListener{
 
     private static final String TAG = "TimeLineAdapter";
     Context context;
@@ -60,8 +62,14 @@ public class TimeLineAdapter extends BaseAdapter {
     private ProgressDialog pDialog;
     private static final int DOWNLOAD_AUDIO_EVENT_CODE = 1;
 
+    // This will store the id of the currently playing audio (default -1)
+    private String currentPlayingAudioId = "-1";
+    private ImageView lastPlayedAudioPlayButton = null;
+    private int firstVisiblePosition;
+    private int lastVisiblePosition;
+    private int lastPlayedAudioPosition;
+
     public TimeLineAdapter(Context context, List<Memories> memoriesList) {
-        Log.d(TAG, "constructor called");
         this.context = context;
         this.memoriesList = memoriesList;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -98,13 +106,13 @@ public class TimeLineAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void updateList(List<Memories> updatedList) {
-        memoriesList = updatedList;
-    }
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         Log.d(TAG, "get view called");
+        firstVisiblePosition = ((ListView)parent).getFirstVisiblePosition();
+        lastVisiblePosition = ((ListView)parent).getLastVisiblePosition();
+
+        Log.d(TAG, "first , last " + firstVisiblePosition + " " + lastVisiblePosition);
         final int type = getItemViewType(position);
         System.out.println("getView " + position + " " + convertView + " type = " + type);
         final ViewHolder holder;
@@ -166,8 +174,7 @@ public class TimeLineAdapter extends BaseAdapter {
             }
 
             // common views in all memories
-            holder.timeLineProfileImg = (ImageView) convertView
-                    .findViewById(R.id.timelineItemUserImage);
+            holder.timeLineProfileImg = (ImageView) convertView.findViewById(R.id.timelineItemUserImage);
             holder.timelineNoLikesTxt = (TextView) convertView.findViewById(R.id.noLikesTxt);
             holder.timelineItemTime = (TextView) convertView.findViewById(R.id.timelineItemTime);
             holder.timelineItemFavBtn = (ImageButton) convertView
@@ -180,8 +187,6 @@ public class TimeLineAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Log.d(TAG, "3.1");
-
         // set on click listeners to handle events on multiple buttons
         holder.timelineItemFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,13 +198,11 @@ public class TimeLineAdapter extends BaseAdapter {
 
                 if (likeId == null) {
                     //If not liked, create a new like object, save it to local, update on server
-                    Log.d(TAG, "memory is not already liked so liking it");
                     like = MemoriesUtil.createLikeRequest(mem.getId(), Request.getCategoryTypeFromMemory(mem), context, mem.getMemType());
                     mem.getLikes().add(like);
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_filled);
                 } else {
                     // If already liked, delete from local database, delete from server
-                    Log.d(TAG, "memory is not already liked so removing the like");
                     like = mem.getLikeById(likeId);
                     holder.timelineItemFavBtn.setImageResource(R.drawable.ic_favourite_empty);
                     MemoriesUtil.createUnlikeRequest(like, Request.getCategoryTypeFromMemory(mem), context);
@@ -213,11 +216,9 @@ public class TimeLineAdapter extends BaseAdapter {
         // DATE --
         final Memories memory = memoriesList.get(position);
         holder.timelineItemTime.setText(HelpMe.getDate(memory.getCreatedAt(), HelpMe.DATE_FULL));
-        Log.d(TAG, ContactDataSource.getContactById(context, memory.getCreatedBy()) + memory.getCreatedBy() + "!!!");
         holder.timelineItemUserName.setText(ContactDataSource.getContactById(context, memory.getCreatedBy()).getProfileName());
 
         // if the memory is from current user
-        Log.d(TAG, "Iam executing" + memory.getCreatedBy() + TJPreferences.getUserId(context));
         if (memory.getCreatedBy().equals(TJPreferences.getUserId(context))) {
             try {
                 holder.timeLineProfileImg.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context, TJPreferences.getProfileImgPath(context), 80, 80));
@@ -233,12 +234,9 @@ public class TimeLineAdapter extends BaseAdapter {
         }
 
         //set the favourites count
-        Log.d(TAG, "memory = " + memory.getMemType() + memory.getId() + "likes count = " + memory.getLikes().size());
         holder.timelineNoLikesTxt.setText(String.valueOf(memory.getLikes().size()));
         holder.timelineItemFavBtn.setImageResource(memory.isMemoryLikedByCurrentUser(context) != null ?
                 R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
-
-        Log.d(TAG, "3.2");
 
         switch (type) {
             case 5:
@@ -256,12 +254,49 @@ public class TimeLineAdapter extends BaseAdapter {
                 break;
             case 1:
                 Log.d(TAG, "in audio");
+                final Audio audio = (Audio) memoriesList.get(position);
+                Log.d(TAG, "  " + !isPlaying + !currentPlayingAudioId.equals(audio.getId()));
+                if(!isPlaying || !currentPlayingAudioId.equals(audio.getId())){
+                    holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                }else{
+                    holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.ic_pause_black_24dp);
+                }
                 holder.timelineItemAudioPlayBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Audio audio = (Audio) memoriesList.get(position);
 
-                        if (!isPlaying) {
+                        // Condition 1: if already playing and clicked for the audio which is already playing
+                        if (isPlaying && audio.getId().equals(currentPlayingAudioId)) {
+                            holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                            currentPlayingAudioId = "-1";
+                            lastPlayedAudioPlayButton = holder.timelineItemAudioPlayBtn;
+                            isPlaying = false;
+                        } else {
+                            lastPlayedAudioPosition = position;
+                            // Condition : If already playing and play clicked for different audio, than change the icon of the previous playing audio
+                            if (isPlaying) {
+                                mPlayer.stopPlaying();
+                                if (lastPlayedAudioPlayButton != null) {
+                                    lastPlayedAudioPlayButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                                }
+                            }
+
+                            if (audio.getDataLocalURL() == null || !(new File(audio.getDataLocalURL())).exists()) {
+                                registerEvent();
+                                pDialog.show();
+                                DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(DOWNLOAD_AUDIO_EVENT_CODE, audio);
+                                asyncTask.execute();
+                            } else {
+                                mPlayer = new AudioPlayer(audio.getDataLocalURL(), TimeLineAdapter.this);
+                                mPlayer.startPlaying();
+                            }
+                            holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.ic_pause_black_24dp);
+                            currentPlayingAudioId = audio.getId();
+                            lastPlayedAudioPlayButton = holder.timelineItemAudioPlayBtn;
+                            isPlaying = true;
+                        }
+
+                        /*if (!isPlaying) {
                             if (audio.getDataLocalURL() == null) {
                                 pDialog.setMessage("Loading...");
                                 pDialog.show();
@@ -269,16 +304,15 @@ public class TimeLineAdapter extends BaseAdapter {
                                 DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(DOWNLOAD_AUDIO_EVENT_CODE, audio);
                                 asyncTask.execute();
                             } else {
-                                mPlayer = new AudioPlayer(audio.getDataLocalURL());
+                                mPlayer = new AudioPlayer(audio.getDataLocalURL(), TimeLineAdapter.this);
                                 mPlayer.startPlaying();
                             }
                         } else {
                             mPlayer.stopPlaying();
                         }
-                        isPlaying = !isPlaying;
+                        isPlaying = !isPlaying;*/
                     }
                 });
-                Log.d(TAG, "iN AUDIO ENDED HERE");
                 break;
 
             case 6:
@@ -316,20 +350,32 @@ public class TimeLineAdapter extends BaseAdapter {
                     switch (i){
                         case 0: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
                             holder.timelineItemMoodBuddyImage1.setVisibility(View.VISIBLE);
-                            holder.timelineItemMoodBuddyImage1.setImageBitmap(BitmapFactory.decodeFile(fContact
-                                    .getPicLocalUrl()));
+                            try {
+                                holder.timelineItemMoodBuddyImage1.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context,
+                                        fContact.getPicLocalUrl(), 150, 150));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
                             break;
 
                         case 1: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
                             holder.timelineItemMoodBuddyImage2.setVisibility(View.VISIBLE);
-                            holder.timelineItemMoodBuddyImage2.setImageBitmap(BitmapFactory.decodeFile(fContact
-                                    .getPicLocalUrl()));
+                            try {
+                                holder.timelineItemMoodBuddyImage2.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context,
+                                        fContact.getPicLocalUrl(), 150, 150));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
                             break;
 
                         case 2: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
                             holder.timelineItemMoodBuddyImage3.setVisibility(View.VISIBLE);
-                            holder.timelineItemMoodBuddyImage3.setImageBitmap(BitmapFactory.decodeFile(fContact
-                                    .getPicLocalUrl()));
+                            try {
+                                holder.timelineItemMoodBuddyImage3.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context,
+                                        fContact.getPicLocalUrl(), 150, 150));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
                             break;
 
                         case 3: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
@@ -359,7 +405,7 @@ public class TimeLineAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = null;
+                Intent intent;
                 switch (type) {
                     case HelpMe.TYPE_PICTURE:
                         intent = new Intent(context, PictureDetail.class);
@@ -400,6 +446,39 @@ public class TimeLineAdapter extends BaseAdapter {
         return convertView;
     }
 
+    private void registerEvent(){
+        EventBus.getDefault().register(this);
+    }
+
+    private void unRegisterEvent(){
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(AudioDownloadEvent event){
+        if(event.getCallerCode() == DOWNLOAD_AUDIO_EVENT_CODE) {
+            unRegisterEvent();
+            pDialog.dismiss();
+            if (event.isSuccess()) {
+                currentPlayingAudioId = event.getAudio().getId();
+                mPlayer = new AudioPlayer(event.getAudio().getDataLocalURL(), this);
+                mPlayer.startPlaying();
+                AudioDataSource.updateDataLocalUrl(context, event.getAudio().getId(), event.getAudio().getDataLocalURL());
+            } else {
+                Toast.makeText(context, "Sorry, unable to download your audio, please try again later", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onAudioComplete() {
+        if(lastPlayedAudioPosition >= firstVisiblePosition && lastPlayedAudioPosition <= lastVisiblePosition) {
+            lastPlayedAudioPlayButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+        }
+        lastPlayedAudioPlayButton = null;
+        currentPlayingAudioId = "-1";
+        isPlaying = false;
+    }
+
     public static class ViewHolder {
         public TextView timelineItemCaption;
         public TextView timelineItemTime;
@@ -420,29 +499,6 @@ public class TimeLineAdapter extends BaseAdapter {
         public ImageView timelineItemMoodicon;
         public TextView timelineItemMoodiconTxt;
         public TextView timelineItemMoodExtraBuddyTxt;
-    }
-
-    private void registerEvent(){
-        EventBus.getDefault().register(this);
-    }
-
-    private void unRegisterEvent(){
-        EventBus.getDefault().unregister(this);
-    }
-
-    public void onEvent(AudioDownloadEvent event){
-        Log.d(TAG, "onEvent called from timeline adapter " + DOWNLOAD_AUDIO_EVENT_CODE + event.getCallerCode());
-        if(event.getCallerCode() == DOWNLOAD_AUDIO_EVENT_CODE) {
-            unRegisterEvent();
-            pDialog.dismiss();
-            if (event.isSuccess()) {
-                mPlayer = new AudioPlayer(event.getAudio().getDataLocalURL());
-                mPlayer.startPlaying();
-                AudioDataSource.updateDataLocalUrl(context, event.getAudio().getId(), event.getAudio().getDataLocalURL());
-            } else {
-                Toast.makeText(context, "Sorry, unable to download your audio, please try again later", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
 }

@@ -2,7 +2,6 @@ package com.traveljar.memories.gallery.adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public class AudioGalleryAdapter extends BaseAdapter {
+public class AudioGalleryAdapter extends BaseAdapter implements AudioPlayer.OnAudioCompleteListener{
 
     private static final String TAG = "AUDIO_GALLERY_ADAPTER";
     private Context mContext;
@@ -81,55 +80,42 @@ public class AudioGalleryAdapter extends BaseAdapter {
             playAudio.setImageResource(R.drawable.play_audio_red);
         }
 
+/*        if(currentPlayingAudioId.equals("-1") || (currentPlayingAudioId.equals(audio.getId()) && !isPlaying)){
+            playAudio.setImageResource(R.drawable.play_audio_red);
+        }else {
+            playAudio.setImageResource(R.drawable.pause_audio_red);
+        }*/
+
         playAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Condition 1: if already playing and clicked for the audio which is already playing
+                if(isPlaying && audio.getId().equals(currentPlayingAudioId)){
+                    playAudio.setImageResource(R.drawable.play_audio_red);
+                    currentPlayingAudioId = "-1";
+                    lastPlayedAudioPlayButton = playAudio;
+                    isPlaying = false;
+                }else {
+                    // Condition : If already playing and play clicked for different audio, than change the icon of the previous playing audio
+                    if(isPlaying) {
+                        mPlayer.stopPlaying();
+                        if (lastPlayedAudioPlayButton != null) {
+                            lastPlayedAudioPlayButton.setImageResource(R.drawable.play_audio_red);
+                        }
+                    }
 
-                if (!isPlaying) {
-                    //No audio is being played so play the current audio
-                    Log.d(TAG, "No audio is being played so play the current audio");
                     if (audio.getDataLocalURL() == null) {
                         mProgressDialog.show();
                         DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(DOWNLOAD_EVENT_CODE, audio);
                         asyncTask.execute();
                     } else {
-                        mPlayer = new AudioPlayer(audio.getDataLocalURL());
+                        mPlayer = new AudioPlayer(audio.getDataLocalURL(), AudioGalleryAdapter.this);
                         mPlayer.startPlaying();
                     }
                     playAudio.setImageResource(R.drawable.pause_audio_red);
                     currentPlayingAudioId = audio.getId();
                     lastPlayedAudioPlayButton = playAudio;
                     isPlaying = true;
-                } else {
-                    mPlayer.stopPlaying();
-                    if(lastPlayedAudioPlayButton != null) {
-                        lastPlayedAudioPlayButton.setImageResource(R.drawable.play_audio_red);
-                    }
-
-                    //If play clicked for the audio which is already playing than stop that audio
-                    if (currentPlayingAudioId.equals(audio.getId())) {
-                        Log.d(TAG, "play audio button clicked for the audio which was already playing");
-                        playAudio.setImageResource(R.drawable.play_audio_red);
-                        currentPlayingAudioId = "-1";
-                        lastPlayedAudioPlayButton = playAudio;
-                        isPlaying = false;
-                    } else {
-                        //If play clicked and another audio is also playing than stop that audio and play the requested one
-                        Log.d(TAG, "play audio button clicked for the audio other than audio which is playing");
-                        Log.d(TAG, "audio local url is " + audio.getDataLocalURL());
-                        if (audio.getDataLocalURL() == null) {
-                            mProgressDialog.show();
-                            DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(DOWNLOAD_EVENT_CODE, audio);
-                            asyncTask.execute();
-                        } else {
-                            mPlayer = new AudioPlayer(audio.getDataLocalURL());
-                            mPlayer.startPlaying();
-                        }
-                        playAudio.setImageResource(R.drawable.pause_audio_red);
-                        currentPlayingAudioId = audio.getId();
-                        lastPlayedAudioPlayButton = playAudio;
-                        // change the icon from pause to play for the previous audio
-                    }
                 }
             }
         });
@@ -147,11 +133,11 @@ public class AudioGalleryAdapter extends BaseAdapter {
 
     public void onEvent(AudioDownloadEvent event){
         if(event.getCallerCode() == DOWNLOAD_EVENT_CODE) {
-            unRegisterEvent();
+            //unRegisterEvent();
             mProgressDialog.dismiss();
             if (event.isSuccess()) {
                 currentPlayingAudioId = event.getAudio().getId();
-                mPlayer = new AudioPlayer(event.getAudio().getDataLocalURL());
+                mPlayer = new AudioPlayer(event.getAudio().getDataLocalURL(), this);
                 mPlayer.startPlaying();
                 AudioDataSource.updateDataLocalUrl(mContext, event.getAudio().getId(), event.getAudio().getDataLocalURL());
             } else {
@@ -160,4 +146,10 @@ public class AudioGalleryAdapter extends BaseAdapter {
         }
     }
 
+    @Override
+    public void onAudioComplete() {
+        lastPlayedAudioPlayButton.setImageResource(R.drawable.play_audio_red);
+        lastPlayedAudioPlayButton = null;
+        isPlaying = false;
+    }
 }

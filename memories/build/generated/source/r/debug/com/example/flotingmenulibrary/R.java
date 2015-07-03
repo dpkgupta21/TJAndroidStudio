@@ -184,10 +184,10 @@ public final class R {
 		public static final int abc_list_selector_disabled_holo_light = 0x7f02002d;
 		public static final int abc_list_selector_holo_dark = 0x7f02002e;
 		public static final int abc_list_selector_holo_light = 0x7f02002f;
-		public static final int fab_bg_mini = 0x7f02008f;
-		public static final int fab_bg_normal = 0x7f020090;
-		public static final int shadow = 0x7f020135;
-		public static final int shadow_mini = 0x7f020136;
+		public static final int fab_bg_mini = 0x7f02008e;
+		public static final int fab_bg_normal = 0x7f02008f;
+		public static final int shadow = 0x7f02013a;
+		public static final int shadow_mini = 0x7f02013b;
 	}
 	public static final class id {
 		public static final int action_bar = 0x7f0c006b;

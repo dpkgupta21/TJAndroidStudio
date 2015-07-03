@@ -29,21 +29,21 @@ public class SelectMoodsDialog extends DialogFragment {
     private List<Map<String, String>> emoticons;
     private String[] emoticonNames = new String[]{
             "angry",
-            "after boom",
+            "boooom",
             "amazed",
             "angry",
-            "bad smelly",
+            "booooo",
             "baffle",
             "beated",
             "beauty",
-            "big smile",
+            "hahahaha",
             "boss",
             "confident",
             "confused",
             "cry",
             "doubt",
             "embarassed",
-            "hell boy",
+            "hellll",
             "hungry",
             "rap",
             "sad",
@@ -53,11 +53,11 @@ public class SelectMoodsDialog extends DialogFragment {
             "waaaht",
 
     };
-    private int[] emoticonIds = new int[]{R.drawable.angry, R.drawable.after_boom,
-            R.drawable.amazed, R.drawable.angry, R.drawable.bad_smelly, R.drawable.baffle,
-            R.drawable.beated, R.drawable.beauty, R.drawable.big_smile,
+    private int[] emoticonIds = new int[]{R.drawable.angry, R.drawable.boooom,
+            R.drawable.amazed, R.drawable.angry, R.drawable.booooo, R.drawable.baffle,
+            R.drawable.beated, R.drawable.beauty, R.drawable.hahahaha,
             R.drawable.boss, R.drawable.confident, R.drawable.confuse,
-            R.drawable.cry, R.drawable.doubt, R.drawable.embarrassed, R.drawable.hell_boy, R.drawable.hungry,
+            R.drawable.cry, R.drawable.doubt, R.drawable.embarrassed, R.drawable.hellll, R.drawable.hungry,
             R.drawable.rap, R.drawable.sad,R.drawable.shame, R.drawable.smile, R.drawable.spiderman,
             R.drawable.waaaht,};
 

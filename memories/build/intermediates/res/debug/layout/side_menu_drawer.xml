@@ -40,15 +40,6 @@
             android:text="Update your status here"
             android:textColor="@color/white" />
 
-        <ImageButton
-            android:id="@+id/sidemenu_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/sidemenu_profile_pic"
-            android:background="@color/transparent"
-            android:contentDescription="@string/default_string"
-            android:src="@drawable/ic_settings_black_24dp" />
     </RelativeLayout>
 
     <ListView
@@ -68,5 +59,61 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/tj_gray_border" />
+
+    <!-- Settings and Other Things-->
+
+    <RelativeLayout
+        android:id="@+id/sidemenu_settings"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:background="@drawable/list_selector">
+
+        <ImageView
+            android:id="@+id/side_menu_settings_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/default_string"
+            android:src="@drawable/ic_settings_applications_black_24dp" />
+
+        <com.traveljar.memories.customviews.MyTextViewBodyMed14
+            android:id="@+id/side_menu_settings_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="72dp"
+            android:gravity="center_vertical"
+            android:text="Settings"
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/list_selector">
+
+        <ImageView
+            android:id="@+id/side_menu_feedback_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/default_string"
+            android:src="@drawable/ic_feedback_black_24dp" />
+
+        <com.traveljar.memories.customviews.MyTextViewBodyMed14
+            android:id="@+id/side_menu_feedback_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="72dp"
+            android:gravity="center_vertical"
+            android:text="Send Feedback"
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
+
+
 
 </LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/side_menu_drawer.xml -->

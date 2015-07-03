@@ -229,19 +229,19 @@ public class HelpMe {
     public static Bitmap decodeSampledBitmapFromPath(Context mContext, String resPath,
                                                      int reqWidth, int reqHeight) throws FileNotFoundException {
 
-        Log.d(TAG, "local file path for image is " + resPath);
+        //Log.d(TAG, "local file path for image is " + resPath);
 
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
 
-        Log.d(TAG, "decoding from path to fileinputstream");
+        //Log.d(TAG, "decoding from path to fileinputstream");
         BitmapFactory.decodeStream(new FileInputStream(resPath), null, options);
 
         // Calculate inSampleSize
         // options.inSampleSize = 8;
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-        Log.d(TAG, "In sample size " + options.inSampleSize);
+        //Log.d(TAG, "In sample size " + options.inSampleSize);
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
