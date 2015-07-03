@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,8 +58,7 @@ public class ProfileActivity extends BaseActivity {
     private boolean isStatusUpdated;
 
     private String mProfileImgPath;
-
-    private Menu mMenu;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +108,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void setUpToolbar(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Profile");
@@ -150,7 +148,8 @@ public class ProfileActivity extends BaseActivity {
                                 new UpdateProfileAsyncTask().execute();
                                 String columnNamesArray[] = new String[columnNames.size()];
                                 String columnValuesArray[] = new String[columnNames.size()];
-                                ContactDataSource.updateContact(ProfileActivity.this, TJPreferences.getUserId(ProfileActivity.this), columns.toArray(columnValuesArray), columnNames.toArray(columnNamesArray));
+                                ContactDataSource.updateContact(ProfileActivity.this, TJPreferences.getUserId(ProfileActivity.this),
+                                        columns.toArray(columnValuesArray), columnNames.toArray(columnNamesArray));
                             }else {
                                 finish();
                             }
@@ -173,7 +172,7 @@ public class ProfileActivity extends BaseActivity {
                             }
                         });
                         item.setVisible(false);
-                        mMenu.findItem(R.id.action_done).setVisible(true);
+                        toolbar.getMenu().findItem(R.id.action_done).setVisible(true);
                         return true;
                 }
                 return false;

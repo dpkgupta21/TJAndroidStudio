@@ -10,13 +10,21 @@ public class AudioPlayer {
     private static final String TAG = "AUDIO_PLAYER.JAVA";
     private MediaPlayer mPlayer = null;
     private String mFileName;
+    private OnAudioCompleteListener completionListener;
 
-    public AudioPlayer(String fileName) {
+    public AudioPlayer(String fileName, OnAudioCompleteListener completionListener) {
         mFileName = fileName;
+        this.completionListener = completionListener;
     }
 
     public void startPlaying() {
         mPlayer = new MediaPlayer();
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                completionListener.onAudioComplete();
+            }
+        });
         try {
             mPlayer.setDataSource(mFileName);
             mPlayer.prepare();
@@ -29,6 +37,10 @@ public class AudioPlayer {
     public void stopPlaying() {
         mPlayer.release();
         mPlayer = null;
+    }
+
+    public interface OnAudioCompleteListener{
+        void onAudioComplete();
     }
 
 }

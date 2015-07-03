@@ -184,8 +184,8 @@ public final class R {
 		public static final int abc_list_selector_disabled_holo_light = 0x7f02002d;
 		public static final int abc_list_selector_holo_dark = 0x7f02002e;
 		public static final int abc_list_selector_holo_light = 0x7f02002f;
-		public static final int fab_bg_mini = 0x7f02007d;
-		public static final int fab_bg_normal = 0x7f02007e;
+		public static final int fab_bg_mini = 0x7f02007c;
+		public static final int fab_bg_normal = 0x7f02007d;
 		public static final int shadow = 0x7f0200ec;
 		public static final int shadow_mini = 0x7f0200ed;
 	}

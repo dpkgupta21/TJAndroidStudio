@@ -30,9 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by abhi on 28/05/15.
- */
 public class SideMenuDrawer extends Fragment {
 
     private static final String TAG = "<BaseActivity>";
