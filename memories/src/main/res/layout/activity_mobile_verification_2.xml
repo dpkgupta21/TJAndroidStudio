@@ -13,7 +13,7 @@
         android:layout_marginTop="50dp"
         android:src="@drawable/logo_embross" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg
+    <com.traveljar.memories.customviews.MyTextViewBodyReg14
         android:id="@+id/textView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -33,12 +33,6 @@ public class Settings extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
-
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Settings");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         setUpToolbar();
 
         createSettings();
@@ -73,7 +67,7 @@ public class Settings extends AppCompatActivity{
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Account Settings");
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,10 +135,10 @@ public class Settings extends AppCompatActivity{
     }
 
     private void initializeSettingsIconIdsList() {
-        settingsIconIdsList.add(String.valueOf(R.drawable.settings_account));
-        settingsIconIdsList.add(String.valueOf(R.drawable.settings_general));
-        settingsIconIdsList.add(String.valueOf(R.drawable.settings_about));
-        settingsIconIdsList.add(String.valueOf(R.drawable.settings_logout));
+        settingsIconIdsList.add(String.valueOf(R.drawable.ic_account_circle_black_24dp));
+        settingsIconIdsList.add(String.valueOf(R.drawable.ic_settings_applications_black_24dp));
+        settingsIconIdsList.add(String.valueOf(R.drawable.ic_info_black_24dp));
+        settingsIconIdsList.add(String.valueOf(R.drawable.ic_power_settings_new_black_24dp));
         settingsIconIdsList.add(String.valueOf(R.drawable.logout));
         settingsIconIdsList.add(String.valueOf(R.drawable.logout));
         settingsIconIdsList.add(String.valueOf(R.drawable.logout));

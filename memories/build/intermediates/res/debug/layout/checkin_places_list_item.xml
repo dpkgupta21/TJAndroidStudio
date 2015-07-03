@@ -21,7 +21,7 @@
 
         <!-- checkin_place profileName -->
 
-        <com.traveljar.memories.customviews.MyTextViewBodyMed
+        <com.traveljar.memories.customviews.MyTextViewBodyMed14
             android:id="@+id/checkin_place_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
 
         <!-- checkin_place address -->
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/checkin_place_address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             android:singleLine="true"
             android:text="Phuket, Thailand" />
 
-        <com.traveljar.memories.customviews.MyTextViewSmallText
+        <com.traveljar.memories.customviews.MyTextViewReg12
             android:id="@+id/checkin_place_count"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -49,4 +49,4 @@
             android:text="3,123 were here" />
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/checkin_places_list_item.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/checkin_places_list_item.xml -->

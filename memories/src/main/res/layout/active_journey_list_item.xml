@@ -7,8 +7,6 @@
     android:paddingRight="7dp"
     android:paddingTop="7dp">
 
-
-
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -24,67 +22,66 @@
 
         </FrameLayout>
 
-        <com.traveljar.memories.customviews.MyTextViewHeadline
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <com.traveljar.memories.customviews.MyTextViewReg24
             android:id="@+id/active_journey_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             android:text="Journey Name"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textColor="@color/white" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/active_journey_list_tagline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/active_journey_list_name"
             android:text="Journey tagline"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/white" />
 
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/active_journey_list_buddy_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:padding="7dp"
+            android:layout_marginLeft="5dp"
             android:text="Some buddies"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/white" />
 
         <ImageView
             android:id="@+id/active_journey_list_buddy_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="7dp"
             android:layout_toLeftOf="@id/active_journey_list_buddy_count"
-            android:src="@drawable/active_journey_buddy" />
+            android:src="@drawable/ic_group_white_18dp" />
 
 
         <ImageView
             android:id="@+id/active_journey_list_place_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="7dp"
-            android:src="@drawable/active_journey_location" />
+            android:src="@drawable/ic_location_on_white_18dp" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/active_journey_list_buddy_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="7dp"
             android:layout_toRightOf="@id/active_journey_list_place_icon"
             android:text="Some place"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/white" />
 
-
+    </RelativeLayout>
 
 </RelativeLayout>

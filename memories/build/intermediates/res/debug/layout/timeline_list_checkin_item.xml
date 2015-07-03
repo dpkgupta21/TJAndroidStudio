@@ -23,11 +23,11 @@
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
             android:layout_below="@id/timelineItemImage"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="-45dp"
             android:src="@drawable/gumnaam_profile_image" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyMed14
             android:id="@+id/timelineItemUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:text="Some Name"
             android:textColor="@color/white" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyMed
+        <com.traveljar.memories.customviews.MyTextViewBodyMed14
             android:id="@+id/timelineItemCheckinPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <com.traveljar.memories.customviews.MyTextViewSubHeadingReg
+            <com.traveljar.memories.customviews.MyTextViewReg16
                 android:id="@+id/timelineItemCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                 android:textColor="@color/black" />
 
 
-            <com.traveljar.memories.customviews.MyTextViewSmallText
+            <com.traveljar.memories.customviews.MyTextViewReg12
                 android:id="@+id/timelineItemTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 android:contentDescription="@string/default_string"
                 android:src="@drawable/ic_favourite_empty" />
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg
+            <com.traveljar.memories.customviews.MyTextViewBodyReg14
                 android:id="@+id/noLikesTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,4 +104,4 @@
         </RelativeLayout>
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_checkin_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_checkin_item.xml -->

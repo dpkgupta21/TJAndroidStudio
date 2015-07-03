@@ -30,7 +30,7 @@
             android:layout_marginLeft="15dp"
             android:src="@drawable/gumnaam_profile_image" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/photo_detail_profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 android:contentDescription="@string/default_string"
                 android:src="@drawable/ic_favourite_empty" />
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg
+            <com.traveljar.memories.customviews.MyTextViewBodyReg14
                 android:id="@+id/no_likes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="50sp" />
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg
+            <com.traveljar.memories.customviews.MyTextViewBodyReg14
                 android:id="@+id/photo_detail_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg
+            <com.traveljar.memories.customviews.MyTextViewBodyReg14
                 android:id="@+id/photo_detail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
 
         </RelativeLayout>
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/video_detail_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,4 +133,4 @@
     </LinearLayout>
 
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/video_detail.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/video_detail.xml -->

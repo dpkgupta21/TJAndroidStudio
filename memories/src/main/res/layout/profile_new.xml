@@ -23,6 +23,23 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/abhi" />
 
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/action_bar_background"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/Theme.AppCompat.NoActionBar">
+
+                    <com.traveljar.memories.customviews.MyTextViewMed20
+                        android:id="@+id/toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="Title"/>
+
+                </android.support.v7.widget.Toolbar>
+
         </FrameLayout>
 
         <com.traveljar.memories.customviews.MyCircularImageView
@@ -35,7 +52,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/gumnaam_profile_image" />
 
-        <com.traveljar.memories.customviews.MyTextViewHeadline
+        <com.traveljar.memories.customviews.MyTextViewReg24
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,31 +62,13 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/profile_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/profile_name"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white" />
-
-<!--        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="Title"/>
-
-        </android.support.v7.widget.Toolbar>-->
 
     </RelativeLayout>
 

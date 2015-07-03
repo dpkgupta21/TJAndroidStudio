@@ -58,12 +58,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         setContentView(R.layout.video_detail);
         Log.d(TAG, "entrerd video details");
 
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Video Detail");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
-
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
 
@@ -175,7 +169,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         title.setText("Memories");
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

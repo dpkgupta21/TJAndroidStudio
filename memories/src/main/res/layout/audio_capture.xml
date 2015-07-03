@@ -17,7 +17,7 @@
             android:layout_height="100dp"
             android:src="@drawable/audio_wave" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/timerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,14 +36,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/play_audio_red" />
+            android:src="@drawable/ic_play_arrow_black_24dp" />
 
         <ImageButton
             android:id="@+id/audio_capture_stop_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/pause_audio_red" />
+            android:src="@drawable/ic_pause_black_24dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -55,14 +55,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/play_audio_red" />
+                android:src="@drawable/ic_play_arrow_black_24dp" />
 
             <ImageButton
                 android:id="@+id/audio_capture_retry_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/sync" />
+                android:src="@drawable/ic_replay_black_24dp" />
 
         </LinearLayout>
     </LinearLayout>

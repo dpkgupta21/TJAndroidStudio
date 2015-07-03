@@ -160,7 +160,7 @@ public class ActivejourneyList extends BaseActivity {
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Active Journeys");
 
-        toolbar.setNavigationIcon(R.drawable.ic_delete);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar.inflateMenu(R.menu.active_journey_action_bar);
         //toolbar.setTitle("Active Journeys");
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

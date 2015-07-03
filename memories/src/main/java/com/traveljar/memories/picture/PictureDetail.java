@@ -55,12 +55,6 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         setContentView(R.layout.photo_detail);
         Log.d(TAG, "entrerd photo details");
 
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        toolbar.setTitle("Picture Detail");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
-
         photo = (ImageView) findViewById(R.id.photo_detail_photo);
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
@@ -166,8 +160,8 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
 
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Picture");
-
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

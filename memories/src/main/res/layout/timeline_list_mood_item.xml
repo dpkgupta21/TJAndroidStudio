@@ -26,7 +26,7 @@
 
         <!-- Extra elements for code consistensy. They are used in timeline-->
         <!-- So DO NOT deleete these two-->
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyMed14
             android:id="@+id/timelineItemUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
 
         </RelativeLayout>
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/timelineItemMoodExtraBuddyTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/sad" />
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg
+            <com.traveljar.memories.customviews.MyTextViewBodyReg14
                 android:id="@+id/timelineItemMoodIconTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp">
 
-        <com.traveljar.memories.customviews.MyTextViewSubHeadingReg
+        <com.traveljar.memories.customviews.MyTextViewReg16
             android:id="@+id/timelineItemCaption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
             android:textSize="18sp" />
 
 
-        <com.traveljar.memories.customviews.MyTextViewSmallText
+        <com.traveljar.memories.customviews.MyTextViewReg12
             android:id="@+id/timelineItemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
             android:contentDescription="@string/default_string"
             android:src="@drawable/ic_favourite_empty" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

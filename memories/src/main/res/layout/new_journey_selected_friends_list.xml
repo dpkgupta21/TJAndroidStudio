@@ -32,7 +32,7 @@
             android:background="@color/transparent"
             android:contentDescription="@string/default_string"
             android:onClick="goToAllContactList"
-            android:src="@drawable/add182" />
+            android:src="@drawable/ic_add_black_24dp" />
     </RelativeLayout>
 
     <ListView

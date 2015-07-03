@@ -35,8 +35,8 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        fab:fab_addButtonColorNormal="@color/tj_red_dark_icons"
-        fab:fab_addButtonColorPressed="@color/tj_red_dark_icons"
+        fab:fab_addButtonColorNormal="@color/primaryColor"
+        fab:fab_addButtonColorPressed="@color/primaryColorDark"
         fab:fab_addButtonPlusIconColor="@color/white"
         fab:fab_expandDirection="up"
         fab:fab_labelStyle="@style/menu_labels_style">

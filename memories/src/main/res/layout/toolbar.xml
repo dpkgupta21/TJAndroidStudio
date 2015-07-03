@@ -12,12 +12,11 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        <TextView
+        <com.traveljar.memories.customviews.MyTextViewMed20
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textStyle="bold"
             android:text="Title"/>
 
     </android.support.v7.widget.Toolbar>

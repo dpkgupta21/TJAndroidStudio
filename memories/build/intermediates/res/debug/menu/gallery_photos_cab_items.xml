@@ -12,8 +12,8 @@
     <!-- Delete -->
     <item
         android:id="@+id/action_delete"
-        android:icon="@drawable/delete48"
+        android:icon="@drawable/ic_delete_white_24dp"
         android:title="Delete"
         app:showAsAction="never" />
 
-</menu><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/menu/gallery_photos_cab_items.xml -->
+</menu><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/menu/gallery_photos_cab_items.xml -->
