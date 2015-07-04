@@ -267,6 +267,7 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
 
                         // Condition 1: if already playing and clicked for the audio which is already playing
                         if (isPlaying && audio.getId().equals(currentPlayingAudioId)) {
+                            mPlayer.stopPlaying();
                             holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.play_audio_red);
                             currentPlayingAudioId = "-1";
                             lastPlayedAudioPlayButton = holder.timelineItemAudioPlayBtn;

@@ -80,17 +80,12 @@ public class AudioGalleryAdapter extends BaseAdapter implements AudioPlayer.OnAu
             playAudio.setImageResource(R.drawable.play_audio_red);
         }
 
-/*        if(currentPlayingAudioId.equals("-1") || (currentPlayingAudioId.equals(audio.getId()) && !isPlaying)){
-            playAudio.setImageResource(R.drawable.play_audio_red);
-        }else {
-            playAudio.setImageResource(R.drawable.pause_audio_red);
-        }*/
-
         playAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Condition 1: if already playing and clicked for the audio which is already playing
                 if(isPlaying && audio.getId().equals(currentPlayingAudioId)){
+                    mPlayer.stopPlaying();
                     playAudio.setImageResource(R.drawable.play_audio_red);
                     currentPlayingAudioId = "-1";
                     lastPlayedAudioPlayButton = playAudio;
