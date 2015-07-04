@@ -36,13 +36,11 @@ public class JourneyDataSource {
         values.put(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY, newJourney.getCreatedBy());
         String buddyIds = newJourney.getBuddies() == null ? "" : Joiner.on(",").join(newJourney.getBuddies());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, (buddyIds));
-        Log.d(TAG, "JOurney = " + newJourney.getIdOnServer() + "saving buddyIds = " + buddyIds + newJourney.getBuddies());
-        // values.put(MySQLiteHelper.JOURNEY_COLUMN_JOURNEY_LAPS,
-        // newJourney.getLaps().toString());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_STATUS, newJourney.getJourneyStatus());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_CREATED_AT, newJourney.getCreatedAt());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT, newJourney.getUpdatedAt());
         values.put(MySQLiteHelper.JOURNEY_COLUMN_COMPELTED_AT, newJourney.getCompletedAt());
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_IS_USER_ACTIVE, newJourney.isUserActive() ? 1 : 0);
 
         // insert row
         long journey_id = db.insert(MySQLiteHelper.TABLE_JOURNEY, null, values);
@@ -126,6 +124,14 @@ public class JourneyDataSource {
         db.close();
     }
 
+    public static void updateUserActiveStatus(Context context, String journeyId, boolean isActive) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_IS_USER_ACTIVE, isActive ? 1 : 0);
+        db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId, null);
+        db.close();
+    }
+
     public static void deleteJourney(Context context, String journeyId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         db.delete(MySQLiteHelper.TABLE_JOURNEY, MySQLiteHelper.JOURNEY_COLUMN_ID + "=?", new String[]{journeyId});
@@ -192,6 +198,7 @@ public class JourneyDataSource {
                 journey.setUpdatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT)));
                 journey.setCompletedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_COMPELTED_AT)));
                 journey.setLapsList(LapDataSource.getLapFromJourney(context, journey.getIdOnServer()));
+                journey.setIsUserActive(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_IS_USER_ACTIVE)) == 1);
                 Log.d(TAG, LapDataSource.getLapFromJourney(context, journey.getIdOnServer()) + "!");
                 journeyList.add(journey);
                 cursor.moveToNext();

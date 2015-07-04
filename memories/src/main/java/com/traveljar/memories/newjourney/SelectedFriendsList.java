@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.models.Contact;
-import com.traveljar.memories.newjourney.adapters.MultiAutoCompleteViewAdapter;
+import com.traveljar.memories.newjourney.adapters.FriendsAutoCompleteAdapter;
 import com.traveljar.memories.newjourney.adapters.SelectedFriendsListAdapter;
 import com.traveljar.memories.volley.AppController;
 
@@ -37,7 +37,7 @@ public class SelectedFriendsList extends AppCompatActivity {
     private ListView contactListView;
     private ProgressDialog mProgressDialog;
 
-    private MultiAutoCompleteViewAdapter adapter;
+    private FriendsAutoCompleteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +46,6 @@ public class SelectedFriendsList extends AppCompatActivity {
         Log.d(TAG, "entered Add friends");
 
         setUpToolBar();
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Select Friends");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         selectedList = new ArrayList<>();
 
@@ -74,7 +69,7 @@ public class SelectedFriendsList extends AppCompatActivity {
 
         allContactsList = ContactDataSource.getAllContacts(this);
 
-        adapter = new MultiAutoCompleteViewAdapter(this, allContactsList);
+        adapter = new FriendsAutoCompleteAdapter(this, allContactsList);
         macTv.setAdapter(adapter);
         macTv.setThreshold(1);
         macTv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -102,11 +97,12 @@ public class SelectedFriendsList extends AppCompatActivity {
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Select Friends");
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SelectedFriendsList.this.finish();
+                Log.d(TAG, "finished");
+                finish();
             }
         });
         TextView next = (TextView)toolbar.findViewById(R.id.action_done);
@@ -120,28 +116,6 @@ public class SelectedFriendsList extends AppCompatActivity {
         });
 
     }
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_items_laps, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_next:
-                goToNext();
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
 
     private void goToNext() {
         AppController.buddyList = new ArrayList<>();

@@ -35,7 +35,6 @@ import java.util.List;
 public class AudioDetail extends AppCompatActivity {
 
     private static final String TAG = "<AudioDetail>";
-    private static final int ACTION_ITEM_DELETE = 0;
     List<String> likedBy;
     private TextView dateBig;
     private TextView date;
@@ -105,7 +104,7 @@ public class AudioDetail extends AppCompatActivity {
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Audio Detail");
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

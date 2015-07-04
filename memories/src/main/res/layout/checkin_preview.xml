@@ -41,14 +41,14 @@
             android:imeOptions="actionDone"
             />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/checkin_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="@dimen/tj_large_font" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/checkin_details_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:background="@color/transparent"
             android:contentDescription="@string/default_string"
             android:onClick="goToCamera"
-            android:src="@drawable/small35" />
+            android:src="@drawable/ic_photo_camera_black_24dp" />
 
         <ImageButton
             android:id="@+id/checkin_details_friends_btn"
@@ -84,7 +84,7 @@
             android:background="@color/transparent"
             android:contentDescription="@string/default_string"
             android:onClick="goToBuddyList"
-            android:src="@drawable/add70" />
+            android:src="@drawable/ic_person_add_black_24dp" />
 
         <ImageButton
             android:id="@+id/checkin_details_place_btn"
@@ -94,7 +94,7 @@
             android:background="@color/transparent"
             android:contentDescription="@string/default_string"
             android:onClick="goToPlaceList"
-            android:src="@drawable/facebook30" />
+            android:src="@drawable/ic_location_on_black_24dp" />
     </LinearLayout>
 
 </LinearLayout>

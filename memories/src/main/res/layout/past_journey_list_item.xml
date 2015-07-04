@@ -6,7 +6,7 @@
     android:background="@drawable/abhi"
     android:padding="10dp">
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg
+    <com.traveljar.memories.customviews.MyTextViewBodyReg14
         android:id="@+id/past_journey_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/tj_large_font" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg
+    <com.traveljar.memories.customviews.MyTextViewBodyReg14
         android:id="@+id/past_journey_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/tj_large_font" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg
+    <com.traveljar.memories.customviews.MyTextViewBodyReg14
         android:id="@+id/past_journey_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

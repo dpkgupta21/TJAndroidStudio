@@ -35,7 +35,6 @@ import java.io.FileNotFoundException;
 public class PictureDetail extends AppCompatActivity implements DownloadPicture.OnPictureDownloadListener {
 
     private static final String TAG = "<PhotoDetail>";
-    private static final int ACTION_ITEM_DELETE = 0;
     private ImageView photo;
     private TextView dateBig;
     private TextView date;
@@ -54,12 +53,6 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photo_detail);
         Log.d(TAG, "entrerd photo details");
-
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        toolbar.setTitle("Picture Detail");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         photo = (ImageView) findViewById(R.id.photo_detail_photo);
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
@@ -166,8 +159,8 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
 
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Picture");
-
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,7 +174,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case ACTION_ITEM_DELETE:
+                    case R.id.action_delete:
                         new AlertDialog.Builder(PictureDetail.this)
                                 .setTitle("Delete")
                                 .setMessage("Are you sure you want to remove this item from your memories")

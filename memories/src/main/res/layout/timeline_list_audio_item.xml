@@ -10,16 +10,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="7dp"
         android:background="@color/white">
 
         <ImageButton
             android:id="@+id/timelineItemPlayBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/play_audio_red" />
+            android:src="@drawable/ic_play_arrow_black_24dp" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/text123"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +31,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/tj_large_font" />
 
-        <com.traveljar.memories.customviews.MyTextViewSmallText
+        <com.traveljar.memories.customviews.MyTextViewReg12
             android:id="@+id/timelineItemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,21 +74,22 @@
             android:contentDescription="@string/default_string"
             android:src="@drawable/ic_favourite_empty" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/timelineItemFavIcon"
-            android:text="0"
-            android:textSize="@dimen/tj_extra_giant_font" />
+            android:text="0"/>
 
-        <TextView
+        <com.traveljar.memories.customviews.MyTextViewBodyMed14
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/timelineItemUserName"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="Some Name"
             android:layout_toRightOf="@+id/timelineItemUserImage"
             android:layout_toEndOf="@+id/timelineItemUserImage" />
 

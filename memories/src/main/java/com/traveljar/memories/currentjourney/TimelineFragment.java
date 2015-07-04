@@ -15,8 +15,10 @@ import android.widget.RelativeLayout;
 
 import com.example.flotingmenulibrary.FloatingActionsMenu;
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
 import com.traveljar.memories.currentjourney.adapters.TimeLineAdapter;
+import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.SessionManager;
@@ -35,14 +37,17 @@ public class TimelineFragment extends Fragment {
     private View rootView;
     private List<Memories> memoriesList;
     private RelativeLayout mLayout;
+    private Journey journey;
 
     private int visibleItemPosition;
 
     private static TimelineFragment instance;
-    public TimelineFragment(){
+
+    public TimelineFragment() {
         instance = this;
     }
-    public static TimelineFragment getInstance(){
+
+    public static TimelineFragment getInstance() {
         return instance == null ? new TimelineFragment() : instance;
     }
 
@@ -61,20 +66,15 @@ public class TimelineFragment extends Fragment {
         Intent intent = new Intent(getActivity(), MakeServerRequestsService.class);
         getActivity().startService(intent);
 
-        Log.d(TAG, "onactivitycreated() method called from timeline");
-        /**
-         * Call getActivity() function whenever you want to check user login getActivity() will
-         * redirect user to LoginActivity is he is not logged in
-         * */
-
         mLayout = (RelativeLayout) rootView.findViewById(R.id.timeline_layout);
 
         SessionManager session = new SessionManager(getActivity());
         session.checkLogin(getActivity());
 
-        String j_id = TJPreferences.getActiveJourneyId(getActivity());
+        //String j_id = TJPreferences.getActiveJourneyId(getActivity());
+        journey = JourneyDataSource.getJourneyById(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
         Log.d(TAG, "Yes user is logged in.....");
-        Log.d(TAG, "j_id = " + j_id);
+        Log.d(TAG, "j_id = " + journey.getIdOnServer());
         Log.d(TAG, "user_id = " + TJPreferences.getUserId(getActivity()));
 
         mListView = (ListView) rootView.findViewById(R.id.timelineList);
@@ -95,6 +95,10 @@ public class TimelineFragment extends Fragment {
         // FAB ============================================
         // Configure floating action button
         mFab = (FloatingActionsMenu) rootView.findViewById(R.id.multiple_actions_down);
+        Log.d(TAG, "user active" + journey.isUserActive());
+        if(!journey.isUserActive()){
+            mFab.setVisibility(View.GONE);
+        }
         baseActivityContentOverlay = (FrameLayout) rootView.findViewById(R.id.content_activity_overlay);
 
         mFab.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
@@ -137,10 +141,11 @@ public class TimelineFragment extends Fragment {
         super.onPause();
     }
 
-    public void loadMemoriesList(){
-        memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));        Log.d(TAG, "no of memories = " + memoriesList.size());
+    public void loadMemoriesList() {
+        memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
         Log.d(TAG, "no of memories = " + memoriesList.size());
-        if(memoriesList.size() > 0) {
+        Log.d(TAG, "no of memories = " + memoriesList.size());
+        if (memoriesList.size() > 0) {
             mListView.setVisibility(View.VISIBLE);
             mLayout.setBackgroundColor(getResources().getColor(R.color.white));
             if (mAdapter == null) {
@@ -154,7 +159,7 @@ public class TimelineFragment extends Fragment {
                 mListView.setAdapter(mAdapter);
                 mListView.setSelection(visibleItemPosition);
             }
-        }else {
+        } else {
             Log.d(TAG, "no of memories < 0");
             mListView.setVisibility(View.GONE);
             mLayout.setBackgroundResource(R.drawable.img_no_timeline_item);

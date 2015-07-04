@@ -20,7 +20,7 @@
             android:numColumns="auto_fit"
             android:verticalSpacing="10dp" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

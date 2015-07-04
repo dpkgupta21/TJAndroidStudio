@@ -71,7 +71,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
 
     private void setUpToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.subtitle_toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_delete);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         TextView subtitle = (TextView)toolbar.findViewById(R.id.toolbar_subtitle);
         title.setText(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName());
@@ -160,6 +160,17 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.timeline_viewpager + ":" + mViewPager.getCurrentItem());
         if(fragment instanceof TimelineFragment){
             TimelineFragment.getInstance().loadMemoriesList();
+        }
+    }
+
+    public void refreshTimelineFragment(){
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.timeline_viewpager + ":" + mViewPager.getCurrentItem());
+        if(fragment instanceof TimelineFragment){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .detach(fragment)
+                    .attach(fragment)
+                    .commit();
         }
     }
 

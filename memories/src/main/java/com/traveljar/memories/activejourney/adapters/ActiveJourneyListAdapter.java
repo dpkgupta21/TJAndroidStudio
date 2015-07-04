@@ -169,11 +169,15 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
                     Log.d(TAG, "context " + mContext + " -- " + intent);
                 }
             } else {
-                Log.d(TAG, "all required contacts are already present in the database");
+                Log.d(TAG, "1.1");
                 mDialog.dismiss();
+                Log.d(TAG, "1.2");
                 Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
+                Log.d(TAG, "1.3");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Log.d(TAG, "1.4");
                 mContext.startActivity(intent);
+                Log.d(TAG, "1.5");
             }
 
         }

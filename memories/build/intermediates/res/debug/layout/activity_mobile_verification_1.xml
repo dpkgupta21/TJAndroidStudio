@@ -14,7 +14,7 @@
         android:layout_marginTop="39dp"
         android:src="@drawable/logo_embross" />
 
-    <com.traveljar.memories.customviews.MyTextViewSubHeadingReg
+    <com.traveljar.memories.customviews.MyTextViewReg16
         android:id="@+id/textView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         android:text="Verify"
         android:textColor="@color/white" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg
+    <com.traveljar.memories.customviews.MyTextViewBodyReg14
         android:id="@+id/number_ver1_verifying_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         android:text="Verifying, Please wait..."
         android:visibility="gone" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg
+    <com.traveljar.memories.customviews.MyTextViewBodyReg14
         android:id="@+id/number_ver1_countdown_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -36,6 +36,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String JOURNEY_COLUMN_CREATED_AT = "createdAt";
     public static final String JOURNEY_COLUMN_UPDATED_AT = "updatedAt";
     public static final String JOURNEY_COLUMN_COMPELTED_AT = "completedAt";
+    public static final String JOURNEY_COLUMN_IS_USER_ACTIVE = "isUserActive"; //Flag to check whether current user is active or not
 
     // Table TIMELINE fields
     public static final String TABLE_TIMELINE = "TIMELINE";
@@ -131,7 +132,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String CHECKIN_COLUMN_LATITUDE = "latitude";
     public static final String CHECKIN_COLUMN_LONGITUDE = "longitude";
     public static final String CHECKIN_COLUMN_PLACE_NAME = "checkInPlaceName";
-    public static final String CHECKIN_COLUMN_PIC_URL = "checkInPicURL";
+    public static final String CHECKIN_COLUMN_PIC_LOCAL_URL = "checkInPicLocalURL";
+    public static final String CHECKIN_COLUMN_PIC_SERVER_URL = "checkInPicServerURL";
+    public static final String CHECKIN_COLUMN_PIC_THUMB_URL = "checkInPicThumbURL";
     public static final String CHECKIN_COLUMN_WITH = "checkInWith";
     public static final String CHECKIN_COLUMN_CREATED_BY = "createdBy";
     public static final String CHECKIN_COLUMN_CREATED_AT = "createdAt";
@@ -268,6 +271,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + JOURNEY_COLUMN_CREATED_AT + " integer ,"
             + JOURNEY_COLUMN_UPDATED_AT + " integer ,"
             + JOURNEY_COLUMN_COMPELTED_AT + " integer ,"
+            + JOURNEY_COLUMN_IS_USER_ACTIVE + " integer ,"
             + JOURNEY_COLUMN_STATUS + " text " + ");";
 
     private static final String CREATE_TABLE_TIMELINE = "create table " + TABLE_TIMELINE + "("
@@ -360,7 +364,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + CHECKIN_COLUMN_LATITUDE + " REAL,"
             + CHECKIN_COLUMN_LONGITUDE + " REAL,"
             + CHECKIN_COLUMN_PLACE_NAME + " text,"
-            + CHECKIN_COLUMN_PIC_URL + " text ,"
+            + CHECKIN_COLUMN_PIC_LOCAL_URL + " text ,"
+            + CHECKIN_COLUMN_PIC_THUMB_URL + " text ,"
+            + CHECKIN_COLUMN_PIC_SERVER_URL + " text ,"
             + CHECKIN_COLUMN_WITH + " text ,"
             + CHECKIN_COLUMN_CREATED_BY + " text ,"
             + CHECKIN_COLUMN_CREATED_AT + " text ,"

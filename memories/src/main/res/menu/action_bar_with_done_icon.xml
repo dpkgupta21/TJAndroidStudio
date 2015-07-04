@@ -5,7 +5,7 @@
     <!-- Done Button -->
     <item
         android:id="@+id/action_done"
-        android:icon="@drawable/ic_done"
+        android:icon="@drawable/ic_check_white_24dp"
         android:title="Done"
         app:showAsAction="withText|always" />
 

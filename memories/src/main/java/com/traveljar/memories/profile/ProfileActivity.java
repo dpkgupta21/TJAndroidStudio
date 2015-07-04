@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import retrofit.http.HEAD;
+
 public class ProfileActivity extends BaseActivity {
 
     private static final String TAG = "<PROFILEACTIVITY>";
@@ -65,12 +67,6 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_new);
 
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Profile");
-        toolbar.setVisibility(View.GONE);
-
-        Toolbar toolbarProfile = (Toolbar) findViewById(R.id.toolbar_profile);
-        setSupportActionBar(toolbarProfile);*/
         setUpToolbar();
 
         mProfileImg = (MyCircularImageView) findViewById(R.id.profile_img);
@@ -109,11 +105,15 @@ public class ProfileActivity extends BaseActivity {
 
     private void setUpToolbar(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.GONE);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar_profile);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
 
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Profile");
 
-        toolbar.setNavigationIcon(R.drawable.ic_delete);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
         toolbar.inflateMenu(R.menu.toolbar_profile);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

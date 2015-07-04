@@ -5,7 +5,7 @@
     android:layout_gravity="center_vertical"
     android:paddingRight="3dp">
 
-    <TextView
+    <com.traveljar.memories.customviews.MyTextViewMed20
         android:id="@+id/action_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

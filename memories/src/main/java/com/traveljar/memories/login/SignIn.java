@@ -28,6 +28,7 @@ import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.models.Contact;
+import com.traveljar.memories.services.PullContactsService;
 import com.traveljar.memories.services.PullMemoriesService;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
@@ -139,8 +140,11 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
                                         e.printStackTrace();
                                     }
                                     Log.d(TAG, response.toString());
-                                    Log.d(TAG, "calling pullMemoriesService to fetch all journeys and their memories");
+                                    // Fetch all contacts and memories and contacts
                                     if (HelpMe.isNetworkAvailable(SignIn.this)) {
+                                        Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+                                        intent.putExtra("ACTIVITY_CODE", 3);
+                                        startService(intent);
                                         new PullMemoriesService(SignIn.this, SignIn.this, REQUEST_FETCH_MEMORIES).fetchJourneys();
                                     } else {
                                         Toast.makeText(SignIn.this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
@@ -193,7 +197,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
         String phone = userItem.getString("phone");
         String api_key = userItem.getString("api_key");
         String status = userItem.getString("status");
-        status = (status == "null") ? "Those who travel are not lost" : status;
+        status = (status.equals("null")) ? "Those who travel are not lost" : status;
         String interest = userItem.getString("interests");
         final String picServerUrl = userItem.getJSONObject("profile_picture").getJSONObject("original").getString("url");
         String picLocalUrl;
@@ -201,7 +205,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
 
 
         // Fetching the profile image of the user
-        if (picServerUrl != "null") {
+        if (picServerUrl.equals("null")) {
             picLocalUrl = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + id + ".jpeg";
             TJPreferences.setProfileImgPath(this, picLocalUrl);
             ImageRequest request = new ImageRequest(picServerUrl,
@@ -302,15 +306,10 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
         return true;
     }
 
-    /**
-     * Gets the current registration ID for application on GCM service, if there
-     * is one.
-     * <p/>
+    /*
+     * Gets the current registration ID for application on GCM service, if there is one.
      * If result is empty, the app needs to register.
-     *
-     * @return registration ID, or empty string if there is no existing
-     * registration ID.
-     */
+     * @return registration ID, or empty string if there is no existing registration ID. */
     private String getRegistrationId(Context context) {
         String registrationId = TJPreferences.getGcmRegId(context);
         if (registrationId == null) {

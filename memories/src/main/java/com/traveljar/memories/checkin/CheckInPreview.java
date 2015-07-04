@@ -2,6 +2,9 @@ package com.traveljar.memories.checkin;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,9 +29,10 @@ import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CheckInPreview extends AppCompatActivity {
@@ -42,20 +46,18 @@ public class CheckInPreview extends AppCompatActivity {
     private EditText checkinDetailsCaption;
     private TextView checkinDetailsPlace;
     private TextView checkinDetailsBuddies;
+    private ImageButton img;
     private double lat;
     private double longi;
     private List<Contact> mContactsList;
+    private long createdAt;
+    private String picUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkin_preview);
 
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Checkin");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         setUpToolBar();
 
         // get the name of the place
@@ -75,6 +77,7 @@ public class CheckInPreview extends AppCompatActivity {
         checkinDetailsPlace = (TextView) findViewById(R.id.checkin_details_location);
         checkinDetailsBuddies = (TextView)findViewById(R.id.checkin_friends);
         checkinDetailsPlace.append(placeName);
+        img = (ImageButton) findViewById(R.id.checkin_details_image);
 
         for(Contact contact : mContactsList){
             contact.setSelected(true);
@@ -104,7 +107,7 @@ public class CheckInPreview extends AppCompatActivity {
             }
         });
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,8 +151,8 @@ public class CheckInPreview extends AppCompatActivity {
         String user_id = TJPreferences.getUserId(this);
 
         CheckIn newCheckIn = new CheckIn(null, j_id, HelpMe.CHECKIN_TYPE, checkinDetailsCaption
-                .getText().toString().trim(), lat, longi, placeName, null, selectedFriends, user_id,
-                HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), null);
+                .getText().toString().trim(), lat, longi, placeName, picUrl, selectedFriends, user_id,
+                HelpMe.getCurrentTime(), HelpMe.getCurrentTime());
 
         Log.d(TAG, "latitude -> " + newCheckIn.getLatitude() + " longitude -> " + longi + newCheckIn.getLongitude());
         Long id = CheckinDataSource.createCheckIn(newCheckIn, this);
@@ -170,44 +173,29 @@ public class CheckInPreview extends AppCompatActivity {
     /**
      * Create a file Uri for saving an image or video
      */
-    private static Uri getOutputMediaFileUri(int type) {
+    private Uri getOutputMediaFileUri(int type) {
         Log.d(TAG, "1");
-        return Uri.fromFile(getOutputMediaFile(type));
+        return Uri.fromFile(getOutputMediaFile());
     }
 
     /**
      * Create a File for saving an image or video
      */
-    private static File getOutputMediaFile(int type) {
-        Log.d(TAG, "2");
-        // To be safe, you should check that the SDCard is mounted
-        Log.d(TAG, "isSDcardmounted = " + Environment.getExternalStorageState());
-
-        File mediaStorageDir = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "TravelJar");
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            Log.d(TAG, "3");
-            if (!mediaStorageDir.mkdirs()) {
-                Log.d(TAG, "4");
-                Log.d("TravelJar", "failed to create directory");
-                return null;
-            }
+    private File getOutputMediaFile() {
+        createdAt = System.currentTimeMillis();
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath());
+        if (!storageDir.exists()) {
+            storageDir.mkdirs();
         }
-
-        Log.d(TAG, "5");
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile;
-
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp
-                + ".jpg");
-
-        return mediaFile;
+        String fileName = "/pic_" + TJPreferences.getUserId(this) + "_" + TJPreferences.getActiveJourneyId(this) + "_" + createdAt + ".jpg";
+        File file = new File(storageDir, fileName);
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        picUrl = file.getAbsolutePath();
+        return file;
     }
 
     public void goToPlaceList(View v) {
@@ -216,36 +204,9 @@ public class CheckInPreview extends AppCompatActivity {
         startActivity(i);
     }
 
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar_with_done_text, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_done:
-                Log.d(TAG, "done clicked!");
-                createNewCheckinIntoDB();
-                *//*Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);*//*
-                finish();
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
     public void goToBuddyList(View v) {
         Intent intent = new Intent(getApplicationContext(), CheckInFriendsList.class);
-        intent.putParcelableArrayListExtra("FRIENDS", mContactsList == null ? null : (ArrayList) mContactsList);
+        intent.putParcelableArrayListExtra("FRIENDS", mContactsList == null ? null : (ArrayList<Contact>) mContactsList);
         startActivityForResult(intent, REQUEST_CODE_SELECT_FRIENDS);
     }
 
@@ -255,16 +216,22 @@ public class CheckInPreview extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "6" + requestCode + "--" + resultCode + "--" + RESULT_OK);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // Image captured and saved to fileUri specified in the Intent
-                ImageButton img = (ImageButton) findViewById(R.id.checkin_details_image);
-                Log.d(TAG, fileUri.toString());
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                img.setImageBitmap(photo);
-
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Bitmap bitmap = null;
+            try {
+                bitmap = BitmapFactory.decodeFile(picUrl);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
+
+            int rotation = getImageRotationInDegrees();
+            if (rotation != 0) {
+                bitmap = getAdjustedBitmap(bitmap, rotation);
+                Log.d(TAG, "calling replace image");
+                replaceImg(bitmap);
+                Log.d("TAG", "bitmap compressed successfully");
+            }
+            img.setImageBitmap(bitmap);
         }
 
         if (requestCode == REQUEST_CODE_SELECT_FRIENDS && resultCode == RESULT_OK) {
@@ -277,14 +244,49 @@ public class CheckInPreview extends AppCompatActivity {
         }
     }
 
-    // CAMERA METHODS
-    // -----------------------------------------------------------------
+    private int getImageRotationInDegrees(){
+        try {
+            ExifInterface exif = new ExifInterface(picUrl);
+            int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
+            else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
+            else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public Bitmap getAdjustedBitmap(Bitmap bitmap, int rotate) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(rotate);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix,
+                true);
+        return bitmap;
+    }
+
+    private void replaceImg(Bitmap bitmap){
+        File file = new File(picUrl);
+        file.delete();
+        FileOutputStream fOut = null;
+        try {
+            fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                fOut.flush();
+                fOut.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void goToCamera(View v) {
-        // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // create a file to save the image
-        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-        // start the image capture Intent
+        fileUri = Uri.fromFile(getOutputMediaFile());
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 

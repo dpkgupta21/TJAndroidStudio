@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -32,7 +31,6 @@ import java.io.FileNotFoundException;
 
 public class NoteDetail extends AppCompatActivity {
     private static final String TAG = "<NoteDetail>";
-    private static final int ACTION_ITEM_DELETE = 0;
     private TextView noteContent;
     private TextView dateBig;
     private TextView date;
@@ -138,7 +136,7 @@ public class NoteDetail extends AppCompatActivity {
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Note");
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +181,7 @@ public class NoteDetail extends AppCompatActivity {
         });
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(mNote.getCreatedBy().equals(TJPreferences.getUserId(this))) {
             menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -226,6 +224,6 @@ public class NoteDetail extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
 }

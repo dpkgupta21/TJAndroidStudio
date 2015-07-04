@@ -189,7 +189,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 buddyIdsList.add(createdBy);
                 buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
-                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt);
+                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt, true);
                 new PullJourney(jItem, this, this).fetchJourneys();
 
                 break;
@@ -239,6 +239,12 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 buddyId = bundle.getString("removed_buddy_id");
                 journeyId = bundle.getString("journey_id");
                 if(buddyId.equals(TJPreferences.getUserId(this))){
+                    JourneyDataSource.updateUserActiveStatus(this, journeyId, false);
+                    if(CurrentJourneyBaseActivity.isActivityVisible()){
+                        CurrentJourneyBaseActivity.getInstance().refreshTimelineFragment();
+                    }
+                }
+/*                if(buddyId.equals(TJPreferences.getUserId(this))){
                     //delete all the memories from the journey
                     JourneyDataSource.removeAllMemoriesFromJourney(this, journeyId);
                     LikeDataSource.deleteAllLikesFromJourney(this, journeyId);
@@ -246,7 +252,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 }else {
                     JourneyDataSource.removeContactFromJourney(this, buddyId, journeyId);
                     JourneyDataSource.removeAllMemoriesByUserFromJourney(this, buddyId, journeyId);
-                }
+                }*/
                 break;
 
             case HelpMe.TYPE_PROFILE_UPDATE:
@@ -382,7 +388,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 caption = data.getString("caption");
 
                 CheckIn newCheckIn = new CheckIn(idOnServer, jId, HelpMe.CHECKIN_TYPE, caption, latitude, longitude,
-                        place_name, null, buddyList, createdBy, createdAt, updatedAt, null);
+                        place_name, null, buddyList, createdBy, createdAt, updatedAt);
 
                 CheckinDataSource.createCheckIn(newCheckIn, this);
                 break;

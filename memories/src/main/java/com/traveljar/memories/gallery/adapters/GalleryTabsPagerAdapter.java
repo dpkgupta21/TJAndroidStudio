@@ -11,7 +11,7 @@ import com.traveljar.memories.gallery.GalleryVideoAlbumsFragment;
 
 public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] titles = new String[]{"Album", "Audios", "Videos", "Notes"};
+    private String[] titles = new String[]{"Pictures", "Audios", "Videos", "Notes"};
 
     public GalleryTabsPagerAdapter(FragmentManager fm) {
         super(fm);

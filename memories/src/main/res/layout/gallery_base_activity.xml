@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/gallery_toolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -17,7 +17,7 @@
                 android:id="@+id/sliding_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/tj_orange_dark"
+                android:background="@color/primaryColorDark"
                 />
 
     </android.support.v7.widget.Toolbar>

@@ -16,7 +16,7 @@
         <com.traveljar.memories.customviews.SlidingTabLayout
             android:id="@+id/timeline_sliding_tabs"
             android:layout_width="match_parent"
-            android:background="@color/tj_orange_dark2"
+            android:background="@color/primaryColorDark"
             android:layout_height="wrap_content"  />
 
     </android.support.v7.widget.Toolbar>

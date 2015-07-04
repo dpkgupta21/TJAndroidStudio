@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -57,12 +56,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_detail);
         Log.d(TAG, "entrerd video details");
-
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Video Detail");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
@@ -175,7 +168,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         title.setText("Memories");
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,7 +182,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case ACTION_ITEM_DELETE:
+                    case R.id.action_delete:
                         new AlertDialog.Builder(VideoDetail.this)
                                 .setTitle("Delete")
                                 .setMessage("Are you sure you want to remove this item from your memories")
@@ -220,7 +213,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         });
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu){
         if(mVideo.getCreatedBy().equals(TJPreferences.getUserId(this))){
             menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -264,7 +257,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     @Override
     public void onVideoDownload(String videoLocalUrl, Video video) {

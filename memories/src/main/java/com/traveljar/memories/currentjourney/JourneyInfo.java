@@ -34,13 +34,9 @@ import com.traveljar.memories.utility.TJPreferences;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by abhi on 29/05/15.
- */
 public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExitJourneyListener{
 
     private static final String TAG = "<JourneyInfo>";
-    private static final int MENU_ADD_BUDDY_ID = 0;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private JourneyInfoBuddiesListAdapter mAdapter;
@@ -164,7 +160,7 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Journey Info");
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,28 +188,6 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
         });
     }
 
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if(HelpMe.isAdmin(this)){
-            menu.add(0, MENU_ADD_BUDDY_ID, 0, "Add Friend").setIcon(R.drawable.add70).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case MENU_ADD_BUDDY_ID:
-                Log.d(TAG, "action_add_buddy clicked!");
-                Intent i = new Intent(this, JourneyInfoFriendsList.class);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
     private int convertDpToPixels(int dp){
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
         return (int)px;
@@ -223,7 +197,7 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
         int[] drawables = new int[]{R.drawable.img_journey_info_1, R.drawable.img_journey_info_2, R.drawable.img_journey_info_3, R.drawable.img_journey_info_4, R.drawable.img_journey_info_5, R.drawable.img_journey_info_6,};
         Random rand = new Random();
         // nextInt is normally exclusive of the top value so add 1 to make it inclusive
-        int randomNum = rand.nextInt((5 - 0) + 1) + 0;
+        int randomNum = rand.nextInt((5) + 1);
         mCoverImage.setImageResource(drawables[randomNum]);
     }
 
@@ -246,7 +220,8 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
     public void onExitJourney(int resultCode, String contactId) {
         if(resultCode == 0) {
             mProgressDialog.dismiss();
-            JourneyDataSource.deleteJourney(this, TJPreferences.getActiveJourneyId(this));
+            JourneyDataSource.updateUserActiveStatus(this, TJPreferences.getActiveJourneyId(this), false);
+//            JourneyDataSource.deleteJourney(this, TJPreferences.getActiveJourneyId(this));
             Intent intent = new Intent(this, ActivejourneyList.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

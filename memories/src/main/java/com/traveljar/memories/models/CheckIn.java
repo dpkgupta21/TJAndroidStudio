@@ -6,16 +6,17 @@ import java.util.List;
 public class CheckIn extends Memories {
     private String caption;
     private String checkInPlaceName;
-    private String checkInPicURL;
+    private String checkInPicLocalURL;
     private List<String> checkInWith;
+    private String checkInPicServerPath;
+    private String checkInPicThumbPath;
 
     public CheckIn() {
 
     }
 
-    public CheckIn(String idOnServer, String jId, String memType, String caption, double lat,
-                   double longi, String checkInPlaceName, String checkInPicURL,
-                   List<String> checkInWith, String createdBy, long createdAt, long updatedAt, List<String> likedBy) {
+    public CheckIn(String idOnServer, String jId, String memType, String caption, double lat, double longi, String checkInPlaceName, String checkInPicLocalURL,
+                   List<String> checkInWith, String createdBy, long createdAt, long updatedAt) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -23,12 +24,11 @@ public class CheckIn extends Memories {
         this.latitude = lat;
         this.longitude = longi;
         this.checkInPlaceName = checkInPlaceName;
-        this.checkInPicURL = checkInPicURL;
+        this.checkInPicLocalURL = checkInPicLocalURL;
         this.checkInWith = checkInWith;
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.likes = likes;
     }
 
     public String getCaption() {
@@ -51,12 +51,28 @@ public class CheckIn extends Memories {
         this.checkInPlaceName = checkInPlaceName;
     }
 
-    public String getCheckInPicURL() {
-        return checkInPicURL;
+    public String getCheckInPicLocalURL() {
+        return checkInPicLocalURL;
     }
 
-    public void setCheckInPicURL(String checkInPicURL) {
-        this.checkInPicURL = checkInPicURL;
+    public void setCheckInPicLocalURL(String checkInPicLocalURL) {
+        this.checkInPicLocalURL = checkInPicLocalURL;
+    }
+
+    public String getCheckInPicServerPath() {
+        return checkInPicServerPath;
+    }
+
+    public void setCheckInPicServerPath(String checkInPicServerPath) {
+        this.checkInPicServerPath = checkInPicServerPath;
+    }
+
+    public String getCheckInPicThumbPath() {
+        return checkInPicThumbPath;
+    }
+
+    public void setCheckInPicThumbPath(String checkInPicThumbPath) {
+        this.checkInPicThumbPath = checkInPicThumbPath;
     }
 
     public List<String> getCheckInWith() {
@@ -66,10 +82,6 @@ public class CheckIn extends Memories {
     public void setCheckInWith(List<String> checkInWith) {
         this.checkInWith = checkInWith;
     }
-
-/*    public void updateLikedBy(Context context, String memId, List<String> likedBy) {
-        CheckinDataSource.updateFavourites(context, memId, likedBy);
-    }*/
 
     @Override
     public String toString() {

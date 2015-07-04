@@ -257,9 +257,9 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
                 final Audio audio = (Audio) memoriesList.get(position);
                 Log.d(TAG, "  " + !isPlaying + !currentPlayingAudioId.equals(audio.getId()));
                 if(!isPlaying || !currentPlayingAudioId.equals(audio.getId())){
-                    holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.play_audio_red);
+                    holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                 }else{
-                    holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.pause_audio_red);
+                    holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.ic_pause_black_24dp);
                 }
                 holder.timelineItemAudioPlayBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -268,7 +268,7 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
                         // Condition 1: if already playing and clicked for the audio which is already playing
                         if (isPlaying && audio.getId().equals(currentPlayingAudioId)) {
                             mPlayer.stopPlaying();
-                            holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.play_audio_red);
+                            holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                             currentPlayingAudioId = "-1";
                             lastPlayedAudioPlayButton = holder.timelineItemAudioPlayBtn;
                             isPlaying = false;
@@ -278,7 +278,7 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
                             if (isPlaying) {
                                 mPlayer.stopPlaying();
                                 if (lastPlayedAudioPlayButton != null) {
-                                    lastPlayedAudioPlayButton.setImageResource(R.drawable.play_audio_red);
+                                    lastPlayedAudioPlayButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                                 }
                             }
 
@@ -291,27 +291,11 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
                                 mPlayer = new AudioPlayer(audio.getDataLocalURL(), TimeLineAdapter.this);
                                 mPlayer.startPlaying();
                             }
-                            holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.pause_audio_red);
+                            holder.timelineItemAudioPlayBtn.setImageResource(R.drawable.ic_pause_black_24dp);
                             currentPlayingAudioId = audio.getId();
                             lastPlayedAudioPlayButton = holder.timelineItemAudioPlayBtn;
                             isPlaying = true;
                         }
-
-                        /*if (!isPlaying) {
-                            if (audio.getDataLocalURL() == null) {
-                                pDialog.setMessage("Loading...");
-                                pDialog.show();
-                                registerEvent();
-                                DownloadAudioAsyncTask asyncTask = new DownloadAudioAsyncTask(DOWNLOAD_AUDIO_EVENT_CODE, audio);
-                                asyncTask.execute();
-                            } else {
-                                mPlayer = new AudioPlayer(audio.getDataLocalURL(), TimeLineAdapter.this);
-                                mPlayer.startPlaying();
-                            }
-                        } else {
-                            mPlayer.stopPlaying();
-                        }
-                        isPlaying = !isPlaying;*/
                     }
                 });
                 break;
@@ -473,7 +457,7 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
     @Override
     public void onAudioComplete() {
         if(lastPlayedAudioPosition >= firstVisiblePosition && lastPlayedAudioPosition <= lastVisiblePosition) {
-            lastPlayedAudioPlayButton.setImageResource(R.drawable.play_audio_red);
+            lastPlayedAudioPlayButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
         }
         lastPlayedAudioPlayButton = null;
         currentPlayingAudioId = "-1";

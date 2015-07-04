@@ -14,6 +14,7 @@ public class Journey implements Comparable<Journey> {
     private long createdAt;
     private long updatedAt;
     private long completedAt;
+    private boolean isUserActive;
     private List<Lap> lapsList;
 
     public Journey() {
@@ -21,7 +22,7 @@ public class Journey implements Comparable<Journey> {
     }
 
     public Journey(String idOnServer, String name, String tagLine, String groupType, String createdBy, List<String> jLaps,
-                   List<String> buddies, String journeyStatus, long createdAt, long updatedAt, long completedAt) {
+                   List<String> buddies, String journeyStatus, long createdAt, long updatedAt, long completedAt, boolean isUserActive) {
         this.idOnServer = idOnServer;
         this.name = name;
         this.tagLine = tagLine;
@@ -33,6 +34,7 @@ public class Journey implements Comparable<Journey> {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.completedAt = completedAt;
+        this.isUserActive = isUserActive;
     }
 
     public String getIdOnServer() {
@@ -127,8 +129,12 @@ public class Journey implements Comparable<Journey> {
         this.journeyStatus = journeyStatus;
     }
 
-    public boolean isAdmin(String userId) {
-        return userId.equals(this.getIdOnServer());
+    public boolean isUserActive() {
+        return isUserActive;
+    }
+
+    public void setIsUserActive(boolean isUserActive) {
+        this.isUserActive = isUserActive;
     }
 
     public List<Lap> getLapsList() {

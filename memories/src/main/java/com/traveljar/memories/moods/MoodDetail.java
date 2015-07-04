@@ -33,7 +33,6 @@ import java.util.List;
 public class MoodDetail extends AppCompatActivity {
 
     private static final String TAG = "<MoodDetail>";
-    private static final int ACTION_ITEM_DELETE = 0;
 
     private TextView dateBig;
     private TextView date;
@@ -129,7 +128,8 @@ public class MoodDetail extends AppCompatActivity {
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Memories");
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +143,7 @@ public class MoodDetail extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case ACTION_ITEM_DELETE:
+                    case R.id.action_delete:
                         new AlertDialog.Builder(MoodDetail.this)
                                 .setTitle("Delete")
                                 .setMessage("Are you sure you want to remove this item from your memories")

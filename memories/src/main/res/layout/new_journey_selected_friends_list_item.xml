@@ -13,7 +13,7 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/abhi" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyMed
+    <com.traveljar.memories.customviews.MyTextViewBodyMed14
         android:id="@+id/add_friends_contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,11 +29,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/delete85"
+        android:background="@drawable/ic_delete_white_24dp"
         android:contentDescription="@string/default_string"
         android:text="Content not available" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg
+    <com.traveljar.memories.customviews.MyTextViewBodyReg14
         android:id="@+id/add_friends_contact_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

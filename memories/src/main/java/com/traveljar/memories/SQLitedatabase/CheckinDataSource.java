@@ -34,7 +34,9 @@ public class CheckinDataSource {
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CAPTION, newCheckIn.getCaption());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE, newCheckIn.getLatitude());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE, newCheckIn.getLongitude());
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_URL, newCheckIn.getCheckInPicURL());
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_LOCAL_URL, newCheckIn.getCheckInPicLocalURL());
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_SERVER_URL, newCheckIn.getCheckInPicServerPath());
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_THUMB_URL, newCheckIn.getCheckInPicThumbPath());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_PLACE_NAME, newCheckIn.getCheckInPlaceName());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_WITH, newCheckIn.getCheckInWith() == null ? null : Joiner.on(",").join(newCheckIn.getCheckInWith()));
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY, newCheckIn.getCreatedBy());
@@ -160,20 +162,17 @@ public class CheckinDataSource {
                 checkin.setMemType(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_MEM_TYPE)));
                 checkin.setCaption(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_CAPTION)));
 
-                checkin.setCheckInPlaceName(cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PLACE_NAME)));
-                checkin.setCheckInPicURL(cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_URL)));
+                checkin.setCheckInPlaceName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PLACE_NAME)));
+                checkin.setCheckInPicLocalURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_LOCAL_URL)));
+                checkin.setCheckInPicThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_THUMB_URL)));
+                checkin.setCheckInPicServerPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_SERVER_URL)));
                 String list = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_WITH));
                 if (list != null) {
                     checkin.setCheckInWith(Arrays.asList(list.split(",")));
                 }
-                checkin.setCreatedBy(cursor.getString(cursor
-                        .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY)));
-                checkin.setCreatedAt(cursor.getLong(cursor
-                        .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_CREATED_AT)));
-                checkin.setUpdatedAt(cursor.getLong(cursor
-                        .getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT)));
+                checkin.setCreatedBy(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY)));
+                checkin.setCreatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_CREATED_AT)));
+                checkin.setUpdatedAt(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_UPDATED_AT)));
                 checkin.setLikes(LikeDataSource.getLikesForMemory(context, checkin.getId(), HelpMe.CHECKIN_TYPE));
 
                 checkin.setLatitude(cursor.getDouble(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE)));

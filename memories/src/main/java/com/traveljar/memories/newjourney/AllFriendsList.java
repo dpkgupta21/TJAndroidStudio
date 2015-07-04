@@ -44,10 +44,6 @@ public class AllFriendsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_traveljar_contact_list);
 
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Add Friends");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         setUpToolBar();
 
         mDialog = new ProgressDialog(this);
@@ -97,7 +93,7 @@ public class AllFriendsList extends AppCompatActivity {
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Add Friends");
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

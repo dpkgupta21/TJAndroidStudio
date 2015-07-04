@@ -200,7 +200,7 @@ public class NewJourneyDetail extends AppCompatActivity {
 
         // Add it to the Database
         Journey newJ = new Journey(idOnServer, name, tag_line, group_relationship, created_by_id,
-                null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE, HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), 0);
+                null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE, HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), 0, true);
         JourneyDataSource.createJourney(newJ, getBaseContext());
         for(Lap lap : AppController.lapList){
             Log.d(TAG, "setting jouney id " + idOnServer);
@@ -219,15 +219,7 @@ public class NewJourneyDetail extends AppCompatActivity {
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Journey Detail");
 
-        toolbar.setNavigationIcon(R.drawable.ic_next);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NewJourneyDetail.this.finish();
-            }
-        });
-
-        toolbar.setNavigationIcon(R.drawable.ic_next);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

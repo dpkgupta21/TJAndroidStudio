@@ -98,6 +98,7 @@ public class PullMemoriesService {
                                 tagLine = jsonObject.getString("tag_line");
                                 createdBy = jsonObject.getString("created_by_id");
                                 createdAt = Long.parseLong(jsonObject.getString("created_at"));
+                                updatedAt = Long.parseLong(jsonObject.getString("updated_at"));
 
 
                                 JSONArray jsonArray = jsonObject.getJSONArray("buddy_ids");
@@ -121,7 +122,7 @@ public class PullMemoriesService {
                                 journeyStatus = jsonObject.getString("completed_at").equals("null") ? Constants.JOURNEY_STATUS_ACTIVE : Constants.JOURNEY_STATUS_FINISHED;
 
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
-                                        createdBy, lapsList, buddyList, journeyStatus, createdAt, createdAt, 0);
+                                        createdBy, lapsList, buddyList, journeyStatus, createdAt, updatedAt, 0, true);
                                 JourneyDataSource.createJourney(journey, mContext);
 
                                 memoriesList = jsonObject.getJSONArray("memories");
@@ -250,7 +251,7 @@ public class PullMemoriesService {
                         String buddys = memory.getString("buddies");
                         List<String> buddyIds = buddys == null ? null : Arrays.asList(buddys.split(","));
                         CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName, null, buddyIds, createdBy,
-                                createdAt, updatedAt, null);
+                                createdAt, updatedAt);
                         id = CheckinDataSource.createCheckIn(newCheckIn, mContext);
                         parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId, memoryId);
 
