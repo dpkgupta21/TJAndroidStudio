@@ -100,6 +100,20 @@ public class ContactDataSource {
         return contacts;
     }
 
+    public static List<Contact> getAllContactsFromJourney(Context context, String journeyId){
+        String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " INNER JOIN " + MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP +
+                " ON " + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP +
+                "." + MySQLiteHelper.MAPPING_COLUMN_CONTACT_ID + " WHERE " + MySQLiteHelper.MAPPING_COLUMN_JOURNEY_ID +
+                " = '" + journeyId + "'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Log.d(TAG, "cursor size is " + cursor.getCount());
+        List<Contact> contactList = getContactsListFromCursor(cursor, context);
+        cursor.close();
+        db.close();
+        return contactList;
+    }
+
     public static List<String> getNonExistingContacts(Context context, List<String> contactIds) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         List<String> existingContacts = new ArrayList<>();
@@ -265,7 +279,7 @@ CCCC
                 contact.setPicServerUrl((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL))));
                 contact.setPhoneNo((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PHONE))));
                 contact.setAllJourneyIds((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS))));
-                contact.setOnBoard(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD)) == 1 ? true: false);
+                contact.setOnBoard(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD)) == 1);
                 contact.setStatus((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_STATUS))));
 
                 contactsList.add(contact);

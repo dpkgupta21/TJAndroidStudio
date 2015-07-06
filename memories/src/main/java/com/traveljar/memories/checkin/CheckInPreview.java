@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +26,7 @@ import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.models.Request;
 import com.traveljar.memories.services.MakeServerRequestsService;
+import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 
@@ -37,11 +39,9 @@ import java.util.List;
 
 public class CheckInPreview extends AppCompatActivity {
 
-    public static final int MEDIA_TYPE_IMAGE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final String TAG = "<CheckInPreview>";
     private static final int REQUEST_CODE_SELECT_FRIENDS = 2;
-    private Uri fileUri;
     private String placeName;
     private EditText checkinDetailsCaption;
     private TextView checkinDetailsPlace;
@@ -52,6 +52,8 @@ public class CheckInPreview extends AppCompatActivity {
     private List<Contact> mContactsList;
     private long createdAt;
     private String picUrl;
+    private String picThumbnailPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,12 +149,14 @@ public class CheckInPreview extends AppCompatActivity {
             }
         }
 
+        createThumbnail();
+
         String j_id = TJPreferences.getActiveJourneyId(this);
         String user_id = TJPreferences.getUserId(this);
 
-        CheckIn newCheckIn = new CheckIn(null, j_id, HelpMe.CHECKIN_TYPE, checkinDetailsCaption
-                .getText().toString().trim(), lat, longi, placeName, picUrl, selectedFriends, user_id,
-                HelpMe.getCurrentTime(), HelpMe.getCurrentTime());
+        CheckIn newCheckIn = new CheckIn(null, j_id, HelpMe.CHECKIN_TYPE, checkinDetailsCaption.getText().toString().trim(),
+                lat, longi, placeName, picUrl, null, picThumbnailPath, selectedFriends, user_id, HelpMe.getCurrentTime(),
+                HelpMe.getCurrentTime());
 
         Log.d(TAG, "latitude -> " + newCheckIn.getLatitude() + " longitude -> " + longi + newCheckIn.getLongitude());
         Long id = CheckinDataSource.createCheckIn(newCheckIn, this);
@@ -170,17 +174,7 @@ public class CheckInPreview extends AppCompatActivity {
         }
     }
 
-    /**
-     * Create a file Uri for saving an image or video
-     */
-    private Uri getOutputMediaFileUri(int type) {
-        Log.d(TAG, "1");
-        return Uri.fromFile(getOutputMediaFile());
-    }
-
-    /**
-     * Create a File for saving an image or video
-     */
+    /* Create a File for saving an image or video*/
     private File getOutputMediaFile() {
         createdAt = System.currentTimeMillis();
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath());
@@ -195,6 +189,7 @@ public class CheckInPreview extends AppCompatActivity {
             e.printStackTrace();
         }
         picUrl = file.getAbsolutePath();
+        Log.d(TAG, picUrl + "  " + file.getAbsolutePath());
         return file;
     }
 
@@ -210,10 +205,37 @@ public class CheckInPreview extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_SELECT_FRIENDS);
     }
 
-    public void goToMoods(View v) {
-
+    public void goToCamera(View v) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = getOutputMediaFile();
+            if (photoFile != null) {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            }
+        }
     }
 
+    private void createThumbnail(){
+        Bitmap thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(picUrl), 512, 384);
+        picThumbnailPath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" + TJPreferences.getUserId(this) + "_" +
+                TJPreferences.getActiveJourneyId(this) + "_" + createdAt + ".jpg";
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(picThumbnailPath);
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -223,7 +245,7 @@ public class CheckInPreview extends AppCompatActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
+            Log.d(TAG, "pic url is 1" + picUrl);
             int rotation = getImageRotationInDegrees();
             if (rotation != 0) {
                 bitmap = getAdjustedBitmap(bitmap, rotation);
@@ -246,6 +268,7 @@ public class CheckInPreview extends AppCompatActivity {
 
     private int getImageRotationInDegrees(){
         try {
+            Log.d(TAG, "pic url is " + picUrl);
             ExifInterface exif = new ExifInterface(picUrl);
             int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
@@ -282,12 +305,6 @@ public class CheckInPreview extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    public void goToCamera(View v) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = Uri.fromFile(getOutputMediaFile());
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
 }

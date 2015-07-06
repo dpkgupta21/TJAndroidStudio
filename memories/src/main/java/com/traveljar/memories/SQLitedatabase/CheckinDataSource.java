@@ -19,12 +19,6 @@ public class CheckinDataSource {
 
     private static final String TAG = "<<CheckinDataSource>>";
 
-    // Database fields
-    // ------------------------ "CHECKIN" table methods ----------------//
-
-    /*
-     * Creating a checkin
-     */
     public static long createCheckIn(CheckIn newCheckIn, Context context) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -34,9 +28,9 @@ public class CheckinDataSource {
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CAPTION, newCheckIn.getCaption());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE, newCheckIn.getLatitude());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE, newCheckIn.getLongitude());
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_LOCAL_URL, newCheckIn.getCheckInPicLocalURL());
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_SERVER_URL, newCheckIn.getCheckInPicServerPath());
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_THUMB_URL, newCheckIn.getCheckInPicThumbPath());
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_LOCAL_URL, newCheckIn.getCheckInPicLocalPath());
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_SERVER_URL, newCheckIn.getCheckInPicServerUrl());
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_THUMB_URL, newCheckIn.getCheckInPicThumbUrl());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_PLACE_NAME, newCheckIn.getCheckInPlaceName());
         values.put(MySQLiteHelper.CHECKIN_COLUMN_WITH, newCheckIn.getCheckInWith() == null ? null : Joiner.on(",").join(newCheckIn.getCheckInWith()));
         values.put(MySQLiteHelper.CHECKIN_COLUMN_CREATED_BY, newCheckIn.getCreatedBy());
@@ -66,8 +60,6 @@ public class CheckinDataSource {
         } else {
             Log.d(TAG, "no past checkins!!!");
         }
-
-        c.close();
         db.close();
         return c;
     }
@@ -108,10 +100,11 @@ public class CheckinDataSource {
         db.close();
     }
 
-    public static void updateServerId(Context context, String checkinId, String serverId) {
+    public static void updateServerIdAndPicUrl(Context context, String checkinId, String serverId, String picServerUrl) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.CHECKIN_COLUMN_ID_ONSERVER, serverId);
+        values.put(MySQLiteHelper.CHECKIN_COLUMN_PIC_SERVER_URL, picServerUrl);
         db.update(MySQLiteHelper.TABLE_CHECKIN, values, MySQLiteHelper.CHECKIN_COLUMN_ID + " = " + checkinId, null);
         db.close();
     }
@@ -163,9 +156,9 @@ public class CheckinDataSource {
                 checkin.setCaption(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_CAPTION)));
 
                 checkin.setCheckInPlaceName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PLACE_NAME)));
-                checkin.setCheckInPicLocalURL(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_LOCAL_URL)));
-                checkin.setCheckInPicThumbPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_THUMB_URL)));
-                checkin.setCheckInPicServerPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_SERVER_URL)));
+                checkin.setCheckInPicLocalPath(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_LOCAL_URL)));
+                checkin.setCheckInPicThumbUrl(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_THUMB_URL)));
+                checkin.setCheckInPicServerUrl(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_PIC_SERVER_URL)));
                 String list = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CHECKIN_COLUMN_WITH));
                 if (list != null) {
                     checkin.setCheckInWith(Arrays.asList(list.split(",")));

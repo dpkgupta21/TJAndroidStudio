@@ -44,6 +44,16 @@ public class JourneyDataSource {
 
         // insert row
         long journey_id = db.insert(MySQLiteHelper.TABLE_JOURNEY, null, values);
+
+        // Insert journey-contact mapping in the mapping table
+        for(String contact : newJourney.getBuddies()){
+            values = new ContentValues();
+            values.put(MySQLiteHelper.MAPPING_COLUMN_JOURNEY_ID, newJourney.getIdOnServer());
+            values.put(MySQLiteHelper.MAPPING_COLUMN_CONTACT_ID, contact);
+            values.put(MySQLiteHelper.MAPPING_COLUMN_IS_USER_ACTIVE, newJourney.isUserActive() ? 1 : 0);
+            Log.d(TAG, "adding mapping" + values);
+            db.insert(MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP, null, values);
+        }
         db.close();
 
         Log.d(TAG, "New Journey Inserted! with idOnServer = " + newJourney.getIdOnServer() + newJourney.getJourneyStatus());
@@ -159,6 +169,7 @@ public class JourneyDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, Joiner.on(",").join(journey.getBuddies()));
         db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId, null);
+        db.close();
     }
 
     public static void removeAllMemoriesFromJourney(Context context, String journeyId){

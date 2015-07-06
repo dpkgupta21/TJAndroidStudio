@@ -7,11 +7,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
-import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
+import com.traveljar.memories.customevents.CheckInDownloadEvent;
 import com.traveljar.memories.customevents.PictureDownloadEvent;
 import com.traveljar.memories.customevents.VideoDownloadEvent;
 import com.traveljar.memories.models.Audio;
@@ -22,6 +22,7 @@ import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.models.Video;
+import com.traveljar.memories.utility.CheckinUtil;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.PictureUtilities;
@@ -54,6 +55,7 @@ public class PullMemoriesService {
 //    private static final int DOWNLOAD_VIDEO_EVENT_CODE = 1;
     private static final int VIDEO_DOWNLOAD_REQUESTER_CODE = 0;
     private static final int PICTURE_DOWNLOAD_REQUESTER_CODE = 0;
+    private static final int CHECKIN_DOWNLOAD_REQUESTER_CODE = 0;
 
 
     public PullMemoriesService(Context context, OnTaskFinishListener listener, int REQUEST_CODE) {
@@ -89,6 +91,7 @@ public class PullMemoriesService {
                             List<String> buddyList;
                             JSONArray memoriesList;
                             String journeyStatus;
+                            boolean isUserActive;
 
 
                             for (int i = 0; i < length; i++) {
@@ -99,6 +102,7 @@ public class PullMemoriesService {
                                 createdBy = jsonObject.getString("created_by_id");
                                 createdAt = Long.parseLong(jsonObject.getString("created_at"));
                                 updatedAt = Long.parseLong(jsonObject.getString("updated_at"));
+                                isUserActive = Boolean.parseBoolean(jsonObject.getString("active"));
 
 
                                 JSONArray jsonArray = jsonObject.getJSONArray("buddy_ids");
@@ -122,7 +126,7 @@ public class PullMemoriesService {
                                 journeyStatus = jsonObject.getString("completed_at").equals("null") ? Constants.JOURNEY_STATUS_ACTIVE : Constants.JOURNEY_STATUS_FINISHED;
 
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
-                                        createdBy, lapsList, buddyList, journeyStatus, createdAt, updatedAt, 0, true);
+                                        createdBy, lapsList, buddyList, journeyStatus, createdAt, updatedAt, 0, isUserActive);
                                 JourneyDataSource.createJourney(journey, mContext);
 
                                 memoriesList = jsonObject.getJSONArray("memories");
@@ -239,7 +243,6 @@ public class PullMemoriesService {
                         Log.d(TAG, "video parsed and saved successfully" + thumbnailUrl);
 
                     } else if (key.equals("checkin") && object.get(key) instanceof JSONObject) {
-
                         createdBy = memory.getString("user_id");
                         memoryId = memory.getString("id");
 
@@ -250,10 +253,16 @@ public class PullMemoriesService {
                         String note = memory.getString("note");
                         String buddys = memory.getString("buddies");
                         List<String> buddyIds = buddys == null ? null : Arrays.asList(buddys.split(","));
-                        CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName, null, buddyIds, createdBy,
-                                createdAt, updatedAt);
-                        id = CheckinDataSource.createCheckIn(newCheckIn, mContext);
-                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId, memoryId);
+
+                        fileUrl = memory.getJSONObject("picture_file").getJSONObject("original").getString("url");
+                        thumbnailUrl = memory.getJSONObject("picture_file").getJSONObject("medium").getString("url");
+
+                        CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName,
+                                null, fileUrl, thumbnailUrl, buddyIds, createdBy, createdAt, updatedAt);
+
+                        parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.CHECKIN_TYPE, journeyId, memoryId);
+                        CheckinUtil.createNewCheckInFromServer(mContext, newCheckIn, CHECKIN_DOWNLOAD_REQUESTER_CODE);
+                        count++;
 
                         Log.d(TAG, "checkin parsed and saved successfully");
 
@@ -333,6 +342,7 @@ public class PullMemoriesService {
                 count = 0;
                 isService = false;
                 mListener.onFinishTask(REQUEST_CODE);
+
             }
         }
     }
@@ -369,4 +379,10 @@ public class PullMemoriesService {
         }
     }
 
+    public void onEvent(CheckInDownloadEvent event){
+        if(event.getCallerCode() == CHECKIN_DOWNLOAD_REQUESTER_CODE) {
+            LikeDataSource.updateMemoryLocalId(event.getCheckIn().getIdOnServer(), event.getCheckIn().getMemType(), event.getCheckIn().getId(),
+                    mContext);
+        }
+    }
 }

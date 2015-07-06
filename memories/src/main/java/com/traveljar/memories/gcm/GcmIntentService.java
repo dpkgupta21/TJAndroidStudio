@@ -13,7 +13,6 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
-import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
@@ -34,6 +33,7 @@ import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.services.PullJourney;
+import com.traveljar.memories.utility.CheckinUtil;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.ContactsUtil;
 import com.traveljar.memories.utility.HelpMe;
@@ -179,17 +179,20 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 createdAt = Long.parseLong(bundle.getString("created_at"));
                 updatedAt = Long.parseLong(bundle.getString("updated_at"));
                 completedAt = 0;
+                boolean isUserActive = true;
+
                 //completedAt = bundle.getString("completed_at") == "null" ? 0 : Long.parseLong(bundle.getString("completed_at"));
 
                 Log.d(TAG, "bundle buddy ids are " + bundle.get("buddy_ids"));
                 String buddyIds = (String) bundle.get("buddy_ids");
                 buddyIds = buddyIds.replace("[", "");
                 buddyIds = buddyIds.replace("]", "");
-                List<String> buddyIdsList = new ArrayList(Arrays.asList(buddyIds.split(",")));
+                List<String> buddyIdsList = new ArrayList<String>(Arrays.asList(buddyIds.split(",")));
                 buddyIdsList.add(createdBy);
                 buddyIdsList.remove(TJPreferences.getUserId(getBaseContext()));
 
-                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList, Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt, true);
+                Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList,
+                        Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt, isUserActive);
                 new PullJourney(jItem, this, this).fetchJourneys();
 
                 break;
@@ -300,8 +303,8 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
         String mood;
         List<String> buddyIds;
         String reason;
-        Double latitude = data.getString("latitude") == "null" ? 0.0d : Double.parseDouble(data.getString("latitude"));
-        Double longitude = data.getString("longitude") == "null" ? 0.0d : Double.parseDouble(data.getString("longitude"));
+        Double latitude = data.getString("latitude").equals("null") ? 0.0d : Double.parseDouble(data.getString("latitude"));
+        Double longitude = data.getString("longitude").equals("null") ? 0.0d : Double.parseDouble(data.getString("longitude"));
         long audioDuration;
 
         switch (memType) {
@@ -327,7 +330,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 dataUrl = data.getString("data_url");
                 size = Long.parseLong(data.getString("size"));
                 extension = data.getString("extention");
-                audioDuration = data.getString("duration") == "null" ? 0 : Long.parseLong(data.getString("duration"));
+                audioDuration = data.getString("duration").equals("null") ? 0 : Long.parseLong(data.getString("duration"));
 
                 Audio newAudio = new Audio(idOnServer, jId, HelpMe.AUDIO_TYPE, extension, size,
                         dataUrl, null, createdBy, createdAt, updatedAt, null, audioDuration, latitude, longitude);
@@ -379,18 +382,21 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 break;
 
             case HelpMe.SERVER_CHECKIN_TYPE:
-                Log.d(TAG, "its checkin type with idOnServer = " + idOnServer);
+
                 String buddies = data.getString("buddies");
                 buddies = buddies.replace("[", "");
                 buddies = buddies.replace("]", "");
                 List<String> buddyList = Arrays.asList(buddies.split(","));
                 String place_name = data.getString("place_name");
                 caption = data.getString("caption");
+                thumb = data.getString("thumb");
+                dataUrl = data.getString("data_url");
 
                 CheckIn newCheckIn = new CheckIn(idOnServer, jId, HelpMe.CHECKIN_TYPE, caption, latitude, longitude,
-                        place_name, null, buddyList, createdBy, createdAt, updatedAt);
+                        place_name, null, dataUrl, thumb, buddyList, createdBy, createdAt, updatedAt);
 
-                CheckinDataSource.createCheckIn(newCheckIn, this);
+                CheckinUtil.createNewCheckInFromServer(this, newCheckIn, -1);
+                //CheckinDataSource.createCheckIn(newCheckIn, this);
                 break;
 
             default:

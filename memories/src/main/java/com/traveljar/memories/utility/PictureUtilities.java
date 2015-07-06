@@ -156,10 +156,5 @@ public class PictureUtilities {
         }
     }
 
-/*    public interface OnFinishDownloadListener{
-        void onFinishDownload(String videoServerId, String memoryType, String videoLocalId);
-    }*/
-
-
 }
 

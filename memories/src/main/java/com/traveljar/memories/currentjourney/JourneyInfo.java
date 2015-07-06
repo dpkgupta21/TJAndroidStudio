@@ -38,7 +38,6 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
 
     private static final String TAG = "<JourneyInfo>";
     private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
     private JourneyInfoBuddiesListAdapter mAdapter;
 
     private TextView journeyName;
@@ -59,6 +58,12 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_journey_info);
+
+        List<Contact> contactList = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        Log.d(TAG, "total contacts fetched from journey are " + contactList.size());
+        for(Contact contact : contactList){
+            Log.d(TAG, " " + contact);
+        }
 
         setUpToolBar();
         journeyName = (TextView) findViewById(R.id.journey_info_journey_name);
@@ -150,7 +155,7 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
     }

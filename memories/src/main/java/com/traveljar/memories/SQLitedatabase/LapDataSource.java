@@ -69,7 +69,6 @@ public class LapDataSource {
                 journeyId + "'";
         Cursor cursor = db.rawQuery(query, null);
         List<Lap> lapsList = getLapsFromCursor(cursor);
-        Log.d(TAG, "total laps for journey are " + lapsList.size());
         cursor.close();
         db.close();
         return lapsList;

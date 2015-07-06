@@ -27,6 +27,7 @@ import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.newjourney.LapsList;
+import com.traveljar.memories.services.PullContactsService;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.SessionManager;
@@ -176,6 +177,9 @@ public class SignUp extends Activity {
                         Log.d(TAG, "=====" + response.toString());
                         try {
                             createNewUserInDB(response);
+                            Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+                            intent.putExtra("ACTIVITY_CODE", 4);
+                            startService(intent);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

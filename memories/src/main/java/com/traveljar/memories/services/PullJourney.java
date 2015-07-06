@@ -7,10 +7,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
-import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
+import com.traveljar.memories.customevents.CheckInDownloadEvent;
 import com.traveljar.memories.customevents.PictureDownloadEvent;
 import com.traveljar.memories.customevents.VideoDownloadEvent;
 import com.traveljar.memories.models.Audio;
@@ -21,6 +21,7 @@ import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.models.Video;
+import com.traveljar.memories.utility.CheckinUtil;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.PictureUtilities;
@@ -51,6 +52,7 @@ public class PullJourney {
 
     private static final int VIDEO_DOWNLOAD_REQUESTER_CODE = 0;
     private static final int PICTURE_DOWNLOAD_REQUESTER_CODE = 0;
+    private static final int CHECKIN_DOWNLOAD_REQUESTER_CODE = 0;
 
     public static PullJourney getInstance(){
         return instance == null ? new PullJourney() : instance;
@@ -192,6 +194,22 @@ public class PullJourney {
 
                     } else if (key.equals("checkin") && object.get(key) instanceof JSONObject) {
 
+/*                        createdBy = memory.getString("user_id");
+                        memoryId = memory.getString("id");
+
+                        latitude = memory.getString("latitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("latitude"));
+                        longitude = memory.getString("longitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("longitude"));
+
+                        String placeName = memory.getString("place_name");
+                        String note = memory.getString("note");
+                        String buddys = memory.getString("buddies");
+                        List<String> buddyIds = buddys == null ? null : Arrays.asList(buddys.split(","));
+                        CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName, null, null, null,
+                                buddyIds, createdBy, createdAt, updatedAt);
+                        id = CheckinDataSource.createCheckIn(newCheckIn, context);
+                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId, memoryId);
+
+                        Log.d(TAG, "checkin parsed and saved successfully");*/
                         createdBy = memory.getString("user_id");
                         memoryId = memory.getString("id");
 
@@ -202,10 +220,16 @@ public class PullJourney {
                         String note = memory.getString("note");
                         String buddys = memory.getString("buddies");
                         List<String> buddyIds = buddys == null ? null : Arrays.asList(buddys.split(","));
-                        CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName, null, buddyIds, createdBy,
-                                createdAt, updatedAt);
-                        id = CheckinDataSource.createCheckIn(newCheckIn, context);
-                        parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId, memoryId);
+
+                        fileUrl = memory.getJSONObject("picture_file").getJSONObject("original").getString("url");
+                        thumbnailUrl = memory.getJSONObject("picture_file").getJSONObject("medium").getString("url");
+
+                        CheckIn newCheckIn = new CheckIn(memoryId, journeyId, HelpMe.CHECKIN_TYPE, note, latitude, longitude, placeName,
+                                null, fileUrl, thumbnailUrl, buddyIds, createdBy, createdAt, updatedAt);
+
+                        parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.CHECKIN_TYPE, journeyId, memoryId);
+                        CheckinUtil.createNewCheckInFromServer(context, newCheckIn, CHECKIN_DOWNLOAD_REQUESTER_CODE);
+                        count++;
 
                         Log.d(TAG, "checkin parsed and saved successfully");
 
@@ -289,6 +313,7 @@ public class PullJourney {
                 count = 0;
                 isService = false;
                 mListener.onFinishTask(journey);
+                unRegisterEvent();
             }
         }
     }
@@ -311,6 +336,13 @@ public class PullJourney {
     public void onEvent(VideoDownloadEvent event){
         if(event.getCallerCode() == VIDEO_DOWNLOAD_REQUESTER_CODE) {
             LikeDataSource.updateMemoryLocalId(event.getVideo().getIdOnServer(), event.getVideo().getMemType(), event.getVideo().getId(),
+                    context);
+        }
+    }
+
+    public void onEvent(CheckInDownloadEvent event){
+        if(event.getCallerCode() == CHECKIN_DOWNLOAD_REQUESTER_CODE) {
+            LikeDataSource.updateMemoryLocalId(event.getCheckIn().getIdOnServer(), event.getCheckIn().getMemType(), event.getCheckIn().getId(),
                     context);
         }
     }

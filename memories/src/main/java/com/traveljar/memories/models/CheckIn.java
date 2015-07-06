@@ -6,17 +6,18 @@ import java.util.List;
 public class CheckIn extends Memories {
     private String caption;
     private String checkInPlaceName;
-    private String checkInPicLocalURL;
+    private String checkInPicLocalPath;
     private List<String> checkInWith;
-    private String checkInPicServerPath;
-    private String checkInPicThumbPath;
+    private String checkInPicServerUrl;
+    private String checkInPicThumbUrl;
 
     public CheckIn() {
 
     }
 
-    public CheckIn(String idOnServer, String jId, String memType, String caption, double lat, double longi, String checkInPlaceName, String checkInPicLocalURL,
-                   List<String> checkInWith, String createdBy, long createdAt, long updatedAt) {
+    public CheckIn(String idOnServer, String jId, String memType, String caption, double lat, double longi, String checkInPlaceName,
+                   String checkInPicLocalPath, String checkInPicServerUrl, String checkInPicThumbUrl, List<String> checkInWith,
+                   String createdBy, long createdAt, long updatedAt) {
         this.idOnServer = idOnServer;
         this.jId = jId;
         this.memType = memType;
@@ -24,7 +25,9 @@ public class CheckIn extends Memories {
         this.latitude = lat;
         this.longitude = longi;
         this.checkInPlaceName = checkInPlaceName;
-        this.checkInPicLocalURL = checkInPicLocalURL;
+        this.checkInPicServerUrl = checkInPicServerUrl;
+        this.checkInPicLocalPath = checkInPicLocalPath;
+        this.checkInPicThumbUrl = checkInPicThumbUrl;
         this.checkInWith = checkInWith;
         this.createdBy = createdBy;
         this.createdAt = createdAt;
@@ -51,28 +54,28 @@ public class CheckIn extends Memories {
         this.checkInPlaceName = checkInPlaceName;
     }
 
-    public String getCheckInPicLocalURL() {
-        return checkInPicLocalURL;
+    public String getCheckInPicLocalPath() {
+        return checkInPicLocalPath;
     }
 
-    public void setCheckInPicLocalURL(String checkInPicLocalURL) {
-        this.checkInPicLocalURL = checkInPicLocalURL;
+    public void setCheckInPicLocalPath(String checkInPicLocalPath) {
+        this.checkInPicLocalPath = checkInPicLocalPath;
     }
 
-    public String getCheckInPicServerPath() {
-        return checkInPicServerPath;
+    public String getCheckInPicServerUrl() {
+        return checkInPicServerUrl;
     }
 
-    public void setCheckInPicServerPath(String checkInPicServerPath) {
-        this.checkInPicServerPath = checkInPicServerPath;
+    public void setCheckInPicServerUrl(String checkInPicServerUrl) {
+        this.checkInPicServerUrl = checkInPicServerUrl;
     }
 
-    public String getCheckInPicThumbPath() {
-        return checkInPicThumbPath;
+    public String getCheckInPicThumbUrl() {
+        return checkInPicThumbUrl;
     }
 
-    public void setCheckInPicThumbPath(String checkInPicThumbPath) {
-        this.checkInPicThumbPath = checkInPicThumbPath;
+    public void setCheckInPicThumbUrl(String checkInPicThumbUrl) {
+        this.checkInPicThumbUrl = checkInPicThumbUrl;
     }
 
     public List<String> getCheckInWith() {
