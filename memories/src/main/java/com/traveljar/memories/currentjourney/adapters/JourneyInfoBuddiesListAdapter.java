@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.JourneyUtil;
@@ -145,11 +144,13 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
     public void onExitJourney(int resultCode, String userId) {
         if (resultCode == 0) {
             mDialog.dismiss();
-            JourneyDataSource.removeContactFromJourney(context, userId, TJPreferences.getActiveJourneyId(context));
+            //JourneyDataSource.removeContactFromJourney(context, userId, TJPreferences.getActiveJourneyId(context));
             /*MemoriesDataSource.deleteAllMemoriesCreatedByUser(context, userId);
             MemoriesDataSource.removeUserFromMemories(context, userId);*/
             //mDataset = ContactDataSource.getContactsFromJourney(context, TJPreferences.getActiveJourneyId(context));
-            mDataset = ContactDataSource.getAllContactsFromJourney(context, TJPreferences.getActiveJourneyId(context));
+            ContactDataSource.updateContactJourneyStatus(context, userId, TJPreferences.getActiveJourneyId(context), false);
+            mDataset = ContactDataSource.getAllActiveContactsFromJourney(context, TJPreferences.getActiveJourneyId(context));
+            //mDataset = ContactDataSource.getAllContactsFromJourney(context, TJPreferences.getActiveJourneyId(context));
             this.notifyDataSetChanged();
         } else {
             mDialog.dismiss();

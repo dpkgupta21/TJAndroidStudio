@@ -115,6 +115,31 @@ public class ContactDataSource {
         return contactList;
     }
 
+    //    Using mapping table
+    public static List<Contact> getAllActiveContactsFromJourney(Context context, String journeyId){
+        String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " INNER JOIN " + MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP +
+                " ON " + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP +
+                "." + MySQLiteHelper.MAPPING_COLUMN_CONTACT_ID + " WHERE " + MySQLiteHelper.MAPPING_COLUMN_JOURNEY_ID +
+                " = '" + journeyId + "' AND " + MySQLiteHelper.MAPPING_COLUMN_IS_USER_ACTIVE + " = 1";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Log.d(TAG, "cursor size is " + cursor.getCount());
+        List<Contact> contactList = getContactsListFromCursor(cursor, context);
+        cursor.close();
+        db.close();
+        return contactList;
+    }
+
+    public static void updateContactJourneyStatus(Context context, String userId, String journeyId,  boolean status){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.MAPPING_COLUMN_IS_USER_ACTIVE, status ? "1" : "0");
+        Log.d(TAG, "values are " + values);
+        db.update(MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP, values, MySQLiteHelper.MAPPING_COLUMN_CONTACT_ID + " = '" + userId
+                + "' AND " + MySQLiteHelper.MAPPING_COLUMN_JOURNEY_ID + " = '" + journeyId + "'", null);
+        db.close();
+    }
+
     public static List<String> getNonExistingContacts(Context context, List<String> contactIds) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         List<String> existingContacts = new ArrayList<>();

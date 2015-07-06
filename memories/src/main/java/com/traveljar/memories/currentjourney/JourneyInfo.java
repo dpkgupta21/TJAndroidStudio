@@ -59,7 +59,7 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_journey_info);
 
-        List<Contact> contactList = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        List<Contact> contactList = ContactDataSource.getAllActiveContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         Log.d(TAG, "total contacts fetched from journey are " + contactList.size());
         for(Contact contact : contactList){
             Log.d(TAG, " " + contact);
@@ -209,7 +209,7 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
     @Override
     public void onResume(){
         //allBuddiesList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
-        allBuddiesList = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        allBuddiesList = ContactDataSource.getAllActiveContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         mRecyclerView.getLayoutParams().height = convertDpToPixels(allBuddiesList.size() * 90);
         journeyBuddyCount.setText(String.valueOf(allBuddiesList.size()));
         if(mAdapter == null){
@@ -227,7 +227,6 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
         if(resultCode == 0) {
             mProgressDialog.dismiss();
             JourneyDataSource.updateUserActiveStatus(this, TJPreferences.getActiveJourneyId(this), false);
-//            JourneyDataSource.deleteJourney(this, TJPreferences.getActiveJourneyId(this));
             Intent intent = new Intent(this, ActivejourneyList.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

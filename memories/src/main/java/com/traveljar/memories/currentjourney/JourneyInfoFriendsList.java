@@ -25,9 +25,6 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-/**
- * Created by abhi on 06/06/15.
- */
 public class JourneyInfoFriendsList extends AppCompatActivity {
 
     private static final String TAG = "<JInfoFriendsList>";
