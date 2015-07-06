@@ -64,7 +64,8 @@ public class JourneyInfoFriendsList extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        allBuddiesList = ContactDataSource.getContactsFromJourney(getBaseContext(), TJPreferences.getActiveJourneyId(getBaseContext()));
+        //allBuddiesList = ContactDataSource.getContactsFromJourney(getBaseContext(), TJPreferences.getActiveJourneyId(getBaseContext()));
+        allBuddiesList = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         allContactsList = ContactDataSource.getAllContacts(getBaseContext());
         Log.d(TAG, allBuddiesList.size() + "====" + allContactsList.size());
         allContactsList.removeAll(allBuddiesList);
@@ -145,7 +146,8 @@ public class JourneyInfoFriendsList extends AppCompatActivity {
         if(event.getActivityCode() == ACTIVITY_CODE) {
             Log.d(TAG, "contacts fetched successfully, now dismiss the dialog");
             mDialog.dismiss();
-            allBuddiesList = ContactDataSource.getContactsFromJourney(getBaseContext(), TJPreferences.getActiveJourneyId(getBaseContext()));
+            //allBuddiesList = ContactDataSource.getContactsFromJourney(getBaseContext(), TJPreferences.getActiveJourneyId(getBaseContext()));
+            allBuddiesList = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
             allContactsList = ContactDataSource.getAllContacts(getBaseContext());
             Log.d(TAG, allBuddiesList.size() + "====" + allContactsList.size());
             allContactsList.removeAll(allBuddiesList);

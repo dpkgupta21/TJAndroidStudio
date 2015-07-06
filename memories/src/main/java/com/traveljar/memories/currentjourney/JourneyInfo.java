@@ -208,7 +208,8 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
 
     @Override
     public void onResume(){
-        allBuddiesList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        //allBuddiesList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        allBuddiesList = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         mRecyclerView.getLayoutParams().height = convertDpToPixels(allBuddiesList.size() * 90);
         journeyBuddyCount.setText(String.valueOf(allBuddiesList.size()));
         if(mAdapter == null){

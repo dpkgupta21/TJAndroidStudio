@@ -73,7 +73,8 @@ public class MoodDetail extends AppCompatActivity {
 
         mMoodReason.setText(mMood.getReason());
         /*Setting the names of the friends in the mood*/
-        List<Contact> moodFriends = ContactDataSource.getContactsListFromIds(this, mMood.getBuddyIds());
+        //List<Contact> moodFriends = ContactDataSource.getContactsListFromIds(this, mMood.getBuddyIds());
+        List<Contact> moodFriends = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         String moodFriendsTxt = "";
         for(Contact contact : moodFriends){
             moodFriendsTxt += contact.getProfileName() + ", ";

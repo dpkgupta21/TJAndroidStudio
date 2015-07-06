@@ -100,6 +100,7 @@ public class ContactDataSource {
         return contacts;
     }
 
+//    Using mapping table
     public static List<Contact> getAllContactsFromJourney(Context context, String journeyId){
         String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " INNER JOIN " + MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP +
                 " ON " + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP +
@@ -147,6 +148,72 @@ public class ContactDataSource {
         return nonExistingContactsList;
     }
 
+    public static Contact getContactById(Context context, String buddyId) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " WHERE "
+                + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = '" + buddyId + "'";
+        Cursor cursor = db.rawQuery(query, null);
+
+        Contact contact = null;
+        if (cursor.moveToFirst()) {
+            contact = getContactsListFromCursor(cursor, context).get(0);
+        }
+        cursor.close();
+        db.close();
+        return contact;
+    }
+
+    public static void updateContact(Context context, String contactId, String[] columnValues, String... columns) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        int i = 0;
+        for (String column : columns) {
+            values.put(column, columnValues[i]);
+            i++;
+        }
+        db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contactId, null);
+        db.close();
+    }
+
+    private static List<Contact> getContactsListFromCursor(Cursor cursor, Context context) {
+        List<Contact> contactsList = new ArrayList<>();
+        Contact contact;
+        if (cursor.moveToFirst()) {
+            do {
+                contact = new Contact();
+                contact.setIdOnServer(cursor.getString((cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER))));
+                contact.setProfileName((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME))));
+                contact.setPhoneBookName((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PHONEBOOK_NAME))));
+                contact.setPrimaryEmail((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_EMAIL))));
+                contact.setStatus((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_EMAIL))));
+                contact.setPicLocalUrl((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL))));
+                contact.setPicServerUrl((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL))));
+                contact.setPhoneNo((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PHONE))));
+                contact.setAllJourneyIds((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS))));
+                contact.setOnBoard(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD)) == 1);
+                contact.setStatus((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_STATUS))));
+
+                contactsList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        return contactsList;
+    }
+
+    // Method created to use in clause.
+    // http://stackoverflow.com/questions/7418849/android-sqlite-in-clause-and-placeholders
+    private static String makePlaceholders(int len) {
+        if (len < 1) {
+            throw new RuntimeException("No placeholders");
+        } else {
+            StringBuilder sb = new StringBuilder(len * 2 - 1);
+            sb.append("?");
+            for (int i = 1; i < len; i++) {
+                sb.append(",?");
+            }
+            return sb.toString();
+        }
+    }
+
     // This method will take a list of contact Ids and return a List of Contacts corresponding to those Ids
     public static List<Contact> getContactsListFromIds(Context context, List<String> contactIds) {
         String[] ids = new String[contactIds.size()];
@@ -190,117 +257,6 @@ public class ContactDataSource {
         cursor.close();
         db.close();
         return contactsList;
-    }
-
-    public static Contact getContactById(Context context, String buddyId) {
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        String query = "SELECT * FROM " + MySQLiteHelper.TABLE_CONTACT + " WHERE "
-                + MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = '" + buddyId + "'";
-        Cursor cursor = db.rawQuery(query, null);
-
-        Contact contact = null;
-        if (cursor.moveToFirst()) {
-            contact = getContactsListFromCursor(cursor, context).get(0);
-        }
-        cursor.close();
-        db.close();
-        return contact;
-    }
-
-/*    public static void updateStatus(Context context, String contactId, String status) {
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        ContentValues values = new ContentValues();
-CCCC
-        db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contactId, null);
-        db.close();
-    }
-
-    // this can update both the localPicUrl as well as ServerPicUrl
-    // here give column value either MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL OR MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL
-    public static void updatePicUrl(Context context, String contactId, String url, String column) {
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(column, url);
-        db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contactId, null);
-        db.close();
-    }*/
-
-    public static void updateContact(Context context, String contactId, String[] columnValues, String... columns) {
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        ContentValues values = new ContentValues();
-        int i = 0;
-        for (String column : columns) {
-            values.put(column, columnValues[i]);
-            i++;
-        }
-        db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contactId, null);
-        db.close();
-    }
-
-/*
-    public static void createNewContact(Contact contact, Context context){
-        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        Contact updateContact = ContactDataSource.getContactById(context, contact.getIdOnServer());
-        if(updateContact == null){
-            createContact(contact, context);
-        }else {
-            //Update the whole contact
-            ContentValues values = new ContentValues();
-            values.put(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME, contact.getProfileName());
-            values.put(MySQLiteHelper.CONTACT_COLUMN_EMAIL, contact.getPrimaryEmail());
-            values.put(MySQLiteHelper.CONTACT_COLUMN_PHONE, contact.getPhoneNo());
-            values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL, contact.getPicServerUrl());
-            values.put(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL, contact.getPicLocalUrl());
-            values.put(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS, contact.getAllJourneyIds());
-            values.put(MySQLiteHelper.CONTACT_COLUMN_INTERESTS, contact.getInterests());
-            values.put(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD, contact.isOnBoard() ? 1 : 0);
-            values.put(MySQLiteHelper.CONTACT_COLUMN_STATUS, contact.getStatus());
-            db.update(MySQLiteHelper.TABLE_CONTACT, values, MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER + " = " + contact.getIdOnServer(), null);
-            db.close();
-        }
-    }
-*/
-
-
-
-
-    private static List<Contact> getContactsListFromCursor(Cursor cursor, Context context) {
-        List<Contact> contactsList = new ArrayList<>();
-        Contact contact;
-        if (cursor.moveToFirst()) {
-            do {
-                contact = new Contact();
-                contact.setIdOnServer(cursor.getString((cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ID_ONSERVER))));
-                contact.setProfileName((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME))));
-                contact.setPhoneBookName((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PHONEBOOK_NAME))));
-                contact.setPrimaryEmail((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_EMAIL))));
-                contact.setStatus((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_EMAIL))));
-                contact.setPicLocalUrl((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL))));
-                contact.setPicServerUrl((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PIC_SERVER_URL))));
-                contact.setPhoneNo((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_PHONE))));
-                contact.setAllJourneyIds((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ALL_JIDS))));
-                contact.setOnBoard(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_ISONBOARD)) == 1);
-                contact.setStatus((cursor.getString(cursor.getColumnIndex(MySQLiteHelper.CONTACT_COLUMN_STATUS))));
-
-                contactsList.add(contact);
-            } while (cursor.moveToNext());
-        }
-        return contactsList;
-    }
-
-    // Method created to use in clause.
-    // http://stackoverflow.com/questions/7418849/android-sqlite-in-clause-and-placeholders
-    private static String makePlaceholders(int len) {
-        if (len < 1) {
-            throw new RuntimeException("No placeholders");
-        } else {
-            StringBuilder sb = new StringBuilder(len * 2 - 1);
-            sb.append("?");
-            for (int i = 1; i < len; i++) {
-                sb.append(",?");
-            }
-            return sb.toString();
-        }
     }
 
 }

@@ -67,7 +67,8 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
             }
         });
 
-        mContactsList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        //mContactsList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        mContactsList = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));;
         Log.d(TAG, "buddies in journey are " + mContactsList.size());
     }
 

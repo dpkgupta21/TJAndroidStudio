@@ -10,6 +10,7 @@ public class Journey implements Comparable<Journey> {
     private String createdBy;
     private List<String> laps;
     private List<String> buddies;
+    private List<Contact> contactsList;
     private String journeyStatus;
     private long createdAt;
     private long updatedAt;
@@ -143,6 +144,14 @@ public class Journey implements Comparable<Journey> {
 
     public void setLapsList(List<Lap> lapsList) {
         this.lapsList = lapsList;
+    }
+
+    public List<Contact> getContactsList() {
+        return contactsList;
+    }
+
+    public void setContactsList(List<Contact> contactsList) {
+        this.contactsList = contactsList;
     }
 
     @Override

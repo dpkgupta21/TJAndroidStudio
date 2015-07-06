@@ -78,7 +78,8 @@ public class CheckinDetail extends AppCompatActivity {
         mCheckInCaptionTxt.setText(mCheckIn.getCaption());
         mCheckInInPlaceTxt.setText("@ " + mCheckIn.getCheckInPlaceName());
         /*Setting the names of the friends in the checkin*/
-        List<Contact> checkInWith = ContactDataSource.getContactsListFromIds(this, mCheckIn.getCheckInWith());
+        //List<Contact> checkInWith = ContactDataSource.getContactsListFromIds(this, mCheckIn.getCheckInWith());
+        List<Contact> checkInWith = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         String checkInWithText = "";
         for(Contact contact : checkInWith){
             checkInWithText += contact.getProfileName() + ", ";
