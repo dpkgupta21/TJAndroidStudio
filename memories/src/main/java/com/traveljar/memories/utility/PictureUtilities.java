@@ -69,6 +69,7 @@ public class PictureUtilities {
 /*                        if(finishListener != null) {
                             finishListener.onFinishDownload(pic.getIdOnServer(), pic.getMemType(), String.valueOf(id));
                         }*/
+                            PullMemoriesService.isFinished();
                             EventBus.getDefault().post(new PictureDownloadEvent(pic, true, downloadRequesterCode));
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -84,6 +85,7 @@ public class PictureUtilities {
                     }
                 }, 0, 0, null, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
+                        EventBus.getDefault().post(new PictureDownloadEvent(pic, false, downloadRequesterCode));
                         Log.d(TAG, "error oaccuered" + error.getMessage());
                     }
                 });
@@ -93,9 +95,9 @@ public class PictureUtilities {
             pic.setPicThumbnailPath(imagePath);
             long id = PictureDataSource.createPicture(pic, context);
             pic.setId(String.valueOf(id));
+            PullMemoriesService.isFinished();
             EventBus.getDefault().post(new PictureDownloadEvent(pic, true, downloadRequesterCode));
         }
-        PullMemoriesService.isFinished();
     }
 
     public static boolean uploadPicOnServer(Context context, final Picture picture){

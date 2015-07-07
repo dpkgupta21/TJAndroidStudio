@@ -40,7 +40,6 @@ public class VideoPreview extends AppCompatActivity {
     private TextView time;
     private EditText caption;
     private ImageView mProfileImg;
-    private long currenTime;
     private String videoPath;
     private Video mVideo;
     private ProgressDialog pDialog;
@@ -63,7 +62,6 @@ public class VideoPreview extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
 
-        currenTime = HelpMe.getCurrentTime();
         video = (ImageView) findViewById(R.id.thumbnail);
         dateBig = (TextView) findViewById(R.id.photo_detail_date_big);
         date = (TextView) findViewById(R.id.photo_detail_date);
@@ -181,11 +179,15 @@ public class VideoPreview extends AppCompatActivity {
                 VideoPreview.this.finish();
             }
         });
+        toolbar.inflateMenu(R.menu.toolbar_with_done_text);
         TextView done = (TextView) toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "done clicked!");
+                if(!caption.getText().toString().isEmpty()){
+                    mVideo.setCaption(caption.getText().toString());
+                }
                 saveAndUploadVideo();
                 finish();
             }

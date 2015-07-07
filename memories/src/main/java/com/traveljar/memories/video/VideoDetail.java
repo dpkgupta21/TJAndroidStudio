@@ -165,7 +165,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
-        title.setText("Memories");
+        title.setText("Video Memory");
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);

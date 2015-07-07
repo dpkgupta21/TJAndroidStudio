@@ -42,7 +42,7 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <include layout="@layout/toolbar_with_text_action_item" />
+        <include layout="@layout/toolbar" />
 
 
     </RelativeLayout>

@@ -21,9 +21,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-/**
- * Created by ankit on 17/6/15.
- */
 public class UploadVideoService extends IntentService{
 
     private Video video;

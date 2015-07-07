@@ -133,7 +133,6 @@ public class PicturePreview extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void setUpToolBar(){
@@ -149,6 +148,7 @@ public class PicturePreview extends AppCompatActivity {
                 PicturePreview.this.finish();
             }
         });
+        toolbar.inflateMenu(R.menu.toolbar_with_done_text);
         TextView done = (TextView) toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,27 +176,4 @@ public class PicturePreview extends AppCompatActivity {
         }
     }
 
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar_with_done_text, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_done:
-                Log.d(TAG, "done clicked!");
-                saveAndUploadPic();
-                finish();
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
 }

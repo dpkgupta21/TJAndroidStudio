@@ -118,7 +118,9 @@ public class CheckinUtil {
         MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
         entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
-        entityBuilder.addPart("checkin[picture_file]", new FileBody(new File(checkIn.getCheckInPicLocalPath())));
+        if(checkIn.getCheckInPicLocalPath() != null) {
+            entityBuilder.addPart("checkin[picture_file]", new FileBody(new File(checkIn.getCheckInPicLocalPath())));
+        }
         entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(context));
         entityBuilder.addTextBody("checkin[user_id]", checkIn.getCreatedBy());
         entityBuilder.addTextBody("checkin[place_name]", checkIn.getCheckInPlaceName());
@@ -137,7 +139,7 @@ public class CheckinUtil {
             response = new DefaultHttpClient().execute(updateProfileRequest);
             JSONObject object = new JSONObject(EntityUtils.toString(response.getEntity()));
 
-            Log.d(TAG, "checkIn uploaded with response " + response);
+            Log.d(TAG, "checkIn uploaded with response " + object);
             String serverId = object.getJSONObject("checkin").getString("id");
             String serverUrl = object.getJSONObject("checkin").getJSONObject("picture_file").getJSONObject("original").getString("url");
             CheckinDataSource.updateServerIdAndPicUrl(context.getApplicationContext(), checkIn.getId(), serverId, serverUrl);
@@ -154,7 +156,7 @@ public class CheckinUtil {
                 checkIn.getjId() + "_"+ checkIn.getCreatedAt() + ".jpg";
         File file = new File(imagePath);
         if(!file.exists()) {
-            if (checkIn.getCheckInPicThumbUrl()!= null) {
+            if (checkIn.getCheckInPicThumbUrl() != null && !checkIn.getCheckInPicThumbUrl().equals("null")) {
                 ImageRequest request = new ImageRequest(checkIn.getCheckInPicThumbUrl(), new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
@@ -166,6 +168,7 @@ public class CheckinUtil {
                             long id = CheckinDataSource.createCheckIn(checkIn, context);
                             checkIn.setId(String.valueOf(id));
                             Log.d(TAG, "saving checkin " + checkIn);
+                            PullMemoriesService.isFinished();
                             EventBus.getDefault().post(new CheckInDownloadEvent(checkIn, true, downloadRequesterCode));
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -182,17 +185,24 @@ public class CheckinUtil {
                 }, 0, 0, null, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG, "error oaccuered" + error.getMessage());
+                        EventBus.getDefault().post(new CheckInDownloadEvent(checkIn, false, downloadRequesterCode));
                     }
                 });
                 AppController.getInstance().addToRequestQueue(request);
+            }else {
+                checkIn.setCheckInPicThumbUrl(null);
+                long id = CheckinDataSource.createCheckIn(checkIn, context);
+                checkIn.setId(String.valueOf(id));
+                PullMemoriesService.isFinished();
+                EventBus.getDefault().post(new CheckInDownloadEvent(checkIn, true, downloadRequesterCode));
             }
         }else {
             checkIn.setCheckInPicThumbUrl(imagePath);
             long id = CheckinDataSource.createCheckIn(checkIn, context);
             checkIn.setId(String.valueOf(id));
+            PullMemoriesService.isFinished();
             EventBus.getDefault().post(new CheckInDownloadEvent(checkIn, true, downloadRequesterCode));
         }
-        PullMemoriesService.isFinished();
     }
 
 }

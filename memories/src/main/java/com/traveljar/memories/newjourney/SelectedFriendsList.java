@@ -1,10 +1,8 @@
 package com.traveljar.memories.newjourney;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,9 +29,6 @@ public class SelectedFriendsList extends AppCompatActivity {
 
     private List<Contact> allContactsList;
     public static SelectedFriendsListAdapter contactListViewAdapter;
-    // handler and runnable are used to check(every 1 second) from PullContactsService.java whether all the contacts have been fetched
-    Handler timerHandler = new Handler();
-    private ActionBar actionBar;
     private ListView contactListView;
     private ProgressDialog mProgressDialog;
 

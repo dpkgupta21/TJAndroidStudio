@@ -259,7 +259,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 break;
 
             case HelpMe.TYPE_PROFILE_UPDATE:
-                JSONObject obj = null;
+                JSONObject obj;
                 try {
                     obj = new JSONObject(bundle.getString("user"));
                     Log.d(TAG, "contact fetched with server id " + obj);
@@ -314,7 +314,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 String thumb = data.getString("thumb");
                 size = Long.parseLong(data.getString("size"));
                 extension = data.getString("extension");
-                caption = data.getString("caption");
+                caption = data.getString("caption").equals("null") ? null : data.getString("caption");
 
                 Log.d(TAG, "caption is " + caption);
 
@@ -344,7 +344,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 String localThumbUrl = data.getString("thumbnail");
                 size = Long.parseLong(data.getString("size"));
                 extension = data.getString("extension");
-                caption = data.getString("caption");
+                caption = data.getString("caption").equals("null") ? null : data.getString("caption");
 
                 Video newVideo = new Video(idOnServer, jId, HelpMe.VIDEO_TYPE, caption, extension,
                         size, dataUrl, null, createdBy, createdAt, updatedAt, null, null, latitude, longitude);
@@ -388,7 +388,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 buddies = buddies.replace("]", "");
                 List<String> buddyList = Arrays.asList(buddies.split(","));
                 String place_name = data.getString("place_name");
-                caption = data.getString("caption");
+                caption = data.getString("caption").equals("null") ? null : data.getString("caption");
                 thumb = data.getString("thumb");
                 dataUrl = data.getString("data_url");
 

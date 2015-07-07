@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 
 public class SignIn extends Activity implements PullMemoriesService.OnTaskFinishListener {
 
-    protected static final String TAG = null;
+    protected static final String TAG = "SignIn";
     // GCM -----------------------------------
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static int REQUEST_FETCH_MEMORIES = 1;
@@ -101,6 +101,11 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
 
     public void signIn(View v) {
         Log.d(TAG, "signIn() method called");
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setTitle("Loading your memories...");
+        pDialog.setCanceledOnTouchOutside(false);
+        pDialog.show();
         // Get a GCM registration id
         startRegistrationOfGCM(getApplicationContext());
     }
@@ -109,10 +114,6 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
     public void makeRequestToServer() {
         if (HelpMe.isNetworkAvailable(this)) {
             Log.d(TAG, "makeREqusttoServer method called" + regid);
-            pDialog = new ProgressDialog(this);
-            pDialog.setTitle("Loading your memories...");
-            pDialog.setCanceledOnTouchOutside(false);
-            pDialog.show();
             // Get username, password from EditText
             final String emailAddress = txtEmailAddress.getText().toString().trim();
             String password = txtPassword.getText().toString().trim();
@@ -205,7 +206,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
 
 
         // Fetching the profile image of the user
-        if (picServerUrl.equals("null")) {
+        if (!picServerUrl.equals("null")) {
             picLocalUrl = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + id + ".jpeg";
             TJPreferences.setProfileImgPath(this, picLocalUrl);
             ImageRequest request = new ImageRequest(picServerUrl,

@@ -200,8 +200,8 @@ public class PullMemoriesService {
                                 100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
                         parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.PICTURE_TYPE, journeyId, memoryId);
                         //PictureUtilities.getInstance().setOnFinishDownloadListener(this);
-                        PictureUtilities.getInstance().createNewPicFromServer(mContext, newPic, thumbnailUrl, PICTURE_DOWNLOAD_REQUESTER_CODE);
                         count++;
+                        PictureUtilities.getInstance().createNewPicFromServer(mContext, newPic, thumbnailUrl, PICTURE_DOWNLOAD_REQUESTER_CODE);
                         Log.d(TAG, "picture parsed and saved successfully");
 
                     } else if (key.equals("note") && object.get(key) instanceof JSONObject) {
@@ -237,10 +237,9 @@ public class PullMemoriesService {
                                 "png", 1223, null, fileUrl, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
 
                         parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.VIDEO_TYPE, journeyId, memoryId);
+                        count++;
                         VideoUtil.getInstance().createNewVideoFromServer(mContext, newVideo, thumbnailUrl, VIDEO_DOWNLOAD_REQUESTER_CODE);
                         //parseAndSaveLikes(memory.getJSONArray("likes"), String.valueOf(id), HelpMe.CHECKIN_TYPE, journeyId);
-                        count++;
-                        Log.d(TAG, "video parsed and saved successfully" + thumbnailUrl);
 
                     } else if (key.equals("checkin") && object.get(key) instanceof JSONObject) {
                         createdBy = memory.getString("user_id");
@@ -261,8 +260,8 @@ public class PullMemoriesService {
                                 null, fileUrl, thumbnailUrl, buddyIds, createdBy, createdAt, updatedAt);
 
                         parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.CHECKIN_TYPE, journeyId, memoryId);
-                        CheckinUtil.createNewCheckInFromServer(mContext, newCheckIn, CHECKIN_DOWNLOAD_REQUESTER_CODE);
                         count++;
+                        CheckinUtil.createNewCheckInFromServer(mContext, newCheckIn, CHECKIN_DOWNLOAD_REQUESTER_CODE);
 
                         Log.d(TAG, "checkin parsed and saved successfully");
 
@@ -334,24 +333,17 @@ public class PullMemoriesService {
     }
 
     public static void isFinished() {
+        Log.d(TAG, "not finished" + count);
         if (isService) {
             count--;
-            Log.d(TAG, "not finished" + count);
             if (count < 0) {
                 Log.d(TAG, "isfinished called" + count);
                 count = 0;
                 isService = false;
                 mListener.onFinishTask(REQUEST_CODE);
-
             }
         }
     }
-
-/*    @Override
-    public void onFinishDownload(String serverId, String memType, String localId) {
-        Log.d(TAG, "updating memory local id for mem type " + memType);
-        LikeDataSource.updateMemoryLocalId(serverId, memType, localId, mContext);
-    }*/
 
     public interface OnTaskFinishListener {
         void onFinishTask(int REQUEST_CODES);
@@ -366,6 +358,7 @@ public class PullMemoriesService {
     }
 
     public void onEvent(PictureDownloadEvent event){
+        Log.d(TAG, "picture downloaded successfully");
         if(event.getCallerCode() == PICTURE_DOWNLOAD_REQUESTER_CODE) {
             LikeDataSource.updateMemoryLocalId(event.getPicture().getIdOnServer(), event.getPicture().getMemType(),
                     event.getPicture().getId(), mContext);
@@ -373,6 +366,7 @@ public class PullMemoriesService {
     }
 
     public void onEvent(VideoDownloadEvent event){
+        Log.d(TAG, "video downloaded successfully");
         if(event.getCallerCode() == VIDEO_DOWNLOAD_REQUESTER_CODE) {
             LikeDataSource.updateMemoryLocalId(event.getVideo().getIdOnServer(), event.getVideo().getMemType(), event.getVideo().getId(),
                     mContext);
@@ -380,6 +374,7 @@ public class PullMemoriesService {
     }
 
     public void onEvent(CheckInDownloadEvent event){
+        Log.d(TAG, "checkin downloaded successfully");
         if(event.getCallerCode() == CHECKIN_DOWNLOAD_REQUESTER_CODE) {
             LikeDataSource.updateMemoryLocalId(event.getCheckIn().getIdOnServer(), event.getCheckIn().getMemType(), event.getCheckIn().getId(),
                     mContext);
