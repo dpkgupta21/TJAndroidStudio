@@ -9,15 +9,8 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
 import com.traveljar.memories.R;
-import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
-import com.traveljar.memories.models.Place;
 import com.traveljar.memories.newjourney.adapters.LocationListAdapter;
 import com.traveljar.memories.newjourney.adapters.PlacesAutoCompleteAdapter;
-import com.traveljar.memories.utility.HelpMe;
-import com.traveljar.memories.utility.TJPreferences;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class LocationList extends AppCompatActivity {
 
@@ -74,7 +67,7 @@ public class LocationList extends AppCompatActivity {
 
     }
 
-    private long createNewPlaceInDB(String desc) {
+/*    private long createNewPlaceInDB(String desc) {
         List<String> placeDetails;
         placeDetails = Arrays.asList(desc.split(","));
 
@@ -85,6 +78,6 @@ public class LocationList extends AppCompatActivity {
         }
         Place newPlace = new Place(null, null, null, placeDetails.get(len - 1), placeDetails.get(len - 2), city, TJPreferences.getUserId(getBaseContext()), HelpMe.getCurrentTime());
         return PlaceDataSource.createPlace(newPlace, getBaseContext());
-    }
+    }*/
 
 }

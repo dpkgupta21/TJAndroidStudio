@@ -45,14 +45,17 @@ public class JourneyDataSource {
         // insert row
         long journey_id = db.insert(MySQLiteHelper.TABLE_JOURNEY, null, values);
 
+        Log.d(TAG, "new journey buddies" + newJourney.getBuddies());
         // Insert journey-contact mapping in the mapping table
-        for(String contact : newJourney.getBuddies()){
-            values = new ContentValues();
-            values.put(MySQLiteHelper.MAPPING_COLUMN_JOURNEY_ID, newJourney.getIdOnServer());
-            values.put(MySQLiteHelper.MAPPING_COLUMN_CONTACT_ID, contact);
-            values.put(MySQLiteHelper.MAPPING_COLUMN_IS_USER_ACTIVE, newJourney.isUserActive() ? 1 : 0);
-            Log.d(TAG, "adding mapping" + values);
-            db.insert(MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP, null, values);
+        if(newJourney.getBuddies() != null) {
+            for (String contact : newJourney.getBuddies()) {
+                values = new ContentValues();
+                values.put(MySQLiteHelper.MAPPING_COLUMN_JOURNEY_ID, newJourney.getIdOnServer());
+                values.put(MySQLiteHelper.MAPPING_COLUMN_CONTACT_ID, contact);
+                values.put(MySQLiteHelper.MAPPING_COLUMN_IS_USER_ACTIVE, newJourney.isUserActive() ? 1 : 0);
+                Log.d(TAG, "adding mapping" + values);
+                db.insert(MySQLiteHelper.TABLE_CONTACT_JOURNEY_MAP, null, values);
+            }
         }
         db.close();
 
@@ -156,8 +159,9 @@ public class JourneyDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS, Joiner.on(",").join(buddyIds));
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId, null);
+        db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = '" + journeyId + "'", null);
         db.close();
+        Log.d(TAG, "content values are " + values);
         Log.d(TAG, "New buddy with id = " + contactId + " successfully added to the current journey with id = " + journeyId);
     }
 

@@ -39,7 +39,7 @@ public class SelectMoodsDialog extends DialogFragment {
             "hahahaha",
             "boss",
             "confident",
-            "confused",
+            "confuse",
             "cry",
             "doubt",
             "embarassed",

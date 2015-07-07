@@ -161,12 +161,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_PLACE = "PLACE";
     public static final String PLACE_COLUMN_ID = "_id";
     public static final String PLACE_COLUMN_ID_ONSERVER = "idOnServer";
-    public static final String PLACE_COLUMN_ID_ON_GOOGLE = "idOnGoogle";
     public static final String PLACE_COLUMN_COUNTRY = "country";
     public static final String PLACE_COLUMN_STATE = "state";
     public static final String PLACE_COLUMN_CITY = "city";
-    public static final String PLACE_COLUMN_CREATED_BY = "createdBy";
     public static final String PLACE_COLUMN_CREATED_AT = "createdAt";
+    public static final String PLACE_COLUMN_LATITUDE = "latitude";
+    public static final String PLACE_COLUMN_LONGITUDE = "longitude";
 
     //Table Likes
     public static final String TABLE_LIKE = "LIKE";
@@ -221,6 +221,16 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String LAP_COLUMN_CONVEYANCE_MODE = "conveyanceMode";
     public static final String LAP_COLUMN_START_DATE = "startDate";
 
+    //original LAP table
+    public static final String TABLE_LAPS = "LAPS";
+    public static final String LAPS_COLUMN_ID = "id";
+    public static final String LAPS_COLUMN_ID_ON_SERVER = "idOnServer";
+    public static final String LAPS_COLUMN_JOURNEY_ID = "journeyId";
+    public static final String LAPS_COLUMN_SOURCE_PLACE_ID = "sourcePlaceId";
+    public static final String LAPS_COLUMN_DESTINATION_PLACE_ID = "destinationPlaceId";
+    public static final String LAPS_COLUMN_CONVEYANCE_MODE = "conveyanceMode";
+    public static final String LAPS_COLUMN_START_DATE = "startDate";
+
 //    Table JOURNEY_CONTACT_MAPPING
     public static final String TABLE_CONTACT_JOURNEY_MAP = "CONTACT_JOURNEY_MAPPING";
     public static final String MAPPING_COLUMN_JOURNEY_ID = "journeyId";
@@ -245,6 +255,15 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + LAP_COLUMN_DESTINATION_COUNTRY + " text ,"
             + LAP_COLUMN_START_DATE + " integer ,"
             + LAP_COLUMN_CONVEYANCE_MODE + " integer " + ");";
+
+    private static final String CREATE_TABLE_LAPS = "create table " + TABLE_LAPS + "("
+            + LAPS_COLUMN_ID + " integer primary key autoincrement, "
+            + LAPS_COLUMN_ID_ON_SERVER + " text , "
+            + LAPS_COLUMN_JOURNEY_ID + " text ,"
+            + LAPS_COLUMN_SOURCE_PLACE_ID + " text,"
+            + LAPS_COLUMN_DESTINATION_PLACE_ID + " text ,"
+            + LAPS_COLUMN_START_DATE + " integer ,"
+            + LAPS_COLUMN_CONVEYANCE_MODE + " integer " + ");";
 
     private static final String CREATE_TABLE_LIKE = "create table " + TABLE_LIKE + "("
             + LIKE_COLUMN_ID + " integer primary key autoincrement, "
@@ -404,11 +423,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_PLACE = "create table if not exists " + TABLE_PLACE + "("
             + PLACE_COLUMN_ID + " integer primary key autoincrement, "
             + PLACE_COLUMN_ID_ONSERVER + " text, "
-            + PLACE_COLUMN_ID_ON_GOOGLE + " text ,"
             + PLACE_COLUMN_COUNTRY + " text ,"
             + PLACE_COLUMN_STATE + " text ,"
             + PLACE_COLUMN_CITY + " text ,"
-            + PLACE_COLUMN_CREATED_BY + " text ,"
+            + PLACE_COLUMN_LATITUDE + " text ,"
+            + PLACE_COLUMN_LONGITUDE + " text ,"
             + PLACE_COLUMN_CREATED_AT + " integer " + ");";
 
     private static final String CREATE_TABLE_TIMECAPSULE = "create table if not exists " + TABLE_TIMECAPSULE + "("
@@ -466,6 +485,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.delete(TABLE_TIMECAPSULE, null, null);
         db.delete(TABLE_REQUEST_QUEUE, null, null);
         db.delete(TABLE_LAP, null, null);
+        db.delete(TABLE_LAPS, null, null);
+        db.delete(TABLE_CONTACT_JOURNEY_MAP, null, null);
     }
 
     @Override
@@ -498,6 +519,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.d(TAG, "REQUEST_QUEUE table created!");
         database.execSQL(CREATE_TABLE_LAP);
         Log.d(TAG, "LAP table created!");
+        database.execSQL(CREATE_TABLE_LAPS);
+        Log.d(TAG, "LAPS table created!");
         database.execSQL(CREATE_TABLE_CONTACT_JOURNEY_MAP);
         Log.d(TAG, "TABLE CONTACT JOURNEY MAP created!");
     }

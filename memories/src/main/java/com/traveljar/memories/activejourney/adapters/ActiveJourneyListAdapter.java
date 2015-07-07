@@ -15,12 +15,15 @@ import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
+import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.customevents.ContactsFetchEvent;
 import com.traveljar.memories.models.Journey;
-import com.traveljar.memories.models.Lap;
+import com.traveljar.memories.models.Laps;
 import com.traveljar.memories.models.Picture;
+import com.traveljar.memories.models.Place;
 import com.traveljar.memories.services.PullBuddies;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
@@ -78,14 +81,18 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         final String name = journeyItem.getName();
         final String tagline = journeyItem.getTagLine();
         final String buddyCount = (journeyItem.getBuddies().size() + 1) + " people";
-        List<Lap> lapList = journeyItem.getLapsList();
+
+/*        List<Lap> lapList = journeyItem.getLapsList();
         String place = "";
         if(lapList.size() > 0){
             place = lapList.get(0).getDestinationCityName();
+        }*/
+        String place = "";
+        List<Laps> lapsList = LapsDataSource.getLapsFromJourney(mContext, journeyItem.getIdOnServer());
+        if(lapsList.size() > 0){
+            Place destinationCity = PlaceDataSource.getPlaceById(mContext, lapsList.get(0).getDestinationPlaceId());
+            place = destinationCity.getCity();
         }
-        Log.d(TAG, "place name is " + place);
-
-        Log.d(TAG, "info are : " + name + journeyItem.getIdOnServer());
 
         holder.journeyName.setText(name);
         holder.journeyTagline.setText(tagline);

@@ -85,6 +85,7 @@ public class CreateNotes extends AppCompatActivity {
                 CreateNotes.this.finish();
             }
         });
+        toolbar.inflateMenu(R.menu.action_bar_with_done_icon);
         TextView done = (TextView)toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override

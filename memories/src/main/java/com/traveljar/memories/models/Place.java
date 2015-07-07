@@ -1,28 +1,29 @@
 package com.traveljar.memories.models;
 
-/**
- * Created by abhi on 05/06/15.
- */
+
 public class Place {
 
     private String id;
     private String idOnServer;
-    private String idOnGoogle;
     private String country;
     private String state;
     private String city;
-    private String createdBy;
     private long createdAt;
+    private double latitude;
+    private double longitude;
 
-    public Place(String id, String idOnServer, String idOnGoogle, String country, String state, String city, String createdBy, long createdAt) {
+    public Place(){}
+
+    public Place(String id, String idOnServer, String country, String state, String city, long createdAt,
+                 double latitude, double longitude) {
         this.id = id;
         this.idOnServer = idOnServer;
-        this.idOnGoogle = idOnGoogle;
         this.country = country;
         this.state = state;
         this.city = city;
-        this.createdBy = createdBy;
         this.createdAt = createdAt;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getId() {
@@ -39,14 +40,6 @@ public class Place {
 
     public void setIdOnServer(String idOnServer) {
         this.idOnServer = idOnServer;
-    }
-
-    public String getIdOnGoogle() {
-        return idOnGoogle;
-    }
-
-    public void setIdOnGoogle(String idOnGoogle) {
-        this.idOnGoogle = idOnGoogle;
     }
 
     public String getCountry() {
@@ -73,19 +66,27 @@ public class Place {
         this.city = city;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
     public long getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

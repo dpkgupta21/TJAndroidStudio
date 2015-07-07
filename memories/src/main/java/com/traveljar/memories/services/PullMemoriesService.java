@@ -8,19 +8,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
+import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
+import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
 import com.traveljar.memories.customevents.CheckInDownloadEvent;
 import com.traveljar.memories.customevents.PictureDownloadEvent;
 import com.traveljar.memories.customevents.VideoDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Journey;
+import com.traveljar.memories.models.Laps;
 import com.traveljar.memories.models.Like;
 import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
+import com.traveljar.memories.models.Place;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.utility.CheckinUtil;
 import com.traveljar.memories.utility.Constants;
@@ -86,7 +90,7 @@ public class PullMemoriesService {
                             String createdBy;
                             long createdAt;
                             long updatedAt;
-                            String laps;
+                            JSONArray laps;
                             List<String> lapsList;
                             List<String> buddyList;
                             JSONArray memoriesList;
@@ -121,12 +125,12 @@ public class PullMemoriesService {
                                 buddyList.remove(TJPreferences.getUserId(mContext));
                                 Log.d(TAG, "1.4 = " + TJPreferences.getUserId(mContext));
 
-                                laps = jsonObject.getJSONArray("journey_lap_ids").toString();
-                                lapsList = Arrays.asList(laps.split(","));
+                                laps = jsonObject.getJSONArray("journey_laps");
+                                parseLaps(laps, idOnServer);
                                 journeyStatus = jsonObject.getString("completed_at").equals("null") ? Constants.JOURNEY_STATUS_ACTIVE : Constants.JOURNEY_STATUS_FINISHED;
 
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
-                                        createdBy, lapsList, buddyList, journeyStatus, createdAt, updatedAt, 0, isUserActive);
+                                        createdBy, null, buddyList, journeyStatus, createdAt, updatedAt, 0, isUserActive);
                                 JourneyDataSource.createJourney(journey, mContext);
 
                                 memoriesList = jsonObject.getJSONArray("memories");
@@ -341,6 +345,49 @@ public class PullMemoriesService {
                 count = 0;
                 isService = false;
                 mListener.onFinishTask(REQUEST_CODE);
+            }
+        }
+    }
+
+    private void parseLaps(JSONArray journeyLaps, String journeyId){
+        Laps laps;
+        Place source;
+        Place destination;
+        JSONObject lapObject;
+        JSONObject sourceObject = null;
+        JSONObject destinationObject;
+        Double latitude;
+        Double longitude;
+        long sourceId;
+        long destinationId;
+        int noLaps = journeyLaps.length();
+        for(int i = 0; i < noLaps; i++){
+            try {
+                lapObject = (JSONObject)journeyLaps.get(i);
+                sourceObject = lapObject.getJSONObject("source");
+                destinationObject = lapObject.getJSONObject("destination");
+
+                //Parsing source place
+                latitude = sourceObject.getString("latitude").equals("null") ? 0.0 : Double.parseDouble(sourceObject.getString("latitude"));
+                longitude = sourceObject.getString("longitude").equals("null") ? 0.0 : Double.parseDouble(sourceObject.getString("longitude"));
+
+                source = new Place(null, sourceObject.getString("id"), sourceObject.getString("country"), sourceObject.getString("state"),
+                        sourceObject.getString("city"), Long.parseLong(sourceObject.getString("created_at")), latitude, longitude);
+                sourceId = PlaceDataSource.createPlace(source, mContext);
+
+                // Parsing destination Place
+                latitude = destinationObject.getString("latitude").equals("null") ? 0.0 : Double.parseDouble(destinationObject.getString("latitude"));
+                longitude = destinationObject.getString("longitude").equals("null") ? 0.0 : Double.parseDouble(destinationObject.getString("longitude"));
+
+                destination = new Place(null, destinationObject.getString("id"), destinationObject.getString("country"), destinationObject.getString("state"),
+                        destinationObject.getString("city"), Long.parseLong(destinationObject.getString("created_at")), latitude, longitude);
+                destinationId = PlaceDataSource.createPlace(destination, mContext);
+
+                laps = new Laps(null, lapObject.getString("id"), journeyId, String.valueOf(sourceId), String.valueOf(destinationId),
+                        HelpMe.getConveyanceModeCode(lapObject.getString("travel_mode")), Long.parseLong(lapObject.getString("start_date")));
+                LapsDataSource.createLap(laps, mContext);
+            }catch (JSONException ex){
+                ex.printStackTrace();
             }
         }
     }

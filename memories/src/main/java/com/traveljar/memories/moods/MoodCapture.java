@@ -158,6 +158,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
 
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Mood");
+        toolbar.inflateMenu(R.menu.toolbar_with_done_text);
 
         TextView done = (TextView)toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {

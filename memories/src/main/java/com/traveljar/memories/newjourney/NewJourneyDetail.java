@@ -19,9 +19,13 @@ import com.google.common.base.Joiner;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.LapDataSource;
+import com.traveljar.memories.SQLitedatabase.LapsDataSource;
+import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Lap;
+import com.traveljar.memories.models.Laps;
+import com.traveljar.memories.models.Place;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
@@ -135,9 +139,7 @@ public class NewJourneyDetail extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
-                        if (pDialog != null) {
-                            pDialog.dismiss();
-                        }
+                        pDialog.dismiss();
                         try {
                             createNewJourneyInDB(response);
                             AppController.buddyList.clear();
@@ -186,7 +188,9 @@ public class NewJourneyDetail extends AppCompatActivity {
         String group_relationship = newJourney.getString("group_relationship");
         String created_by_id = newJourney.getString("created_by_id");
 
-        JSONArray lapsList = newJourney.getJSONArray("journey_lap_ids");
+//        JSONArray lapsList = newJourney.getJSONArray("journey_lap_ids");
+        JSONArray lapsArray = newJourney.getJSONArray("journey_laps");
+        parseLaps(lapsArray, idOnServer);
         JSONArray buddyList = newJourney.getJSONArray("buddy_ids");
 
         ArrayList<String> buddyArrayList = null;
@@ -211,6 +215,49 @@ public class NewJourneyDetail extends AppCompatActivity {
         LapDataSource.updateLapsList(AppController.lapList, this);
         AppController.lapList.clear();
         TJPreferences.setActiveJourneyId(this, idOnServer);
+    }
+
+    private void parseLaps(JSONArray journeyLaps, String journeyId){
+        Laps laps;
+        Place source;
+        Place destination;
+        JSONObject lapObject;
+        JSONObject sourceObject;
+        JSONObject destinationObject;
+        Double latitude;
+        Double longitude;
+        long sourceId;
+        long destinationId;
+        int noLaps = journeyLaps.length();
+        for(int i = 0; i < noLaps; i++){
+            try {
+                lapObject = (JSONObject)journeyLaps.get(i);
+                sourceObject = lapObject.getJSONObject("source");
+                destinationObject = lapObject.getJSONObject("destination");
+
+                //Parsing source place
+                latitude = sourceObject.getString("latitude").equals("null") ? 0.0 : Double.parseDouble(sourceObject.getString("latitude"));
+                longitude = sourceObject.getString("longitude").equals("null") ? 0.0 : Double.parseDouble(sourceObject.getString("longitude"));
+
+                source = new Place(null, sourceObject.getString("id"), sourceObject.getString("country"), sourceObject.getString("state"),
+                        sourceObject.getString("city"), Long.parseLong(sourceObject.getString("created_at")), latitude, longitude);
+                sourceId = PlaceDataSource.createPlace(source, this);
+
+                // Parsing destination Place
+                latitude = destinationObject.getString("latitude").equals("null") ? 0.0 : Double.parseDouble(destinationObject.getString("latitude"));
+                longitude = destinationObject.getString("longitude").equals("null") ? 0.0 : Double.parseDouble(destinationObject.getString("longitude"));
+
+                destination = new Place(null, destinationObject.getString("id"), destinationObject.getString("country"), destinationObject.getString("state"),
+                        destinationObject.getString("city"), Long.parseLong(destinationObject.getString("created_at")), latitude, longitude);
+                destinationId = PlaceDataSource.createPlace(destination, this);
+
+                laps = new Laps(null, lapObject.getString("id"), journeyId, String.valueOf(sourceId), String.valueOf(destinationId),
+                        HelpMe.getConveyanceModeCode(lapObject.getString("travel_mode")), Long.parseLong(lapObject.getString("start_date")));
+                LapsDataSource.createLap(laps, this);
+            }catch (JSONException ex){
+                ex.printStackTrace();
+            }
+        }
     }
 
     private void setUpToolBar(){

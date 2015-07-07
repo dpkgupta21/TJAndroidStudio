@@ -90,7 +90,6 @@ public class HelpMe {
     private static final String TAG = "<HelpMe>";
     public static Context mContext;
 
-
     // get name of transport from codes
     public static String getConveyanceMode(int c) {
         switch (c) {
@@ -112,6 +111,28 @@ public class HelpMe {
                 return "Magical Carpet";
         }
         return null;
+    }
+
+    // get mode of transport code from name
+    public static int getConveyanceModeCode(String mode) {
+        switch (mode){
+            case "Flight" :
+                return 1;
+            case "Car" :
+                return 2;
+            case "Train" :
+                return 3;
+            case "Ship" :
+                return 4;
+            case "Walking" :
+                return 5;
+            case "Bus" :
+                return 6;
+            case "Bike/Cycling" :
+                return 7;
+            default:
+                return 8;
+        }
     }
 
     public HelpMe() {

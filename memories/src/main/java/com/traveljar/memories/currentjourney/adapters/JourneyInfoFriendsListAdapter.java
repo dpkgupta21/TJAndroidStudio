@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.SQLitedatabase.ContactJourneyMappingDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
@@ -114,6 +115,7 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
         // In Recycler views OnItemCLick is handled here
         @Override
         public void onClick(View v) {
+            //mDialog.show();
             Log.d(TAG, getAdapterPosition() + "===" + getLayoutPosition());
             Contact contact = mDataset.get(getLayoutPosition());
             JourneyUtil.getInstance().setAddBuddyListener(JourneyInfoFriendsListAdapter.this);
@@ -126,6 +128,7 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
         if(resultCode == 0) {
             mDialog.dismiss();
             mDataset.remove(ContactDataSource.getContactById(mContext, contactId));
+            ContactJourneyMappingDataSource.addMapping(mContext, contactId, TJPreferences.getActiveJourneyId(mContext), true);
             this.notifyDataSetChanged();
             JourneyDataSource.addContactToJourney(mContext, contactId, TJPreferences.getActiveJourneyId(mContext));
         }else {

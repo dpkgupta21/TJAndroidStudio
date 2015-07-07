@@ -2,9 +2,6 @@ package com.traveljar.memories.models;
 
 import java.util.List;
 
-/**
- * Created by ankit on 26/6/15.
- */
 public class Lap {
 
     private String id;
