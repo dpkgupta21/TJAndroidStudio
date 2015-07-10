@@ -176,7 +176,7 @@ public class AddLap extends AppCompatActivity {
                 break;
             case R.id.walkToggle:
                 if (toggleWalk.isChecked()) {
-                    lap.setConveyanceMode(HelpMe.CONVEYANCE_SHIP);
+                    lap.setConveyanceMode(HelpMe.CONVEYANCE_WALK);
                     conveyanceOff();
                     toggleWalk.setChecked(true);
                 } else {

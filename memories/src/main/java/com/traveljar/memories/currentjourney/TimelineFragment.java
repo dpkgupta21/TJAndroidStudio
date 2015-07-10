@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -33,7 +32,7 @@ public class TimelineFragment extends Fragment {
     private ListView mListView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FloatingActionsMenu mFab;
-    private FrameLayout baseActivityContentOverlay;
+    //private FrameLayout baseActivityContentOverlay;
     private View rootView;
     private List<Memories> memoriesList;
     private RelativeLayout mLayout;
@@ -94,31 +93,48 @@ public class TimelineFragment extends Fragment {
 
         // FAB ============================================
         // Configure floating action button
-        mFab = (FloatingActionsMenu) rootView.findViewById(R.id.multiple_actions_down);
+         mFab = (FloatingActionsMenu) rootView.findViewById(R.id.multiple_actions_down);
         Log.d(TAG, "user active" + journey.isUserActive());
         if(!journey.isUserActive()){
             mFab.setVisibility(View.GONE);
         }
-        baseActivityContentOverlay = (FrameLayout) rootView.findViewById(R.id.content_activity_overlay);
 
         mFab.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
 
             @Override
             public void onMenuExpanded() {
                 Log.d(TAG, "FAB expanded");
-                baseActivityContentOverlay.setBackgroundColor(getResources().getColor(
-                        R.color.black_semi_transparent));
+                /*baseActivityContentOverlay.setBackgroundColor(getResources().getColor(
+                        R.color.black_semi_transparent));*/
+                ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_activity_overlay).setBackgroundColor(getResources().getColor(R.color.black_semi_transparent));
+                ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_toolbar_overlay).setBackgroundColor(getResources().getColor(R.color.black_semi_transparent));
             }
 
             @Override
             public void onMenuCollapsed() {
                 Log.d(TAG, "FAB collapsed");
-                baseActivityContentOverlay.setBackgroundColor(getResources().getColor(R.color.transparent));
+                //baseActivityContentOverlay.setBackgroundColor(getResources().getColor(R.color.transparent));
+                ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_activity_overlay).setBackgroundColor(getResources().getColor(R.color.transparent));
+                ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_toolbar_overlay).setBackgroundColor(getResources().getColor(R.color.transparent));
+
             }
         });
 
         // Remove the overlay if clicked anywhere other than FAB buttons
-        baseActivityContentOverlay.setOnTouchListener(new View.OnTouchListener() {
+        ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_activity_overlay).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // ignore all touch events
+                if (mFab.isExpanded()) {
+                    mFab.collapse();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Remove the overlay if clicked anywhere other than FAB buttons
+        ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_toolbar_overlay).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 // ignore all touch events
@@ -168,9 +184,12 @@ public class TimelineFragment extends Fragment {
 
     // Onresume of the fragment fetch all the memories from the database and
     // if adapter is null, create new else notifyDataSetChanged()
+    @Override
     public void onResume() {
         loadMemoriesList();
         Log.d(TAG, "on resume() method called from timeline");
         super.onResume();
     }
 }
+
+

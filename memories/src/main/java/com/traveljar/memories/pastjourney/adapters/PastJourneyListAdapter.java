@@ -10,7 +10,14 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.SQLitedatabase.MySQLiteHelper;
+import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
+import com.traveljar.memories.models.Laps;
+import com.traveljar.memories.models.Place;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class PastJourneyListAdapter extends CursorAdapter {
     private static final String TAG = "<PastJourneyListAdapt>";
@@ -28,22 +35,26 @@ public class PastJourneyListAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        Log.d(TAG, "1");
         TextView journeyTitle = (TextView) view.findViewById(R.id.past_journey_title);
-        Log.d(TAG, "2" + cursor.getColumnIndex("name"));
-        journeyTitle.setText(cursor.getString(cursor
-                .getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_NAME)));
-
-        Log.d(TAG, "3");
         TextView journeyPlace = (TextView) view.findViewById(R.id.past_journey_place);
-        journeyPlace.setText(cursor.getString(cursor
-                .getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_TAGLINE)));
+        TextView journeyTagline = (TextView) view.findViewById(R.id.past_journey_tagline);
+        TextView buddyCount = (TextView) view.findViewById(R.id.past_journey_buddy_count);
 
-        Log.d(TAG, "3.1");
-        TextView journeyDate = (TextView) view.findViewById(R.id.past_journey_date);
-        journeyDate.setText(cursor.getString(cursor
-                .getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATEDBY)));
-        Log.d(TAG, "3.2");
+        journeyTitle.setText(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_NAME)));
+        journeyTagline.setText(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_TAGLINE)));
+
+        String buddyIds = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
+        int size = buddyIds.isEmpty() ? 0 : Arrays.asList(buddyIds.split(",")).size();
+        buddyCount.setText(String.valueOf(size + 1) + " people");
+
+        String place = "";
+        List<Laps> lapsList = LapsDataSource.getLapsFromJourney(context, cursor.getString(cursor.getColumnIndex
+                (MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER)));
+        if(lapsList.size() > 0){
+            Place destinationCity = PlaceDataSource.getPlaceById(context, lapsList.get(0).getDestinationPlaceId());
+            place = destinationCity.getCity();
+        }
+        journeyPlace.setText(place);
 
     }
 

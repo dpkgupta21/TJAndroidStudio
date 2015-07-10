@@ -29,6 +29,7 @@ import com.traveljar.memories.utility.TJPreferences;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class PicturePreview extends AppCompatActivity {
 
@@ -43,6 +44,7 @@ public class PicturePreview extends AppCompatActivity {
     private String imagePath;
     private Picture mPicture;
     private long createdAt;
+    private TextView placeTxt;
 
     private ProgressDialog pDialog;
 
@@ -63,6 +65,7 @@ public class PicturePreview extends AppCompatActivity {
         caption = (EditText) findViewById(R.id.photo_detail_caption);
         mProfileImg = (ImageView) findViewById(R.id.photo_detail_profile_image);
         profileName = (TextView) findViewById(R.id.photo_detail_profile_name);
+        placeTxt = (TextView) findViewById(R.id.photo_detail_place);
 
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
@@ -110,6 +113,10 @@ public class PicturePreview extends AppCompatActivity {
 
         photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
 
+        String place = "Lat " + new DecimalFormat("#.##").format(mPicture.getLatitude()) + " Lon " +
+                new DecimalFormat("#.##").format(mPicture.getLongitude());;
+        placeTxt.setText(place);
+
         //Profile picture
         Log.d(TAG, "setting the profile picture" + mPicture.getCreatedBy());
         if (TJPreferences.getProfileImgPath(this) != null) {
@@ -148,7 +155,7 @@ public class PicturePreview extends AppCompatActivity {
                 PicturePreview.this.finish();
             }
         });
-        toolbar.inflateMenu(R.menu.toolbar_with_done_text);
+        // toolbar.inflateMenu(R.menu.toolbar_with_done_text);
         TextView done = (TextView) toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override

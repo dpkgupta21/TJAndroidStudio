@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="300dp">
@@ -86,6 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Name"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
             android:inputType="textPersonName"/>
 
         <com.traveljar.memories.customviews.MyEditTextView
@@ -94,6 +98,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Status"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:inputType="textPersonName"/>
 
     </LinearLayout>

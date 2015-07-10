@@ -6,6 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -59,23 +60,28 @@ public class VideoAlbumsGalleryAdapter extends BaseAdapter {
         ImageView img = (ImageView)convertView.findViewById(R.id.album_img);
         TextView journeyName = (TextView)convertView.findViewById(R.id.album_name);
         TextView noItems = (TextView)convertView.findViewById(R.id.no_items);
+        RelativeLayout relLay = (RelativeLayout) convertView.findViewById(R.id.gallery_photos_rel_layout);
 
         Bitmap bitmap;
         Video video = mAlbumsList.get(mJourneyList.get(position));
+        AbsListView.LayoutParams params = new AbsListView.LayoutParams(getImageWidth(), getImageWidth());
+        relLay.setLayoutParams(params);
+/*        relLay.getLayoutParams().width = getImageWidth();
+        relLay.getLayoutParams().height = getImageWidth();
+        relLay.requestLayout();*/
 
-        img.setLayoutParams(new RelativeLayout.LayoutParams(getImageWidth(), getImageWidth()));
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if(video != null){
             try {
                 bitmap = HelpMe.decodeSampledBitmapFromPath(mContext, video.getLocalThumbPath(), 150, 150);
                 img.setImageBitmap(bitmap);
-                noItems.setText(String.valueOf(VideoDataSource.getVideoCountOfJourney(mContext, video.getjId())) + " Videos ");
+                noItems.setText(String.valueOf(VideoDataSource.getVideoCountOfJourney(mContext, video.getjId())));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }else {
-            img.setImageResource(R.drawable.gumnaam_profile_image);
-            noItems.setText("0 Videos ");
+            img.setImageResource(R.drawable.gallery_video);
+            noItems.setText("0");
         }
         journeyName.setText(mJourneyList.get(position).getName());
 

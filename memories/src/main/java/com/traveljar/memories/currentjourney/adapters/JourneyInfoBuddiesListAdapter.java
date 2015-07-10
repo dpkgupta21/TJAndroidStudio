@@ -36,6 +36,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
         mDataset = myDataset;
         this.context = context;
         mDialog = new ProgressDialog(context);
+        mDialog.setCanceledOnTouchOutside(false);
     }
 
     public void add(int position, Contact item) {
@@ -73,7 +74,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
         // - replace the contents of the view with that element
         final Contact contactsItem = mDataset.get(position);
         final String name = contactsItem.getPhoneBookName() == null ? contactsItem.getProfileName() : contactsItem.getPhoneBookName();
-        final String status = contactsItem.getStatus();
+        final String status = contactsItem.getStatus() == null ? "" : contactsItem.getStatus();
         final String picLocalURL = contactsItem.getPicLocalUrl();
 
         Log.d(TAG, "info are : " + name + "---" + status + "---" + picLocalURL);

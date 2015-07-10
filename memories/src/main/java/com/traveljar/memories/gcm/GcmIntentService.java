@@ -73,9 +73,9 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
 			 * don't recognize.
 			 */
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString());
+                //sendNotification("Send error: " + extras.toString());
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-                sendNotification("Deleted messages on server: " + extras.toString());
+                //sendNotification("Deleted messages on server: " + extras.toString());
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
@@ -130,7 +130,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
 
         Log.d(TAG, "1.3" + userIdList.toString());
 
-        String journeyId;
+        final String journeyId;
         String jName;
         String tagline;
         String createdBy;
@@ -202,8 +202,27 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 memType = bundle.getString("memory_type");
                 MemoriesDataSource.deleteMemoryWithServerId(this, memType, memId);
                 if(CurrentJourneyBaseActivity.isActivityVisible()){
-                    CurrentJourneyBaseActivity.getInstance().refreshTimelineList();
-                }
+                    Thread thread = new Thread(){
+                            @Override
+                            public void run() {
+                                try {
+                                    synchronized (this) {
+                                        wait(5000);
+                                        CurrentJourneyBaseActivity.getInstance().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                CurrentJourneyBaseActivity.getInstance().refreshTimelineList();
+                                            }
+                                        });
+
+                                    }
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        thread.start();
+                    }
                 break;
 
             case HelpMe.TYPE_LIKE_MEMORY:
@@ -283,6 +302,36 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                         e.printStackTrace();
                     }
                 break;
+            case HelpMe.TYPE_END_JOURNEY:
+                journeyId = bundle.getString("journey_id");
+                JourneyDataSource.updateJourneyStatus(this, journeyId, Constants.JOURNEY_STATUS_FINISHED);
+                if(CurrentJourneyBaseActivity.isActivityVisible()){
+                    CurrentJourneyBaseActivity.getInstance().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            CurrentJourneyBaseActivity.getInstance().endJourney(journeyId);
+                        }
+                    });
+                }
+                if(ActivejourneyList.getInstance().isActivityVisible()){
+                    ActivejourneyList.getInstance().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ActivejourneyList.getInstance().refreshJourneysList();
+                        }
+                    });
+                }
+                NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+                PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this,
+                        ActivejourneyList.class), 0);
+                String message = "your journey is finished we'll get back to you with a nice video once it is avilable ";
+
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_launcher).setContentTitle("GCM Notification")
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message)).setContentText(message);
+
+                mBuilder.setContentIntent(contentIntent);
+                mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
             default:
                 break;
         }

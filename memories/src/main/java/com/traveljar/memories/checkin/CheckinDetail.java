@@ -28,6 +28,7 @@ import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CheckinDetail extends AppCompatActivity {
@@ -43,7 +44,7 @@ public class CheckinDetail extends AppCompatActivity {
     private TextView mCheckInCaptionTxt;
     private TextView mCheckInWithTxt;
     private TextView mCheckInInPlaceTxt;
-
+    private TextView placeTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class CheckinDetail extends AppCompatActivity {
         mCheckInCaptionTxt  = (TextView) findViewById(R.id.checkin_caption);
         mCheckInWithTxt = (TextView) findViewById(R.id.checkin_friends_names);
         mCheckInInPlaceTxt = (TextView) findViewById(R.id.checkin_place);
+        placeTxt = (TextView) findViewById(R.id.checkin_detail_place);
 
         Bundle extras = getIntent().getExtras();
 
@@ -116,6 +118,9 @@ public class CheckinDetail extends AppCompatActivity {
         noLikesTxt.setText(String.valueOf(mCheckIn.getLikes().size()));
         mFavBtn.setImageResource(mCheckIn.isMemoryLikedByCurrentUser(this) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
 
+        String place = "Lat " + new DecimalFormat("#.##").format(mCheckIn.getLatitude()) + " Lon " +
+                new DecimalFormat("#.##").format(mCheckIn.getLongitude());;
+        placeTxt.setText(place);
         setFavouriteBtnClickListener();
 
         dateBig.setText(HelpMe.getDate(mCheckIn.getCreatedAt(), HelpMe.DATE_ONLY));

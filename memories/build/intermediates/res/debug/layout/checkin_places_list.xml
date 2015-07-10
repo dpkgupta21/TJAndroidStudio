@@ -10,7 +10,9 @@
         android:id="@+id/checkin_places_search"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Search places" />
+        android:singleLine="true"
+        android:hint="Search places"
+        android:imeOptions="actionDone" />
 
 
     <ListView

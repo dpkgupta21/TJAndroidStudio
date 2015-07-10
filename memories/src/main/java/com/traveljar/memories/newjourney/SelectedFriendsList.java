@@ -25,10 +25,10 @@ import java.util.List;
 public class SelectedFriendsList extends AppCompatActivity {
 
     private static final String TAG = "<SelectedFriendsList>";
-    public static List<Contact> selectedList;
+    public List<Contact> selectedList;
 
     private List<Contact> allContactsList;
-    public static SelectedFriendsListAdapter contactListViewAdapter;
+    public SelectedFriendsListAdapter contactListViewAdapter;
     private ListView contactListView;
     private ProgressDialog mProgressDialog;
 
@@ -45,6 +45,7 @@ public class SelectedFriendsList extends AppCompatActivity {
         selectedList = new ArrayList<>();
 
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
 
         contactListView = (ListView) findViewById(R.id.addFriendsList);
 
@@ -58,9 +59,6 @@ public class SelectedFriendsList extends AppCompatActivity {
 
         // configure auto complete text view
         final MultiAutoCompleteTextView macTv = (MultiAutoCompleteTextView) findViewById(R.id.addFriendsContactSearch);
-        /*ArrayAdapter<String> aaStr = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(
-                R.array.contacts_list));*/
 
         allContactsList = ContactDataSource.getAllContacts(this);
 
@@ -69,7 +67,6 @@ public class SelectedFriendsList extends AppCompatActivity {
         macTv.setThreshold(1);
         macTv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         macTv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Contact contact = adapter.getFilteredContactAtPosition(position);
@@ -83,8 +80,30 @@ public class SelectedFriendsList extends AppCompatActivity {
     }
 
     public void goToAllContactList(View v) {
-        Intent i = new Intent(this, AllFriendsList.class);
-        startActivity(i);
+        for(Contact contact : allContactsList){
+            Log.d(TAG, "inside gotoAllContactList " + contact.isSelected());
+        }
+        Intent intent = new Intent(this, AllFriendsList.class);
+        intent.putParcelableArrayListExtra("FRIENDS_LIST", (ArrayList<Contact>) allContactsList);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK && requestCode == 1){
+            allContactsList = data.getParcelableArrayListExtra("SELECTED_CONTACTS_LIST");
+            selectedList.clear();
+            for(Contact contact : allContactsList){
+                if(contact.isSelected()){
+                    selectedList.add(contact);
+                }
+            }
+            for(Contact contact : allContactsList){
+                Log.d(TAG, "inside gotoAllContactList " + contact.isSelected());
+            }
+            contactListViewAdapter.updateList(selectedList);
+            contactListViewAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setUpToolBar(){
@@ -130,8 +149,8 @@ public class SelectedFriendsList extends AppCompatActivity {
 
     @Override
     public void onResume(){
-        allContactsList = ContactDataSource.getAllContacts(this);
-        adapter.updateList(allContactsList);
+        List<Contact> allContacts = ContactDataSource.getAllContacts(this);
+        adapter.updateList(allContacts);
         adapter.notifyDataSetChanged();
         super.onResume();
     }

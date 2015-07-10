@@ -32,13 +32,15 @@ public class BaseActivity extends AppCompatActivity {
 
         Log.d(TAG, "3");
 
-        if(layoutResID == R.layout.current_journey_base_activity) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+/*        if(layoutResID == R.layout.current_journey_base_activity) {
             findViewById(R.id.toolbar).setVisibility(View.GONE);
             toolbar = (Toolbar) findViewById(R.id.subtitle_toolbar);
         }else {
             findViewById(R.id.subtitle_toolbar).setVisibility(View.GONE);
             toolbar = (Toolbar) findViewById(R.id.toolbar);
-        }
+        }*/
         initDrawer();
         Log.d(TAG, "4");
 //        setupNavigationView();

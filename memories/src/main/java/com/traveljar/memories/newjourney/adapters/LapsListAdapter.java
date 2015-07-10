@@ -45,10 +45,8 @@ public class LapsListAdapter extends ArrayAdapter<Lap> {
             viewHolder.from = (TextView) rowView.findViewById(R.id.new_journey_location_lap_from);
             viewHolder.to = (TextView) rowView.findViewById(R.id.new_journey_location_lap_to);
             viewHolder.date = (TextView) rowView.findViewById(R.id.new_journey_location_lap_date);
-            viewHolder.conveyance = (TextView) rowView
-                    .findViewById(R.id.new_journey_location_lap_conveyance);
-            viewHolder.editBtn = (ImageButton) rowView
-                    .findViewById(R.id.edit_journey_lap);
+            viewHolder.conveyance = (TextView) rowView.findViewById(R.id.new_journey_location_lap_conveyance);
+            viewHolder.editBtn = (ImageButton) rowView.findViewById(R.id.edit_journey_lap);
             viewHolder.editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

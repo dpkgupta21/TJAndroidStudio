@@ -52,8 +52,7 @@ public class ImageGalleryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         if (rowView == null) {
-            LayoutInflater inflater = (LayoutInflater) mContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.gallery_gridview_item, null);
             ViewHolder holder = new ViewHolder(rowView, mContext);
             rowView.setTag(holder);

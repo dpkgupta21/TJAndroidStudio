@@ -28,6 +28,7 @@ import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +45,7 @@ public class AudioDetail extends AppCompatActivity {
     private long currenTime;
     private Audio mAudio;
     private TextView noLikesTxt;
+    private TextView placeTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class AudioDetail extends AppCompatActivity {
         mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.profilePic);
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
+        placeTxt = (TextView) findViewById(R.id.photo_detail_place);
 
         Bundle extras = getIntent().getExtras();
         mAudio = AudioDataSource.getAudioById(this, extras.getString("AUDIO_ID"));
@@ -83,6 +86,10 @@ public class AudioDetail extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        String place = "Lat " + new DecimalFormat("#.##").format(mAudio.getLatitude()) + " Lon " +
+                new DecimalFormat("#.##").format(mAudio.getLongitude());;
+        placeTxt.setText(place);
 
         setFavouriteBtnClickListener();
 

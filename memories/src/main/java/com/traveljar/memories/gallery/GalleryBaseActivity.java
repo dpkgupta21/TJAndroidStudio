@@ -26,8 +26,9 @@ public class GalleryBaseActivity extends BaseActivity {
         setUpToolBar();
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new GalleryTabsPagerAdapter(getSupportFragmentManager()));
+        mViewPager.setAdapter(new GalleryTabsPagerAdapter(getSupportFragmentManager(), this));
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setCustomTabView(R.layout.gallery_custom_tab_title, R.id.tab_text);
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
 

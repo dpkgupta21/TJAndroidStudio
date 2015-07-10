@@ -56,6 +56,7 @@ public class GalleryVideos extends AppCompatActivity implements DownloadVideoAsy
         mGridView = (GridView) findViewById(R.id.videos_grid_view);
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Downloading Video please wait");
+        mProgressDialog.setCanceledOnTouchOutside(false);
 
         mVideoList = VideoDataSource.getAllVideoMemories(this, journeyId);
         mAdapter = new VideoGalleryAdapter(this, mVideoList);

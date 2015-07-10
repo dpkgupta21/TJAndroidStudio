@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class VideoPreview extends AppCompatActivity {
 
@@ -45,6 +46,7 @@ public class VideoPreview extends AppCompatActivity {
     private ProgressDialog pDialog;
     private TextView createdByName;
     private long createdAt;
+    private TextView placeTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +69,9 @@ public class VideoPreview extends AppCompatActivity {
         date = (TextView) findViewById(R.id.photo_detail_date);
         time = (TextView) findViewById(R.id.photo_detail_time);
         caption = (EditText) findViewById(R.id.video_detail_caption);
-//        mFavBtn = (ImageButton) findViewById(R.id.favBtn);
         mProfileImg = (ImageView) findViewById(R.id.profilePic);
-//        noLikesTxt = (TextView) findViewById(R.id.no_likes);
         createdByName = (TextView) findViewById(R.id.photo_detail_profile_name);
+        placeTxt = (TextView) findViewById(R.id.photo_detail_place);
 
         //Extract thumbnail and save it
         String thumbnailPath;
@@ -118,6 +119,10 @@ public class VideoPreview extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        String place = "Lat " + new DecimalFormat("#.##").format(mVideo.getLatitude()) + " Lon " +
+                new DecimalFormat("#.##").format(mVideo.getLongitude());;
+        placeTxt.setText(place);
 
         setThumbnailClickListener();
 

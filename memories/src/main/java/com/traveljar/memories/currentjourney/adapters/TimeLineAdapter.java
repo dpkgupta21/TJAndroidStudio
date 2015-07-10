@@ -156,6 +156,7 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
                     holder.timelineItemCaption = (TextView) convertView
                             .findViewById(R.id.timelineItemCaption);
                     holder.timelineItemCheckinPlace = (TextView) convertView.findViewById(R.id.timelineItemCheckinPlace);
+                    holder.timelineItemImage = (ImageView) convertView.findViewById(R.id.timelineItemImage);
                     break;
 
                 case HelpMe.TYPE_MOOD:
@@ -320,6 +321,11 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
             case 2:
                 Log.d(TAG, "in checkin");
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
+                Log.d(TAG, "checking thumb path is " + checkin.getCheckInPicThumbUrl());
+                if(checkin.getCheckInPicThumbUrl() != null){
+                    LoadThumbFromPath.loadBitmap(checkin.getCheckInPicThumbUrl(), holder.timelineItemImage, HelpMe.getWindowWidth(context),
+                            HelpMe.getWindowHeight(context)/3, context);
+                }
                 holder.timelineItemCaption.setText(checkin.getCaption());
                 holder.timelineItemCheckinPlace.setText(checkin.getCheckInPlaceName());
                 break;
@@ -327,7 +333,9 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
             case 3:
                 Log.d(TAG, "in mood");
                 Mood mood = (Mood) memoriesList.get(position);
-
+                holder.timelineItemMoodBuddyImage1.setVisibility(View.GONE);
+                holder.timelineItemMoodBuddyImage2.setVisibility(View.GONE);
+                holder.timelineItemMoodBuddyImage3.setVisibility(View.GONE);
                 int buddyCount = mood.getBuddyIds().size();
                 Contact fContact;
                 for (int i = 0; i<buddyCount; i++){
@@ -369,7 +377,7 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
                                     .getPicLocalUrl()));
                             break;
 
-                        default: Log.d(TAG, "more than 3 poepl ein mood");
+                        default: Log.d(TAG, "more than 3 people in mood");
                             holder.timelineItemMoodExtraBuddyTxt.setVisibility(View.VISIBLE);
                             break;
                     }

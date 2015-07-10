@@ -32,7 +32,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:gravity="right"
-            android:text="DONE"
+            android:text="Done"
             android:layout_marginRight="5dp"
             />
     </LinearLayout>

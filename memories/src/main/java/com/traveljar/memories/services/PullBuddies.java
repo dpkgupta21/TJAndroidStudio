@@ -62,6 +62,8 @@ public class PullBuddies {
                                 String userName = response.getJSONObject("user").getString("name");
                                 String email = response.getJSONObject("user").getString("email");
                                 String status = response.getJSONObject("user").getString("status");
+                                if(status.equals("null"))
+                                    status = null;
                                 String interests = response.getJSONObject("user").getString("interests");
                                 String phone_no = response.getJSONObject("user").getString("phone");
                                 String phoneBookName = HelpMe.getContactNameFromNumber(mContext, phone_no);

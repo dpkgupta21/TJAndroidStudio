@@ -53,6 +53,8 @@
             android:inputType="textEmailAddress"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
             android:textSize="@dimen/tj_medium_font" />
 
         <com.traveljar.memories.customviews.MyEditTextView
@@ -64,6 +66,8 @@
             android:inputType="textPassword"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:textSize="@dimen/tj_medium_font" />
 
         <com.traveljar.memories.customviews.MyButtonView

@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
@@ -21,6 +22,7 @@ import com.traveljar.memories.currentjourney.adapters.CurrentJourneyTabsAdapter;
 import com.traveljar.memories.customviews.SlidingTabLayout;
 import com.traveljar.memories.moods.MoodCapture;
 import com.traveljar.memories.note.CreateNotes;
+import com.traveljar.memories.pastjourney.PastJourneyList;
 import com.traveljar.memories.picture.PictureCapture;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.video.VideoCapture;
@@ -31,6 +33,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
     private SlidingTabLayout mSlidingTabLayout;
     private ViewPager mViewPager;
     CurrentJourneyTabsAdapter mTabsAdapter;
+    public static final int NOTIFICATION_ID = 1;
 
     private static boolean activityVisible;
     public static boolean isActivityVisible() {
@@ -59,7 +62,6 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
         setContentView(R.layout.current_journey_base_activity);
 
         setUpToolbar();
-
         mViewPager = (ViewPager) findViewById(R.id.timeline_viewpager);
         mTabsAdapter = new CurrentJourneyTabsAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mTabsAdapter);
@@ -69,8 +71,14 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
 
     }
 
+    public void overlayTimelineFragment(int color){
+        //overlayFrame.setBackgroundColor(getResources().getColor(color));
+    }
+
+
+
     private void setUpToolbar(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.subtitle_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         TextView subtitle = (TextView)toolbar.findViewById(R.id.toolbar_subtitle);
@@ -171,6 +179,16 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
                     .detach(fragment)
                     .attach(fragment)
                     .commit();
+        }
+    }
+
+    public void endJourney(String journeyId){
+        if(TJPreferences.getActiveJourneyId(this).equals(journeyId)){
+            Toast.makeText(this, "Your journey has been marked finished by the admin", Toast.LENGTH_SHORT).show();
+            finish();
+            Intent intent = new Intent(this, PastJourneyList.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
 

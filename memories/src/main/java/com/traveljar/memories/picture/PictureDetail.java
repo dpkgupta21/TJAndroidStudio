@@ -30,6 +30,7 @@ import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 
 
 public class PictureDetail extends AppCompatActivity implements DownloadPicture.OnPictureDownloadListener {
@@ -45,6 +46,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
     private Picture mPicture;
     private TextView noLikesTxt;
     private TextView mPictureCaption;
+    private TextView placeTxt;
 
     private ProgressDialog pDialog;
 
@@ -63,6 +65,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         profileName = (TextView) findViewById(R.id.photo_detail_profile_name);
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
         mPictureCaption = (TextView) findViewById(R.id.photo_detail_caption);
+        placeTxt = (TextView) findViewById(R.id.photo_detail_place);
 
         pDialog = new ProgressDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
@@ -103,6 +106,11 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         }
         profileName.setText(createdBy);
         Log.d(TAG, "profile picture set successfully");
+
+        String place = "Lat " + new DecimalFormat("#.##").format(mPicture.getLatitude()) + " Lon " +
+                new DecimalFormat("#.##").format(mPicture.getLongitude());;
+        placeTxt.setText(place);
+        setFavouriteBtnClickListener();
 
         setFavouriteBtnClickListener();
 

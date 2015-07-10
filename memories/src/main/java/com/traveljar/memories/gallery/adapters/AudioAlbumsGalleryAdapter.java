@@ -5,6 +5,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -51,23 +52,27 @@ public class AudioAlbumsGalleryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.gallery_album_grid_item, null);
+            convertView = inflater.inflate(R.layout.gallery_album_audio_grid_item, null);
         }
         ImageView img = (ImageView)convertView.findViewById(R.id.album_img);
         TextView journeyName = (TextView)convertView.findViewById(R.id.album_name);
         TextView noItems = (TextView)convertView.findViewById(R.id.no_items);
-
+        RelativeLayout relLay = (RelativeLayout) convertView.findViewById(R.id.gallery_photos_rel_layout);
         Audio audio = mAlbumsList.get(mJourneyList.get(position));
 
-        img.setLayoutParams(new RelativeLayout.LayoutParams(getImageWidth(), getImageWidth()));
+        AbsListView.LayoutParams params = new AbsListView.LayoutParams(getImageWidth(), getImageWidth());
+        relLay.setLayoutParams(params);
+/*        relLay.getLayoutParams().width = getImageWidth();
+        relLay.getLayoutParams().height = getImageWidth();
+        relLay.requestLayout();*/
+
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if(audio != null){
-            img.setImageResource(R.drawable.ic_play);
-            noItems.setText(String.valueOf(AudioDataSource.getAudioCountOfJourney(mContext, audio.getjId())) + " Audios");
+            noItems.setText(String.valueOf(AudioDataSource.getAudioCountOfJourney(mContext, audio.getjId())));
         }else {
-            img.setImageResource(R.drawable.gumnaam_profile_image);
-            noItems.setText("0 Audios");
+            noItems.setText("0");
         }
+        img.setImageResource(R.drawable.gallery_audio);
         journeyName.setText(mJourneyList.get(position).getName());
 
         return convertView;

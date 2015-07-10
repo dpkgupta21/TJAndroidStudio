@@ -32,6 +32,8 @@
             android:layout_marginBottom="15dp"
             android:layout_marginTop="25dp"
             android:hint="Journey Name"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
             android:inputType="text" />
 
         <com.traveljar.memories.customviews.MyEditTextView

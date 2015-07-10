@@ -28,6 +28,7 @@ import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class MoodDetail extends AppCompatActivity {
@@ -45,6 +46,7 @@ public class MoodDetail extends AppCompatActivity {
     private TextView mMoodFriendsTxt;
     private TextView mMoodReason;
     private ImageView mMoodImg;
+    private TextView placeTxt;
 
 
     @Override
@@ -64,6 +66,7 @@ public class MoodDetail extends AppCompatActivity {
         mMoodFriendsTxt  = (TextView) findViewById(R.id.mood_friends_names);
         mMoodReason = (TextView) findViewById(R.id.mood_reason);
         mMoodImg = (ImageView) findViewById(R.id.mood_img);
+        placeTxt = (TextView) findViewById(R.id.mood_detail_place);
 
         Bundle extras = getIntent().getExtras();
 
@@ -115,6 +118,9 @@ public class MoodDetail extends AppCompatActivity {
         noLikesTxt.setText(String.valueOf(mMood.getLikes().size()));
         mFavBtn.setImageResource(mMood.isMemoryLikedByCurrentUser(this) != null ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite_empty);
 
+        String place = "Lat " + new DecimalFormat("#.##").format(mMood.getLatitude()) + " Lon " +
+                new DecimalFormat("#.##").format(mMood.getLongitude());;
+        placeTxt.setText(place);
         setFavouriteBtnClickListener();
 
         dateBig.setText(HelpMe.getDate(mMood.getCreatedAt(), HelpMe.DATE_ONLY));

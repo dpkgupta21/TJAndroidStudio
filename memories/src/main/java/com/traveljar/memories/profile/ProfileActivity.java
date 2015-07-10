@@ -77,6 +77,7 @@ public class ProfileActivity extends BaseActivity {
         mEditStatus = (EditText) findViewById(R.id.edit_status);
 
         mDialog = new ProgressDialog(this);
+        mDialog.setCanceledOnTouchOutside(false);
 
         mUserName.setText(TJPreferences.getUserName(this));
         mStatus.setText(TJPreferences.getUserStatus(this));

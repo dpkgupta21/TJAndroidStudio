@@ -28,6 +28,7 @@ import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 
 public class NoteDetail extends AppCompatActivity {
     private static final String TAG = "<NoteDetail>";
@@ -40,18 +41,13 @@ public class NoteDetail extends AppCompatActivity {
     private ImageButton mFavBtn;
     private Note mNote;
     private TextView noLikesTxt;
+    private TextView placeTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_detail);
         Log.d(TAG, "entrerd notes details");
-
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("Note Detail");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         noteContent = (TextView) findViewById(R.id.note_detail_note);
         dateBig = (TextView) findViewById(R.id.note_detail_date_big);
@@ -61,6 +57,7 @@ public class NoteDetail extends AppCompatActivity {
         mProfileImg = (ImageView) findViewById(R.id.note_detail_profile_image);
         profileName = (TextView) findViewById(R.id.note_detail_profile_name);
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
+        placeTxt = (TextView) findViewById(R.id.note_detail_place);
 
         Bundle extras = getIntent().getExtras();
 
@@ -97,6 +94,9 @@ public class NoteDetail extends AppCompatActivity {
             }
         }
 
+        String place = "Lat " + new DecimalFormat("#.##").format(mNote.getLatitude()) + " Lon " +
+                new DecimalFormat("#.##").format(mNote.getLongitude());;
+        placeTxt.setText(place);
         setFavouriteBtnClickListener();
 
         dateBig.setText(HelpMe.getDate(mNote.getCreatedAt(), HelpMe.DATE_ONLY));

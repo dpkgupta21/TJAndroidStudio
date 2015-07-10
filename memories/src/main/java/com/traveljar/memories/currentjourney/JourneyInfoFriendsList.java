@@ -50,7 +50,7 @@ public class JourneyInfoFriendsList extends AppCompatActivity {
 
         mDialog = new ProgressDialog(this);
         mDialog.setMessage("please wait while we fetch your contacts from server");
-        //mDialog.setCanceledOnTouchOutside(false);
+        mDialog.setCanceledOnTouchOutside(false);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.journey_info_friends_list_recycler_view);
         // use this setting to improve performance if you know that changes

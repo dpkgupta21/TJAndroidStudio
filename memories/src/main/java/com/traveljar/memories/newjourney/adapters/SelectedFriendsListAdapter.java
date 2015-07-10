@@ -27,6 +27,10 @@ public class SelectedFriendsListAdapter extends ArrayAdapter<Contact> {
         this.names = contactList;
     }
 
+    public void updateList(List<Contact> newList){
+        names = newList;
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;

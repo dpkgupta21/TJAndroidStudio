@@ -42,7 +42,7 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar_with_text_action_item" />
 
 
     </RelativeLayout>
@@ -66,7 +66,6 @@
                 android:id="@+id/photo_detail_date_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:text="07"
                 android:textColor="@color/tj_red_light_text"
@@ -92,6 +91,15 @@
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="@dimen/tj_medium_font" />
 
+            <com.traveljar.memories.customviews.MyTextViewReg12
+                android:id="@+id/photo_detail_place"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_alignParentLeft="true"
+                android:text="place"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/photo_detail_time"/>
+
         </RelativeLayout>
 
         <com.traveljar.memories.customviews.MyEditTextView
@@ -100,8 +108,9 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:hint="Give this picture some words!"
-            android:inputType="textMultiLine"
             android:layout_marginTop="30dp"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:lines="2" />
 
     </LinearLayout>

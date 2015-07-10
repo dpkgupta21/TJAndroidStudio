@@ -43,6 +43,7 @@
             android:maxLength="3"
             android:textSize="16sp"
             android:inputType="phone"
+            android:singleLine="true"
             android:text="+91"/>
 
         <com.traveljar.memories.customviews.MyEditTextView
@@ -51,6 +52,8 @@
             android:layout_height="wrap_content"
             android:minEms="10"
             android:inputType="phone"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:maxLength="10"/>
     </LinearLayout>
 

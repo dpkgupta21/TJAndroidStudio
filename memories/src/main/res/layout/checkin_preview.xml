@@ -16,7 +16,7 @@
             android:background="@color/tj_orange"
             android:contentDescription="@string/default_string"
             android:onClick="goToCamera"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/eiffel_tower" />
 
         <include layout="@layout/toolbar_with_text_action_item" />

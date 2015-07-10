@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar"/>
+
     <com.traveljar.memories.customviews.MyTextViewBodyReg14
         android:id="@+id/active_journey_no_buddies_msg"
         android:layout_width="match_parent"

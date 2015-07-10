@@ -1,11 +1,12 @@
 package com.traveljar.memories.checkin.adapter;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
@@ -13,24 +14,45 @@ import com.android.volley.Cache.Entry;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.traveljar.memories.R;
+import com.traveljar.memories.checkin.CheckInPlacesList;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.volley.AppController;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
-public class CheckInPlacesListAdapter extends ArrayAdapter<Map<String, String>> {
+public class CheckInPlacesListAdapter extends BaseAdapter implements Filterable {
     private static final String TAG = "[TagFileAdapter]";
     private final Activity context;
-    private ArrayList<Map<String, String>> names;
+    private List<CheckInPlacesList.Place> mOriginalList;
+    private List<CheckInPlacesList.Place> mFilteredList;
     private ViewHolder holder;
 
-    public CheckInPlacesListAdapter(Activity context, ArrayList<Map<String, String>> tagList) {
-        super(context, R.layout.checkin_places_list_item, tagList);
-        Log.d(TAG, "construcor");
+    public CheckInPlacesListAdapter(Activity context, List<CheckInPlacesList.Place> tagList) {
         this.context = context;
-        this.names = tagList;
+        this.mOriginalList = tagList;
+        this.mFilteredList = tagList;
+    }
+
+    @Override
+    public int getCount() {
+        return mFilteredList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return mFilteredList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    public void updateList(List<CheckInPlacesList.Place> list){
+        mOriginalList = list;
+        mFilteredList = list;
     }
 
     @Override
@@ -53,14 +75,11 @@ public class CheckInPlacesListAdapter extends ArrayAdapter<Map<String, String>> 
 
         // fill data
         holder = (ViewHolder) rowView.getTag();
-        String n = names.get(position).get("name");
-        String a = names.get(position).get("address");
-        String c = names.get(position).get("count");
-        String t = names.get(position).get("thumbnail");
-        holder.name.setText(n);
-        holder.address.setText(a);
-        holder.count.setText(c);
-        makeImageRequest(t);
+        CheckInPlacesList.Place  place = mFilteredList.get(position);
+        holder.name.setText(place.getName());
+        holder.address.setText(place.getAddress());
+        holder.count.setText(place.getCheckInCount());
+        makeImageRequest(place.getThumbUrl());
 
         return rowView;
     }
@@ -95,6 +114,41 @@ public class CheckInPlacesListAdapter extends ArrayAdapter<Map<String, String>> 
         public NetworkImageView thumbnail;
         private TextView address;
         private TextView count;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                FilterResults filterResults = new FilterResults();
+                //If there's nothing to filter on, return the original data for your list
+                if (charSequence == null || charSequence.length() == 0) {
+                    filterResults.values = mOriginalList;
+                    filterResults.count = mOriginalList.size();
+                } else {
+                    ArrayList<CheckInPlacesList.Place> resultList = new ArrayList<>();
+                    for (CheckInPlacesList.Place place: mOriginalList) {
+                        if(place.getName().toLowerCase().startsWith(charSequence.toString().toLowerCase()))
+                            resultList.add(place);
+                    }
+                    filterResults.values = resultList;
+                    filterResults.count = resultList.size();
+                }
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mFilteredList = (ArrayList) filterResults.values;
+//                notifyDataSetChanged();
+                if (filterResults.count > 0) {
+                    notifyDataSetChanged();
+                } else {
+                    notifyDataSetInvalidated();
+                }
+            }
+        };
     }
 
 }

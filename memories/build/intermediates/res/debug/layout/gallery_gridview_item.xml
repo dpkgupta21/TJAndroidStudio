@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:contentDescription="@string/default_string"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/pictures_stack" />
 
     <ImageView
         android:id="@+id/overlayImg"
@@ -22,6 +22,7 @@
         android:layout_alignParentTop="true"
         android:contentDescription="@string/default_string"
         android:scaleType="centerCrop"
+        android:visibility="gone"
         android:src="@drawable/img_selected" />
 
 </RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/gallery_gridview_item.xml -->

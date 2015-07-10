@@ -107,7 +107,6 @@
                 android:id="@+id/checkin_detail_date_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:text="07"
                 android:textColor="@color/tj_red_light_text"
@@ -132,6 +131,15 @@
                 android:text="Sunday 1:19 pm"
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="@dimen/tj_medium_font" />
+
+            <com.traveljar.memories.customviews.MyTextViewReg12
+                android:id="@+id/checkin_detail_place"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_alignParentLeft="true"
+                android:text="place"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/checkin_detail_time"/>
 
         </RelativeLayout>
 

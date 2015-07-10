@@ -53,28 +53,31 @@ public class PictureAlbumsGalleryAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.gallery_album_grid_item, null);
+            convertView = inflater.inflate(R.layout.gallery_album_grid_item, parent, false);
         }
         ImageView img = (ImageView)convertView.findViewById(R.id.album_img);
+        RelativeLayout relLay = (RelativeLayout) convertView.findViewById(R.id.gallery_photos_rel_layout);
         TextView journeyName = (TextView)convertView.findViewById(R.id.album_name);
         TextView noItems = (TextView)convertView.findViewById(R.id.no_items);
 
         Bitmap bitmap;
         Picture picture = mAlbumsList.get(mJourneyList.get(position));
 
-        img.setLayoutParams(new RelativeLayout.LayoutParams(getImageWidth(), getImageWidth()));
+        relLay.getLayoutParams().width = getImageWidth();
+        relLay.getLayoutParams().height = getImageWidth();
+        relLay.requestLayout();
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if(picture != null){
             try {
                 bitmap = HelpMe.decodeSampledBitmapFromPath(mContext, picture.getPicThumbnailPath(), 150, 150);
                 img.setImageBitmap(bitmap);
-                noItems.setText(String.valueOf(PictureDataSource.getPicCountOfJourney(mContext, picture.getjId())) + " Pictures ");
+                noItems.setText(String.valueOf(PictureDataSource.getPicCountOfJourney(mContext, picture.getjId())));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }else {
             img.setImageResource(R.drawable.gumnaam_profile_image);
-            noItems.setText(" 0 Pictures ");
+            noItems.setText("0");
         }
         journeyName.setText(mJourneyList.get(position).getName());
 

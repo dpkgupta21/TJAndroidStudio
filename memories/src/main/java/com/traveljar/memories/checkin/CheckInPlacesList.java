@@ -2,8 +2,13 @@ package com.traveljar.memories.checkin;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -36,6 +41,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CheckInPlacesList extends AppCompatActivity {
@@ -44,11 +50,16 @@ public class CheckInPlacesList extends AppCompatActivity {
 
     // These tags will be used to cancel the requests
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
-    private ArrayList<Map<String, String>> placeList;
+    private List<Place> placeList;
     private CheckInPlacesListAdapter placeListViewAdapter;
     private ProgressDialog pDialog;
     private double lat;
     private double longi;
+    private long lastCharTypedAt = 0;
+
+    long requestStartTime;
+    long requestFinishTime;
+    long requestParseTime;
 
     private EditText filterPlacesEditTxt;
 
@@ -59,29 +70,32 @@ public class CheckInPlacesList extends AppCompatActivity {
 
         setUpToolBar();
 
+        LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+
+        if (!manager.isProviderEnabled( LocationManager.GPS_PROVIDER)) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog,  final int id) {
+                            startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, final int id) {
+                            dialog.cancel();
+                        }
+                    });
+            final AlertDialog alert = builder.create();
+            alert.setCanceledOnTouchOutside(false);
+            alert.show();
+        }
+
         filterPlacesEditTxt = (EditText) findViewById(R.id.checkin_places_search);
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
-        pDialog.setCancelable(false);
-
-        if (HelpMe.isNetworkAvailable(getBaseContext())) {
-            Log.d(TAG, "network available");
-            GPSTracker gps = new GPSTracker(this);
-            // gps enabled return boolean true/false
-            if (gps.canGetLocation()) {
-                lat = gps.getLatitude(); // returns latitude
-                longi = gps.getLongitude(); // returns longitude
-                getCheckInPlaces(lat, longi, null);
-            } else {
-                Toast.makeText(getApplicationContext(), "Network issues. Try later.",
-                        Toast.LENGTH_LONG).show();
-            }
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Please connect to internet", Toast.LENGTH_LONG)
-                    .show();
-        }
+        pDialog.setCanceledOnTouchOutside(false);
 
     }
 
@@ -105,22 +119,25 @@ public class CheckInPlacesList extends AppCompatActivity {
      * Making json object request
      */
     private void getCheckInPlaces(double lat, double longi, String query) {
-        showProgressDialog();
+        //showProgressDialog();
 
         String url = Constants.URL_FS_VENUE_EXPLORE + "?ll=" + lat + "," + longi + "&client_id="
                 + Constants.FOURSQUARE_CLIENT_ID + "&client_secret=" + Constants.FOURSQUARE_CLIENT_SECRET
-                + "&v=" + Constants.v;
+                + "&v=" + Constants.v + "&limit=20";
 
         url = (query == null) ? url : url + "&query=" + query;
 
         Log.d(TAG, "FS_URL=" + url);
+        requestStartTime = System.currentTimeMillis();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET, url, (String) null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         // Log.d(TAG, response.toString());
-                        hideProgressDialog();
+                        requestFinishTime = System.currentTimeMillis();
+                        Log.d(TAG, "total time to fetch request -> " + (requestFinishTime - requestStartTime)/1000);
+                        //hideProgressDialog();
                         try {
                             Log.d(TAG, response.toString());
                             updateCheckInPlacesList(response);
@@ -137,13 +154,9 @@ public class CheckInPlacesList extends AppCompatActivity {
                 hideProgressDialog();
             }
         }) {
-
-            /**
-             * Passing some request headers
-             * */
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
@@ -159,7 +172,8 @@ public class CheckInPlacesList extends AppCompatActivity {
     private void updateCheckInPlacesList(JSONObject res) throws JSONException {
 
         formatJSON(res);
-
+        requestParseTime = System.currentTimeMillis();
+        Log.d(TAG, "total time to parse request -> " + (requestParseTime - requestFinishTime)/1000);
         ListView checkInPlaceListView = (ListView) findViewById(R.id.checkInPlacesList);
         placeListViewAdapter = new CheckInPlacesListAdapter(this, placeList);
         checkInPlaceListView.setAdapter(placeListViewAdapter);
@@ -168,9 +182,9 @@ public class CheckInPlacesList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // selected item
-                String placeName = placeList.get(position).get("name");
+                Place place = (Place)placeListViewAdapter.getItem(position);
                 Intent i = new Intent(CheckInPlacesList.this, CheckInPreview.class);
-                i.putExtra("placeName", placeName);
+                i.putExtra("placeName", place.getName());
                 i.putExtra("latitude", lat);
                 i.putExtra("longitude", longi);
                 startActivity(i);
@@ -181,11 +195,19 @@ public class CheckInPlacesList extends AppCompatActivity {
         filterPlacesEditTxt.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("Text [" + s + "]");
-                getCheckInPlaces(lat, longi, s.toString());
-            }
+            public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                placeListViewAdapter.getFilter().filter(s);
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        if (System.currentTimeMillis() - lastCharTypedAt >= 500) {
+                            //send request
+                            getCheckInPlaces(lat, longi, s.toString());
+                        }
+                    }
+                }, 500);
+                lastCharTypedAt = System.currentTimeMillis();
 
+            }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -200,7 +222,7 @@ public class CheckInPlacesList extends AppCompatActivity {
     }
 
     private void formatJSON(JSONObject jsonObj) throws JSONException {
-        placeList = new ArrayList<Map<String, String>>();
+        placeList = new ArrayList<>();
 
         String code = jsonObj.getJSONObject("meta").getString("code");
         // Log.d(TAG, "successs ----" + code + jsonObj.toString());
@@ -209,54 +231,112 @@ public class CheckInPlacesList extends AppCompatActivity {
         Integer len = venueList.length();
         Log.d(TAG, "NO of places = " + len);
 
+        placeList = new ArrayList<>();
+        Place place;
         for (int i = 0; i < len; i++) {
             JSONObject venueItem = venueList.getJSONObject(i);
-            Map<String, String> map = new HashMap<String, String>();
-            String address = null;
-            String count = null;
-            String imgURL = null;
+            place = new Place();
 
-            // check for name
-            String name = venueItem.getString("name");
-
-            // get distance from current location
-            address = venueItem.getJSONObject("location").getString("distance") + "m";
-
+            place.setName(venueItem.getString("name"));
+            place.setAddress(venueItem.getJSONObject("location").getString("distance") + "m");
             // check if address is valid
             if (venueItem.getJSONObject("location").has("address")) {
-                address += " - " + venueItem.getJSONObject("location").getString("address");
+                place.setAddress(place.getAddress() + " - " + venueItem.getJSONObject("location").getString("address"));
             }
-
             // check if crossStreet is valid
             if (venueItem.getJSONObject("location").has("crossStreet")) {
-                address += ", " + venueItem.getJSONObject("location").getString("crossStreet");
+                place.setAddress(place.getAddress() + ", " + venueItem.getJSONObject("location").getString("crossStreet"));
             }
-
             // check for number of user there
             if (venueItem.getJSONObject("stats").has("checkinsCount")) {
-                count = venueItem.getJSONObject("stats").getString("checkinsCount");
+                place.setCheckInCount(venueItem.getJSONObject("stats").getString("checkinsCount"));
             }
 
             // get the icon URL
-            // Log.d(TAG, "categories no of itme" +
-            // venueItem.getJSONArray("categories").toString());
             if (!venueItem.getJSONArray("categories").isNull(0)) {
                 if (venueItem.getJSONArray("categories").getJSONObject(0).has("icon")) {
                     String prefix = venueItem.getJSONArray("categories").getJSONObject(0)
                             .getJSONObject("icon").getString("prefix");
                     String suffix = venueItem.getJSONArray("categories").getJSONObject(0)
                             .getJSONObject("icon").getString("suffix");
-                    imgURL = prefix + "bg_64" + suffix;
+                    place.setThumbUrl(prefix + "bg_64" + suffix);
                 }
             }
-
-            map.put("name", name);
-            map.put("address", address);
-            map.put("count", count + " check-ins already");
-            map.put("thumbnail", imgURL);
-            placeList.add(map);
+            placeList.add(place);
         }
 
+    }
+
+    @Override
+    public void onResume(){
+        LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        if(manager.isProviderEnabled( LocationManager.GPS_PROVIDER)){
+            if (HelpMe.isNetworkAvailable(getBaseContext())) {
+                GPSTracker gps = new GPSTracker(this);
+                // gps enabled return boolean true/false
+                if (gps.canGetLocation()) {
+                    lat = gps.getLatitude(); // returns latitude
+                    longi = gps.getLongitude(); // returns longitude
+                    getCheckInPlaces(lat, longi, null);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Network issues. Try later.",
+                            Toast.LENGTH_LONG).show();
+                }
+
+            } else {
+                Toast.makeText(getApplicationContext(), "Please connect to internet", Toast.LENGTH_LONG)
+                        .show();
+            }
+        }
+        super.onResume();
+    }
+
+    public class Place{
+        String name;
+        String address;
+        String checkInCount;
+        String thumbUrl;
+
+        public Place(){}
+
+        public Place(String name, String address, String checkInCount, String thumbUrl) {
+            this.name = name;
+            this.address = address;
+            this.checkInCount = checkInCount;
+            this.thumbUrl = thumbUrl;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getCheckInCount() {
+            return checkInCount;
+        }
+
+        public void setCheckInCount(String checkInCount) {
+            this.checkInCount = checkInCount;
+        }
+
+        public String getThumbUrl() {
+            return thumbUrl;
+        }
+
+        public void setThumbUrl(String thumbUrl) {
+            this.thumbUrl = thumbUrl;
+        }
     }
 
 }

@@ -81,6 +81,15 @@
                 android:textColor="@color/tj_red_light_text"
                 android:textSize="50sp" />
 
+            <com.traveljar.memories.customviews.MyTextViewReg12
+                android:id="@+id/photo_detail_place"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_alignParentLeft="true"
+                android:text="place"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/photo_detail_time"/>
+
             <com.traveljar.memories.customviews.MyTextViewBodyReg14
                 android:id="@+id/photo_detail_date"
                 android:layout_width="wrap_content"
@@ -109,7 +118,8 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:hint="Give this picture some words!"
-            android:inputType="textMultiLine"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:layout_marginTop="30dp"
             android:lines="2" />
 

@@ -32,6 +32,7 @@ import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 
 
 public class VideoDetail extends AppCompatActivity implements DownloadVideoAsyncTask.OnVideoDownloadListener {
@@ -48,6 +49,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
     private ProgressDialog pDialog;
     private TextView createdByName;
     private TextView mVideoCaption;
+    private TextView placeTxt;
 
     private static final int ACTION_ITEM_DELETE = 1;
 
@@ -69,6 +71,7 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         noLikesTxt = (TextView) findViewById(R.id.no_likes);
         createdByName = (TextView) findViewById(R.id.photo_detail_profile_name);
         mVideoCaption = (TextView) findViewById(R.id.video_detail_caption);
+        placeTxt = (TextView) findViewById(R.id.video_detail_place);
 
         Bundle extras = getIntent().getExtras();
         mVideo = VideoDataSource.getVideoById(extras.getString("VIDEO_ID"), this);
@@ -102,6 +105,11 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
             e.printStackTrace();
         }
         createdByName.setText(createdBy);
+
+        String place = "Lat " + new DecimalFormat("#.##").format(mVideo.getLatitude()) + " Lon " +
+                new DecimalFormat("#.##").format(mVideo.getLongitude());;
+        placeTxt.setText(place);
+        setFavouriteBtnClickListener();
 
         setFavouriteBtnClickListener();
         setThumbnailClickListener();

@@ -12,7 +12,8 @@
         android:layout_height="match_parent"
         android:gravity="top"
         android:hint="What's on your mind?"
-        android:inputType="textMultiLine"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         android:padding="15dp" />
 
 </LinearLayout>

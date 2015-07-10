@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/timeline_toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/abc_action_bar_default_height_material"
-        android:minHeight="?attr/actionBarSize"
-        app:contentInsetStart="0dp"
-        android:background="@drawable/action_bar_background"
-        app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
 
-        <com.traveljar.memories.customviews.SlidingTabLayout
-            android:id="@+id/timeline_sliding_tabs"
+        <include layout="@layout/toolbar_with_custom_subtitle"/>
+
+        <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/timeline_toolbar"
             android:layout_width="match_parent"
-            android:background="@color/primaryColorDark"
-            android:layout_height="wrap_content"  />
+            android:layout_height="@dimen/abc_action_bar_default_height_material"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetStart="0dp"
+            android:background="@drawable/action_bar_background"
+            app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
-    </android.support.v7.widget.Toolbar>
+            <com.traveljar.memories.customviews.SlidingTabLayout
+                android:id="@+id/timeline_sliding_tabs"
+                android:layout_width="match_parent"
+                android:background="@color/primaryColorDark"
+                android:layout_height="wrap_content"  />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/timeline_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:background="@android:color/white" />
+        </android.support.v7.widget.Toolbar>
+    </LinearLayout>
 
-</LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:id="@+id/content_toolbar_overlay"
+             />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/timeline_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_below="@id/linearLayout"
+            android:background="@android:color/white" />
+
+
+
+</RelativeLayout>

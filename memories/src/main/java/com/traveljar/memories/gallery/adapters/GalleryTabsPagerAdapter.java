@@ -1,9 +1,15 @@
 package com.traveljar.memories.gallery.adapters;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 
+import com.traveljar.memories.R;
 import com.traveljar.memories.gallery.GalleryAudioAlbumsFragment;
 import com.traveljar.memories.gallery.GalleryNotesAlbumsFragment;
 import com.traveljar.memories.gallery.GalleryPictureAlbumsFragment;
@@ -12,10 +18,19 @@ import com.traveljar.memories.gallery.GalleryVideoAlbumsFragment;
 public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
 
     private String[] titles = new String[]{"Pictures", "Audios", "Videos", "Notes"};
+    private Context context;
 
-    public GalleryTabsPagerAdapter(FragmentManager fm) {
+    public GalleryTabsPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.context = context;
     }
+
+    private int[] imageResId = {
+            R.drawable.ic_photo_camera_white_24dp,
+            R.drawable.ic_audiotrack_white_24dp,
+            R.drawable.ic_video_library_white_24dp,
+            R.drawable.ic_event_note_white_24dp
+    };
 
     @Override
     public Fragment getItem(int index) {
@@ -56,7 +71,12 @@ public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles[position];
+        Drawable image = context.getResources().getDrawable(imageResId[position]);
+        image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+        SpannableString sb = new SpannableString(" ");
+        ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
+        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return sb;
     }
 
 }

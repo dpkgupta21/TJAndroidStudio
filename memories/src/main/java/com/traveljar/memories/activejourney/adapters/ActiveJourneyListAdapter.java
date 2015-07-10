@@ -48,7 +48,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         mDataset = myDataset;
         mContext = context;
         mDialog = new ProgressDialog(mContext);
-        registerEvent();
+        mDialog.setCanceledOnTouchOutside(false);
     }
 
     public void add(int position, Journey item) {
@@ -82,11 +82,6 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         final String tagline = journeyItem.getTagLine();
         final String buddyCount = (journeyItem.getBuddies().size() + 1) + " people";
 
-/*        List<Lap> lapList = journeyItem.getLapsList();
-        String place = "";
-        if(lapList.size() > 0){
-            place = lapList.get(0).getDestinationCityName();
-        }*/
         String place = "";
         List<Laps> lapsList = LapsDataSource.getLapsFromJourney(mContext, journeyItem.getIdOnServer());
         if(lapsList.size() > 0){
@@ -167,6 +162,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
 
                 if (buddyList != null && !buddyList.isEmpty()) {
                     Log.d(TAG, "some buddies need to be fetched from server hence fetching from server" + buddyList.size());
+                    registerEvent();
                     new PullBuddies(mContext, buddyList, LISTENER_CODE).fetchBuddies();
                 } else {
                     Log.d(TAG, "no buddy to be fetched from server hence starting current activity");

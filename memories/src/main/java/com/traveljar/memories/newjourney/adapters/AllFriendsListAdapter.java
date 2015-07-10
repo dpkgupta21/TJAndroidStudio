@@ -61,6 +61,8 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
             viewHolder = (ViewHolder)convertView.getTag();
             Log.d(TAG, "convert view is NOT null" + list.size() + "position = " + position);
         }
+        Log.d(TAG, "get view " + list.get(position).isSelected());
+        viewHolder.checkbox.setChecked(list.get(position).isSelected());
 
         viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

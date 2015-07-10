@@ -76,6 +76,7 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
         mCoverImage = (ImageView)findViewById(R.id.journey_info_cover_image);
 
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
 
         setCoverImage();
 

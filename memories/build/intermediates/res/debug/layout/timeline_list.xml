@@ -21,9 +21,10 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <FrameLayout
-        android:id="@+id/content_activity_overlay"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/content_activity_overlay" />
+
 
     <com.example.flotingmenulibrary.FloatingActionsMenu
         android:id="@+id/multiple_actions_down"
@@ -113,5 +114,6 @@
 
 
     </com.example.flotingmenulibrary.FloatingActionsMenu>
+
 
 </RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list.xml -->

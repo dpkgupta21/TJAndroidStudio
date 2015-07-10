@@ -5,6 +5,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,9 +19,6 @@ import com.traveljar.memories.models.Note;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by ankit on 2/7/15.
- */
 public class NotesAlbumsGalleryAdapter extends BaseAdapter {
 
     private static final String TAG = "GalleryNoteAdapter";
@@ -59,18 +57,24 @@ public class NotesAlbumsGalleryAdapter extends BaseAdapter {
         ImageView img = (ImageView)convertView.findViewById(R.id.album_img);
         TextView journeyName = (TextView)convertView.findViewById(R.id.album_name);
         TextView noItems = (TextView)convertView.findViewById(R.id.no_items);
-
+        RelativeLayout relLay = (RelativeLayout) convertView.findViewById(R.id.gallery_photos_rel_layout);
         Note note = mAlbumsList.get(mJourneyList.get(position));
 
-        img.setLayoutParams(new RelativeLayout.LayoutParams(getImageWidth(), getImageWidth()));
+        AbsListView.LayoutParams params = new AbsListView.LayoutParams(getImageWidth(), getImageWidth());
+        relLay.setLayoutParams(params);
+
+/*
+        relLay.getLayoutParams().width = getImageWidth();
+        relLay.getLayoutParams().height = getImageWidth();
+        relLay.requestLayout();
+*/
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if(note != null){
-            img.setImageResource(R.drawable.ic_play);
-            noItems.setText(String.valueOf(NoteDataSource.getNoteCountOfJourney(mContext, note.getjId())) + " Notes");
+            noItems.setText(String.valueOf(NoteDataSource.getNoteCountOfJourney(mContext, note.getjId())));
         }else {
-            img.setImageResource(R.drawable.gumnaam_profile_image);
-            noItems.setText(" 0 Notes");
+            noItems.setText("0");
         }
+        img.setImageResource(R.drawable.gallery_note);
         journeyName.setText(mJourneyList.get(position).getName());
 
         return convertView;

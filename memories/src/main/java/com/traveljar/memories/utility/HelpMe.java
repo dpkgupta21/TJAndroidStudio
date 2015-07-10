@@ -48,6 +48,7 @@ public class HelpMe {
     public static final int TYPE_UNLIKE_MEMORY = 7;
     public static final int TYPE_ADD_BUDDY = 8;
     public static final int TYPE_REMOVE_BUDDY = 9;
+    public static final int TYPE_END_JOURNEY = 10;
 
     // Type = picture/audio/video/note
     // don't change them -- are synced with server

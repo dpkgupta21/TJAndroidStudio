@@ -150,7 +150,9 @@ public class CheckInPreview extends AppCompatActivity {
             }
         }
 
-        createThumbnail();
+        if(picUrl != null) {
+            createThumbnail();
+        }
 
         String j_id = TJPreferences.getActiveJourneyId(this);
         String user_id = TJPreferences.getUserId(this);
@@ -239,6 +241,7 @@ public class CheckInPreview extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "result code = " + resultCode + " request code = " + requestCode);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Bitmap bitmap = null;
             try {

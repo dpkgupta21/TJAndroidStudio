@@ -230,7 +230,7 @@ public class PullContactsService extends IntentService {
             String email = userItem.getString("email");
             String phone_no = (userItem.getString("phone").equals("null") ? null : userItem.getString("phone"));
             String phoneBookName = HelpMe.getContactNameFromNumber(this, phone_no);
-            String status = userItem.getString("status");
+            String status = userItem.getString("status").equals("null") ? null : userItem.getString("status");
             String picServerUrl = userItem.getJSONObject("profile_picture").getJSONObject("thumb")
                     .getString("url");
             String picLocalUrl;

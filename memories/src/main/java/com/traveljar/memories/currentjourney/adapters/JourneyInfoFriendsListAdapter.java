@@ -35,6 +35,7 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
         mDataset = myDataset;
         mContext = context;
         mDialog = new ProgressDialog(context);
+        mDialog.setCanceledOnTouchOutside(false);
     }
 
     public void add(int position, Contact item) {

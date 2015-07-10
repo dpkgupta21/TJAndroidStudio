@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -158,7 +155,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
 
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Mood");
-        toolbar.inflateMenu(R.menu.toolbar_with_done_text);
+        // toolbar.inflateMenu(R.menu.toolbar_with_done_text);
 
         TextView done = (TextView)toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +166,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
                         if (selectedFriends.size() == 0) {
                             Toast.makeText(MoodCapture.this, "please select at least one friend", Toast.LENGTH_SHORT)
                                     .show();
-                        } else if (moodReasonEditTxt.getText().toString() == null) {
+                        } else if (moodReasonEditTxt.getText().toString().isEmpty()) {
                             Toast.makeText(MoodCapture.this, "please write the reason for the mood", Toast.LENGTH_SHORT)
                                     .show();
                         } else {
@@ -181,7 +178,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         });
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_with_done_text, menu);
@@ -196,14 +193,14 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
                 if (selectedFriends.size() == 0) {
                     Toast.makeText(this, "please select at least one friend", Toast.LENGTH_SHORT)
                             .show();
-                } else if (moodReasonEditTxt.getText().toString() == null) {
+                } else if (moodReasonEditTxt.getText().toString().isEmpty()) {
                     Toast.makeText(this, "please write the reason for the mood", Toast.LENGTH_SHORT)
                             .show();
                 } else {
                     createNewMoodIntoDB();
-/*                    Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
+*//*                    Intent i = new Intent(getBaseContext(), CurrentJourneyBaseActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);*/
+                    startActivity(i);*//*
                     finish();
                 }
                 return true;
@@ -212,7 +209,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

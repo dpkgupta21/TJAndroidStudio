@@ -1,38 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/past_journey_card"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="@drawable/abhi"
-    android:padding="10dp">
+    android:layout_height="200dp"
+    android:background="@color/tj_gray_bg"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp"
+    android:paddingTop="7dp">
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
-        android:id="@+id/past_journey_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="New Year&apos;s Party"
-        android:textColor="@color/white"
-        android:textSize="@dimen/tj_large_font" />
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/black">
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
-        android:id="@+id/past_journey_place"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Goa"
-        android:textColor="@color/white"
-        android:textSize="@dimen/tj_large_font" />
+        <ImageView
+            android:id="@+id/past_journey_cover_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.6"
+            android:scaleType="centerCrop"
+            android:src="@drawable/abhi" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
-        android:id="@+id/past_journey_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="25th Dec - 2nd Jan"
-        android:textColor="@color/white"
-        android:textSize="@dimen/tj_medium_font" />
+    </FrameLayout>
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/past_journey_list_item.xml -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <com.traveljar.memories.customviews.MyTextViewReg24
+            android:id="@+id/past_journey_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:text="Journey Name"
+            android:textColor="@color/white" />
+
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+            android:id="@+id/past_journey_tagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/past_journey_title"
+            android:text="Journey tagline"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white" />
+
+
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+            android:id="@+id/past_journey_buddy_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:text="Some buddies"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/past_journey_buddy_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/past_journey_buddy_count"
+            android:src="@drawable/ic_group_white_18dp" />
+
+
+        <ImageView
+            android:id="@+id/past_journey_place_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_location_on_white_18dp" />
+
+        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+            android:id="@+id/past_journey_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/past_journey_place_icon"
+            android:text="Some place"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
+<!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/past_journey_list_item.xml -->
