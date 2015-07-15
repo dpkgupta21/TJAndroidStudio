@@ -235,10 +235,10 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
 
                 memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
 
-                Log.d(TAG, "memories value is " + memories);
-                Like like = new Like(null, null, journeyId, memories.getId(), userId, memoryType, true, memId, createdAt, updatedAt);
-                LikeDataSource.createLike(like, this);
-
+                if(memories != null) {
+                    Like like = new Like(null, null, journeyId, memories.getId(), userId, memoryType, true, memId, createdAt, updatedAt);
+                    LikeDataSource.createLike(like, this);
+                }
                 break;
 
             case HelpMe.TYPE_UNLIKE_MEMORY:
@@ -247,7 +247,9 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 String user_id = bundle.get("user_id").toString();
 
                 memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
-                LikeDataSource.deleteLike(this, memories.getId(), user_id, memories.getMemType());
+                if(memories != null) {
+                    LikeDataSource.deleteLike(this, memories.getId(), user_id, memories.getMemType());
+                }
                 break;
 
             case HelpMe.TYPE_ADD_BUDDY:

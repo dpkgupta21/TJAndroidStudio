@@ -14,11 +14,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -32,6 +31,7 @@ import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.SessionManager;
 import com.traveljar.memories.utility.TJPreferences;
+import com.traveljar.memories.volley.AppController;
 import com.traveljar.memories.volley.CustomJsonRequest;
 
 import org.json.JSONException;
@@ -166,7 +166,7 @@ public class SignUp extends Activity {
         getParams();
 
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
+        //RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.URL_SIGN_UP;
 
         // Request a string response from the provided URL.
@@ -201,8 +201,8 @@ public class SignUp extends Activity {
 
         // Add the request to the RequestQueue.
         //AppController.getInstance().getRequestQueue().add(signUpReg);
-        queue.add(signUpReg);
-
+        signUpReg.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().getRequestQueue().add(signUpReg);
     }
 
     private void autoPopulateEmail(EditText emailTxt) {

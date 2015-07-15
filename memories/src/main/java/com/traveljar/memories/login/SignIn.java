@@ -15,12 +15,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -112,69 +111,54 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
 
 
     public void makeRequestToServer() {
-        if (HelpMe.isNetworkAvailable(this)) {
-            Log.d(TAG, "makeREqusttoServer method called" + regid);
-            // Get username, password from EditText
-            final String emailAddress = txtEmailAddress.getText().toString().trim();
-            String password = txtPassword.getText().toString().trim();
+        // Get username, password from EditText
+        final String emailAddress = txtEmailAddress.getText().toString().trim();
+        String password = txtPassword.getText().toString().trim();
+        // Check if username, password is filled
+        if (emailAddress.length() > 0 && password.length() > 0) {
+            // Instantiate the RequestQueue.
+            String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=" + regid;
+            Log.d(TAG, url);
 
-            // Add the request to the RequestQueue.
-            // But before that check for Internet connection
-            if (HelpMe.isNetworkAvailable(this)) {
-                // Check if username, password is filled
-                if (emailAddress.length() > 0 && password.length() > 0) {
-                    // Instantiate the RequestQueue.
-                    RequestQueue queue = Volley.newRequestQueue(this);
-                    String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=" + regid;
-                    Log.d(TAG, url);
+            pDialog.show();
 
-                    pDialog.show();
-
-                    CustomJsonRequest jsonObjReq = new CustomJsonRequest(Request.Method.GET, url, null,
-                            new Response.Listener<JSONObject>() {
-
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    try {
-                                        saveUser(response);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    Log.d(TAG, response.toString());
-                                    // Fetch all contacts and memories and contacts
-                                    if (HelpMe.isNetworkAvailable(SignIn.this)) {
-                                        Intent intent = new Intent(getBaseContext(), PullContactsService.class);
-                                        intent.putExtra("ACTIVITY_CODE", 3);
-                                        startService(intent);
-                                        new PullMemoriesService(SignIn.this, SignIn.this, REQUEST_FETCH_MEMORIES).fetchJourneys();
-                                    } else {
-                                        Toast.makeText(SignIn.this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-
+            CustomJsonRequest jsonObjReq = new CustomJsonRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
-                            pDialog.dismiss();
-                            Toast.makeText(getApplicationContext(),
-                                    "Username & password donot match!", Toast.LENGTH_LONG)
-                                    .show();
+                        public void onResponse(JSONObject response) {
+                            try {
+                                saveUser(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Log.d(TAG, response.toString());
+                            // Fetch all contacts and memories and contacts
+                            Intent intent = new Intent(getBaseContext(), PullContactsService.class);
+                            intent.putExtra("ACTIVITY_CODE", 3);
+                            startService(intent);
+                            new PullMemoriesService(SignIn.this, SignIn.this, REQUEST_FETCH_MEMORIES).fetchJourneys();
                         }
-                    });
+                    }, new Response.ErrorListener() {
 
-                    queue.add(jsonObjReq);
-
-                } else {
-                    // username / password doesn't match
-                    Toast.makeText(getApplicationContext(), "Please enter username/password",
-                            Toast.LENGTH_LONG).show();
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    pDialog.dismiss();
+                    Toast.makeText(getApplicationContext(),
+                            "Username & password donot match!", Toast.LENGTH_LONG)
+                            .show();
                 }
+            });
+            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            if (HelpMe.isNetworkAvailable(SignIn.this)) {
+                AppController.getInstance().getRequestQueue().add(jsonObjReq);
             } else {
-                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG)
-                        .show();
+                Toast.makeText(SignIn.this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
             }
+
         } else {
-            Toast.makeText(this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
+            // username / password doesn't match
+            Toast.makeText(getApplicationContext(), "Please enter username/password",
+                    Toast.LENGTH_LONG).show();
         }
     }
 

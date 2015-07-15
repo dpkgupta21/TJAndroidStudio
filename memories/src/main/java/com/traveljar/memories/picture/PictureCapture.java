@@ -156,6 +156,7 @@ public class PictureCapture extends AppCompatActivity {
                 imagePath = copyPictureToTJDir(HelpMe.getRealPathFromURI(selectedImageUri, this));
                 Intent i = new Intent(getBaseContext(), PicturePreview.class);
                 i.putExtra("imagePath", imagePath);
+                i.putExtra("IS_PIC_FROM_GALLERY", true);
                 i.putExtra("CREATED_AT", createdAt);
                 startActivity(i);
                 Log.d(TAG, "ok pic");

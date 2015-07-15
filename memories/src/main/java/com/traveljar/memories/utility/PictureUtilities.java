@@ -72,6 +72,7 @@ public class PictureUtilities {
                             PullMemoriesService.isFinished();
                             EventBus.getDefault().post(new PictureDownloadEvent(pic, true, downloadRequesterCode));
                         } catch (Exception e) {
+                            EventBus.getDefault().post(new PictureDownloadEvent(pic, false, downloadRequesterCode));
                             e.printStackTrace();
                         } finally {
                             try {
@@ -85,6 +86,7 @@ public class PictureUtilities {
                     }
                 }, 0, 0, null, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
+                        PullMemoriesService.isFinished();
                         EventBus.getDefault().post(new PictureDownloadEvent(pic, false, downloadRequesterCode));
                         Log.d(TAG, "error oaccuered" + error.getMessage());
                     }

@@ -65,8 +65,9 @@ public class VideoUtil {
                             video.setId(String.valueOf(id));
                             Log.d(TAG, "video downloaded successfully");
                             PullMemoriesService.isFinished();
-                            EventBus.getDefault().post(new VideoDownloadEvent(video, true, downloadRequesterCode));
+                            EventBus.getDefault().post(new VideoDownloadEvent(video, false, downloadRequesterCode));
                         } catch (Exception e) {
+                            EventBus.getDefault().post(new VideoDownloadEvent(video, false, downloadRequesterCode));
                             e.printStackTrace();
                         } finally {
                             try {
@@ -81,6 +82,7 @@ public class VideoUtil {
                 }, 0, 0, null, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
                         EventBus.getDefault().post(new VideoDownloadEvent(video, false, downloadRequesterCode));
+                        PullMemoriesService.isFinished();
                         Log.d(TAG, "error occured" + error.getMessage());
                     }
                 });

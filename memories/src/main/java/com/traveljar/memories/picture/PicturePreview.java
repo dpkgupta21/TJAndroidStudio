@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +46,8 @@ public class PicturePreview extends AppCompatActivity {
     private Picture mPicture;
     private long createdAt;
     private TextView placeTxt;
+    private double latitude = 0.0d;
+    private double longitude = 0.0d;
 
     private ProgressDialog pDialog;
 
@@ -71,7 +74,10 @@ public class PicturePreview extends AppCompatActivity {
         pDialog.setCanceledOnTouchOutside(false);
 
         Bundle extras = getIntent().getExtras();
-
+        boolean isPicFromGallery = false;
+        if (extras.containsKey("IS_PIC_FROM_GALLERY")) {
+            isPicFromGallery = true;
+        }
         Log.d(TAG, "running for a newly clicked picture");
         profileName.setText(TJPreferences.getUserName(getBaseContext()));
         imagePath = extras.getString("imagePath");
@@ -96,25 +102,17 @@ public class PicturePreview extends AppCompatActivity {
             }
         }
 
-        Double lat = 0.0d;
-        Double longi = 0.0d;
-        GPSTracker gps = new GPSTracker(this);
-        if (gps.canGetLocation()) {
-            lat = gps.getLatitude(); // returns latitude
-            longi = gps.getLongitude(); // returns longitude
-        } else {
-            Toast.makeText(getApplicationContext(), "Network issues. Try later.",
-                    Toast.LENGTH_LONG).show();
-        }
+        setLocation(isPicFromGallery);
 
         mPicture = new Picture(null, TJPreferences.getActiveJourneyId(this), HelpMe.PICTURE_TYPE, caption.getText().toString()
                 .trim(), "jpg", 1223, null, imagePath, TJPreferences.getUserId(this), createdAt, createdAt,
-                null, localThumbnailPath, lat, longi);
+                null, localThumbnailPath, latitude, longitude);
 
         photo.setImageBitmap(BitmapFactory.decodeFile(localThumbnailPath));
 
         String place = "Lat " + new DecimalFormat("#.##").format(mPicture.getLatitude()) + " Lon " +
-                new DecimalFormat("#.##").format(mPicture.getLongitude());;
+                new DecimalFormat("#.##").format(mPicture.getLongitude());
+        ;
         placeTxt.setText(place);
 
         //Profile picture
@@ -142,10 +140,53 @@ public class PicturePreview extends AppCompatActivity {
         });
     }
 
-    private void setUpToolBar(){
+    private void setLocation(boolean isPicFromGallery) {
+        if (isPicFromGallery) {
+            ExifInterface exifInterface = null;
+            try {
+                exifInterface = new ExifInterface(imagePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String lat = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+            String lat_ref = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
+            String longi = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+            String longi_ref = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF);
+            if ((lat != null)
+                    && (lat_ref != null)
+                    && (longi != null)
+                    && (longi_ref != null)) {
+
+                if (lat_ref.equals("N")) {
+                    latitude = convertToDegree(lat);
+                } else {
+                    latitude = 0 - convertToDegree(lat);
+                }
+
+                if (longi_ref.equals("E")) {
+                    longitude = convertToDegree(longi);
+                } else {
+                    longitude = 0 - convertToDegree(longi);
+                }
+            }
+            Log.d(TAG, "latitude and longitude from exif are " + latitude + " " + longitude);
+        }
+        if (latitude == 0.0d || longitude == 0.0d) {
+            GPSTracker gps = new GPSTracker(this);
+            if (gps.canGetLocation()) {
+                latitude = gps.getLatitude(); // returns latitude
+                longitude = gps.getLongitude(); // returns longitude
+            } else {
+                Toast.makeText(getApplicationContext(), "Network issues. Try later.",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Picture Preview");
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
@@ -174,13 +215,39 @@ public class PicturePreview extends AppCompatActivity {
         Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
                 Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_PICTURE, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, this);
-        if(HelpMe.isNetworkAvailable(this)) {
+        if (HelpMe.isNetworkAvailable(this)) {
             Intent intent = new Intent(this, MakeServerRequestsService.class);
             startService(intent);
-        }
-        else{
+        } else {
             Log.d(TAG, "since no network not starting service RQ");
         }
+    }
+
+    // Converts String(Latitude and longitude) obtained from exifInterface to double values (original you get as lat = 30/1,12/1,34/1)
+    private Double convertToDegree(String stringDMS) {
+        Double result = null;
+        String[] DMS = stringDMS.split(",", 3);
+
+        String[] stringD = DMS[0].split("/", 2);
+        Double D0 = new Double(stringD[0]);
+        Double D1 = new Double(stringD[1]);
+        Double FloatD = D0 / D1;
+
+        String[] stringM = DMS[1].split("/", 2);
+        Double M0 = new Double(stringM[0]);
+        Double M1 = new Double(stringM[1]);
+        Double FloatM = M0 / M1;
+
+        String[] stringS = DMS[2].split("/", 2);
+        Double S0 = new Double(stringS[0]);
+        Double S1 = new Double(stringS[1]);
+        Double FloatS = S0 / S1;
+
+        result = new Double(FloatD + (FloatM / 60) + (FloatS / 3600));
+
+        return result;
+
+
     }
 
 }

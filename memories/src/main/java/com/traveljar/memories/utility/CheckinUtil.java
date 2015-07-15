@@ -171,6 +171,7 @@ public class CheckinUtil {
                             PullMemoriesService.isFinished();
                             EventBus.getDefault().post(new CheckInDownloadEvent(checkIn, true, downloadRequesterCode));
                         } catch (Exception e) {
+                            EventBus.getDefault().post(new CheckInDownloadEvent(checkIn, false, downloadRequesterCode));
                             e.printStackTrace();
                         } finally {
                             try {
@@ -185,6 +186,7 @@ public class CheckinUtil {
                 }, 0, 0, null, new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG, "error oaccuered" + error.getMessage());
+                        PullMemoriesService.isFinished();
                         EventBus.getDefault().post(new CheckInDownloadEvent(checkIn, false, downloadRequesterCode));
                     }
                 });

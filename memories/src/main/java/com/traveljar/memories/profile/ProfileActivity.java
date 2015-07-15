@@ -40,12 +40,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import retrofit.http.HEAD;
-
 public class ProfileActivity extends BaseActivity {
 
     private static final String TAG = "<PROFILEACTIVITY>";
-    private static final int REQUEST_CODE_UPDATE_PROFILE = 2;
     private static int PICK_IMAGE = 1;
     private MyCircularImageView mProfileImg;
     private ImageView mCoverImg;
@@ -182,25 +179,6 @@ public class ProfileActivity extends BaseActivity {
 
     }
 
-/*    @Override
-    public void onBackPressed() {
-        if (!mEditStatus.getText().toString().equals(TJPreferences.getUserStatus(this))) {
-            TJPreferences.setUserStatus(this, mEditStatus.getText().toString());
-        }
-
-        Intent intent = new Intent();
-        intent.putExtra("PROFILE_PICTURE_UPDATED", isProfilePicUpdated);
-        if (!mEditName.getText().toString().equals(TJPreferences.getUserName(this))) {
-            TJPreferences.setUserName(this, mEditName.getText().toString());
-            intent.putExtra("USER_NAME_UPDATED", true);
-        } else {
-            intent.putExtra("Status_UPDATED", false);
-        }
-        setResult(RESULT_OK, intent);
-        Log.d(TAG, "on back pressed called " + intent + RESULT_OK);
-        finish();
-    }*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -217,79 +195,6 @@ public class ProfileActivity extends BaseActivity {
             }
         }
     }
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //int groupId, int itemId, int order, int titleRes
-        menu.add(0, 0, 0, "Done").setIcon(R.drawable.ic_done).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        menu.add(0, 1, 1, "Edit").setIcon(R.drawable.ic_edit).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        menu.findItem(0).setVisible(false);
-        mMenu = menu;
-        super.onCreateOptionsMenu(menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case 0:
-                if (HelpMe.isNetworkAvailable(this)) {
-                    List<String> columns = new ArrayList<>();
-                    List<String> columnNames = new ArrayList<>();
-                    if (!mEditName.getText().toString().equals(TJPreferences.getUserName(this))) {
-                        TJPreferences.setUserName(this, mEditName.getText().toString());
-                        isNameUpdated = true;
-                        columns.add(mEditName.getText().toString());
-                        columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME);
-                    }
-                    if (!mEditStatus.getText().toString().equals(TJPreferences.getUserStatus(this))) {
-                        TJPreferences.setUserStatus(this, mEditStatus.getText().toString());
-                        isStatusUpdated = true;
-                        columns.add(mEditStatus.getText().toString());
-                        columnNames.add(MySQLiteHelper.CONTACT_COLUMN_STATUS);
-                    }
-                    if (isProfilePicUpdated) {
-                        Log.d(TAG, "profile image path " + mProfileImgPath);
-                        TJPreferences.setProfileImgPath(this, mProfileImgPath);
-                        columns.add(mProfileImgPath);
-                        columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL);
-                    }
-                    if (isNameUpdated || isStatusUpdated || isProfilePicUpdated) {
-                        mDialog.setMessage("Updating your profile");
-                        mDialog.show();
-                        new UpdateProfileAsyncTask().execute();
-                        String columnNamesArray[] = new String[columnNames.size()];
-                        String columnValuesArray[] = new String[columnNames.size()];
-                        ContactDataSource.updateContact(ProfileActivity.this, TJPreferences.getUserId(ProfileActivity.this), columns.toArray(columnValuesArray), columnNames.toArray(columnNamesArray));
-                    }else {
-                        finish();
-                    }
-                }else{
-                    Toast.makeText(this, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
-                }
-
-                return true;
-            case 1:
-                LinearLayout layout = (LinearLayout) findViewById(R.id.edit_layout);
-                layout.setVisibility(View.VISIBLE);
-                mEditName.setText(TJPreferences.getUserName(this));
-                mEditStatus.setText(TJPreferences.getUserStatus(this));
-                mProfileImg.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        Intent intent = new Intent(Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                        startActivityForResult(intent, PICK_IMAGE);
-                    }
-                });
-                item.setVisible(false);
-                mMenu.findItem(0).setVisible(true);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
 
     private class UpdateProfileAsyncTask extends AsyncTask<Map<String, String>, Void, HttpResponse> {
 
@@ -324,15 +229,21 @@ public class ProfileActivity extends BaseActivity {
                 return response;
             } catch (IOException e) {
                 Log.d("User", "error in updating profile" + e.getMessage());
-                mDialog.dismiss();
-//                Toast.makeText(ProfileActivity.this, "Unable to update Profile please try after some time", Toast.LENGTH_SHORT).show();
                 return null;
             }
         }
 
         @Override
         protected void onPostExecute(HttpResponse result) {
+            mDialog.dismiss();
             if (result == null) {
+                Bitmap profileImgThumbnail = null;
+                try {
+                    profileImgThumbnail = HelpMe.decodeSampledBitmapFromPath(ProfileActivity.this, mProfileImgPath, 110, 110);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                mProfileImg.setImageBitmap(profileImgThumbnail);
                 Toast.makeText(ProfileActivity.this, "Unable to update Profile please try after some time", Toast.LENGTH_SHORT).show();
             }else {
                 mDialog.dismiss();
@@ -346,6 +257,9 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     public void onBackPressed(){
+        if(mDialog.isShowing()){
+            mDialog.dismiss();
+        }
         Intent i = new Intent(this, ActivejourneyList.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);

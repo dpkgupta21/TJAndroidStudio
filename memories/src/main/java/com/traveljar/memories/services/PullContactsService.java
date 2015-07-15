@@ -11,6 +11,7 @@ import android.os.Build;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.util.LongSparseArray;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -76,15 +77,17 @@ public class PullContactsService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
-        Log.d(TAG, "on Handle Intent");
-        getPhoneContactsList();
+        if (HelpMe.isNetworkAvailable(this)) {
+            getPhoneContactsList();
+        } else {
+            Toast.makeText(this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private List<Contact> getPhoneContactsList() {
         List<AddressBookContact> list = new LinkedList<>();
         LongSparseArray<AddressBookContact> array = new LongSparseArray<>();
-        long start = System.currentTimeMillis();
 
         String[] projection = {
                 ContactsContract.Data.MIMETYPE,
@@ -131,7 +134,6 @@ public class PullContactsService extends IntentService {
                 addressBookContact.addPhone(type, data);
             }
         }
-        long ms = System.currentTimeMillis() - start;
         Log.d(TAG, "contacts fetching completed here");
         cursor.close();
 
@@ -322,7 +324,7 @@ public class PullContactsService extends IntentService {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         public void addEmail(int type, String address) {
             if (emails == null) {
-                emails = new LongSparseArray<String>();
+                emails = new LongSparseArray<>();
             }
             emails.put(type, address);
         }
@@ -330,7 +332,7 @@ public class PullContactsService extends IntentService {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         public void addPhone(int type, String number) {
             if (phones == null) {
-                phones = new LongSparseArray<String>();
+                phones = new LongSparseArray<>();
             }
             phones.put(type, number);
         }
