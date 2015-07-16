@@ -96,7 +96,6 @@ public class CheckInPlacesList extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCanceledOnTouchOutside(false);
-
     }
 
     private void setUpToolBar(){
@@ -177,6 +176,8 @@ public class CheckInPlacesList extends AppCompatActivity {
         ListView checkInPlaceListView = (ListView) findViewById(R.id.checkInPlacesList);
         placeListViewAdapter = new CheckInPlacesListAdapter(this, placeList);
         checkInPlaceListView.setAdapter(placeListViewAdapter);
+        if(!pDialog.isShowing())
+            pDialog.dismiss();
 
         checkInPlaceListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -272,6 +273,7 @@ public class CheckInPlacesList extends AppCompatActivity {
         LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
         if(manager.isProviderEnabled( LocationManager.GPS_PROVIDER)){
             if (HelpMe.isNetworkAvailable(getBaseContext())) {
+                pDialog.show();
                 GPSTracker gps = new GPSTracker(this);
                 // gps enabled return boolean true/false
                 if (gps.canGetLocation()) {

@@ -150,9 +150,9 @@ public class CheckInPreview extends AppCompatActivity {
             }
         }
 
-        if(picUrl != null) {
+/*        if(picUrl != null) {
             createThumbnail();
-        }
+        }*/
 
         String j_id = TJPreferences.getActiveJourneyId(this);
         String user_id = TJPreferences.getUserId(this);
@@ -243,12 +243,8 @@ public class CheckInPreview extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "result code = " + resultCode + " request code = " + requestCode);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Bitmap bitmap = null;
-            try {
-                bitmap = BitmapFactory.decodeFile(picUrl);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            Bitmap bitmap;
+            bitmap = BitmapFactory.decodeFile(picUrl);
             Log.d(TAG, "pic url is 1" + picUrl);
             int rotation = getImageRotationInDegrees();
             if (rotation != 0) {
@@ -257,7 +253,9 @@ public class CheckInPreview extends AppCompatActivity {
                 replaceImg(bitmap);
                 Log.d("TAG", "bitmap compressed successfully");
             }
-            img.setImageBitmap(bitmap);
+            bitmap.recycle();
+            createThumbnail();
+            img.setImageBitmap(BitmapFactory.decodeFile(picThumbnailPath));
         }
 
         if (requestCode == REQUEST_CODE_SELECT_FRIENDS && resultCode == RESULT_OK) {

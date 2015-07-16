@@ -56,6 +56,8 @@ public class ProfileActivity extends BaseActivity {
     private boolean isNameUpdated;
     private boolean isStatusUpdated;
 
+    private boolean isEditMode;
+
     private String mProfileImgPath;
     private Toolbar toolbar;
 
@@ -102,10 +104,12 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void setUpToolbar(){
+/*
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
+*/
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_profile);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
 
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
@@ -114,6 +118,10 @@ public class ProfileActivity extends BaseActivity {
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
         toolbar.inflateMenu(R.menu.toolbar_profile);
+        if(isEditMode){
+            toolbar.getMenu().findItem(R.id.action_done).setVisible(false);
+            toolbar.getMenu().findItem(R.id.action_edit).setVisible(true);
+        }
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -143,6 +151,7 @@ public class ProfileActivity extends BaseActivity {
                             if (isNameUpdated || isStatusUpdated || isProfilePicUpdated) {
                                 mDialog.setMessage("Updating your profile");
                                 mDialog.show();
+                                isEditMode = false;
                                 new UpdateProfileAsyncTask().execute();
                                 String columnNamesArray[] = new String[columnNames.size()];
                                 String columnValuesArray[] = new String[columnNames.size()];
@@ -157,6 +166,7 @@ public class ProfileActivity extends BaseActivity {
 
                         return true;
                     case R.id.action_edit:
+                        isEditMode = true;
                         LinearLayout layout = (LinearLayout) findViewById(R.id.edit_layout);
                         layout.setVisibility(View.VISIBLE);
                         mEditName.setText(TJPreferences.getUserName(ProfileActivity.this));
@@ -211,10 +221,10 @@ public class ProfileActivity extends BaseActivity {
             if (isStatusUpdated) {
                 entityBuilder.addTextBody("user[status]", mEditStatus.getText().toString());
             }
+            Log.d(TAG, "reg id is " + TJPreferences.getGcmRegId(getBaseContext()));
             entityBuilder.addTextBody("api_key", TJPreferences.getApiKey(getBaseContext()));
             entityBuilder.addTextBody("user[red_id]", TJPreferences.getGcmRegId(getBaseContext()));
 
-            Log.d(TAG, "reg id is " + TJPreferences.getGcmRegId(getBaseContext()));
             String url = Constants.URL_UPDATE_USER_DETAILS + TJPreferences.getUserId(getBaseContext());
             Log.d(TAG, "url is " + url);
 
