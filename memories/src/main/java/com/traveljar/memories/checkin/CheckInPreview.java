@@ -91,11 +91,9 @@ public class CheckInPreview extends AppCompatActivity {
 
     private void setUpToolBar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent_black));
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText("Checkin");
-
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
 
         TextView done = (TextView)toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {

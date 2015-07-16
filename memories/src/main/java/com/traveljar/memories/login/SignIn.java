@@ -94,19 +94,20 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
         finish();
     }
 
-    public void fbSignIn(View v) {
-
-    }
-
     public void signIn(View v) {
         Log.d(TAG, "signIn() method called");
 
-        pDialog = new ProgressDialog(this);
-        pDialog.setTitle("Loading your memories...");
-        pDialog.setCanceledOnTouchOutside(false);
-        pDialog.show();
-        // Get a GCM registration id
-        startRegistrationOfGCM(getApplicationContext());
+        if (!HelpMe.isNetworkAvailable(SignIn.this)) {
+            Log.d(TAG, "no internet availablae");
+            Toast.makeText(SignIn.this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
+        } else {
+            pDialog = new ProgressDialog(this);
+            pDialog.setTitle("Loading your memories...");
+            pDialog.setCanceledOnTouchOutside(false);
+            pDialog.show();
+            // Get a GCM registration id
+            startRegistrationOfGCM(getApplicationContext());
+        }
     }
 
 
@@ -120,21 +121,22 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
             String url = Constants.URL_SIGN_IN + "?email=" + emailAddress + "&password=" + password + "&reg_id=" + regid;
             Log.d(TAG, url);
 
-            pDialog.show();
-
             CustomJsonRequest jsonObjReq = new CustomJsonRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
+                                Log.d(TAG, "got some response = " + response.toString());
                                 saveUser(response);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Log.d(TAG, response.toString());
+
+                            Log.d(TAG, "1.3");
                             // Fetch all contacts and memories and contacts
                             Intent intent = new Intent(getBaseContext(), PullContactsService.class);
                             intent.putExtra("ACTIVITY_CODE", 3);
+                            Log.d(TAG, "1.4");
                             startService(intent);
                             new PullMemoriesService(SignIn.this, SignIn.this, REQUEST_FETCH_MEMORIES).fetchJourneys();
                         }
@@ -148,15 +150,21 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
                             .show();
                 }
             });
-            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            Log.d(TAG, "1.5");
+            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
             if (HelpMe.isNetworkAvailable(SignIn.this)) {
                 AppController.getInstance().getRequestQueue().add(jsonObjReq);
             } else {
                 Toast.makeText(SignIn.this, "Network unavailable please turn on your data", Toast.LENGTH_SHORT).show();
             }
 
+
         } else {
             // username / password doesn't match
+            pDialog.dismiss();
             Toast.makeText(getApplicationContext(), "Please enter username/password",
                     Toast.LENGTH_LONG).show();
         }
@@ -175,6 +183,7 @@ public class SignIn extends Activity implements PullMemoriesService.OnTaskFinish
     }
 
     private void saveUser(JSONObject res) throws JSONException {
+        Log.d(TAG, "1.6");
         JSONObject userItem = res.getJSONObject("user_register");
         final String id = userItem.getString("id");
         String name = userItem.getString("name");

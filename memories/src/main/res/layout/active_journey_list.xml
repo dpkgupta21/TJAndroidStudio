@@ -7,7 +7,7 @@
 
     <include layout="@layout/toolbar"/>
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
+    <com.traveljar.memories.customviews.MyTextViewReg14
         android:id="@+id/active_journey_no_buddies_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

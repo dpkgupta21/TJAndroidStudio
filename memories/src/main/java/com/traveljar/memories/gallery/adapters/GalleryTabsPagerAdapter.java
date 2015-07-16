@@ -28,7 +28,7 @@ public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
     private int[] imageResId = {
             R.drawable.ic_photo_camera_white_24dp,
             R.drawable.ic_audiotrack_white_24dp,
-            R.drawable.ic_video_library_white_24dp,
+            R.drawable.ic_videocam_white_24dp,
             R.drawable.ic_event_note_white_24dp
     };
 

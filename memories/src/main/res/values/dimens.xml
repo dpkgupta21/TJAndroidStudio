@@ -17,5 +17,6 @@
 
     <dimen name="circularProfDimen">75dp</dimen>
     <dimen name="new_lap_transport_icon_size">64dp</dimen>
+    <dimen name="slidingTabLayoutHeight">45dp</dimen>
 
 </resources>

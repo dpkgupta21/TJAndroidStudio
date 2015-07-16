@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/default_string"
             android:scaleType="centerCrop"
-            android:alpha="0.5" />
+            android:alpha="0.8" />
 
         <com.traveljar.memories.customviews.MyCircularImageView
             android:id="@+id/photo_detail_profile_image"
@@ -30,7 +30,7 @@
             android:layout_marginLeft="15dp"
             android:src="@drawable/gumnaam_profile_image" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+        <com.traveljar.memories.customviews.MyTextViewReg14
             android:id="@+id/photo_detail_profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                 android:contentDescription="@string/default_string"
                 android:src="@drawable/ic_favourite_empty" />
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg14
+            <com.traveljar.memories.customviews.MyTextViewReg14
                 android:id="@+id/no_likes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,45 +89,48 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="07"
-                android:textColor="@color/tj_red_light_text"
-                android:textSize="50sp" />
+                android:textColor="@color/primaryColor"
+                android:textSize="55sp" />
 
-            <com.traveljar.memories.customviews.MyTextViewReg12
+            <com.traveljar.memories.customviews.MyTextViewReg14
                 android:id="@+id/photo_detail_place"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_alignParentLeft="true"
-                android:text="place"
-                android:layout_marginTop="10dp"
+                android:text="15, 8th cross Rd"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
                 android:layout_below="@id/photo_detail_time"/>
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg14
+            <com.traveljar.memories.customviews.MyTextViewReg14
                 android:id="@+id/photo_detail_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignTop="@id/photo_detail_date_big"
                 android:layout_toRightOf="@id/photo_detail_date_big"
                 android:text="7 December 2014"
-                android:textColor="@color/tj_red_light_text"
+                android:textColor="@color/primaryColor"
                 android:textSize="@dimen/tj_medium_font" />
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg14
+            <com.traveljar.memories.customviews.MyTextViewReg14
                 android:id="@+id/photo_detail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:layout_alignLeft="@id/photo_detail_date"
                 android:layout_below="@id/photo_detail_date"
                 android:text="Sunday 1:19 pm"
-                android:textColor="@color/tj_red_light_text"
+                android:textColor="@color/primaryColor"
                 android:textSize="@dimen/tj_medium_font" />
 
         </RelativeLayout>
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+        <com.traveljar.memories.customviews.MyTextViewReg14
             android:id="@+id/photo_detail_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"/>
+            android:layout_marginTop="25dp"/>
 
     </LinearLayout>
 

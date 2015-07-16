@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="sidemenu_features_list">
-        <item>Future Journeys</item>
+        <item>Active Journeys</item>
         <item>Past Journeys</item>
         <item>Memories</item>
         <item>Profile</item>

@@ -5,7 +5,7 @@
     <!-- Done Button -->
     <item
         android:id="@+id/action_next"
-        android:title="Next"
+        android:title="Next "
         app:showAsAction="withText|always" />
 
 </menu>

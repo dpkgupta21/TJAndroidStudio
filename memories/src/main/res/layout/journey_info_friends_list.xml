@@ -13,13 +13,15 @@
         android:scrollbars="vertical"
         android:visibility="gone" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
+    <com.traveljar.memories.customviews.MyTextViewCustom
         android:id="@+id/journey_info_friends_list_no_buddies_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="No other friends left"
-        android:visibility="gone" />
+        android:padding="20dp"
+        android:textSize="18sp"
+        android:text="No other friends left on Travel Jar who you can add."
+         />
 
 
 </LinearLayout>

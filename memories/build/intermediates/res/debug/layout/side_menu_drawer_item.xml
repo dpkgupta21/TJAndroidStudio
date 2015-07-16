@@ -11,7 +11,7 @@
         android:layout_marginLeft="16dp"
         android:layout_centerVertical="true"
         android:contentDescription="@string/default_string"
-        android:src="@drawable/hamburger" />
+        android:src="@drawable/ic_account_circle_black_24dp" />
 
     <com.traveljar.memories.customviews.MyTextViewBodyMed14
         android:id="@+id/side_menu_cloud_title"
@@ -22,4 +22,4 @@
         android:text="Content not available"
         android:textColor="@color/black" />
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/side_menu_drawer_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/side_menu_drawer_item.xml -->

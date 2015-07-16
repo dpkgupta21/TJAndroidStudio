@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
-        android:src="@drawable/delete85" />
+        android:src="@drawable/ic_delete_white_24dp" />
 
     <ImageView
         android:id="@+id/detailImage"
@@ -47,4 +47,4 @@
         android:visibility="gone"
         android:layout_alignEnd="@+id/closeIcon" />
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/gallery_photos_detail_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/gallery_photos_detail_item.xml -->

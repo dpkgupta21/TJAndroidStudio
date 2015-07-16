@@ -24,7 +24,7 @@
         android:src="@drawable/ic_img_selected"
         android:visibility="gone" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
+    <com.traveljar.memories.customviews.MyTextViewReg14
         android:id="@+id/friendName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

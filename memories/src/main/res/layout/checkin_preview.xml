@@ -41,14 +41,14 @@
             android:imeOptions="actionDone"
             />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+        <com.traveljar.memories.customviews.MyTextViewReg14
             android:id="@+id/checkin_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="@dimen/tj_large_font" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+        <com.traveljar.memories.customviews.MyTextViewReg14
             android:id="@+id/checkin_details_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -2,13 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Upload -->
-    <item
-        android:id="@+id/action_upload"
-        android:icon="@drawable/upload119"
-        android:title="Upload"
-        app:showAsAction="ifRoom" />
-
     <!-- Delete -->
     <item
         android:id="@+id/action_delete"
@@ -16,4 +9,4 @@
         android:title="Delete"
         app:showAsAction="never" />
 
-</menu><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/menu/gallery_photos_cab_items.xml -->
+</menu><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/menu/gallery_photos_cab_items.xml -->

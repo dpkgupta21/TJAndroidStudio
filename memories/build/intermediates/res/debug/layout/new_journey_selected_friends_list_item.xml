@@ -28,8 +28,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/ic_delete_white_24dp"
+        android:background="@drawable/ic_delete_black_24dp"
         android:contentDescription="@string/default_string"
         android:text="Content not available" />
 
@@ -43,4 +44,4 @@
         android:layout_toRightOf="@+id/add_friends_contact_image"
         android:layout_toEndOf="@+id/add_friends_contact_image" />
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/new_journey_selected_friends_list_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/new_journey_selected_friends_list_item.xml -->

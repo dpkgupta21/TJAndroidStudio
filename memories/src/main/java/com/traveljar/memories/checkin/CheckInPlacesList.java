@@ -70,14 +70,14 @@ public class CheckInPlacesList extends AppCompatActivity {
 
         setUpToolBar();
 
-        LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        if (!manager.isProviderEnabled( LocationManager.GPS_PROVIDER)) {
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(final DialogInterface dialog,  final int id) {
+                        public void onClick(final DialogInterface dialog, final int id) {
                             startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
                         }
                     })
@@ -98,9 +98,9 @@ public class CheckInPlacesList extends AppCompatActivity {
         pDialog.setCanceledOnTouchOutside(false);
     }
 
-    private void setUpToolBar(){
+    private void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Checkin Places");
     }
 
@@ -135,7 +135,7 @@ public class CheckInPlacesList extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // Log.d(TAG, response.toString());
                         requestFinishTime = System.currentTimeMillis();
-                        Log.d(TAG, "total time to fetch request -> " + (requestFinishTime - requestStartTime)/1000);
+                        Log.d(TAG, "total time to fetch request -> " + (requestFinishTime - requestStartTime) / 1000);
                         //hideProgressDialog();
                         try {
                             Log.d(TAG, response.toString());
@@ -172,18 +172,18 @@ public class CheckInPlacesList extends AppCompatActivity {
 
         formatJSON(res);
         requestParseTime = System.currentTimeMillis();
-        Log.d(TAG, "total time to parse request -> " + (requestParseTime - requestFinishTime)/1000);
+        Log.d(TAG, "total time to parse request -> " + (requestParseTime - requestFinishTime) / 1000);
         ListView checkInPlaceListView = (ListView) findViewById(R.id.checkInPlacesList);
         placeListViewAdapter = new CheckInPlacesListAdapter(this, placeList);
         checkInPlaceListView.setAdapter(placeListViewAdapter);
-        if(!pDialog.isShowing())
+        if (!pDialog.isShowing())
             pDialog.dismiss();
 
         checkInPlaceListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // selected item
-                Place place = (Place)placeListViewAdapter.getItem(position);
+                Place place = (Place) placeListViewAdapter.getItem(position);
                 Intent i = new Intent(CheckInPlacesList.this, CheckInPreview.class);
                 i.putExtra("placeName", place.getName());
                 i.putExtra("latitude", lat);
@@ -209,6 +209,7 @@ public class CheckInPlacesList extends AppCompatActivity {
                 lastCharTypedAt = System.currentTimeMillis();
 
             }
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -239,10 +240,10 @@ public class CheckInPlacesList extends AppCompatActivity {
             place = new Place();
 
             place.setName(venueItem.getString("name"));
-            place.setAddress(venueItem.getJSONObject("location").getString("distance") + "m");
+            place.setDistance(venueItem.getJSONObject("location").getString("distance"));
             // check if address is valid
             if (venueItem.getJSONObject("location").has("address")) {
-                place.setAddress(place.getAddress() + " - " + venueItem.getJSONObject("location").getString("address"));
+                place.setAddress(venueItem.getJSONObject("location").getString("address"));
             }
             // check if crossStreet is valid
             if (venueItem.getJSONObject("location").has("crossStreet")) {
@@ -269,9 +270,9 @@ public class CheckInPlacesList extends AppCompatActivity {
     }
 
     @Override
-    public void onResume(){
-        LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-        if(manager.isProviderEnabled( LocationManager.GPS_PROVIDER)){
+    public void onResume() {
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             if (HelpMe.isNetworkAvailable(getBaseContext())) {
                 pDialog.show();
                 GPSTracker gps = new GPSTracker(this);
@@ -293,23 +294,34 @@ public class CheckInPlacesList extends AppCompatActivity {
         super.onResume();
     }
 
-    public class Place{
+    public class Place {
         String name;
         String address;
+        String distance;
         String checkInCount;
         String thumbUrl;
 
-        public Place(){}
+        public Place() {
+        }
 
-        public Place(String name, String address, String checkInCount, String thumbUrl) {
+        public Place(String name, String address, String distance, String checkInCount, String thumbUrl) {
             this.name = name;
             this.address = address;
+            this.distance = distance;
             this.checkInCount = checkInCount;
             this.thumbUrl = thumbUrl;
         }
 
         public String getName() {
             return name;
+        }
+
+        public String getDistance() {
+            return distance;
+        }
+
+        public void setDistance(String distance) {
+            this.distance = distance;
         }
 
         public void setName(String name) {

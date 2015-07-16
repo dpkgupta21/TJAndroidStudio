@@ -39,8 +39,8 @@ public class LapsList extends AppCompatActivity {
 
         // Add lap FAB Button
         final MyFABView fabButton = new MyFABView.Builder(this)
-                .withDrawable(getResources().getDrawable(R.drawable.plus79))
-                .withButtonColor(getResources().getColor(R.color.tj_orange))
+                .withDrawable(getResources().getDrawable(R.drawable.ic_add_white_24dp))
+                .withButtonColor(getResources().getColor(R.color.primaryColor))
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT).withMargins(0, 0, 16, 16).create();
 
         fabButton.setOnClickListener(new OnClickListener() {

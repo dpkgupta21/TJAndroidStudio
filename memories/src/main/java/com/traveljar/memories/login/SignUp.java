@@ -25,7 +25,6 @@ import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.models.Contact;
-import com.traveljar.memories.newjourney.LapsList;
 import com.traveljar.memories.services.PullContactsService;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
@@ -92,12 +91,6 @@ public class SignUp extends Activity {
 
     public void goToSignIn(View v) {
         Intent i = new Intent(getBaseContext(), SignIn.class);
-        startActivity(i);
-        finish();
-    }
-
-    public void fbSignUp(View v) {
-        Intent i = new Intent(getBaseContext(), LapsList.class);
         startActivity(i);
         finish();
     }

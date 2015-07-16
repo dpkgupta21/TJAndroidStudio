@@ -139,11 +139,6 @@ public class Settings extends AppCompatActivity{
         settingsIconIdsList.add(String.valueOf(R.drawable.ic_settings_applications_black_24dp));
         settingsIconIdsList.add(String.valueOf(R.drawable.ic_info_black_24dp));
         settingsIconIdsList.add(String.valueOf(R.drawable.ic_power_settings_new_black_24dp));
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
-        settingsIconIdsList.add(String.valueOf(R.drawable.logout));
-
     }
 
     @Override

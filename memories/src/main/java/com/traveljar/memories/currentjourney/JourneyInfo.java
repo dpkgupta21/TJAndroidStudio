@@ -174,7 +174,7 @@ public class JourneyInfo extends AppCompatActivity implements JourneyUtil.OnExit
             }
         });
 
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent_black));
 
         if(HelpMe.isAdmin(this)){
             toolbar.inflateMenu(R.menu.journey_info_with_add_buddy);

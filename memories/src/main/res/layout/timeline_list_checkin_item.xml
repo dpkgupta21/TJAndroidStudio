@@ -27,7 +27,7 @@
             android:layout_marginTop="-45dp"
             android:src="@drawable/gumnaam_profile_image" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyMed14
+        <com.traveljar.memories.customviews.MyTextViewMed14
             android:id="@+id/timelineItemUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:text="Some Name"
             android:textColor="@color/white" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyMed14
+        <com.traveljar.memories.customviews.MyTextViewMed14
             android:id="@+id/timelineItemCheckinPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/active_journey_location"
+            android:src="@drawable/ic_location_on_white_18dp"
             android:layout_toLeftOf="@id/timelineItemCheckinPlace"/>
 
         <RelativeLayout
@@ -92,7 +92,7 @@
                 android:contentDescription="@string/default_string"
                 android:src="@drawable/ic_favourite_empty" />
 
-            <com.traveljar.memories.customviews.MyTextViewBodyReg14
+            <com.traveljar.memories.customviews.MyTextViewReg14
                 android:id="@+id/noLikesTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

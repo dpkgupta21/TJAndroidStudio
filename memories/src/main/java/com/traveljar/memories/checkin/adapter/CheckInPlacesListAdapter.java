@@ -50,7 +50,7 @@ public class CheckInPlacesListAdapter extends BaseAdapter implements Filterable 
         return 0;
     }
 
-    public void updateList(List<CheckInPlacesList.Place> list){
+    public void updateList(List<CheckInPlacesList.Place> list) {
         mOriginalList = list;
         mFilteredList = list;
     }
@@ -67,6 +67,7 @@ public class CheckInPlacesListAdapter extends BaseAdapter implements Filterable 
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.name = (TextView) rowView.findViewById(R.id.checkin_place_name);
             viewHolder.address = (TextView) rowView.findViewById(R.id.checkin_place_address);
+            viewHolder.distance = (TextView) rowView.findViewById(R.id.checkin_place_distance);
             viewHolder.count = (TextView) rowView.findViewById(R.id.checkin_place_count);
             viewHolder.thumbnail = (NetworkImageView) rowView
                     .findViewById(R.id.checkin_place_thumbnail);
@@ -75,9 +76,10 @@ public class CheckInPlacesListAdapter extends BaseAdapter implements Filterable 
 
         // fill data
         holder = (ViewHolder) rowView.getTag();
-        CheckInPlacesList.Place  place = mFilteredList.get(position);
+        CheckInPlacesList.Place place = mFilteredList.get(position);
         holder.name.setText(place.getName());
         holder.address.setText(place.getAddress());
+        holder.distance.setText(place.getDistance() + " m");
         holder.count.setText(place.getCheckInCount());
         makeImageRequest(place.getThumbUrl());
 
@@ -113,6 +115,7 @@ public class CheckInPlacesListAdapter extends BaseAdapter implements Filterable 
         public TextView name;
         public NetworkImageView thumbnail;
         private TextView address;
+        private TextView distance;
         private TextView count;
     }
 
@@ -128,8 +131,8 @@ public class CheckInPlacesListAdapter extends BaseAdapter implements Filterable 
                     filterResults.count = mOriginalList.size();
                 } else {
                     ArrayList<CheckInPlacesList.Place> resultList = new ArrayList<>();
-                    for (CheckInPlacesList.Place place: mOriginalList) {
-                        if(place.getName().toLowerCase().startsWith(charSequence.toString().toLowerCase()))
+                    for (CheckInPlacesList.Place place : mOriginalList) {
+                        if (place.getName().toLowerCase().startsWith(charSequence.toString().toLowerCase()))
                             resultList.add(place);
                     }
                     filterResults.values = resultList;

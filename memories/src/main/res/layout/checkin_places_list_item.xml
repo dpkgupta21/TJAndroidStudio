@@ -17,11 +17,12 @@
     <RelativeLayout
         android:id="@+id/checkin_place_details"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp">
 
         <!-- checkin_place profileName -->
 
-        <com.traveljar.memories.customviews.MyTextViewBodyMed14
+        <com.traveljar.memories.customviews.MyTextViewMed14
             android:id="@+id/checkin_place_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
 
         <!-- checkin_place address -->
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+        <com.traveljar.memories.customviews.MyTextViewReg14
             android:id="@+id/checkin_place_address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -41,12 +42,29 @@
             android:singleLine="true"
             android:text="Phuket, Thailand" />
 
-        <com.traveljar.memories.customviews.MyTextViewReg12
-            android:id="@+id/checkin_place_count"
+        <com.traveljar.memories.customviews.MyTextViewReg14
+            android:id="@+id/checkin_place_distance"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/checkin_place_address"
-            android:text="3,123 were here" />
-    </RelativeLayout>
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="500 m" />
 
+        <com.traveljar.memories.customviews.MyTextViewMed14
+            android:id="@+id/checkin_place_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="3,123" />
+
+        <com.traveljar.memories.customviews.MyTextViewReg14
+            android:id="@+id/checkin_place_count_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/checkin_place_count"
+            android:text="Checkins" />
+    </RelativeLayout>
 </LinearLayout>

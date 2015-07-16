@@ -75,9 +75,9 @@ public class AudioGalleryAdapter extends BaseAdapter implements AudioPlayer.OnAu
 
         //If current audio is being played than put pause button else put play button
         if (currentPlayingAudioId.equals(audio.getId())) {
-            playAudio.setImageResource(R.drawable.pause_audio_red);
+            playAudio.setImageResource(R.drawable.ic_pause_black_24dp);
         } else {
-            playAudio.setImageResource(R.drawable.play_audio_red);
+            playAudio.setImageResource(R.drawable.ic_play_arrow_black_24dp);
         }
 
         playAudio.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ public class AudioGalleryAdapter extends BaseAdapter implements AudioPlayer.OnAu
                 // Condition 1: if already playing and clicked for the audio which is already playing
                 if(isPlaying && audio.getId().equals(currentPlayingAudioId)){
                     mPlayer.stopPlaying();
-                    playAudio.setImageResource(R.drawable.play_audio_red);
+                    playAudio.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                     currentPlayingAudioId = "-1";
                     lastPlayedAudioPlayButton = playAudio;
                     isPlaying = false;
@@ -95,7 +95,7 @@ public class AudioGalleryAdapter extends BaseAdapter implements AudioPlayer.OnAu
                     if(isPlaying) {
                         mPlayer.stopPlaying();
                         if (lastPlayedAudioPlayButton != null) {
-                            lastPlayedAudioPlayButton.setImageResource(R.drawable.play_audio_red);
+                            lastPlayedAudioPlayButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                         }
                     }
 
@@ -107,7 +107,7 @@ public class AudioGalleryAdapter extends BaseAdapter implements AudioPlayer.OnAu
                         mPlayer = new AudioPlayer(audio.getDataLocalURL(), AudioGalleryAdapter.this);
                         mPlayer.startPlaying();
                     }
-                    playAudio.setImageResource(R.drawable.pause_audio_red);
+                    playAudio.setImageResource(R.drawable.ic_pause_black_24dp);
                     currentPlayingAudioId = audio.getId();
                     lastPlayedAudioPlayButton = playAudio;
                     isPlaying = true;
@@ -143,7 +143,7 @@ public class AudioGalleryAdapter extends BaseAdapter implements AudioPlayer.OnAu
 
     @Override
     public void onAudioComplete() {
-        lastPlayedAudioPlayButton.setImageResource(R.drawable.play_audio_red);
+        lastPlayedAudioPlayButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
         lastPlayedAudioPlayButton = null;
         isPlaying = false;
     }

@@ -9,8 +9,7 @@
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
+        android:layout_height="@dimen/slidingTabLayoutHeight"
         app:contentInsetStart="0dp"
         android:background="@drawable/action_bar_background"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
@@ -31,4 +30,4 @@
         android:layout_weight="1"
         android:background="@android:color/white" />
 
-</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/gallery_base_activity.xml -->
+</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/gallery_base_activity.xml -->

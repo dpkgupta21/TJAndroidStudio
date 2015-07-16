@@ -6,7 +6,7 @@
 
     <include layout="@layout/toolbar_with_text_action_item" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
+    <com.traveljar.memories.customviews.MyTextViewReg14
         android:id="@+id/friends_list_no_buddies_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

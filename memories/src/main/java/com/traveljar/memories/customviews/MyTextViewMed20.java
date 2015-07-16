@@ -26,7 +26,8 @@ public class MyTextViewMed20 extends TextView {
     }
 
     private void init() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf");
+//        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/OmnesMed.ttf");
         setTypeface(tf);
         setTextSize(20);
     }

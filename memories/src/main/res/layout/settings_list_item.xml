@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="15sp" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
+    <com.traveljar.memories.customviews.MyTextViewReg14
         android:id="@+id/landingSettingsTitle"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"

@@ -51,7 +51,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/active_journey_location"
+            android:src="@drawable/ic_location_on_white_18dp"
             android:layout_toLeftOf="@id/timelineItemCheckinPlace"/>
 
         <RelativeLayout
@@ -104,4 +104,4 @@
         </RelativeLayout>
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_checkin_item.xml -->
+</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_checkin_item.xml -->
