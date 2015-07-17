@@ -1,6 +1,7 @@
 package com.traveljar.memories.services;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -38,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -122,6 +124,8 @@ public class PullJourney {
         String description;
         long audioDuration;
         long id;
+        String imagePath;
+        String localDataPath = null;
 
         Double latitude;
         Double longitude;
@@ -154,8 +158,14 @@ public class PullJourney {
                         latitude = memory.getString("latitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("latitude"));
                         longitude = memory.getString("longitude").equals("null") ? 0.0d : Double.parseDouble(memory.getString("longitude"));
 
+                        imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() +
+                                "/pic_" + createdBy + "_" + journeyId + "_" + createdAt + ".jpg";
+                        if((new File(imagePath).exists())){
+                            localDataPath = imagePath;
+                        }
+
                         Picture newPic = new Picture(memoryId, journeyId, HelpMe.PICTURE_TYPE, description, "jpg",
-                                100, fileUrl, null, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
+                                100, fileUrl, localDataPath, createdBy, createdAt, updatedAt, null, thumbnailUrl, latitude, longitude);
                         parseAndSaveLikes(memory.getJSONArray("likes"), null, HelpMe.PICTURE_TYPE, journeyId, memoryId);
                         PictureUtilities.getInstance().createNewPicFromServer(context, newPic, thumbnailUrl, PICTURE_DOWNLOAD_REQUESTER_CODE);
                         count++;

@@ -42,4 +42,18 @@
         android:src="@drawable/ic_close_black_24dp"
  />
 
+    <TextView
+        android:id="@+id/journey_info_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin"
+        android:visibility="gone"
+        android:textColor="@color/tj_green"
+        android:layout_alignTop="@+id/cur_journey_buddies_image"
+        android:layout_toRightOf="@+id/cur_journey_buddies_name"
+        android:layout_toEndOf="@+id/cur_journey_buddies_name"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"/>
+
 </RelativeLayout>

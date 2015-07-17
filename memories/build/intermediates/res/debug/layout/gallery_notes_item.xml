@@ -34,7 +34,7 @@
 
     </LinearLayout>
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
+    <com.traveljar.memories.customviews.MyTextViewReg14
         android:id="@+id/galleryNoteItemtext"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
@@ -42,4 +42,4 @@
         android:text="@string/gallery_note_default_text"
         android:textSize="16sp" />
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/gallery_notes_item.xml -->
+</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/gallery_notes_item.xml -->

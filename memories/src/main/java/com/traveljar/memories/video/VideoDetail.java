@@ -221,52 +221,6 @@ public class VideoDetail extends AppCompatActivity implements DownloadVideoAsync
         });
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        if(mVideo.getCreatedBy().equals(TJPreferences.getUserId(this))){
-            menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case ACTION_ITEM_DELETE:
-                new AlertDialog.Builder(this)
-                        .setTitle("Delete")
-                        .setMessage("Are you sure you want to remove this item from your memories")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Request request = new Request(null, mVideo.getId(), mVideo.getjId(), Request.OPERATION_TYPE_DELETE,
-                                        Request.CATEGORY_TYPE_VIDEO, Request.REQUEST_STATUS_NOT_STARTED, 0);
-                                RequestQueueDataSource.createRequest(request, VideoDetail.this);
-                                VideoDataSource.updateDeleteStatus(VideoDetail.this, mVideo.getId(), true);
-                                if(HelpMe.isNetworkAvailable(VideoDetail.this)) {
-                                    Intent intent = new Intent(VideoDetail.this, MakeServerRequestsService.class);
-                                    startService(intent);
-                                }
-                                finish();
-//                                MemoriesUtil.getInstance().deleteMemory(VideoDetail.this, mVideo.getIdOnServer());
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
     @Override
     public void onVideoDownload(String videoLocalUrl, Video video) {
         VideoDataSource.updateVideoLocalUrl(this, video.getId(), video.getDataLocalURL());

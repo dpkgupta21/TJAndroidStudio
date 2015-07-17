@@ -21,7 +21,7 @@
             android:layout_alignParentLeft="true"
             android:src="@drawable/ic_play_arrow_black_24dp" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+        <com.traveljar.memories.customviews.MyTextViewReg14
             android:id="@+id/text123"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:contentDescription="@string/default_string"
             android:src="@drawable/ic_favourite_empty" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+        <com.traveljar.memories.customviews.MyTextViewReg14
             android:id="@+id/noLikesTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             android:layout_toLeftOf="@+id/timelineItemFavIcon"
             android:text="0"/>
 
-        <com.traveljar.memories.customviews.MyTextViewBodyMed14
+        <com.traveljar.memories.customviews.MyTextViewMed14
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/timelineItemUserName"
@@ -95,4 +95,4 @@
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->
+</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->

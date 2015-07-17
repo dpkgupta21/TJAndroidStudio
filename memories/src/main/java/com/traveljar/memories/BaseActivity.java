@@ -20,6 +20,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(int layoutResID) {
+
         Log.d(TAG, "1");
 
         drawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.base_activity, null);

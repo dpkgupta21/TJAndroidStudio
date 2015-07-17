@@ -18,6 +18,7 @@ import com.traveljar.memories.gallery.adapters.VideoAlbumsGalleryAdapter;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Video;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,7 @@ public class GalleryVideoAlbumsFragment extends Fragment {
     private void populateAlbumsList(){
         mAlbumsList = new HashMap<>();
         mJourneysList = JourneyDataSource.getAllActiveJourneys(getActivity());
+        Collections.sort(mJourneysList);
         for(Journey journey : mJourneysList){
             mAlbumsList.put(journey, VideoDataSource.getRandomVideoOfJourney(journey.getIdOnServer(), getActivity()));
         }

@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
+import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.models.Contact;
+import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.JourneyUtil;
 import com.traveljar.memories.utility.TJPreferences;
@@ -88,7 +90,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
 
         holder.buddyName.setText(name);
         holder.buddyStatus.setText(status);
-        if (HelpMe.isAdmin(context)) {
+        if (HelpMe.isAdmin(context) && !contactsItem.getIdOnServer().equals(TJPreferences.getUserId(context))) {
             holder.removeBuddyIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,6 +116,12 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
         } else {
             holder.removeBuddyIcon.setVisibility(View.GONE);
         }
+        Journey journey = JourneyDataSource.getJourneyById(context, TJPreferences.getActiveJourneyId(context));
+        if(journey.getCreatedBy().equals(contactsItem.getIdOnServer())){
+            holder.adminText.setVisibility(View.VISIBLE);
+        }else {
+            holder.adminText.setVisibility(View.GONE);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -131,6 +139,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
         public TextView buddyStatus;
         public ImageView buddyPicImageView;
         public ImageView removeBuddyIcon;
+        public TextView adminText;
 
         public ViewHolder(View v) {
             super(v);
@@ -138,6 +147,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
             buddyStatus = (TextView) v.findViewById(R.id.cur_journey_buddies_status);
             buddyPicImageView = (ImageView) v.findViewById(R.id.cur_journey_buddies_image);
             removeBuddyIcon = (ImageView) v.findViewById(R.id.journey_info_buddies_remove);
+            adminText = (TextView) v.findViewById(R.id.journey_info_admin);
         }
     }
 
@@ -145,10 +155,6 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
     public void onExitJourney(int resultCode, String userId) {
         if (resultCode == 0) {
             mDialog.dismiss();
-            //JourneyDataSource.removeContactFromJourney(context, userId, TJPreferences.getActiveJourneyId(context));
-            /*MemoriesDataSource.deleteAllMemoriesCreatedByUser(context, userId);
-            MemoriesDataSource.removeUserFromMemories(context, userId);*/
-            //mDataset = ContactDataSource.getContactsFromJourney(context, TJPreferences.getActiveJourneyId(context));
             ContactDataSource.updateContactJourneyStatus(context, userId, TJPreferences.getActiveJourneyId(context), false);
             mDataset = ContactDataSource.getAllActiveContactsFromJourney(context, TJPreferences.getActiveJourneyId(context));
             //mDataset = ContactDataSource.getAllContactsFromJourney(context, TJPreferences.getActiveJourneyId(context));

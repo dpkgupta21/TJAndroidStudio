@@ -145,6 +145,14 @@ public class JourneyDataSource {
         db.close();
     }
 
+    public static void updateUpdatedAtTime(Context context, long updatedAt, String journeyId){
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT, updatedAt);
+        db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId, null);
+        db.close();
+    }
+
     public static void deleteJourney(Context context, String journeyId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         db.delete(MySQLiteHelper.TABLE_JOURNEY, MySQLiteHelper.JOURNEY_COLUMN_ID + "=?", new String[]{journeyId});

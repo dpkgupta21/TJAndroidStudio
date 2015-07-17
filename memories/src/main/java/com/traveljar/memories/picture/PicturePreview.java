@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -197,7 +198,21 @@ public class PicturePreview extends AppCompatActivity {
             }
         });
         // toolbar.inflateMenu(R.menu.toolbar_with_done_text);
-        TextView done = (TextView) toolbar.findViewById(R.id.action_done);
+
+        toolbar.inflateMenu(R.menu.action_bar_with_done_icon);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_done:
+                        saveAndUploadPic();
+                        finish();
+                        break;
+                }
+                return true;
+            }
+        });
+/*        TextView done = (TextView) toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,7 +220,7 @@ public class PicturePreview extends AppCompatActivity {
                 saveAndUploadPic();
                 finish();
             }
-        });
+        });*/
     }
 
     private void saveAndUploadPic() {

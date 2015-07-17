@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -158,7 +159,29 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         title.setText("Mood");
         // toolbar.inflateMenu(R.menu.toolbar_with_done_text);
 
-        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
+        toolbar.inflateMenu(R.menu.action_bar_with_done_icon);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_done:
+                        if (selectedFriends.size() == 0) {
+                            Toast.makeText(MoodCapture.this, "please select at least one friend", Toast.LENGTH_SHORT)
+                                    .show();
+                        } else if (moodReasonEditTxt.getText().toString().isEmpty()) {
+                            Toast.makeText(MoodCapture.this, "please write the reason for the mood", Toast.LENGTH_SHORT)
+                                    .show();
+                        } else {
+                            createNewMoodIntoDB();
+                            finish();
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+
+/*        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +199,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
                         }
                 }
             }
-        });
+        });*/
     }
 
 /*    @Override

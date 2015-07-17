@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/logo_embross" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
+    <com.traveljar.memories.customviews.MyTextViewReg24
         android:id="@+id/textView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -21,8 +21,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/number_verification2"
-        android:textColor="@color/white"
-        android:textSize="@dimen/tj_large_font" />
+        android:textColor="@color/white" />
 
 
     <com.traveljar.memories.customviews.MyButtonView
@@ -36,4 +35,4 @@
         android:text="CONTINUE"
         android:textColor="@color/white"/>
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/activity_mobile_verification_2.xml -->
+</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/activity_mobile_verification_2.xml -->

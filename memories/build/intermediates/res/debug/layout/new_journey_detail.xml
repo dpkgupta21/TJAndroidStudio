@@ -34,7 +34,7 @@
             android:hint="Journey Name"
             android:imeOptions="actionNext"
             android:singleLine="true"
-            android:inputType="text" />
+            android:inputType="text|textCapWords" />
 
         <com.traveljar.memories.customviews.MyEditTextView
             android:id="@+id/new_journey_detail_tagline"
@@ -56,4 +56,4 @@
             android:textColor="@color/white" />
     </LinearLayout>
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/new_journey_detail.xml -->
+</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/new_journey_detail.xml -->

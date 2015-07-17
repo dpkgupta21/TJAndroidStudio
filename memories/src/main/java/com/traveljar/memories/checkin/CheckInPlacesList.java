@@ -176,7 +176,7 @@ public class CheckInPlacesList extends AppCompatActivity {
         ListView checkInPlaceListView = (ListView) findViewById(R.id.checkInPlacesList);
         placeListViewAdapter = new CheckInPlacesListAdapter(this, placeList);
         checkInPlaceListView.setAdapter(placeListViewAdapter);
-        if (!pDialog.isShowing())
+        if (pDialog.isShowing())
             pDialog.dismiss();
 
         checkInPlaceListView.setOnItemClickListener(new OnItemClickListener() {
