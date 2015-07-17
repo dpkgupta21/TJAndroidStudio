@@ -31,12 +31,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="FROM"
-                    android:textColor="@color/tj_orange"
+                    android:textColor="@color/tj_lables_gray"
                     android:textSize="@dimen/tj_medium_font" />
 
                 <com.traveljar.memories.customviews.MyTextViewReg24
                     android:id="@+id/new_journey_location_new_from"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/tj_lable_value_gray"
                     android:layout_height="wrap_content"
                     android:text="Bangalore" />
             </LinearLayout>
@@ -62,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:text="TO"
-                    android:textColor="@color/tj_orange"
+                    android:textColor="@color/tj_lables_gray"
                     android:textSize="@dimen/tj_medium_font" />
 
                 <com.traveljar.memories.customviews.MyTextViewReg24
@@ -70,6 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:textColor="@color/tj_lable_value_gray"
                     android:text="Delhi" />
             </LinearLayout>
         </RelativeLayout>
@@ -79,7 +81,7 @@
             android:layout_height="2dp"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
-            android:background="#c0c0c0" />
+            android:background="#e6e6e6" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,12 +95,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DEPART ON"
-                android:textColor="@color/tj_orange"
+                android:textColor="@color/tj_lables_gray"
                 android:textSize="@dimen/tj_medium_font" />
 
             <com.traveljar.memories.customviews.MyTextViewReg24
                 android:id="@+id/new_journey_location_new_date"
                 android:layout_width="match_parent"
+                android:textColor="@color/tj_lable_value_gray"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -107,7 +110,7 @@
             android:layout_height="2dp"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
-            android:background="#c0c0c0" />
+            android:background="#e6e6e6" />
 
 
         <!-- Mode of transport -->
@@ -121,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MODE OF TRANSPORT"
-                android:textColor="@color/tj_orange"
+                android:textColor="@color/tj_lables_gray"
                 android:textSize="@dimen/tj_medium_font" />
 
             <LinearLayout

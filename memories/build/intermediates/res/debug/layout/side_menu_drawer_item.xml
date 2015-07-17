@@ -13,7 +13,7 @@
         android:contentDescription="@string/default_string"
         android:src="@drawable/ic_account_circle_black_24dp" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyMed14
+    <com.traveljar.memories.customviews.MyTextViewMed14
         android:id="@+id/side_menu_cloud_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

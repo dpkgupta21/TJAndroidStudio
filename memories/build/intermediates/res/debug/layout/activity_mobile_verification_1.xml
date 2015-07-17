@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tj_orange"
+    android:padding="10dp"
     android:orientation="vertical">
 
     <ImageView
@@ -22,7 +23,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
         android:gravity="center"
-        android:padding="10dp"
         android:text="@string/number_verification1"
         android:textColor="@color/white" />
 
@@ -68,7 +68,7 @@
         android:text="Verify"
         android:textColor="@color/white" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
+    <com.traveljar.memories.customviews.MyTextViewReg14
         android:id="@+id/number_ver1_verifying_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
         android:text="Verifying, Please wait..."
         android:visibility="gone" />
 
-    <com.traveljar.memories.customviews.MyTextViewBodyReg14
+    <com.traveljar.memories.customviews.MyTextViewReg14
         android:id="@+id/number_ver1_countdown_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

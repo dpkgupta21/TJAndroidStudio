@@ -22,7 +22,7 @@
             android:layout_marginTop="0dp"
             android:src="@drawable/abhi" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyMed14
+        <com.traveljar.memories.customviews.MyTextViewMed14
             android:id="@+id/sidemenu_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:text="Anonymous"
             android:textColor="@color/white" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyReg14
+        <com.traveljar.memories.customviews.MyTextViewReg14
             android:id="@+id/sidemenu_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             android:contentDescription="@string/default_string"
             android:src="@drawable/ic_settings_applications_black_24dp" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyMed14
+        <com.traveljar.memories.customviews.MyTextViewMed14
             android:id="@+id/side_menu_settings_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -103,7 +103,7 @@
             android:contentDescription="@string/default_string"
             android:src="@drawable/ic_feedback_black_24dp" />
 
-        <com.traveljar.memories.customviews.MyTextViewBodyMed14
+        <com.traveljar.memories.customviews.MyTextViewMed14
             android:id="@+id/side_menu_feedback_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

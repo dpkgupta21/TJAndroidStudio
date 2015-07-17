@@ -158,6 +158,11 @@
     <eat-comment/>
     <color name="ripple_material_dark">#4dffffff</color>
     <color name="ripple_material_light">#1f000000</color>
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/values/color.xml -->
+    <eat-comment/>
+    <color name="secondaryColor">#8BBC14</color>
+    <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="secondary_text_default_material_dark">#b3ffffff</color>
     <color name="secondary_text_default_material_light">#8a000000</color>
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
@@ -188,9 +193,11 @@
     <color name="tj_fab_blue">#2790AA</color>
     <color name="tj_fab_yellow">#FECB45</color>
     <color name="tj_fb_blue">#3C5B97</color>
-    <color name="tj_gray_bg">#f3f3f3</color>
+    <color name="tj_gray_bg">#f6f6f6</color>
     <color name="tj_gray_border">#c8c8c8</color>
     <color name="tj_green">#16A085</color>
+    <color name="tj_lable_value_gray">#6F6F6F</color>
+    <color name="tj_lables_gray">#C1C1C1</color>
     <color name="tj_light_gray">#EEEEEE</color>
     <color name="tj_medium_gray">#666666</color>
     <color name="tj_orange">#FFA31A</color>
