@@ -18,6 +18,7 @@ import com.traveljar.memories.gallery.adapters.NotesAlbumsGalleryAdapter;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Note;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,7 @@ public class GalleryNotesAlbumsFragment extends Fragment {
     private void populateAlbumsList(){
         mAlbumsList = new HashMap<>();
         mJourneysList = JourneyDataSource.getAllActiveJourneys(getActivity());
+        Collections.sort(mJourneysList);
         for(Journey journey : mJourneysList){
             mAlbumsList.put(journey, NoteDataSource.getRandomNoteFromJourney(journey.getIdOnServer(), getActivity()));
         }

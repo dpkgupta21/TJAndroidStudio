@@ -22,6 +22,7 @@ import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.MySQLiteHelper;
 import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.customviews.MyCircularImageView;
+import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
@@ -131,20 +132,17 @@ public class ProfileActivity extends BaseActivity {
                             List<String> columns = new ArrayList<>();
                             List<String> columnNames = new ArrayList<>();
                             if (!mEditName.getText().toString().equals(TJPreferences.getUserName(ProfileActivity.this))) {
-                                TJPreferences.setUserName(ProfileActivity.this, mEditName.getText().toString());
                                 isNameUpdated = true;
                                 columns.add(mEditName.getText().toString());
                                 columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PROFILE_NAME);
                             }
                             if (!mEditStatus.getText().toString().equals(TJPreferences.getUserStatus(ProfileActivity.this))) {
-                                TJPreferences.setUserStatus(ProfileActivity.this, mEditStatus.getText().toString());
                                 isStatusUpdated = true;
                                 columns.add(mEditStatus.getText().toString());
                                 columnNames.add(MySQLiteHelper.CONTACT_COLUMN_STATUS);
                             }
                             if (isProfilePicUpdated) {
                                 Log.d(TAG, "profile image path " + mProfileImgPath);
-                                TJPreferences.setProfileImgPath(ProfileActivity.this, mProfileImgPath);
                                 columns.add(mProfileImgPath);
                                 columnNames.add(MySQLiteHelper.CONTACT_COLUMN_PIC_LOCAL_URL);
                             }
@@ -256,6 +254,20 @@ public class ProfileActivity extends BaseActivity {
                 mProfileImg.setImageBitmap(profileImgThumbnail);
                 Toast.makeText(ProfileActivity.this, "Unable to update Profile please try after some time", Toast.LENGTH_SHORT).show();
             }else {
+                Contact contact = ContactDataSource.getContactById(ProfileActivity.this, TJPreferences.getUserId(ProfileActivity.this));
+                if(isNameUpdated){
+                    TJPreferences.setUserName(ProfileActivity.this, mEditName.getText().toString());
+                    contact.setProfileName(mEditName.getText().toString());
+                }
+                if(isStatusUpdated){
+                    TJPreferences.setUserStatus(ProfileActivity.this, mEditStatus.getText().toString());
+                    contact.setStatus(mEditStatus.getText().toString());
+                }
+                if(isProfilePicUpdated){
+                    TJPreferences.setProfileImgPath(ProfileActivity.this, mProfileImgPath);
+                    contact.setPicLocalUrl(mProfileImgPath);
+                }
+                ContactDataSource.updateContact(ProfileActivity.this, contact);
                 mDialog.dismiss();
                 Intent intent = getIntent();
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

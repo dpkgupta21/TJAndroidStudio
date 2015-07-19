@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -84,7 +85,23 @@ public class MoodSelectFriends extends AppCompatActivity {
             }
         });
 
-        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
+        toolbar.inflateMenu(R.menu.action_bar_with_done_icon);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_done:
+                        Intent returnIntent = new Intent();
+                        returnIntent.putParcelableArrayListExtra("FRIENDS", (ArrayList) mContactsList);
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                        break;
+                }
+                return true;
+            }
+        });
+
+/*        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,44 +110,7 @@ public class MoodSelectFriends extends AppCompatActivity {
                 setResult(RESULT_OK, returnIntent);
                 finish();
             }
-        });
+        });*/
     }
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar_with_done_text, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_done:
-                Log.d(TAG, "done clicked!");
-                Intent returnIntent = new Intent();
-                returnIntent.putParcelableArrayListExtra("FRIENDS", (ArrayList) mContactsList);
-                setResult(RESULT_OK, returnIntent);
-                finish();
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
-    /*@Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent returnIntent = new Intent();
-        setResult(RESULT_CANCELED, returnIntent);
-        finish();
-    }*/
-
-    // whenever the activity is called with a list ids of selected friends, fetch all the contacts from the current journey and
-    // and mark the contacts as unselected whose ids are not present in the mSelectedFriends
 
 }

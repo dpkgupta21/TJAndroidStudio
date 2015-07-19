@@ -56,15 +56,19 @@ public class NewJourneyDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_detail);
 
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Journey Details");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         setUpToolBar();
 
         mJourneyName = (EditText) findViewById(R.id.new_journey_detail_name);
         mJourneyTagLine = (EditText) findViewById(R.id.new_journey_detail_tagline);
+    }
+
+    private void capitalizeJourneyName(){
+        jName = "";
+        String[] name = mJourneyName.getText().toString().trim().split(" ");
+        for(String s : name){
+            jName += s.substring(0, 1).toUpperCase() + s.substring(1) + " ";
+        }
+        jName = jName.trim();
     }
 
     private void createParams() {
@@ -76,7 +80,10 @@ public class NewJourneyDetail extends AppCompatActivity {
         // create params to be sent in create new journey api
         params = new HashMap<>();
         try {
-            params.put("journey[name]", mJourneyName.getText().toString().trim());
+
+
+
+            params.put("journey[name]", jName);
             params.put("journey[tag_line]", mJourneyTagLine.getText().toString().trim());
             params.put("journey[group_relationship]", jGroupType);
             params.put("journey[buddy_ids]", jBuddyList);
@@ -116,7 +123,7 @@ public class NewJourneyDetail extends AppCompatActivity {
     }
 
     public void createNewJourney(View v) {
-        jName = mJourneyName.getText().toString().trim();
+        capitalizeJourneyName();
         if (!jName.isEmpty()) {
             if (HelpMe.isNetworkAvailable(this)) {
 

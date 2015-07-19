@@ -61,11 +61,11 @@ public class JourneyInfoFriendsList extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //allBuddiesList = ContactDataSource.getContactsFromJourney(getBaseContext(), TJPreferences.getActiveJourneyId(getBaseContext()));
-        allBuddiesList = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        allBuddiesList = ContactDataSource.getAllActiveContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         allContactsList = ContactDataSource.getAllContacts(getBaseContext());
-        Log.d(TAG, allBuddiesList.size() + "====" + allContactsList.size());
+        Log.d(TAG, "all buddies list -> " + allBuddiesList);
+        Log.d(TAG, "contacts list -> " + allContactsList);
         allContactsList.removeAll(allBuddiesList);
-        Log.d(TAG, allBuddiesList.size() + "====" + allContactsList.size());
 
         if (allContactsList.size() > 0) {
             mRecyclerView.setVisibility(View.VISIBLE);

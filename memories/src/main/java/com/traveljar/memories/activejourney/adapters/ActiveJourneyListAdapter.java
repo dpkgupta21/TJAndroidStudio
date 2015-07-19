@@ -108,6 +108,8 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+        }else{
+            holder.journeyCoverPic.setImageResource(R.drawable.abhi);
         }
 
     }

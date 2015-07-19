@@ -168,7 +168,7 @@ public class Journey implements Comparable<Journey> {
 
     @Override
     public int compareTo(Journey another) {
-        if (this.createdAt > (another.createdAt)) {
+        if (this.updatedAt > (another.updatedAt)) {
             return -1;
         } else {
             return 1;

@@ -18,6 +18,7 @@ import com.traveljar.memories.gallery.adapters.PictureAlbumsGalleryAdapter;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Picture;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,7 @@ public class GalleryPictureAlbumsFragment extends Fragment{
     private void populateAlbumsList(){
         mAlbumsList = new HashMap<>();
         mJourneysList = JourneyDataSource.getAllActiveJourneys(getActivity());
+        Collections.sort(mJourneysList);
         for(Journey journey : mJourneysList){
             mAlbumsList.put(journey, PictureDataSource.getRandomPicOfJourney(journey.getIdOnServer(), getActivity()));
         }

@@ -140,6 +140,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
         long completedAt;
         String memoryType;
         Memories memories;
+        String message;
 
         String userId;
 
@@ -194,6 +195,8 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 Journey jItem = new Journey(journeyId, jName, tagline, "Friends", createdBy, null, buddyIdsList,
                         Constants.JOURNEY_STATUS_ACTIVE, createdAt, updatedAt, completedAt, isUserActive);
                 new PullJourney(jItem, this, this).fetchJourneys();
+                message = "You have been added to a new journey by your friend";
+                showNotification(message, ActivejourneyList.class);
 
                 break;
 
@@ -323,17 +326,9 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                         }
                     });
                 }
-                NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-                PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this,
-                        ActivejourneyList.class), 0);
-                String message = "your journey is finished we'll get back to you with a nice video once it is avilable ";
+                message = "Your journey has been marked finished by the admin. We'll get back to you with a video of the same very soon";
+                showNotification(message, ActivejourneyList.class);
 
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_launcher).setContentTitle("GCM Notification")
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message)).setContentText(message);
-
-                mBuilder.setContentIntent(contentIntent);
-                mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
             default:
                 break;
         }
@@ -462,4 +457,18 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
             ActivejourneyList.getInstance().refreshJourneysList();
         }
     }
+
+    private void showNotification(String message, Class _activity){
+        NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this,
+                _activity), 0);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_launcher).setContentTitle("GCM Notification")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message)).setContentText(message);
+
+        mBuilder.setContentIntent(contentIntent);
+        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
+
 }

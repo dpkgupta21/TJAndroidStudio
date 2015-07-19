@@ -19,6 +19,7 @@ import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.volley.AppController;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +80,12 @@ public class CheckInPlacesListAdapter extends BaseAdapter implements Filterable 
         CheckInPlacesList.Place place = mFilteredList.get(position);
         holder.name.setText(place.getName());
         holder.address.setText(place.getAddress());
-        holder.distance.setText(place.getDistance() + " m");
+        int dist = Integer.parseInt(place.getDistance());
+        if(dist > 1000){
+            holder.distance.setText(String.valueOf(new DecimalFormat("#.##").format((double)dist/1000)) + " km");
+        }else {
+            holder.distance.setText(place.getDistance() + " m");
+        }
         holder.count.setText(place.getCheckInCount());
         makeImageRequest(place.getThumbUrl());
 

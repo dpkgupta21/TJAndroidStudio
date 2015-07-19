@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -57,7 +57,7 @@ public class TimecapsuleFragment extends Fragment {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-        RelativeLayout mLayout = (RelativeLayout) rootView.findViewById(R.id.layout);
+        LinearLayout mLayout = (LinearLayout) rootView.findViewById(R.id.layout);
 
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(rootView.getContext());

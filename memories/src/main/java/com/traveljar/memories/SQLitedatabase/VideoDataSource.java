@@ -120,6 +120,7 @@ public class VideoDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.VIDEO_COLUMN_IS_DELETED, isDeleted ? 1 : 0);
+        values.put(MySQLiteHelper.VIDEO_COLUMN_UPDATED_AT, HelpMe.getCurrentTime());
         db.update(MySQLiteHelper.TABLE_VIDEO, values, MySQLiteHelper.VIDEO_COLUMN_ID + " = " + memLocalId, null);
         db.close();
     }
@@ -138,6 +139,7 @@ public class VideoDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.VIDEO_COLUMN_CAPTION, caption);
+        values.put(MySQLiteHelper.VIDEO_COLUMN_UPDATED_AT, HelpMe.getCurrentTime());
         db.update(MySQLiteHelper.TABLE_VIDEO, values, MySQLiteHelper.VIDEO_COLUMN_ID + " = " + videoId, null);
         db.close();
     }

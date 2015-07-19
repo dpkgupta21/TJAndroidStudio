@@ -44,7 +44,7 @@
 
         <com.traveljar.memories.customviews.MyTextViewReg14
             android:id="@+id/checkin_place_distance"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/checkin_place_address"
             android:ellipsize="end"

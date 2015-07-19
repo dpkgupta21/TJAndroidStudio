@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -265,13 +266,26 @@ public class AudioCapture extends AppCompatActivity {
                 AudioCapture.this.finish();
             }
         });
-        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
+        toolbar.inflateMenu(R.menu.action_bar_with_done_icon);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_done:
+                        saveAndUploadAudio();
+                        finish();
+                        break;
+                }
+                return true;
+            }
+        });
+/*        TextView done = (TextView)toolbar.findViewById(R.id.action_done);
         done.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveAndUploadAudio();
                 finish();
             }
-        });
+        });*/
     }
 }
