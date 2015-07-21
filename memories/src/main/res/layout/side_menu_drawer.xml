@@ -48,8 +48,7 @@
         android:layout_height="wrap_content"
         android:divider="@color/white"
         android:layout_marginTop="8dp"
-        android:dividerHeight="1dp"
-        android:drawSelectorOnTop="true"/>
+        android:dividerHeight="1dp"/>
 
     <!-- Horizontal line in sidebar to divide -->
 

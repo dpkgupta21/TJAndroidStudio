@@ -192,7 +192,9 @@ public class PullContactsService extends IntentService {
                 try {
                     insertContactsInDB(response);
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
+                    noRequests = 0;
+                    EventBus.getDefault().post(new ContactsFetchEvent("Contacts Fetched Successfully", CALLING_ACTIVITY_CODE, false));
+                    Toast.makeText(PullContactsService.this, "Unable to fetch contacts please try again", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }

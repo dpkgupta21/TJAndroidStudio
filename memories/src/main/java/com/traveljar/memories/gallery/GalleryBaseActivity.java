@@ -18,6 +18,10 @@ public class GalleryBaseActivity extends BaseActivity {
     private SlidingTabLayout mSlidingTabLayout;
     private ViewPager mViewPager;
 
+    public GalleryBaseActivity(){
+        super(2);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

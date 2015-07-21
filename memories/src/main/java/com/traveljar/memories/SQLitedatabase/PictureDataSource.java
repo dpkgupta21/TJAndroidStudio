@@ -64,12 +64,12 @@ public class PictureDataSource {
     }
 
     // To get list of all pictures as Picture list
-    public static List<Picture> getAllPictures(Context context) {
-        List<Picture> memoriesList;
+    public static List<Memories> getAllPictures(Context context) {
+        List<Memories> memoriesList;
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PICTURE + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED + "='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        memoriesList = getPictures(cursor, context);
+        memoriesList = getPictureMemories(cursor, context);
         cursor.close();
         db.close();
         return memoriesList;

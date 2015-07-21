@@ -42,6 +42,7 @@ public class SplashScreen extends Activity {
         createTravelJarInitials();
 
         // check if already logged in
+
         if (session.isLoggedIn(this)) {
             Log.d(TAG, "since already logged in");
             Log.d(TAG, "SplashScreen ==> TimelineFragment");

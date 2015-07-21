@@ -1,6 +1,8 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -11,8 +13,6 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
 MERGED from TJAndroidStudio:flotingMenuLibrary:unspecified:7:5
@@ -76,6 +76,10 @@ uses-permission#android.permission.READ_SMS
 ADDED from AndroidManifest.xml:20:5
 	android:name
 		ADDED from AndroidManifest.xml:20:22
+uses-permission#android.permission.CAMERA
+ADDED from AndroidManifest.xml:21:5
+	android:name
+		ADDED from AndroidManifest.xml:21:22
 uses-permission#android.permission.WAKE_LOCK
 ADDED from AndroidManifest.xml:22:5
 	android:name
@@ -92,8 +96,12 @@ uses-permission#android.permission.VIBRATE
 ADDED from AndroidManifest.xml:25:5
 	android:name
 		ADDED from AndroidManifest.xml:25:22
-application
+uses-feature#android.hardware.camera
 ADDED from AndroidManifest.xml:27:5
+	android:name
+		ADDED from AndroidManifest.xml:27:19
+application
+ADDED from AndroidManifest.xml:29:5
 MERGED from TJAndroidStudio:flotingMenuLibrary:unspecified:11:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from com.android.support:appcompat-v7:22.2.0:22:5
@@ -108,478 +116,484 @@ MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from com.google.android.gms:play-services:6.1.71:16:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
 	android:label
-		ADDED from AndroidManifest.xml:31:9
+		ADDED from AndroidManifest.xml:33:9
 	android:allowBackup
-		ADDED from AndroidManifest.xml:29:9
+		ADDED from AndroidManifest.xml:31:9
 	android:icon
-		ADDED from AndroidManifest.xml:30:9
-	android:theme
 		ADDED from AndroidManifest.xml:32:9
+	android:theme
+		ADDED from AndroidManifest.xml:34:9
 	android:name
-		ADDED from AndroidManifest.xml:28:9
+		ADDED from AndroidManifest.xml:30:9
 activity#com.traveljar.memories.login.SplashScreen
-ADDED from AndroidManifest.xml:33:9
+ADDED from AndroidManifest.xml:35:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:35:13
+		ADDED from AndroidManifest.xml:37:13
 	android:label
+		ADDED from AndroidManifest.xml:38:13
+	android:name
 		ADDED from AndroidManifest.xml:36:13
-	android:name
-		ADDED from AndroidManifest.xml:34:13
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:37:13
+ADDED from AndroidManifest.xml:39:13
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:38:17
-	android:name
-		ADDED from AndroidManifest.xml:38:25
-category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:40:17
 	android:name
-		ADDED from AndroidManifest.xml:40:27
+		ADDED from AndroidManifest.xml:40:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:42:17
+	android:name
+		ADDED from AndroidManifest.xml:42:27
 activity#com.traveljar.memories.login.SignIn
-ADDED from AndroidManifest.xml:43:9
+ADDED from AndroidManifest.xml:45:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:45:13
+		ADDED from AndroidManifest.xml:47:13
 	android:label
-		ADDED from AndroidManifest.xml:46:13
-	android:name
-		ADDED from AndroidManifest.xml:44:13
-activity#com.traveljar.memories.login.SignUp
-ADDED from AndroidManifest.xml:47:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:49:13
-	android:label
-		ADDED from AndroidManifest.xml:50:13
-	android:name
 		ADDED from AndroidManifest.xml:48:13
-activity#com.traveljar.memories.login.NumberVerificationActivity
-ADDED from AndroidManifest.xml:51:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:53:13
-	android:label
-		ADDED from AndroidManifest.xml:54:13
 	android:name
+		ADDED from AndroidManifest.xml:46:13
+activity#com.traveljar.memories.login.SignUp
+ADDED from AndroidManifest.xml:49:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:51:13
+	android:label
 		ADDED from AndroidManifest.xml:52:13
-activity#com.traveljar.memories.login.NumberVerificationActivity2
-ADDED from AndroidManifest.xml:55:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:57:13
-	android:label
-		ADDED from AndroidManifest.xml:58:13
 	android:name
+		ADDED from AndroidManifest.xml:50:13
+activity#com.traveljar.memories.login.NumberVerificationActivity
+ADDED from AndroidManifest.xml:53:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:55:13
+	android:label
 		ADDED from AndroidManifest.xml:56:13
-activity#com.traveljar.memories.BaseActivity
-ADDED from AndroidManifest.xml:59:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:61:13
-	android:label
-		ADDED from AndroidManifest.xml:62:13
 	android:name
+		ADDED from AndroidManifest.xml:54:13
+activity#com.traveljar.memories.login.NumberVerificationActivity2
+ADDED from AndroidManifest.xml:57:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:59:13
+	android:label
 		ADDED from AndroidManifest.xml:60:13
-activity#com.traveljar.memories.checkin.CheckInPlacesList
-ADDED from AndroidManifest.xml:63:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:65:13
-	android:label
-		ADDED from AndroidManifest.xml:66:13
 	android:name
+		ADDED from AndroidManifest.xml:58:13
+activity#com.traveljar.memories.BaseActivity
+ADDED from AndroidManifest.xml:61:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:63:13
+	android:label
 		ADDED from AndroidManifest.xml:64:13
-activity#com.traveljar.memories.checkin.CheckInPreview
-ADDED from AndroidManifest.xml:67:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:69:13
-	android:label
-		ADDED from AndroidManifest.xml:70:13
 	android:name
+		ADDED from AndroidManifest.xml:62:13
+activity#com.traveljar.memories.checkin.CheckInPlacesList
+ADDED from AndroidManifest.xml:65:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:67:13
+	android:label
 		ADDED from AndroidManifest.xml:68:13
-activity#com.traveljar.memories.checkin.CheckInFriendsList
-ADDED from AndroidManifest.xml:71:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:73:13
-	android:label
-		ADDED from AndroidManifest.xml:74:13
 	android:name
+		ADDED from AndroidManifest.xml:66:13
+activity#com.traveljar.memories.checkin.CheckInPreview
+ADDED from AndroidManifest.xml:69:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:71:13
+	android:label
 		ADDED from AndroidManifest.xml:72:13
-activity#com.traveljar.memories.checkin.CheckinDetail
-ADDED from AndroidManifest.xml:75:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:77:13
-	android:label
-		ADDED from AndroidManifest.xml:78:13
 	android:name
+		ADDED from AndroidManifest.xml:70:13
+activity#com.traveljar.memories.checkin.CheckInFriendsList
+ADDED from AndroidManifest.xml:73:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:75:13
+	android:label
 		ADDED from AndroidManifest.xml:76:13
-activity#com.traveljar.memories.picture.PictureCapture
-ADDED from AndroidManifest.xml:79:9
-	android:label
-		ADDED from AndroidManifest.xml:81:13
 	android:name
+		ADDED from AndroidManifest.xml:74:13
+activity#com.traveljar.memories.checkin.CheckinDetail
+ADDED from AndroidManifest.xml:77:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:79:13
+	android:label
 		ADDED from AndroidManifest.xml:80:13
-activity#com.traveljar.memories.moods.MoodCapture
-ADDED from AndroidManifest.xml:82:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:84:13
-	android:label
-		ADDED from AndroidManifest.xml:85:13
 	android:name
+		ADDED from AndroidManifest.xml:78:13
+activity#com.traveljar.memories.picture.PictureCapture
+ADDED from AndroidManifest.xml:81:9
+	android:label
 		ADDED from AndroidManifest.xml:83:13
-activity#com.traveljar.memories.audio.AudioCapture
-ADDED from AndroidManifest.xml:86:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:88:13
-	android:label
-		ADDED from AndroidManifest.xml:89:13
 	android:name
+		ADDED from AndroidManifest.xml:82:13
+activity#com.traveljar.memories.moods.MoodCapture
+ADDED from AndroidManifest.xml:84:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:86:13
+	android:label
 		ADDED from AndroidManifest.xml:87:13
-activity#com.traveljar.memories.gallery.GalleryAudios
-ADDED from AndroidManifest.xml:90:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:92:13
-	android:label
-		ADDED from AndroidManifest.xml:93:13
 	android:name
+		ADDED from AndroidManifest.xml:85:13
+activity#com.traveljar.memories.audio.AudioCapture
+ADDED from AndroidManifest.xml:88:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:90:13
+	android:label
 		ADDED from AndroidManifest.xml:91:13
-activity#com.traveljar.memories.picture.PictureDetail
-ADDED from AndroidManifest.xml:94:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:96:13
-	android:label
-		ADDED from AndroidManifest.xml:97:13
 	android:name
+		ADDED from AndroidManifest.xml:89:13
+activity#com.traveljar.memories.gallery.GalleryAudios
+ADDED from AndroidManifest.xml:92:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:94:13
+	android:label
 		ADDED from AndroidManifest.xml:95:13
-activity#com.traveljar.memories.picture.PicturePreview
-ADDED from AndroidManifest.xml:98:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:100:13
-	android:label
-		ADDED from AndroidManifest.xml:101:13
 	android:name
+		ADDED from AndroidManifest.xml:93:13
+activity#com.traveljar.memories.picture.PictureDetail
+ADDED from AndroidManifest.xml:96:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:98:13
+	android:label
 		ADDED from AndroidManifest.xml:99:13
-activity#com.traveljar.memories.gallery.GalleryPhotos
-ADDED from AndroidManifest.xml:102:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:104:13
-	android:label
-		ADDED from AndroidManifest.xml:105:13
 	android:name
+		ADDED from AndroidManifest.xml:97:13
+activity#com.traveljar.memories.picture.PicturePreview
+ADDED from AndroidManifest.xml:100:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:102:13
+	android:label
 		ADDED from AndroidManifest.xml:103:13
-activity#com.traveljar.memories.gallery.GalleryBaseActivity
-ADDED from AndroidManifest.xml:106:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:108:13
-	android:label
-		ADDED from AndroidManifest.xml:109:13
 	android:name
+		ADDED from AndroidManifest.xml:101:13
+activity#com.traveljar.memories.gallery.GalleryPhotos
+ADDED from AndroidManifest.xml:104:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:106:13
+	android:label
 		ADDED from AndroidManifest.xml:107:13
-activity#com.traveljar.memories.gallery.GalleryPhotoDetail
-ADDED from AndroidManifest.xml:110:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:112:13
-	android:label
-		ADDED from AndroidManifest.xml:113:13
-	android:theme
-		ADDED from AndroidManifest.xml:114:13
 	android:name
+		ADDED from AndroidManifest.xml:105:13
+activity#com.traveljar.memories.gallery.GalleryBaseActivity
+ADDED from AndroidManifest.xml:108:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:110:13
+	android:label
 		ADDED from AndroidManifest.xml:111:13
-activity#com.traveljar.memories.pastjourney.PastJourneyList
-ADDED from AndroidManifest.xml:115:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:117:13
-	android:label
-		ADDED from AndroidManifest.xml:118:13
 	android:name
+		ADDED from AndroidManifest.xml:109:13
+activity#com.traveljar.memories.gallery.GalleryPhotoDetail
+ADDED from AndroidManifest.xml:112:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:114:13
+	android:label
+		ADDED from AndroidManifest.xml:115:13
+	android:theme
 		ADDED from AndroidManifest.xml:116:13
-activity#com.traveljar.memories.newjourney.SelectedFriendsList
-ADDED from AndroidManifest.xml:119:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:121:13
-	android:label
-		ADDED from AndroidManifest.xml:122:13
 	android:name
+		ADDED from AndroidManifest.xml:113:13
+activity#com.traveljar.memories.pastjourney.PastJourneyList
+ADDED from AndroidManifest.xml:117:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:119:13
+	android:label
 		ADDED from AndroidManifest.xml:120:13
-activity#com.traveljar.memories.newjourney.AllFriendsList
-ADDED from AndroidManifest.xml:123:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:125:13
-	android:label
-		ADDED from AndroidManifest.xml:126:13
 	android:name
+		ADDED from AndroidManifest.xml:118:13
+activity#com.traveljar.memories.newjourney.SelectedFriendsList
+ADDED from AndroidManifest.xml:121:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:123:13
+	android:label
 		ADDED from AndroidManifest.xml:124:13
-activity#com.traveljar.memories.newjourney.NewJourneyDetail
-ADDED from AndroidManifest.xml:127:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:129:13
-	android:label
-		ADDED from AndroidManifest.xml:130:13
 	android:name
+		ADDED from AndroidManifest.xml:122:13
+activity#com.traveljar.memories.newjourney.AllFriendsList
+ADDED from AndroidManifest.xml:125:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:127:13
+	android:label
 		ADDED from AndroidManifest.xml:128:13
-activity#com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity
-ADDED from AndroidManifest.xml:131:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:133:13
-	android:label
-		ADDED from AndroidManifest.xml:134:13
 	android:name
+		ADDED from AndroidManifest.xml:126:13
+activity#com.traveljar.memories.newjourney.NewJourneyDetail
+ADDED from AndroidManifest.xml:129:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:131:13
+	android:label
 		ADDED from AndroidManifest.xml:132:13
-activity#com.traveljar.memories.currentjourney.JourneyInfoFriendsList
-ADDED from AndroidManifest.xml:135:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:137:13
-	android:label
-		ADDED from AndroidManifest.xml:138:13
 	android:name
+		ADDED from AndroidManifest.xml:130:13
+activity#com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity
+ADDED from AndroidManifest.xml:133:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:135:13
+	android:label
 		ADDED from AndroidManifest.xml:136:13
-activity#com.traveljar.memories.newjourney.AddLap
-ADDED from AndroidManifest.xml:139:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:141:13
-	android:label
-		ADDED from AndroidManifest.xml:142:13
 	android:name
+		ADDED from AndroidManifest.xml:134:13
+activity#com.traveljar.memories.currentjourney.JourneyInfoFriendsList
+ADDED from AndroidManifest.xml:137:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:139:13
+	android:label
 		ADDED from AndroidManifest.xml:140:13
-activity#com.traveljar.memories.newjourney.LapsList
-ADDED from AndroidManifest.xml:143:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:145:13
-	android:label
-		ADDED from AndroidManifest.xml:146:13
 	android:name
+		ADDED from AndroidManifest.xml:138:13
+activity#com.traveljar.memories.newjourney.AddLap
+ADDED from AndroidManifest.xml:141:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:143:13
+	android:label
 		ADDED from AndroidManifest.xml:144:13
-activity#com.traveljar.memories.newjourney.LocationList
-ADDED from AndroidManifest.xml:147:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:149:13
-	android:label
-		ADDED from AndroidManifest.xml:150:13
 	android:name
+		ADDED from AndroidManifest.xml:142:13
+activity#com.traveljar.memories.newjourney.LapsList
+ADDED from AndroidManifest.xml:145:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:147:13
+	android:label
 		ADDED from AndroidManifest.xml:148:13
-activity#com.traveljar.memories.profile.ProfileActivity
-ADDED from AndroidManifest.xml:151:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:153:13
-	android:label
-		ADDED from AndroidManifest.xml:154:13
 	android:name
+		ADDED from AndroidManifest.xml:146:13
+activity#com.traveljar.memories.newjourney.LocationList
+ADDED from AndroidManifest.xml:149:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:151:13
+	android:label
 		ADDED from AndroidManifest.xml:152:13
-activity#com.traveljar.memories.profile.ChangePassword
-ADDED from AndroidManifest.xml:155:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:157:13
-	android:label
-		ADDED from AndroidManifest.xml:158:13
 	android:name
+		ADDED from AndroidManifest.xml:150:13
+activity#com.traveljar.memories.profile.ProfileActivity
+ADDED from AndroidManifest.xml:153:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:155:13
+	android:label
 		ADDED from AndroidManifest.xml:156:13
-activity#com.traveljar.memories.audio.AudioDetail
-ADDED from AndroidManifest.xml:159:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:161:13
-	android:label
-		ADDED from AndroidManifest.xml:162:13
 	android:name
+		ADDED from AndroidManifest.xml:154:13
+activity#com.traveljar.memories.profile.ChangePassword
+ADDED from AndroidManifest.xml:157:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:159:13
+	android:label
 		ADDED from AndroidManifest.xml:160:13
+	android:name
+		ADDED from AndroidManifest.xml:158:13
+activity#com.traveljar.memories.audio.AudioDetail
+ADDED from AndroidManifest.xml:161:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:163:13
+	android:label
+		ADDED from AndroidManifest.xml:164:13
+	android:name
+		ADDED from AndroidManifest.xml:162:13
 activity#com.traveljar.memories.video.VideoCapture
-ADDED from AndroidManifest.xml:164:9
+ADDED from AndroidManifest.xml:166:9
 	android:label
-		ADDED from AndroidManifest.xml:166:13
-	android:name
-		ADDED from AndroidManifest.xml:165:13
-activity#com.traveljar.memories.video.VideoDetail
-ADDED from AndroidManifest.xml:167:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:169:13
-	android:label
-		ADDED from AndroidManifest.xml:170:13
-	android:name
 		ADDED from AndroidManifest.xml:168:13
-activity#com.traveljar.memories.video.VideoPreview
-ADDED from AndroidManifest.xml:171:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:173:13
-	android:label
-		ADDED from AndroidManifest.xml:174:13
 	android:name
+		ADDED from AndroidManifest.xml:167:13
+activity#com.traveljar.memories.video.VideoDetail
+ADDED from AndroidManifest.xml:169:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:171:13
+	android:label
 		ADDED from AndroidManifest.xml:172:13
-activity#com.traveljar.memories.gallery.GalleryVideos
-ADDED from AndroidManifest.xml:175:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:177:13
-	android:label
-		ADDED from AndroidManifest.xml:178:13
 	android:name
+		ADDED from AndroidManifest.xml:170:13
+activity#com.traveljar.memories.video.VideoPreview
+ADDED from AndroidManifest.xml:173:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:175:13
+	android:label
 		ADDED from AndroidManifest.xml:176:13
-activity#com.traveljar.memories.note.CreateNotes
-ADDED from AndroidManifest.xml:179:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:181:13
-	android:label
-		ADDED from AndroidManifest.xml:182:13
 	android:name
+		ADDED from AndroidManifest.xml:174:13
+activity#com.traveljar.memories.gallery.GalleryVideos
+ADDED from AndroidManifest.xml:177:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:179:13
+	android:label
 		ADDED from AndroidManifest.xml:180:13
-activity#com.traveljar.memories.note.NoteDetail
-ADDED from AndroidManifest.xml:183:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:185:13
-	android:label
-		ADDED from AndroidManifest.xml:186:13
 	android:name
+		ADDED from AndroidManifest.xml:178:13
+activity#com.traveljar.memories.note.CreateNotes
+ADDED from AndroidManifest.xml:181:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:183:13
+	android:label
 		ADDED from AndroidManifest.xml:184:13
-activity#com.traveljar.memories.gallery.GalleryNotes
-ADDED from AndroidManifest.xml:187:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:189:13
-	android:label
-		ADDED from AndroidManifest.xml:190:13
 	android:name
+		ADDED from AndroidManifest.xml:182:13
+activity#com.traveljar.memories.note.NoteDetail
+ADDED from AndroidManifest.xml:185:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:187:13
+	android:label
 		ADDED from AndroidManifest.xml:188:13
-activity#com.traveljar.memories.moods.MoodSelectFriends
-ADDED from AndroidManifest.xml:191:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:193:13
-	android:label
-		ADDED from AndroidManifest.xml:194:13
 	android:name
+		ADDED from AndroidManifest.xml:186:13
+activity#com.traveljar.memories.gallery.GalleryNotes
+ADDED from AndroidManifest.xml:189:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:191:13
+	android:label
 		ADDED from AndroidManifest.xml:192:13
-activity#com.traveljar.memories.moods.MoodDetail
-ADDED from AndroidManifest.xml:195:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:197:13
-	android:label
-		ADDED from AndroidManifest.xml:198:13
 	android:name
+		ADDED from AndroidManifest.xml:190:13
+activity#com.traveljar.memories.moods.MoodSelectFriends
+ADDED from AndroidManifest.xml:193:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:195:13
+	android:label
 		ADDED from AndroidManifest.xml:196:13
-activity#com.traveljar.memories.retrofit.MultiPartUpload
-ADDED from AndroidManifest.xml:199:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:201:13
-	android:label
-		ADDED from AndroidManifest.xml:202:13
 	android:name
+		ADDED from AndroidManifest.xml:194:13
+activity#com.traveljar.memories.moods.MoodDetail
+ADDED from AndroidManifest.xml:197:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:199:13
+	android:label
 		ADDED from AndroidManifest.xml:200:13
+	android:name
+		ADDED from AndroidManifest.xml:198:13
+activity#com.traveljar.memories.retrofit.MultiPartUpload
+ADDED from AndroidManifest.xml:201:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:203:13
+	android:label
+		ADDED from AndroidManifest.xml:204:13
+	android:name
+		ADDED from AndroidManifest.xml:202:13
 activity#com.traveljar.memories.activejourney.ActivejourneyList
-ADDED from AndroidManifest.xml:204:9
+ADDED from AndroidManifest.xml:206:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:206:13
+		ADDED from AndroidManifest.xml:208:13
 	android:label
+		ADDED from AndroidManifest.xml:209:13
+	android:name
 		ADDED from AndroidManifest.xml:207:13
-	android:name
-		ADDED from AndroidManifest.xml:205:13
 activity#com.traveljar.memories.currentjourney.JourneyInfo
-ADDED from AndroidManifest.xml:209:9
+ADDED from AndroidManifest.xml:211:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:211:13
+		ADDED from AndroidManifest.xml:213:13
 	android:label
+		ADDED from AndroidManifest.xml:214:13
+	android:name
 		ADDED from AndroidManifest.xml:212:13
-	android:name
-		ADDED from AndroidManifest.xml:210:13
 activity#com.traveljar.memories.picture.DisplayPicture
-ADDED from AndroidManifest.xml:214:9
+ADDED from AndroidManifest.xml:216:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:216:13
+		ADDED from AndroidManifest.xml:218:13
 	android:label
+		ADDED from AndroidManifest.xml:219:13
+	android:name
 		ADDED from AndroidManifest.xml:217:13
-	android:name
-		ADDED from AndroidManifest.xml:215:13
 activity#com.traveljar.memories.settings.Settings
-ADDED from AndroidManifest.xml:219:9
+ADDED from AndroidManifest.xml:221:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:221:13
+		ADDED from AndroidManifest.xml:223:13
 	android:label
+		ADDED from AndroidManifest.xml:224:13
+	android:name
 		ADDED from AndroidManifest.xml:222:13
-	android:name
-		ADDED from AndroidManifest.xml:220:13
 activity#com.traveljar.memories.settings.AccountSettings
-ADDED from AndroidManifest.xml:224:9
+ADDED from AndroidManifest.xml:226:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:226:13
+		ADDED from AndroidManifest.xml:228:13
 	android:label
+		ADDED from AndroidManifest.xml:229:13
+	android:name
 		ADDED from AndroidManifest.xml:227:13
-	android:name
-		ADDED from AndroidManifest.xml:225:13
 activity#com.traveljar.memories.currentjourney.TimecapsulePlayer
-ADDED from AndroidManifest.xml:229:9
+ADDED from AndroidManifest.xml:231:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:231:13
+		ADDED from AndroidManifest.xml:233:13
 	android:label
+		ADDED from AndroidManifest.xml:234:13
+	android:name
 		ADDED from AndroidManifest.xml:232:13
+activity#com.traveljar.memories.media.CaptureMedia
+ADDED from AndroidManifest.xml:236:9
+	android:label
+		ADDED from AndroidManifest.xml:238:13
 	android:name
-		ADDED from AndroidManifest.xml:230:13
-service#com.traveljar.memories.services.PullContactsService
-ADDED from AndroidManifest.xml:235:9
-	android:exported
 		ADDED from AndroidManifest.xml:237:13
-	android:name
-		ADDED from AndroidManifest.xml:236:13
-service#com.traveljar.memories.picture.UploadPictureService
-ADDED from AndroidManifest.xml:239:9
+service#com.traveljar.memories.services.PullContactsService
+ADDED from AndroidManifest.xml:240:9
 	android:exported
+		ADDED from AndroidManifest.xml:242:13
+	android:name
 		ADDED from AndroidManifest.xml:241:13
-	android:name
-		ADDED from AndroidManifest.xml:240:13
-service#com.traveljar.memories.video.UploadVideoService
-ADDED from AndroidManifest.xml:243:9
+service#com.traveljar.memories.picture.UploadPictureService
+ADDED from AndroidManifest.xml:244:9
 	android:exported
+		ADDED from AndroidManifest.xml:246:13
+	android:name
 		ADDED from AndroidManifest.xml:245:13
+service#com.traveljar.memories.video.UploadVideoService
+ADDED from AndroidManifest.xml:248:9
+	android:exported
+		ADDED from AndroidManifest.xml:250:13
 	android:name
-		ADDED from AndroidManifest.xml:244:13
+		ADDED from AndroidManifest.xml:249:13
 service#com.traveljar.memories.services.MakeServerRequestsService
-ADDED from AndroidManifest.xml:246:9
-	android:exported
-		ADDED from AndroidManifest.xml:248:13
-	android:name
-		ADDED from AndroidManifest.xml:247:13
-receiver#com.traveljar.memories.utility.SMSReceiver
 ADDED from AndroidManifest.xml:251:9
-	android:enabled
-		ADDED from AndroidManifest.xml:253:13
 	android:exported
-		ADDED from AndroidManifest.xml:254:13
+		ADDED from AndroidManifest.xml:253:13
 	android:name
 		ADDED from AndroidManifest.xml:252:13
+receiver#com.traveljar.memories.utility.SMSReceiver
+ADDED from AndroidManifest.xml:256:9
+	android:exported
+		ADDED from AndroidManifest.xml:259:13
+	android:enabled
+		ADDED from AndroidManifest.xml:258:13
+	android:name
+		ADDED from AndroidManifest.xml:257:13
 intent-filter#android.provider.Telephony.SMS_RECEIVED
-ADDED from AndroidManifest.xml:255:13
+ADDED from AndroidManifest.xml:260:13
 	android:priority
-		ADDED from AndroidManifest.xml:255:28
+		ADDED from AndroidManifest.xml:260:28
 action#android.provider.Telephony.SMS_RECEIVED
-ADDED from AndroidManifest.xml:256:17
+ADDED from AndroidManifest.xml:261:17
 	android:name
-		ADDED from AndroidManifest.xml:256:25
+		ADDED from AndroidManifest.xml:261:25
 meta-data#com.google.android.gms.version
-ADDED from AndroidManifest.xml:260:9
+ADDED from AndroidManifest.xml:265:9
+	android:name
+		ADDED from AndroidManifest.xml:266:13
 	android:value
-		ADDED from AndroidManifest.xml:262:13
-	android:name
-		ADDED from AndroidManifest.xml:261:13
+		ADDED from AndroidManifest.xml:267:13
 receiver#com.traveljar.memories.gcm.GcmBroadcastReceiver
-ADDED from AndroidManifest.xml:271:9
+ADDED from AndroidManifest.xml:276:9
 	android:permission
-		ADDED from AndroidManifest.xml:273:13
+		ADDED from AndroidManifest.xml:278:13
 	android:name
-		ADDED from AndroidManifest.xml:272:13
+		ADDED from AndroidManifest.xml:277:13
 intent-filter#com.example.memories+com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:274:13
+ADDED from AndroidManifest.xml:279:13
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from AndroidManifest.xml:277:17
+ADDED from AndroidManifest.xml:282:17
 	android:name
-		ADDED from AndroidManifest.xml:277:25
+		ADDED from AndroidManifest.xml:282:25
 action#com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:279:17
+ADDED from AndroidManifest.xml:284:17
 	android:name
-		ADDED from AndroidManifest.xml:279:25
+		ADDED from AndroidManifest.xml:284:25
 category#com.example.memories
-ADDED from AndroidManifest.xml:281:17
+ADDED from AndroidManifest.xml:286:17
 	android:name
-		ADDED from AndroidManifest.xml:281:27
+		ADDED from AndroidManifest.xml:286:27
 receiver#com.traveljar.memories.services.NetworkStateBroadCastReceiver
-ADDED from AndroidManifest.xml:285:9
+ADDED from AndroidManifest.xml:290:9
 	android:label
-		ADDED from AndroidManifest.xml:286:13
+		ADDED from AndroidManifest.xml:291:13
 	android:name
-		ADDED from AndroidManifest.xml:285:19
+		ADDED from AndroidManifest.xml:290:19
 intent-filter#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from AndroidManifest.xml:287:13
+ADDED from AndroidManifest.xml:292:13
 action#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from AndroidManifest.xml:288:17
+ADDED from AndroidManifest.xml:293:17
 	android:name
-		ADDED from AndroidManifest.xml:288:25
+		ADDED from AndroidManifest.xml:293:25
 service#com.traveljar.memories.gcm.GcmIntentService
-ADDED from AndroidManifest.xml:298:9
+ADDED from AndroidManifest.xml:303:9
 	android:name
-		ADDED from AndroidManifest.xml:298:18
+		ADDED from AndroidManifest.xml:303:18

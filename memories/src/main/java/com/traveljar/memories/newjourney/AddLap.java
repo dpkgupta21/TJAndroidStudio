@@ -120,20 +120,28 @@ public class AddLap extends AppCompatActivity {
         }
     }
 
-    private void setUpToolBar(){
+    private void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("New Lap");
     }
 
     public void listFromPlaces(View v) {
-        Intent i = new Intent(getBaseContext(), LocationList.class);
-        startActivityForResult(i, 1);
+        if (HelpMe.isNetworkAvailable(this)) {
+            Intent i = new Intent(getBaseContext(), LocationList.class);
+            startActivityForResult(i, 1);
+        } else {
+            Toast.makeText(this, "please switch ON packet data to continue", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void listToPlaces(View v) {
-        Intent i = new Intent(getBaseContext(), LocationList.class);
-        startActivityForResult(i, 2);
+        if (HelpMe.isNetworkAvailable(this)) {
+            Intent i = new Intent(getBaseContext(), LocationList.class);
+            startActivityForResult(i, 2);
+        } else {
+            Toast.makeText(this, "please switch ON packet data to continue", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void conveyanceToggle(View v) {
@@ -238,14 +246,14 @@ public class AddLap extends AppCompatActivity {
         if (lap.getConveyanceMode() == -1) {
             Toast.makeText(this, "Please select the conveyance mode", Toast.LENGTH_SHORT).show();
         } else {
-            if(editMode){
-                if(isSourceEdited){
+            if (editMode) {
+                if (isSourceEdited) {
                     setLapSourceInfo();
                 }
-                if(isDestinationEdited){
+                if (isDestinationEdited) {
                     setLapDestinationInfo();
                 }
-                if(isDateEdited){
+                if (isDateEdited) {
                     lap.setStartDate(epochTime);
                 }
                 LapDataSource.updateLap(lap, this);
@@ -266,7 +274,7 @@ public class AddLap extends AppCompatActivity {
         }
     }
 
-    private void setLapSourceInfo(){
+    private void setLapSourceInfo() {
         // Received location has city, state and country
         if (fromLocationList.size() == 3) {
             lap.setSourceCityName(fromLocationList.get(0));
@@ -280,7 +288,7 @@ public class AddLap extends AppCompatActivity {
         }
     }
 
-    private void setLapDestinationInfo(){
+    private void setLapDestinationInfo() {
         if (toLocationList.size() == 3) {
             lap.setDestinationCityName(toLocationList.get(0));
             lap.setDestinationStateName(toLocationList.get(1));

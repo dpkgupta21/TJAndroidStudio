@@ -43,6 +43,10 @@ import java.util.Map;
 
 public class ProfileActivity extends BaseActivity {
 
+    public ProfileActivity(){
+        super(3);
+    }
+
     private static final String TAG = "<PROFILEACTIVITY>";
     private static int PICK_IMAGE = 1;
     private MyCircularImageView mProfileImg;

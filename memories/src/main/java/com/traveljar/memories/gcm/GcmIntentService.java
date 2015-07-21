@@ -21,7 +21,6 @@ import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
-import com.traveljar.memories.currentjourney.TimelineFragment;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
@@ -89,31 +88,11 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 }
                 
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
-                // Post notification of received message.
-                //sendNotification("Received: " + extras.toString());
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
-    }
-
-    // Put the message into a notification and post it.
-    // This is just one simple example of what you might choose to do with
-    // a GCM message.
-    private void sendNotification(String msg) {
-        mNotificationManager = (NotificationManager) this
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this,
-                TimelineFragment.class), 0);
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher).setContentTitle("GCM Notification")
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(msg)).setContentText(msg);
-
-        mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
     private void parseGcmMessage(Bundle bundle) {
@@ -141,6 +120,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
         String memoryType;
         Memories memories;
         String message;
+        Journey journey;
 
         String userId;
 
@@ -168,6 +148,9 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                journey = JourneyDataSource.getJourneyById(this, journeyId);
+                message = "A new memory has been added to the journey " + journey.getName();
+                showNotification(message, ActivejourneyList.class);
                 break;
 
             case HelpMe.TYPE_CREATE_JOURNEY:
@@ -260,6 +243,9 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 journeyId = bundle.getString("journey_id");
                 ContactsUtil.fetchContact(this, buddyId);
                 JourneyDataSource.addContactToJourney(this, buddyId, journeyId);
+                journey = JourneyDataSource.getJourneyById(this, journeyId);
+                message = "A friend has been removed from the journey " + journey.getName();
+                showNotification(message, ActivejourneyList.class);
                 break;
 
             case HelpMe.TYPE_REMOVE_BUDDY:
@@ -271,15 +257,10 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                         CurrentJourneyBaseActivity.getInstance().refreshTimelineFragment();
                     }
                 }
-/*                if(buddyId.equals(TJPreferences.getUserId(this))){
-                    //delete all the memories from the journey
-                    JourneyDataSource.removeAllMemoriesFromJourney(this, journeyId);
-                    LikeDataSource.deleteAllLikesFromJourney(this, journeyId);
-                    JourneyDataSource.deleteJourney(this, journeyId);
-                }else {
-                    JourneyDataSource.removeContactFromJourney(this, buddyId, journeyId);
-                    JourneyDataSource.removeAllMemoriesByUserFromJourney(this, buddyId, journeyId);
-                }*/
+                journey = JourneyDataSource.getJourneyById(this, journeyId);
+                message = "A new friend has been added to the journey " + journey.getName();
+                showNotification(message, ActivejourneyList.class);
+
                 break;
 
             case HelpMe.TYPE_PROFILE_UPDATE:

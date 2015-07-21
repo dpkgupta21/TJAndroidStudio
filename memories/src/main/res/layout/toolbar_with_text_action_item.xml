@@ -33,6 +33,7 @@
             android:textStyle="bold"
             android:gravity="right"
             android:text="Done"
+            android:elevation="20dp"
             android:layout_marginRight="12dp"
             />
     </LinearLayout>
