@@ -190,18 +190,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="55dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/photo_detail_profile_image"
                         android:text="Some Name"
-                        android:textColor="@color/white"
+                        android:textColor="@color/md_blue"
                         android:textSize="20sp" />
 
                     <com.traveljar.memories.customviews.MyTextViewReg14
                         android:id="@+id/photo_detail_caption"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"/>
+                        android:textColor="@color/tj_dark_gray"
+                        android:layout_marginTop="10dp"/>
 
                 </LinearLayout>
 
@@ -211,6 +212,8 @@
                 android:id="@+id/photo_detail_rl1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:background="@color/white">
 
                 <ImageButton
@@ -244,16 +247,6 @@
                     android:textSize="55sp" />
 
                 <com.traveljar.memories.customviews.MyTextViewReg14
-                    android:id="@+id/photo_detail_place"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:text="15, 8th cross Rd"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"
-                    android:layout_below="@id/photo_detail_time"/>
-
-                <com.traveljar.memories.customviews.MyTextViewReg14
                     android:id="@+id/photo_detail_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -276,6 +269,15 @@
                     android:textSize="@dimen/tj_medium_font" />
 
             </RelativeLayout>
+
+            <com.traveljar.memories.customviews.MyTextViewReg14
+                android:id="@+id/photo_detail_place"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="15, 8th cross Rd"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 
