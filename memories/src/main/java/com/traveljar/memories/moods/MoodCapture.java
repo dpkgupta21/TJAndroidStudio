@@ -67,6 +67,8 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
 
         //mContactsList = ContactDataSource.getContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         mContactsList = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
+        Contact contact = ContactDataSource.getContactById(this, TJPreferences.getUserId(this));
+        mContactsList.add(contact);
         Log.d(TAG, "buddies in journey are " + mContactsList.size());
     }
 
@@ -135,17 +137,16 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
         Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
                 Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_MOOD, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, this);
-        if(HelpMe.isNetworkAvailable(this)) {
+        if (HelpMe.isNetworkAvailable(this)) {
             Intent intent = new Intent(this, MakeServerRequestsService.class);
             startService(intent);
-        }
-        else{
+        } else {
             Log.d(TAG, "since no network not starting service RQ");
         }
 
     }
 
-    private void setUpToolBar(){
+    private void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -155,7 +156,7 @@ public class MoodCapture extends AppCompatActivity implements SelectMoodsDialog.
             }
         });
 
-        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Mood");
         // toolbar.inflateMenu(R.menu.toolbar_with_done_text);
 

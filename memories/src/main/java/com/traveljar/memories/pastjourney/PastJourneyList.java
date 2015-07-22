@@ -19,6 +19,10 @@ public class PastJourneyList extends BaseActivity {
     private static final String TAG = null;
     private PastJourneyListAdapter pastJourneyListViewAdapter;
 
+    public PastJourneyList(){
+        super(1);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

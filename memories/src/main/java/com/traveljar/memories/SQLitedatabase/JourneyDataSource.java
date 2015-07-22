@@ -111,6 +111,17 @@ public class JourneyDataSource {
         return journeyList;
     }
 
+    public static int getActiveJourneysCount(Context context){
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_ACTIVE + "'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Log.e(TAG, selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
+    }
+
     public static Cursor getAllPastJourneys(Context context) {
 
         String selectQuery = "SELECT * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_FINISHED + "'";
@@ -126,6 +137,17 @@ public class JourneyDataSource {
 //        c.close();
         db.close();
         return c;
+    }
+
+    public static int getPastJourneysCount(Context context){
+        String selectQuery = "SELECT * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_FINISHED + "'";
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Log.e(TAG, selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
     }
 
     public static void updateJourneyStatus(Context context, String journeyId, String journeyStatus) {

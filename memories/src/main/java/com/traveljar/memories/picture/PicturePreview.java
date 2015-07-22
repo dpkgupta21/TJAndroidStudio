@@ -76,10 +76,10 @@ public class PicturePreview extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         boolean isPicFromGallery = false;
+        Log.d(TAG, "intent " + getIntent() + " extras " + extras.getString("imagePath"));
         if (extras.containsKey("IS_PIC_FROM_GALLERY")) {
             isPicFromGallery = true;
         }
-        Log.d(TAG, "running for a newly clicked picture");
         profileName.setText(TJPreferences.getUserName(getBaseContext()));
         imagePath = extras.getString("imagePath");
         createdAt = HelpMe.getCurrentTime();
@@ -113,7 +113,6 @@ public class PicturePreview extends AppCompatActivity {
 
         String place = "Lat " + new DecimalFormat("#.##").format(mPicture.getLatitude()) + " Lon " +
                 new DecimalFormat("#.##").format(mPicture.getLongitude());
-        ;
         placeTxt.setText(place);
 
         //Profile picture
@@ -149,6 +148,7 @@ public class PicturePreview extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            assert exifInterface != null;
             String lat = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
             String lat_ref = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
             String longi = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
@@ -240,25 +240,25 @@ public class PicturePreview extends AppCompatActivity {
 
     // Converts String(Latitude and longitude) obtained from exifInterface to double values (original you get as lat = 30/1,12/1,34/1)
     private Double convertToDegree(String stringDMS) {
-        Double result = null;
+        Double result;
         String[] DMS = stringDMS.split(",", 3);
 
         String[] stringD = DMS[0].split("/", 2);
-        Double D0 = new Double(stringD[0]);
-        Double D1 = new Double(stringD[1]);
+        Double D0 = Double.valueOf(stringD[0]);
+        Double D1 = Double.valueOf(stringD[1]);
         Double FloatD = D0 / D1;
 
         String[] stringM = DMS[1].split("/", 2);
-        Double M0 = new Double(stringM[0]);
-        Double M1 = new Double(stringM[1]);
+        Double M0 = Double.valueOf(stringM[0]);
+        Double M1 = Double.valueOf(stringM[1]);
         Double FloatM = M0 / M1;
 
         String[] stringS = DMS[2].split("/", 2);
-        Double S0 = new Double(stringS[0]);
-        Double S1 = new Double(stringS[1]);
+        Double S0 = Double.valueOf(stringS[0]);
+        Double S1 = Double.valueOf(stringS[1]);
         Double FloatS = S0 / S1;
 
-        result = new Double(FloatD + (FloatM / 60) + (FloatS / 3600));
+        result = FloatD + (FloatM / 60) + (FloatS / 3600);
 
         return result;
 

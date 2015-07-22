@@ -17,6 +17,20 @@ public class BaseActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
     protected DrawerLayout drawerLayout;
+    public int selectedPosition;// Position of the item selected in the side menu
+    public static BaseActivity instance;
+
+    public BaseActivity(){
+        instance = this;
+    }
+
+    public static BaseActivity getInstance(){
+        return instance == null ? new BaseActivity() : instance;
+    }
+
+    public BaseActivity(int selectedPosition){
+        this.selectedPosition = selectedPosition;
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -35,17 +49,8 @@ public class BaseActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-/*        if(layoutResID == R.layout.current_journey_base_activity) {
-            findViewById(R.id.toolbar).setVisibility(View.GONE);
-            toolbar = (Toolbar) findViewById(R.id.subtitle_toolbar);
-        }else {
-            findViewById(R.id.subtitle_toolbar).setVisibility(View.GONE);
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
-        }*/
         initDrawer();
         Log.d(TAG, "4");
-//        setupNavigationView();
-
     }
 
     private void initDrawer() {
@@ -62,6 +67,7 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                SideMenuDrawer.getInstance().updateSelectedItemColor(selectedPosition);
             }
         };
         drawerLayout.setDrawerListener(drawerToggle);

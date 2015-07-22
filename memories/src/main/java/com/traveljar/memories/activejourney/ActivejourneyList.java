@@ -57,6 +57,7 @@ public class ActivejourneyList extends BaseActivity {
     private static ActivejourneyList instance;
 
     public ActivejourneyList(){
+        super(0);
         instance = this;
     }
 

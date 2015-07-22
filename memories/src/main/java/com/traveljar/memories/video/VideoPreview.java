@@ -54,11 +54,6 @@ public class VideoPreview extends AppCompatActivity {
         setContentView(R.layout.video_preview);
         Log.d(TAG, "entrerd video details");
 
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Video");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         setUpToolBar();
 
         pDialog = new ProgressDialog(this);
@@ -71,7 +66,7 @@ public class VideoPreview extends AppCompatActivity {
         caption = (EditText) findViewById(R.id.video_detail_caption);
         mProfileImg = (ImageView) findViewById(R.id.profilePic);
         createdByName = (TextView) findViewById(R.id.photo_detail_profile_name);
-        placeTxt = (TextView) findViewById(R.id.photo_detail_place);
+        placeTxt = (TextView) findViewById(R.id.video_detail_place);
 
         //Extract thumbnail and save it
         String thumbnailPath;
@@ -121,7 +116,8 @@ public class VideoPreview extends AppCompatActivity {
         }
 
         String place = "Lat " + new DecimalFormat("#.##").format(mVideo.getLatitude()) + " Lon " +
-                new DecimalFormat("#.##").format(mVideo.getLongitude());;
+                new DecimalFormat("#.##").format(mVideo.getLongitude());
+        ;
         placeTxt.setText(place);
 
         setThumbnailClickListener();
@@ -162,19 +158,18 @@ public class VideoPreview extends AppCompatActivity {
         Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
                 Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_VIDEO, Request.REQUEST_STATUS_NOT_STARTED, 0);
         RequestQueueDataSource.createRequest(request, this);
-        if(HelpMe.isNetworkAvailable(this)) {
+        if (HelpMe.isNetworkAvailable(this)) {
             Intent intent = new Intent(this, MakeServerRequestsService.class);
             startService(intent);
-        }
-        else{
+        } else {
             Log.d(TAG, "since no network not starting service RQ");
         }
     }
 
-    private void setUpToolBar(){
+    private void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Video Preview");
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
@@ -190,7 +185,7 @@ public class VideoPreview extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "done clicked!");
-                if(!caption.getText().toString().isEmpty()){
+                if (!caption.getText().toString().isEmpty()) {
                     mVideo.setCaption(caption.getText().toString());
                 }
                 saveAndUploadVideo();

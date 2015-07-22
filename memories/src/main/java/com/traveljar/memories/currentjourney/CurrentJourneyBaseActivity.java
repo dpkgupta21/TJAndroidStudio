@@ -20,10 +20,10 @@ import com.traveljar.memories.audio.AudioCapture;
 import com.traveljar.memories.checkin.CheckInPlacesList;
 import com.traveljar.memories.currentjourney.adapters.CurrentJourneyTabsAdapter;
 import com.traveljar.memories.customviews.SlidingTabLayout;
+import com.traveljar.memories.media.CaptureMedia;
 import com.traveljar.memories.moods.MoodCapture;
 import com.traveljar.memories.note.CreateNotes;
 import com.traveljar.memories.pastjourney.PastJourneyList;
-import com.traveljar.memories.picture.PictureCapture;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.video.VideoCapture;
 
@@ -49,6 +49,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
     private static CurrentJourneyBaseActivity instance;
 
     public CurrentJourneyBaseActivity(){
+        super(5);
         instance = this;
     }
 
@@ -119,7 +120,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
                 break;
             case R.id.button_photo:
                 Log.d(TAG, "photo clicked");
-                i = new Intent(this, PictureCapture.class);
+                i = new Intent(this, CaptureMedia.class);
                 startActivity(i);
                 break;
             case R.id.button_note:

@@ -96,12 +96,12 @@ public class VideoDataSource {
         return memoriesList;
     }
 
-    public static List<Video> getAllVideos(Context context) {
+    public static List<Memories> getAllVideos(Context context) {
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_VIDEO + " WHERE " + MySQLiteHelper.PICTURE_COLUMN_IS_DELETED
                 + " ='0'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
-        List<Video> videosList = getVideosList(c, context);
+        List<Memories> videosList = getVideosMemoryList(c, context);
         c.close();
         db.close();
         return videosList;
