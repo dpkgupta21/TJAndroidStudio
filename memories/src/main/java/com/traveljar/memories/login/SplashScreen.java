@@ -43,6 +43,9 @@ public class SplashScreen extends Activity {
 
         // check if already logged in
 
+       /* Intent intent = new Intent(getBaseContext(), CaptureVideo.class);
+        startActivity(intent);*/
+
         if (session.isLoggedIn(this)) {
             Log.d(TAG, "since already logged in");
             Log.d(TAG, "SplashScreen ==> TimelineFragment");

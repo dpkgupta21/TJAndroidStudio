@@ -111,12 +111,13 @@ public class CaptureImage extends Fragment {
                 Intent i = new Intent(getActivity(), PicturePreview.class);
                 i.putExtra("imagePath", imagePath);
                 startActivity(i);
-                getActivity().finish();
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
             }
         }
     };
+
+
 
     private File getOutputMediaFile() throws IOException {
         createdAt = System.currentTimeMillis();
