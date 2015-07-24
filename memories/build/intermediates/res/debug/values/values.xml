@@ -137,7 +137,7 @@
     <color name="md_blue">#0075BC</color>
     <color name="photo_tint">#88101010</color>
     <color name="primary">#673ab7</color>
-    <color name="primaryColor">#e84c3d</color>
+    <color name="primaryColor">#E74C3C</color>
     <color name="primaryColorDark">#c83426</color>
     <color name="primary_dark">#512da8</color>
     <!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
@@ -195,6 +195,9 @@
     <color name="tj_fb_blue">#3C5B97</color>
     <color name="tj_gray_bg">#f6f6f6</color>
     <color name="tj_gray_border">#c8c8c8</color>
+    <color name="tj_gray_dark">#333333</color>
+    <color name="tj_gray_light">#999999</color>
+    <color name="tj_gray_med">#666666</color>
     <color name="tj_green">#16A085</color>
     <color name="tj_lable_value_gray">#6F6F6F</color>
     <color name="tj_lables_gray">#C1C1C1</color>
@@ -203,12 +206,9 @@
     <color name="tj_orange">#FFA31A</color>
     <color name="tj_orange_dark">#ff9900</color>
     <color name="tj_orange_dark2">#f1960f</color>
-    <color name="tj_picture_capture_green">#60ee82</color>
-    <color name="tj_picture_capture_red">#ee5e5e</color>
     <color name="tj_purple">#912CEE</color>
+    <color name="tj_red">#E74C3C</color>
     <color name="tj_red_dark_icons">#ff0032</color>
-    <color name="tj_red_dark_toolbar">#e84c3d</color>
-    <color name="tj_red_light_status_bar">#c83426</color>
     <color name="tj_red_light_text">#f3a49d</color>
     <color name="tj_yellow">#FF9900</color>
     <color name="translucent">#CC000000</color>

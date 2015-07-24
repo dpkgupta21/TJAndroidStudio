@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
+import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.models.Request;
 import com.traveljar.memories.services.GPSTracker;
@@ -206,21 +207,14 @@ public class PicturePreview extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_done:
                         saveAndUploadPic();
-                        finish();
+                        Intent intent = new Intent(PicturePreview.this, CurrentJourneyBaseActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                         break;
                 }
                 return true;
             }
         });
-/*        TextView done = (TextView) toolbar.findViewById(R.id.action_done);
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "done clicked!");
-                saveAndUploadPic();
-                finish();
-            }
-        });*/
     }
 
     private void saveAndUploadPic() {

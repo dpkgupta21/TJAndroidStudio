@@ -6,23 +6,23 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.widget.Toast;
+import android.util.Log;
 
 /**
  * Created by ankit on 22/6/15.
  */
 public class NetworkStateBroadCastReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "NetworkStateBroadCastReceiver";
+    private static final String TAG = "NetStateBroadCastRec";
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        if(checkInternet(context))        {
-            Toast.makeText(context, "Network Available", Toast.LENGTH_LONG).show();
+        if (checkInternet(context)) {
+            Log.d(TAG, "Network Available");
             Intent i = new Intent(context, MakeServerRequestsService.class);
             context.startService(i);
-        }else {
-            Toast.makeText(context, "Network gone", Toast.LENGTH_LONG).show();
+        } else {
+            Log.d(TAG, "Network gone");
         }
 
     }

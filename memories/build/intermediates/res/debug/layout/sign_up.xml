@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:onClick="signUp"
-            android:background="@drawable/rounded_corner_button"
+            android:background="@drawable/rounded_corner_button_green"
             android:text="SIGN UP"
             android:textColor="@color/white"
             android:textSize="20sp" />

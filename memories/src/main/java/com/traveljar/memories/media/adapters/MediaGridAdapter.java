@@ -1,4 +1,4 @@
-package com.traveljar.memories.media;
+package com.traveljar.memories.media.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -90,14 +90,12 @@ public class MediaGridAdapter extends BaseAdapter {
                     intent.putExtra("VIDEO_PATH", moveFileToTravelJarDir(cursor.getString(1), createdAt));
                     intent.putExtra("CREATED_AT", createdAt);
                     mContext.startActivity(intent);
-                    ((CaptureMedia)mContext).finish();
                 }else {
                     Intent intent = new Intent(mContext, PicturePreview.class);
                     intent.putExtra("imagePath", replaceImg(thumb, createdAt));
                     intent.putExtra("IS_PIC_FROM_GALLERY", true);
                     intent.putExtra("CREATED_AT", createdAt);
                     mContext.startActivity(intent);
-                    ((CaptureMedia)mContext).finish();
                 }
             }
         });

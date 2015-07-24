@@ -25,7 +25,7 @@ import com.traveljar.memories.moods.MoodCapture;
 import com.traveljar.memories.note.CreateNotes;
 import com.traveljar.memories.pastjourney.PastJourneyList;
 import com.traveljar.memories.utility.TJPreferences;
-import com.traveljar.memories.video.VideoCapture;
+import com.traveljar.memories.video.CaptureVideo;
 
 public class CurrentJourneyBaseActivity extends BaseActivity {
 
@@ -130,7 +130,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
                 break;
             case R.id.button_video:
                 Log.d(TAG, "video clicked");
-                i = new Intent(this, VideoCapture.class);
+                i = new Intent(this, CaptureVideo.class);
                 startActivity(i);
                 break;
             case R.id.button_audio:

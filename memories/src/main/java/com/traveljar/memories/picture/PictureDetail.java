@@ -213,53 +213,6 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         });
     }
 
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (mPicture.getCreatedBy().equals(TJPreferences.getUserId(this))) {
-            menu.add(0, ACTION_ITEM_DELETE, 0, "Delete").setIcon(R.drawable.ic_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case ACTION_ITEM_DELETE:
-                new AlertDialog.Builder(this)
-                        .setTitle("Delete")
-                        .setMessage("Are you sure you want to remove this item from your memories")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Request request = new Request(null, mPicture.getId(), mPicture.getjId(), Request.OPERATION_TYPE_DELETE,
-                                        Request.CATEGORY_TYPE_PICTURE, Request.REQUEST_STATUS_NOT_STARTED, 0);
-                                PictureDataSource.updateDeleteStatus(PictureDetail.this, mPicture.getId(), true);
-                                RequestQueueDataSource.createRequest(request, PictureDetail.this);
-                                if(HelpMe.isNetworkAvailable(PictureDetail.this)) {
-                                    Intent intent = new Intent(PictureDetail.this, MakeServerRequestsService.class);
-                                    startService(intent);
-                                }
-                                finish();
-                                //MemoriesUtil.getInstance().deleteMemory(PictureDetail.this, mPicture.getIdOnServer());
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-*/
-
     @Override
     public void onDownloadPicture(Picture picture, boolean success) {
         PictureDataSource.updatePicLocalPath(this, picture.getDataLocalURL(), picture.getId());

@@ -82,6 +82,9 @@
             android:name=".picture.PictureCapture"
             android:label="@string/app_name" />
         <activity
+            android:name=".picture.CapturePicture"
+            android:label="@string/app_name" />
+        <activity
             android:name=".moods.MoodCapture"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
@@ -167,6 +170,10 @@
             android:name=".video.VideoCapture"
             android:label="@string/app_name" />
         <activity
+            android:name=".video.CaptureVideo"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
             android:name=".video.VideoDetail"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
@@ -235,7 +242,8 @@
 
         <activity
             android:name=".media.CaptureMedia"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".services.PullContactsService"

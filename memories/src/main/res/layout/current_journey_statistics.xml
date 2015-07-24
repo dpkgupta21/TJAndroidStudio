@@ -12,7 +12,7 @@
             android:id="@+id/current_journey_stats_buddies_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/tj_picture_capture_green"
+            android:background="@color/tj_green"
             android:padding="20dp">
 
             <com.traveljar.memories.customviews.MyTextViewCustom

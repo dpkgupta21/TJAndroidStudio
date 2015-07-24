@@ -10,8 +10,14 @@
     <color name="transparent_black">#80000000</color>
 
     <!-- TJ New colors -->
-    <color name="tj_red_dark_toolbar">#e84c3d</color>
-    <color name="tj_red_light_status_bar">#c83426</color>
+
+    <color name="tj_red">#E74C3C</color>
+    <color name="tj_green">#16A085</color>
+    <color name="tj_yellow">#FF9900</color>
+    <color name="tj_gray_dark">#333333</color>
+    <color name="tj_gray_med">#666666</color>
+    <color name="tj_gray_light">#999999</color>
+
     <color name="tj_red_dark_icons">#ff0032</color>
     <color name="tj_red_light_text">#f3a49d</color>
 
@@ -19,9 +25,6 @@
 
 
     <color name="tj_black_text">#f3f3f3</color>
-
-    <color name="tj_picture_capture_red">#ee5e5e</color>
-    <color name="tj_picture_capture_green">#60ee82</color>
 
     <color name="tj_fab_yellow">#FECB45</color>
     <color name="tj_fab_blue">#2790AA</color>
@@ -38,9 +41,6 @@
     <color name="tj_orange_dark">#ff9900</color>
     <color name="tj_orange_dark2">#f1960f</color>
 
-    <color name="tj_green">#16A085</color>
-
-    <color name="tj_yellow">#FF9900</color>
     <color name="tj_dark_gray">#333333</color>
     <color name="tj_medium_gray">#666666</color>
     <color name="tj_light_gray">#EEEEEE</color>
@@ -58,7 +58,7 @@
     <color name="black_semi_transparent">#B2000000</color>
     <color name="profile_background">#FFAD0E</color>
 
-    <color name="primaryColor">#e84c3d</color>
+    <color name="primaryColor">#E74C3C</color>
     <color name="primaryColorDark">#c83426</color>
 
 </resources>

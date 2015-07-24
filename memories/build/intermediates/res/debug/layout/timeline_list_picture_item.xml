@@ -42,9 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/timelineItemUserImage"
             android:background="@color/white"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:layout_marginTop="-30dp"
+            android:padding="5dp"
+            android:layout_marginLeft="85dp">
 
             <com.traveljar.memories.customviews.MyTextViewReg16
                 android:id="@+id/timelineItemCaption"

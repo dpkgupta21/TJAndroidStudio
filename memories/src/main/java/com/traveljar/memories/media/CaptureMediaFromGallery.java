@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.media.adapters.MediaGridAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,12 @@ public class CaptureMediaFromGallery extends Fragment {
         List<Map<String, String>> memoriesPath = new ArrayList<>();
 
         String[] projection = {
-                MediaStore.Files.FileColumns._ID,
-                MediaStore.Files.FileColumns.DATA,
-                MediaStore.Files.FileColumns.DATE_ADDED,
-                MediaStore.Files.FileColumns.MEDIA_TYPE,
-                MediaStore.Files.FileColumns.MIME_TYPE,
-                MediaStore.Files.FileColumns.TITLE
+            MediaStore.Files.FileColumns._ID,
+            MediaStore.Files.FileColumns.DATA,
+            MediaStore.Files.FileColumns.DATE_ADDED,
+            MediaStore.Files.FileColumns.MEDIA_TYPE,
+            MediaStore.Files.FileColumns.MIME_TYPE,
+            MediaStore.Files.FileColumns.TITLE
         };
 
         // Return only video and image metadata.

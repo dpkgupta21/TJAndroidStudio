@@ -80,7 +80,7 @@ public class TimelineFragment extends Fragment {
 
         //loadMemoriesList();
 
-        // Swipe to refersh tmline
+        // Pull to refersh tmline
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.timeline_swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
@@ -106,22 +106,22 @@ public class TimelineFragment extends Fragment {
                 Log.d(TAG, "FAB expanded");
                 /*baseActivityContentOverlay.setBackgroundColor(getResources().getColor(
                         R.color.black_semi_transparent));*/
-                ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_activity_overlay).setBackgroundColor(getResources().getColor(R.color.black_semi_transparent));
-                ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_toolbar_overlay).setBackgroundColor(getResources().getColor(R.color.black_semi_transparent));
+                getActivity().findViewById(R.id.content_activity_overlay).setBackgroundColor(getResources().getColor(R.color.black_semi_transparent));
+                getActivity().findViewById(R.id.content_toolbar_overlay).setBackgroundColor(getResources().getColor(R.color.black_semi_transparent));
             }
 
             @Override
             public void onMenuCollapsed() {
                 Log.d(TAG, "FAB collapsed");
                 //baseActivityContentOverlay.setBackgroundColor(getResources().getColor(R.color.transparent));
-                ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_activity_overlay).setBackgroundColor(getResources().getColor(R.color.transparent));
-                ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_toolbar_overlay).setBackgroundColor(getResources().getColor(R.color.transparent));
+                getActivity().findViewById(R.id.content_activity_overlay).setBackgroundColor(getResources().getColor(R.color.transparent));
+                getActivity().findViewById(R.id.content_toolbar_overlay).setBackgroundColor(getResources().getColor(R.color.transparent));
 
             }
         });
 
         // Remove the overlay if clicked anywhere other than FAB buttons
-        ((CurrentJourneyBaseActivity) getActivity()).findViewById(R.id.content_activity_overlay).setOnTouchListener(new View.OnTouchListener() {
+        getActivity().findViewById(R.id.content_activity_overlay).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 // ignore all touch events
@@ -159,7 +159,6 @@ public class TimelineFragment extends Fragment {
 
     public void loadMemoriesList() {
         memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
-        Log.d(TAG, "no of memories = " + memoriesList.size());
         Log.d(TAG, "no of memories = " + memoriesList.size());
         if (memoriesList.size() > 0) {
             mListView.setVisibility(View.VISIBLE);

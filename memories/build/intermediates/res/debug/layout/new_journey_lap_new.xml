@@ -238,7 +238,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/rounded_corner_button"
+                android:background="@drawable/rounded_corner_button_green"
                 android:onClick="updateDone"
                 android:text="UPDATE"
                 android:textColor="@color/white" />

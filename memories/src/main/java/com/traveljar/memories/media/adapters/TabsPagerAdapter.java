@@ -1,8 +1,12 @@
-package com.traveljar.memories.media;
+package com.traveljar.memories.media.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.traveljar.memories.media.CaptureImage;
+import com.traveljar.memories.media.CaptureMediaFromGallery;
+import com.traveljar.memories.media.CaptureVideo;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter{
 

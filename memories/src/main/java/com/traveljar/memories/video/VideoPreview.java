@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
+import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.models.Request;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.services.GPSTracker;
@@ -189,33 +190,10 @@ public class VideoPreview extends AppCompatActivity {
                     mVideo.setCaption(caption.getText().toString());
                 }
                 saveAndUploadVideo();
-                finish();
+                Intent intent = new Intent(VideoPreview.this, CurrentJourneyBaseActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
     }
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar_with_done_text, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_done:
-                Log.d(TAG, "done clicked!");
-                saveAndUploadVideo();
-                finish();
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
 }
