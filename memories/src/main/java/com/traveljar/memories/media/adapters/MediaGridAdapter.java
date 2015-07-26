@@ -1,4 +1,4 @@
-package com.traveljar.memories.media;
+package com.traveljar.memories.media.adapters;
 
 import android.content.Context;
 import android.content.Intent;

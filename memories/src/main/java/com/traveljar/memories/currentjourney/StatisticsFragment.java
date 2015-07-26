@@ -1,13 +1,12 @@
 package com.traveljar.memories.currentjourney;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.traveljar.memories.R;
@@ -17,16 +16,20 @@ import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
+import com.traveljar.memories.currentjourney.adapters.StatisticsAdapter;
 import com.traveljar.memories.utility.TJPreferences;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-/**
- * Created by abhi on 28/05/15.
- */
 public class StatisticsFragment extends Fragment {
 
     private static final String TAG = "<StatisticsFragment>";
     private View rootView;
+    GridView gridView;
+    List<Map<String, String>> statistics;
     Button mButton;
     private TextView buddyCountTxtView;
     private TextView picCountTxtView;
@@ -46,7 +49,14 @@ public class StatisticsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Get all views from XML
+        gridView = (GridView) rootView.findViewById(R.id.statistics_grid);
+        populateStatistics();
+
+        StatisticsAdapter adapter = new StatisticsAdapter(getActivity(), statistics);
+        gridView.setAdapter(adapter);
+
+
+/*        // Get all views from XML
         buddyCountTxtView = (TextView) rootView.findViewById(R.id.current_journey_stats_buddies_number);
         picCountTxtView = (TextView) rootView.findViewById(R.id.current_journey_stats_photos_number);
         noteCountTxtView = (TextView) rootView.findViewById(R.id.current_journey_stats_notes_number);
@@ -62,15 +72,43 @@ public class StatisticsFragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-        Log.d(TAG, "5");
+        Log.d(TAG, "5");*/
     }
 
-    @Override
+    private void populateStatistics(){
+        statistics = new ArrayList<>();
+        String jId = TJPreferences.getActiveJourneyId(getActivity());
+        statistics.add(getStatMap(JourneyDataSource.getJourneyById(getActivity(), jId).getBuddies().size(), "Buddies",
+                R.drawable.ic_info_black_24dp));
+        statistics.add(getStatMap(0, "Km travelled", R.drawable.ic_info_black_24dp));
+        statistics.add(getStatMap(PictureDataSource.getPicCountOfJourney(getActivity(), jId), "Pictures",
+                R.drawable.ic_info_black_24dp));
+        statistics.add(getStatMap(NoteDataSource.getNoteCountOfJourney(getActivity(), jId), "Notes",
+                R.drawable.ic_info_black_24dp));
+        statistics.add(getStatMap(VideoDataSource.getVideoCountOfJourney(getActivity(), jId), "Videos",
+                R.drawable.ic_info_black_24dp));
+        statistics.add(getStatMap(AudioDataSource.getAudioCountOfJourney(getActivity(), jId), "Audios",
+                R.drawable.ic_info_black_24dp));
+        statistics.add(getStatMap(MoodDataSource.getMoodCountOfJourney(getActivity(), jId), "Moods",
+                R.drawable.ic_info_black_24dp));
+        statistics.add(getStatMap(MoodDataSource.getMoodCountOfJourney(getActivity(), jId), "Checkins",
+                R.drawable.ic_info_black_24dp));
+    }
+
+    private Map<String, String> getStatMap(int number, String title, int resourceId){
+        Map<String, String> stat  = new HashMap<>();
+        stat.put("count", String.valueOf(number));
+        stat.put("title", title);
+        stat.put("resource_id", String.valueOf(resourceId));
+        return stat;
+    }
+
+/*    @Override
     public void onResume(){
         Log.d(TAG, "on resume method called");
         updateStats();
         super.onResume();
-    }
+    }*/
 
     // It collects counts of different memories and stats and updated on UI
     private void updateStats(){

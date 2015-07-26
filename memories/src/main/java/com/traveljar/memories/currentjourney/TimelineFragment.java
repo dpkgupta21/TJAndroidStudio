@@ -80,7 +80,7 @@ public class TimelineFragment extends Fragment {
 
         //loadMemoriesList();
 
-        // Swipe to refersh tmline
+        // Pull to refersh tmline
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.timeline_swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
@@ -159,7 +159,6 @@ public class TimelineFragment extends Fragment {
 
     public void loadMemoriesList() {
         memoriesList = MemoriesDataSource.getAllMemoriesList(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
-        Log.d(TAG, "no of memories = " + memoriesList.size());
         Log.d(TAG, "no of memories = " + memoriesList.size());
         if (memoriesList.size() > 0) {
             mListView.setVisibility(View.VISIBLE);

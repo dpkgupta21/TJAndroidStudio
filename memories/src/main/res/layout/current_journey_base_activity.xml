@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:id="@+id/linearLayout">
 
-        <include layout="@layout/toolbar_with_custom_subtitle"/>
+        <include layout="@layout/toolbar_current_journey"/>
 
         <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/timeline_toolbar"
@@ -25,7 +25,7 @@
             <com.traveljar.memories.customviews.SlidingTabLayout
                 android:id="@+id/timeline_sliding_tabs"
                 android:layout_width="match_parent"
-                android:background="@color/primaryColorDark"
+                android:background="@color/base_color"
                 android:layout_height="wrap_content"  />
 
         </android.support.v7.widget.Toolbar>

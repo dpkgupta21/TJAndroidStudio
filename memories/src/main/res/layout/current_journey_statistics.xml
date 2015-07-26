@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="5dp">
+
+<GridView
+    android:id="@+id/statistics_grid"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:numColumns="2"
+    android:padding="1dp"
+    android:verticalSpacing="1dp"
+    android:horizontalSpacing="1dp"
+    android:background="@color/tj_gray_light" />
+</LinearLayout>
+<!--
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,7 +31,7 @@
             android:id="@+id/current_journey_stats_buddies_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/tj_picture_capture_green"
+            android:background="@color/tj_green"
             android:padding="20dp">
 
             <com.traveljar.memories.customviews.MyTextViewCustom
@@ -52,7 +71,7 @@
                 android:id="@+id/current_journey_stats_distance_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="255"
+                android:text="0"
                 android:textColor="@color/white"
                 android:textSize="40sp" />
 
@@ -284,4 +303,4 @@
             android:text="View time capsrue" />
 
     </LinearLayout>
-</ScrollView>
+</ScrollView>-->

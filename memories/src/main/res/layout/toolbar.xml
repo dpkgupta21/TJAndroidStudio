@@ -12,7 +12,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        <com.traveljar.memories.customviews.MyTextViewMed20
+        <com.traveljar.memories.customviews.MyTextViewMed18
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -20,10 +20,10 @@ import com.traveljar.memories.audio.AudioCapture;
 import com.traveljar.memories.checkin.CheckInPlacesList;
 import com.traveljar.memories.currentjourney.adapters.CurrentJourneyTabsAdapter;
 import com.traveljar.memories.customviews.SlidingTabLayout;
+import com.traveljar.memories.media.CaptureMedia;
 import com.traveljar.memories.moods.MoodCapture;
 import com.traveljar.memories.note.CreateNotes;
 import com.traveljar.memories.pastjourney.PastJourneyList;
-import com.traveljar.memories.picture.CapturePicture;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.video.CaptureVideo;
 
@@ -49,7 +49,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
     private static CurrentJourneyBaseActivity instance;
 
     public CurrentJourneyBaseActivity(){
-        super(0);
+        super(1);
         instance = this;
     }
 
@@ -82,9 +82,9 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
-        TextView subtitle = (TextView)toolbar.findViewById(R.id.toolbar_subtitle);
-        title.setText(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName());
-        subtitle.setText(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getTagLine());
+        //TextView subtitle = (TextView)toolbar.findViewById(R.id.toolbar_subtitle);
+        title.setText(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName().toUpperCase());
+        //subtitle.setText(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getTagLine());
 
         toolbar.inflateMenu(R.menu.current_journey_action_bar);
         toolbar.setTitle("Current Journeys");
@@ -120,7 +120,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
                 break;
             case R.id.button_photo:
                 Log.d(TAG, "photo clicked");
-                i = new Intent(this, CapturePicture.class);
+                i = new Intent(this, CaptureMedia.class);
                 startActivity(i);
                 break;
             case R.id.button_note:

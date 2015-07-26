@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <corners android:radius="1dip"/>
+    <stroke android:color="@color/tj_lables_gray" android:width="1dip"/>
+    <solid android:color="@color/tj_lables_gray" />
+</shape>

@@ -158,6 +158,7 @@ public class SideMenuDrawer extends Fragment {
 
     public void updateSelectedItemColor(int position){
         featuresListView.getChildAt(position).setBackgroundColor(getResources().getColor(R.color.primaryColor));
+        // featuresListView.getChildAt(position).getRootView()./
     }
 
     @Override

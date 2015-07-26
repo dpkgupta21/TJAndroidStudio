@@ -25,6 +25,9 @@ public class Constants {
     public static final String URL_MEMORY_UPLOAD = URL_TJ_DOMAIN + "api/v1/journeys/";
     public static final String URL_MEMORY_UPDATE = URL_TJ_DOMAIN + "api/v1/journeys/";
 
+    // 4. TIMECAPSULE APIS
+    public static final String URL_TIMECAPSULE_GENERATE = URL_TJ_DOMAIN + "api/v1/timecapsule/video";
+
     // =================================================================================
 
     // GOOGLE APP INFO

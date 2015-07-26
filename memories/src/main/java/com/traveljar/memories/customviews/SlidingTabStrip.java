@@ -1,9 +1,5 @@
 package com.traveljar.memories.customviews;
 
-/**
- * Created by ankit on 28/5/15.
- */
-
 import android.R;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -131,11 +127,11 @@ class SlidingTabStrip extends LinearLayout {
 
             mSelectedIndicatorPaint.setColor(color);
 
-            canvas.drawRect(left, height - mSelectedIndicatorThickness, right,
-                    height, mSelectedIndicatorPaint);
+/*            canvas.drawRect(left, height - mSelectedIndicatorThickness, right,
+                    height, mSelectedIndicatorPaint);*/
         }
 
-        // Thin underline along the entire bottom edge
+        // Thin underline along the entire bottom edge`
         canvas.drawRect(0, height - mBottomBorderThickness, getWidth(), height, mBottomBorderPaint);
     }
 

@@ -39,16 +39,6 @@ public class CurrentJourneyTabsAdapter extends FragmentPagerAdapter {
         return 3;
     }
 
-    // BEGIN_INCLUDE (pageradapter_getpagetitle)
-
-    /**
-     * Return the title of the item at {@code position}. This is important
-     * as what this method returns is what is displayed in the
-     * {@link //SlidingTabLayout}.
-     * <p/>
-     * Here we construct one using the position value, but for real
-     * application the title should refer to the item's contents.
-     */
     @Override
     public CharSequence getPageTitle(int position) {
         return titles[position];

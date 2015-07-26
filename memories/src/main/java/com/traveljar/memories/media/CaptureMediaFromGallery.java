@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.media.adapters.MediaGridAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

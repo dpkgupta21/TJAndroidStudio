@@ -12,15 +12,13 @@
         android:gravity="center"
         android:text="We will update a timecapsule video everyday for you." />
 
-    <Button
+    <com.traveljar.memories.customviews.MyButtonView
         android:id="@+id/generate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="test me"
-        android:textSize="22dp"
         android:layout_margin="10dp"
         android:padding="10dp"
-        />
+        android:text="Make Video" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/current_journey_timecapsule_swipe_refresh_layout"

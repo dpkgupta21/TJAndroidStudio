@@ -50,7 +50,7 @@
             android:id="@+id/new_journey_detail_create_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner_button"
+            android:background="@drawable/rounded_corner_button_green"
             android:onClick="createNewJourney"
             android:text="Let&apos;s Begin"
             android:textColor="@color/white" />

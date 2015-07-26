@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.customviews.SlidingTabLayout;
+import com.traveljar.memories.media.adapters.TabsPagerAdapter;
 
 public class CaptureMedia extends AppCompatActivity {
 

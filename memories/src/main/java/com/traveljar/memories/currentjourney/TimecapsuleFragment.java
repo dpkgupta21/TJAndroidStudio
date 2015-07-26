@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -34,8 +34,6 @@ public class TimecapsuleFragment extends Fragment {
 
     private static final String TAG = "<TimecapsuleFragment>";
     private View rootView;
-    private Button generateButton;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,12 +50,10 @@ public class TimecapsuleFragment extends Fragment {
 
         RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.current_journey_timecapsule_recycler_view);
 
-        generateButton = (Button)rootView.findViewById(R.id.generate);
-
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-        RelativeLayout mLayout = (RelativeLayout) rootView.findViewById(R.id.layout);
+        LinearLayout mLayout = (LinearLayout) rootView.findViewById(R.id.layout);
 
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(rootView.getContext());
@@ -69,36 +65,38 @@ public class TimecapsuleFragment extends Fragment {
         // specify an adapter (see also next example)
         TimecapsuleAdapter mAdapter = new TimecapsuleAdapter((ArrayList) mTimecapsuleList);
 
+        Button button = (Button) rootView.findViewById(R.id.generate);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateTimecapsule();
+            }
+        });
 
-        setListenerOnGenerateButton();
     }
 
 
-    private void setListenerOnGenerateButton(){
-        String uploadRequestTag = "UPLOAD_NOTE";
+    public void generateTimecapsule() {
+        String uploadRequestTag = "TIMECAPSULE_GENERATE";
         Map<String, String> params = new HashMap<>();
 
         // put the parameters here
         //params.put("note[updated_at]", String.valueOf(note.getUpdatedAt()));
 
-        String url = Constants.URL_MEMORY_UPLOAD + TJPreferences.getActiveJourneyId(getActivity()) + "/notes";
-        CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.POST, url, params,
+        String url = Constants.URL_TIMECAPSULE_GENERATE + "?api_key=" + TJPreferences.getApiKey(getActivity())
+                + "&j_id=" + TJPreferences.getActiveJourneyId(getActivity());
+        Log.d(TAG, url);
+        CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.GET, url, params,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG, "note uploaded successfully" + response);
-                        try {
-                            String serverId = response.getJSONObject("note").getString("id");
-                        } catch (Exception ex) {
-                            Log.d(TAG, "exception in parsing note received from server" + ex);
-                        }
-
+                        Log.d(TAG, "response from server = " + response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "error in uploading note" + error);
+                Log.d(TAG, "error in generating timecapsule video" + error);
             }
         });
         AppController.getInstance().addToRequestQueue(uploadRequest, uploadRequestTag);
