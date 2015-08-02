@@ -15,6 +15,26 @@ public class Timecapsule {
     private String extension;
     private long size;
     private String createdBy;
+
+    public Timecapsule(){
+
+    }
+
+    public Timecapsule(String idOnServer, String jId, String videoLocalURL, String videoServerURL, String localThumbPath,
+                       String caption, String extension, long size, String createdBy, long createdAt, long updatedAt) {
+        this.idOnServer = idOnServer;
+        this.jId = jId;
+        this.videoLocalURL = videoLocalURL;
+        this.videoServerURL = videoServerURL;
+        this.localThumbPath = localThumbPath;
+        this.caption = caption;
+        this.extension = extension;
+        this.size = size;
+        this.createdBy = createdBy;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     private long createdAt;
     private long updatedAt;
 

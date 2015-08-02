@@ -49,7 +49,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
     private static CurrentJourneyBaseActivity instance;
 
     public CurrentJourneyBaseActivity(){
-        super(1);
+        super(0);
         instance = this;
     }
 

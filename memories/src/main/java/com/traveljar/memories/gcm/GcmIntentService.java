@@ -30,6 +30,7 @@ import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Mood;
 import com.traveljar.memories.models.Note;
 import com.traveljar.memories.models.Picture;
+import com.traveljar.memories.models.Timecapsule;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.services.PullJourney;
 import com.traveljar.memories.utility.CheckinUtil;
@@ -164,8 +165,6 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 updatedAt = Long.parseLong(bundle.getString("updated_at"));
                 completedAt = 0;
                 boolean isUserActive = true;
-
-                //completedAt = bundle.getString("completed_at") == "null" ? 0 : Long.parseLong(bundle.getString("completed_at"));
 
                 Log.d(TAG, "bundle buddy ids are " + bundle.get("buddy_ids"));
                 String buddyIds = (String) bundle.get("buddy_ids");
@@ -309,6 +308,16 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 }
                 message = "Your journey has been marked finished by the admin. We'll get back to you with a video of the same very soon";
                 showNotification(message, ActivejourneyList.class);
+                break;
+
+            case HelpMe.TYPE_TIMECAPSULE_CREATE:
+                journeyId = bundle.getString("journey_id");
+                String timecapsuleURL = bundle.getString("timecap_video");
+                String idOnServer = "123";
+                long dummyText = Long.parseLong("111");
+
+                Timecapsule newTimecapsule = new Timecapsule(idOnServer, journeyId, "", timecapsuleURL,
+                        "", "", "mp4", dummyText, "abhi", dummyText, dummyText);
 
             default:
                 break;
