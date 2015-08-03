@@ -21,6 +21,7 @@ import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
+import com.traveljar.memories.currentjourney.DownloadTimeCapsuleAsyncTask;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;
@@ -298,7 +299,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                         }
                     });
                 }
-                if(ActivejourneyList.getInstance().isActivityVisible()){
+                if(ActivejourneyList.isActivityVisible()){
                     ActivejourneyList.getInstance().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -318,6 +319,9 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
 
                 Timecapsule newTimecapsule = new Timecapsule(idOnServer, journeyId, "", timecapsuleURL,
                         "", "", "mp4", dummyText, "abhi", dummyText, dummyText);
+
+                DownloadTimeCapsuleAsyncTask asyncTask = new DownloadTimeCapsuleAsyncTask(newTimecapsule, this);
+                asyncTask.execute();
 
             default:
                 break;

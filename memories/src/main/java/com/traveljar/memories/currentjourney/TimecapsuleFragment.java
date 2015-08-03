@@ -63,7 +63,7 @@ public class TimecapsuleFragment extends Fragment {
                 getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
 
         // specify an adapter (see also next example)
-        TimecapsuleAdapter mAdapter = new TimecapsuleAdapter((ArrayList) mTimecapsuleList);
+        TimecapsuleAdapter mAdapter = new TimecapsuleAdapter((ArrayList<Timecapsule>) mTimecapsuleList);
 
         Button button = (Button) rootView.findViewById(R.id.generate);
         button.setOnClickListener(new View.OnClickListener() {

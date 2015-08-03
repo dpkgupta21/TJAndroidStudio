@@ -11,9 +11,6 @@ import com.traveljar.memories.models.Timecapsule;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by abhi on 26/06/15.
- */
 public class TimecapsuleDataSource {
 
     private static final String TAG = "<TimecapsuleDataSource>";
