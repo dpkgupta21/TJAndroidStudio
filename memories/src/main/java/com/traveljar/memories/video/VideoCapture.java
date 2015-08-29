@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+// Not getting used right now.
 public class VideoCapture extends AppCompatActivity {
 
     static final int REQUEST_VIDEO_CAPTURE = 1;

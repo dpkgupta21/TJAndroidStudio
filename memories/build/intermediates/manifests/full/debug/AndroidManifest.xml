@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.traveljar.memories"
-    android:versionCode="6"
-    android:versionName="1.5" >
+    android:versionCode="7"
+    android:versionName="1.6" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -31,11 +31,11 @@
         android:allowBackup="true"
         android:icon="@drawable/jar"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/myAppTheme" >
         <activity
             android:name="com.traveljar.memories.login.SplashScreen"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,40 +44,31 @@
         </activity>
         <activity
             android:name="com.traveljar.memories.login.SignIn"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.login.SignUp"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.login.NumberVerificationActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.login.NumberVerificationActivity2"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.BaseActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.checkin.CheckInPlacesList"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.checkin.CheckInPreview"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.checkin.CheckInFriendsList"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.checkin.CheckinDetail"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.picture.PictureCapture"
             android:label="@string/app_name" />
@@ -86,156 +77,120 @@
             android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.moods.MoodCapture"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.audio.AudioCapture"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.gallery.GalleryAudios"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.picture.PictureDetail"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.picture.PicturePreview"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.gallery.GalleryPhotos"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.gallery.GalleryBaseActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.gallery.GalleryPhotoDetail"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.traveljar.memories.pastjourney.PastJourneyList"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.newjourney.SelectedFriendsList"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.newjourney.AllFriendsList"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.newjourney.NewJourneyDetail"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.currentjourney.JourneyInfoFriendsList"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.newjourney.AddLap"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.newjourney.LapsList"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.newjourney.LocationList"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.profile.ProfileActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.profile.ChangePassword"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.audio.AudioDetail"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.video.VideoCapture"
             android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.video.CaptureVideo"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.video.VideoDetail"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.video.VideoPreview"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.gallery.GalleryVideos"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.note.CreateNotes"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.note.NoteDetail"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.gallery.GalleryNotes"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.moods.MoodSelectFriends"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.moods.MoodDetail"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.retrofit.MultiPartUpload"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.activejourney.ActivejourneyList"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.currentjourney.JourneyInfo"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.picture.DisplayPicture"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.settings.Settings"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.settings.AccountSettings"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.currentjourney.TimecapsulePlayer"
             android:label="@string/app_name"
             android:screenOrientation="landscape" />
         <activity
             android:name="com.traveljar.memories.media.CaptureMedia"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
 
         <service
             android:name="com.traveljar.memories.services.PullContactsService"

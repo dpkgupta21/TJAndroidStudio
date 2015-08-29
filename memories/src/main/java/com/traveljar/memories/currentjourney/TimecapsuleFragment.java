@@ -46,7 +46,7 @@ public class TimecapsuleFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.d(TAG, "enetred gallery photos fragment!!");
+        Log.d(TAG, "enetred gallery timecapsule fragment!!");
 
         RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.current_journey_timecapsule_recycler_view);
 
@@ -64,6 +64,7 @@ public class TimecapsuleFragment extends Fragment {
 
         // specify an adapter (see also next example)
         TimecapsuleAdapter mAdapter = new TimecapsuleAdapter((ArrayList<Timecapsule>) mTimecapsuleList);
+        mRecyclerView.setAdapter(mAdapter);
 
         Button button = (Button) rootView.findViewById(R.id.generate);
         button.setOnClickListener(new View.OnClickListener() {

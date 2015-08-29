@@ -7,14 +7,15 @@
 
     <include layout="@layout/toolbar"/>
 
-    <com.traveljar.memories.customviews.MyTextViewReg14
-        android:id="@+id/active_journey_no_buddies_msg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="You donot have any active journeys."
-        android:visibility="gone" />
+    <ImageButton
+        android:id="@+id/active_journey_start_btn"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="200dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center"
+        android:src="@drawable/active_journey_start_button"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/active_journey_swipe_refresh_layout"

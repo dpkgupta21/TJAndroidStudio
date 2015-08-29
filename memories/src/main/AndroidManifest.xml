@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.traveljar.memories"
-    android:versionCode="6"
-    android:versionName="1.5">
+    android:versionCode="7"
+    android:versionName="1.6">
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -29,12 +29,13 @@
     <application
         android:name=".volley.AppController"
         android:allowBackup="true"
+        android:largeHeap="true"
         android:icon="@drawable/jar"
         android:label="@string/app_name"
         android:theme="@style/myAppTheme">
         <activity
             android:name=".login.SplashScreen"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,39 +45,39 @@
         </activity>
         <activity
             android:name=".login.SignIn"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".login.SignUp"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".login.NumberVerificationActivity"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".login.NumberVerificationActivity2"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".BaseActivity"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name"/>
         <activity
             android:name=".checkin.CheckInPlacesList"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".checkin.CheckInPreview"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".checkin.CheckInFriendsList"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.checkin.CheckinDetail"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".picture.PictureCapture"
@@ -86,153 +87,150 @@
             android:label="@string/app_name" />
         <activity
             android:name=".moods.MoodCapture"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".audio.AudioCapture"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".gallery.GalleryAudios"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".picture.PictureDetail"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".picture.PicturePreview"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".gallery.GalleryPhotos"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".gallery.GalleryBaseActivity"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name"/>
         <activity
             android:name=".gallery.GalleryPhotoDetail"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name=".pastjourney.PastJourneyList"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".newjourney.SelectedFriendsList"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".newjourney.AllFriendsList"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".newjourney.NewJourneyDetail"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".currentjourney.CurrentJourneyBaseActivity"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".currentjourney.JourneyInfoFriendsList"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".newjourney.AddLap"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".newjourney.LapsList"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".newjourney.LocationList"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".profile.ProfileActivity"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".profile.ChangePassword"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".audio.AudioDetail"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
 
         <activity
-            android:name=".video.VideoCapture"
-            android:label="@string/app_name" />
-        <activity
             android:name=".video.CaptureVideo"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".video.VideoDetail"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".video.VideoPreview"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".gallery.GalleryVideos"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".note.CreateNotes"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name="com.traveljar.memories.note.NoteDetail"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".gallery.GalleryNotes"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".moods.MoodSelectFriends"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".moods.MoodDetail"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
         <activity
             android:name=".retrofit.MultiPartUpload"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
 
         <activity
             android:name=".activejourney.ActivejourneyList"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
 
         <activity
             android:name=".currentjourney.JourneyInfo"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name"/>
 
         <activity
             android:name=".picture.DisplayPicture"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name" />
 
         <activity
             android:name=".settings.Settings"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name"/>
 
         <activity
             android:name=".settings.AccountSettings"
-            android:screenOrientation="portrait"
+            
             android:label="@string/app_name"/>
 
         <activity
@@ -243,7 +241,7 @@
         <activity
             android:name=".media.CaptureMedia"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            />
 
         <service
             android:name=".services.PullContactsService"

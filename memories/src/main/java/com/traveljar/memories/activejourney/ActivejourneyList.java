@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class ActivejourneyList extends BaseActivity {
     /*activityVisible will track the visible state of the activity which
     * will be used to refresh the listview when gcm notification arrives*/
     private static boolean activityVisible;
+
     public static boolean isActivityVisible() {
         return activityVisible;
     }
@@ -56,12 +58,12 @@ public class ActivejourneyList extends BaseActivity {
 
     private static ActivejourneyList instance;
 
-    public ActivejourneyList(){
+    public ActivejourneyList() {
         super(0);
         instance = this;
     }
 
-    public static ActivejourneyList getInstance(){
+    public static ActivejourneyList getInstance() {
         return instance == null ? new ActivejourneyList() : instance;
     }
 
@@ -76,11 +78,11 @@ public class ActivejourneyList extends BaseActivity {
         /*Just for testing purpose*/
         List<Lap> lapsList = LapDataSource.getAllLaps(this);
         Log.d(TAG, "total laps fetched for journey are " + lapsList.size());
-        for(Lap lap : lapsList){
+        for (Lap lap : lapsList) {
             Log.d(TAG, "lap is " + lap);
         }
 
-        mLayout  = (LinearLayout)findViewById(R.id.active_journey_layout);
+        mLayout = (LinearLayout) findViewById(R.id.active_journey_layout);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.active_journey_recycler_view);
         mRecyclerView.setVisibility(View.VISIBLE);
@@ -103,15 +105,15 @@ public class ActivejourneyList extends BaseActivity {
                 refreshJourneys();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
-            });
+        });
     }
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(Gravity.LEFT)){
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
             Log.d(TAG, "closing the drawer");
             drawerLayout.closeDrawer(Gravity.LEFT);
-        }else {
+        } else {
             if (backPressedToExitOnce) {
                 super.onBackPressed();
             } else {
@@ -155,10 +157,10 @@ public class ActivejourneyList extends BaseActivity {
         super.onPause();
     }
 
-    private void setUpToolbar(){
+    private void setUpToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Active Journeys");
 
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
@@ -168,7 +170,7 @@ public class ActivejourneyList extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_add_journey :
+                    case R.id.action_add_journey:
                         Log.d(TAG, "new journey clicked!");
                         Intent i = new Intent(getBaseContext(), LapsList.class);
                         startActivity(i);
@@ -179,19 +181,30 @@ public class ActivejourneyList extends BaseActivity {
         });
     }
 
-    private void refreshJourneys(){
+    private void refreshJourneys() {
         allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
         Collections.sort(allActiveJourney);
-        if(allActiveJourney.size() > 0){
-            if(mAdapter == null){
+        if (allActiveJourney.size() > 0) {
+            if (mAdapter == null) {
                 mAdapter = new ActiveJourneyListAdapter(allActiveJourney, this);
                 mRecyclerView.setAdapter(mAdapter);
-            }else {
+            } else {
                 mAdapter.updateList(allActiveJourney);
                 mAdapter.notifyDataSetChanged();
             }
-        }else {
+        } else {
             mLayout.setBackgroundResource(R.drawable.img_no_active_journey);
+            ImageButton startNewJourneyBtn = (ImageButton) findViewById(R.id.active_journey_start_btn);
+            startNewJourneyBtn.setVisibility(View.VISIBLE);
+            startNewJourneyBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "new journey clicked!");
+                    Intent i = new Intent(getBaseContext(), LapsList.class);
+                    startActivity(i);
+                }
+            });
+
         }
     }
 
@@ -203,7 +216,7 @@ public class ActivejourneyList extends BaseActivity {
     }
 
     /*This method will be called by GCMIntentService if the activity is visible to refresh the listview*/
-    public void refreshJourneysList(){
+    public void refreshJourneysList() {
         Intent intent = getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         finish();
