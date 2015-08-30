@@ -207,7 +207,7 @@ ADDED from AndroidManifest.xml:82:9
 		ADDED from AndroidManifest.xml:84:13
 	android:name
 		ADDED from AndroidManifest.xml:83:13
-activity#com.traveljar.memories.picture.CapturePicture
+activity#com.traveljar.memories.picture.PictureCaptureBaseActivity
 ADDED from AndroidManifest.xml:85:9
 	android:label
 		ADDED from AndroidManifest.xml:87:13
@@ -401,7 +401,7 @@ ADDED from AndroidManifest.xml:212:9
 		ADDED from AndroidManifest.xml:215:13
 	android:name
 		ADDED from AndroidManifest.xml:213:13
-activity#com.traveljar.memories.picture.DisplayPicture
+activity#com.traveljar.memories.picture.PictureFullScreen
 ADDED from AndroidManifest.xml:217:9
 	android:label
 		ADDED from AndroidManifest.xml:220:13

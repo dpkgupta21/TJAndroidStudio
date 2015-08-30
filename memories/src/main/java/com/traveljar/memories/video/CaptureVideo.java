@@ -16,7 +16,7 @@ public class CaptureVideo extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capture_media_base_activity);
-        Log.d("CapturePicture", "on create called");
+        Log.d("PictureCaptureBaseActivity", "on create called");
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager()));
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);

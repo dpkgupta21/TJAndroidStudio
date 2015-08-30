@@ -11,6 +11,9 @@ public class Constants {
 //    public final static String URL_TJ_DOMAIN = "http://localhost:3000/";
 
     // 1. USER APIS
+
+    public static final String URL_BASE = "https://www.traveljar.in/api/v1/";
+
     public static final String URL_SIGN_IN = URL_TJ_DOMAIN + "api/v1/users/login";
     public static final String URL_SIGN_UP = URL_TJ_DOMAIN + "api/v1/users";
     public static final String URL_UPDATE_USER_DETAILS = URL_TJ_DOMAIN + "api/v1/users/";

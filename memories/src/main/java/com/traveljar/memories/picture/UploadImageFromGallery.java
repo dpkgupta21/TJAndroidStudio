@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.traveljar.memories.R;
+import com.traveljar.memories.picture.adapters.PicGalleryGridAdapter;
 
 public class UploadImageFromGallery extends Fragment{
     private static final String TAG = "UploadImageFromGallery";

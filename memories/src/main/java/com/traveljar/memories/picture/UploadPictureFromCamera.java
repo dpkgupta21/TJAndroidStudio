@@ -4,10 +4,15 @@ package com.traveljar.memories.picture;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class UploadPictureFromCamera extends Fragment{
+    private static final String TAG = "uploadPicFromCam";
     private View rootView;
     private Camera mCamera;
     private CameraPreview mPreview;
@@ -108,11 +114,22 @@ public class UploadPictureFromCamera extends Fragment{
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 fos.write(data);
                 fos.close();
+                int rotation = getImageRotationInDegrees();
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+                Log.d(TAG, "rotation is " + rotation);
+                if (rotation != 0) {
+                    bitmap = getAdjustedBitmap(bitmap, rotation);
+                    Log.d(TAG, "calling replace image");
+                    replaceImg(bitmap);
+                    Log.d("TAG", "bitmap compressed successfully");
+                }
                 Intent i = new Intent(getActivity(), PicturePreview.class);
                 i.putExtra("imagePath", imagePath);
                 startActivity(i);
             } catch (FileNotFoundException e) {
+                e.printStackTrace();
             } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     };
@@ -129,4 +146,45 @@ public class UploadPictureFromCamera extends Fragment{
         imagePath = file.getAbsolutePath();
         return file;
     }
+
+    private int getImageRotationInDegrees(){
+        try {
+            ExifInterface exif = new ExifInterface(imagePath);
+            int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
+            else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
+            else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public Bitmap getAdjustedBitmap(Bitmap bitmap, int rotate) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(rotate);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix,
+                true);
+        return bitmap;
+    }
+
+    private void replaceImg(Bitmap bitmap){
+        File file = new File(imagePath);
+        file.delete();
+        FileOutputStream fOut = null;
+        try {
+            fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                fOut.flush();
+                fOut.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

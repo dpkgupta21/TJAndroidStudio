@@ -1,5 +1,7 @@
 package com.traveljar.memories.retrofit;
 
+import org.json.JSONObject;
+
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Field;
@@ -39,9 +41,11 @@ public interface TravelJarServices {
     public void uploadAudio(
             @Path("journey_id") String journeyId,
             @Part("api_key") TypedString apiKey,
+            @Part("audio[longitude]") TypedString latitude,
+            @Part("audio[latitude]") TypedString longitude,
             @Part("audio[user_id]") TypedString userId,
             @Part("audio[audio_file]") TypedFile audio,
-            Callback<String> callback);
+            Callback<JSONObject> callback);
 
     @Multipart
     @POST("/journeys/{journey_id}/videos")

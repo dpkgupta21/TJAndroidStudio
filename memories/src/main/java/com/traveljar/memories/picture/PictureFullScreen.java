@@ -11,7 +11,7 @@ import com.traveljar.memories.R;
 /**
  * Created by ankit on 2/6/15.
  */
-public class DisplayPicture extends Activity {
+public class PictureFullScreen extends Activity {
 
     private static final String TAG = "display_picture";
     private String mPictureLocalPath;

@@ -131,7 +131,7 @@ public class PicturePreview extends AppCompatActivity {
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PicturePreview.this, DisplayPicture.class);
+                Intent intent = new Intent(PicturePreview.this, PictureFullScreen.class);
                 intent.putExtra("PICTURE_PATH", mPicture.getDataLocalURL());
                 startActivity(intent);
             }

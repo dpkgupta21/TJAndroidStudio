@@ -1,4 +1,4 @@
-package com.traveljar.memories.picture;
+package com.traveljar.memories.picture.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
+import com.traveljar.memories.picture.PicturePreview;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 

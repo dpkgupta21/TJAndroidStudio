@@ -1,8 +1,11 @@
-package com.traveljar.memories.picture;
+package com.traveljar.memories.picture.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.traveljar.memories.picture.UploadImageFromGallery;
+import com.traveljar.memories.picture.UploadPictureFromCamera;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 

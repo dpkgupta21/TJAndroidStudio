@@ -21,14 +21,24 @@ import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.Request;
+import com.traveljar.memories.retrofit.TravelJarServices;
 import com.traveljar.memories.services.GPSTracker;
 import com.traveljar.memories.services.MakeServerRequestsService;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.TypedFile;
+import retrofit.mime.TypedString;
 
 public class AudioCapture extends AppCompatActivity {
 
@@ -190,12 +200,38 @@ public class AudioCapture extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Network issues. Try later.",
                     Toast.LENGTH_LONG).show();
         }
+
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constants.URL_BASE)
+                .build();
+
+        TravelJarServices service = restAdapter.create(TravelJarServices.class);
+        service.uploadAudio(TJPreferences.getActiveJourneyId(this), new TypedString(TJPreferences.getApiKey(this)),
+                new TypedString(String.valueOf(lat)), new TypedString(String.valueOf(longi)),
+                new TypedString(TJPreferences.getUserId(this)),
+                new TypedFile("audio/mpeg", new File(mFileName)),
+                new Callback<JSONObject>() {
+                    @Override
+                    public void success(JSONObject object, Response response) {
+                        Log.d(TAG, "retrofit response successful " + object);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        Log.d(TAG, "retrofit response error " + retrofitError);
+                    }
+                });
+
+
         Audio audio = new Audio(null, TJPreferences.getActiveJourneyId(this), HelpMe.AUDIO_TYPE,
                 "3gp", (new File(mFileName)).length(), null, mFileName, TJPreferences.getUserId(this), createdAt,
                 createdAt, null, audioDuration, lat, longi);
         Long id = AudioDataSource.createAudio(audio, this);
         audio.setId(String.valueOf(id));
         Log.d(TAG, "new audio added in local DB successfully");
+
+
 
         Request request = new Request(null, String.valueOf(id), TJPreferences.getActiveJourneyId(this),
                 Request.OPERATION_TYPE_CREATE, Request.CATEGORY_TYPE_AUDIO, Request.REQUEST_STATUS_NOT_STARTED, 0);

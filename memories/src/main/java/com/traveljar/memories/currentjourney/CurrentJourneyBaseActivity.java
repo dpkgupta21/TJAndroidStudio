@@ -23,7 +23,7 @@ import com.traveljar.memories.customviews.SlidingTabLayout;
 import com.traveljar.memories.moods.MoodCapture;
 import com.traveljar.memories.note.CreateNotes;
 import com.traveljar.memories.pastjourney.PastJourneyList;
-import com.traveljar.memories.picture.CapturePicture;
+import com.traveljar.memories.picture.PictureCaptureBaseActivity;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.video.CaptureVideo;
 
@@ -114,7 +114,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
                 break;
             case R.id.button_photo:
                 Log.d(TAG, "photo clicked");
-                i = new Intent(this, CapturePicture.class);
+                i = new Intent(this, PictureCaptureBaseActivity.class);
                 startActivity(i);
                 break;
             case R.id.button_note:

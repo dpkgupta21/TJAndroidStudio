@@ -123,7 +123,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
                     new DownloadPicture(mPicture, PictureDetail.this).startDownloadingPic();
                 } else {
                     Log.d(TAG, "profile pic is already present in the local so displaying it");
-                    Intent intent = new Intent(PictureDetail.this, DisplayPicture.class);
+                    Intent intent = new Intent(PictureDetail.this, PictureFullScreen.class);
                     intent.putExtra("PICTURE_PATH", mPicture.getDataLocalURL());
                     startActivity(intent);
                 }
@@ -214,7 +214,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         PictureDataSource.updatePicLocalPath(this, picture.getDataLocalURL(), picture.getId());
         Log.d(TAG, "picture downloaded successfully now displaying it");
         pDialog.dismiss();
-        Intent intent = new Intent(this, DisplayPicture.class);
+        Intent intent = new Intent(this, PictureFullScreen.class);
         intent.putExtra("PICTURE_PATH", picture.getDataLocalURL());
         startActivity(intent);
     }
