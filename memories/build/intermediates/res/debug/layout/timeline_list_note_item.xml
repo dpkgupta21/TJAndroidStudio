@@ -43,13 +43,15 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <com.traveljar.memories.customviews.MyCircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/timelineItemUserImage"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/gumnaam_profile_image" />
+            app:border_width="2dp"
+            app:border_color="#FFFFFF"
+            android:layout_centerVertical="true" />
 
         <com.traveljar.memories.customviews.MyTextViewMed14
             android:id="@+id/timelineItemUserName"
@@ -82,4 +84,4 @@
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_note_item.xml -->
+</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_note_item.xml -->

@@ -3,6 +3,7 @@ package com.traveljar.memories.gallery.adapters;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -15,14 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.picture.DownloadPicture;
-import com.traveljar.memories.utility.HelpMe;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.util.List;
 
 public class ImageCarouselAdapter extends PagerAdapter implements DownloadPicture.OnPictureDownloadListener{
@@ -86,12 +87,7 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
             picPath = pic.getPicThumbnailPath();
         }
 
-        try {
-            imgDisplay.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, picPath, displayMetrics.widthPixels,
-                    displayMetrics.heightPixels));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        Glide.with(_activity).load(Uri.fromFile(new File(picPath))).asBitmap().into(imgDisplay);
 
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,13 +120,7 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
     public void onDownloadPicture(Picture picture, boolean result) {
         if(result) {
             downloadBtnView.setVisibility(View.GONE);
-            DisplayMetrics displayMetrics = _activity.getResources().getDisplayMetrics();
-            try {
-                ((ImageView)image).setImageBitmap(HelpMe.decodeSampledBitmapFromPath(_activity, picture.getDataLocalURL(),
-                        displayMetrics.widthPixels, displayMetrics.heightPixels));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Glide.with(_activity).load(Uri.fromFile(new File(picture.getDataLocalURL()))).asBitmap().into((ImageView)image);
             PictureDataSource.updatePicLocalPath(_activity, picture.getDataLocalURL(), picture.getId());
             pDialog.dismiss();
             Log.d(TAG, " " + PictureDataSource.getPictureById(_activity, picture.getId()));

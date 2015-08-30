@@ -25,8 +25,6 @@ public class JourneyDataSource {
      */
     public static long createJourney(Journey newJourney, Context context) {
 
-        Log.d(TAG, "value of journey is " + newJourney.toString());
-
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER, newJourney.getIdOnServer());
@@ -45,7 +43,6 @@ public class JourneyDataSource {
         // insert row
         long journey_id = db.insert(MySQLiteHelper.TABLE_JOURNEY, null, values);
 
-        Log.d(TAG, "new journey buddies" + newJourney.getBuddies());
         // Insert journey-contact mapping in the mapping table
         if(newJourney.getBuddies() != null) {
             for (String contact : newJourney.getBuddies()) {

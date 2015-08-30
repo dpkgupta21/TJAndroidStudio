@@ -5,30 +5,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
-    <ImageButton
-        android:id="@+id/active_journey_start_btn"
-        android:layout_width="300dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="200dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:layout_gravity="center"
-        android:src="@drawable/active_journey_start_button"/>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/active_journey_swipe_refresh_layout"
+    <LinearLayout
+        android:id="@+id/layout_visible_no_journey"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/active_journey_recycler_view"
+        <ImageButton
+            android:id="@+id/active_journey_start_btn"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="200dp"
+            android:adjustViewBounds="true"
+            android:background="@color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/active_journey_start_button" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_hidden_no_journey"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/active_journey_swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            android:visibility="gone" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="wrap_content">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/active_journey_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:visibility="gone" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

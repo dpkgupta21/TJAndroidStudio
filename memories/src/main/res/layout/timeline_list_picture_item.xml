@@ -17,13 +17,16 @@
             android:scaleType="centerCrop"
             android:src="@drawable/abhi" />
 
-        <com.traveljar.memories.customviews.MyCircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/timelineItemUserImage"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
             android:layout_below="@id/timelineItemImage"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="-45dp"
+            app:border_width="2dp"
+            app:border_color="#FFFFFF"
             android:src="@drawable/gumnaam_profile_image" />
 
         <com.traveljar.memories.customviews.MyTextViewMed14

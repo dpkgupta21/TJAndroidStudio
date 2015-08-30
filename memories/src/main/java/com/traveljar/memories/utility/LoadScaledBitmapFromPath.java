@@ -1,25 +1,11 @@
 package com.traveljar.memories.utility;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.widget.ImageView;
-
-import com.traveljar.memories.R;
-
-import java.io.FileNotFoundException;
-import java.lang.ref.WeakReference;
-
 /**
  * Created by ankit on 18/6/15.
  */
 public class LoadScaledBitmapFromPath {
 
-    public static void loadBitmap(String imagePath, ImageView imageView, int height, int width,
+/*    public static void loadBitmap(String imagePath, ImageView imageView, int height, int width,
                                   Context context) {
         if (cancelPotentialWork(imagePath, imageView)) {
             final LoadBitmapTask task = new LoadBitmapTask(imageView, context, width, height);
@@ -109,6 +95,6 @@ class LoadBitmapTask extends AsyncTask<String, Void, Bitmap> {
                 imageView.setImageBitmap(bitmap);
             }
         }
-    }
+    }*/
 }
 

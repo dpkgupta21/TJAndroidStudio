@@ -203,10 +203,6 @@
             android:name=".moods.MoodDetail"
             
             android:label="@string/app_name" />
-        <activity
-            android:name=".retrofit.MultiPartUpload"
-            
-            android:label="@string/app_name" />
 
         <activity
             android:name=".activejourney.ActivejourneyList"

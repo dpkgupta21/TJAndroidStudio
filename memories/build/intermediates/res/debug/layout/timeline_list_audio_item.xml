@@ -57,11 +57,14 @@
         android:layout_height="75dp"
         android:background="@color/white">
 
-        <com.traveljar.memories.customviews.MyCircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/timelineItemUserImage"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
             android:layout_alignParentLeft="true"
+            app:border_width="2dp"
+            app:border_color="#FFFFFF"
             android:src="@drawable/gumnaam_profile_image" />
 
         <ImageButton
@@ -95,4 +98,4 @@
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->
+</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/timeline_list_audio_item.xml -->

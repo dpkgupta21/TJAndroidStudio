@@ -20,10 +20,10 @@ import com.traveljar.memories.audio.AudioCapture;
 import com.traveljar.memories.checkin.CheckInPlacesList;
 import com.traveljar.memories.currentjourney.adapters.CurrentJourneyTabsAdapter;
 import com.traveljar.memories.customviews.SlidingTabLayout;
-import com.traveljar.memories.media.CaptureMedia;
 import com.traveljar.memories.moods.MoodCapture;
 import com.traveljar.memories.note.CreateNotes;
 import com.traveljar.memories.pastjourney.PastJourneyList;
+import com.traveljar.memories.picture.CapturePicture;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.video.CaptureVideo;
 
@@ -72,12 +72,6 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
 
     }
 
-    public void overlayTimelineFragment(int color){
-        //overlayFrame.setBackgroundColor(getResources().getColor(color));
-    }
-
-
-
     private void setUpToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
@@ -120,7 +114,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
                 break;
             case R.id.button_photo:
                 Log.d(TAG, "photo clicked");
-                i = new Intent(this, CaptureMedia.class);
+                i = new Intent(this, CapturePicture.class);
                 startActivity(i);
                 break;
             case R.id.button_note:

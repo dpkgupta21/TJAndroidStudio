@@ -23,7 +23,8 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_mic" />
 
-        <com.traveljar.memories.customviews.MyCircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profilePic"
             android:layout_width="70dp"
             android:layout_height="70dp"
@@ -33,8 +34,10 @@
             android:layout_marginLeft="50dp"
             android:layout_marginStart="50dp"
             android:layout_marginTop="115dp"
+            app:border_color="#FFFFFF"
             android:adjustViewBounds="true"
             android:contentDescription="@string/abc_action_bar_home_description"
+            app:border_width="2dp"
             android:src="@drawable/banner3" />
     </RelativeLayout>
 
@@ -105,4 +108,4 @@
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/audio_detail.xml -->
+</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/audio_detail.xml -->

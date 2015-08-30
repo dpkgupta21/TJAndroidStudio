@@ -2,6 +2,7 @@ package com.traveljar.memories.currentjourney.adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,17 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactJourneyMappingDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
-import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.JourneyUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.util.List;
 
 public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyInfoFriendsListAdapter.ViewHolder> implements JourneyUtil.OnAddBuddyListener {
@@ -76,16 +77,11 @@ public class JourneyInfoFriendsListAdapter extends RecyclerView.Adapter<JourneyI
 
         holder.contactName.setText(name);
 
-        try {
-            if (profileLocalURL != null) {
-                holder.contactImage.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(mContext, profileLocalURL, 100, 100));
-            } else {
-                holder.contactImage.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(mContext, Constants.GUMNAAM_IMAGE_URL, 100, 100));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (profileLocalURL != null) {
+            Glide.with(mContext).load(Uri.fromFile(new File(profileLocalURL))).asBitmap().into(holder.contactImage);
+        } else {
+            Glide.with(mContext).load(Uri.fromFile(new File(Constants.GUMNAAM_IMAGE_URL))).asBitmap().into(holder.contactImage);
         }
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)

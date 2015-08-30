@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.RequestQueueDataSource;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
@@ -28,7 +29,6 @@ import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -107,14 +107,10 @@ public class VideoPreview extends AppCompatActivity {
                 .trim(), "png", 1223, null, videoPath, TJPreferences.getUserId(this), createdAt, createdAt, null, thumbnailPath, lat, longi);
 
         video.setImageBitmap(BitmapFactory.decodeFile(thumbnailPath));
-        try {
-            if (TJPreferences.getProfileImgPath(this) != null) {
-                Bitmap profileBitmap = HelpMe.decodeSampledBitmapFromPath(this, TJPreferences.getProfileImgPath(this), 100, 100);
-                mProfileImg.setImageBitmap(profileBitmap);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (TJPreferences.getProfileImgPath(this) != null) {
+            Glide.with(this).load(Uri.fromFile(new File(TJPreferences.getProfileImgPath(this)))).asBitmap().into(mProfileImg);
         }
+
 
         String place = "Lat " + new DecimalFormat("#.##").format(mVideo.getLatitude()) + " Lon " +
                 new DecimalFormat("#.##").format(mVideo.getLongitude());

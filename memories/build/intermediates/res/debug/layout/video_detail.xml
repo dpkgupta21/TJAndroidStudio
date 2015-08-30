@@ -19,7 +19,10 @@
             android:scaleType="centerCrop"
             android:src="@drawable/banner3" />
 
-        <com.traveljar.memories.customviews.MyCircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:border_width="2dp"
+            app:border_color="#FFFFFF"
             android:id="@+id/profilePic"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
@@ -147,4 +150,4 @@
     </LinearLayout>
 
 
-</LinearLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/video_detail.xml -->
+</LinearLayout><!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/layout/video_detail.xml -->

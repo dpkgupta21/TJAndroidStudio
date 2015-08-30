@@ -2,7 +2,7 @@ package com.traveljar.memories.profile;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,12 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.MySQLiteHelper;
 import com.traveljar.memories.activejourney.ActivejourneyList;
-import com.traveljar.memories.customviews.MyCircularImageView;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
@@ -35,7 +35,6 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ public class ProfileActivity extends BaseActivity {
 
     private static final String TAG = "<PROFILEACTIVITY>";
     private static int PICK_IMAGE = 1;
-    private MyCircularImageView mProfileImg;
+    private ImageView mProfileImg;
     private ImageView mCoverImg;
     private TextView mUserName;
     private TextView mStatus;
@@ -73,7 +72,7 @@ public class ProfileActivity extends BaseActivity {
 
         setUpToolbar();
 
-        mProfileImg = (MyCircularImageView) findViewById(R.id.profile_img);
+        mProfileImg = (ImageView)findViewById(R.id.profile_img);
         mCoverImg = (ImageView) findViewById(R.id.cover_image);
         mUserName = (TextView) findViewById(R.id.profile_name);
         mStatus = (TextView) findViewById(R.id.profile_status);
@@ -95,24 +94,12 @@ public class ProfileActivity extends BaseActivity {
         String profileImgPath = TJPreferences.getProfileImgPath(this);
         File imgFile = new File(profileImgPath);
         if (imgFile.exists()) {
-            try {
-                mProfileImg.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 200, 200));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            try {
-                mCoverImg.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 300, 300));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Glide.with(this).load(Uri.fromFile(new File(profileImgPath))).asBitmap().into(mProfileImg);
+            Glide.with(this).load(Uri.fromFile(new File(profileImgPath))).asBitmap().into(mCoverImg);
         }
     }
 
     private void setUpToolbar(){
-/*
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setVisibility(View.GONE);
-*/
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
@@ -197,14 +184,8 @@ public class ProfileActivity extends BaseActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && null != data) {
             mProfileImgPath = HelpMe.getRealPathFromURI(data.getData(), this);
             Log.d(TAG, "New profile Image Path" + mProfileImgPath);
-            try {
-                Bitmap profileImgThumbnail = HelpMe.decodeSampledBitmapFromPath(this,
-                        mProfileImgPath, 110, 110);
-                mProfileImg.setImageBitmap(profileImgThumbnail);
-                isProfilePicUpdated = true;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Glide.with(this).load(Uri.fromFile(new File(mProfileImgPath))).asBitmap().into(mProfileImg);
+            isProfilePicUpdated = true;
         }
     }
 
@@ -249,13 +230,7 @@ public class ProfileActivity extends BaseActivity {
         protected void onPostExecute(HttpResponse result) {
             mDialog.dismiss();
             if (result == null) {
-                Bitmap profileImgThumbnail = null;
-                try {
-                    profileImgThumbnail = HelpMe.decodeSampledBitmapFromPath(ProfileActivity.this, mProfileImgPath, 110, 110);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                mProfileImg.setImageBitmap(profileImgThumbnail);
+                Glide.with(ProfileActivity.this).load(Uri.fromFile(new File(mProfileImgPath))).asBitmap().into(mProfileImg);
                 Toast.makeText(ProfileActivity.this, "Unable to update Profile please try after some time", Toast.LENGTH_SHORT).show();
             }else {
                 Contact contact = ContactDataSource.getContactById(ProfileActivity.this, TJPreferences.getUserId(ProfileActivity.this));

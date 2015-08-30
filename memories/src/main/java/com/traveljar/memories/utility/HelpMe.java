@@ -8,7 +8,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,16 +17,12 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore.MediaColumns;
 import android.provider.MediaStore.Video.Thumbnails;
 import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.models.Journey;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -230,55 +225,6 @@ public class HelpMe {
         }
     }
 
-    public static Bitmap decodeSampledBitmapFromURI(Context mContext, String resPath, int reqWidth,
-                                                    int reqHeight) throws FileNotFoundException {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-
-        Log.d(TAG, "decoding from path to fileinputstream");
-        String realPath = getRealPathFromURI(Uri.parse(resPath), mContext);
-        BitmapFactory.decodeStream(new FileInputStream(realPath), null, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeStream(new FileInputStream(realPath), null, options);
-    }
-
-    public static Bitmap decodeSampledBitmapFromPath(Context mContext, String resPath,
-                                                     int reqWidth, int reqHeight) throws FileNotFoundException {
-
-        //Log.d(TAG, "local file path for image is " + resPath);
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-
-        //Log.d(TAG, "decoding from path to fileinputstream");
-        BitmapFactory.decodeStream(new FileInputStream(resPath), null, options);
-
-        // Calculate inSampleSize
-        // options.inSampleSize = 8;
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-        //Log.d(TAG, "In sample size " + options.inSampleSize);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeStream(new FileInputStream(resPath), null, options);
-    }
-
-    /*returns the bitmap from the path without downscaling the image */
-    public static Bitmap getBitmapFromPath(String filePath){
-        File imageFile = new File(filePath);
-        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), new BitmapFactory.Options());
-        return bitmap;
-    }
-
-
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth,
                                             int reqHeight) {
         // Raw height and width of image
@@ -374,22 +320,6 @@ public class HelpMe {
             e.printStackTrace();
         }
         return date.getTime();
-    }
-
-    public static int getWindowHeight(Context context){
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.y;
-    }
-
-    public static int getWindowWidth(Context context){
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.x;
     }
 
     public static String getContactNameFromNumber(Context context, String phoneNumber) {

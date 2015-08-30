@@ -43,7 +43,8 @@
             android:textSize="@dimen/tj_medium_font"
             android:layout_gravity="center_horizontal" />
 
-        <com.traveljar.memories.customviews.MyCircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/checkin_detail_profile_image"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
@@ -52,6 +53,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
+            app:border_width="2dp"
+            app:border_color="#FFFFFF"
             android:src="@drawable/gumnaam_profile_image" />
 
         <com.traveljar.memories.customviews.MyTextViewReg14

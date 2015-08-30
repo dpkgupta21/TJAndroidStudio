@@ -1,6 +1,7 @@
 package com.traveljar.memories.gallery.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Video;
-import com.traveljar.memories.utility.LoadScaledBitmapFromPath;
 
+import java.io.File;
 import java.util.List;
 
 public class VideoGalleryAdapter extends BaseAdapter {
@@ -66,7 +68,7 @@ public class VideoGalleryAdapter extends BaseAdapter {
             holder.overlayImgView.setVisibility(View.VISIBLE);
         }
 
-        LoadScaledBitmapFromPath.loadBitmap(video.getLocalThumbPath(), holder.imgView, 150, 150, mContext);
+        Glide.with(mContext).load(Uri.fromFile(new File(video.getLocalThumbPath()))).asBitmap().into(holder.imgView);
         holder.overlayImgView.setImageResource(R.drawable.img_selected);
         return rowView;
     }

@@ -2,6 +2,7 @@ package com.traveljar.memories.gallery.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Video;
-import com.traveljar.memories.utility.HelpMe;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -72,13 +73,8 @@ public class VideoAlbumsGalleryAdapter extends BaseAdapter {
 
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if(video != null){
-            try {
-                bitmap = HelpMe.decodeSampledBitmapFromPath(mContext, video.getLocalThumbPath(), 150, 150);
-                img.setImageBitmap(bitmap);
-                noItems.setText(String.valueOf(VideoDataSource.getVideoCountOfJourney(mContext, video.getjId())));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Glide.with(mContext).load(Uri.fromFile(new File(video.getLocalThumbPath()))).asBitmap().into(img);
+            noItems.setText(String.valueOf(VideoDataSource.getVideoCountOfJourney(mContext, video.getjId())));
         }else {
             img.setImageResource(R.drawable.gallery_video);
             noItems.setText("0");

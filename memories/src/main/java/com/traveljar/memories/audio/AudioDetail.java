@@ -2,7 +2,7 @@ package com.traveljar.memories.audio;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -27,16 +28,14 @@ import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class AudioDetail extends AppCompatActivity {
 
     private static final String TAG = "<AudioDetail>";
-    List<String> likedBy;
     private TextView dateBig;
     private TextView date;
     private TextView time;
@@ -80,11 +79,8 @@ public class AudioDetail extends AppCompatActivity {
         } else {
             profileImgPath = TJPreferences.getProfileImgPath(this);
         }
-        try {
-            Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
-            mProfileImg.setImageBitmap(bitmap);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if(profileImgPath != null) {
+            Glide.with(this).load(Uri.fromFile(new File(profileImgPath))).asBitmap().into(mProfileImg);
         }
 
         String place = "Lat " + new DecimalFormat("#.##").format(mAudio.getLatitude()) + " Lon " +

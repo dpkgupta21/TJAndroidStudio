@@ -19,10 +19,8 @@ import android.widget.Toast;
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
-import com.traveljar.memories.SQLitedatabase.LapDataSource;
 import com.traveljar.memories.activejourney.adapters.ActiveJourneyListAdapter;
 import com.traveljar.memories.models.Journey;
-import com.traveljar.memories.models.Lap;
 import com.traveljar.memories.newjourney.LapsList;
 
 import java.util.Collections;
@@ -73,15 +71,6 @@ public class ActivejourneyList extends BaseActivity {
 
         setContentView(R.layout.active_journey_list);
 
-        setUpToolbar();
-
-        /*Just for testing purpose*/
-        List<Lap> lapsList = LapDataSource.getAllLaps(this);
-        Log.d(TAG, "total laps fetched for journey are " + lapsList.size());
-        for (Lap lap : lapsList) {
-            Log.d(TAG, "lap is " + lap);
-        }
-
         mLayout = (LinearLayout) findViewById(R.id.active_journey_layout);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.active_journey_recycler_view);
@@ -95,6 +84,7 @@ public class ActivejourneyList extends BaseActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         refreshJourneys();
+        setUpToolbar();
 
         // Add pull to refresh functionality
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.active_journey_swipe_refresh_layout);
@@ -183,8 +173,11 @@ public class ActivejourneyList extends BaseActivity {
 
     private void refreshJourneys() {
         allActiveJourney = JourneyDataSource.getAllActiveJourneys(this);
+
         Collections.sort(allActiveJourney);
         if (allActiveJourney.size() > 0) {
+            findViewById(R.id.layout_visible_no_journey).setVisibility(View.GONE);
+            findViewById(R.id.layout_hidden_no_journey).setVisibility(View.VISIBLE);
             if (mAdapter == null) {
                 mAdapter = new ActiveJourneyListAdapter(allActiveJourney, this);
                 mRecyclerView.setAdapter(mAdapter);
@@ -193,6 +186,8 @@ public class ActivejourneyList extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
             }
         } else {
+            findViewById(R.id.layout_visible_no_journey).setVisibility(View.GONE);
+            findViewById(R.id.layout_hidden_no_journey).setVisibility(View.VISIBLE);
             mLayout.setBackgroundResource(R.drawable.img_no_active_journey);
             ImageButton startNewJourneyBtn = (ImageButton) findViewById(R.id.active_journey_start_btn);
             startNewJourneyBtn.setVisibility(View.VISIBLE);
@@ -204,7 +199,6 @@ public class ActivejourneyList extends BaseActivity {
                     startActivity(i);
                 }
             });
-
         }
     }
 

@@ -14,7 +14,8 @@
 
         <!-- Extra elements for code consistensy. They are used in timeline-->
         <!-- So DO NOT deleete these two-->
-        <com.traveljar.memories.customviews.MyCircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/timelineItemUserImage"
             android:layout_width="@dimen/circularProfDimen"
             android:layout_height="@dimen/circularProfDimen"
@@ -22,6 +23,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="-45dp"
             android:visibility="invisible"
+            app:border_color="#FFFFFF"
+            app:border_width="2dp"
             android:src="@drawable/gumnaam_profile_image" />
 
         <!-- Extra elements for code consistensy. They are used in timeline-->
@@ -45,13 +48,19 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
-            <com.traveljar.memories.customviews.MyCircularImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:border_width="2dp"
+                app:border_color="#FFFFFF"
                 android:id="@+id/timelineItemMoodBuddyPic1"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:src="@drawable/gumnaam_profile_image" />
 
-            <com.traveljar.memories.customviews.MyCircularImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:border_width="2dp"
+                app:border_color="#FFFFFF"
                 android:id="@+id/timelineItemMoodBuddyPic2"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
@@ -60,7 +69,10 @@
                 android:layout_toRightOf="@id/timelineItemMoodBuddyPic1"
                 android:src="@drawable/gumnaam_profile_image" />
 
-            <com.traveljar.memories.customviews.MyCircularImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:border_width="2dp"
+                app:border_color="#FFFFFF"
                 android:id="@+id/timelineItemMoodBuddyPic3"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
@@ -69,7 +81,10 @@
                 android:layout_below="@id/timelineItemMoodBuddyPic2"
                 android:src="@drawable/gumnaam_profile_image" />
 
-            <com.traveljar.memories.customviews.MyCircularImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:border_width="2dp"
+                app:border_color="#FFFFFF"
                 android:id="@+id/timelineItemMoodBuddyPic4"
                 android:layout_width="75dp"
                 android:layout_height="75dp"

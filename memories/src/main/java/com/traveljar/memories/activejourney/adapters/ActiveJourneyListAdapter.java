@@ -8,27 +8,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.LapsDataSource;
-import com.traveljar.memories.SQLitedatabase.PictureDataSource;
 import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.customevents.ContactsFetchEvent;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Laps;
-import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.models.Place;
 import com.traveljar.memories.services.PullBuddies;
-import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,9 +90,12 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
         holder.journeyBuddyCount.setText(buddyCount);
         holder.journeyPlace.setText(place);
 
-        Picture coverPic = PictureDataSource.getRandomPicOfJourney(mDataset.get(position).getIdOnServer(), mContext);
+//        Picture coverPic = PictureDataSource.getRandomPicOfJourney(mDataset.get(position).getIdOnServer(), mContext);
 
-        if (coverPic != null) {
+        Glide.with(mContext).load(R.drawable.abhi).into(holder.journeyCoverPic);
+        /*if (coverPic != null) {
+            Log.d(TAG, "path is " + coverPic.getDataLocalURL());
+            Glide.with(mContext).load(Uri.fromFile(new File(coverPic.getDataLocalURL()))).into(holder.journeyCoverPic);
             try {
                 holder.journeyCoverPic.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(mContext, coverPic.getPicThumbnailPath(), 512, 384));
                 AlphaAnimation alpha = new AlphaAnimation(0.5F, 0.5F); // change values as you want
@@ -108,9 +107,9 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        }else{
+        }else{*/
             holder.journeyCoverPic.setImageResource(R.drawable.abhi);
-        }
+//        }
 
     }
 
@@ -165,7 +164,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
                 if (buddyList != null && !buddyList.isEmpty()) {
                     Log.d(TAG, "some buddies need to be fetched from server hence fetching from server" + buddyList.size());
                     registerEvent();
-                    new PullBuddies(mContext, buddyList, LISTENER_CODE).fetchBuddies();
+                    new PullBuddies(mContext.getApplicationContext(), buddyList, LISTENER_CODE).fetchBuddies();
                 } else {
                     Log.d(TAG, "no buddy to be fetched from server hence starting current activity");
                     Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
@@ -197,6 +196,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
     }
 
     public void onEvent(ContactsFetchEvent event) {
+        Log.d(TAG, "active journey list adapter on event");
         //Discard the event if the event's activity code is not similar to its own activity code
         if (event.getActivityCode() == LISTENER_CODE) {
             mDialog.dismiss();

@@ -2,7 +2,7 @@ package com.traveljar.memories.checkin;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.CheckinDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -27,7 +28,7 @@ import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -52,12 +53,6 @@ public class CheckinDetail extends AppCompatActivity {
         setContentView(R.layout.checkin_detail);
         Log.d(TAG, "entrerd checkin details");
 
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("Checkin Detail");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
-
         dateBig = (TextView) findViewById(R.id.checkin_detail_date_big);
         date = (TextView) findViewById(R.id.checkin_detail_date);
         time = (TextView) findViewById(R.id.checkin_detail_time);
@@ -79,8 +74,6 @@ public class CheckinDetail extends AppCompatActivity {
 
         mCheckInCaptionTxt.setText(mCheckIn.getCaption());
         mCheckInInPlaceTxt.setText("@ " + mCheckIn.getCheckInPlaceName());
-        /*Setting the names of the friends in the checkin*/
-        //List<Contact> checkInWith = ContactDataSource.getContactsListFromIds(this, mCheckIn.getCheckInWith());
         List<Contact> checkInWith = ContactDataSource.getAllContactsFromJourney(this, TJPreferences.getActiveJourneyId(this));
         String checkInWithText = "";
         for(Contact contact : checkInWith){
@@ -104,13 +97,8 @@ public class CheckinDetail extends AppCompatActivity {
         }
         profileName.setText(createdBy);
 
-        if (profileImgPath != null) {
-            try {
-                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
-                mProfileImg.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+        if(profileImgPath != null) {
+            Glide.with(this).load(Uri.fromFile(new File(profileImgPath))).asBitmap().into(mProfileImg);
         }
         Log.d(TAG, "profile picture set successfully");
 

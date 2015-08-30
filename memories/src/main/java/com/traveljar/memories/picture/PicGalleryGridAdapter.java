@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -15,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
@@ -70,7 +72,9 @@ public class PicGalleryGridAdapter extends BaseAdapter{
         long id = cursor.getLong(0);
         final Bitmap thumb;
 
-        thumb = MediaStore.Images.Thumbnails.getThumbnail(mContext.getContentResolver(), id, MediaStore.Images.Thumbnails.MICRO_KIND, null);
+//        thumb = MediaStore.Images.Thumbnails.getThumbnail(mContext.getContentResolver(), id, MediaStore.Images.Thumbnails.MICRO_KIND, null);
+        Glide.with(mContext).load(Uri.fromFile(new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA))))).into(holder.imgView);
+
         holder.videoPlayImg.setVisibility(View.GONE);
 
         rowView.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +89,9 @@ public class PicGalleryGridAdapter extends BaseAdapter{
                 mContext.startActivity(intent);
             }
         });
-        Log.d(TAG, "thumbnail is " + position + "  " + thumb);
-        holder.imgView.setImageBitmap(thumb);
+        Log.d(TAG, "inside Pic gallery grid adapter ");
+/*        Log.d(TAG, "thumbnail is " + position + "  " + thumb);
+        holder.imgView.setImageBitmap(thumb);*/
         return rowView;
     }
 

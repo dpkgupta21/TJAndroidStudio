@@ -3,7 +3,7 @@ package com.traveljar.memories.currentjourney.adapters;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
@@ -37,13 +38,11 @@ import com.traveljar.memories.note.NoteDetail;
 import com.traveljar.memories.picture.PictureDetail;
 import com.traveljar.memories.utility.AudioPlayer;
 import com.traveljar.memories.utility.HelpMe;
-import com.traveljar.memories.utility.LoadThumbFromPath;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.video.VideoDetail;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -220,17 +219,15 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
         holder.timelineItemUserName.setText(ContactDataSource.getContactById(context, memory.getCreatedBy()).getProfileName());
 
         // if the memory is from current user
+
         if (memory.getCreatedBy().equals(TJPreferences.getUserId(context))) {
-            try {
-                holder.timeLineProfileImg.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context, TJPreferences.getProfileImgPath(context), 80, 80));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if(TJPreferences.getProfileImgPath(context) != null) {
+                Glide.with(context).load(Uri.fromFile(new File(TJPreferences.getProfileImgPath(context)))).into(holder.timeLineProfileImg);
             }
         } else {
             Contact contact = ContactDataSource.getContactById(context, memory.getCreatedBy());
-            if (contact != null) {
-                holder.timeLineProfileImg.setImageBitmap(BitmapFactory.decodeFile(contact
-                        .getPicLocalUrl()));
+            if (contact != null && contact.getPicLocalUrl() != null) {
+                Glide.with(context).load(Uri.fromFile(new File(contact.getPicLocalUrl()))).into(holder.timeLineProfileImg);
             }
         }
 
@@ -245,8 +242,9 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
 
                 Picture pic = (Picture) memoriesList.get(position);
                 if (pic.getPicThumbnailPath() != null) {
-                    LoadThumbFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, HelpMe.getWindowWidth(context),
-                            HelpMe.getWindowHeight(context)/3, context);
+                    Glide.with(context).load(Uri.fromFile(new File(pic.getPicThumbnailPath()))).into(holder.timelineItemImage);
+                    /*LoadThumbFromPath.loadBitmap(pic.getPicThumbnailPath(), holder.timelineItemImage, HelpMe.getWindowWidth(context),
+                            HelpMe.getWindowHeight(context)/3, context);*/
                     holder.timelineItemCaption.setText(pic.getCaption());
 
                 } else {
@@ -304,11 +302,12 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
             case 6:
                 Log.d(TAG, "in video");
                 Video vid = (Video) memoriesList.get(position);
+                Glide.with(context).load(Uri.fromFile(new File(vid.getLocalThumbPath()))).into(holder.timelineItemImage);
 
 //                LoadThumbnailFromPath.loadBitmap(vid.getDataLocalURL(), holder.timelineItemImage, context);
                 holder.timelineItemCaption.setText(vid.getCaption());
-                LoadThumbFromPath.loadBitmap(vid.getLocalThumbPath(), holder.timelineItemImage, HelpMe.getWindowWidth(context),
-                        HelpMe.getWindowHeight(context)/3, context);
+//                LoadThumbFromPath.loadBitmap(vid.getLocalThumbPath(), holder.timelineItemImage, HelpMe.getWindowWidth(context),
+//                        HelpMe.getWindowHeight(context)/3, context);
                 //holder.timelineItemImage.setImageBitmap(HelpMe.getVideoThumbnail(vid.getDataURL()));
                 break;
 
@@ -323,8 +322,9 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
                 CheckIn checkin = (CheckIn) memoriesList.get(position);
                 Log.d(TAG, "checking thumb path is " + checkin.getCheckInPicThumbUrl());
                 if(checkin.getCheckInPicThumbUrl() != null){
-                    LoadThumbFromPath.loadBitmap(checkin.getCheckInPicThumbUrl(), holder.timelineItemImage, HelpMe.getWindowWidth(context),
-                            HelpMe.getWindowHeight(context)/3, context);
+                    Glide.with(context).load(Uri.fromFile(new File(checkin.getCheckInPicThumbUrl()))).into(holder.timelineItemImage);
+                    /*LoadThumbFromPath.loadBitmap(checkin.getCheckInPicThumbUrl(), holder.timelineItemImage, HelpMe.getWindowWidth(context),
+                            HelpMe.getWindowHeight(context)/3, context);*/
                 }
                 holder.timelineItemCaption.setText(checkin.getCaption());
                 holder.timelineItemCheckinPlace.setText(checkin.getCheckInPlaceName());
@@ -338,43 +338,38 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
                 holder.timelineItemMoodBuddyImage3.setVisibility(View.GONE);
                 int buddyCount = mood.getBuddyIds().size();
                 Contact fContact;
-                for (int i = 0; i<buddyCount; i++){
+                /*for (int i = 0; i<buddyCount; i++){
 
                     switch (i){
                         case 0: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
                             holder.timelineItemMoodBuddyImage1.setVisibility(View.VISIBLE);
-                            try {
-                                holder.timelineItemMoodBuddyImage1.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context,
-                                        fContact.getPicLocalUrl(), 150, 150));
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
+                            if(fContact.getPicLocalUrl() != null) {
+                                Glide.with(context).load(Uri.fromFile(new File(fContact.getPicLocalUrl()))).into(holder.timelineItemMoodBuddyImage1);
                             }
+
+//                                holder.timelineItemMoodBuddyImage1.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context,
+//                                        fContact.getPicLocalUrl(), 150, 150));
                             break;
 
                         case 1: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
                             holder.timelineItemMoodBuddyImage2.setVisibility(View.VISIBLE);
-                            try {
-                                holder.timelineItemMoodBuddyImage2.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context,
-                                        fContact.getPicLocalUrl(), 150, 150));
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
+                            if(fContact.getPicLocalUrl() != null) {
+                                Glide.with(context).load(Uri.fromFile(new File(fContact.getPicLocalUrl()))).into(holder.timelineItemMoodBuddyImage1);
                             }
                             break;
 
                         case 2: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
                             holder.timelineItemMoodBuddyImage3.setVisibility(View.VISIBLE);
-                            try {
-                                holder.timelineItemMoodBuddyImage3.setImageBitmap(HelpMe.decodeSampledBitmapFromPath(context,
-                                        fContact.getPicLocalUrl(), 150, 150));
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
+                            if(fContact.getPicLocalUrl() != null) {
+                                Glide.with(context).load(Uri.fromFile(new File(fContact.getPicLocalUrl()))).into(holder.timelineItemMoodBuddyImage1);
                             }
                             break;
 
                         case 3: fContact = ContactDataSource.getContactById(context, mood.getBuddyIds().get(i));
                             holder.timelineItemMoodBuddyImage4.setVisibility(View.VISIBLE);
-                            holder.timelineItemMoodBuddyImage4.setImageBitmap(BitmapFactory.decodeFile(fContact
-                                    .getPicLocalUrl()));
+                            if(fContact.getPicLocalUrl() != null) {
+                                Glide.with(context).load(Uri.fromFile(new File(fContact.getPicLocalUrl()))).into(holder.timelineItemMoodBuddyImage1);
+                            }
                             break;
 
                         default: Log.d(TAG, "more than 3 people in mood");
@@ -382,7 +377,7 @@ public class TimeLineAdapter extends BaseAdapter implements AudioPlayer.OnAudioC
                             break;
                     }
 
-                }
+                }*/
 
                 holder.timelineItemMoodiconTxt.setText(mood.getMood());
                 holder.timelineItemCaption.setText(mood.getReason());

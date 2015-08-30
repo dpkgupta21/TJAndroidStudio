@@ -4,7 +4,10 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <com.traveljar.memories.customviews.MyCircularImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:border_width="2dp"
+        app:border_color="#FFFFFF"
         android:id="@+id/all_contacts_contact_image"
         android:layout_width="75sp"
         android:layout_height="75sp"

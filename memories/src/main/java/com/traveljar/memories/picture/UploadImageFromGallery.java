@@ -5,16 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.traveljar.memories.R;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class UploadImageFromGallery extends Fragment{
     private static final String TAG = "UploadImageFromGallery";
@@ -32,8 +29,8 @@ public class UploadImageFromGallery extends Fragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         GridView mGridView = (GridView)rootView.findViewById(R.id.media_grid_view);
-        List<Map<String, String>> memoriesPath = new ArrayList<>();
 
+        Log.d(TAG, "inside upload image from gallery");
         String[] projection = {
                 MediaStore.Files.FileColumns._ID,
                 MediaStore.Files.FileColumns.DATA,

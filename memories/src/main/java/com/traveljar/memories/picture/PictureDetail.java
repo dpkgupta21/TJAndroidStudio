@@ -3,8 +3,8 @@ package com.traveljar.memories.picture;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
@@ -29,7 +30,7 @@ import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.MemoriesUtil;
 import com.traveljar.memories.utility.TJPreferences;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.text.DecimalFormat;
 
 
@@ -97,12 +98,7 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
             createdBy = TJPreferences.getUserName(this);
         }
         if (profileImgPath != null) {
-            try {
-                Bitmap bitmap = HelpMe.decodeSampledBitmapFromPath(this, profileImgPath, 100, 100);
-                mProfileImg.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Glide.with(this).load(Uri.fromFile(new File(profileImgPath))).asBitmap().into(mProfileImg);
         }
         profileName.setText(createdBy);
         Log.d(TAG, "profile picture set successfully");

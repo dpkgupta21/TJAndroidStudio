@@ -11,8 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/default_string"
-        android:scaleType="centerCrop"
-        android:src="@drawable/pictures_stack" />
+        android:scaleType="centerCrop" />
 
     <ImageView
         android:id="@+id/media_type_video"
@@ -22,7 +21,6 @@
         android:layout_alignParentTop="true"
         android:contentDescription="@string/default_string"
         android:scaleType="centerCrop"
-        android:visibility="gone"
-        android:src="@drawable/ic_play" />
+        android:visibility="gone" />
 
 </RelativeLayout>
