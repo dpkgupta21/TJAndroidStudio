@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.customevents.ContactsFetchEvent;
+import com.traveljar.memories.eventbus.ContactsFetchEvent;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;

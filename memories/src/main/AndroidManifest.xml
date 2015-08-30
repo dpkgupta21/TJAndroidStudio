@@ -244,13 +244,6 @@
             android:exported="false" />
 
         <service
-            android:name=".picture.UploadPictureService"
-            android:exported="false" />
-
-        <service
-            android:name=".video.UploadVideoService"
-            android:exported="false" />
-        <service
             android:name=".services.MakeServerRequestsService"
             android:exported="false" />
 

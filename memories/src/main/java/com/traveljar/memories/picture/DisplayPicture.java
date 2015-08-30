@@ -8,6 +8,8 @@ import android.widget.ImageView;
 
 import com.traveljar.memories.R;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 /**
  * Created by ankit on 2/6/15.
  */
@@ -16,6 +18,7 @@ public class DisplayPicture extends Activity {
     private static final String TAG = "display_picture";
     private String mPictureLocalPath;
     private ImageView mImageView;
+    private PhotoViewAttacher mAttacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class DisplayPicture extends Activity {
 
         mImageView.setImageBitmap(BitmapFactory.decodeFile(mPictureLocalPath));
 
+        // Attach a PhotoViewAttacher, which takes care of all of the zooming functionality.
+        mAttacher = new PhotoViewAttacher(mImageView);
     }
 
 

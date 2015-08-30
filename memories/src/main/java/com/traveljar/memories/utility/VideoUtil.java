@@ -3,19 +3,16 @@ package com.traveljar.memories.utility;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.traveljar.memories.SQLitedatabase.VideoDataSource;
-import com.traveljar.memories.customevents.VideoDownloadEvent;
+import com.traveljar.memories.eventbus.VideoDownloadEvent;
 import com.traveljar.memories.models.Video;
 import com.traveljar.memories.services.PullMemoriesService;
 import com.traveljar.memories.volley.AppController;
-import com.traveljar.memories.volley.CustomJsonRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -29,8 +26,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -38,8 +33,8 @@ public class VideoUtil {
 
     private static VideoUtil instance;
 
-    public static VideoUtil getInstance(){
-        if(instance == null)
+    public static VideoUtil getInstance() {
+        if (instance == null)
             instance = new VideoUtil();
         return instance;
     }
@@ -47,10 +42,10 @@ public class VideoUtil {
     public static final String TAG = "VIDEO_UTIL";
 
     public void createNewVideoFromServer(final Context context, final Video video, String thumbUrl, final int downloadRequesterCode) {
-        final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "thumb_" + TJPreferences.getUserId(context) + "_"+ video.getjId()
-                + "_"+ video.getCreatedAt() + ".jpg";
+        final String imagePath = Constants.TRAVELJAR_FOLDER_VIDEO + "thumb_" + TJPreferences.getUserId(context) + "_" + video.getjId()
+                + "_" + video.getCreatedAt() + ".jpg";
         Log.d(TAG, "creating new video from server" + imagePath);
-        if(!(new File(imagePath).exists())) {
+        if (!(new File(imagePath).exists())) {
             Log.d(TAG, "video thumbnail not presend hence downloading");
             if (thumbUrl != null) {
                 ImageRequest request = new ImageRequest(thumbUrl, new Response.Listener<Bitmap>() {
@@ -89,7 +84,7 @@ public class VideoUtil {
                 request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 AppController.getInstance().addToRequestQueue(request);
             }
-        }else {
+        } else {
             Log.d(TAG, "video thumbnail already presend");
             video.setLocalThumbPath(imagePath);
             long id = VideoDataSource.createVideo(video, context);
@@ -99,7 +94,7 @@ public class VideoUtil {
         }
     }
 
-    public static boolean uploadVideoOnServer(Context context, Video video){
+    public static boolean uploadVideoOnServer(Context context, Video video) {
         Log.d(TAG, "uploading video on server");
         MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
         entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -132,30 +127,4 @@ public class VideoUtil {
         }
     }
 
-    public static void updateCaption(final Video video, final String caption, final Context context){
-        if(!HelpMe.isNetworkAvailable(context)){
-            Toast.makeText(context, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
-        }else {
-            String url = Constants.URL_MEMORY_UPDATE + TJPreferences.getActiveJourneyId(context) + "/videos/" + video.getIdOnServer();
-            Map<String, String> params = new HashMap<>();
-            params.put("api_key", TJPreferences.getApiKey(context));
-            params.put("video[description]", TJPreferences.getApiKey(context));
-            CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
-                    new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d(TAG, "picture caption updated successfully" + response);
-                            VideoDataSource.updateCaption(context, caption, video.getId());
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d(TAG, "error in updating picture caption" + error);
-                    error.printStackTrace();
-                }
-            });
-            AppController.getInstance().addToRequestQueue(uploadRequest);
-        }
-    }
 }

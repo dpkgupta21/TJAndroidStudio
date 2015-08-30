@@ -18,7 +18,7 @@ import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
-import com.traveljar.memories.customevents.ContactsFetchEvent;
+import com.traveljar.memories.eventbus.ContactsFetchEvent;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Laps;
 import com.traveljar.memories.models.Place;

@@ -1,4 +1,4 @@
-package com.traveljar.memories.customevents;
+package com.traveljar.memories.eventbus;
 
 public class ContactsFetchEvent {
 

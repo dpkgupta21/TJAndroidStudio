@@ -1,4 +1,4 @@
-package com.traveljar.memories.customevents;
+package com.traveljar.memories.eventbus;
 
 import com.traveljar.memories.models.Video;
 
