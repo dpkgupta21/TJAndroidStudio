@@ -1,4 +1,4 @@
-package com.traveljar.memories.media;
+package com.traveljar.memories.picture;
 
 import android.content.Context;
 import android.content.res.Configuration;

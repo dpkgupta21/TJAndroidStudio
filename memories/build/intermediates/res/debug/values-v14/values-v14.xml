@@ -28,4 +28,8 @@
     </style>
     <style name="TextAppearance.StatusBar.EventContent.Time"/>
     <style name="TextAppearance.StatusBar.EventContent.Title" parent="@android:style/TextAppearance.StatusBar.EventContent.Title"/>
+    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.3.1/res/values-v14/values-v14.xml -->
+    <eat-comment/>
+    <style name="__LeakCanary.Base" parent="android:Theme.Holo">
+  </style>
 </resources>

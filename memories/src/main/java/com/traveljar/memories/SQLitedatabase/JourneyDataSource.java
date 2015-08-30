@@ -69,7 +69,6 @@ public class JourneyDataSource {
         List<Journey> journeyList = parseJourneysAsList(context, cursor);
         cursor.close();
         db.close();
-        Log.d(TAG, "journey fetched successfully");
         return journeyList.get(0);
     }
 
@@ -83,7 +82,6 @@ public class JourneyDataSource {
         List<String> buddyIds = new ArrayList<>();
         if (cursor.moveToFirst()) {
             String buddies = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_BUDDY_IDS));
-            Log.d(TAG, "Buddies ids list is = " + buddies);
             if (!buddies.isEmpty()) {
                 buddyIds = Arrays.asList(buddies.split(","));
             }
@@ -102,7 +100,6 @@ public class JourneyDataSource {
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         List<Journey> journeyList = parseJourneysAsList(context, cursor);
-        Log.d(TAG, "total active journeys fetched are " + journeyList.size());
         cursor.close();
         db.close();
         return journeyList;
@@ -152,7 +149,6 @@ public class JourneyDataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.JOURNEY_COLUMN_STATUS, journeyStatus);
         db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = " + journeyId, null);
-        Log.d(TAG, "journey status updated successfully");
         db.close();
     }
 
@@ -188,8 +184,6 @@ public class JourneyDataSource {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         db.update(MySQLiteHelper.TABLE_JOURNEY, values, MySQLiteHelper.JOURNEY_COLUMN_ID_ONSERVER + " = '" + journeyId + "'", null);
         db.close();
-        Log.d(TAG, "content values are " + values);
-        Log.d(TAG, "New buddy with id = " + contactId + " successfully added to the current journey with id = " + journeyId);
     }
 
     public static void removeContactFromJourney(Context context, String contactId, String journeyId) {

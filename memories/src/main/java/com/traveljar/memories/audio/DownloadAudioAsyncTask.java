@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.traveljar.memories.customevents.AudioDownloadEvent;
+import com.traveljar.memories.eventbus.AudioDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.utility.Constants;
 

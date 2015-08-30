@@ -48,7 +48,7 @@ public class DownloadTimeCapsuleAsyncTask extends AsyncTask<String, Integer, Str
         try {
             Log.d(TAG, "video server url is " + mTimeCapsule.getVideoServerURL());
             URL downloadUrl = new URL(mTimeCapsule.getVideoServerURL());
-            Log.d(TAG, "started downloading video");
+            Log.d(TAG, "started downloading video " + mTimeCapsule.getVideoServerURL());
             connection = (HttpURLConnection) downloadUrl.openConnection();
             connection.connect();
 
@@ -97,6 +97,7 @@ public class DownloadTimeCapsuleAsyncTask extends AsyncTask<String, Integer, Str
 
     @Override
     protected void onPostExecute(String result) {
+        Log.d(TAG, "download time capsule video" + (result == null ? "couldnot download video" : "video downloaded successfully"));
         if (result != null) {
             /*mListener.onVideoDownload(result, mVideo);*/
         }

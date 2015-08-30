@@ -21,10 +21,11 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.customevents.ContactsFetchEvent;
+import com.traveljar.memories.eventbus.ContactsFetchEvent;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.HelpMe;
+import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.volley.AppController;
 
 import org.json.JSONArray;
@@ -170,6 +171,7 @@ public class PullContactsService extends IntentService {
 
         jsonParams.put("phone_count", phoneLen.toString());
         jsonParams.put("email_count", emailLen.toString());
+        jsonParams.put("api_key", TJPreferences.getApiKey(this));
 
         for (int i = 0; i < phoneLen; i++) {
             jsonParams.put("phone_array[" + i + "]", allPhoneList.get(i));

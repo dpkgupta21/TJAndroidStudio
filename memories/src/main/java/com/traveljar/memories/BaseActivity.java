@@ -67,7 +67,7 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                SideMenuDrawer.getInstance().updateSelectedItemColor(selectedPosition);
+//                SideMenuDrawer.getInstance().updateSelectedItemColor(selectedPosition);
             }
         };
         drawerLayout.setDrawerListener(drawerToggle);

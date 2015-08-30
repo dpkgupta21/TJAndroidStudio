@@ -10,15 +10,16 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
+import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
-import com.traveljar.memories.customevents.CheckInDownloadEvent;
-import com.traveljar.memories.customevents.PictureDownloadEvent;
-import com.traveljar.memories.customevents.VideoDownloadEvent;
+import com.traveljar.memories.eventbus.CheckInDownloadEvent;
+import com.traveljar.memories.eventbus.PictureDownloadEvent;
+import com.traveljar.memories.eventbus.VideoDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Journey;
@@ -114,20 +115,13 @@ public class PullMemoriesService {
 
 
                                 JSONArray jsonArray = jsonObject.getJSONArray("buddy_ids");
-                                Log.d(TAG, "1.0 = " + idOnServer);
-                                Log.d(TAG, "1.1 = " + jsonArray);
                                 buddyList = new ArrayList<>();
                                 for (int j = 0; j < jsonArray.length(); j++) {
                                     buddyList.add(jsonArray.getString(j));
                                 }
 
-                                Log.d(TAG, "1.2 = " + buddyList);
-                                //Log.d(TAG, "Journey = " + idOnServer + " , buddyList = " + buddyList.size() + buddyList);
-
                                 buddyList.add(createdBy);
-                                Log.d(TAG, "1.3 = " + createdBy);
                                 buddyList.remove(TJPreferences.getUserId(mContext));
-                                Log.d(TAG, "1.4 = " + TJPreferences.getUserId(mContext));
 
                                 laps = jsonObject.getJSONArray("journey_laps");
                                 parseLaps(laps, idOnServer);
@@ -136,6 +130,14 @@ public class PullMemoriesService {
                                 journey = new Journey(idOnServer, name, tagLine, "friends",
                                         createdBy, null, buddyList, journeyStatus, createdAt, updatedAt, 0, isUserActive);
                                 JourneyDataSource.createJourney(journey, mContext);
+
+                                buddyList.add(TJPreferences.getUserId(mContext));
+                                ArrayList<String> nonExistingContacts = (ArrayList<String>) ContactDataSource.getNonExistingContacts(mContext, buddyList);
+                                if (nonExistingContacts != null && !nonExistingContacts.isEmpty()) {
+                                    Log.d(TAG, "some buddies need to be fetched from server hence fetching from server" + buddyList.size());
+//                                    registerEvent();
+                                    new PullBuddies(mContext.getApplicationContext(), nonExistingContacts, 0).fetchBuddies();
+                                }
 
                                 memoriesList = jsonObject.getJSONArray("memories");
                                 if (memoriesList != null) {

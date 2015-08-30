@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.traveljar.memories.R;
-import com.traveljar.memories.media.CameraPreview;
+import com.traveljar.memories.picture.CameraPreview;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 

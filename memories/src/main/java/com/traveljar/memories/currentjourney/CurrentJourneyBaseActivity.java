@@ -1,6 +1,8 @@
 package com.traveljar.memories.currentjourney;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.manager.RequestManagerRetriever;
 import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
@@ -42,29 +45,31 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
     public static void activityResumed() {
         activityVisible = true;
     }
-    public static void activityPaused() {
+    /*public static void activityPaused() {
         activityVisible = false;
-    }
+    }*/
 
-    private static CurrentJourneyBaseActivity instance;
+//    private static CurrentJourneyBaseActivity instance;
 
     public CurrentJourneyBaseActivity(){
         super(0);
-        instance = this;
+//        instance = this;
     }
 
-    public static CurrentJourneyBaseActivity getInstance(){
+    /*public static CurrentJourneyBaseActivity getInstance(){
         return instance == null ? new CurrentJourneyBaseActivity() : instance;
-    }
+    }*/
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_journey_base_activity);
 
+        Log.d(TAG, "instance of currentjourneyBaseActivity " + this + " " + this.isDestroyed());
         setUpToolbar();
         mViewPager = (ViewPager) findViewById(R.id.timeline_viewpager);
-        mTabsAdapter = new CurrentJourneyTabsAdapter(getSupportFragmentManager());
+        mTabsAdapter = new CurrentJourneyTabsAdapter(this.getSupportFragmentManager());
         mViewPager.setAdapter(mTabsAdapter);
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.timeline_sliding_tabs);
         mSlidingTabLayout.setDistributeEvenly(true);
@@ -80,6 +85,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
         title.setText(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getName().toUpperCase());
         //subtitle.setText(JourneyDataSource.getJourneyById(this, TJPreferences.getActiveJourneyId(getBaseContext())).getTagLine());
 
+        RequestManagerRetriever retriever;
         toolbar.inflateMenu(R.menu.current_journey_action_bar);
         toolbar.setTitle("Current Journeys");
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -149,7 +155,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
 
     @Override
     protected void onPause() {
-        activityPaused();
+//        activityPaused();
         super.onPause();
     }
 
@@ -162,7 +168,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
     public void refreshTimelineList(){
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.timeline_viewpager + ":" + mViewPager.getCurrentItem());
         if(fragment instanceof TimelineFragment){
-            TimelineFragment.getInstance().loadMemoriesList();
+//            TimelineFragment.getInstance().loadMemoriesList();
         }
     }
 
@@ -185,6 +191,12 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        instance = null;
+        super.onDestroy();
     }
 
 }

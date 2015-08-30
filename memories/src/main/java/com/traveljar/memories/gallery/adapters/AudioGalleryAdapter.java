@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
 import com.traveljar.memories.audio.DownloadAudioAsyncTask;
-import com.traveljar.memories.customevents.AudioDownloadEvent;
+import com.traveljar.memories.eventbus.AudioDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.utility.AudioPlayer;

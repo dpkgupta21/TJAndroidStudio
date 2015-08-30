@@ -26,6 +26,8 @@ import com.traveljar.memories.picture.DownloadPicture;
 import java.io.File;
 import java.util.List;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 public class ImageCarouselAdapter extends PagerAdapter implements DownloadPicture.OnPictureDownloadListener{
     private static final String TAG = "ImageCarouselAdapter";
     private Activity _activity;
@@ -35,6 +37,7 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
     //Used to store the view of button for which download is called so that on successful completion it can be set invisible
     private View downloadBtnView;
     private View image;
+    PhotoViewAttacher mAttacher;
 
     // constructor
     public ImageCarouselAdapter(Activity activity, List<Memories> pictureList) {
@@ -88,6 +91,9 @@ public class ImageCarouselAdapter extends PagerAdapter implements DownloadPictur
         }
 
         Glide.with(_activity).load(Uri.fromFile(new File(picPath))).asBitmap().into(imgDisplay);
+
+        // Attach a PhotoViewAttacher, which takes care of all of the zooming functionality.
+        mAttacher = new PhotoViewAttacher(imgDisplay);
 
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.squareup.leakcanary.LeakCanary;
 import com.traveljar.memories.models.Lap;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class AppController extends Application {
         super.onCreate();
         mInstance = this;
         lapList = new ArrayList<>();
+
+        LeakCanary.install(this);
     }
 
     public RequestQueue getRequestQueue() {

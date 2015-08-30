@@ -4,24 +4,32 @@ package com.traveljar.memories.currentjourney.adapters;
  * Created by abhi on 26/06/15.
  */
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
 import com.traveljar.memories.models.Timecapsule;
 import com.traveljar.memories.utility.HelpMe;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class TimecapsuleAdapter extends RecyclerView.Adapter<TimecapsuleAdapter.ViewHolder> {
     private ArrayList<Timecapsule> mDataset;
+    private Context context;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public TimecapsuleAdapter(ArrayList<Timecapsule> myDataset) {
+    public TimecapsuleAdapter(ArrayList<Timecapsule> myDataset, Context context) {
         mDataset = myDataset;
+        this.context = context;
     }
 
     public void add(int position, Timecapsule item) {
@@ -51,12 +59,21 @@ public class TimecapsuleAdapter extends RecyclerView.Adapter<TimecapsuleAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final Timecapsule TimecapsuleItem = mDataset.get(position);
-        final String bigDate = HelpMe.getDate(TimecapsuleItem.getCreatedAt(), HelpMe.DATE_ONLY);
-        final String day = HelpMe.getDate(TimecapsuleItem.getCreatedAt(), HelpMe.ONLY_DAY);
+        final Timecapsule timecapsuleItem = mDataset.get(position);
+        final String bigDate = HelpMe.getDate(timecapsuleItem.getCreatedAt(), HelpMe.DATE_ONLY);
+        final String day = HelpMe.getDate(timecapsuleItem.getCreatedAt(), HelpMe.ONLY_DAY);
 
         holder.txtNoteDate.setText(bigDate);
         holder.txtNoteDay.setText(day);
+        Glide.with(context).load(Uri.fromFile(new File(timecapsuleItem.getVideoLocalURL()))).into(holder.timeCapsuleCoverPic);
+        holder.timeCapsuleCoverPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(timecapsuleItem.getVideoLocalURL())));
+                mediaIntent.setDataAndType(Uri.fromFile(new File(timecapsuleItem.getVideoLocalURL())), "video/*");
+                context.startActivity(mediaIntent);
+            }
+        });
 
     }
 
@@ -73,11 +90,13 @@ public class TimecapsuleAdapter extends RecyclerView.Adapter<TimecapsuleAdapter.
         // each data item is just a string in this case
         public TextView txtNoteDate;
         public TextView txtNoteDay;
+        public ImageView timeCapsuleCoverPic;
 
         public ViewHolder(View v) {
             super(v);
             txtNoteDate = (TextView) v.findViewById(R.id.cur_journey_timecapsule_item_big_date);
             txtNoteDay = (TextView) v.findViewById(R.id.cur_journey_timecapsule_item_day);
+            timeCapsuleCoverPic = (ImageView) v.findViewById(R.id.timecapsule_cover_pic);
         }
     }
 

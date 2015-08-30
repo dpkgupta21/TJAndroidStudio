@@ -8,11 +8,11 @@ public class Constants {
 
     // BASE DOMAIN API
     public final static String URL_TJ_DOMAIN = "https://www.traveljar.in/";
-//    public final static String URL_TJ_DOMAIN = "http://localhost:3000/";
+//    public final static String URL_TJ_DOMAIN = "http://192.168.1.10:3000/";
 
     // 1. USER APIS
 
-    public static final String URL_BASE = "https://www.traveljar.in/api/v1/";
+    public static final String URL_BASE = "https://www.traveljar.in/";
 
     public static final String URL_SIGN_IN = URL_TJ_DOMAIN + "api/v1/users/login";
     public static final String URL_SIGN_UP = URL_TJ_DOMAIN + "api/v1/users";

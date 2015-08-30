@@ -28,7 +28,7 @@ import java.util.List;
 public class TimelineFragment extends Fragment {
 
     private static final String TAG = "<TimelineFragment>";
-    public static TimeLineAdapter mAdapter;
+    public TimeLineAdapter mAdapter;
     private ListView mListView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FloatingActionsMenu mFab;
@@ -42,18 +42,17 @@ public class TimelineFragment extends Fragment {
 
     private static TimelineFragment instance;
 
-    public TimelineFragment() {
+    /*public TimelineFragment() {
         instance = this;
-    }
+    }*/
 
-    public static TimelineFragment getInstance() {
+    /*public static TimelineFragment getInstance() {
         return instance == null ? new TimelineFragment() : instance;
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.timeline_list, container, false);
-        Log.d(TAG, "onactivitycreated() method called from timeline");
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -64,6 +63,8 @@ public class TimelineFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), MakeServerRequestsService.class);
         getActivity().startService(intent);
+
+        Log.d(TAG, "timeline fragment context is " + getActivity() + " " + getActivity().isDestroyed());
 
         mLayout = (RelativeLayout) rootView.findViewById(R.id.timeline_layout);
 

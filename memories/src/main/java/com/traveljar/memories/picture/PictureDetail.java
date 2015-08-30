@@ -117,16 +117,9 @@ public class PictureDetail extends AppCompatActivity implements DownloadPicture.
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPicture.getDataLocalURL() == null) {
-                    pDialog.setMessage("Please wait while the picture is getting downloaded");
-                    pDialog.show();
-                    new DownloadPicture(mPicture, PictureDetail.this).startDownloadingPic();
-                } else {
-                    Log.d(TAG, "profile pic is already present in the local so displaying it");
-                    Intent intent = new Intent(PictureDetail.this, PictureFullScreen.class);
-                    intent.putExtra("PICTURE_PATH", mPicture.getDataLocalURL());
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(PictureDetail.this, PictureFullScreen.class);
+                intent.putExtra("PICTURE_PATH", mPicture.getPicThumbnailPath());
+                startActivity(intent);
             }
         });
 

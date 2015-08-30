@@ -462,6 +462,9 @@
     <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/design/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <item name="view_offset_helper" type="id"/>
+    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.3.1/res/values/values.xml -->
+    <eat-comment/>
+    <integer name="__leak_canary_max_stored_leaks">7</integer>
     <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <integer name="abc_config_activityDefaultDur">220</integer>
@@ -477,6 +480,22 @@
     <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <integer name="status_bar_notification_info_maxnum">999</integer>
+    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.3.1/res/values/values.xml -->
+    <eat-comment/>
+    <string name="__leak_canary_analysis_failed">Leak analysis failed</string>
+    <string name="__leak_canary_class_has_leaked">%s has leaked</string>
+    <string name="__leak_canary_delete">Delete</string>
+    <string name="__leak_canary_delete_all">Delete all</string>
+    <string name="__leak_canary_display_activity_label">Leaks</string>
+    <string name="__leak_canary_failure_report">"Please report this failure to http://github.com/square/leakcanary\n"</string>
+    <string name="__leak_canary_leak_list_title">Leaks in %s</string>
+    <string name="__leak_canary_notification_message">Click for more details</string>
+    <string name="__leak_canary_share_heap_dump">Share heap dump</string>
+    <string name="__leak_canary_share_leak">Share info</string>
+    <string name="__leak_canary_share_with">Share with…</string>
+    <string name="__leak_canary_toast_heap_dump">Dumping memory, app will freeze. Brrrr.</string>
+    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
     <string name="abc_action_bar_home_subtitle_description_format">%1$s, %2$s, %3$s</string>
@@ -1989,6 +2008,10 @@
         <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
         <item name="errorTextAppearance">@style/TextAppearance.Design.Error</item>
     </style>
+    <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.3.1/res/values/values.xml -->
+    <eat-comment/>
+    <style name="__LeakCanary.Base" parent="android:Theme">
+  </style>
     <!-- From: file:/media/ankit/6C4C-C295/traveljar/TJAndroidStudio/memories/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="menu_labels_style">

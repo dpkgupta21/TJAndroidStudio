@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.ContactDataSource;
-import com.traveljar.memories.customevents.ContactsFetchEvent;
+import com.traveljar.memories.eventbus.ContactsFetchEvent;
 import com.traveljar.memories.models.Contact;
 import com.traveljar.memories.newjourney.adapters.AllFriendsListAdapter;
 import com.traveljar.memories.services.PullContactsService;

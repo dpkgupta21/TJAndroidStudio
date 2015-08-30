@@ -30,6 +30,9 @@ MERGED from com.google.android.gms:play-services:6.1.71:15:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.android.support:cardview-v7:21.0.3:15:5
 MERGED from de.hdodenhof:circleimageview:1.3.0:5:5
+MERGED from com.github.chrisbanes.photoview:library:1.2.3:2:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.squareup.leakcanary:leakcanary-android:1.3.1:20:5
 	android:targetSdkVersion
 		ADDED from AndroidManifest.xml:9:9
 		INJECTED from AndroidManifest.xml:0:0
@@ -52,6 +55,7 @@ ADDED from AndroidManifest.xml:13:5
 		ADDED from AndroidManifest.xml:13:22
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:14:5
+MERGED from com.squareup.leakcanary:leakcanary-android:1.3.1:25:5
 	android:name
 		ADDED from AndroidManifest.xml:14:22
 uses-permission#android.permission.ACCESS_FINE_LOCATION
@@ -119,12 +123,17 @@ MERGED from com.google.android.gms:play-services:6.1.71:16:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from com.android.support:cardview-v7:21.0.3:16:5
 MERGED from de.hdodenhof:circleimageview:1.3.0:9:5
+MERGED from com.github.chrisbanes.photoview:library:1.2.3:4:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from com.squareup.leakcanary:leakcanary-android:1.3.1:27:5
 	android:label
 		ADDED from AndroidManifest.xml:34:9
 	android:allowBackup
 		ADDED from AndroidManifest.xml:31:9
 	android:icon
 		ADDED from AndroidManifest.xml:33:9
+	android:hardwareAccelerated
+		ADDED from com.github.chrisbanes.photoview:library:1.2.3:4:45
 	android:theme
 		ADDED from AndroidManifest.xml:35:9
 	android:largeHeap
@@ -201,317 +210,327 @@ ADDED from AndroidManifest.xml:78:9
 		ADDED from AndroidManifest.xml:81:13
 	android:name
 		ADDED from AndroidManifest.xml:79:13
-activity#com.traveljar.memories.picture.PictureCapture
+activity#com.traveljar.memories.picture.PictureCaptureBaseActivity
 ADDED from AndroidManifest.xml:82:9
 	android:label
 		ADDED from AndroidManifest.xml:84:13
 	android:name
 		ADDED from AndroidManifest.xml:83:13
-activity#com.traveljar.memories.picture.PictureCaptureBaseActivity
+activity#com.traveljar.memories.moods.MoodCapture
 ADDED from AndroidManifest.xml:85:9
 	android:label
-		ADDED from AndroidManifest.xml:87:13
+		ADDED from AndroidManifest.xml:88:13
 	android:name
 		ADDED from AndroidManifest.xml:86:13
-activity#com.traveljar.memories.moods.MoodCapture
-ADDED from AndroidManifest.xml:88:9
-	android:label
-		ADDED from AndroidManifest.xml:91:13
-	android:name
-		ADDED from AndroidManifest.xml:89:13
 activity#com.traveljar.memories.audio.AudioCapture
-ADDED from AndroidManifest.xml:92:9
+ADDED from AndroidManifest.xml:89:9
 	android:label
-		ADDED from AndroidManifest.xml:95:13
+		ADDED from AndroidManifest.xml:92:13
 	android:name
-		ADDED from AndroidManifest.xml:93:13
+		ADDED from AndroidManifest.xml:90:13
 activity#com.traveljar.memories.gallery.GalleryAudios
-ADDED from AndroidManifest.xml:96:9
+ADDED from AndroidManifest.xml:93:9
 	android:label
-		ADDED from AndroidManifest.xml:99:13
+		ADDED from AndroidManifest.xml:96:13
 	android:name
-		ADDED from AndroidManifest.xml:97:13
+		ADDED from AndroidManifest.xml:94:13
 activity#com.traveljar.memories.picture.PictureDetail
-ADDED from AndroidManifest.xml:100:9
+ADDED from AndroidManifest.xml:97:9
 	android:label
-		ADDED from AndroidManifest.xml:103:13
+		ADDED from AndroidManifest.xml:100:13
 	android:name
-		ADDED from AndroidManifest.xml:101:13
+		ADDED from AndroidManifest.xml:98:13
 activity#com.traveljar.memories.picture.PicturePreview
-ADDED from AndroidManifest.xml:104:9
+ADDED from AndroidManifest.xml:101:9
 	android:label
-		ADDED from AndroidManifest.xml:107:13
+		ADDED from AndroidManifest.xml:104:13
 	android:name
-		ADDED from AndroidManifest.xml:105:13
+		ADDED from AndroidManifest.xml:102:13
 activity#com.traveljar.memories.gallery.GalleryPhotos
-ADDED from AndroidManifest.xml:108:9
+ADDED from AndroidManifest.xml:105:9
 	android:label
-		ADDED from AndroidManifest.xml:111:13
+		ADDED from AndroidManifest.xml:108:13
 	android:name
-		ADDED from AndroidManifest.xml:109:13
+		ADDED from AndroidManifest.xml:106:13
 activity#com.traveljar.memories.gallery.GalleryBaseActivity
-ADDED from AndroidManifest.xml:112:9
+ADDED from AndroidManifest.xml:109:9
 	android:label
-		ADDED from AndroidManifest.xml:115:13
+		ADDED from AndroidManifest.xml:112:13
 	android:name
-		ADDED from AndroidManifest.xml:113:13
+		ADDED from AndroidManifest.xml:110:13
 activity#com.traveljar.memories.gallery.GalleryPhotoDetail
-ADDED from AndroidManifest.xml:116:9
+ADDED from AndroidManifest.xml:113:9
 	android:label
-		ADDED from AndroidManifest.xml:119:13
+		ADDED from AndroidManifest.xml:116:13
 	android:theme
-		ADDED from AndroidManifest.xml:120:13
-	android:name
 		ADDED from AndroidManifest.xml:117:13
+	android:name
+		ADDED from AndroidManifest.xml:114:13
 activity#com.traveljar.memories.pastjourney.PastJourneyList
-ADDED from AndroidManifest.xml:121:9
+ADDED from AndroidManifest.xml:118:9
 	android:label
-		ADDED from AndroidManifest.xml:124:13
+		ADDED from AndroidManifest.xml:121:13
 	android:name
-		ADDED from AndroidManifest.xml:122:13
+		ADDED from AndroidManifest.xml:119:13
 activity#com.traveljar.memories.newjourney.SelectedFriendsList
-ADDED from AndroidManifest.xml:125:9
+ADDED from AndroidManifest.xml:122:9
 	android:label
-		ADDED from AndroidManifest.xml:128:13
+		ADDED from AndroidManifest.xml:125:13
 	android:name
-		ADDED from AndroidManifest.xml:126:13
+		ADDED from AndroidManifest.xml:123:13
 activity#com.traveljar.memories.newjourney.AllFriendsList
-ADDED from AndroidManifest.xml:129:9
+ADDED from AndroidManifest.xml:126:9
 	android:label
-		ADDED from AndroidManifest.xml:132:13
+		ADDED from AndroidManifest.xml:129:13
 	android:name
-		ADDED from AndroidManifest.xml:130:13
+		ADDED from AndroidManifest.xml:127:13
 activity#com.traveljar.memories.newjourney.NewJourneyDetail
-ADDED from AndroidManifest.xml:133:9
+ADDED from AndroidManifest.xml:130:9
 	android:label
-		ADDED from AndroidManifest.xml:136:13
+		ADDED from AndroidManifest.xml:133:13
 	android:name
-		ADDED from AndroidManifest.xml:134:13
+		ADDED from AndroidManifest.xml:131:13
 activity#com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity
-ADDED from AndroidManifest.xml:137:9
+ADDED from AndroidManifest.xml:134:9
 	android:label
-		ADDED from AndroidManifest.xml:140:13
+		ADDED from AndroidManifest.xml:137:13
 	android:name
-		ADDED from AndroidManifest.xml:138:13
+		ADDED from AndroidManifest.xml:135:13
 activity#com.traveljar.memories.currentjourney.JourneyInfoFriendsList
-ADDED from AndroidManifest.xml:141:9
+ADDED from AndroidManifest.xml:138:9
 	android:label
-		ADDED from AndroidManifest.xml:144:13
+		ADDED from AndroidManifest.xml:141:13
 	android:name
-		ADDED from AndroidManifest.xml:142:13
+		ADDED from AndroidManifest.xml:139:13
 activity#com.traveljar.memories.newjourney.AddLap
-ADDED from AndroidManifest.xml:145:9
+ADDED from AndroidManifest.xml:142:9
 	android:label
-		ADDED from AndroidManifest.xml:148:13
+		ADDED from AndroidManifest.xml:145:13
 	android:name
-		ADDED from AndroidManifest.xml:146:13
+		ADDED from AndroidManifest.xml:143:13
 activity#com.traveljar.memories.newjourney.LapsList
-ADDED from AndroidManifest.xml:149:9
+ADDED from AndroidManifest.xml:146:9
 	android:label
-		ADDED from AndroidManifest.xml:152:13
+		ADDED from AndroidManifest.xml:149:13
 	android:name
-		ADDED from AndroidManifest.xml:150:13
+		ADDED from AndroidManifest.xml:147:13
 activity#com.traveljar.memories.newjourney.LocationList
-ADDED from AndroidManifest.xml:153:9
+ADDED from AndroidManifest.xml:150:9
 	android:label
-		ADDED from AndroidManifest.xml:156:13
+		ADDED from AndroidManifest.xml:153:13
 	android:name
-		ADDED from AndroidManifest.xml:154:13
+		ADDED from AndroidManifest.xml:151:13
 activity#com.traveljar.memories.profile.ProfileActivity
-ADDED from AndroidManifest.xml:157:9
+ADDED from AndroidManifest.xml:154:9
 	android:label
-		ADDED from AndroidManifest.xml:160:13
+		ADDED from AndroidManifest.xml:157:13
 	android:name
-		ADDED from AndroidManifest.xml:158:13
+		ADDED from AndroidManifest.xml:155:13
 activity#com.traveljar.memories.profile.ChangePassword
-ADDED from AndroidManifest.xml:161:9
+ADDED from AndroidManifest.xml:158:9
 	android:label
-		ADDED from AndroidManifest.xml:164:13
+		ADDED from AndroidManifest.xml:161:13
 	android:name
-		ADDED from AndroidManifest.xml:162:13
+		ADDED from AndroidManifest.xml:159:13
 activity#com.traveljar.memories.audio.AudioDetail
-ADDED from AndroidManifest.xml:165:9
+ADDED from AndroidManifest.xml:162:9
 	android:label
-		ADDED from AndroidManifest.xml:168:13
+		ADDED from AndroidManifest.xml:165:13
 	android:name
-		ADDED from AndroidManifest.xml:166:13
+		ADDED from AndroidManifest.xml:163:13
 activity#com.traveljar.memories.video.CaptureVideo
-ADDED from AndroidManifest.xml:170:9
+ADDED from AndroidManifest.xml:167:9
 	android:label
-		ADDED from AndroidManifest.xml:173:13
+		ADDED from AndroidManifest.xml:170:13
 	android:name
-		ADDED from AndroidManifest.xml:171:13
+		ADDED from AndroidManifest.xml:168:13
 activity#com.traveljar.memories.video.VideoDetail
-ADDED from AndroidManifest.xml:174:9
+ADDED from AndroidManifest.xml:171:9
 	android:label
-		ADDED from AndroidManifest.xml:177:13
+		ADDED from AndroidManifest.xml:174:13
 	android:name
-		ADDED from AndroidManifest.xml:175:13
+		ADDED from AndroidManifest.xml:172:13
 activity#com.traveljar.memories.video.VideoPreview
-ADDED from AndroidManifest.xml:178:9
+ADDED from AndroidManifest.xml:175:9
 	android:label
-		ADDED from AndroidManifest.xml:181:13
+		ADDED from AndroidManifest.xml:178:13
 	android:name
-		ADDED from AndroidManifest.xml:179:13
+		ADDED from AndroidManifest.xml:176:13
 activity#com.traveljar.memories.gallery.GalleryVideos
-ADDED from AndroidManifest.xml:182:9
+ADDED from AndroidManifest.xml:179:9
 	android:label
-		ADDED from AndroidManifest.xml:185:13
+		ADDED from AndroidManifest.xml:182:13
 	android:name
-		ADDED from AndroidManifest.xml:183:13
+		ADDED from AndroidManifest.xml:180:13
 activity#com.traveljar.memories.note.CreateNotes
-ADDED from AndroidManifest.xml:186:9
+ADDED from AndroidManifest.xml:183:9
 	android:label
-		ADDED from AndroidManifest.xml:189:13
+		ADDED from AndroidManifest.xml:186:13
 	android:name
-		ADDED from AndroidManifest.xml:187:13
+		ADDED from AndroidManifest.xml:184:13
 activity#com.traveljar.memories.note.NoteDetail
-ADDED from AndroidManifest.xml:190:9
+ADDED from AndroidManifest.xml:187:9
 	android:label
-		ADDED from AndroidManifest.xml:193:13
+		ADDED from AndroidManifest.xml:190:13
 	android:name
-		ADDED from AndroidManifest.xml:191:13
+		ADDED from AndroidManifest.xml:188:13
 activity#com.traveljar.memories.gallery.GalleryNotes
-ADDED from AndroidManifest.xml:194:9
+ADDED from AndroidManifest.xml:191:9
 	android:label
-		ADDED from AndroidManifest.xml:197:13
+		ADDED from AndroidManifest.xml:194:13
 	android:name
-		ADDED from AndroidManifest.xml:195:13
+		ADDED from AndroidManifest.xml:192:13
 activity#com.traveljar.memories.moods.MoodSelectFriends
-ADDED from AndroidManifest.xml:198:9
+ADDED from AndroidManifest.xml:195:9
 	android:label
-		ADDED from AndroidManifest.xml:201:13
+		ADDED from AndroidManifest.xml:198:13
 	android:name
-		ADDED from AndroidManifest.xml:199:13
+		ADDED from AndroidManifest.xml:196:13
 activity#com.traveljar.memories.moods.MoodDetail
-ADDED from AndroidManifest.xml:202:9
+ADDED from AndroidManifest.xml:199:9
 	android:label
-		ADDED from AndroidManifest.xml:205:13
+		ADDED from AndroidManifest.xml:202:13
 	android:name
-		ADDED from AndroidManifest.xml:203:13
+		ADDED from AndroidManifest.xml:200:13
 activity#com.traveljar.memories.activejourney.ActivejourneyList
-ADDED from AndroidManifest.xml:207:9
+ADDED from AndroidManifest.xml:204:9
 	android:label
-		ADDED from AndroidManifest.xml:210:13
+		ADDED from AndroidManifest.xml:207:13
 	android:name
-		ADDED from AndroidManifest.xml:208:13
+		ADDED from AndroidManifest.xml:205:13
 activity#com.traveljar.memories.currentjourney.JourneyInfo
-ADDED from AndroidManifest.xml:212:9
+ADDED from AndroidManifest.xml:209:9
 	android:label
-		ADDED from AndroidManifest.xml:215:13
+		ADDED from AndroidManifest.xml:212:13
 	android:name
-		ADDED from AndroidManifest.xml:213:13
+		ADDED from AndroidManifest.xml:210:13
 activity#com.traveljar.memories.picture.PictureFullScreen
-ADDED from AndroidManifest.xml:217:9
+ADDED from AndroidManifest.xml:214:9
 	android:label
-		ADDED from AndroidManifest.xml:220:13
+		ADDED from AndroidManifest.xml:217:13
 	android:name
-		ADDED from AndroidManifest.xml:218:13
+		ADDED from AndroidManifest.xml:215:13
 activity#com.traveljar.memories.settings.Settings
-ADDED from AndroidManifest.xml:222:9
+ADDED from AndroidManifest.xml:219:9
 	android:label
-		ADDED from AndroidManifest.xml:225:13
+		ADDED from AndroidManifest.xml:222:13
 	android:name
-		ADDED from AndroidManifest.xml:223:13
+		ADDED from AndroidManifest.xml:220:13
 activity#com.traveljar.memories.settings.AccountSettings
-ADDED from AndroidManifest.xml:227:9
+ADDED from AndroidManifest.xml:224:9
 	android:label
-		ADDED from AndroidManifest.xml:230:13
+		ADDED from AndroidManifest.xml:227:13
 	android:name
-		ADDED from AndroidManifest.xml:228:13
+		ADDED from AndroidManifest.xml:225:13
 activity#com.traveljar.memories.currentjourney.TimecapsulePlayer
-ADDED from AndroidManifest.xml:232:9
+ADDED from AndroidManifest.xml:229:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:234:13
+		ADDED from AndroidManifest.xml:231:13
 	android:label
-		ADDED from AndroidManifest.xml:235:13
+		ADDED from AndroidManifest.xml:232:13
 	android:name
-		ADDED from AndroidManifest.xml:233:13
+		ADDED from AndroidManifest.xml:230:13
 activity#com.traveljar.memories.media.CaptureMedia
-ADDED from AndroidManifest.xml:237:9
+ADDED from AndroidManifest.xml:234:9
 	android:label
-		ADDED from AndroidManifest.xml:239:13
+		ADDED from AndroidManifest.xml:236:13
 	android:name
-		ADDED from AndroidManifest.xml:238:13
+		ADDED from AndroidManifest.xml:235:13
 service#com.traveljar.memories.services.PullContactsService
-ADDED from AndroidManifest.xml:242:9
+ADDED from AndroidManifest.xml:239:9
 	android:exported
-		ADDED from AndroidManifest.xml:244:13
+		ADDED from AndroidManifest.xml:241:13
 	android:name
-		ADDED from AndroidManifest.xml:243:13
-service#com.traveljar.memories.picture.UploadPictureService
-ADDED from AndroidManifest.xml:246:9
-	android:exported
-		ADDED from AndroidManifest.xml:248:13
-	android:name
-		ADDED from AndroidManifest.xml:247:13
-service#com.traveljar.memories.video.UploadVideoService
-ADDED from AndroidManifest.xml:250:9
-	android:exported
-		ADDED from AndroidManifest.xml:252:13
-	android:name
-		ADDED from AndroidManifest.xml:251:13
+		ADDED from AndroidManifest.xml:240:13
 service#com.traveljar.memories.services.MakeServerRequestsService
-ADDED from AndroidManifest.xml:253:9
+ADDED from AndroidManifest.xml:243:9
 	android:exported
-		ADDED from AndroidManifest.xml:255:13
+		ADDED from AndroidManifest.xml:245:13
 	android:name
-		ADDED from AndroidManifest.xml:254:13
+		ADDED from AndroidManifest.xml:244:13
 receiver#com.traveljar.memories.utility.SMSReceiver
-ADDED from AndroidManifest.xml:258:9
+ADDED from AndroidManifest.xml:248:9
 	android:exported
-		ADDED from AndroidManifest.xml:261:13
+		ADDED from AndroidManifest.xml:251:13
 	android:enabled
-		ADDED from AndroidManifest.xml:260:13
+		ADDED from AndroidManifest.xml:250:13
 	android:name
-		ADDED from AndroidManifest.xml:259:13
+		ADDED from AndroidManifest.xml:249:13
 intent-filter#android.provider.Telephony.SMS_RECEIVED
-ADDED from AndroidManifest.xml:262:13
+ADDED from AndroidManifest.xml:252:13
 	android:priority
-		ADDED from AndroidManifest.xml:262:28
+		ADDED from AndroidManifest.xml:252:28
 action#android.provider.Telephony.SMS_RECEIVED
-ADDED from AndroidManifest.xml:263:17
+ADDED from AndroidManifest.xml:253:17
 	android:name
-		ADDED from AndroidManifest.xml:263:25
+		ADDED from AndroidManifest.xml:253:25
 meta-data#com.google.android.gms.version
-ADDED from AndroidManifest.xml:267:9
+ADDED from AndroidManifest.xml:257:9
 	android:name
-		ADDED from AndroidManifest.xml:268:13
+		ADDED from AndroidManifest.xml:258:13
 	android:value
-		ADDED from AndroidManifest.xml:269:13
+		ADDED from AndroidManifest.xml:259:13
 receiver#com.traveljar.memories.gcm.GcmBroadcastReceiver
-ADDED from AndroidManifest.xml:278:9
+ADDED from AndroidManifest.xml:268:9
 	android:permission
-		ADDED from AndroidManifest.xml:280:13
+		ADDED from AndroidManifest.xml:270:13
 	android:name
-		ADDED from AndroidManifest.xml:279:13
+		ADDED from AndroidManifest.xml:269:13
 intent-filter#com.example.memories+com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:281:13
+ADDED from AndroidManifest.xml:271:13
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from AndroidManifest.xml:284:17
+ADDED from AndroidManifest.xml:274:17
 	android:name
-		ADDED from AndroidManifest.xml:284:25
+		ADDED from AndroidManifest.xml:274:25
 action#com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:286:17
+ADDED from AndroidManifest.xml:276:17
 	android:name
-		ADDED from AndroidManifest.xml:286:25
+		ADDED from AndroidManifest.xml:276:25
 category#com.example.memories
-ADDED from AndroidManifest.xml:288:17
+ADDED from AndroidManifest.xml:278:17
 	android:name
-		ADDED from AndroidManifest.xml:288:27
+		ADDED from AndroidManifest.xml:278:27
 receiver#com.traveljar.memories.services.NetworkStateBroadCastReceiver
-ADDED from AndroidManifest.xml:292:9
+ADDED from AndroidManifest.xml:282:9
 	android:label
-		ADDED from AndroidManifest.xml:293:13
+		ADDED from AndroidManifest.xml:283:13
 	android:name
-		ADDED from AndroidManifest.xml:292:19
+		ADDED from AndroidManifest.xml:282:19
 intent-filter#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from AndroidManifest.xml:294:13
+ADDED from AndroidManifest.xml:284:13
 action#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from AndroidManifest.xml:295:17
+ADDED from AndroidManifest.xml:285:17
 	android:name
-		ADDED from AndroidManifest.xml:295:25
+		ADDED from AndroidManifest.xml:285:25
 service#com.traveljar.memories.gcm.GcmIntentService
-ADDED from AndroidManifest.xml:305:9
+ADDED from AndroidManifest.xml:295:9
 	android:name
-		ADDED from AndroidManifest.xml:305:18
+		ADDED from AndroidManifest.xml:295:18
+service#com.squareup.leakcanary.internal.HeapAnalyzerService
+ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:28:9
+	android:process
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:31:13
+	android:enabled
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:30:13
+	android:name
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:29:13
+service#com.squareup.leakcanary.DisplayLeakService
+ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:32:9
+	android:enabled
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:34:13
+	android:name
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:33:13
+activity#com.squareup.leakcanary.internal.DisplayLeakActivity
+ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:36:9
+	android:label
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:40:13
+	android:icon
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:39:13
+	android:theme
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:42:13
+	android:enabled
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:38:13
+	android:taskAffinity
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:41:13
+	android:name
+		ADDED from com.squareup.leakcanary:leakcanary-android:1.3.1:37:13

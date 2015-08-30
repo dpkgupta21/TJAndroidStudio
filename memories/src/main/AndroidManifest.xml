@@ -80,9 +80,6 @@
             
             android:label="@string/app_name" />
         <activity
-            android:name=".picture.PictureCapture"
-            android:label="@string/app_name" />
-        <activity
             android:name=".picture.PictureCaptureBaseActivity"
             android:label="@string/app_name" />
         <activity
@@ -243,13 +240,6 @@
             android:name=".services.PullContactsService"
             android:exported="false" />
 
-        <service
-            android:name=".picture.UploadPictureService"
-            android:exported="false" />
-
-        <service
-            android:name=".video.UploadVideoService"
-            android:exported="false" />
         <service
             android:name=".services.MakeServerRequestsService"
             android:exported="false" />

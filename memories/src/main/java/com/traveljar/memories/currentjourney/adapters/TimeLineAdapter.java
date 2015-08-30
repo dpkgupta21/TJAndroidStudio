@@ -22,7 +22,7 @@ import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.audio.AudioDetail;
 import com.traveljar.memories.audio.DownloadAudioAsyncTask;
 import com.traveljar.memories.checkin.CheckinDetail;
-import com.traveljar.memories.customevents.AudioDownloadEvent;
+import com.traveljar.memories.eventbus.AudioDownloadEvent;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
 import com.traveljar.memories.models.Contact;

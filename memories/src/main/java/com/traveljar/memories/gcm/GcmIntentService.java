@@ -20,7 +20,6 @@ import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
-import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.currentjourney.DownloadTimeCapsuleAsyncTask;
 import com.traveljar.memories.models.Audio;
 import com.traveljar.memories.models.CheckIn;
@@ -187,7 +186,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 memId = bundle.getString("memory_id");
                 memType = bundle.getString("memory_type");
                 MemoriesDataSource.deleteMemoryWithServerId(this, memType, memId);
-                if(CurrentJourneyBaseActivity.isActivityVisible()){
+                /*if(CurrentJourneyBaseActivity.isActivityVisible()){
                     Thread thread = new Thread(){
                             @Override
                             public void run() {
@@ -208,7 +207,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                             }
                         };
                         thread.start();
-                    }
+                    }*/
                 break;
 
             case HelpMe.TYPE_LIKE_MEMORY:
@@ -253,9 +252,9 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 journeyId = bundle.getString("journey_id");
                 if(buddyId.equals(TJPreferences.getUserId(this))){
                     JourneyDataSource.updateUserActiveStatus(this, journeyId, false);
-                    if(CurrentJourneyBaseActivity.isActivityVisible()){
+                    /*if(CurrentJourneyBaseActivity.isActivityVisible()){
                         CurrentJourneyBaseActivity.getInstance().refreshTimelineFragment();
-                    }
+                    }*/
                 }
                 journey = JourneyDataSource.getJourneyById(this, journeyId);
                 message = "A new friend has been added to the journey " + journey.getName();
@@ -291,14 +290,14 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
             case HelpMe.TYPE_END_JOURNEY:
                 journeyId = bundle.getString("journey_id");
                 JourneyDataSource.updateJourneyStatus(this, journeyId, Constants.JOURNEY_STATUS_FINISHED);
-                if(CurrentJourneyBaseActivity.isActivityVisible()){
+                /*if(CurrentJourneyBaseActivity.isActivityVisible()){
                     CurrentJourneyBaseActivity.getInstance().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             CurrentJourneyBaseActivity.getInstance().endJourney(journeyId);
                         }
                     });
-                }
+                }*/
                 if(ActivejourneyList.isActivityVisible()){
                     ActivejourneyList.getInstance().runOnUiThread(new Runnable() {
                         @Override

@@ -3,18 +3,15 @@ package com.traveljar.memories.utility;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.traveljar.memories.SQLitedatabase.PictureDataSource;
-import com.traveljar.memories.customevents.PictureDownloadEvent;
+import com.traveljar.memories.eventbus.PictureDownloadEvent;
 import com.traveljar.memories.models.Picture;
 import com.traveljar.memories.services.PullMemoriesService;
 import com.traveljar.memories.volley.AppController;
-import com.traveljar.memories.volley.CustomJsonRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -28,8 +25,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -39,16 +34,11 @@ public class PictureUtilities {
 
     private static PictureUtilities instance;
 
-//    private static OnFinishDownloadListener finishListener;
-
     public static PictureUtilities getInstance(){
         if(instance == null)
             instance = new PictureUtilities();
         return instance;
     }
-/*    public void setOnFinishDownloadListener(OnFinishDownloadListener listener){
-        finishListener = listener;
-    }*/
 
     public void createNewPicFromServer(final Context context, final Picture pic, String thumbUrl, final int downloadRequesterCode) {
         final String imagePath = Constants.TRAVELJAR_FOLDER_PICTURE + "thumb_" + TJPreferences.getUserId(context) + "_"+ pic.getjId() + "_"+ pic.getCreatedAt() + ".jpg";
@@ -131,33 +121,6 @@ public class PictureUtilities {
             return false;
         }
         //parsing response received from server
-    }
-
-    public static void updateCaption(final Picture picture, final String caption, final Context context){
-        if(!HelpMe.isNetworkAvailable(context)){
-            Toast.makeText(context, "Network unavailable please try after some time", Toast.LENGTH_SHORT).show();
-        }else {
-            String url = Constants.URL_MEMORY_UPDATE + TJPreferences.getActiveJourneyId(context) + "/pictures/" + picture.getIdOnServer();
-            Map<String, String> params = new HashMap<>();
-            params.put("api_key", TJPreferences.getApiKey(context));
-            params.put("picture[description]", TJPreferences.getApiKey(context));
-            CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
-                    new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d(TAG, "picture caption updated successfully" + response);
-                            PictureDataSource.updateCaption(context, caption, picture.getId());
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d(TAG, "error in updating picture caption" + error);
-                    error.printStackTrace();
-                }
-            });
-            AppController.getInstance().addToRequestQueue(uploadRequest);
-        }
     }
 
 }

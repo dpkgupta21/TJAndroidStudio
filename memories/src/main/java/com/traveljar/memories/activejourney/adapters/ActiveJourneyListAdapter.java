@@ -14,18 +14,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.traveljar.memories.R;
-import com.traveljar.memories.SQLitedatabase.ContactDataSource;
 import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
-import com.traveljar.memories.customevents.ContactsFetchEvent;
+import com.traveljar.memories.eventbus.ContactsFetchEvent;
 import com.traveljar.memories.models.Journey;
 import com.traveljar.memories.models.Laps;
 import com.traveljar.memories.models.Place;
-import com.traveljar.memories.services.PullBuddies;
 import com.traveljar.memories.utility.TJPreferences;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -153,37 +150,10 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
             Journey journey = mDataset.get(getLayoutPosition());
             TJPreferences.setActiveJourneyId(mContext, journey.getIdOnServer());
 
-            // Fetch all those contacts which are not in the contacts list of current user but are on the journey
-            Log.d(TAG, "buddies from journey " + journey.getBuddies());
-            if (journey.getBuddies() != null && !journey.getBuddies().isEmpty()) {
-                Log.d(TAG, "buddies are = " + journey.getBuddies());
-                ArrayList<String> buddyList = (ArrayList<String>) ContactDataSource.getNonExistingContacts(mContext, journey.getBuddies());
-
-                Log.d(TAG, "non existing contacts list is" + buddyList);
-
-                if (buddyList != null && !buddyList.isEmpty()) {
-                    Log.d(TAG, "some buddies need to be fetched from server hence fetching from server" + buddyList.size());
-                    registerEvent();
-                    new PullBuddies(mContext.getApplicationContext(), buddyList, LISTENER_CODE).fetchBuddies();
-                } else {
-                    Log.d(TAG, "no buddy to be fetched from server hence starting current activity");
-                    Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(intent);
-                    Log.d(TAG, "context " + mContext + " -- " + intent);
-                }
-            } else {
-                Log.d(TAG, "1.1");
                 mDialog.dismiss();
-                Log.d(TAG, "1.2");
                 Intent intent = new Intent(mContext, CurrentJourneyBaseActivity.class);
-                Log.d(TAG, "1.3");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Log.d(TAG, "1.4");
                 mContext.startActivity(intent);
-                Log.d(TAG, "1.5");
-            }
-
         }
     }
 
