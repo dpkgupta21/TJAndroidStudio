@@ -38,7 +38,7 @@ public class DownloadTimeCapsuleAsyncTask extends AsyncTask<String, Integer, Str
         HttpURLConnection connection = null;
 
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath());
-        if(!storageDir.exists()){
+        if (!storageDir.exists()) {
             /*Check whether the directory exists if not create one*/
             storageDir.mkdirs();
         }

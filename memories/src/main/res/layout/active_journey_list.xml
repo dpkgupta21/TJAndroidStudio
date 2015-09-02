@@ -13,6 +13,28 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/tj_orange"
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:id="@+id/active_journey_empty_compass_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_next_black" />
+
+            <com.traveljar.memories.customviews.MyTextViewMed20
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/active_journey_empty_compass_icon"
+                android:text="CREATE JOURNEY"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
         <ImageButton
             android:id="@+id/active_journey_start_btn"
             android:layout_width="300dp"

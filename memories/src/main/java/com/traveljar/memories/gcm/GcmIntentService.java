@@ -314,10 +314,13 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 journeyId = bundle.getString("journey_id");
                 String timecapsuleURL = bundle.getString("timecap_video");
                 String idOnServer = "123";
+                createdAt = Long.parseLong(bundle.get("created_at").toString());
+                updatedAt = Long.parseLong(bundle.get("updated_at").toString());
+
                 long dummyText = Long.parseLong("111");
 
                 Timecapsule newTimecapsule = new Timecapsule(idOnServer, journeyId, "", timecapsuleURL,
-                        "", "", "mp4", dummyText, "abhi", dummyText, dummyText);
+                        "", "", "mp4", dummyText, "abhi", createdAt, updatedAt);
 
                 DownloadTimeCapsuleAsyncTask asyncTask = new DownloadTimeCapsuleAsyncTask(newTimecapsule, this);
                 asyncTask.execute();

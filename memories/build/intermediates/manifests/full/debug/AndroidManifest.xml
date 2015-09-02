@@ -176,13 +176,6 @@
         <activity
             android:name="com.traveljar.memories.settings.AccountSettings"
             android:label="@string/app_name" />
-        <activity
-            android:name="com.traveljar.memories.currentjourney.TimecapsulePlayer"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name="com.traveljar.memories.media.CaptureMedia"
-            android:label="@string/app_name" />
 
         <service
             android:name="com.traveljar.memories.services.PullContactsService"
