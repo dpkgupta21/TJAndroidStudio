@@ -21,9 +21,9 @@ public class MemoriesDataSource {
     public static List<Memories> getAllMemoriesList(Context context, String journeyId) {
         List<Memories> memoriesList = new ArrayList<>();
         memoriesList.addAll(PictureDataSource.getPictureMemoriesFromJourney(context, journeyId));
-        memoriesList.addAll(AudioDataSource.getAudioMemoriesForJourney(context, journeyId));
+    //    memoriesList.addAll(AudioDataSource.getAudioMemoriesForJourney(context, journeyId));
         memoriesList.addAll(CheckinDataSource.getAllCheckinsList(context, journeyId));
-        memoriesList.addAll(NoteDataSource.getAllNotesList(context, journeyId));
+      //  memoriesList.addAll(NoteDataSource.getAllNotesList(context, journeyId));
         memoriesList.addAll(VideoDataSource.getAllVideoMemories(context, journeyId));
         memoriesList.addAll(MoodDataSource.getMoodsFromJourney(context, journeyId));
         Collections.sort(memoriesList);

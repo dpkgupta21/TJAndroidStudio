@@ -13,9 +13,10 @@ public class Lap {
     private String destinationCityName;
     private String destinationStateName;
     private String destinationCountryName;
-    private int conveyanceMode;
     private long startDate;
-
+    private String sourcePlaceId;
+    private String destinationPlaceId;
+    private int conveyanceMode;
     public Lap(){
 
     }
@@ -122,6 +123,22 @@ public class Lap {
 
     public void setStartDate(long startDate) {
         this.startDate = startDate;
+    }
+
+    public String getSourcePlaceId() {
+        return sourcePlaceId;
+    }
+
+    public void setSourcePlaceId(String sourcePlaceId) {
+        this.sourcePlaceId = sourcePlaceId;
+    }
+
+    public String getDestinationPlaceId() {
+        return destinationPlaceId;
+    }
+
+    public void setDestinationPlaceId(String destinationPlaceId) {
+        this.destinationPlaceId = destinationPlaceId;
     }
 
     public static Lap getLapFromLapsList(List<Lap> lapsList, String lapId){

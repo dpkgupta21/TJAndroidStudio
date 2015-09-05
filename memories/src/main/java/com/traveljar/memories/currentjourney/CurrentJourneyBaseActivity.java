@@ -19,14 +19,13 @@ import com.traveljar.memories.BaseActivity;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
-import com.traveljar.memories.audio.AudioCapture;
 import com.traveljar.memories.checkin.CheckInPlacesList;
 import com.traveljar.memories.currentjourney.adapters.CurrentJourneyTabsAdapter;
 import com.traveljar.memories.customviews.SlidingTabLayout;
 import com.traveljar.memories.moods.MoodCapture;
-import com.traveljar.memories.note.CreateNotes;
 import com.traveljar.memories.pastjourney.PastJourneyList;
 import com.traveljar.memories.picture.PictureCaptureBaseActivity;
+import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.video.CaptureVideo;
 
@@ -75,6 +74,7 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
 
+        HelpMe.pullDb(this);
     }
 
     private void setUpToolbar(){
@@ -123,21 +123,21 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
                 i = new Intent(this, PictureCaptureBaseActivity.class);
                 startActivity(i);
                 break;
-            case R.id.button_note:
+          /*  case R.id.button_note:
                 i = new Intent(this, CreateNotes.class);
                 startActivity(i);
                 Log.d(TAG, "note clicked");
-                break;
+                break;*/
             case R.id.button_video:
                 Log.d(TAG, "video clicked");
                 i = new Intent(this, CaptureVideo.class);
                 startActivity(i);
                 break;
-            case R.id.button_audio:
+        /*    case R.id.button_audio:
                 Log.d(TAG, "audio clicked");
                 i = new Intent(this, AudioCapture.class);
                 startActivity(i);
-                break;
+                break;*/
         }
     }
 

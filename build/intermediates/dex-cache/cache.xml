@@ -2,179 +2,46 @@
 <items version="2" >
 
     <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/TJAndroidStudio/flotingMenuLibrary/unspecified/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="54514be65ad66387b8143d090fec3a5de718a5de">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-10dab2287cbd1ee6c9196a812e84b0a98fe37e61.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-a166949066772bfe3b6313421a65f400824bd931.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Downloads/Setups/adt-bundle-mac-x86_64-20140702/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-c8a8d3261180258dbb7b70a743c781a8f5527d24.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/android-support-v7-recyclerview.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="7c0018e9838fc8c654c6fa83a110c4600b46febd">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/android-support-v7-recyclerview-8128fb0c59e7572a4121714ae9771bf0cb28d86b.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/google-collections-1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="9ffe71ac6dcab6bc03ea13f5c2e7b2804e69b357">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/google-collections-1.0-37cc7d5f53ef3b364e732c670614d05ca99ddb2a.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/gson-2.3.1-c970ea5b85422df836bae54661059e6dfecee0e9.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-5101de4c76bb2dde33df6c724f3fc3de7c1c4ce0.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/design/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-80e55ae5f0f6dca54785b0e80956079fd24106be.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/de.hdodenhof/circleimageview/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-8ed939195e089c565b81a32065ad851868b3abf1.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/com.squareup.leakcanary/leakcanary-watcher/1.3.1/6904771474c058abfc5912c13d12b02754712165/leakcanary-watcher-1.3.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6904771474c058abfc5912c13d12b02754712165">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/leakcanary-watcher-1.3.1-f4f6ec17fab8617c0f3aca1c63660e5973a5dfef.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/retrofit-1.9.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a681c044244d9fc375198588297a39ba78028423">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/retrofit-1.9.0-02e50e9140694ed40cfea19ca45f0ef4f4df25e0.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/androidasync-2.1.3.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="52aed89a155265a48984ecc06aa8dec12674edad">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/androidasync-2.1.3-cd51b8bfce6a37baca2203927decd0bc61c4fbbb.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-92b1cfc8d78af8a528304e1057d98b6cfa521a6a.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-5fc8b74880fd896a384d21a3c57df664dca1305c.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/commons-io-2.4.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/commons-io-2.4-8fae23eb2dbf44228f71d9cffee0cdb9919cf00b.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/com.squareup.haha/haha/1.3/d2c832f9d14a11c79f58a7ee2e10526a12152c72/haha-1.3.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d2c832f9d14a11c79f58a7ee2e10526a12152c72">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/haha-1.3-f3c5101bc20fa12ca36b039cf967f44a91521abe.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.6/cf8bacbf0d476c7f2221f861269365b66447f7ec/httpmime-4.3.6.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="cf8bacbf0d476c7f2221f861269365b66447f7ec">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/httpmime-4.3.6-138c746b7260a70afc58f5365f176edf8e7638ac.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.6.1/86b122e640af09b0723e1fa44083c354ba6d9089/glide-3.6.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="86b122e640af09b0723e1fa44083c354ba6d9089">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/glide-3.6.1-ab3d425b6ce80d3f1bdd5e9829316b4f615ecf34.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.3.1/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="9066b6d4e2536b49e3b58aa301fd925247032df0">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-bef0577d9d31f39c963a0d45f82d02486df8913e.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/com.squareup.leakcanary/leakcanary-analyzer/1.3.1/325e7401a7ea16918eb39ba8baad8fd5561a55d3/leakcanary-analyzer-1.3.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="325e7401a7ea16918eb39ba8baad8fd5561a55d3">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/leakcanary-analyzer-1.3.1-4e35c1dff2e543a54310c2eb93f791f3c97b8b39.jar" />
-    </item>
-    <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.github.chrisbanes.photoview/library/1.2.3/jars/classes.jar"
+        jar="E:\checkout\Travel Jar\TJAndroidStudio\memories\build\intermediates\exploded-aar\com.github.chrisbanes.photoview\library\1.2.3\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="81aa0e8e77d948204aa6754019c6f3c04dd922e3">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-75647d6ffdac8286a83375c546dc18735819982c.jar" />
+        <dex dex="E:\checkout\Travel Jar\TJAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-b53a27f814a97324e96e81cd417a664162a7f1b0.jar" />
     </item>
     <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5/82edcaec6c7b4599eaeaaf11167ceea41db42f33/httpclient-android-4.3.5.jar"
+        jar="C:\Users\mayur.tailor\.gradle\caches\modules-2\files-2.1\com.squareup.haha\haha\1.3\d2c832f9d14a11c79f58a7ee2e10526a12152c72\haha-1.3.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="82edcaec6c7b4599eaeaaf11167ceea41db42f33">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/httpclient-android-4.3.5-3d23a28497f6363a48321bf12621daa42303c689.jar" />
+        sha1="d2c832f9d14a11c79f58a7ee2e10526a12152c72">
+        <dex dex="E:\checkout\Travel Jar\TJAndroidStudio\memories\build\intermediates\pre-dexed\debug\haha-1.3-4c617167029a99dabc810186ca91b85d7de9d818.jar" />
     </item>
     <item
-        jar="/Users/abhi/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.4.0/ddd166d01b3158d1c00576d29f7ed15c030df719/eventbus-2.4.0.jar"
+        jar="E:\checkout\Travel Jar\TJAndroidStudio\memories\build\intermediates\exploded-aar\TJAndroidStudio\flotingMenuLibrary\unspecified\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="ddd166d01b3158d1c00576d29f7ed15c030df719">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/eventbus-2.4.0-919cb07b55b141c8d303aee61a4f2bd7397098f0.jar" />
+        sha1="898ebd5746f0abc7547434682b7b7c106a7bae2e">
+        <dex dex="E:\checkout\Travel Jar\TJAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-f50aa02cdd325322cb0995cb95a4d86147cd1eb6.jar" />
     </item>
     <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jar="C:\Users\mayur.tailor\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-watcher\1.3.1\6904771474c058abfc5912c13d12b02754712165\leakcanary-watcher-1.3.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/classes-10493b666eae2f5465be64f04800502991f6167f.jar" />
+        sha1="6904771474c058abfc5912c13d12b02754712165">
+        <dex dex="E:\checkout\Travel Jar\TJAndroidStudio\memories\build\intermediates\pre-dexed\debug\leakcanary-watcher-1.3.1-6692fad698939c985d656bdef9064e017ca358d4.jar" />
     </item>
     <item
-        jar="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/libs/volley.jar"
+        jar="E:\checkout\Travel Jar\TJAndroidStudio\memories\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.3.1\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="d8f5b9114ebe0f76de7fbf55e950540959ce4ff8">
-        <dex dex="/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/build/intermediates/pre-dexed/debug/volley-bf3d3956663a874a72ea6a997a5c6144db637478.jar" />
+        sha1="9066b6d4e2536b49e3b58aa301fd925247032df0">
+        <dex dex="E:\checkout\Travel Jar\TJAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-a84986f0f7bd30376f4afa5cf6fd3cd7c8e819b4.jar" />
+    </item>
+    <item
+        jar="C:\Users\mayur.tailor\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-analyzer\1.3.1\325e7401a7ea16918eb39ba8baad8fd5561a55d3\leakcanary-analyzer-1.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="325e7401a7ea16918eb39ba8baad8fd5561a55d3">
+        <dex dex="E:\checkout\Travel Jar\TJAndroidStudio\memories\build\intermediates\pre-dexed\debug\leakcanary-analyzer-1.3.1-1e6c982621d37af79981f3835eaabdecebffdb92.jar" />
     </item>
 
 </items>

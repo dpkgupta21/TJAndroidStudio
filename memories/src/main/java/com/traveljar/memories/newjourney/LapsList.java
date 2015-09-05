@@ -35,8 +35,6 @@ public class LapsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_laps_list);
 
-        setUpToolBar();
-
         // Add lap FAB Button
         final MyFABView fabButton = new MyFABView.Builder(this)
                 .withDrawable(getResources().getDrawable(R.drawable.ic_add_white_24dp))
@@ -58,15 +56,9 @@ public class LapsList extends AppCompatActivity {
         noLapsPlaceholderImg = (ImageView) findViewById(R.id.no_laps_placeholder);
         getStartedImg = (ImageView) findViewById(R.id.no_laps_get_started);
 
-        if(AppController.lapList.size() == 0){
-            noLapsPlaceholderImg.setVisibility(View.VISIBLE);
-            getStartedImg.setVisibility(View.VISIBLE);
-            lapsListView.setVisibility(View.GONE);
-        } else {
-            lapsListViewAdapter = new LapsListAdapter(this, AppController.lapList);
-            lapsListView.setAdapter(lapsListViewAdapter);
-        }
+
     }
+
 
     private void setUpToolBar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,6 +69,7 @@ public class LapsList extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppController.lapList.clear();
                 LapsList.this.finish();
             }
         });
@@ -137,6 +130,20 @@ public class LapsList extends AppCompatActivity {
     public void onResume(){
         //Invalidate the menu for the visibility of the next option in the menu
         invalidateOptionsMenu();
+        if(AppController.lapList.size() == 0){
+            noLapsPlaceholderImg.setVisibility(View.VISIBLE);
+            getStartedImg.setVisibility(View.VISIBLE);
+            lapsListView.setVisibility(View.GONE);
+        } else {
+            lapsListView.setVisibility(View.VISIBLE);
+            noLapsPlaceholderImg.setVisibility(View.GONE);
+            getStartedImg.setVisibility(View.GONE);
+            lapsListViewAdapter = new LapsListAdapter(this, AppController.lapList);
+            lapsListView.setAdapter(lapsListViewAdapter);
+        }
+
+        setUpToolBar();
+
         super.onResume();
     }
 

@@ -42,7 +42,7 @@
         fab:fab_expandDirection="up"
         fab:fab_labelStyle="@style/menu_labels_style">
 
-        <com.example.flotingmenulibrary.FloatingActionButton
+       <!-- <com.example.flotingmenulibrary.FloatingActionButton
             android:id="@+id/button_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             fab:fab_colorPressed="@color/white"
             fab:fab_size="mini"
             fab:fab_title="Audio" />
-
+-->
         <com.example.flotingmenulibrary.FloatingActionButton
             android:id="@+id/button_mood"
             android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
             fab:fab_size="mini"
             fab:fab_title="Picture" />
 
-        <com.example.flotingmenulibrary.FloatingActionButton
+        <!--<com.example.flotingmenulibrary.FloatingActionButton
             android:id="@+id/button_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
             fab:fab_colorNormal="@color/tj_fab_yellow"
             fab:fab_colorPressed="@color/white"
             fab:fab_size="mini"
-            fab:fab_title="Note" />
+            fab:fab_title="Note" />-->
 
         <com.example.flotingmenulibrary.FloatingActionButton
             android:id="@+id/button_video"
@@ -116,4 +116,4 @@
     </com.example.flotingmenulibrary.FloatingActionsMenu>
 
 
-</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/timeline_list.xml -->
+</RelativeLayout><!-- From: file:/E:/checkout/Travel%20Jar/TJAndroidStudio/memories/src/main/res/layout/timeline_list.xml -->

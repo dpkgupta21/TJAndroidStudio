@@ -35,7 +35,6 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="115dp"
             app:border_color="#FFFFFF"
-            android:adjustViewBounds="true"
             android:contentDescription="@string/abc_action_bar_home_description"
             app:border_width="2dp"
             android:src="@drawable/banner3" />

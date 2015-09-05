@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.traveljar.memories.SQLitedatabase.AudioDataSource;
+import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
 import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
@@ -40,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -87,15 +89,38 @@ public class PullJourney {
                     public void onResponse(JSONObject response) {
                         try {
                             Log.d(TAG, "=====" + response.getJSONObject("journey"));
-                            JSONObject jsonObject = response.getJSONObject("journey");
+                            JSONObject newJourney = response.getJSONObject("journey");
+                            String idOnServer = newJourney.getString("id");
+                            String name = newJourney.getString("name");
+                            name = name.substring(0, 1).toUpperCase() + name.substring(1);
+                            String tag_line = newJourney.getString("tag_line");
+                            String group_relationship = newJourney.getString("group_relationship");
+                            String created_by_id = newJourney.getString("created_by_id");
 
-                            JSONArray laps = jsonObject.getJSONArray("journey_laps");
+//        JSONArray lapsList = newJourney.getJSONArray("journey_lap_ids");
+                            JSONArray lapsArray = newJourney.getJSONArray("journey_laps");
+                            parseLaps(lapsArray, idOnServer);
+                            JSONArray buddyList = newJourney.getJSONArray("buddy_ids");
+                            ArrayList<String> buddyArrayList = null;
+                            if (buddyList.length() > 0) {
+                                buddyArrayList = new ArrayList<>();
+                                int len = buddyList.length();
+                                for (int i = 0; i < len; i++) {
+                                    buddyArrayList.add(buddyList.get(i).toString());
+                                }
+                            }
+                            // Add it to the Database
+                            Journey newJ = new Journey(idOnServer, name, tag_line, group_relationship, created_by_id,
+                                    null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE, HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), 0, true);
+                            JourneyDataSource.createJourney(newJ, context);
+
+                            JSONArray laps = newJourney.getJSONArray("journey_laps");
                             parseLaps(laps, journey.getIdOnServer());
                             JSONArray memoriesList;
-                            memoriesList = jsonObject.getJSONArray("memories");
+                            memoriesList = newJourney.getJSONArray("memories");
                             if (memoriesList != null) {
                                 Log.d(TAG, "there are no memories");
-                                saveMemories(jsonObject.getJSONArray("memories"), journey.getIdOnServer());
+                                saveMemories(newJourney.getJSONArray("memories"), journey.getIdOnServer());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

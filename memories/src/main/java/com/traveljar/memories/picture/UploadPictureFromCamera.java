@@ -49,13 +49,17 @@ public class UploadPictureFromCamera extends Fragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (isDeviceSupportCamera(getActivity())) {
             // initialize camera and display it
             capture();
         } else {
             Toast.makeText(getActivity(), "Sorry! Your device doesn't support camera", Toast.LENGTH_LONG).show();
         }
-
     }
 
     public void capture() {

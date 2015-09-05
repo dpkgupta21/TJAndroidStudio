@@ -15,11 +15,13 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public static final String LOG_TAG = "CameraPreview";
     private SurfaceHolder mSurfaceHolder;
     private Camera mCamera;
+    private Context context;
 
     // Constructor that obtains context and camera
     @SuppressWarnings("deprecation")
     public CameraPreview(Context context, Camera camera) {
         super(context);
+        this.context = context;
         this.mCamera = camera;
         Log.d(LOG_TAG, "mCamera :: " + mCamera);
         this.mSurfaceHolder = this.getHolder();
@@ -74,10 +76,42 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 // Uncomment for Android 2.0 and above
                 parameters.setRotation(0);
             }
+            mCamera.setParameters(parameters);
             mCamera.setPreviewDisplay(surfaceHolder);
             mCamera.startPreview();
+
+            /// Resolve problem of orientation. Edited By Mayur
+           /* Camera.CameraInfo camInfo = new Camera.CameraInfo();
+            Camera.getCameraInfo(0, camInfo);
+            int cameraRotationOffset = camInfo.orientation;
+            WindowManager windowManager = (WindowManager) context
+                    .getSystemService(Context.WINDOW_SERVICE);
+            int rotation = windowManager.getDefaultDisplay().getRotation();
+            int degrees = 0;
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    degrees = 0;
+                    break; // Natural orientation
+                case Surface.ROTATION_90:
+                    degrees = 90;
+                    break; // Landscape left
+                case Surface.ROTATION_180:
+                    degrees = 180;
+                    break;// Upside down
+                case Surface.ROTATION_270:
+                    degrees = 270;
+                    break;// Landscape right
+            }
+            int displayRotation = (cameraRotationOffset - degrees + 360) % 360;
+            mCamera.setDisplayOrientation(90);
+             int rotate = (360 + cameraRotationOffset - degrees) % 360;
+            parameters.setRotation(90);
+            mCamera.setParameters(parameters);
+            mCamera.setPreviewDisplay(surfaceHolder);
+            mCamera.startPreview();*/
         } catch (Exception e) {
             // intentionally left blank for a test
+            e.printStackTrace();;
         }
     }
 }

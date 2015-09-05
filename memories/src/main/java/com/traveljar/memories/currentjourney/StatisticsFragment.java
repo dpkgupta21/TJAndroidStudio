@@ -83,12 +83,12 @@ public class StatisticsFragment extends Fragment {
         statistics.add(getStatMap(0, "Km travelled", R.drawable.ic_info_black_24dp));
         statistics.add(getStatMap(PictureDataSource.getPicCountOfJourney(getActivity(), jId), "Pictures",
                 R.drawable.ic_info_black_24dp));
-        statistics.add(getStatMap(NoteDataSource.getNoteCountOfJourney(getActivity(), jId), "Notes",
-                R.drawable.ic_info_black_24dp));
+      /*  statistics.add(getStatMap(NoteDataSource.getNoteCountOfJourney(getActivity(), jId), "Notes",
+                R.drawable.ic_info_black_24dp));*/
         statistics.add(getStatMap(VideoDataSource.getVideoCountOfJourney(getActivity(), jId), "Videos",
                 R.drawable.ic_info_black_24dp));
-        statistics.add(getStatMap(AudioDataSource.getAudioCountOfJourney(getActivity(), jId), "Audios",
-                R.drawable.ic_info_black_24dp));
+       /* statistics.add(getStatMap(AudioDataSource.getAudioCountOfJourney(getActivity(), jId), "Audios",
+                R.drawable.ic_info_black_24dp));*/
         statistics.add(getStatMap(MoodDataSource.getMoodCountOfJourney(getActivity(), jId), "Moods",
                 R.drawable.ic_info_black_24dp));
         statistics.add(getStatMap(MoodDataSource.getMoodCountOfJourney(getActivity(), jId), "Checkins",

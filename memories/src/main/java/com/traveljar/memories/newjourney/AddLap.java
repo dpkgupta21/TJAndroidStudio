@@ -15,8 +15,11 @@ import android.widget.ToggleButton;
 
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.LapDataSource;
+import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.models.Lap;
+import com.traveljar.memories.models.Laps;
 import com.traveljar.memories.utility.HelpMe;
+import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.volley.AppController;
 
 import java.text.SimpleDateFormat;
@@ -53,10 +56,13 @@ public class AddLap extends AppCompatActivity {
 
     private Lap lap;
 
+    private boolean isJourneyCreated=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_journey_lap_new);
+
+        isJourneyCreated = getIntent().getBooleanExtra("isJourneyCreated", false);
 
         setUpToolBar();
 
@@ -106,7 +112,11 @@ public class AddLap extends AppCompatActivity {
         if (getIntent().hasExtra("EDIT_LAP_ID")) {
             editMode = true;
 //            lap = LapDataSource.getLapById(getIntent().getStringExtra("EDIT_LAP_ID"), this);
-            lap = Lap.getLapFromLapsList(AppController.lapList, getIntent().getStringExtra("EDIT_LAP_ID"));
+            if(isJourneyCreated){
+                lap  = LapsDataSource.getLapByIdWithPlace(this, getIntent().getStringExtra("EDIT_LAP_ID"));
+            }else {
+                lap = Lap.getLapFromLapsList(AppController.lapList, getIntent().getStringExtra("EDIT_LAP_ID"));
+            }
             dateLocation.setText(HelpMe.getDate(lap.getStartDate(), 1));
             fromLocation.setText(lap.getSourceCityName());
             toLocation.setText(lap.getDestinationCityName());
@@ -256,7 +266,11 @@ public class AddLap extends AppCompatActivity {
                 if (isDateEdited) {
                     lap.setStartDate(epochTime);
                 }
-                LapDataSource.updateLap(lap, this);
+                if(isJourneyCreated){
+                    LapsDataSource.updateLap(lap, this);
+                }else {
+                    LapDataSource.updateLap(lap, this);
+                }
             } else {
                 setLapSourceInfo();
                 setLapDestinationInfo();
@@ -264,12 +278,18 @@ public class AddLap extends AppCompatActivity {
                 long id = LapDataSource.createLap(lap, this);
                 lap.setId(String.valueOf(id));
                 Log.d(TAG, "total laps in the database are " + LapDataSource.getAllLaps(this));
-                AppController.lapList.add(lap);
+                if(isJourneyCreated){
+                    Laps laps = new Laps(null, null, TJPreferences.getActiveJourneyId(AddLap.this), null, null,
+                            lap.getConveyanceMode(), epochTime);
+                    LapsDataSource.createLap(laps, this);
+                }else {
+                    AppController.lapList.add(lap);
+                }
             }
 
-            Intent i = new Intent(getBaseContext(), LapsList.class);
+           /* Intent i = new Intent(getBaseContext(), LapsList.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
+            startActivity(i);*/
             finish();
         }
     }

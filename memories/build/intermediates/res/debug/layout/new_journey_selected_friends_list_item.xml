@@ -47,4 +47,4 @@
         android:layout_toRightOf="@+id/add_friends_contact_image"
         android:layout_toEndOf="@+id/add_friends_contact_image" />
 
-</RelativeLayout><!-- From: file:/Users/abhi/Documents/TJDev/Android/TJGradle/TJAndroidStudio/memories/src/main/res/layout/new_journey_selected_friends_list_item.xml -->
+</RelativeLayout><!-- From: file:/E:/checkout/Travel%20Jar/TJAndroidStudio/memories/src/main/res/layout/new_journey_selected_friends_list_item.xml -->

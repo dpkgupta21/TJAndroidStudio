@@ -10,14 +10,12 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
 import com.traveljar.memories.R;
-import com.traveljar.memories.gallery.GalleryAudioAlbumsFragment;
-import com.traveljar.memories.gallery.GalleryNotesAlbumsFragment;
 import com.traveljar.memories.gallery.GalleryPictureAlbumsFragment;
 import com.traveljar.memories.gallery.GalleryVideoAlbumsFragment;
 
 public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] titles = new String[]{"Pictures", "Audios", "Videos", "Notes"};
+    private String[] titles = new String[]{"Pictures",/* "Audios",*/ "Videos"/*, "Notes"*/};
     private Context context;
 
     public GalleryTabsPagerAdapter(FragmentManager fm, Context context) {
@@ -27,9 +25,9 @@ public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
 
     private int[] imageResId = {
             R.drawable.ic_photo_camera_white_24dp,
-            R.drawable.ic_audiotrack_white_24dp,
+         //   R.drawable.ic_audiotrack_white_24dp,
             R.drawable.ic_videocam_white_24dp,
-            R.drawable.ic_event_note_white_24dp
+          //  R.drawable.ic_event_note_white_24dp
     };
 
     @Override
@@ -39,15 +37,15 @@ public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 // Top Rated fragment activity
                 return new GalleryPictureAlbumsFragment();
-            case 1:
+          /*  case 1:
                 // Games fragment activity
-                return new GalleryAudioAlbumsFragment();
-            case 2:
+                return new GalleryAudioAlbumsFragment();*/
+            case 1:
                 // Movies fragment activity
                 return new GalleryVideoAlbumsFragment();
-            case 3:
+         /*   case 3:
                 // Movies fragment activity
-                return new GalleryNotesAlbumsFragment();
+                return new GalleryNotesAlbumsFragment();*/
         }
 
         return null;
@@ -56,7 +54,7 @@ public class GalleryTabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 4;
+        return 2;
     }
 
     // BEGIN_INCLUDE (pageradapter_getpagetitle)
