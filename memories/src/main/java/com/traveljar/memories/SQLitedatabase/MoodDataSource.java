@@ -35,6 +35,7 @@ public class MoodDataSource {
         values.put(MySQLiteHelper.MOOD_COLUMN_LONGITUDE, newMood.getLongitude());
 
         long mood_id = db.insert(MySQLiteHelper.TABLE_MOOD, null, values);
+        JourneyDataSource.updateUpdatedAtTime(context, newMood.getUpdatedAt(),newMood.getjId());
         Log.d(TAG, "New mood Inserted!");
 
         db.close();

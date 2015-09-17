@@ -44,6 +44,7 @@ public class PictureDataSource {
 
         // insert row
         Long picture_id = db.insert(MySQLiteHelper.TABLE_PICTURE, null, values);
+        JourneyDataSource.updateUpdatedAtTime(context, newPic.getUpdatedAt(),newPic.getjId());
         Log.d(TAG, "New Picture Inserted! with id" + picture_id);
 
         db.close();

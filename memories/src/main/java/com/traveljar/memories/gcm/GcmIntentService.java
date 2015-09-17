@@ -19,6 +19,7 @@ import com.traveljar.memories.SQLitedatabase.LikeDataSource;
 import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
 import com.traveljar.memories.SQLitedatabase.MoodDataSource;
 import com.traveljar.memories.SQLitedatabase.NoteDataSource;
+import com.traveljar.memories.SQLitedatabase.TimecapsuleDataSource;
 import com.traveljar.memories.activejourney.ActivejourneyList;
 import com.traveljar.memories.currentjourney.DownloadTimeCapsuleAsyncTask;
 import com.traveljar.memories.models.Audio;
@@ -48,7 +49,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GcmIntentService extends IntentService implements PullJourney.OnTaskFinishListener{
+public class GcmIntentService extends IntentService implements PullJourney.OnTaskFinishListener {
     public static final int NOTIFICATION_ID = 1;
     public static final String TAG = "<GcmIntentService>";
     private NotificationManager mNotificationManager;
@@ -87,7 +88,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 } else {
                     Log.d(TAG, "dodged a number verification exception");
                 }
-                
+
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 Log.i(TAG, "Received: " + extras.toString());
             }
@@ -220,7 +221,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
 
                 memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
 
-                if(memories != null) {
+                if (memories != null) {
                     Like like = new Like(null, null, journeyId, memories.getId(), userId, memoryType, true, memId, createdAt, updatedAt);
                     LikeDataSource.createLike(like, this);
                 }
@@ -232,7 +233,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                 String user_id = bundle.get("user_id").toString();
 
                 memories = MemoriesDataSource.getMemoryFromTypeAndId(this, memId, memoryType);
-                if(memories != null) {
+                if (memories != null) {
                     LikeDataSource.deleteLike(this, memories.getId(), user_id, memories.getMemType());
                 }
                 break;
@@ -250,7 +251,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
             case HelpMe.TYPE_REMOVE_BUDDY:
                 buddyId = bundle.getString("removed_buddy_id");
                 journeyId = bundle.getString("journey_id");
-                if(buddyId.equals(TJPreferences.getUserId(this))){
+                if (buddyId.equals(TJPreferences.getUserId(this))) {
                     JourneyDataSource.updateUserActiveStatus(this, journeyId, false);
                     /*if(CurrentJourneyBaseActivity.isActivityVisible()){
                         CurrentJourneyBaseActivity.getInstance().refreshTimelineFragment();
@@ -273,19 +274,19 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                     contact.setStatus(obj.getString("status"));
                     contact.setPhoneNo(obj.getString("phone"));
                     boolean profilePicUpdated = Boolean.parseBoolean(obj.getString("is_profile_pic_change"));
-                    if(profilePicUpdated){
+                    if (profilePicUpdated) {
                         String picUrl = obj.getString("profile_picture");
                         String profilePicPath = Constants.TRAVELJAR_FOLDER_BUDDY_PROFILES + contact.getIdOnServer() + ".jpeg";
-                        if(ContactsUtil.fetchProfilePicture(this, picUrl, profilePicPath)){
+                        if (ContactsUtil.fetchProfilePicture(this, picUrl, profilePicPath)) {
                             contact.setPicLocalUrl(profilePicPath);
                             contact.setPicServerUrl(picUrl);
                         }
                     }
                     Log.d(TAG, "contact fetched ->" + contact);
                     ContactDataSource.updateContact(this, contact);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
             case HelpMe.TYPE_END_JOURNEY:
                 journeyId = bundle.getString("journey_id");
@@ -298,7 +299,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
                         }
                     });
                 }*/
-                if(ActivejourneyList.isActivityVisible()){
+                if (ActivejourneyList.isActivityVisible()) {
                     ActivejourneyList.getInstance().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -321,9 +322,9 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
 
                 Timecapsule newTimecapsule = new Timecapsule(idOnServer, journeyId, "", timecapsuleURL,
                         "", "", "mp4", dummyText, "abhi", createdAt, updatedAt);
-
-                DownloadTimeCapsuleAsyncTask asyncTask = new DownloadTimeCapsuleAsyncTask(newTimecapsule, this);
-                asyncTask.execute();
+                TimecapsuleDataSource.createTimecapsule(newTimecapsule, this);
+                // DownloadTimeCapsuleAsyncTask asyncTask = new DownloadTimeCapsuleAsyncTask(newTimecapsule, this);
+                //asyncTask.execute();
 
             default:
                 break;
@@ -454,7 +455,7 @@ public class GcmIntentService extends IntentService implements PullJourney.OnTas
         }
     }
 
-    private void showNotification(String message, Class _activity){
+    private void showNotification(String message, Class _activity) {
         NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this,
                 _activity), 0);

@@ -41,6 +41,7 @@ public class CheckinDataSource {
 
         // insert row
         Long checkin_id = db.insert(MySQLiteHelper.TABLE_CHECKIN, null, values);
+        JourneyDataSource.updateUpdatedAtTime(context, newCheckIn.getUpdatedAt(),newCheckIn.getjId());
         Log.d(TAG, "New Checkin Inserted!");
 
         db.close();

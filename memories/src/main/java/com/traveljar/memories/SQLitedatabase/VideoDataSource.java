@@ -39,6 +39,7 @@ public class VideoDataSource {
         values.put(MySQLiteHelper.VIDEO_COLUMN_LATITUDE, newVideo.getLatitude());
         values.put(MySQLiteHelper.VIDEO_COLUMN_LONGITUDE, newVideo.getLongitude());
         long video_id = db.insert(MySQLiteHelper.TABLE_VIDEO, null, values);
+        JourneyDataSource.updateUpdatedAtTime(context, newVideo.getUpdatedAt(),newVideo.getjId());
         Log.d(TAG, "New video Inserted!");
 
         db.close();

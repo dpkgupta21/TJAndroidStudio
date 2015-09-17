@@ -6,6 +6,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.traveljar.memories.gallery.adapters.Utils;
 import com.traveljar.memories.volley.AppController;
 import com.traveljar.memories.volley.CustomJsonRequest;
 
@@ -18,6 +19,7 @@ public class JourneyUtil {
 
     private OnAddBuddyListener mBuddyAddListener;
     private OnExitJourneyListener mExitJourneyListener;
+    private OnCreateJourneyLapListener mCreateJourneyLapListener;
 
     private static JourneyUtil mInstance;
 
@@ -32,6 +34,10 @@ public class JourneyUtil {
 
     public void setExitJourneyListener(OnExitJourneyListener listener) {
         mExitJourneyListener = listener;
+    }
+
+    public void setCreateJourneyLapListener(OnCreateJourneyLapListener listener) {
+        mCreateJourneyLapListener = listener;
     }
 
     private static final String TAG = "JourneyUtil";
@@ -111,20 +117,21 @@ public class JourneyUtil {
 
     // Update a user from the journey
 
-    public static void updateJourneyLap(Context context, final HashMap params) {
-        String url = Constants.URL_CREATE_JOURNEY + "/" + TJPreferences.getActiveJourneyId(context) + "/remove_buddy";
+    public void updateJourneyLap(Context context, final HashMap params, String journeyId) {
+        String url = Constants.URL_CREATE_JOURNEY + "/" + journeyId + "/journey_laps";
 
         Utils.showLog(TAG, "calling url " + url);
-        CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
+        CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.POST, url, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Utils.showLog(TAG, "user has successfully updated the journey lap");
+                        mCreateJourneyLapListener.onCreateJourneyLap(0, response);
+                        Utils.showLog(TAG, "on Create journey lap");
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Utils.showLog(TAG, "user unable to updated the journey lap" + error);
+                Utils.showLog(TAG, "user unable to  create the journey lap" + error);
                 error.printStackTrace();
             }
         });
@@ -141,4 +148,7 @@ public class JourneyUtil {
         void onExitJourney(int resultCode, String userId);
     }
 
+    public interface OnCreateJourneyLapListener {
+        void onCreateJourneyLap(int resultCode, JSONObject response);
+    }
 }

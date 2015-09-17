@@ -16,12 +16,16 @@ import android.widget.ToggleButton;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
+import com.traveljar.memories.gallery.adapters.Utils;
 import com.traveljar.memories.models.Laps;
 import com.traveljar.memories.models.Place;
 import com.traveljar.memories.utility.HelpMe;
 import com.traveljar.memories.utility.JourneyUtil;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.volley.AppController;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class AddLap extends AppCompatActivity {
+public class AddLap extends AppCompatActivity implements JourneyUtil.OnCreateJourneyLapListener {
 
     protected static final String TAG = "<AddLap>";
     private TextView fromLocation;
@@ -281,12 +285,21 @@ public class AddLap extends AppCompatActivity {
                 setLapDestinationInfo();
 
 
-                long id = LapsDataSource.createLap(laps, this);
-                laps.setId(String.valueOf(id));
-                //Log.d(TAG, "total laps in the database are " + LapDataSource.getAllLaps(this));
                 if (isJourneyCreated) {
-                    JourneyUtil.updateJourneyLap(this, createParams(laps));
+                    laps.setJourneyId(TJPreferences.getActiveJourneyId(AddLap.this));
+                    long id = LapsDataSource.createLap(laps, this);
+                    laps.setId(String.valueOf(id));
+
+                    JourneyUtil.getInstance().setCreateJourneyLapListener(this);
+                    JourneyUtil.getInstance().updateJourneyLap(
+                            AddLap.this,
+                            createParams(laps),
+                            TJPreferences.getActiveJourneyId(AddLap.this));
+
                 } else {
+                    long id = LapsDataSource.createLap(laps, this);
+                    laps.setId(String.valueOf(id));
+
                     AppController.lapsList.add(laps);
                 }
             }
@@ -300,6 +313,7 @@ public class AddLap extends AppCompatActivity {
     }
 
     private void setLapSourceInfo() {
+
         // Received location has city, state and country
         if (fromLocationList.size() == 3) {
             laps.setSourceCityName(fromLocationList.get(0));
@@ -405,28 +419,28 @@ public class AddLap extends AppCompatActivity {
         try {
             params.put("api_key", TJPreferences.getApiKey(getBaseContext()));
             params.put("journey_lap[travel_mode]", String.valueOf(laps.getConveyanceMode()));
-            params.put("journey_lap[time_of_day]", String.valueOf(laps.getStartDate()));
+            //params.put("journey_lap[time_of_day]", String.valueOf(laps.getStartDate()));
             params.put("journey_lap[start_date]", String.valueOf(laps.getStartDate()));
-            // params.put("journey_lap[end_date]", String.valueOf(laps.getStartDate()));
+            params.put("journey_lap[end_date]", String.valueOf(laps.getStartDate()));
 
             // Get Lap local id
-            params.put("journey_lap[journey_laps_attributes[0]][journey_lap_local_id]",
+            params.put("journey_lap[journey_lap_local_id]",
                     laps.getId());
 
             // Get source info
-            params.put("journey_lap[journey_laps_attributes[0]][source_city_name]",
+            params.put("journey_lap[source_city_name]",
                     laps.getSourceCityName());
-            params.put("journey_lap[journey_laps_attributes[0]][source_state_name]",
+            params.put("journey_lap[source_state_name]",
                     laps.getSourceStateName());
-            params.put("journey_lap[journey_laps_attributes[0]][source_country_name]",
+            params.put("journey_lap[source_country_name]",
                     laps.getSourceCountryName());
 
             // Get destination info
-            params.put("journey_lap[journey_laps_attributes[0]][destination_city_name]",
+            params.put("journey_lap[destination_city_name]",
                     laps.getDestinationCityName());
-            params.put("journey_lap[journey_laps_attributes[0]][destination_state_name]",
+            params.put("journey_lap[destination_state_name]",
                     laps.getDestinationStateName());
-            params.put("journey_lap[journey_laps_attributes[0]][destination_country_name]",
+            params.put("journey_lap[destination_country_name]",
                     laps.getDestinationCountryName());
 
         } catch (Exception e) {
@@ -434,5 +448,68 @@ public class AddLap extends AppCompatActivity {
         }
         return params;
     }
+
+    @Override
+    public void onCreateJourneyLap(int resultCode, JSONObject response) {
+        Utils.showLog(TAG, "Response " + response);
+
+        try {
+            parseLaps(response.getJSONObject("journey_lap"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseLaps(JSONObject journeyLapResponse) throws JSONException {
+        Laps laps;
+        JSONObject sourceObject;
+        JSONObject destinationObject;
+        Double latitude;
+        Double longitude;
+
+
+        sourceObject = journeyLapResponse.getJSONObject("source");
+        destinationObject = journeyLapResponse.getJSONObject("destination");
+
+        //Parsing source place
+        latitude = sourceObject.getString("latitude").equals("null") ?
+                0.0 :
+                Double.parseDouble(sourceObject.getString("latitude"));
+        longitude = sourceObject.getString("longitude").equals("null") ?
+                0.0 :
+                Double.parseDouble(sourceObject.getString("longitude"));
+
+        PlaceDataSource.updatePlace(sourceObject.getString("id"),
+                sourceObject.getString("city"),
+                sourceObject.getString("state"),
+                sourceObject.getString("country"),
+                this
+        );
+
+        // Parsing destination Place
+        latitude = destinationObject.getString("latitude").equals("null") ?
+                0.0 : Double.parseDouble(destinationObject.getString("latitude"));
+        longitude = destinationObject.getString("longitude").equals("null") ?
+                0.0 : Double.parseDouble(destinationObject.getString("longitude"));
+
+
+        PlaceDataSource.updatePlace(destinationObject.getString("id"),
+                destinationObject.getString("city"),
+                destinationObject.getString("state"),
+                destinationObject.getString("country"),
+                this
+        );
+
+
+        laps = new Laps(journeyLapResponse.getString("journey_lap_local_id"),
+                journeyLapResponse.getString("id"),
+                journeyLapResponse.getString("journey_id"),
+                null,
+                null,
+                HelpMe.getConveyanceModeCode(journeyLapResponse.getString("travel_mode")),
+                Long.parseLong(journeyLapResponse.getString("start_date")));
+        LapsDataSource.updateLapsServerId(laps, this);
+    }
+
 
 }

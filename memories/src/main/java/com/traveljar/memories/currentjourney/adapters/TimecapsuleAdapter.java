@@ -69,9 +69,14 @@ public class TimecapsuleAdapter extends RecyclerView.Adapter<TimecapsuleAdapter.
         holder.timeCapsuleCoverPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(timecapsuleItem.getVideoLocalURL())));
-                mediaIntent.setDataAndType(Uri.fromFile(new File(timecapsuleItem.getVideoLocalURL())), "video/*");
-                context.startActivity(mediaIntent);
+                //String videoUrl = "http://videosite/myvideo.mp4";
+                Intent playVideo = new Intent(Intent.ACTION_VIEW);
+                playVideo.setDataAndType(Uri.parse(timecapsuleItem.getVideoServerURL()), "video/mp4");
+                context.startActivity(playVideo);
+
+            /*    Intent mediaIntent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(timecapsuleItem.getVideoLocalURL())));
+                mediaIntent.setDataAndType(Uri.fromFile(new File(timecapsuleItem.getVideoLocalURL())), "video*//*");
+                context.startActivity(mediaIntent);*/
             }
         });
 

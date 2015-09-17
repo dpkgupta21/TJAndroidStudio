@@ -21,6 +21,11 @@ public class Utils {
         this._context = context;
     }
 
+
+    public static void showLog(final String TAG, final String log) {
+        Log.d(TAG, log);
+    }
+
     /*
      * Reading file paths from SDCard
      */

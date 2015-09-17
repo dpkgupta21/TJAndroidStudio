@@ -46,6 +46,11 @@
         <item>Memories</item>
         <item>Profile</item>
     </string-array>
+    <string-array name="video_length_items">
+        <item>Short</item>
+        <item>Medium</item>
+        <item>Long</item>
+    </string-array>
     <!-- From: file:/F:/Pratham_Workspace1/TJDeepakAndroidStudio/memories/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>

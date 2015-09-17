@@ -9,42 +9,6 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/splash_screen_footer" />
 
-    <LinearLayout
-        android:id="@+id/splash_screen_footer"
-        style="@android:style/ButtonBar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_weight="0"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <com.traveljar.memories.customviews.MyButtonView
-            android:id="@+id/splash_signup_btn"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:onClick="goToSignUp"
-            android:text="I&apos;m New"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-        <com.traveljar.memories.customviews.MyButtonView
-            android:id="@+id/splash_signin_btn"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:onClick="goToSignIn"
-            android:text="Sign In"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-
     <RadioGroup
         android:id="@+id/swipe_indicator_radio_group"
         android:layout_width="match_parent"
@@ -79,6 +43,41 @@
             android:button="@null" />
 
     </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/splash_screen_footer"
+        style="@android:style/ButtonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <com.traveljar.memories.customviews.MyButtonView
+            android:id="@+id/splash_signup_btn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:onClick="goToSignUp"
+            android:text="I&apos;m New"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <com.traveljar.memories.customviews.MyButtonView
+            android:id="@+id/splash_signin_btn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:onClick="goToSignIn"
+            android:text="Sign In"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 
 </RelativeLayout><!-- From: file:/F:/Pratham_Workspace1/TJDeepakAndroidStudio/memories/src/main/res/layout/splash_screen.xml -->
