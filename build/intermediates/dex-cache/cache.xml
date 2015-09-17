@@ -2,25 +2,39 @@
 <items version="2" >
 
     <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\TJDeepakAndroidStudio\flotingMenuLibrary\unspecified\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a772867b24cc915570d39aca3200f64291684000">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-51221bd36315059e1a42bfed83804644ee7fdc2d.jar" />
-    </item>
-    <item
-        jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\com.squareup.haha\haha\1.3\d2c832f9d14a11c79f58a7ee2e10526a12152c72\haha-1.3.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d2c832f9d14a11c79f58a7ee2e10526a12152c72">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\haha-1.3-e1b242fcf21ec84c883bdba3e32c10adc5d4fd19.jar" />
-    </item>
-    <item
         jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.6.1\86b122e640af09b0723e1fa44083c354ba6d9089\glide-3.6.1.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="86b122e640af09b0723e1fa44083c354ba6d9089">
         <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\glide-3.6.1-225a7320b0e1336da436bed1773b0b5ad9419bcb.jar" />
+    </item>
+    <item
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\TJDeepakAndroidStudio\flotingMenuLibrary\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f0c7c3499701c6c7d3f071e9282f3bf1f6bd2106">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-51221bd36315059e1a42bfed83804644ee7fdc2d.jar" />
+    </item>
+    <item
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\google-collections-1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9ffe71ac6dcab6bc03ea13f5c2e7b2804e69b357">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\google-collections-1.0-82c46be6fc61e6e5a26b52a7ceae948c041cff40.jar" />
+    </item>
+    <item
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\android-support-v7-recyclerview.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7c0018e9838fc8c654c6fa83a110c4600b46febd">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\android-support-v7-recyclerview-13d1bd4438fb64a4bc7fbcf3c4c67bca03f820c0.jar" />
+    </item>
+    <item
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.android.support\design\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-a8d4dd725fb0324af8f162c24006f8ac90f11415.jar" />
     </item>
     <item
         jar="C:\Users\deepak.gupta\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
@@ -30,11 +44,46 @@
         <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-d4ef488f1718c8944a03ebf3747b163e0dcae974.jar" />
     </item>
     <item
-        jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-analyzer\1.3.1\325e7401a7ea16918eb39ba8baad8fd5561a55d3\leakcanary-analyzer-1.3.1.jar"
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="325e7401a7ea16918eb39ba8baad8fd5561a55d3">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\leakcanary-analyzer-1.3.1-f50688d9f36ff945f11938ae8bdeb6c58c34f49a.jar" />
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-b3d70c5d99b61233b1f506df26ba333f929ebd73.jar" />
+    </item>
+    <item
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\volley.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d8f5b9114ebe0f76de7fbf55e950540959ce4ff8">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\volley-6c4442a38411d8e37651d41ba2b3dc8feaedb474.jar" />
+    </item>
+    <item
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-6b027e17308ce75165d2e558d8a568300a082a92.jar" />
+    </item>
+    <item
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.3.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9066b6d4e2536b49e3b58aa301fd925247032df0">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-23fc1079dfe88496258468b53c88f9fed1615404.jar" />
+    </item>
+    <item
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-aa89034fd271b1ad20ae6af149f7bcdab953d12f.jar" />
+    </item>
+    <item
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\commons-io-2.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\commons-io-2.4-36562ebe1194d70812d89a358061a37671a8929e.jar" />
     </item>
     <item
         jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-watcher\1.3.1\6904771474c058abfc5912c13d12b02754712165\leakcanary-watcher-1.3.1.jar"
@@ -51,39 +100,11 @@
         <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-c00319b33e546160fc66d9c1b3212142b327d862.jar" />
     </item>
     <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.3.0\jars\classes.jar"
+        jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\de.greenrobot\eventbus\2.4.0\ddd166d01b3158d1c00576d29f7ed15c030df719\eventbus-2.4.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-dc80fdab1017387cb781151037ffdf0677ccbb11.jar" />
-    </item>
-    <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.github.chrisbanes.photoview\library\1.2.3\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="81aa0e8e77d948204aa6754019c6f3c04dd922e3">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-e3e2d14bf80b703474159d72f5c4eba8d7433cbc.jar" />
-    </item>
-    <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\retrofit-1.9.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a681c044244d9fc375198588297a39ba78028423">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\retrofit-1.9.0-0c37ebf5ef3657c5a45ed8929afe88eb344fa342.jar" />
-    </item>
-    <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-6b027e17308ce75165d2e558d8a568300a082a92.jar" />
-    </item>
-    <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-f8cdfe9280aa471eb080148091b20fd8c3ec7c98.jar" />
+        sha1="ddd166d01b3158d1c00576d29f7ed15c030df719">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\eventbus-2.4.0-a9ca3070664cdd7167d6b84988cad5aac11459f8.jar" />
     </item>
     <item
         jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpmime\4.3.6\cf8bacbf0d476c7f2221f861269365b66447f7ec\httpmime-4.3.6.jar"
@@ -93,32 +114,25 @@
         <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\httpmime-4.3.6-dc53c06d5fc285bd4f886962255a78f97ae7d198.jar" />
     </item>
     <item
-        jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\de.greenrobot\eventbus\2.4.0\ddd166d01b3158d1c00576d29f7ed15c030df719\eventbus-2.4.0.jar"
+        jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\com.squareup.haha\haha\1.3\d2c832f9d14a11c79f58a7ee2e10526a12152c72\haha-1.3.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="ddd166d01b3158d1c00576d29f7ed15c030df719">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\eventbus-2.4.0-a9ca3070664cdd7167d6b84988cad5aac11459f8.jar" />
+        sha1="d2c832f9d14a11c79f58a7ee2e10526a12152c72">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\haha-1.3-e1b242fcf21ec84c883bdba3e32c10adc5d4fd19.jar" />
     </item>
     <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.3.1\jars\classes.jar"
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\retrofit-1.9.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="9066b6d4e2536b49e3b58aa301fd925247032df0">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-23fc1079dfe88496258468b53c88f9fed1615404.jar" />
+        sha1="a681c044244d9fc375198588297a39ba78028423">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\retrofit-1.9.0-0c37ebf5ef3657c5a45ed8929afe88eb344fa342.jar" />
     </item>
     <item
-        jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.3.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\gson-2.3.1-515f8378faef1ef5bb4ad6a75d1eb5c419d9e19d.jar" />
-    </item>
-    <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\commons-io-2.4.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\commons-io-2.4-36562ebe1194d70812d89a358061a37671a8929e.jar" />
+        sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-dc80fdab1017387cb781151037ffdf0677ccbb11.jar" />
     </item>
     <item
         jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\androidasync-2.1.3.jar"
@@ -135,46 +149,32 @@
         <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\httpclient-android-4.3.5-87c3548835599e70a082bfeb947c29ff7d4a4df6.jar" />
     </item>
     <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\google-collections-1.0.jar"
+        jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="9ffe71ac6dcab6bc03ea13f5c2e7b2804e69b357">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\google-collections-1.0-82c46be6fc61e6e5a26b52a7ceae948c041cff40.jar" />
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\gson-2.3.1-515f8378faef1ef5bb4ad6a75d1eb5c419d9e19d.jar" />
     </item>
     <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\volley.jar"
+        jar="C:\Users\deepak.gupta\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-analyzer\1.3.1\325e7401a7ea16918eb39ba8baad8fd5561a55d3\leakcanary-analyzer-1.3.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="d8f5b9114ebe0f76de7fbf55e950540959ce4ff8">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\volley-6c4442a38411d8e37651d41ba2b3dc8feaedb474.jar" />
+        sha1="325e7401a7ea16918eb39ba8baad8fd5561a55d3">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\leakcanary-analyzer-1.3.1-f50688d9f36ff945f11938ae8bdeb6c58c34f49a.jar" />
     </item>
     <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\libs\android-support-v7-recyclerview.jar"
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="7c0018e9838fc8c654c6fa83a110c4600b46febd">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\android-support-v7-recyclerview-13d1bd4438fb64a4bc7fbcf3c4c67bca03f820c0.jar" />
+        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-f8cdfe9280aa471eb080148091b20fd8c3ec7c98.jar" />
     </item>
     <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\jars\classes.jar"
+        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.github.chrisbanes.photoview\library\1.2.3\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-aa89034fd271b1ad20ae6af149f7bcdab953d12f.jar" />
-    </item>
-    <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.android.support\design\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-a8d4dd725fb0324af8f162c24006f8ac90f11415.jar" />
-    </item>
-    <item
-        jar="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-b3d70c5d99b61233b1f506df26ba333f929ebd73.jar" />
+        sha1="81aa0e8e77d948204aa6754019c6f3c04dd922e3">
+        <dex dex="F:\Pratham_Workspace1\TJDeepakAndroidStudio\memories\build\intermediates\pre-dexed\debug\classes-e3e2d14bf80b703474159d72f5c4eba8d7433cbc.jar" />
     </item>
 
 </items>

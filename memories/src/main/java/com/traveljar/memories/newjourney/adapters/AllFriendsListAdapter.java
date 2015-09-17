@@ -58,7 +58,7 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
             viewHolder.checkbox = (CheckBox) convertView.findViewById(R.id.all_contacts_checkbox);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder)convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
             Log.d(TAG, "convert view is NOT null" + list.size() + "position = " + position);
         }
         Log.d(TAG, "get view " + list.get(position).isSelected());
@@ -106,7 +106,8 @@ public class AllFriendsListAdapter extends ArrayAdapter<Contact> implements Filt
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 list = (List<Contact>) results.values;
-                notifyDataSetChanged();
+                if (list != null)
+                    notifyDataSetChanged();
             }
 
             @Override
