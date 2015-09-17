@@ -15,6 +15,7 @@ public class Timecapsule {
     private String extension;
     private long size;
     private String createdBy;
+    private boolean makeVideo;
 
     public Timecapsule(){
 
@@ -133,4 +134,9 @@ public class Timecapsule {
     public void setUpdatedAt(long updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public boolean isMakeVideo() { return makeVideo; }
+
+    public void setMakeVideo(boolean makeVideo) {   this.makeVideo = makeVideo;    }
+
 }

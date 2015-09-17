@@ -66,10 +66,10 @@ public class LapsList extends AppCompatActivity {
         title.setText("Travel Itinerary");
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppController.lapList.clear();
+                AppController.lapsList.clear();
                 LapsList.this.finish();
             }
         });
@@ -77,7 +77,7 @@ public class LapsList extends AppCompatActivity {
         TextView next = (TextView)toolbar.findViewById(R.id.action_done);
         next.setText("Next");
 
-        if(AppController.lapList.size() == 0){
+        if(AppController.lapsList.size() == 0){
             next.setVisibility(View.GONE);
         } else {
             next.setVisibility(View.VISIBLE);
@@ -92,7 +92,7 @@ public class LapsList extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(AppController.lapList.size() > 0) {
+        if(AppController.lapsList.size() > 0) {
             menu.add(0, ID_ACTION_ITEM_NEXT, 0, "Next").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return super.onCreateOptionsMenu(menu);
@@ -130,7 +130,7 @@ public class LapsList extends AppCompatActivity {
     public void onResume(){
         //Invalidate the menu for the visibility of the next option in the menu
         invalidateOptionsMenu();
-        if(AppController.lapList.size() == 0){
+        if(AppController.lapsList.size() == 0){
             noLapsPlaceholderImg.setVisibility(View.VISIBLE);
             getStartedImg.setVisibility(View.VISIBLE);
             lapsListView.setVisibility(View.GONE);
@@ -138,7 +138,7 @@ public class LapsList extends AppCompatActivity {
             lapsListView.setVisibility(View.VISIBLE);
             noLapsPlaceholderImg.setVisibility(View.GONE);
             getStartedImg.setVisibility(View.GONE);
-            lapsListViewAdapter = new LapsListAdapter(this, AppController.lapList);
+            lapsListViewAdapter = new LapsListAdapter(this, AppController.lapsList);
             lapsListView.setAdapter(lapsListViewAdapter);
         }
 
@@ -150,7 +150,7 @@ public class LapsList extends AppCompatActivity {
     @Override
     public void onBackPressed(){
 //        LapDataSource.deleteLapsList(this, AppController.lapList);
-        AppController.lapList.clear();
+        AppController.lapsList.clear();
         super.onBackPressed();
     }
 

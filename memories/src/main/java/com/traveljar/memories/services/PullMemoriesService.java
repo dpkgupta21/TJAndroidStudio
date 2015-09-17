@@ -217,7 +217,7 @@ public class PullMemoriesService {
 
                         imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() +
                                 "/pic_" + createdBy + "_" + journeyId + "_" + createdAt + ".jpg";
-                        if((new File(imagePath).exists())){
+                        if ((new File(imagePath).exists())) {
                             localDataPath = imagePath;
                         }
 
@@ -404,7 +404,9 @@ public class PullMemoriesService {
                         destinationObject.getString("city"), Long.parseLong(destinationObject.getString("created_at")), latitude, longitude);
                 destinationId = PlaceDataSource.createPlace(destination, mContext);
 
-                laps = new Laps(null, lapObject.getString("id"), journeyId, String.valueOf(sourceId), String.valueOf(destinationId),
+                laps = new Laps(null, lapObject.getString("id"), journeyId,
+                        String.valueOf(sourceId),
+                        String.valueOf(destinationId),
                         HelpMe.getConveyanceModeCode(lapObject.getString("travel_mode")), Long.parseLong(lapObject.getString("start_date")));
                 LapsDataSource.createLap(laps, mContext);
             } catch (JSONException ex) {

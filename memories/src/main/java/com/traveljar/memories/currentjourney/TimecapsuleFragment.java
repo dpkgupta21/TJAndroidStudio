@@ -1,5 +1,8 @@
 package com.traveljar.memories.currentjourney;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,11 +18,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.traveljar.memories.R;
+import com.traveljar.memories.SQLitedatabase.MemoriesDataSource;
 import com.traveljar.memories.SQLitedatabase.TimecapsuleDataSource;
 import com.traveljar.memories.currentjourney.adapters.TimecapsuleAdapter;
+import com.traveljar.memories.models.MakeRequest;
 import com.traveljar.memories.models.Timecapsule;
 import com.traveljar.memories.utility.Constants;
 import com.traveljar.memories.utility.TJPreferences;
+import com.traveljar.memories.video.MakeVideoRequest;
 import com.traveljar.memories.volley.AppController;
 import com.traveljar.memories.volley.CustomJsonRequest;
 
@@ -34,6 +40,9 @@ public class TimecapsuleFragment extends Fragment {
 
     private static final String TAG = "<TimecapsuleFragment>";
     private View rootView;
+    Context context;
+    int count;
+    Timecapsule timecapsule=new Timecapsule();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,10 +76,32 @@ public class TimecapsuleFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         Button button = (Button) rootView.findViewById(R.id.generate);
+
+       Log.d(TAG, "memories are................................" + MemoriesDataSource.getMemoriesCount(getActivity(), TJPreferences.getActiveJourneyId(getActivity())));
+        Log.d(TAG, "videos  are...................................." + TimecapsuleDataSource.getVideoCount(getActivity(), TJPreferences.getActiveJourneyId(getActivity())));
+        count=MemoriesDataSource.getMemoriesCount(getActivity(), TJPreferences.getActiveJourneyId(getActivity()))+
+                TimecapsuleDataSource.getVideoCount(getActivity(), TJPreferences.getActiveJourneyId(getActivity()));
+
+
+       if(count%3==0 && count!=0){
+           timecapsule.setMakeVideo(true);
+           button.setVisibility(View.VISIBLE);
+       }
+        if ((count%3)>0 && count>3){
+            if (timecapsule.isMakeVideo()){
+                button.setVisibility(View.GONE);
+            }
+            else
+                button.setVisibility(View.VISIBLE);
+        }
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generateTimecapsule();
+               // generateTimecapsule();
+                Intent i = new Intent(getActivity(), MakeVideoRequest.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
 
@@ -87,6 +118,11 @@ public class TimecapsuleFragment extends Fragment {
         String url = Constants.URL_TIMECAPSULE_GENERATE + "?api_key=" + TJPreferences.getApiKey(getActivity())
                 + "&j_id=" + TJPreferences.getActiveJourneyId(getActivity());
         Log.d(TAG, url);
+        String videoUrl = url;
+        Intent playVideo = new Intent(Intent.ACTION_VIEW);
+        playVideo.setDataAndType(Uri.parse(videoUrl), "video/mp4");
+        startActivity(playVideo);
+
         CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.GET, url, params,
                 new Response.Listener<JSONObject>() {
 
@@ -101,5 +137,8 @@ public class TimecapsuleFragment extends Fragment {
             }
         });
         AppController.getInstance().addToRequestQueue(uploadRequest, uploadRequestTag);
+        Intent i = new Intent(getActivity(), MakeVideoRequest.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 }

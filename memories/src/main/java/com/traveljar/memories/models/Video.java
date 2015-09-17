@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Video extends Memories implements Parcelable {
 
-    public static final Parcelable.Creator<Video> CREATOR = new Parcelable.Creator<Video>() {
+    public static final Creator<Video> CREATOR = new Creator<Video>() {
 
         public Video createFromParcel(Parcel in) {
             return new Video(in);

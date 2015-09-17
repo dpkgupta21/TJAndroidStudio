@@ -16,7 +16,7 @@ public class Journey implements Comparable<Journey> {
     private long updatedAt;
     private long completedAt;
     private boolean isUserActive;
-    private List<Lap> lapsList;
+    private List<Laps> lapsList;
 
     public Journey() {
 
@@ -138,11 +138,11 @@ public class Journey implements Comparable<Journey> {
         this.isUserActive = isUserActive;
     }
 
-    public List<Lap> getLapsList() {
+    public List<Laps> getLapsList() {
         return lapsList;
     }
 
-    public void setLapsList(List<Lap> lapsList) {
+    public void setLapsList(List<Laps> lapsList) {
         this.lapsList = lapsList;
     }
 

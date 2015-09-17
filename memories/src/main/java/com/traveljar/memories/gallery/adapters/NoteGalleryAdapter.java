@@ -35,7 +35,7 @@ public class NoteGalleryAdapter extends RecyclerView.Adapter<NoteGalleryAdapter.
 
     // Create new views (invoked by the layout manager)
     @Override
-    public NoteGalleryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_notes_item,
                 parent, false);

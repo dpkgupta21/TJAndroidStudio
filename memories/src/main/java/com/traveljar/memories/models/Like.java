@@ -8,7 +8,7 @@ import android.os.Parcelable;
  */
 public class Like implements Parcelable {
 
-    public static final Parcelable.Creator<Like> CREATOR = new Parcelable.Creator<Like>() {
+    public static final Creator<Like> CREATOR = new Creator<Like>() {
         public Like createFromParcel(Parcel in) {
             return new Like(in);
         }

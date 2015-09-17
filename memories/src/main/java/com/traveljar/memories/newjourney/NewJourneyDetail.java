@@ -18,12 +18,10 @@ import com.android.volley.VolleyLog;
 import com.google.common.base.Joiner;
 import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.JourneyDataSource;
-import com.traveljar.memories.SQLitedatabase.LapDataSource;
 import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
 import com.traveljar.memories.currentjourney.CurrentJourneyBaseActivity;
 import com.traveljar.memories.models.Journey;
-import com.traveljar.memories.models.Lap;
 import com.traveljar.memories.models.Laps;
 import com.traveljar.memories.models.Place;
 import com.traveljar.memories.utility.Constants;
@@ -62,10 +60,10 @@ public class NewJourneyDetail extends AppCompatActivity {
         mJourneyTagLine = (EditText) findViewById(R.id.new_journey_detail_tagline);
     }
 
-    private void capitalizeJourneyName(){
+    private void capitalizeJourneyName() {
         jName = "";
         String[] name = mJourneyName.getText().toString().trim().split(" ");
-        for(String s : name){
+        for (String s : name) {
             jName += s.substring(0, 1).toUpperCase() + s.substring(1) + " ";
         }
         jName = jName.trim();
@@ -82,7 +80,6 @@ public class NewJourneyDetail extends AppCompatActivity {
         try {
 
 
-
             params.put("journey[name]", jName);
             params.put("journey[tag_line]", mJourneyTagLine.getText().toString().trim());
             params.put("journey[group_relationship]", jGroupType);
@@ -93,26 +90,30 @@ public class NewJourneyDetail extends AppCompatActivity {
             // it can be properly passed to backend when creating new journey
 
             int currentPosition = 0;
-            for (Lap lap : AppController.lapList) {
+            for (Laps laps : AppController.lapsList) {
+                // Get Lap local id
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][journey_lap_local_id]",
+                        laps.getId());
                 // Get source info
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_city_name]",
-                        lap.getSourceCityName());
+                        laps.getSourceCityName());
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_state_name]",
-                        lap.getSourceStateName());
+                        laps.getSourceStateName());
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][source_country_name]",
-                        lap.getSourceCountryName());
+                        laps.getSourceCountryName());
 
                 // Get destination info
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][destination_city_name]",
-                        lap.getDestinationCityName());
+                        laps.getDestinationCityName());
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][destination_state_name]",
-                        lap.getDestinationStateName());
+                        laps.getDestinationStateName());
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][destination_country_name]",
-                        lap.getDestinationCountryName());
+                        laps.getDestinationCountryName());
 
                 params.put("journey[journey_laps_attributes[" + currentPosition + "]][travel_mode]",
-                        HelpMe.getConveyanceMode(lap.getConveyanceMode()));
-                params.put("journey[journey_laps_attributes[" + currentPosition + "]][start_date]", String.valueOf(lap.getStartDate()));
+                        HelpMe.getConveyanceMode(laps.getConveyanceMode()));
+                params.put("journey[journey_laps_attributes[" + currentPosition + "]][start_date]",
+                        String.valueOf(laps.getStartDate()));
 
                 currentPosition++;
             }
@@ -213,18 +214,18 @@ public class NewJourneyDetail extends AppCompatActivity {
         Journey newJ = new Journey(idOnServer, name, tag_line, group_relationship, created_by_id,
                 null, buddyArrayList, Constants.JOURNEY_STATUS_ACTIVE, HelpMe.getCurrentTime(), HelpMe.getCurrentTime(), 0, true);
         JourneyDataSource.createJourney(newJ, getBaseContext());
-        for(Lap lap : AppController.lapList){
+        for (Laps laps : AppController.lapsList) {
             Log.d(TAG, "setting jouney id " + idOnServer);
-            lap.setJourneyId(idOnServer);
+            laps.setJourneyId(idOnServer);
         }
-        Log.d(TAG, "total laps in the database are " + LapDataSource.getAllLaps(this));
-        LapDataSource.updateLapsList(AppController.lapList, this);
-        LapDataSource.updateLapsList(AppController.lapList, this);
-        AppController.lapList.clear();
+        //Log.d(TAG, "total laps in the database are " + LapDataSource.getAllLaps(this));
+        // LapDataSource.updateLapsList(AppController.lapList, this);
+        //  LapDataSource.updateLapsList(AppController.lapList, this);
+        AppController.lapsList.clear();
         TJPreferences.setActiveJourneyId(this, idOnServer);
     }
 
-    private void parseLaps(JSONArray journeyLaps, String journeyId){
+    private void parseLaps(JSONArray journeyLaps, String journeyId) {
         Laps laps;
         Place source;
         Place destination;
@@ -236,9 +237,10 @@ public class NewJourneyDetail extends AppCompatActivity {
         long sourceId;
         long destinationId;
         int noLaps = journeyLaps.length();
-        for(int i = 0; i < noLaps; i++){
+        for (int i = 0; i < noLaps; i++) {
             try {
-                lapObject = (JSONObject)journeyLaps.get(i);
+
+                lapObject = (JSONObject) journeyLaps.get(i);
                 sourceObject = lapObject.getJSONObject("source");
                 destinationObject = lapObject.getJSONObject("destination");
 
@@ -246,31 +248,54 @@ public class NewJourneyDetail extends AppCompatActivity {
                 latitude = sourceObject.getString("latitude").equals("null") ? 0.0 : Double.parseDouble(sourceObject.getString("latitude"));
                 longitude = sourceObject.getString("longitude").equals("null") ? 0.0 : Double.parseDouble(sourceObject.getString("longitude"));
 
-                source = new Place(null, sourceObject.getString("id"), sourceObject.getString("country"), sourceObject.getString("state"),
-                        sourceObject.getString("city"), Long.parseLong(sourceObject.getString("created_at")), latitude, longitude);
-                sourceId = PlaceDataSource.createPlace(source, this);
+                PlaceDataSource.updatePlace(sourceObject.getString("id"),
+                        sourceObject.getString("city"),
+                        sourceObject.getString("state"),
+                        sourceObject.getString("country"),
+                        this
+                );
+
+//                source = new Place(null, sourceObject.getString("id"), sourceObject.getString("country"), sourceObject.getString("state"),
+//                        sourceObject.getString("city"), Long.parseLong(sourceObject.getString("created_at")), latitude, longitude);
+//                sourceId = PlaceDataSource.createPlace(source, this);
 
                 // Parsing destination Place
                 latitude = destinationObject.getString("latitude").equals("null") ? 0.0 : Double.parseDouble(destinationObject.getString("latitude"));
                 longitude = destinationObject.getString("longitude").equals("null") ? 0.0 : Double.parseDouble(destinationObject.getString("longitude"));
 
-                destination = new Place(null, destinationObject.getString("id"), destinationObject.getString("country"), destinationObject.getString("state"),
-                        destinationObject.getString("city"), Long.parseLong(destinationObject.getString("created_at")), latitude, longitude);
-                destinationId = PlaceDataSource.createPlace(destination, this);
 
-                laps = new Laps(null, lapObject.getString("id"), journeyId, String.valueOf(sourceId), String.valueOf(destinationId),
-                        HelpMe.getConveyanceModeCode(lapObject.getString("travel_mode")), Long.parseLong(lapObject.getString("start_date")));
-                LapsDataSource.createLap(laps, this);
-            }catch (JSONException ex){
+                PlaceDataSource.updatePlace(destinationObject.getString("id"),
+                        destinationObject.getString("city"),
+                        destinationObject.getString("state"),
+                        destinationObject.getString("country"),
+                        this
+                );
+
+                /*
+                 * Todo Here we need to  update Laps serverId and Journery id
+                 */
+
+//                destination = new Place(null, destinationObject.getString("id"), destinationObject.getString("country"), destinationObject.getString("state"),
+//                        destinationObject.getString("city"), Long.parseLong(destinationObject.getString("created_at")), latitude, longitude);
+//                destinationId = PlaceDataSource.createPlace(destination, this);
+
+
+                laps = new Laps(lapObject.getString("journey_lap_local_id"), lapObject.getString("id"), journeyId,
+                        null,
+                        null,
+                        HelpMe.getConveyanceModeCode(lapObject.getString("travel_mode")),
+                        Long.parseLong(lapObject.getString("start_date")));
+                LapsDataSource.updateLapsServerId(laps, this);
+            } catch (JSONException ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-    private void setUpToolBar(){
+    private void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        TextView title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        TextView title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Journey Detail");
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);

@@ -21,16 +21,16 @@ public class JourneyUtil {
 
     private static JourneyUtil mInstance;
 
-    public static JourneyUtil getInstance(){
+    public static JourneyUtil getInstance() {
         mInstance = mInstance == null ? new JourneyUtil() : mInstance;
         return mInstance;
     }
 
-    public void setAddBuddyListener(OnAddBuddyListener listener){
+    public void setAddBuddyListener(OnAddBuddyListener listener) {
         mBuddyAddListener = listener;
     }
 
-    public void setExitJourneyListener(OnExitJourneyListener listener){
+    public void setExitJourneyListener(OnExitJourneyListener listener) {
         mExitJourneyListener = listener;
     }
 
@@ -38,7 +38,7 @@ public class JourneyUtil {
 
 
     // Removes a user from the journey
-    public void exitJourney(Context context, final String userId){
+    public void exitJourney(Context context, final String userId) {
         String url = Constants.URL_CREATE_JOURNEY + "/" + TJPreferences.getActiveJourneyId(context) + "/remove_buddy";
         Map<String, String> params = new HashMap<>();
         params.put("api_key", TJPreferences.getApiKey(context));
@@ -62,8 +62,8 @@ public class JourneyUtil {
         AppController.getInstance().addToRequestQueue(uploadRequest);
     }
 
-    public static void endJourneyOnServer(final Context context){
-        String url = Constants.URL_CREATE_JOURNEY + "/" +TJPreferences.getActiveJourneyId(context);
+    public static void endJourneyOnServer(final Context context) {
+        String url = Constants.URL_CREATE_JOURNEY + "/" + TJPreferences.getActiveJourneyId(context);
         Map<String, String> params = new HashMap<String, String>();
         params.put("api_key", TJPreferences.getApiKey(context));
         params.put("journey[completed_at]", "2015-06-09T06:09:06.258Z");
@@ -84,7 +84,7 @@ public class JourneyUtil {
         AppController.getInstance().addToRequestQueue(uploadRequest);
     }
 
-    public void addUserToJourney(Context context, final String contactId){
+    public void addUserToJourney(Context context, final String contactId) {
         String url = Constants.URL_CREATE_JOURNEY + "/" + TJPreferences.getActiveJourneyId(context) + "/add_buddy";
         Map<String, String> params = new HashMap<>();
         params.put("api_key", TJPreferences.getApiKey(context));
@@ -107,12 +107,37 @@ public class JourneyUtil {
         });
         AppController.getInstance().addToRequestQueue(uploadRequest);
     }
+
+
+    // Update a user from the journey
+
+    public static void updateJourneyLap(Context context, final HashMap params) {
+        String url = Constants.URL_CREATE_JOURNEY + "/" + TJPreferences.getActiveJourneyId(context) + "/remove_buddy";
+
+        Utils.showLog(TAG, "calling url " + url);
+        CustomJsonRequest uploadRequest = new CustomJsonRequest(Request.Method.PUT, url, params,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Utils.showLog(TAG, "user has successfully updated the journey lap");
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Utils.showLog(TAG, "user unable to updated the journey lap" + error);
+                error.printStackTrace();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(uploadRequest);
+    }
+
+
     // result code = 0 for success, -1 for failure
-    public interface OnAddBuddyListener{
+    public interface OnAddBuddyListener {
         void onAddBuddy(String contactId, int resultCode);
     }
 
-    public interface OnExitJourneyListener{
+    public interface OnExitJourneyListener {
         void onExitJourney(int resultCode, String userId);
     }
 

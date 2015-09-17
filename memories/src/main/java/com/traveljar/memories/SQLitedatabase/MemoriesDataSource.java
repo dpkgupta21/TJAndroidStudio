@@ -17,6 +17,7 @@ import java.util.List;
 public class MemoriesDataSource {
 
     private static final String TAG = "<MemoriesDS>";
+    public static int mem_count;
 
     public static List<Memories> getAllMemoriesList(Context context, String journeyId) {
         List<Memories> memoriesList = new ArrayList<>();
@@ -29,6 +30,7 @@ public class MemoriesDataSource {
         Collections.sort(memoriesList);
 
         Log.d(TAG, "total memories =" + memoriesList.size());
+        mem_count=memoriesList.size();
         return memoriesList;
     }
 
@@ -81,6 +83,21 @@ public class MemoriesDataSource {
         }
         db.close();
         Log.d(TAG, "user successfully added to the current journey");
+    }
+
+    public static int getMemoriesCount(Context context, String journeyId) {
+
+        List<Memories> memoriesList = new ArrayList<>();
+
+        memoriesList.addAll(PictureDataSource.getPictureMemoriesFromJourney(context, journeyId));
+        //    memoriesList.addAll(AudioDataSource.getAudioMemoriesForJourney(context, journeyId));
+        memoriesList.addAll(CheckinDataSource.getAllCheckinsList(context, journeyId));
+        //  memoriesList.addAll(NoteDataSource.getAllNotesList(context, journeyId));
+
+        memoriesList.addAll(MoodDataSource.getMoodsFromJourney(context, journeyId));
+       // Log.d(TAG, "cursor length = " + c.getCount() + " with j_id = " + journeyId);
+        int count = memoriesList.size();
+        return count;
     }
 
     public static Memories getMemoryFromTypeAndId(Context context, String idOnServer, String memType){

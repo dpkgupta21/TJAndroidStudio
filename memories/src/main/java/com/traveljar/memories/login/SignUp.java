@@ -79,7 +79,6 @@ public class SignUp extends Activity {
         txtPassword = (EditText) findViewById(R.id.signupPasswordTxt);
         txtName = (EditText) findViewById(R.id.signupNameTxt);
         autoPopulateEmail(txtEmailAddress);
-
     }
 
     @Override
@@ -141,7 +140,8 @@ public class SignUp extends Activity {
                     TJPreferences.setProfileImgPath(SignUp.this, Constants.GUMNAAM_IMAGE_URL);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "No internet connection please check your internet connection", Toast.LENGTH_LONG)
+                    Toast.makeText(getApplicationContext(), "No internet connection please" +
+                            " check your internet connection", Toast.LENGTH_LONG)
                             .show();
                 }
             } else {
@@ -218,7 +218,8 @@ public class SignUp extends Activity {
         String phone = userItem.getString("phone");
         String api_key = userItem.getString("api_key");
 
-        Contact contact = new Contact(id, name, name, email, null, null, Constants.GUMNAAM_IMAGE_URL, phone, null, false, null);
+        Contact contact = new Contact(id, name, name, email, null, null, Constants.GUMNAAM_IMAGE_URL,
+                phone, null, false, null);
         ContactDataSource.createContact(contact, this);
 
         TJPreferences.setUserId(this, id);

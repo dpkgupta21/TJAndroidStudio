@@ -13,6 +13,7 @@ import com.traveljar.memories.R;
 import com.traveljar.memories.SQLitedatabase.LapsDataSource;
 import com.traveljar.memories.currentjourney.adapters.LapsAdapter;
 import com.traveljar.memories.models.Lap;
+import com.traveljar.memories.models.Laps;
 import com.traveljar.memories.newjourney.AddLap;
 import com.traveljar.memories.utility.TJPreferences;
 
@@ -23,7 +24,7 @@ public class LapsFragment extends Fragment {
     private static final String TAG = "<LapsFragment>";
     private View rootView;
     private ListView lvLaps;
-    private List<Lap> lapList;
+    private List<Laps> lapsList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.current_journey_lapslist, container, false);
@@ -52,8 +53,8 @@ public class LapsFragment extends Fragment {
     @Override
     public void onResume() {
         String jId = TJPreferences.getActiveJourneyId(getActivity());
-        lapList = LapsDataSource.getLapsFromJourneyWithPlace(getActivity(), jId);
-        LapsAdapter adapter = new LapsAdapter(getActivity(), lapList);
+        lapsList = LapsDataSource.getLapsFromJourneyWithPlace(getActivity(), jId);
+        LapsAdapter adapter = new LapsAdapter(getActivity(), lapsList);
         lvLaps.setAdapter(adapter);
         super.onResume();
     }

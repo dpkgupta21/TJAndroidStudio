@@ -15,28 +15,39 @@ public class PlaceDataSource {
 
     private static final String TAG = "<PlaceDataSource>";
 
+
     public static long createPlace(Place newPlace, Context context) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
-        ContentValues values = new ContentValues();
 
-        values.put(MySQLiteHelper.PLACE_COLUMN_ID_ONSERVER, newPlace.getIdOnServer());
-        values.put(MySQLiteHelper.PLACE_COLUMN_COUNTRY, newPlace.getCountry());
-        values.put(MySQLiteHelper.PLACE_COLUMN_STATE, newPlace.getState());
-        values.put(MySQLiteHelper.PLACE_COLUMN_CITY, newPlace.getCity());
-        values.put(MySQLiteHelper.PLACE_COLUMN_CREATED_AT, newPlace.getCreatedAt());
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE, newPlace.getLatitude());
-        values.put(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE, newPlace.getLongitude());
+        long place_id = -1;
+        String selectQuery = "SELECT  " + MySQLiteHelper.PLACE_COLUMN_ID + " FROM " + MySQLiteHelper.TABLE_PLACE + " WHERE "
+                + MySQLiteHelper.PLACE_COLUMN_CITY + " = '" + newPlace.getCity() + "' AND "
+                + MySQLiteHelper.PLACE_COLUMN_STATE + " = '" + newPlace.getState() + "' AND "
+                + MySQLiteHelper.PLACE_COLUMN_COUNTRY + " = '" + newPlace.getCountry() + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            place_id = cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.PLACE_COLUMN_ID));
+        }
 
+        if (place_id == -1) {
+            ContentValues values = new ContentValues();
+            values.put(MySQLiteHelper.PLACE_COLUMN_ID_ONSERVER, newPlace.getIdOnServer());
+            values.put(MySQLiteHelper.PLACE_COLUMN_COUNTRY, newPlace.getCountry());
+            values.put(MySQLiteHelper.PLACE_COLUMN_STATE, newPlace.getState());
+            values.put(MySQLiteHelper.PLACE_COLUMN_CITY, newPlace.getCity());
+            values.put(MySQLiteHelper.PLACE_COLUMN_CREATED_AT, newPlace.getCreatedAt());
+            values.put(MySQLiteHelper.CHECKIN_COLUMN_LATITUDE, newPlace.getLatitude());
+            values.put(MySQLiteHelper.CHECKIN_COLUMN_LONGITUDE, newPlace.getLongitude());
 
-        long place_id = db.insert(MySQLiteHelper.TABLE_PLACE, null, values);
+            place_id = db.insert(MySQLiteHelper.TABLE_PLACE, null, values);
+        }
         Log.d(TAG, "New place Inserted!");
-
         db.close();
 
         return place_id;
     }
 
-    public static Place getPlaceById(Context context, String placeId){
+    public static Place getPlaceById(Context context, String placeId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_PLACE + " WHERE "
                 + MySQLiteHelper.PLACE_COLUMN_ID + " = '" + placeId + "'";
@@ -48,7 +59,7 @@ public class PlaceDataSource {
         return placeList.get(0);
     }
 
-    public static List<Place> parsePlacesAsList(Context context, Cursor cursor){
+    public static List<Place> parsePlacesAsList(Context context, Cursor cursor) {
         List<Place> placeList = new ArrayList<>();
         if (cursor.moveToFirst()) {
             Place place;
@@ -69,4 +80,14 @@ public class PlaceDataSource {
         return placeList;
     }
 
+    public static void updatePlace(String placeServerId, String cityName, String stateName, String countryName, Context context) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.PLACE_COLUMN_ID_ONSERVER, placeServerId);
+        int flag = db.update(MySQLiteHelper.TABLE_PLACE, values, MySQLiteHelper.PLACE_COLUMN_CITY + " = '" + cityName + "' AND "
+                + MySQLiteHelper.PLACE_COLUMN_STATE + " = '" + stateName + "' AND "
+                + MySQLiteHelper.PLACE_COLUMN_COUNTRY + " = '" + countryName + "'", null);
+        db.close();
+
+    }
 }

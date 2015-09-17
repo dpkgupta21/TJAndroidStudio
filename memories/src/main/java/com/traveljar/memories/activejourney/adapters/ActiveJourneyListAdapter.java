@@ -36,9 +36,6 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
     // For the request bus receive event to discard the received event which is not meant for this activity
     private static int LISTENER_CODE = 0;
 
-    public ActiveJourneyListAdapter() {
-
-    }
     // Provide a suitable constructor (depends on the kind of dataset)
     public ActiveJourneyListAdapter(List<Journey> myDataset, Context context) {
         mDataset = myDataset;
@@ -60,7 +57,7 @@ public class ActiveJourneyListAdapter extends RecyclerView.Adapter<ActiveJourney
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ActiveJourneyListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.active_journey_list_item,
                 parent, false);

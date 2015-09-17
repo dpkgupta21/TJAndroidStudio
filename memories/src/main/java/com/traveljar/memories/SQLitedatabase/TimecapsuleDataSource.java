@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.traveljar.memories.models.Memories;
 import com.traveljar.memories.models.Timecapsule;
 
 import java.util.ArrayList;
@@ -75,6 +76,20 @@ public class TimecapsuleDataSource {
         c.close();
         db.close();
         return timecapsuleList;
+    }
+
+    public static int getVideoCount(Context context, String journeyId) {
+
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_TIMECAPSULE + " WHERE "
+                + MySQLiteHelper.TIMECAPSULE_COLUMN_JID + " = " + journeyId;
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        Log.d(TAG, "cursor length = " + c.getCount() + " with j_id = " + journeyId);
+        List<Timecapsule> timecapsuleList = getTimecapsulesList(c, context);
+        c.close();
+        db.close();
+        return timecapsuleList.size();
     }
 
     private static List<Timecapsule> getTimecapsulesList(Cursor cursor, Context context) {

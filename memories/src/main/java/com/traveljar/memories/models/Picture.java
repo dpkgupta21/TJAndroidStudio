@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Picture extends Memories implements Parcelable {
 
-    public static final Parcelable.Creator<Picture> CREATOR = new Parcelable.Creator<Picture>() {
+    public static final Creator<Picture> CREATOR = new Creator<Picture>() {
         public Picture createFromParcel(Parcel in) {
             return new Picture(in);
         }

@@ -45,7 +45,7 @@ public class TimecapsuleAdapter extends RecyclerView.Adapter<TimecapsuleAdapter.
 
     // Create new views (invoked by the layout manager)
     @Override
-    public TimecapsuleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.current_journey_timecapsule_list_item,
                 parent, false);

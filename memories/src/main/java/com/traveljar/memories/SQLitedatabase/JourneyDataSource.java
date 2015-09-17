@@ -94,7 +94,8 @@ public class JourneyDataSource {
 
     public static List<Journey> getAllActiveJourneys(Context context) {
 
-        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE " + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_ACTIVE + "'";
+        String selectQuery = "SELECT  * FROM " + MySQLiteHelper.TABLE_JOURNEY + " WHERE "
+                + MySQLiteHelper.JOURNEY_COLUMN_STATUS + " = '" + Constants.JOURNEY_STATUS_ACTIVE + "'";
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         Log.e(TAG, selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -233,9 +234,9 @@ public class JourneyDataSource {
                 journey.setCreatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_CREATED_AT)));
                 journey.setUpdatedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_UPDATED_AT)));
                 journey.setCompletedAt(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_COMPELTED_AT)));
-                journey.setLapsList(LapDataSource.getLapFromJourney(context, journey.getIdOnServer()));
+                journey.setLapsList(LapsDataSource.getLapsFromJourney(context, journey.getIdOnServer()));
                 journey.setIsUserActive(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.JOURNEY_COLUMN_IS_USER_ACTIVE)) == 1);
-                Log.d(TAG, LapDataSource.getLapFromJourney(context, journey.getIdOnServer()) + "!");
+               // Log.d(TAG, LapsDataSource.getLapsFromJourney(context, journey.getIdOnServer()) + "!");
                 journeyList.add(journey);
                 cursor.moveToNext();
             }

@@ -14,11 +14,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.traveljar.memories.R;
-import com.traveljar.memories.SQLitedatabase.LapDataSource;
 import com.traveljar.memories.SQLitedatabase.LapsDataSource;
-import com.traveljar.memories.models.Lap;
+import com.traveljar.memories.SQLitedatabase.PlaceDataSource;
 import com.traveljar.memories.models.Laps;
+import com.traveljar.memories.models.Place;
 import com.traveljar.memories.utility.HelpMe;
+import com.traveljar.memories.utility.JourneyUtil;
 import com.traveljar.memories.utility.TJPreferences;
 import com.traveljar.memories.volley.AppController;
 
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,9 +56,10 @@ public class AddLap extends AppCompatActivity {
     private List<String> toLocationList;
     private long epochTime;
 
-    private Lap lap;
+    private Laps laps;
 
-    private boolean isJourneyCreated=false;
+    private boolean isJourneyCreated = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,20 +115,20 @@ public class AddLap extends AppCompatActivity {
         if (getIntent().hasExtra("EDIT_LAP_ID")) {
             editMode = true;
 //            lap = LapDataSource.getLapById(getIntent().getStringExtra("EDIT_LAP_ID"), this);
-            if(isJourneyCreated){
-                lap  = LapsDataSource.getLapByIdWithPlace(this, getIntent().getStringExtra("EDIT_LAP_ID"));
-            }else {
-                lap = Lap.getLapFromLapsList(AppController.lapList, getIntent().getStringExtra("EDIT_LAP_ID"));
+            if (isJourneyCreated) {
+                laps = LapsDataSource.getLapsByIdWithPlace(this, getIntent().getStringExtra("EDIT_LAP_ID"));
+            } else {
+                laps = Laps.getLapFromLapsList(AppController.lapsList, getIntent().getStringExtra("EDIT_LAP_ID"));
             }
-            dateLocation.setText(HelpMe.getDate(lap.getStartDate(), 1));
-            fromLocation.setText(lap.getSourceCityName());
-            toLocation.setText(lap.getDestinationCityName());
-            Log.d(TAG, "editing lap with source " + lap.getSourceCityName() + lap.getDestinationCityName());
-            setConveyanceMode(lap.getConveyanceMode());
+            dateLocation.setText(HelpMe.getDate(laps.getStartDate(), 1));
+            fromLocation.setText(laps.getSourceCityName());
+            toLocation.setText(laps.getDestinationCityName());
+            Log.d(TAG, "editing     lap with source " + laps.getSourceCityName() + laps.getDestinationCityName());
+            setConveyanceMode(laps.getConveyanceMode());
         } else {
             //Set default conveyence mode to magical carpet
-            lap = new Lap();
-            lap.setConveyanceMode(HelpMe.CONVEYANCE_CARPET);
+            laps = new Laps();
+            laps.setConveyanceMode(HelpMe.CONVEYANCE_CARPET);
             toggleCarpet.setChecked(true);
         }
     }
@@ -158,74 +161,74 @@ public class AddLap extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.flightToggle:
                 if (toggleFlight.isChecked()) {
-                    lap.setConveyanceMode(HelpMe.CONVEYANCE_FLIGHT);
+                    laps.setConveyanceMode(HelpMe.CONVEYANCE_FLIGHT);
                     conveyanceOff();
                     toggleFlight.setChecked(true);
                 } else {
-                    lap.setConveyanceMode(-1);
+                    laps.setConveyanceMode(-1);
                 }
                 break;
             case R.id.carToggle:
                 if (toggleCar.isChecked()) {
-                    lap.setConveyanceMode(HelpMe.CONVEYANCE_CAR);
+                    laps.setConveyanceMode(HelpMe.CONVEYANCE_CAR);
                     conveyanceOff();
                     toggleCar.setChecked(true);
                 } else {
-                    lap.setConveyanceMode(-1);
+                    laps.setConveyanceMode(-1);
                 }
                 break;
             case R.id.trainToggle:
                 if (toggleTrain.isChecked()) {
-                    lap.setConveyanceMode(HelpMe.CONVEYANCE_TRAIN);
+                    laps.setConveyanceMode(HelpMe.CONVEYANCE_TRAIN);
                     conveyanceOff();
                     toggleTrain.setChecked(true);
                 } else {
-                    lap.setConveyanceMode(-1);
+                    laps.setConveyanceMode(-1);
                 }
                 break;
             case R.id.shipToggle:
                 if (toggleShip.isChecked()) {
-                    lap.setConveyanceMode(HelpMe.CONVEYANCE_SHIP);
+                    laps.setConveyanceMode(HelpMe.CONVEYANCE_SHIP);
                     conveyanceOff();
                     toggleShip.setChecked(true);
                 } else {
-                    lap.setConveyanceMode(-1);
+                    laps.setConveyanceMode(-1);
                 }
                 break;
             case R.id.walkToggle:
                 if (toggleWalk.isChecked()) {
-                    lap.setConveyanceMode(HelpMe.CONVEYANCE_WALK);
+                    laps.setConveyanceMode(HelpMe.CONVEYANCE_WALK);
                     conveyanceOff();
                     toggleWalk.setChecked(true);
                 } else {
-                    lap.setConveyanceMode(-1);
+                    laps.setConveyanceMode(-1);
                 }
                 break;
             case R.id.busToggle:
                 if (toggleBus.isChecked()) {
-                    lap.setConveyanceMode(HelpMe.CONVEYANCE_BUS);
+                    laps.setConveyanceMode(HelpMe.CONVEYANCE_BUS);
                     conveyanceOff();
                     toggleBus.setChecked(true);
                 } else {
-                    lap.setConveyanceMode(-1);
+                    laps.setConveyanceMode(-1);
                 }
                 break;
             case R.id.bikeToggle:
                 if (toggleBike.isChecked()) {
-                    lap.setConveyanceMode(HelpMe.CONVEYANCE_BIKE);
+                    laps.setConveyanceMode(HelpMe.CONVEYANCE_BIKE);
                     conveyanceOff();
                     toggleBike.setChecked(true);
                 } else {
-                    lap.setConveyanceMode(-1);
+                    laps.setConveyanceMode(-1);
                 }
                 break;
             case R.id.carpetToggle:
                 if (toggleCarpet.isChecked()) {
-                    lap.setConveyanceMode(HelpMe.CONVEYANCE_CARPET);
+                    laps.setConveyanceMode(HelpMe.CONVEYANCE_CARPET);
                     conveyanceOff();
                     toggleCarpet.setChecked(true);
                 } else {
-                    lap.setConveyanceMode(-1);
+                    laps.setConveyanceMode(-1);
                 }
                 break;
             default:
@@ -253,43 +256,45 @@ public class AddLap extends AppCompatActivity {
     // save the details
     // And send back them to LapsList list screen
     public void updateDone(View v) {
-        if (lap.getConveyanceMode() == -1) {
+        if (laps.getConveyanceMode() == -1) {
             Toast.makeText(this, "Please select the conveyance mode", Toast.LENGTH_SHORT).show();
         } else {
             if (editMode) {
+                if (isDateEdited) {
+                    laps.setStartDate(epochTime);
+                }
                 if (isSourceEdited) {
                     setLapSourceInfo();
                 }
                 if (isDestinationEdited) {
                     setLapDestinationInfo();
                 }
-                if (isDateEdited) {
-                    lap.setStartDate(epochTime);
-                }
-                if(isJourneyCreated){
-                    LapsDataSource.updateLap(lap, this);
-                }else {
-                    LapDataSource.updateLap(lap, this);
+
+                if (isJourneyCreated) {
+                    LapsDataSource.updateLaps(laps, this);
+                } else {
+                    LapsDataSource.updateLaps(laps, this);
                 }
             } else {
+                laps.setStartDate(epochTime);
                 setLapSourceInfo();
                 setLapDestinationInfo();
-                lap.setStartDate(epochTime);
-                long id = LapDataSource.createLap(lap, this);
-                lap.setId(String.valueOf(id));
-                Log.d(TAG, "total laps in the database are " + LapDataSource.getAllLaps(this));
-                if(isJourneyCreated){
-                    Laps laps = new Laps(null, null, TJPreferences.getActiveJourneyId(AddLap.this), null, null,
-                            lap.getConveyanceMode(), epochTime);
-                    LapsDataSource.createLap(laps, this);
-                }else {
-                    AppController.lapList.add(lap);
+
+
+                long id = LapsDataSource.createLap(laps, this);
+                laps.setId(String.valueOf(id));
+                //Log.d(TAG, "total laps in the database are " + LapDataSource.getAllLaps(this));
+                if (isJourneyCreated) {
+                    JourneyUtil.updateJourneyLap(this, createParams(laps));
+                } else {
+                    AppController.lapsList.add(laps);
                 }
             }
 
            /* Intent i = new Intent(getBaseContext(), LapsList.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);*/
+
             finish();
         }
     }
@@ -297,27 +302,45 @@ public class AddLap extends AppCompatActivity {
     private void setLapSourceInfo() {
         // Received location has city, state and country
         if (fromLocationList.size() == 3) {
-            lap.setSourceCityName(fromLocationList.get(0));
-            lap.setSourceStateName(fromLocationList.get(1));
-            lap.setSourceCountryName(fromLocationList.get(2));
+            laps.setSourceCityName(fromLocationList.get(0));
+            laps.setSourceStateName(fromLocationList.get(1));
+            laps.setSourceCountryName(fromLocationList.get(2));
         }// Received locatino has ONLY state and country
         else {
-            lap.setSourceCityName(fromLocationList.get(0));
-            lap.setSourceStateName(fromLocationList.get(0));
-            lap.setSourceCountryName(fromLocationList.get(1));
+            laps.setSourceCityName(fromLocationList.get(0));
+            laps.setSourceStateName(fromLocationList.get(0));
+            laps.setSourceCountryName(fromLocationList.get(1));
+
+
         }
+
+        Place sourcePlace = new Place(null, null, laps.getSourceCountryName(), laps.getSourceStateName(),
+                laps.getSourceCityName(), laps.getStartDate(), 0, 0);
+        long sourcePlaceId = PlaceDataSource.createPlace(sourcePlace, AddLap.this);
+
+        laps.setSourcePlaceId(String.valueOf(sourcePlaceId));
     }
 
     private void setLapDestinationInfo() {
+        // Received location has city, state and country
         if (toLocationList.size() == 3) {
-            lap.setDestinationCityName(toLocationList.get(0));
-            lap.setDestinationStateName(toLocationList.get(1));
-            lap.setDestinationCountryName(toLocationList.get(2));
-        } else {
-            lap.setDestinationCityName(toLocationList.get(0));
-            lap.setDestinationStateName(toLocationList.get(0));
-            lap.setDestinationCountryName(toLocationList.get(1));
+            laps.setDestinationCityName(toLocationList.get(0));
+            laps.setDestinationStateName(toLocationList.get(1));
+            laps.setDestinationCountryName(toLocationList.get(2));
+        }// Received locatino has ONLY state and country
+        else {
+            laps.setDestinationCityName(toLocationList.get(0));
+            laps.setDestinationStateName(toLocationList.get(0));
+            laps.setDestinationCountryName(toLocationList.get(1));
         }
+
+        Place destinationPlace = new Place(null, null, laps.getDestinationCountryName(),
+                laps.getDestinationStateName(),
+                laps.getDestinationCityName(),
+                laps.getStartDate(), 0, 0);
+        long destinationPlaceId = PlaceDataSource.createPlace(destinationPlace, AddLap.this);
+
+        laps.setDestinationPlaceId(String.valueOf(destinationPlaceId));
     }
 
     private void setConveyanceMode(int c) {
@@ -351,7 +374,6 @@ public class AddLap extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 Log.d(TAG, "returned from 'from' location");
@@ -370,10 +392,47 @@ public class AddLap extends AppCompatActivity {
                 isDestinationEdited = true;
             }
         }
+
         if (resultCode == RESULT_CANCELED) {
             // Write your code if there's no result
         }
+    }
 
+    private HashMap createParams(Laps laps) {
+
+        // create params to be sent in update  lap in  journey api
+        HashMap<String, String> params = new HashMap<>();
+        try {
+            params.put("api_key", TJPreferences.getApiKey(getBaseContext()));
+            params.put("journey_lap[travel_mode]", String.valueOf(laps.getConveyanceMode()));
+            params.put("journey_lap[time_of_day]", String.valueOf(laps.getStartDate()));
+            params.put("journey_lap[start_date]", String.valueOf(laps.getStartDate()));
+            // params.put("journey_lap[end_date]", String.valueOf(laps.getStartDate()));
+
+            // Get Lap local id
+            params.put("journey_lap[journey_laps_attributes[0]][journey_lap_local_id]",
+                    laps.getId());
+
+            // Get source info
+            params.put("journey_lap[journey_laps_attributes[0]][source_city_name]",
+                    laps.getSourceCityName());
+            params.put("journey_lap[journey_laps_attributes[0]][source_state_name]",
+                    laps.getSourceStateName());
+            params.put("journey_lap[journey_laps_attributes[0]][source_country_name]",
+                    laps.getSourceCountryName());
+
+            // Get destination info
+            params.put("journey_lap[journey_laps_attributes[0]][destination_city_name]",
+                    laps.getDestinationCityName());
+            params.put("journey_lap[journey_laps_attributes[0]][destination_state_name]",
+                    laps.getDestinationStateName());
+            params.put("journey_lap[journey_laps_attributes[0]][destination_country_name]",
+                    laps.getDestinationCountryName());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return params;
     }
 
 }

@@ -208,18 +208,18 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
 
     //Table lap
-    public static final String TABLE_LAP = "LAP";
-    public static final String LAP_COLUMN_ID = "id";
-    public static final String LAP_COLUMN_ID_ON_SERVER = "idOnServer";
-    public static final String LAP_COLUMN_JOURNEY_ID = "journeyId";
-    public static final String LAP_COLUMN_SOURCE_CITY = "sourceCity";
-    public static final String LAP_COLUMN_SOURCE_STATE = "sourceState";
-    public static final String LAP_COLUMN_SOURCE_COUNTRY = "sourceCountry";
-    public static final String LAP_COLUMN_DESTINATION_CITY = "destinationCity";
-    public static final String LAP_COLUMN_DESTINATION_STATE = "destinationState";
-    public static final String LAP_COLUMN_DESTINATION_COUNTRY = "destinationCountry";
-    public static final String LAP_COLUMN_CONVEYANCE_MODE = "conveyanceMode";
-    public static final String LAP_COLUMN_START_DATE = "startDate";
+//    public static final String TABLE_LAP = "LAP";
+//    public static final String LAP_COLUMN_ID = "id";
+//    public static final String LAP_COLUMN_ID_ON_SERVER = "idOnServer";
+//    public static final String LAP_COLUMN_JOURNEY_ID = "journeyId";
+//    public static final String LAP_COLUMN_SOURCE_CITY = "sourceCity";
+//    public static final String LAP_COLUMN_SOURCE_STATE = "sourceState";
+//    public static final String LAP_COLUMN_SOURCE_COUNTRY = "sourceCountry";
+//    public static final String LAP_COLUMN_DESTINATION_CITY = "destinationCity";
+//    public static final String LAP_COLUMN_DESTINATION_STATE = "destinationState";
+//    public static final String LAP_COLUMN_DESTINATION_COUNTRY = "destinationCountry";
+//    public static final String LAP_COLUMN_CONVEYANCE_MODE = "conveyanceMode";
+//    public static final String LAP_COLUMN_START_DATE = "startDate";
 
     //original LAP table
     public static final String TABLE_LAPS = "LAPS";
@@ -227,11 +227,17 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String LAPS_COLUMN_ID_ON_SERVER = "idOnServer";
     public static final String LAPS_COLUMN_JOURNEY_ID = "journeyId";
     public static final String LAPS_COLUMN_SOURCE_PLACE_ID = "sourcePlaceId";
+    public static final String LAPS_COLUMN_SOURCE_CITY = "sourceCity";
+    public static final String LAPS_COLUMN_SOURCE_STATE = "sourceState";
+    public static final String LAPS_COLUMN_SOURCE_COUNTRY = "sourceCountry";
+    public static final String LAPS_COLUMN_DESTINATION_CITY = "destinationCity";
+    public static final String LAPS_COLUMN_DESTINATION_STATE = "destinationState";
+    public static final String LAPS_COLUMN_DESTINATION_COUNTRY = "destinationCountry";
     public static final String LAPS_COLUMN_DESTINATION_PLACE_ID = "destinationPlaceId";
     public static final String LAPS_COLUMN_CONVEYANCE_MODE = "conveyanceMode";
     public static final String LAPS_COLUMN_START_DATE = "startDate";
 
-//    Table JOURNEY_CONTACT_MAPPING
+    //    Table JOURNEY_CONTACT_MAPPING
     public static final String TABLE_CONTACT_JOURNEY_MAP = "CONTACT_JOURNEY_MAPPING";
     public static final String MAPPING_COLUMN_JOURNEY_ID = "journeyId";
     public static final String MAPPING_COLUMN_CONTACT_ID = "contactId";
@@ -243,18 +249,18 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + MAPPING_COLUMN_IS_USER_ACTIVE + " integer , "
             + "PRIMARY KEY (" + MAPPING_COLUMN_JOURNEY_ID + ", " + MAPPING_COLUMN_CONTACT_ID + " )" + ");";
 
-    private static final String CREATE_TABLE_LAP = "create table " + TABLE_LAP + "("
-            + LAP_COLUMN_ID + " integer primary key autoincrement, "
-            + LAP_COLUMN_ID_ON_SERVER + " text , "
-            + LAP_COLUMN_JOURNEY_ID + " text ,"
-            + LAP_COLUMN_SOURCE_CITY + " text,"
-            + LAP_COLUMN_SOURCE_STATE + " text ,"
-            + LAP_COLUMN_SOURCE_COUNTRY + " text ,"
-            + LAP_COLUMN_DESTINATION_CITY + " text,"
-            + LAP_COLUMN_DESTINATION_STATE + " text ,"
-            + LAP_COLUMN_DESTINATION_COUNTRY + " text ,"
-            + LAP_COLUMN_START_DATE + " integer ,"
-            + LAP_COLUMN_CONVEYANCE_MODE + " integer " + ");";
+//    private static final String CREATE_TABLE_LAP = "create table " + TABLE_LAP + "("
+//            + LAP_COLUMN_ID + " integer primary key autoincrement, "
+//            + LAP_COLUMN_ID_ON_SERVER + " text , "
+//            + LAP_COLUMN_JOURNEY_ID + " text ,"
+//            + LAP_COLUMN_SOURCE_CITY + " text,"
+//            + LAP_COLUMN_SOURCE_STATE + " text ,"
+//            + LAP_COLUMN_SOURCE_COUNTRY + " text ,"
+//            + LAP_COLUMN_DESTINATION_CITY + " text,"
+//            + LAP_COLUMN_DESTINATION_STATE + " text ,"
+//            + LAP_COLUMN_DESTINATION_COUNTRY + " text ,"
+//            + LAP_COLUMN_START_DATE + " integer ,"
+//            + LAP_COLUMN_CONVEYANCE_MODE + " integer " + ");";
 
     private static final String CREATE_TABLE_LAPS = "create table " + TABLE_LAPS + "("
             + LAPS_COLUMN_ID + " integer primary key autoincrement, "
@@ -484,7 +490,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.delete(TABLE_LIKE, null, null);
         db.delete(TABLE_TIMECAPSULE, null, null);
         db.delete(TABLE_REQUEST_QUEUE, null, null);
-        db.delete(TABLE_LAP, null, null);
+        //db.delete(TABLE_LAP, null, null);
         db.delete(TABLE_LAPS, null, null);
         db.delete(TABLE_CONTACT_JOURNEY_MAP, null, null);
     }
@@ -517,8 +523,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.d(TAG, "TIMECAPSULE table created!");
         database.execSQL(CREATE_TABLE_REQUEST_QUEUE);
         Log.d(TAG, "REQUEST_QUEUE table created!");
-        database.execSQL(CREATE_TABLE_LAP);
-        Log.d(TAG, "LAP table created!");
+        //database.execSQL(CREATE_TABLE_LAP);
+        //Log.d(TAG, "LAP table created!");
         database.execSQL(CREATE_TABLE_LAPS);
         Log.d(TAG, "LAPS table created!");
         database.execSQL(CREATE_TABLE_CONTACT_JOURNEY_MAP);

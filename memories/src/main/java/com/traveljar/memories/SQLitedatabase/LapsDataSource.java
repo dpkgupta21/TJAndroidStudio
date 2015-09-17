@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.traveljar.memories.models.Lap;
 import com.traveljar.memories.models.Laps;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class LapsDataSource {
         return lapId;
     }
 
-    public static List<Laps> getLapsFromJourney(Context context, String journeyId){
+    public static List<Laps> getLapsFromJourney(Context context, String journeyId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
         String query = "SELECT * FROM " + MySQLiteHelper.TABLE_LAPS + " WHERE " + MySQLiteHelper.LAPS_COLUMN_JOURNEY_ID +
                 " ='" + journeyId + "'";
@@ -63,82 +62,149 @@ public class LapsDataSource {
         return lapsList;
     }
 
-    private static List<Lap> getLapWithPlaceFromCursor(Cursor cursor) {
-        List<Lap> lapsList = new ArrayList<Lap>();
+    private static List<Laps> getLapsDetailWithPlaceFromCursor(Cursor cursor) {
+        List<Laps> lapsList = new ArrayList<Laps>();
         try {
-            Lap lap = null;
+            Laps laps = null;
             if (cursor.moveToFirst()) {
                 do {
-                    lap = new Lap();
-                    lap.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_ID)));
-                    lap.setIdOnServer(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_ID_ON_SERVER)));
-                    lap.setJourneyId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_JOURNEY_ID)));
-                    lap.setSourceCityName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_SOURCE_CITY)));
-                    lap.setSourceStateName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_SOURCE_STATE)));
-                    lap.setSourceCountryName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_SOURCE_COUNTRY)));
-                    lap.setDestinationCityName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_DESTINATION_CITY)));
-                    lap.setDestinationStateName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_DESTINATION_STATE)));
-                    lap.setDestinationCountryName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_DESTINATION_COUNTRY)));
-                    lap.setConveyanceMode(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_CONVEYANCE_MODE)));
-                    lap.setStartDate(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.LAP_COLUMN_START_DATE)));
-                    lap.setSourcePlaceId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_SOURCE_PLACE_ID)));
-                    lap.setDestinationPlaceId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_DESTINATION_PLACE_ID)));
-                    lapsList.add(lap);
+                    laps = new Laps();
+                    laps.setId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_ID)));
+                    laps.setIdOnServer(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_ID_ON_SERVER)));
+                    laps.setJourneyId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_JOURNEY_ID)));
+                    laps.setSourceCityName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_SOURCE_CITY)));
+                    laps.setSourceStateName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_SOURCE_STATE)));
+                    laps.setSourceCountryName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_SOURCE_COUNTRY)));
+                    laps.setDestinationCityName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_DESTINATION_CITY)));
+                    laps.setDestinationStateName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_DESTINATION_STATE)));
+                    laps.setDestinationCountryName(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_DESTINATION_COUNTRY)));
+                    laps.setConveyanceMode(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_CONVEYANCE_MODE)));
+                    laps.setStartDate(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_START_DATE)));
+                    laps.setSourcePlaceId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_SOURCE_PLACE_ID)));
+                    laps.setDestinationPlaceId(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.LAPS_COLUMN_DESTINATION_PLACE_ID)));
+                    lapsList.add(laps);
                 } while (cursor.moveToNext());
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return lapsList;
     }
 
-    public static List<Lap> getLapsFromJourneyWithPlace(Context context, String journeyId){
+    public static List<Laps> getLapsFromJourneyWithPlace(Context context, String journeyId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        String query = "SELECT LP.id as id,LP.journeyId as journeyId, LP.idOnServer as idOnServer, LP.conveyanceMode as conveyanceMode, LP.startDate as startDate, " +
-                " S.city as sourceCity, S.state as sourceState, S.country as sourceCountry, D.city as destinationCity," +
-                " D.state as destinationState, D.country as destinationCountry,LP.sourcePlaceId as sourcePlaceId,LP.destinationPlaceId as destinationPlaceId FROM LAPS LP " +
+        String query = "SELECT LP.id as id,LP.journeyId as journeyId," +
+                " LP.idOnServer as idOnServer," +
+                " LP.conveyanceMode as conveyanceMode," +
+                " LP.startDate as startDate, " +
+                " S.city as sourceCity," +
+                " S.state as sourceState," +
+                " S.country as sourceCountry," +
+                " D.city as destinationCity," +
+                " D.state as destinationState," +
+                " D.country as destinationCountry," +
+                " LP.sourcePlaceId as  sourcePlaceId," +
+                " LP.destinationPlaceId as destinationPlaceId" +
+                " FROM LAPS LP " +
                 " left join PLACE S ON S._id = LP.sourcePlaceId " +
                 " left join PLACE D ON D._id = LP.destinationPlaceId " +
-                " WHERE LP.journeyId ='"+journeyId+"'";
+                " WHERE LP.journeyId ='" + journeyId + "'";
+
+//        String query = "SELECT LP.id as id,LP.journeyId as journeyId, LP.idOnServer as idOnServer, " +
+//                " LP.conveyanceMode as conveyanceMode, LP.startDate as startDate,  S.city as sourceCity, " +
+//                "S.state as sourceState, S.country as sourceCountry, " +
+//                "D.city as destinationCity, D.state as destinationState, D.country as destinationCountry, " +
+//                "LP.sourcePlaceId as sourcePlaceId,LP.destinationPlaceId as destinationPlaceId FROM LAPS LP " +
+//                "left join PLACE S ON S._id = LP.sourcePlaceId  left join PLACE D ON D._id = LP.destinationPlaceId " +
+//                "Where  LP.sourcePlaceId <>'' AND LP.destinationPlaceId <>'' AND LP.journeyId ='" + journeyId + "' " +
+//                "UNION " +
+//                "SELECT LP.id as id,LP.journeyId as journeyId, LP.idOnServer as idOnServer, " +
+//                "LP.conveyanceMode as conveyanceMode, LP.startDate as startDate, " +
+//                "LP.sourceCity as sourceCity, LP.sourceState as sourceState, LP.sourceCountry as sourceCountry, " +
+//                "LP.destinationCity as destinationCity, LP.destinationState as destinationState, " +
+//                "LP.destinationCountry as destinationCountry, " +
+//                "LP.sourcePlaceId as sourcePlaceId, LP.destinationPlaceId as destinationPlaceId " +
+//                "FROM LAPS  LP Where  LP.sourcePlaceId ='' AND LP.destinationPlaceId ='' AND " +
+//                "LP.journeyId ='" + journeyId + "' ";
+
         Cursor cursor = db.rawQuery(query, null);
-        List<Lap> lapsList = getLapWithPlaceFromCursor(cursor);
+        List<Laps> lapsList = getLapsDetailWithPlaceFromCursor(cursor);
         cursor.close();
         db.close();
         return lapsList;
     }
 
-    public static Lap getLapByIdWithPlace(Context context, String id){
+    public static Laps getLapsByIdWithPlace(Context context, String id) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        String query = "SELECT LP.id as id,LP.journeyId as journeyId, LP.idOnServer as idOnServer, LP.conveyanceMode as conveyanceMode, LP.startDate as startDate, " +
-                " S.city as sourceCity, S.state as sourceState, S.country as sourceCountry, D.city as destinationCity," +
-                " D.state as destinationState, D.country as destinationCountry,LP.sourcePlaceId as sourcePlaceId,LP.destinationPlaceId as destinationPlaceId FROM LAPS LP " +
+        String query = "SELECT LP.id as id," +
+                " LP.journeyId as journeyId," +
+                " LP.idOnServer as idOnServer," +
+                " LP.conveyanceMode as conveyanceMode," +
+                " LP.startDate as startDate, " +
+                " S.city as sourceCity," +
+                " S.state as sourceState," +
+                " S.country as sourceCountry," +
+                " D.city as destinationCity," +
+                " D.state as destinationState," +
+                " D.country as destinationCountry," +
+                " LP.sourcePlaceId as sourcePlaceId," +
+                " LP.destinationPlaceId as destinationPlaceId " +
+                " FROM LAPS LP " +
                 " left join PLACE S ON S._id = LP.sourcePlaceId " +
                 " left join PLACE D ON D._id = LP.destinationPlaceId " +
-                " WHERE LP.id ='"+id+"'";
+                " WHERE LP.id ='" + id + "'";
         Cursor cursor = db.rawQuery(query, null);
-        List<Lap> lapsList = getLapWithPlaceFromCursor(cursor);
+        List<Laps> lapsList = getLapsDetailWithPlaceFromCursor(cursor);
         return lapsList.get(0);
     }
 
+
+//    public static Lap getLapByIdWithPlace(Context context, String id) {
+//        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
+//        String query = "SELECT LP.id as id,LP.journeyId as journeyId, LP.idOnServer as idOnServer, LP.conveyanceMode as conveyanceMode, LP.startDate as startDate, " +
+//                " S.city as sourceCity, S.state as sourceState, S.country as sourceCountry, D.city as destinationCity," +
+//                " D.state as destinationState, D.country as destinationCountry,LP.sourcePlaceId as sourcePlaceId,LP.destinationPlaceId as destinationPlaceId FROM LAPS LP " +
+//                " left join PLACE S ON S._id = LP.sourcePlaceId " +
+//                " left join PLACE D ON D._id = LP.destinationPlaceId " +
+//                " WHERE LP.id ='" + id + "'";
+//        Cursor cursor = db.rawQuery(query, null);
+//        List<Lap> lapsList = getLapWithPlaceFromCursor(cursor);
+//        return lapsList.get(0);
+//    }
+
     /*Deletes a single lap*/
-    public static void deleteLap(Context context, String lapId){
+    public static void deleteLaps(Context context, String lapsId) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getReadableDatabase();
-        db.delete(MySQLiteHelper.TABLE_LAPS, MySQLiteHelper.LAP_COLUMN_ID + "=?", new String[]{lapId});
+        db.delete(MySQLiteHelper.TABLE_LAPS, MySQLiteHelper.LAPS_COLUMN_ID + "=?", new String[]{lapsId});
         db.close();
     }
 
-    public static void updateLap(Lap lap, Context context) {
+    public static void updateLaps(Laps laps, Context context) {
         SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.LAPS_COLUMN_ID_ON_SERVER, lap.getIdOnServer());
-        values.put(MySQLiteHelper.LAPS_COLUMN_JOURNEY_ID, lap.getJourneyId());
-        values.put(MySQLiteHelper.LAPS_COLUMN_SOURCE_PLACE_ID, lap.getSourcePlaceId());
-        values.put(MySQLiteHelper.LAPS_COLUMN_DESTINATION_PLACE_ID, lap.getDestinationPlaceId());
-        values.put(MySQLiteHelper.LAPS_COLUMN_CONVEYANCE_MODE, lap.getConveyanceMode());
-        values.put(MySQLiteHelper.LAPS_COLUMN_START_DATE, lap.getStartDate());
+        values.put(MySQLiteHelper.LAPS_COLUMN_ID_ON_SERVER, laps.getIdOnServer());
+        values.put(MySQLiteHelper.LAPS_COLUMN_JOURNEY_ID, laps.getJourneyId());
+        values.put(MySQLiteHelper.LAPS_COLUMN_SOURCE_PLACE_ID, laps.getSourcePlaceId());
+        values.put(MySQLiteHelper.LAPS_COLUMN_DESTINATION_PLACE_ID, laps.getDestinationPlaceId());
+        values.put(MySQLiteHelper.LAPS_COLUMN_CONVEYANCE_MODE, laps.getConveyanceMode());
+        values.put(MySQLiteHelper.LAPS_COLUMN_START_DATE, laps.getStartDate());
 
-        db.update(MySQLiteHelper.TABLE_LAPS, values, MySQLiteHelper.LAP_COLUMN_ID + " = '" + lap.getId() + "'", null);
+        db.update(MySQLiteHelper.TABLE_LAPS, values, MySQLiteHelper.LAPS_COLUMN_ID + " = '" + laps.getId() + "'", null);
+        db.close();
+
+    }
+
+    /*
+     *  Here we are updating Laps server id and Journey Id
+     */
+    public static void updateLapsServerId(Laps laps, Context context) {
+        SQLiteDatabase db = MySQLiteHelper.getInstance(context).getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.LAPS_COLUMN_ID_ON_SERVER, laps.getIdOnServer());
+        values.put(MySQLiteHelper.LAPS_COLUMN_JOURNEY_ID, laps.getJourneyId());
+        int flag = db.update(MySQLiteHelper.TABLE_LAPS, values, MySQLiteHelper.LAPS_COLUMN_ID + " = '" + laps.getId() + "'", null);
+
         db.close();
 
     }

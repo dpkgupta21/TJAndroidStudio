@@ -166,14 +166,16 @@ public class CurrentJourneyBaseActivity extends BaseActivity {
 
     // Call this method from from anywhere to refresh timeline adapter when this activity is visible
     public void refreshTimelineList(){
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.timeline_viewpager + ":" + mViewPager.getCurrentItem());
+        Fragment fragment = getSupportFragmentManager().
+                findFragmentByTag("android:switcher:" + R.id.timeline_viewpager + ":" + mViewPager.getCurrentItem());
         if(fragment instanceof TimelineFragment){
 //            TimelineFragment.getInstance().loadMemoriesList();
         }
     }
 
     public void refreshTimelineFragment(){
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.timeline_viewpager + ":" + mViewPager.getCurrentItem());
+        Fragment fragment = getSupportFragmentManager().
+                findFragmentByTag("android:switcher:" + R.id.timeline_viewpager + ":" + mViewPager.getCurrentItem());
         if(fragment instanceof TimelineFragment){
             getSupportFragmentManager()
                     .beginTransaction()

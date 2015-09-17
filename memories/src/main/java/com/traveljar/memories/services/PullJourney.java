@@ -62,15 +62,15 @@ public class PullJourney {
     private static final int PICTURE_DOWNLOAD_REQUESTER_CODE = 0;
     private static final int CHECKIN_DOWNLOAD_REQUESTER_CODE = 0;
 
-    public static PullJourney getInstance(){
+    public static PullJourney getInstance() {
         return instance == null ? new PullJourney() : instance;
     }
 
-    public PullJourney(){
+    public PullJourney() {
         instance = this;
     }
 
-    public PullJourney(Journey journey, Context context, OnTaskFinishListener mListener){
+    public PullJourney(Journey journey, Context context, OnTaskFinishListener mListener) {
         this.journey = journey;
         this.context = context;
         this.mListener = mListener;
@@ -185,7 +185,7 @@ public class PullJourney {
 
                         imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() +
                                 "/pic_" + createdBy + "_" + journeyId + "_" + createdAt + ".jpg";
-                        if((new File(imagePath).exists())){
+                        if ((new File(imagePath).exists())) {
                             localDataPath = imagePath;
                         }
 
@@ -303,14 +303,14 @@ public class PullJourney {
         }
     }
 
-    public void parseAndSaveLikes(JSONArray jsonArray, String memoryId, String memType, String journeyId, String memServerId){
+    public void parseAndSaveLikes(JSONArray jsonArray, String memoryId, String memType, String journeyId, String memServerId) {
         String idOnServer;
         String userId;
         JSONObject jsonObject;
         long createdAt;
         long updatedAt;
         int size = jsonArray.length();
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             try {
                 jsonObject = jsonArray.getJSONObject(i);
                 idOnServer = jsonObject.getString("id");
@@ -326,7 +326,7 @@ public class PullJourney {
         }
     }
 
-    private void parseLaps(JSONArray journeyLaps, String journeyId){
+    private void parseLaps(JSONArray journeyLaps, String journeyId) {
         Laps laps;
         Place source;
         Place destination;
@@ -338,9 +338,9 @@ public class PullJourney {
         long sourceId;
         long destinationId;
         int noLaps = journeyLaps.length();
-        for(int i = 0; i < noLaps; i++){
+        for (int i = 0; i < noLaps; i++) {
             try {
-                lapObject = (JSONObject)journeyLaps.get(i);
+                lapObject = (JSONObject) journeyLaps.get(i);
                 sourceObject = lapObject.getJSONObject("source");
                 destinationObject = lapObject.getJSONObject("destination");
 
@@ -360,10 +360,12 @@ public class PullJourney {
                         destinationObject.getString("city"), Long.parseLong(destinationObject.getString("created_at")), latitude, longitude);
                 destinationId = PlaceDataSource.createPlace(destination, context);
 
-                laps = new Laps(null, lapObject.getString("id"), journeyId, String.valueOf(sourceId), String.valueOf(destinationId),
+                laps = new Laps(null, lapObject.getString("id"), journeyId,
+                        String.valueOf(sourceId),
+                        String.valueOf(destinationId),
                         HelpMe.getConveyanceModeCode(lapObject.getString("travel_mode")), Long.parseLong(lapObject.getString("start_date")));
                 LapsDataSource.createLap(laps, context);
-            }catch (JSONException ex){
+            } catch (JSONException ex) {
                 ex.printStackTrace();
             }
         }
@@ -387,30 +389,30 @@ public class PullJourney {
         }
     }
 
-    private void registerEvent(){
+    private void registerEvent() {
         EventBus.getDefault().register(this);
     }
 
-    private void unRegisterEvent(){
+    private void unRegisterEvent() {
         EventBus.getDefault().unregister(this);
     }
 
-    public void onEvent(PictureDownloadEvent event){
-        if(event.getCallerCode() == PICTURE_DOWNLOAD_REQUESTER_CODE) {
+    public void onEvent(PictureDownloadEvent event) {
+        if (event.getCallerCode() == PICTURE_DOWNLOAD_REQUESTER_CODE) {
             LikeDataSource.updateMemoryLocalId(event.getPicture().getIdOnServer(), event.getPicture().getMemType(),
                     event.getPicture().getId(), context);
         }
     }
 
-    public void onEvent(VideoDownloadEvent event){
-        if(event.getCallerCode() == VIDEO_DOWNLOAD_REQUESTER_CODE) {
+    public void onEvent(VideoDownloadEvent event) {
+        if (event.getCallerCode() == VIDEO_DOWNLOAD_REQUESTER_CODE) {
             LikeDataSource.updateMemoryLocalId(event.getVideo().getIdOnServer(), event.getVideo().getMemType(), event.getVideo().getId(),
                     context);
         }
     }
 
-    public void onEvent(CheckInDownloadEvent event){
-        if(event.getCallerCode() == CHECKIN_DOWNLOAD_REQUESTER_CODE) {
+    public void onEvent(CheckInDownloadEvent event) {
+        if (event.getCallerCode() == CHECKIN_DOWNLOAD_REQUESTER_CODE) {
             LikeDataSource.updateMemoryLocalId(event.getCheckIn().getIdOnServer(), event.getCheckIn().getMemType(), event.getCheckIn().getId(),
                     context);
         }

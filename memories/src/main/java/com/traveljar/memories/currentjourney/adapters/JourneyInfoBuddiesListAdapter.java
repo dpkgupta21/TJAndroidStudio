@@ -58,7 +58,7 @@ public class JourneyInfoBuddiesListAdapter extends RecyclerView.Adapter<JourneyI
 
     // Create new views (invoked by the layout manager)
     @Override
-    public JourneyInfoBuddiesListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(TAG, "view group is " + parent + " " + mDataset.size());
         parent.getLayoutParams().height = convertDpToPixels(mDataset.size() * 90);
 

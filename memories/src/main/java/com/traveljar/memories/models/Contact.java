@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Contact implements Comparable<Contact>, Parcelable {
 
-    public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>() {
+    public static final Creator<Contact> CREATOR = new Creator<Contact>() {
 
         public Contact createFromParcel(Parcel in) {
             return new Contact(in);
@@ -32,8 +32,16 @@ public class Contact implements Comparable<Contact>, Parcelable {
 
     }
 
-    public Contact(String idOnServer, String profileName, String phoneBookName, String primaryEmail, String status,
-                   String picServerUrl, String picLocalUrl, String phoneNo, String allJourneyIds, boolean isOnBoard,
+    public Contact(String idOnServer,
+                   String profileName,
+                   String phoneBookName,
+                   String primaryEmail,
+                   String status,
+                   String picServerUrl,
+                   String picLocalUrl,
+                   String phoneNo,
+                   String allJourneyIds,
+                   boolean isOnBoard,
                    String interests) {
         this.idOnServer = idOnServer;
         this.profileName = profileName;
