@@ -47,4 +47,4 @@
         android:visibility="gone"
         android:layout_alignEnd="@+id/closeIcon" />
 
-</RelativeLayout><!-- From: file:/E:/checkout/Travel%20Jar/TJAndroidStudio/memories/src/main/res/layout/gallery_photos_detail_item.xml -->
+</RelativeLayout><!-- From: file:/F:/Pratham_Workspace1/TJDeepakAndroidStudio/memories/src/main/res/layout/gallery_photos_detail_item.xml -->

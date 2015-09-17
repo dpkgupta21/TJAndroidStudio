@@ -67,4 +67,4 @@
             android:layout_below="@id/checkin_place_count"
             android:text="Checkins" />
     </RelativeLayout>
-</LinearLayout><!-- From: file:/E:/checkout/Travel%20Jar/TJAndroidStudio/memories/src/main/res/layout/checkin_places_list_item.xml -->
+</LinearLayout><!-- From: file:/F:/Pratham_Workspace1/TJDeepakAndroidStudio/memories/src/main/res/layout/checkin_places_list_item.xml -->
